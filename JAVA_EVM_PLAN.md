@@ -1,0 +1,40 @@
+# Java on EVM: smallest useful milestone
+
+## Latest user direction (supersedes the earlier broad plan)
+Start with the simplest possible target and make this repository convenient for agents, including Git. Exactly one implementation worker uses `openai-codex/gpt-5.6-terra`; the parent reviews and verifies.
+
+## M0: one honest end-to-end demo
+Input:
+```java
+public class Add {
+    public static int add(int a, int b) { return a + b; }
+}
+```
+Pipeline: `javac --release 8 → Add.class → AOT translator → standard EVM bytecode → geth EVM → 42` for arguments 20 and 22.
+
+Requirements:
+- Parse an actual classfile and select the named static all-int entry method; do not hardcode its answer or generate code specialized to the input argument values.
+- Implement only the bytecodes needed for this program (`iload`/short forms, `iadd`, `ireturn`; small integer constants / stores / subtract may be added only if trivial). Other selected-method bytecodes fail explicitly. The unused default Java constructor need not be translated.
+- Preserve Java 32-bit wraparound and negative result handling. Accept different runtime arguments without recompiling Java or specializing the EVM program.
+- Actually execute generated code on geth EVM; use finite configurable gas and report measured gas. Host `java` may be used only as an optional test oracle, never the execution backend.
+- A straightforward CLI, readable scoped Go code, a minimal Java source, tests for 20+22, negative operands, INT_MAX+1, unsupported opcode, bad/truncated class input and out-of-gas. Assert emitted code is input-independent.
+- No recursion, arrays, object model, class library or Minecraft work in M0.
+
+## Agent-friendly repository
+- Canonical working directory: `/home/user/evm-jvm/geth` (a real Git repository, not the parent home repository).
+- Upstream: https://github.com/ethereum/go-ethereum.git, tag v1.16.9, base commit `95665d5703e1023995a0ff93e4ce9eb77e8a59bd`.
+- Local branch: `java-on-evm`. Local clone/branch only; do not create or push a GitHub fork.
+- Add concise root `AGENTS.md`: scope, relevant file map, exact build/demo/test commands, next smallest task; no need to scan the whole upstream monorepo.
+- Provide simple `make java-demo` and `make java-test` (or equally simple documented script commands), and `JAVA_EVM.md` quickstart explaining AOT/subset vs full JVM.
+- Ignore generated binaries/classes appropriately without broad unrelated changes. `git status` should be clean after validation and an explicit scoped local milestone commit; use already configured Git identity, do not change global config or stage unrelated files.
+- Keep upstream history/license and VM core unchanged. Document this is a local EVM harness, not on-chain deployment and not a full JVM.
+
+## Acceptance
+1. Single worker implements, runs focused tests and demo, and makes a local milestone commit.
+2. Parent reviews actual execution path and independently reruns commands.
+3. Next milestones listed briefly only: constants/subtraction → comparisons/loops → static calls → heap/objects; not implemented now.
+
+## M0 worker implementation status
+- Worker-complete: scoped translator, CLI, documentation, demo, and focused tests are implemented and locally committed on `java-on-evm`.
+- The implementation was verified with `make java-demo` and `make java-test`; the demo executed through geth's EVM and returned 42 (48 gas).
+- Parent acceptance pending: parent must independently review the actual execution path and rerun the documented commands.

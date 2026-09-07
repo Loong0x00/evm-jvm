@@ -61,3 +61,14 @@ help: Makefile
 	@echo ''
 	@echo 'Targets:'
 	@sed -n 's/^#?//p' $< | column -t -s ':' |  sort | sed -e 's/^/ /'
+
+# Focused Java-on-EVM M0 helpers.
+.PHONY: java-demo java-test
+
+java-demo:
+	mkdir -p build/java-evm
+	javac --release 8 -d build/java-evm examples/java/Add.java
+	go run ./cmd/javaevm -class build/java-evm/Add.class -method add -args 20,22 -gas 100000
+
+java-test:
+	go test ./javaevm
