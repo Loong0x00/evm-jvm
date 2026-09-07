@@ -15,17 +15,17 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m3c --tier full
+python3 tools/java_diff.py --stage m3d --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m3c --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m3d --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
-M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, and `m3c` or `all` adds
-M3c. A manifest without entries in the newest stage continues to run its older
-cases under the new default. `smoke` runs smoke-marked cases, `fast` adds a
-seeded deterministic sample of at most 20 other cases, and `full` runs every
+M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, and `m3d`
+or `all` adds M3d. A manifest without entries in the newest stage continues to
+run its older cases under the new default. `smoke` runs smoke-marked cases,
+`fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
 selection is an error.
@@ -80,6 +80,20 @@ Each bundle case report records the compatible root `class_path` and
 `evm_argv`. The command record independently retains the argv actually run.
 These fields make class order and every raw input artifact auditable.
 
+## M3d hierarchy cases
+
+M3d cases use the unchanged M3b bundle protocol: the manifest explicitly lists
+every supplied class and the runner neither discovers nor loads superclass
+files. Superclass/member resolution and initialization order are EVM work, not
+runner work. M3d remains limited to ordinary classes and supported static
+integer members; interface, instance, and other staged-negative fixtures are
+validation tests, not differential-oracle passes.
+
+The manifest outcome schema is unchanged. In particular, hierarchy/link/access
+reverts are not accepted reference-Java outcomes and cannot pass by matching an
+arbitrary EVM failure. Only the exact value or named Java exception protocol
+below is comparable by the differential oracle.
+
 ## Outcome protocol
 
 Existing value cases retain `expected_kind: "value"`. An explicitly expected
@@ -113,8 +127,8 @@ exception=<fqcn>
 
 The runner accepts an exception as passing only when the manifest explicitly
 expects `java_exception` and the expected, JVM, and EVM classes all match. M3c
-adds `java.lang.ExceptionInInitializerError`; arithmetic escaping an active
-initializer is wrapped as that class, while `java.lang.StackOverflowError`
+adds `java.lang.ExceptionInInitializerError`; M3d preserves that outcome when
+arithmetic escapes a superclass initializer. `java.lang.StackOverflowError`
 remains unwrapped. M2b's `java.lang.ArithmeticException` outside initialization
 remains unchanged. The fixture oracle may report the two initializer-time Error
 outcomes from `Class.forName`, before reflective invocation. Oracle process,

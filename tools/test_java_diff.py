@@ -709,6 +709,7 @@ class JavaDiffTests(unittest.TestCase):
         cases += [case("m3a-smoke", stage="m3a")]
         cases += [case("m3b-smoke", stage="m3b")]
         cases += [case("m3c-smoke", stage="m3c")]
+        cases += [case("m3d-smoke", stage="m3d")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -722,14 +723,15 @@ class JavaDiffTests(unittest.TestCase):
             "m3a": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke"],
             "m3b": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke"],
             "m3c": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke"],
+            "m3d": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m3c")
+        self.assertEqual(parsed.stage, "m3d")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
 

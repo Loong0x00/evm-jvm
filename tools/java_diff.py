@@ -146,9 +146,9 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
         if case_id in seen_ids:
             raise HarnessError(f"duplicate case id: {case_id}")
         seen_ids.add(case_id)
-        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c"):
+        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d"):
             raise HarnessError(
-                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, or m3c"
+                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, m3c, or m3d"
             )
         expected_kind = case["expected_kind"]
         if expected_kind not in ("value", "java_exception"):
@@ -239,8 +239,10 @@ def select_cases(cases: Sequence[Dict[str, Any]], stage: str, tier: str,
         allowed_stages = {"m1", "m2", "m2b", "m3a"}
     elif stage == "m3b":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b"}
-    else:
+    elif stage == "m3c":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c"}
+    else:
+        allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d"}
     stage_cases = [case for case in cases if case["stage"] in allowed_stages]
     if exact_case is not None:
         matches = [case for case in cases if case["id"] == exact_case]
@@ -726,7 +728,7 @@ def finish_report(report: Dict[str, Any]) -> Dict[str, Any]:
 def parser_for(repo: Path) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "all"), default="m3c"
+        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "all"), default="m3d"
     )
     parser.add_argument("--tier", choices=("smoke", "fast", "full"), default="smoke")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)

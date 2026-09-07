@@ -66,42 +66,38 @@ func TestRunClassesMissingOwnerReportsCallerPC(t *testing.T) {
 	)
 }
 
-func TestRunClassesRejectsEnteredUnsupportedClassSemanticsAtInputIndex(t *testing.T) {
-	cases := []struct {
-		name       string
-		sources    map[string]string
-		entryClass string
-		classNames []string
-	}{
-		{
-			name: "interface",
-			sources: map[string]string{
-				"entered/Plain.java": `package entered; public final class Plain { public static int run() { return 1; } }`,
-				"entered/Face.java":  `package entered; public interface Face { static int run() { return 2; } }`,
-			},
-			entryClass: "entered/Face", classNames: []string{"entered/Plain", "entered/Face"},
-		},
-		{
-			name: "non-Object-superclass",
-			sources: map[string]string{
-				"entered/Parent.java": `package entered; public class Parent { }`,
-				"entered/Child.java": `package entered; public final class Child extends Parent {
-					public static int run() { return 3; }
-				}`,
-			},
-			entryClass: "entered/Child", classNames: []string{"entered/Parent", "entered/Child"},
-		},
+func TestRunClassesRejectsEnteredInterfaceAtInputIndex(t *testing.T) {
+	classes := compileBundleValidationJava(t, map[string]string{
+		"entered/Plain.java": `package entered; public final class Plain { public static int run() { return 1; } }`,
+		"entered/Face.java":  `package entered; public interface Face { static int run() { return 2; } }`,
+	}, "entered/Plain", "entered/Face")
+	result, err := RunClasses(
+		[][]byte{classes["entered/Plain"], classes["entered/Face"]},
+		"entered/Face", "run", nil, bundleValidationGasLimit,
+	)
+	assertBundleValidationError(t, result, err, "LinkError(uint256,uint256)", 5, 1)
+}
+
+func TestRunClassesAcceptsProvidedSuperclassAndInheritedInitialization(t *testing.T) {
+	classes := compileBundleValidationJava(t, map[string]string{
+		"entered/Parent.java": `package entered; public class Parent {
+			static int marker = 20;
+			public static int inherited() { return marker + 1; }
+		}`,
+		"entered/Child.java": `package entered; public final class Child extends Parent {
+			static int child = marker + 2;
+			public static int run() { return inherited() * 100 + child; }
+		}`,
+	}, "entered/Parent", "entered/Child")
+	result, err := RunClasses(
+		[][]byte{classes["entered/Parent"], classes["entered/Child"]},
+		"entered/Child", "run", nil, bundleValidationGasLimit,
+	)
+	if err != nil {
+		t.Fatalf("provided superclass failed: %v (result=%+v)", err, result)
 	}
-	for _, tc := range cases {
-		t.Run(tc.name, func(t *testing.T) {
-			classes := compileBundleValidationJava(t, tc.sources, tc.classNames...)
-			inputs := make([][]byte, len(tc.classNames))
-			for i, name := range tc.classNames {
-				inputs[i] = classes[name]
-			}
-			result, err := RunClasses(inputs, tc.entryClass, "run", nil, bundleValidationGasLimit)
-			assertBundleValidationError(t, result, err, "LinkError(uint256,uint256)", 5, 1)
-		})
+	if result.ExceptionClass != "" || result.Value != 2122 || result.GasUsed == 0 || len(result.RevertData) != 0 {
+		t.Fatalf("result = %+v, want inherited initialized value 2122", result)
 	}
 }
 
