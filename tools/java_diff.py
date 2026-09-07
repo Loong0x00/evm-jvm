@@ -34,6 +34,9 @@ INT32_MIN = -(2**31)
 INT32_MAX = 2**31 - 1
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 JAVA_NAME_RE = re.compile(r"^[A-Za-z_$][A-Za-z0-9_$]*$")
+JAVA_FQCN_RE = re.compile(
+    r"^[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+$"
+)
 KV_RE = re.compile(r"^([a-z0-9_]+)=(.*)$")
 
 
@@ -106,10 +109,25 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
         if case_id in seen_ids:
             raise HarnessError(f"duplicate case id: {case_id}")
         seen_ids.add(case_id)
-        if case["stage"] not in ("m1", "m2"):
-            raise HarnessError(f"{case_id}: stage must be m1 or m2")
-        if case["expected_kind"] != "value":
-            raise HarnessError(f"{case_id}: expected_kind must be value in this batch")
+        if case["stage"] not in ("m1", "m2", "m2b"):
+            raise HarnessError(f"{case_id}: stage must be m1, m2, or m2b")
+        expected_kind = case["expected_kind"]
+        if expected_kind not in ("value", "java_exception"):
+            raise HarnessError(
+                f"{case_id}: expected_kind must be value or java_exception"
+            )
+        if expected_kind == "java_exception":
+            expected_exception = case.get("expected_exception")
+            if (not isinstance(expected_exception, str)
+                    or not JAVA_FQCN_RE.fullmatch(expected_exception)):
+                raise HarnessError(
+                    f"{case_id}: expected_exception must be a syntactically valid "
+                    "fully-qualified Java class name"
+                )
+        elif "expected_exception" in case:
+            raise HarnessError(
+                f"{case_id}: expected_exception is only valid for java_exception cases"
+            )
         if not isinstance(case["smoke"], bool):
             raise HarnessError(f"{case_id}: smoke must be a boolean")
         if not JAVA_NAME_RE.fullmatch(case["class"] if isinstance(case["class"], str) else ""):
@@ -158,7 +176,12 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
 
 def select_cases(cases: Sequence[Dict[str, Any]], stage: str, tier: str,
                  seed: int, exact_case: Optional[str]) -> List[Dict[str, Any]]:
-    allowed_stages = {"m1"} if stage == "m1" else {"m1", "m2"}
+    if stage == "m1":
+        allowed_stages = {"m1"}
+    elif stage == "m2":
+        allowed_stages = {"m1", "m2"}
+    else:
+        allowed_stages = {"m1", "m2", "m2b"}
     stage_cases = [case for case in cases if case["stage"] in allowed_stages]
     if exact_case is not None:
         matches = [case for case in cases if case["id"] == exact_case]
@@ -248,8 +271,11 @@ def parse_oracle(record: Dict[str, Any]) -> Tuple[str, Optional[int], Optional[s
     if len(lines) != 1:
         return "oracle_failure", None, "oracle output must contain exactly one line"
     line = lines[0]
-    if line.startswith("exception=") and len(line) > len("exception="):
-        return "oracle_exception", None, line[len("exception="):]
+    if line.startswith("exception="):
+        exception_class = line[len("exception="):]
+        if not JAVA_FQCN_RE.fullmatch(exception_class):
+            return "oracle_failure", None, "oracle exception is not a valid fully-qualified class name"
+        return "oracle_exception", None, exception_class
     if not line.startswith("value="):
         return "oracle_failure", None, "malformed oracle output"
     try:
@@ -294,25 +320,39 @@ def parse_evm(record: Dict[str, Any]) -> Tuple[str, Dict[str, Any], Optional[str
         if not match or match.group(1) in values:
             return "evm_malformed", {}, "malformed or duplicate EVM output line"
         values[match.group(1)] = match.group(2)
-    required = {"engine", "runtime_bytes", "runtime_sha256", "result", "gas_used"}
-    if set(values) != required or values.get("engine") != "evm-jvm-subset-interpreter":
-        return "evm_malformed", {}, "EVM output has unexpected keys or engine"
+    common = {"engine", "runtime_bytes", "runtime_sha256", "gas_used"}
+    outcome_keys = {"result", "exception"} & set(values)
+    if (set(values) - {"result", "exception"} != common
+            or len(outcome_keys) != 1
+            or values.get("engine") != "evm-jvm-subset-interpreter"):
+        return "evm_malformed", {}, "EVM output must have common keys and exactly one outcome"
     try:
         runtime_bytes = int(values["runtime_bytes"], 10)
-        result = int(values["result"], 10)
         gas_used = int(values["gas_used"], 10)
     except ValueError:
         return "evm_malformed", {}, "EVM numeric output is malformed"
     runtime_hash = values["runtime_sha256"].lower()
-    if (runtime_bytes <= 0 or gas_used < 0 or not INT32_MIN <= result <= INT32_MAX
-            or not SHA256_RE.fullmatch(runtime_hash)):
+    if (runtime_bytes <= 0 or gas_used < 0 or not SHA256_RE.fullmatch(runtime_hash)):
         return "evm_malformed", {}, "EVM output values are out of range"
-    return "value", {
+    parsed: Dict[str, Any] = {
         "runtime_bytes": runtime_bytes,
         "runtime_sha256": runtime_hash,
-        "value": result,
         "gas_used": gas_used,
-    }, None
+    }
+    if "result" in outcome_keys:
+        try:
+            result = int(values["result"], 10)
+        except ValueError:
+            return "evm_malformed", {}, "EVM numeric output is malformed"
+        if not INT32_MIN <= result <= INT32_MAX:
+            return "evm_malformed", {}, "EVM output values are out of range"
+        parsed["value"] = result
+        return "value", parsed, None
+    exception_class = values["exception"]
+    if not JAVA_FQCN_RE.fullmatch(exception_class):
+        return "evm_malformed", {}, "EVM exception is not a valid fully-qualified class name"
+    parsed["exception"] = exception_class
+    return "java_exception", parsed, None
 
 
 def clean_case(case: Dict[str, Any]) -> Dict[str, Any]:
@@ -484,9 +524,33 @@ def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
         result["oracle_status"] = oracle_status
         if oracle_value is not None:
             result["oracle_value"] = oracle_value
-        if oracle_status != "value":
+        if oracle_status == "oracle_exception":
+            result["oracle_exception"] = oracle_detail
+        elif oracle_status != "value":
             result["status"] = oracle_status
             result["detail"] = oracle_detail
+            report["cases"].append(result)
+            continue
+
+        expected_kind = case["expected_kind"]
+        if oracle_status == "oracle_exception":
+            if expected_kind != "java_exception":
+                result["status"] = "oracle_exception"
+                result["detail"] = f"unexpected oracle exception: {oracle_detail}"
+                report["cases"].append(result)
+                continue
+            if oracle_detail != case["expected_exception"]:
+                result["status"] = "oracle_exception"
+                result["detail"] = (
+                    f"expected oracle exception {case['expected_exception']}, got {oracle_detail}"
+                )
+                report["cases"].append(result)
+                continue
+        elif expected_kind == "java_exception":
+            result["status"] = "mismatch"
+            result["detail"] = (
+                f"expected oracle exception {case['expected_exception']}, got value={oracle_value}"
+            )
             report["cases"].append(result)
             continue
 
@@ -500,6 +564,10 @@ def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
         evm_status, evm_values, evm_detail = parse_evm(evm_record)
         result["evm_status"] = evm_status
         result.update(evm_values)
+        if evm_status == "value":
+            result["evm_value"] = evm_values["value"]
+        elif evm_status == "java_exception":
+            result["evm_exception"] = evm_values["exception"]
         observed_runtime_hash = evm_values.get("runtime_sha256")
         runtime_mismatch = False
         if observed_runtime_hash is not None:
@@ -513,20 +581,35 @@ def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
                 f"runtime_sha256 differs across cases: {observed_runtime_hash} != {runtime_hash}; "
                 f"underlying EVM classification={evm_status}"
             )
-        elif evm_status != "value":
+        elif evm_status not in ("value", "java_exception"):
             result["status"] = evm_status
             result["detail"] = evm_detail
         elif not 0 < evm_values["gas_used"] <= case["gas_limit"]:
             result["status"] = "evm_malformed"
             result["detail"] = "successful EVM gas_used must be positive and within gas_limit"
-        elif evm_values["value"] != oracle_value:
+        elif expected_kind == "value" and evm_status == "java_exception":
+            result["status"] = "mismatch"
+            result["detail"] = (
+                f"oracle=value={oracle_value} evm_exception={evm_values['exception']}"
+            )
+        elif expected_kind == "java_exception" and evm_status == "value":
+            result["status"] = "mismatch"
+            result["detail"] = (
+                f"oracle_exception={oracle_detail} evm=value={evm_values['value']}"
+            )
+        elif expected_kind == "value" and evm_values["value"] != oracle_value:
             result["status"] = "mismatch"
             result["detail"] = f"oracle={oracle_value} evm={evm_values['value']}"
+        elif (expected_kind == "java_exception"
+              and evm_values["exception"] != case["expected_exception"]):
+            result["status"] = "mismatch"
+            result["detail"] = (
+                f"expected exception {case['expected_exception']}; "
+                f"oracle_exception={oracle_detail} evm_exception={evm_values['exception']}"
+            )
         else:
             result["status"] = "pass"
             result["detail"] = ""
-        if evm_status == "value":
-            result["evm_value"] = evm_values["value"]
         report["cases"].append(result)
 
     report["runtime_sha256"] = runtime_hash
@@ -553,7 +636,7 @@ def finish_report(report: Dict[str, Any]) -> Dict[str, Any]:
 
 def parser_for(repo: Path) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--stage", choices=("m1", "m2", "all"), default="m2")
+    parser.add_argument("--stage", choices=("m1", "m2", "m2b", "all"), default="m2b")
     parser.add_argument("--tier", choices=("smoke", "fast", "full"), default="smoke")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     parser.add_argument("--case", help="run one exact case (still subject to --stage)")

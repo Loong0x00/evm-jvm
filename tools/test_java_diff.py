@@ -43,8 +43,9 @@ public final class Arithmetic {
 
 
 def case(case_id="m1-add", stage="m1", method="add", args=None, smoke=True,
-         timeout=1):
-    return {
+         timeout=1, expected_kind="value",
+         expected_exception="java.lang.ArithmeticException"):
+    fixture = {
         "id": case_id,
         "stage": stage,
         "sources": ["Arithmetic.java"],
@@ -54,8 +55,11 @@ def case(case_id="m1-add", stage="m1", method="add", args=None, smoke=True,
         "gas_limit": 2_000_000,
         "timeout_seconds": timeout,
         "smoke": smoke,
-        "expected_kind": "value",
+        "expected_kind": expected_kind,
     }
+    if expected_kind == "java_exception":
+        fixture["expected_exception"] = expected_exception
+    return fixture
 
 
 class FixtureTree:
@@ -108,11 +112,15 @@ class MockTools:
             if mode == "malformed":
                 print("not-protocol")
                 raise SystemExit(0)
-            if mode == "exception":
-                print("exception=java.lang.ArithmeticException")
-                raise SystemExit(0)
             marker = sys.argv.index("OracleMain")
             method = sys.argv[marker + 2]
+            if mode == "exception" or (mode == "by-method" and method == "divide"):
+                print("exception=" + os.environ.get(
+                    "MOCK_JAVA_EXCEPTION", "java.lang.ArithmeticException"))
+                raise SystemExit(0)
+            if mode == "malformed-exception":
+                print("exception=not qualified")
+                raise SystemExit(0)
             values = [int(x) for x in sys.argv[marker + 3:]]
             result = values[0] if method == "identity" else sum(values)
             print("value=" + str(result))
@@ -139,12 +147,27 @@ class MockTools:
             result = values[0] if method == "identity" else sum(values)
             if mode == "mismatch":
                 result += 1
-            runtime_hash = "b"*64 if mode == "runtime-change" and method == "identity" else "a"*64
+            exception_outcome = mode in ("exception", "exception-gasbad")
+            exception_outcome = exception_outcome or (
+                mode in ("by-method", "exception-runtime-change") and method == "divide")
+            runtime_hash = "b"*64 if (
+                (mode == "runtime-change" and method == "identity")
+                or (mode == "exception-runtime-change" and method == "divide")
+            ) else "a"*64
             print("engine=evm-jvm-subset-interpreter")
             print("runtime_bytes=123")
             print("runtime_sha256=" + runtime_hash)
-            print("result=" + str(result))
-            print("gas_used=456")
+            if mode == "both":
+                print("result=" + str(result))
+                print("exception=java.lang.ArithmeticException")
+            elif mode == "malformed-exception":
+                print("exception=not-qualified")
+            elif exception_outcome:
+                print("exception=" + os.environ.get(
+                    "MOCK_EVM_EXCEPTION", "java.lang.ArithmeticException"))
+            else:
+                print("result=" + str(result))
+            print("gas_used=" + ("0" if mode == "exception-gasbad" else "456"))
         ''')
 
     def environment(self, **extra):
@@ -189,6 +212,145 @@ class JavaDiffTests(unittest.TestCase):
                 self.assertEqual(result["gas_used"], 456)
                 self.assertIn("stdout", result["oracle"])
                 self.assertIn("stdout", result["evm"])
+
+    def test_matching_expected_java_exception_passes_with_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("m2b-div-zero", stage="m2b", method="divide", args=[7, 0],
+                     expected_kind="java_exception"),
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools,
+                env_extra={"MOCK_JAVA_MODE": "exception", "MOCK_EVM_MODE": "exception"},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            result = report["cases"][0]
+            self.assertEqual(result["status"], "pass")
+            self.assertEqual(result["oracle_exception"], "java.lang.ArithmeticException")
+            self.assertEqual(result["evm_exception"], "java.lang.ArithmeticException")
+            self.assertEqual(result["gas_used"], 456)
+            self.assertEqual(report["runtime_sha256"], "a" * 64)
+
+    def test_wrong_java_exception_class_is_a_mismatch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("wrong-exception", stage="m2b", method="divide", args=[7, 0],
+                     expected_kind="java_exception"),
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools,
+                env_extra={
+                    "MOCK_JAVA_MODE": "exception", "MOCK_EVM_MODE": "exception",
+                    "MOCK_EVM_EXCEPTION": "java.lang.NullPointerException",
+                },
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            result = report["cases"][0]
+            self.assertEqual(result["status"], "mismatch")
+            self.assertEqual(result["oracle_exception"], "java.lang.ArithmeticException")
+            self.assertEqual(result["evm_exception"], "java.lang.NullPointerException")
+
+    def test_value_exception_disagreement_fails_in_both_directions(self):
+        scenarios = [
+            (case("value-to-exception"), {"MOCK_EVM_MODE": "exception"}),
+            (case("exception-to-value", stage="m2b", method="divide", args=[7, 0],
+                  expected_kind="java_exception"), {"MOCK_JAVA_MODE": "exception"}),
+        ]
+        for fixture_case, environment in scenarios:
+            with self.subTest(case=fixture_case["id"]), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [fixture_case])
+                tools = MockTools(tmp)
+                completed, report = self.run_runner(
+                    tmp, fixtures.path, tools, env_extra=environment,
+                )
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertEqual(report["cases"][0]["status"], "mismatch")
+
+    def test_unexpected_or_wrong_oracle_exception_fails_before_evm(self):
+        scenarios = [
+            (case("unexpected-oracle"), {}, "unexpected oracle exception"),
+            (case("wrong-oracle", stage="m2b", expected_kind="java_exception"),
+             {"MOCK_JAVA_EXCEPTION": "java.lang.NullPointerException"},
+             "expected oracle exception"),
+        ]
+        for fixture_case, extra, detail in scenarios:
+            with self.subTest(case=fixture_case["id"]), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [fixture_case])
+                tools = MockTools(tmp)
+                environment = {"MOCK_JAVA_MODE": "exception", **extra}
+                completed, report = self.run_runner(
+                    tmp, fixtures.path, tools, env_extra=environment,
+                )
+                self.assertNotEqual(completed.returncode, 0)
+                result = report["cases"][0]
+                self.assertEqual(result["status"], "oracle_exception")
+                self.assertIn(detail, result["detail"])
+                self.assertIn("oracle_exception", result)
+                self.assertNotIn("evm", result)
+
+    def test_exception_output_malformed_or_both_outcomes_is_rejected(self):
+        for mode in ("malformed-exception", "both"):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [case()])
+                tools = MockTools(tmp)
+                completed, report = self.run_runner(
+                    tmp, fixtures.path, tools, env_extra={"MOCK_EVM_MODE": mode},
+                )
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertEqual(report["cases"][0]["status"], "evm_malformed")
+
+    def test_runtime_hash_identity_includes_exception_outcomes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("value-first"),
+                case("exception-second", stage="m2b", method="divide", args=[7, 0],
+                     expected_kind="java_exception"),
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--tier", "full",
+                env_extra={
+                    "MOCK_JAVA_MODE": "by-method",
+                    "MOCK_EVM_MODE": "exception-runtime-change",
+                },
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertEqual(report["cases"][0]["status"], "pass")
+            self.assertEqual(report["cases"][1]["evm_status"], "java_exception")
+            self.assertEqual(report["cases"][1]["status"], "harness_error")
+            self.assertIn("runtime_sha256 differs", report["cases"][1]["detail"])
+
+    def test_exception_success_requires_positive_bounded_gas(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("exception-gas", stage="m2b", expected_kind="java_exception"),
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools,
+                env_extra={
+                    "MOCK_JAVA_MODE": "exception", "MOCK_EVM_MODE": "exception-gasbad",
+                },
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertEqual(report["cases"][0]["status"], "evm_malformed")
+
+    def test_expected_exception_never_accepts_revert_or_oog(self):
+        for mode, status in (("revert", "evm_revert"), ("oog", "evm_oog")):
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [
+                    case("exception-engine-failure", stage="m2b",
+                         expected_kind="java_exception"),
+                ])
+                tools = MockTools(tmp)
+                completed, report = self.run_runner(
+                    tmp, fixtures.path, tools,
+                    env_extra={"MOCK_JAVA_MODE": "exception", "MOCK_EVM_MODE": mode},
+                )
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertEqual(report["cases"][0]["status"], status)
 
     def test_repeated_runs_preserve_existing_files_and_archive_evidence(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -297,6 +459,7 @@ class JavaDiffTests(unittest.TestCase):
         cases = [case("m1-smoke")]
         cases += [case(f"m1-{i:02d}", smoke=False) for i in range(25)]
         cases += [case("m2-smoke", stage="m2")]
+        cases += [case("m2b-smoke", stage="m2b")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -307,6 +470,16 @@ class JavaDiffTests(unittest.TestCase):
             [x["id"] for x in java_diff.select_cases(cases, "m2", "smoke", 56, None)],
             ["m1-smoke", "m2-smoke"],
         )
+        self.assertEqual(
+            [x["id"] for x in java_diff.select_cases(cases, "m2b", "smoke", 56, None)],
+            ["m1-smoke", "m2-smoke", "m2b-smoke"],
+        )
+        self.assertEqual(
+            [x["id"] for x in java_diff.select_cases(cases, "all", "smoke", 56, None)],
+            ["m1-smoke", "m2-smoke", "m2b-smoke"],
+        )
+        parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
+        self.assertEqual(parsed.stage, "m2b")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m1", "full", 56, "m2-smoke")
 
@@ -317,6 +490,15 @@ class JavaDiffTests(unittest.TestCase):
         bad_mutations.append(([case("same"), case("same")], "duplicate case id"))
         escaped = case(); escaped["sources"] = ["../outside.java"]
         bad_mutations.append(([escaped], "escapes"))
+        missing_exception = case(expected_kind="java_exception")
+        del missing_exception["expected_exception"]
+        bad_mutations.append(([missing_exception], "expected_exception"))
+        invalid_exception = case(expected_kind="java_exception")
+        invalid_exception["expected_exception"] = "ArithmeticException"
+        bad_mutations.append(([invalid_exception], "fully-qualified"))
+        value_with_exception = case()
+        value_with_exception["expected_exception"] = "java.lang.ArithmeticException"
+        bad_mutations.append(([value_with_exception], "only valid"))
         for cases, message in bad_mutations:
             with self.subTest(message=message), tempfile.TemporaryDirectory() as tmp:
                 (Path(tmp) / "outside.java").write_text("class Outside {}", encoding="utf-8")

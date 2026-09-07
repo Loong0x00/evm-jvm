@@ -1,49 +1,91 @@
 # Java/EVM differential runner
 
 `tools/java_diff.py` compiles staged Java fixtures, invokes their methods on a
-reference JVM through the fixture-local `OracleMain`, and compares those values
-with the existing `jvmevm` CLI. The JVM is a test oracle only. The EVM CLI is
+reference JVM through the fixture-local `OracleMain`, and compares those
+outcomes with the `jvmevm` CLI. The JVM is a test oracle only. The EVM CLI is
 always given the unchanged `.class` bytes emitted by `javac`; this tool does not
-parse, translate, or specialize class files.
+parse, translate, evaluate, or specialize class files.
 
 Build the CLI separately, then run from the repository root:
 
 ```sh
-make java-smoke  # 16 fixed smoke cases
-make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 to change seed
-make java-full   # all 82 cases, including M1 baseline
+make java-smoke  # all smoke-marked cases in the current cumulative stage
+make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
+make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m1 --tier full
+python3 tools/java_diff.py --stage m2 --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m2 --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m2b --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
-`build/bin/jvmevm`. `--stage m2` is cumulative and includes M1; `all` currently
-includes both known stages. `smoke` runs smoke-marked cases, `fast` adds a
-seeded deterministic sample of at most 20 other cases, and `full` runs every
-case selected by the stage. `--case` selects one exact ID without sampling but
-still honors `--stage`. An empty selection is an error.
+`build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2`
+selects M1+M2, and `m2b` or `all` selects M1+M2+M2b. A manifest without M2b
+entries therefore continues to run its M1+M2 cases under the new default.
+`smoke` runs smoke-marked cases, `fast` adds a seeded deterministic sample of at
+most 20 other cases, and `full` runs every case selected by the stage. `--case`
+selects one exact ID without sampling but still honors `--stage`. An empty
+selection is an error.
 
 For an alternate, self-contained fixture tree (primarily tests), use
 `--fixtures DIR`. It must contain `cases.json`, adjacent guest sources, and
-`OracleMain.java` with the protocol frozen in `JAVA_EVM_M2_PLAN.md`.
+`OracleMain.java` with the additive schema/version-1 protocol frozen in
+`JAVA_EVM_M2B_PLAN.md`.
+
+## Outcome protocol
+
+Existing value cases retain `expected_kind: "value"`. An explicitly expected
+uncaught Java outcome uses both:
+
+```json
+{
+  "expected_kind": "java_exception",
+  "expected_exception": "java.lang.ArithmeticException"
+}
+```
+
+`expected_exception` is required for exception cases, must be a syntactically
+valid fully-qualified Java class name, and is rejected on value cases. The
+reference oracle prints exactly one `value=<signed-int32>` or
+`exception=<fqcn>` line based on the actual invocation; expected answers are not
+hardcoded into the runner or oracle.
+
+A successful EVM CLI invocation prints the four common keys `engine`,
+`runtime_bytes`, `runtime_sha256`, and `gas_used`, plus exactly one outcome key:
+
+```text
+result=<signed-int32>
+```
+
+or
+
+```text
+exception=<fqcn>
+```
+
+The runner accepts an exception as a passing Java outcome only when the
+manifest explicitly expects `java_exception` and the expected, JVM, and EVM
+classes all match. Value/exception disagreements and wrong exception classes
+fail. Nonzero CLI exits, generic reverts, and out-of-gas executions remain EVM
+failures; they are never reclassified as Java exceptions.
 
 ## Limits and failures
 
 The runner validates schema version, required fields, unique IDs, stages,
-signed-int32 arguments (JSON booleans are rejected), fixture-confined existing
-source paths, positive gas limits up to 100,000,000, and per-case timeouts up to
-300 seconds. `javac --release 8` has a 60-second timeout; Java/Javac version
-queries and all oracle/EVM invocations are also bounded.
+expected outcome fields, signed-int32 arguments (JSON booleans are rejected),
+fixture-confined existing source paths, positive gas limits up to 100,000,000,
+and per-case timeouts up to 300 seconds. `javac --release 8` has a 60-second
+timeout; Java/Javac version queries and all oracle/EVM invocations are also
+bounded. Existing smoke/fast sampling and case budgets are unchanged.
 
-Any selected-case failure gives a nonzero exit. Reports distinguish value
-mismatches, oracle exceptions, oracle protocol/process failures, EVM revert,
-out-of-gas, timeout, malformed EVM output, compile failures, and harness errors.
-Expected cases are never silently skipped. Successful EVM output is parsed
-strictly, and one run must report an identical generic `runtime_sha256` for all
-successful EVM executions.
+Any selected-case failure gives a nonzero exit. Reports distinguish value or
+outcome mismatches, unexpected oracle exceptions, oracle protocol/process
+failures, EVM revert, out-of-gas, timeout, malformed EVM output, compile
+failures, and harness errors. Expected cases are never silently skipped.
+Successful value and Java-exception EVM outputs are parsed strictly, must report
+positive gas within the case limit, and must carry one identical generic
+`runtime_sha256` throughout the run.
 
 ## Artifacts and replay
 
@@ -51,17 +93,20 @@ successful EVM executions.
 available, fixture source/manifest/class hashes, runtime hash, queried JDK
 versions, exact command argv/stdout/stderr/exit or timeout status, gas limit and
 gas used, per-case classification, and an exact single-case replay command.
-`failures.txt` is a concise human-readable failure list. Compiled fixture
-classes are retained under a new `run-*/compiled/` directory for every run.
-Each run also keeps its own report and failure summary; top-level `report.json`
-and `failures.txt` describe the latest run. Existing compiled directories are
-never deleted or reused. The default `build/java-diff/` and named
-`build/java-diff-*/` artifact directories are explicitly Git-ignored.
+Outcome metadata uses `oracle_value`/`evm_value` or
+`oracle_exception`/`evm_exception` as applicable. `failures.txt` is a concise
+human-readable failure list.
+
+Compiled fixture classes are retained under a new `run-*/compiled/` directory
+for every run. Each run also keeps its own report and failure summary; top-level
+`report.json` and `failures.txt` describe the latest run. Existing compiled or
+run directories are never deleted or reused. The default `build/java-diff/`
+and named `build/java-diff-*/` artifact directories are explicitly Git-ignored.
 
 Replay is not a hermetic snapshot: the command recompiles fixtures and uses the
-specified CLI. It therefore depends on the current fixture source,
-Java/Javac, CLI binary, and embedded runtime. Compare the recorded hashes and
-version output when reproducing an old report.
+specified CLI. It therefore depends on the current fixture source, Java/Javac,
+CLI binary, and embedded runtime. Compare the recorded hashes and version
+output when reproducing an old report.
 
 ## Tests
 
@@ -73,7 +118,8 @@ python3 -m unittest discover -s tools -p 'test_java_diff.py'
 ```
 
 The real M1 test creates a temporary manifest, guest source, and `OracleMain`,
-then uses actual `javac`, `java`, and a prebuilt CLI supporting M1 (including M2):
+then uses actual `javac`, `java`, and a prebuilt CLI supporting M1 (including
+later cumulative stages):
 
 ```sh
 go build -o build/bin/jvmevm ./cmd/jvmevm
