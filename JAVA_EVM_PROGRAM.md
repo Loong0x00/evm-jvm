@@ -73,7 +73,7 @@ routine permission to start the next verified increment.
 | M3b | raw multi-class input, direct EVM-side resolution/linking | accepted; JAVA_EVM_M3B_PLAN.md |
 | M3c | integer static fields/state and ordinary-class initialization | accepted; JAVA_EVM_M3C_PLAN.md |
 | M3d | class hierarchy/member resolution and superclass-init prerequisites | accepted; JAVA_EVM_M3D_PLAN.md |
-| M4a | integer-array heap, typed references, array helpers/statics | next active batch |
+| M4a | integer-array heap, typed references, array helpers/statics | active; JAVA_EVM_M4A_PLAN.md |
 | M4b | ordinary objects, constructors, instance fields/dispatch | queued after arrays |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -85,9 +85,9 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M3d is accepted:498 fixed cases plus40 independent parent/child/sibling/init
-probes, exact hierarchy and member validation. Artifact32148 bytes remains local
-runtime only. Parent now freezes integer-array heap/typed-reference work for M4a.
-New workers use Sol/high with currently enabled Fast preference. Keep role-specific
-Go helper prefixes, independent negative tests and last-green checkpoints;
-continue to object/reference capabilities without routine confirmation.
+M3d is accepted at **1c8d990**:498 fixed cases plus40 independent hierarchy/init
+probes, exact member validation. Artifact32148 bytes remains local-runtime only.
+M4a typed int-array heap/local/helper/static-reference/outcome contract is frozen;
+dispatch3 workers with Sol/high and enabled Fast preference. Keep role-specific
+Go helper prefixes and exact negative tests. After acceptance proceed to ordinary
+objects/constructors/instance fields and dispatch without routine confirmation.

@@ -1,8 +1,10 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M3d ordinary hierarchy/inherited statics/super-init**,
-recorded in `JAVA_EVM_M3D_PLAN.md`. Next: **M4a integer arrays/typed references**.
-General objects, handlers and class libraries remain later capability slices.
+recorded in `JAVA_EVM_M3D_PLAN.md` at1c8d990. Active: **M4a integer arrays/typed
+references**, frozen in `JAVA_EVM_M4A_PLAN.md`. General objects, handlers and
+class libraries follow. Sol/high workers currently inherit enabled Codex Fast
+(priority request, backend acceptance not guaranteed); do not lower reasoning.
 Runtime is over EIP170 deployment size: local runtime.Execute only, not mainnet
 CREATE compatibility; no consensus-core or host-Java fallback changes.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
