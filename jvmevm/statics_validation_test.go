@@ -264,10 +264,12 @@ func TestM3cFieldResolutionErrorCodesAndMissingOwner(t *testing.T) {
 		"fields/Root.java": `package fields; public final class Root {
 			public static int read() { return Target.value; }
 			public static int write(int x) { Target.value = x; return x; }
+			public static int narrow() { return Target.narrow; }
 			public static int wide() { return (int)Target.wide; }
 		}`,
 		"fields/Target.java": `package fields; public final class Target {
 			public static int value;
+			public static byte narrow;
 			public static long wide;
 		}`,
 	}, "fields/Root", "fields/Target")
@@ -296,10 +298,29 @@ func TestM3cFieldResolutionErrorCodesAndMissingOwner(t *testing.T) {
 	})
 
 	t.Run("non-I-descriptor", func(t *testing.T) {
-		_, pc := parseStaticsClass(t, root).fieldInstruction(t, "wide", opGetstatic, 0)
+		parsed := parseStaticsClass(t, root)
+		_, pc := parsed.fieldInstruction(t, "narrow", opGetstatic, 0)
+		code := parsed.method(t, "narrow", "()I").code
+		if len(code) != 4 || code[0] != opGetstatic || code[3] != 0xac {
+			t.Fatalf("narrow bytecode = %x, want getstatic <B field>; ireturn", code)
+		}
+		// The unselected wide method below contains unsupported l2i, but must not
+		// interfere with verification of this narrow method's field resolution.
+		assertStaticsError(t, func() (Result, error) {
+			return RunClasses([][]byte{root, classes["fields/Target"]}, "fields/Root", "narrow", nil, staticsValidationGasLimit)
+		}, "FieldError(uint256,uint256)", 3, uint64(pc))
+	})
+
+	t.Run("unsupported-l2i-is-bytecode-error-before-field-resolution", func(t *testing.T) {
+		parsed := parseStaticsClass(t, root)
+		_, getstaticPC := parsed.fieldInstruction(t, "wide", opGetstatic, 0)
+		code := parsed.method(t, "wide", "()I").code
+		if len(code) != 5 || getstaticPC != 0 || code[3] != 0x88 || code[4] != 0xac {
+			t.Fatalf("wide bytecode = %x, want getstatic at PC 0; l2i at PC 3; ireturn", code)
+		}
 		assertStaticsError(t, func() (Result, error) {
 			return RunClasses([][]byte{root, classes["fields/Target"]}, "fields/Root", "wide", nil, staticsValidationGasLimit)
-		}, "FieldError(uint256,uint256)", 3, uint64(pc))
+		}, "BytecodeError(uint256,uint256)", 6, 3)
 	})
 
 	t.Run("missing-owner-is-link-error", func(t *testing.T) {
