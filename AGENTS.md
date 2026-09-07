@@ -1,8 +1,10 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **V0 + M2a**. Authoritative batch protocol, worker
-ownership and acceptance: `JAVA_EVM_M2_PLAN.md`. Wider stages in
-`JAVA_EVM_ROADMAP.md` are proposals, not implemented/conformance claims.
+Current accepted stage: **V0 + M2a**. Active next batch: **M2b**, with frozen
+worker ownership/protocol in `JAVA_EVM_M2B_PLAN.md`. Continuous parent orchestration
+is authorized by `JAVA_EVM_PROGRAM.md`, superseding earlier stop-after-each-batch
+instructions. `JAVA_EVM_M2_PLAN.md` is the historical accepted-stage record.
+Wider stages are queued goals, not implemented/conformance claims.
 
 ## Git / ownership
 
@@ -66,10 +68,14 @@ Each run preserves its own classes/report. Replay depends on the current
 sources/tools/CLI; it is not a frozen snapshot. Keep output concise and inspect
 saved failures rather than dumping all logs into agent context.
 
-## Stop boundary
+## Continuous orchestration / worker boundary
 
-V0 + M2a is complete. Do not automatically continue through the roadmap. A new
-bounded plan is needed for remaining integer opcodes, calls/frames, other types,
-arrays/objects, exceptions, libraries, deployment or Minecraft. Do not claim a
-full JVM from current test counts. Preserve finite timeouts/gas and separate
-out-of-gas/unsupported/harness failures from Java semantic results.
+The user authorized the parent to keep planning/delegating/integrating stages
+toward a general JVM, without routine re-confirmation. Parent follows
+`JAVA_EVM_PROGRAM.md`; each worker implements ONLY its frozen stage/write set,
+commits and returns for review (no self-spawning or scope expansion). After a
+verified milestone the parent starts the next dependency-ordered batch.
+Stop/escalate genuine blockers, budget/safety constraints or platform-boundary
+decisions—not merely because a small stage ended. Do not claim a full JVM or
+arbitrary Java support from subset counts. Preserve finite timeouts/gas and
+separate EVM/unsupported/harness failures from structured Java outcomes.
