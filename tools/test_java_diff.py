@@ -149,6 +149,9 @@ class MockTools:
                 "logicalOOM": "java.lang.OutOfMemoryError",
                 "initArrayFailure": "java.lang.ExceptionInInitializerError",
                 "initLogicalOOM": "java.lang.OutOfMemoryError",
+                "nullField": "java.lang.NullPointerException",
+                "objectOOM": "java.lang.OutOfMemoryError",
+                "initObjectOOM": "java.lang.OutOfMemoryError",
             }
             if mode in ("exception", "root-init-eiie") or (
                     mode == "by-method" and method in known):
@@ -197,6 +200,9 @@ class MockTools:
                 "logicalOOM": "java.lang.OutOfMemoryError",
                 "initArrayFailure": "java.lang.ExceptionInInitializerError",
                 "initLogicalOOM": "java.lang.OutOfMemoryError",
+                "nullField": "java.lang.NullPointerException",
+                "objectOOM": "java.lang.OutOfMemoryError",
+                "initObjectOOM": "java.lang.OutOfMemoryError",
             }
             exception_outcome = mode in ("exception", "exception-gasbad", "root-init-eiie")
             exception_outcome = exception_outcome or (
@@ -388,6 +394,44 @@ class JavaDiffTests(unittest.TestCase):
                 self.assertEqual(report["cases"][0]["status"], status)
                 if mode == "oog":
                     self.assertNotIn("evm_exception", report["cases"][0])
+
+    def test_m4b_object_outcomes_keep_exact_classes_and_oog_distinct(self):
+        expected = {
+            "nullField": "java.lang.NullPointerException",
+            # Fixed interpreter caps are mock-only; never force host JVM OOM.
+            "objectOOM": "java.lang.OutOfMemoryError",
+            "initObjectOOM": "java.lang.OutOfMemoryError",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("m4b-" + method, stage="m4b", method=method, args=[],
+                     expected_kind="java_exception", expected_exception=exception)
+                for method, exception in expected.items()
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--stage", "m4b", "--tier", "full",
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(report["status_counts"], {"pass": 3})
+            self.assertEqual(
+                [item["evm_exception"] for item in report["cases"]], list(expected.values())
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [case(
+                "m4b-object-oog", stage="m4b", method="objectOOM", args=[],
+                expected_kind="java_exception", expected_exception="java.lang.OutOfMemoryError",
+            )])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools,
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "oog"},
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertEqual(report["cases"][0]["status"], "evm_oog")
+            self.assertNotIn("evm_exception", report["cases"][0])
 
     def test_real_jvm_array_exceptions_match_mock_evm_without_host_oom(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -823,6 +867,7 @@ public final class Arithmetic {
         cases += [case("m3c-smoke", stage="m3c")]
         cases += [case("m3d-smoke", stage="m3d")]
         cases += [case("m4a-smoke", stage="m4a")]
+        cases += [case("m4b-smoke", stage="m4b")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -838,16 +883,32 @@ public final class Arithmetic {
             "m3c": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke"],
             "m3d": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke"],
             "m4a": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke"],
+            "m4b": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m4a")
+        self.assertEqual(parsed.stage, "m4b")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
+        with self.assertRaises(java_diff.HarnessError):
+            java_diff.select_cases(cases, "m4a", "full", 56, "m4b-smoke")
+        with self.assertRaisesRegex(java_diff.HarnessError, "unknown stage"):
+            java_diff.select_cases(cases, "m4c", "full", 56, None)
+
+    def test_manifest_accepts_only_the_exact_m4b_stage_spelling(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [case("objects", stage="m4b")])
+            _, loaded, _ = java_diff.load_manifest(fixtures.path)
+            self.assertEqual(loaded[0]["stage"], "m4b")
+        for malformed in ("M4b", "m4-b", "m4c", "objects"):
+            with self.subTest(stage=malformed), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [case("bad-stage", stage=malformed)])
+                with self.assertRaisesRegex(java_diff.HarnessError, "stage must be"):
+                    java_diff.load_manifest(fixtures.path)
 
     def test_manifest_rejects_bool_duplicate_id_escape_and_empty_selection(self):
         bad_mutations = []

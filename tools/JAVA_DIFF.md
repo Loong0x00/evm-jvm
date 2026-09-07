@@ -15,16 +15,16 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4a --tier full
+python3 tools/java_diff.py --stage m4b --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4a --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4b --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
-M3d, and `m4a` or `all` adds M4a. A manifest without entries in the newest
-stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
+M3d, `m4a` adds M4a, and `m4b` or `all` adds M4b. A manifest without entries in
+the newest stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
@@ -108,6 +108,24 @@ The reference JVM is used for ordinary array values and for real
 are focused mock/Go tests only: the runner must not attempt to exhaust the host
 JVM heap, whose policy is not the interpreter's fixed resource profile.
 
+## M4b ordinary-object cases
+
+M4b keeps schema 1 and the raw ordered-bundle protocol unchanged. Roots remain
+static methods with only signed `int` arguments and an `int` result; object,
+array, and uninitialized-reference values are never serialized by this runner.
+Construction, bootstrap `java/lang/Object`, layouts, fields, reference
+assignability, direct private/super calls, and constructor lifecycle are all
+interpreted inside the EVM from the supplied raw classfiles.
+
+The reference JVM runs only trusted, finite ordinary-object fixtures. Fixed EVM
+object-count and instance-slot exhaustion probes are mock/Go tests, not host JVM
+OOM oracles. M4b adds no Java exception kinds: arithmetic, stack overflow,
+initializer error, negative array size, array bounds, null receiver, and logical
+OOM remain exact kinds 1 through 7. In particular, an EVM out-of-gas execution
+or arbitrary revert never passes as `OutOfMemoryError` or another Java outcome.
+Virtual/interface dispatch, casts/type tests, handlers, and general class-library
+APIs remain outside this runner stage.
+
 ## Outcome protocol
 
 Existing value cases retain `expected_kind: "value"`. An explicitly expected
@@ -144,7 +162,7 @@ expects `java_exception` and the expected, JVM, and EVM classes all match. M3c
 adds `java.lang.ExceptionInInitializerError`; M3d preserves that outcome when
 arithmetic escapes a superclass initializer. `java.lang.StackOverflowError`
 remains unwrapped. M2b's `java.lang.ArithmeticException` outside initialization
-remains unchanged. M4a additionally recognizes exact
+remains unchanged. M4a and M4b additionally recognize exact
 `java.lang.NegativeArraySizeException`,
 `java.lang.ArrayIndexOutOfBoundsException`, `java.lang.NullPointerException`,
 and `java.lang.OutOfMemoryError` outcomes. The first three, like arithmetic,
