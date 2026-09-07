@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-const expectedRuntimeHash = "e04f1a026a1d8c656a487223e4b5a1b89532e62ac255feb3d2fd74391dcf9036"
+const expectedRuntimeHash = "3388269119ae0f38e61e8f31b835af52bff25a295979faac72c4f3b4eb208c97"
 
 func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
 	addClass := compileJava(t, "Add", `public class Add { public static int add(int a, int b) { return a + b; } }`)
@@ -55,15 +55,16 @@ func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
 }
 
 func TestUnsupportedBytecodeAndMalformedClassRevertInsideEVM(t *testing.T) {
-	multiply := compileJava(t, "Multiply", `public class Multiply { public static int multiply(int a, int b) { return a * b; } }`)
+	// Keep this as a true unsupported-opcode probe now that imul is implemented.
+	allocate := compileJava(t, "Allocate", `public class Allocate { public static int allocate(int n) { return new int[n].length; } }`)
 	for name, tc := range map[string]struct {
 		class  []byte
 		method string
 		args   []int32
 	}{
-		"unsupported-imul": {multiply, "multiply", []int32{6, 7}},
-		"bad-magic":        {[]byte{0, 1, 2, 3}, "add", []int32{1, 2}},
-		"truncated":        {multiply[:len(multiply)-1], "multiply", []int32{6, 7}},
+		"unsupported-newarray": {allocate, "allocate", []int32{3}},
+		"bad-magic":            {[]byte{0, 1, 2, 3}, "add", []int32{1, 2}},
+		"truncated":            {allocate[:len(allocate)-1], "allocate", []int32{3}},
 	} {
 		t.Run(name, func(t *testing.T) {
 			result, err := Run(tc.class, tc.method, tc.args, 2_000_000)

@@ -3,12 +3,13 @@ pragma solidity 0.8.30;
 
 /// @notice A deliberately tiny JVM classfile interpreter which runs entirely in EVM bytecode.
 /// It is not a JVM: it accepts one unambiguous static (int...)int method and implements only
-/// the integer constants, local loads/stores, add/subtract, increment, conditional branches,
-/// goto, and return listed in JAVA_EVM_M2_PLAN.md.
+/// the integer constants, local loads/stores, integer expressions, conditional branches,
+/// goto, and return listed in JAVA_EVM_M2B_PLAN.md.
 contract JVMSubsetInterpreter {
     error ClassError(uint256 code, uint256 offset);
     error MethodError(uint256 code);
     error BytecodeError(uint256 code, uint256 pc);
+    error JavaException(uint256 kind);
 
     uint256 private constant MAX_CONSTANT_POOL = 4096;
     // Explicit allocation caps make malformed-class cost predictable. A Code attribute is at
@@ -53,6 +54,9 @@ contract JVMSubsetInterpreter {
         }
         uint256[] memory utfOffset = new uint256[](cpCount);
         uint256[] memory utfLength = new uint256[](cpCount);
+        // Zero means "not CONSTANT_Integer"; integer bits are stored plus one so all bit
+        // patterns, including 0xffffffff, remain distinguishable without host resolution.
+        uint256[] memory integerConstants = new uint256[](cpCount);
         for (uint256 i = 1; i < cpCount; ++i) {
             uint8 tag = _u1(r);
             if (tag == 1) { // CONSTANT_Utf8
@@ -60,7 +64,9 @@ contract JVMSubsetInterpreter {
                 utfOffset[i] = r.pos;
                 utfLength[i] = n;
                 _skip(r, n);
-            } else if (tag == 3 || tag == 4) {
+            } else if (tag == 3) { // CONSTANT_Integer
+                integerConstants[i] = uint256(_u4(r)) + 1;
+            } else if (tag == 4) {
                 _skip(r, 4);
             } else if (tag == 5 || tag == 6) {
                 _skip(r, 8);
@@ -139,7 +145,7 @@ contract JVMSubsetInterpreter {
         );
         if (args.length != argumentCount) revert MethodError(9);
         if (selected.maxLocals < argumentCount) revert MethodError(10);
-        return _execute(classfile, selected, args, argumentCount);
+        return _execute(classfile, selected, integerConstants, args, argumentCount);
     }
 
     function _readCode(bytes memory classfile, uint256 start, uint256 length, Selected memory s)
@@ -172,17 +178,20 @@ contract JVMSubsetInterpreter {
         if (c.pos != end) revert ClassError(9, c.pos);
     }
 
-    function _execute(bytes memory classfile, Selected memory s, int32[] calldata args, uint256 argc)
-        private
-        pure
-        returns (int32)
+    function _execute(
+        bytes memory classfile,
+        Selected memory s,
+        uint256[] memory integerConstants,
+        int32[] calldata args,
+        uint256 argc
+    ) private pure returns (int32)
     {
         if (s.maxStack > MAX_STACK) revert BytecodeError(1, 0);
         if (s.maxLocals > MAX_LOCALS) revert BytecodeError(10, 0);
 
         // Predecode every instruction, including unreachable code, before execution. This makes
         // branch-to-operand and truncated-operand rejection independent of the path taken.
-        bool[] memory starts = _predecode(classfile, s);
+        bool[] memory starts = _predecode(classfile, s, integerConstants);
         uint32[] memory stack = new uint32[](s.maxStack);
         uint32[] memory locals = new uint32[](s.maxLocals);
         bool[] memory initialized = new bool[](s.maxLocals);
@@ -206,6 +215,19 @@ contract JVMSubsetInterpreter {
             } else if (op == 0x11) { // sipush signed short
                 sp = _push(stack, sp, uint32(int32(_signed16(classfile, s.codeOffset + pc))), opPC);
                 pc += 2;
+            } else if (op == 0x12 || op == 0x13) { // ldc / ldc_w, CONSTANT_Integer only
+                uint256 index;
+                if (op == 0x12) {
+                    index = uint8(classfile[s.codeOffset + pc]);
+                    ++pc;
+                } else {
+                    index = _unsigned16(classfile, s.codeOffset + pc);
+                    pc += 2;
+                }
+                if (index == 0 || index >= integerConstants.length || integerConstants[index] == 0) {
+                    revert BytecodeError(13, opPC);
+                }
+                sp = _push(stack, sp, uint32(integerConstants[index] - 1), opPC);
             } else if (op == 0x15) { // iload index
                 uint256 local = uint8(classfile[s.codeOffset + pc]);
                 ++pc;
@@ -218,13 +240,46 @@ contract JVMSubsetInterpreter {
                 sp = _store(stack, sp, locals, initialized, local, opPC);
             } else if (op >= 0x3b && op <= 0x3e) { // istore_0 ... istore_3
                 sp = _store(stack, sp, locals, initialized, op - 0x3b, opPC);
-            } else if (op == 0x60 || op == 0x64) { // iadd / isub
+            } else if (op == 0x60 || op == 0x64 || op == 0x68) { // iadd / isub / imul
                 if (sp < 2) revert BytecodeError(3, opPC);
                 unchecked {
                     if (op == 0x60) stack[sp - 2] = stack[sp - 2] + stack[sp - 1];
-                    else stack[sp - 2] = stack[sp - 2] - stack[sp - 1];
+                    else if (op == 0x64) stack[sp - 2] = stack[sp - 2] - stack[sp - 1];
+                    else stack[sp - 2] = stack[sp - 2] * stack[sp - 1];
                 }
                 --sp; // uint32 arithmetic above is Java int32 wraparound
+            } else if (op == 0x6c || op == 0x70) { // idiv / irem
+                if (sp < 2) revert BytecodeError(3, opPC);
+                int32 dividend = int32(stack[sp - 2]);
+                int32 divisor = int32(stack[sp - 1]);
+                if (divisor == 0) revert JavaException(1);
+                // Solidity rejects MIN/-1, while Java defines wrapped quotient MIN and remainder 0.
+                if (dividend == type(int32).min && divisor == -1) {
+                    stack[sp - 2] = op == 0x6c ? uint32(0x80000000) : 0;
+                } else if (op == 0x6c) {
+                    stack[sp - 2] = uint32(dividend / divisor);
+                } else {
+                    stack[sp - 2] = uint32(dividend % divisor);
+                }
+                --sp;
+            } else if (op == 0x74) { // ineg
+                if (sp == 0) revert BytecodeError(3, opPC);
+                unchecked {
+                    stack[sp - 1] = uint32(0) - stack[sp - 1];
+                }
+            } else if (op == 0x78 || op == 0x7a || op == 0x7c) { // ishl / ishr / iushr
+                if (sp < 2) revert BytecodeError(3, opPC);
+                uint256 shift = uint256(stack[sp - 1] & 31);
+                if (op == 0x78) stack[sp - 2] = stack[sp - 2] << shift;
+                else if (op == 0x7a) stack[sp - 2] = uint32(int32(stack[sp - 2]) >> shift);
+                else stack[sp - 2] = stack[sp - 2] >> shift;
+                --sp;
+            } else if (op == 0x7e || op == 0x80 || op == 0x82) { // iand / ior / ixor
+                if (sp < 2) revert BytecodeError(3, opPC);
+                if (op == 0x7e) stack[sp - 2] &= stack[sp - 1];
+                else if (op == 0x80) stack[sp - 2] |= stack[sp - 1];
+                else stack[sp - 2] ^= stack[sp - 1];
+                --sp;
             } else if (op == 0x84) { // iinc index, signed-byte constant
                 uint256 local = uint8(classfile[s.codeOffset + pc]);
                 int8 amount = int8(uint8(classfile[s.codeOffset + pc + 1]));
@@ -234,6 +289,11 @@ contract JVMSubsetInterpreter {
                     locals[local] += uint32(int32(amount));
                 }
                 pc += 2;
+            } else if (op == 0x91 || op == 0x92 || op == 0x93) { // i2b / i2c / i2s
+                if (sp == 0) revert BytecodeError(3, opPC);
+                if (op == 0x91) stack[sp - 1] = uint32(int32(int8(uint8(stack[sp - 1]))));
+                else if (op == 0x92) stack[sp - 1] = uint32(uint16(stack[sp - 1]));
+                else stack[sp - 1] = uint32(int32(int16(uint16(stack[sp - 1]))));
             } else if (op >= 0x99 && op <= 0x9e) { // ifeq ... ifle
                 if (sp == 0) revert BytecodeError(3, opPC);
                 int32 value = int32(stack[sp - 1]);
@@ -260,7 +320,7 @@ contract JVMSubsetInterpreter {
         revert BytecodeError(7, pc); // reachable fall-through is not an int return
     }
 
-    function _predecode(bytes memory data, Selected memory s)
+    function _predecode(bytes memory data, Selected memory s, uint256[] memory integerConstants)
         private
         pure
         returns (bool[] memory starts)
@@ -272,6 +332,14 @@ contract JVMSubsetInterpreter {
             uint8 op = uint8(data[s.codeOffset + pc]);
             uint256 width = _instructionWidth(op, pc);
             if (width > s.codeLength - pc) revert BytecodeError(2, pc);
+            if (op == 0x12 || op == 0x13) {
+                uint256 index = op == 0x12
+                    ? uint8(data[s.codeOffset + pc + 1])
+                    : _unsigned16(data, s.codeOffset + pc + 1);
+                if (index == 0 || index >= integerConstants.length || integerConstants[index] == 0) {
+                    revert BytecodeError(13, pc);
+                }
+            }
             pc += width;
         }
         pc = 0;
@@ -289,10 +357,15 @@ contract JVMSubsetInterpreter {
     function _instructionWidth(uint8 op, uint256 pc) private pure returns (uint256) {
         if (
             (op >= 0x02 && op <= 0x08) || (op >= 0x1a && op <= 0x1d)
-                || (op >= 0x3b && op <= 0x3e) || op == 0x60 || op == 0x64 || op == 0xac
+                || (op >= 0x3b && op <= 0x3e) || op == 0x60 || op == 0x64 || op == 0x68
+                || op == 0x6c || op == 0x70 || op == 0x74 || op == 0x78 || op == 0x7a
+                || op == 0x7c || op == 0x7e || op == 0x80 || op == 0x82
+                || (op >= 0x91 && op <= 0x93) || op == 0xac
         ) return 1;
-        if (op == 0x10 || op == 0x15 || op == 0x36) return 2;
-        if (op == 0x11 || op == 0x84 || (op >= 0x99 && op <= 0xa4) || op == 0xa7) return 3;
+        if (op == 0x10 || op == 0x12 || op == 0x15 || op == 0x36) return 2;
+        if (op == 0x11 || op == 0x13 || op == 0x84 || (op >= 0x99 && op <= 0xa4) || op == 0xa7) {
+            return 3;
+        }
         revert BytecodeError(6, pc);
     }
 
@@ -307,8 +380,11 @@ contract JVMSubsetInterpreter {
     }
 
     function _signed16(bytes memory data, uint256 off) private pure returns (int16) {
-        uint16 bits = (uint16(uint8(data[off])) << 8) | uint16(uint8(data[off + 1]));
-        return int16(bits);
+        return int16(_unsigned16(data, off));
+    }
+
+    function _unsigned16(bytes memory data, uint256 off) private pure returns (uint16) {
+        return (uint16(uint8(data[off])) << 8) | uint16(uint8(data[off + 1]));
     }
 
     function _push(uint32[] memory stack, uint256 sp, uint32 value, uint256 pc)

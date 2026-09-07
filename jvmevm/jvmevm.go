@@ -12,9 +12,11 @@
 package jvmevm
 
 import (
+	"bytes"
 	"crypto/sha256"
 	_ "embed"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"strings"
 	"sync"
@@ -24,6 +26,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/core/vm/runtime"
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 //go:embed runtime/JVMSubsetInterpreter.runtime.hex
@@ -32,10 +35,29 @@ var runtimeHex string
 const interpreterABI = `[{"inputs":[{"internalType":"bytes","name":"rawClass","type":"bytes"},{"internalType":"string","name":"entry","type":"string"},{"internalType":"int32[]","name":"args","type":"int32[]"}],"name":"interpret","outputs":[{"internalType":"int32","name":"","type":"int32"}],"stateMutability":"pure","type":"function"}]`
 
 type Result struct {
-	Value         int32
-	GasUsed       uint64
-	RuntimeSHA256 string
-	RevertData    []byte
+	Value          int32
+	ExceptionClass string
+	GasUsed        uint64
+	RuntimeSHA256  string
+	RevertData     []byte
+}
+
+var javaExceptionSelector = crypto.Keccak256([]byte("JavaException(uint256)"))[:4]
+
+func decodeJavaException(data []byte) (string, bool) {
+	if len(data) != 4+32 || !bytes.Equal(data[:4], javaExceptionSelector) {
+		return "", false
+	}
+	// The Solidity kind is uint256. Kind 1 is the only frozen, known outcome.
+	for _, b := range data[4 : len(data)-1] {
+		if b != 0 {
+			return "", false
+		}
+	}
+	if data[len(data)-1] != 1 {
+		return "", false
+	}
+	return "java.lang.ArithmeticException", true
 }
 
 var (
@@ -103,6 +125,12 @@ func Run(classfile []byte, method string, args []int32, gasLimit uint64) (Result
 	output, _, execErr := runtime.Execute(code, input, cfg)
 	if execErr != nil {
 		result.RevertData = append([]byte(nil), output...)
+		if errors.Is(execErr, vm.ErrExecutionReverted) {
+			if exceptionClass, ok := decodeJavaException(output); ok {
+				result.ExceptionClass = exceptionClass
+				return result, nil
+			}
+		}
 		return result, fmt.Errorf("interpreter EVM execution failed: %w (revert_data=0x%x)", execErr, output)
 	}
 	values, err := contract.Methods["interpret"].Outputs.Unpack(output)

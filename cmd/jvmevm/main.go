@@ -42,7 +42,14 @@ func main() {
 	if err != nil {
 		fatal(err)
 	}
-	fmt.Printf("engine=evm-jvm-subset-interpreter\nruntime_bytes=%d\nruntime_sha256=%s\nresult=%d\ngas_used=%d\n", len(code), result.RuntimeSHA256, result.Value, result.GasUsed)
+	fmt.Printf("engine=evm-jvm-subset-interpreter\nruntime_bytes=%d\nruntime_sha256=%s\n%s\ngas_used=%d\n", len(code), result.RuntimeSHA256, formatOutcome(result), result.GasUsed)
+}
+
+func formatOutcome(result jvmevm.Result) string {
+	if result.ExceptionClass != "" {
+		return "exception=" + result.ExceptionClass
+	}
+	return fmt.Sprintf("result=%d", result.Value)
 }
 
 func parseArgs(s string) ([]int32, error) {
