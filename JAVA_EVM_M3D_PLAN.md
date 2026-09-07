@@ -140,6 +140,35 @@ explicitly version a performance allowance without weakening values/outcomes.
 Commit last-green, update hierarchy/profile/init limitations, then automatically
 plan primitive-array/reference heap work. No routine user re-confirmation.
 
-## Status
-Contract frozen on accepted M3c/header-guard base600a1e4; dispatch follows.
-No hierarchy implementation/conformance claim yet.
+## Status / independent acceptance
+
+**M3d accepted; parent continues to integer-array/reference heap work.**
+
+- Runtimeeec1f15→be0d910, fixtures0157727→30c1882,
+  verifier5d60601→9410d57 reviewed/integrated in dependency order.
+- Integration caught a Go test-helper name collision across disjoint files.
+  Parent mechanically renamed only verifier helper/references to
+  verifyM3dHierarchyClassIndex; no assertions/runtime semantics changed. Future
+  worker contracts require role/stage-prefixed helper names.
+- Pinned artifact matches source:32148 bytes, SHA-256
+  `5540b5b5c5aede45bda17f89fa0b99313ad03d8f9249156ac613c2902031a920`.
+  Still exceeds EIP170; direct local runtime.Execute only, no deployment claim.
+- All prior426 manifest entries unchanged. Combined498/498 JVM/EVM outcomes pass;
+  smoke165/165, fast185/185, 26 enabled runner tests, all focused Go/CLI including
+  independent hierarchy validation, artifact checks, AOT regression and vet pass.
+- Parent reviewed touched-path graph validation/cache, declaring-owner resolution,
+  symbolic-class vs member access, protected static subtype checks and explicit
+  initialization continuations. No host parsing/linking/evaluation additions.
+- Exact independent HierarchyError1–5, malformed CP/interface guards, hiding/
+  overload/private/public-hidden/protected access, sibling shared storage,
+  declared-owner-only initialization, forced-getstatic child ConstantValue before
+  parent, inherited final writes, errors/OOG and declared-root boundary all pass.
+- Parent additionally generated40 fresh JVM/EVM cases combining parent/child
+  reentrant init in both first-use orders, sibling shared storage, random int32
+  values and shuffled bundle order. An unreferenced supplied class with missing
+  parent and failing initializer stayed unlinked/uninitialized. All passed;
+  evidence: `build/java-diff-parent-m3d/probe-z1cez4l5/results/`.
+- Interface/default-method semantics, general objects/heap, handlers, remaining
+  numeric/instruction forms and class libraries are still deferred. Resource cap
+  counts root, Java frames and initialization continuations; no OpenJDK-capacity
+  or general Java conformance claim.

@@ -7,6 +7,11 @@ Minecraft**, without stopping for confirmation after every small accepted stage.
 This supersedes earlier per-batch 'stop and wait' instructions. Stages and tests
 remain bounded; acceptance of one stage triggers planning/dispatch of the next.
 Default worker model remains `openai-codex/gpt-5.6-sol`, reasoning `high`.
+Latest speed request: use Codex Fast without lowering reasoning. Installed
+pi-codex-fast-mode is enabled in its user-owned state; new Pi workers load it
+and request service_tier=priority. Parent verified eligibility/payload transform
+preserves high. This requests a paid tier, not proof of backend acceptance;
+no global/provider/auth configuration was changed. Recheck preference on dispatch.
 
 ## Execution invariant
 Guest classfiles are supplied unchanged. Class parsing/linking, Java bytecode
@@ -67,8 +72,9 @@ routine permission to start the next verified increment.
 | M3a | same-class static calls, explicit Java frames/returns/recursion | accepted; JAVA_EVM_M3A_PLAN.md |
 | M3b | raw multi-class input, direct EVM-side resolution/linking | accepted; JAVA_EVM_M3B_PLAN.md |
 | M3c | integer static fields/state and ordinary-class initialization | accepted; JAVA_EVM_M3C_PLAN.md |
-| M3d | class hierarchy/member resolution and superclass-init prerequisites | active; JAVA_EVM_M3D_PLAN.md |
-| M4 | arrays, object allocation/fields, reference values and dispatch | queued |
+| M3d | class hierarchy/member resolution and superclass-init prerequisites | accepted; JAVA_EVM_M3D_PLAN.md |
+| M4a | integer-array heap, typed references, array helpers/statics | next active batch |
+| M4b | ordinary objects, constructors, instance fields/dispatch | queued after arrays |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -79,9 +85,9 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M3c is accepted at **600a1e4**:426 fixed cases plus36 parent initialization
-probes; verifier isolation and real legacy header divergence fixed. Artifact29899
-bytes is local-runtime only (overEIP170). M3d hierarchy/member ownership/access and
-super-init contracts are frozen; dispatch runtime, fixtures and independent
-verifier work. After acceptance, continue to primitive-array/reference heap work,
-without routine confirmation. Keep scoped tests/last-green checkpoints.
+M3d is accepted:498 fixed cases plus40 independent parent/child/sibling/init
+probes, exact hierarchy and member validation. Artifact32148 bytes remains local
+runtime only. Parent now freezes integer-array heap/typed-reference work for M4a.
+New workers use Sol/high with currently enabled Fast preference. Keep role-specific
+Go helper prefixes, independent negative tests and last-green checkpoints;
+continue to object/reference capabilities without routine confirmation.

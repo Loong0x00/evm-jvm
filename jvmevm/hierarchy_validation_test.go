@@ -662,7 +662,7 @@ func mutateHierarchyClass(t *testing.T, original []byte, mutate func([]byte, sta
 	return out
 }
 
-func hierarchyClassIndex(t *testing.T, c staticsClass, name string) uint16 {
+func verifyM3dHierarchyClassIndex(t *testing.T, c staticsClass, name string) uint16 {
 	t.Helper()
 	for index := 1; index < len(c.entries); index++ {
 		entry := c.entries[index]
@@ -677,14 +677,14 @@ func hierarchyClassIndex(t *testing.T, c staticsClass, name string) uint16 {
 func setHierarchySuperClass(t *testing.T, original []byte, name string) []byte {
 	t.Helper()
 	return mutateHierarchyClass(t, original, func(out []byte, c staticsClass) {
-		binary.BigEndian.PutUint16(out[c.cpEnd+4:], hierarchyClassIndex(t, c, name))
+		binary.BigEndian.PutUint16(out[c.cpEnd+4:], verifyM3dHierarchyClassIndex(t, c, name))
 	})
 }
 
 func setHierarchySuperToAliasedClass(t *testing.T, original []byte, name string) []byte {
 	t.Helper()
 	c := parseStaticsClass(t, original)
-	classIndex := hierarchyClassIndex(t, c, name)
+	classIndex := verifyM3dHierarchyClassIndex(t, c, name)
 	nameIndex := c.u2(t, c.entry(t, classIndex).offset+1)
 	if c.cpCount >= 65535 {
 		t.Fatal("test constant pool is full")
@@ -735,7 +735,7 @@ func redirectHierarchyFieldOwnerOccurrence(t *testing.T, out []byte, c staticsCl
 			continue
 		}
 		if seen == occurrence {
-			binary.BigEndian.PutUint16(out[c.entry(t, ref).offset+1:], hierarchyClassIndex(t, c, owner))
+			binary.BigEndian.PutUint16(out[c.entry(t, ref).offset+1:], verifyM3dHierarchyClassIndex(t, c, owner))
 			return
 		}
 		seen++
@@ -756,7 +756,7 @@ func redirectHierarchyCallOwner(t *testing.T, out []byte, c staticsClass, method
 		}
 		refName, refDescriptor := hierarchyRefNameDescriptor(t, c, ref)
 		if refName == name && refDescriptor == descriptor {
-			binary.BigEndian.PutUint16(out[c.entry(t, ref).offset+1:], hierarchyClassIndex(t, c, owner))
+			binary.BigEndian.PutUint16(out[c.entry(t, ref).offset+1:], verifyM3dHierarchyClassIndex(t, c, owner))
 			return
 		}
 	}
