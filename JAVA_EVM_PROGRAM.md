@@ -64,8 +64,9 @@ routine permission to start the next verified increment.
 |---|---|---|
 | V0 / M2a | oracle/replay gates + integer control flow | accepted at 3216753 |
 | M2b | int constants/arithmetic/bitwise/conversions + explicit uncaught arithmetic exception outcome | accepted; JAVA_EVM_M2B_PLAN.md |
-| M3a | same-class static calls, explicit Java frames/returns/recursion | active batch; JAVA_EVM_M3A_PLAN.md |
-| M3b | raw multi-class input, EVM-side resolution/linking, static state/init | queued |
+| M3a | same-class static calls, explicit Java frames/returns/recursion | accepted; JAVA_EVM_M3A_PLAN.md |
+| M3b | raw multi-class input, direct EVM-side resolution/linking | next active batch |
+| M3c | static fields/state, class initialization and hierarchy prerequisites | queued after M3b |
 | M4 | arrays, object allocation/fields, reference values and dispatch | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -77,9 +78,9 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M2b is integrated and independently accepted at **3e53fae**: 201 fixed oracle
-cases plus 293 parent probes passed, including explicit uncaught arithmetic
-exceptions. M3a protocol is frozen in `JAVA_EVM_M3A_PLAN.md`; dispatch runtime,
-fixtures and independent verifier workers in separate worktrees. After M3a
-acceptance, proceed to the next class/runtime dependency slice rather than asking
-for routine 'continue' permission. Keep the current last-green gates.
+M3a is integrated and independently accepted: 268 fixed oracle cases plus 40
+parent frame/caller-state probes passed; exact call validation and frame-cap/OOG
+behavior verified. Next freeze M3b raw-class-bundle loading and direct linking,
+preserving legacy single-class behavior. Split static fields/initialization into
+M3c rather than mixing two large runtime changes. Continue without routine user
+re-confirmation, preserving the current last-green gates.

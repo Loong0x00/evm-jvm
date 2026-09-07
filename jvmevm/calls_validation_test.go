@@ -244,12 +244,14 @@ private static int helper() { return 7; } public static int run() { return helpe
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			original := compileJava(t, "ReturnMismatch", tc.source)
+			returnPC := -1
 			classfile := mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
 				m := c.method(t, "helper", tc.helperDescriptor)
 				changed := false
 				for i := range m.code {
 					if m.code[i] == tc.from {
 						m.code[i] = tc.to
+						returnPC = i
 						changed = true
 					}
 				}
@@ -257,7 +259,9 @@ private static int helper() { return 7; } public static int run() { return helpe
 					t.Fatalf("helper bytecode %x has no opcode 0x%02x", m.code, tc.from)
 				}
 			})
-			assertCallValidationError(t, classfile, "run", nil, "CallError(uint256,uint256)", 5, nil)
+			// Code 5 reports the mismatched return's offset in the entered callee,
+			// unlike codes 1-4 which identify the caller's invokestatic site.
+			assertCallValidationError(t, classfile, "run", nil, "CallError(uint256,uint256)", 5, &returnPC)
 		})
 	}
 }

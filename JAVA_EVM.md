@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M2b)
+# Java inside EVM: staged interpreter (M3a)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -16,10 +16,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 35 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (55 total)
-make java-full       # all 201 differential cases
-make java-test       # artifact check + Go tests + 19 runner tests + all 201 cases
+make java-smoke      # 55 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (75 total)
+make java-full       # all 268 differential cases
+make java-test       # artifact check + Go tests + 21 runner tests + all 268 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -30,8 +30,10 @@ CLI or demo. First-time builds may download Go/compiler dependencies.
 Stage M1 covers 12 add/identity cases. Stage M2 includes these plus 70 integer
 control-flow cases. M2b adds 119 integer-expression cases: 201 total, including
 two expected uncaught ArithmeticExceptions. Earlier 82 cases are preserved.
-Make gates use cumulative `--stage all`; direct `--stage m2` still selects the
-historical 82-case subset. Tests are bounded evidence, not full JVM conformance.
+M3a adds 67 call/frame/recursion cases, bringing the total to 268 (261 values,
+six ArithmeticExceptions and one StackOverflowError). All previous 201 entries
+remain unchanged. Make gates use cumulative `--stage all`; explicit older stages
+still select historical subsets. Tests are bounded evidence, not conformance.
 
 Additional commands:
 
@@ -48,16 +50,16 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **8,959-byte** interpreter runtime handles all three programs:
+One unchanged **13,343-byte** interpreter runtime handles all three programs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 59,325 |
-| Loops.class / sum(100) | 5050 | 1,293,269 |
-| Loops.class / fibonacci(20) | 6765 | 445,283 |
+| Add.class / add(20,22) | 42 | 113,895 |
+| Loops.class / sum(100) | 5050 | 1,669,146 |
+| Loops.class / fibonacci(20) | 6765 | 602,675 |
 
 Runtime SHA-256:
-`3388269119ae0f38e61e8f31b835af52bff25a295979faac72c4f3b4eb208c97`
+`e5da633eda34db0ce3a02563fd6276c8016525d441025eb446b578fdef8a390b`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -80,7 +82,8 @@ Java loop consumes its finite gas budget rather than returning a fake value.
 
 ## Supported semantics and limits
 
-Unambiguous static methods, only `int` arguments and an `int` return:
+Unambiguous static root, only `int` arguments and an `int` return (internal
+helpers can return void and be overloaded):
 
 - `iconst_m1` through `iconst_5`, signed `bipush` and `sipush`
 - `iload`, `istore`, including their `_0` through `_3` forms
@@ -89,6 +92,16 @@ Unambiguous static methods, only `int` arguments and an `int` return:
 - `ishl`, `ishr`, `iushr`, `iand`, `ior`, `ixor`, `i2b`, `i2c`, `i2s`
 - `ifeq`/`ifne`/`iflt`/`ifge`/`ifgt`/`ifle`, corresponding `if_icmp*`
 - `goto`, `ireturn` (including early returns followed by other code)
+- Same-class tag-10 `invokestatic`, internal void `return`, category-1 `pop`
+
+M3a uses independent explicit Java frames in EVM memory: PC, operand stack,
+locals and initialization state. Arguments transfer in descriptor order; value
+returns preserve caller prefixes and locals. Private helpers and overloaded
+helpers resolve by exact name+descriptor; the root entry remains name-unambiguous
+and int-returning. Method code is validated/predecoded only when entered, and
+Methodrefs are cached within an invocation. Unused constructors/String methods
+remain tolerated. Recursive factorial(10)=3628800 and recursive Fibonacci(10)=55
+pass the oracle suite (distinct from the iterative demo above).
 
 32-bit arithmetic wraps like Java; comparisons are signed. Branch offsets are
 signed 16-bit, relative to the instruction address. The interpreter validates
@@ -98,18 +111,21 @@ increments check local initialization; stores, stack operations and return
 shape are bounded/checked at execution time.
 
 Caps: constant pool 4096 entries; Code 65,535 bytes; selected operand stack and
-locals 1024 each. Gas bounds execution and allocation. Method descriptors,
-selected Code structure and relevant UTF-8 references are checked. Class
-initializers (`<clinit>`), selected synchronized/native/abstract/non-static/
-overloaded/no-Code methods and exception tables are rejected.
+locals 1024 each; 128 active Java frames including root. Gas bounds execution
+and allocation. Stack capacity does not claim to match OpenJDK's configuration.
+Method descriptors, entered Code structure and relevant UTF-8 references are
+checked. Class initializers (`<clinit>`), overloaded root names, entered
+synchronized/native/abstract/non-static/no-Code methods and exception tables are
+rejected; overloaded internal helpers are supported.
 
 M2b division truncates toward zero; remainder follows Java's sign rules.
 INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
 **Deferred:** non-integer constants, wide/goto_w, stack permutation forms, switch,
-other primitive types, method calls, arrays, heap/objects, exception handlers,
-monitors, dynamic class loading, class libraries and deployment workflows.
+other primitive types, external/interface/instance calls, multiple-class loading,
+static state/initialization, arrays, heap/objects, exception handlers, monitors,
+class libraries and deployment workflows.
 
 This is not a full JVM verifier: no modified-UTF8 validation, general class
 hierarchy/linking/type verification, full control-flow dataflow verification,
@@ -130,7 +146,15 @@ nonzero. This is not Java launcher's exit-code compatibility.
 The oracle suite explicitly declares expected exception cases and compares
 exception classes from actual JVM and EVM. Unknown payloads, Solidity panics,
 bytecode/class errors and out-of-gas cannot silently become Java exceptions.
-This is **uncaught root arithmetic outcome support only**, not catch/unwinding.
+Kind 2 now represents `java.lang.StackOverflowError` when pushing beyond the
+128-frame cap. Kind 1 propagates from callees. These are **uncaught outcomes
+only**, not catch/handler support; a lower gas limit can fail OOG first.
+
+Call validation has exact `CallError(code,pc)` payloads: malformed reference (1),
+external owner (2), missing exact signature (3), unsupported callee semantics (4),
+return-kind mismatch (5). Codes 1–4 locate the caller's invokestatic; code 5
+locates the mismatched return within the entered method. These remain EVM errors,
+not fabricated Java linkage exceptions.
 
 ## Differential verification and replay
 
@@ -186,6 +210,7 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is now authorized by `JAVA_EVM_PROGRAM.md`. M2b acceptance
-is recorded in `JAVA_EVM_M2B_PLAN.md`; the parent proceeds to static calls/frames
-next rather than waiting for routine re-confirmation. No full-Java claim is made.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M3a acceptance is
+recorded in `JAVA_EVM_M3A_PLAN.md`; the next stage is raw multiple-class loading
+and EVM-side linking, followed by static state/initialization. No full-Java claim
+is made and routine per-stage re-confirmation is not required.

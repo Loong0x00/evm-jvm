@@ -55,8 +55,10 @@ owners and non-int descriptors remain explicit unsupported capabilities.
   existing wide-constant fixtures with >270 methods. Explicitly document limits.
 
 ## Frozen call/exception errors
-Add Solidity `error CallError(uint256 code, uint256 pc);` for explicit call-site
-rejections (pc is offset of invokestatic in the CURRENT method):
+Add Solidity `error CallError(uint256 code, uint256 pc);` for explicit rejections.
+For codes 1–4, pc is the invokestatic offset in the caller. For code 5, pc is the
+mismatched return offset in the entered method (clarified during independent
+integration; tested exactly rather than leaving pc ambiguous):
 1. invalid Methodref/Class/NameAndType/Utf8 tag, index or structure;
 2. owner is not the same ordinary class (external/interface owners unsupported);
 3. no unique method with exact name+descriptor;
@@ -132,5 +134,36 @@ revision and judges full green.
    new dependency-ordered stage (raw multi-class loading/linking/static state or
    remaining integer execution forms, then heap), not a routine confirmation stop.
 
-## Status
-Contract frozen; preparing three worktrees/worker dispatch. M3a not implemented.
+## Status / independent acceptance
+
+**M3a accepted; continue to M3b raw multi-class loading/linking.**
+
+- Runtime `231c169` integrated as `3fe3235`; fixtures `d095e62` as `d297dd7`;
+  independent verifier `baf4378` as `46e04aa`. Scoped writes reviewed.
+- Pinned artifact matches source: 13,343 bytes, SHA-256
+  `e5da633eda34db0ce3a02563fd6276c8016525d441025eb446b578fdef8a390b`.
+- Parent inspected iterative Frame[] execution, packed per-class constant/method
+  metadata, lazy entered-method validation, exact overload/owner-name lookup,
+  cached references, independent frame state and ordered argument/return handling.
+  Host change is only exact kind2 outcome decoding; no host Java resolution.
+- All prior 201 manifest entries remain exactly unchanged. Combined suite passed
+  **268/268** (261 values, 6 ArithmeticExceptions, 1 StackOverflowError), along
+  with focused runtime/CLI + independent malformed-call tests, 21 harness tests,
+  AOT regression, artifact check and go vet.
+- Independent verifier tests pass exact CallError codes1–5, malformed CP chains,
+  caller stack/local preservation, internal overloads, duplicate CP owner with
+  the same class name, void/pop, argument underflow and truncation. Parent
+  resolved the code5 pc ambiguity: it identifies the entered method's return
+  offset, and strengthened both return-mismatch tests to assert that exact pc.
+- Parent added 40 new actual-JVM differential probes with independent recursive
+  source, random int32 seeds/carries, expression prefixes and saved local values;
+  all passed. Local evidence: `build/java-diff-parent-m3a/probe-e26u6z5w/results/`.
+- Exact cap probe on a directly recursive method: depth argument127 (128 frames
+  including root) returns127; argument128 emits StackOverflowError. At gas1000
+  the same call remains genuine OOG, not a Java stack exception. The 128-frame
+  limit is an explicit resource profile, not OpenJDK-capacity compatibility.
+- Representative fixture results: recursiveFactorial(10)=3628800 at537043 gas;
+  recursiveFibonacci(10)=55 at3773347; infinite-recursion StackOverflowError at
+  1520845. Gas varies with the complete class shape.
+- No handlers, reference values/objects/arrays, external class linking, class
+  initialization or class-library support is claimed. Those remain queued.

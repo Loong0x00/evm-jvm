@@ -90,9 +90,8 @@ Inspect private helpers as well as public roots: calls and recursion depend on
 helper bytecode and exact name-and-descriptor resolution. Ordinary javac
 constructors remain unselected and contain `invokespecial` as noted above.
 
-The M2b runtime and exception-aware harness are integrated, and all original 201
-cases previously passed JVM/EVM comparison on the same generic interpreter.
-The 67 M3a entries are reference fixtures for the active static-call/frame stage;
-they are validated against actual javac/Java outcomes but require the M3a runtime
-and harness integration before EVM differential claims. This is subset
-verification, not full JVM conformance.
+M3a runtime and verifier are integrated: all 268 cases passed actual JVM/EVM
+comparison on one generic interpreter, including callee ArithmeticExceptions
+and StackOverflowError. Prior 201 entries remain unchanged. See
+`JAVA_EVM_M3A_PLAN.md` for independent acceptance. This is subset verification,
+not full JVM conformance.
