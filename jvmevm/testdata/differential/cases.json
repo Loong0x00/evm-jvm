@@ -9521,6 +9521,2179 @@
       "smoke": true,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m4a-zero-length",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "zeroLength",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-length-zero",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "length",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-length-one",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "length",
+      "args": [
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-length-eight",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "length",
+      "args": [
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-zero-read-first",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "zeroRead",
+      "args": [
+        1,
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-zero-read-last",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "zeroRead",
+      "args": [
+        5,
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-write-read-positive",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "writeRead",
+      "args": [
+        4,
+        2,
+        91
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-write-read-min",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "writeRead",
+      "args": [
+        1,
+        0,
+        -2147483648
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-write-read-max",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "writeRead",
+      "args": [
+        3,
+        2,
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-fill-sum-empty",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "fillSum",
+      "args": [
+        0,
+        7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-fill-sum-one",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "fillSum",
+      "args": [
+        1,
+        -4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-fill-sum-six",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "fillSum",
+      "args": [
+        6,
+        3
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-fill-sum-overflow",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "fillSum",
+      "args": [
+        3,
+        2147483646
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-search-first",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "search",
+      "args": [
+        6,
+        -7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-search-middle",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "search",
+      "args": [
+        6,
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-search-last",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "search",
+      "args": [
+        6,
+        18
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-search-missing",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "search",
+      "args": [
+        6,
+        19
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-insertion-sorted",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "insertionSort",
+      "args": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-insertion-reverse",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "insertionSort",
+      "args": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-insertion-duplicates",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "insertionSort",
+      "args": [
+        3,
+        1,
+        3,
+        2
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-bubble-sorted",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "bubbleSort",
+      "args": [
+        -3,
+        -1,
+        2,
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-bubble-reverse",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "bubbleSort",
+      "args": [
+        4,
+        3,
+        2,
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-bubble-duplicates",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "bubbleSort",
+      "args": [
+        2,
+        1,
+        2,
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-alias-write-positive",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "aliasWrite",
+      "args": [
+        73
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-alias-write-negative",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "aliasWrite",
+      "args": [
+        -73
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-distinct-write",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "distinctWrite",
+      "args": [
+        55
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-alias-identity-zero",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "aliasIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-distinct-identity-zero",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "distinctIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-distinct-identity-nonzero",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "distinctIdentity",
+      "args": [
+        3
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-zero-length-distinct",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "zeroLengthDistinct",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-null-identity",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-null-vs-zero-array",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullVsArray",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-null-vs-array",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullVsArray",
+      "args": [
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-local-roundtrip-one",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "localRoundTrip",
+      "args": [
+        1,
+        44
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-local-roundtrip-last",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "localRoundTrip",
+      "args": [
+        4,
+        -44
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-return-zero",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "helperReturn",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-return-five",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "helperReturn",
+      "args": [
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-roundtrip-first",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "helperRoundTrip",
+      "args": [
+        3,
+        0,
+        17
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-roundtrip-last",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "helperRoundTrip",
+      "args": [
+        3,
+        2,
+        -17
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-alias",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "helperAlias",
+      "args": [
+        808
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-argument-order-positive",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "helperArgumentOrder",
+      "args": [
+        3,
+        7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-argument-order-negative",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "helperArgumentOrder",
+      "args": [
+        -3,
+        7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-postincrement-ordinary",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "postIncrement",
+      "args": [
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-postincrement-overflow",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "postIncrement",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-preincrement-ordinary",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "preIncrement",
+      "args": [
+        -2
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-preincrement-overflow",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "preIncrement",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-postincrement-expression",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "postIncrementExpression",
+      "args": [
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-preincrement-expression",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "preIncrementExpression",
+      "args": [
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-assignment-expression",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "assignmentExpression",
+      "args": [
+        1,
+        -27
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-chained-assignment",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "chainedAssignment",
+      "args": [
+        19
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-compound-assignment",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "compoundAssignment",
+      "args": [
+        20,
+        -7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-compound-assignment-overflow",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "compoundAssignment",
+      "args": [
+        2147483647,
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-postincrement-computed-index",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "postIncrementAtComputedIndex",
+      "args": [
+        2,
+        6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursive-sum-empty",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "recursiveSum",
+      "args": [
+        0,
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursive-sum-six",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "recursiveSum",
+      "args": [
+        6,
+        -2
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-reverse-checksum",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "reverseChecksum",
+      "args": [
+        1,
+        2,
+        3
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-negative-allocation-minus-one",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "negativeAllocation",
+      "args": [
+        -1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4a-negative-allocation-min",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "negativeAllocation",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4a-null-length",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullLength",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4a-null-read-negative-null-first",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullRead",
+      "args": [
+        -1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4a-null-read-zero",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullRead",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4a-null-read-large-null-first",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullRead",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4a-null-write-negative-null-first",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullWrite",
+      "args": [
+        -1,
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4a-null-write-large-null-first",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "nullWrite",
+      "args": [
+        2147483647,
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4a-read-negative-index",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "readBounds",
+      "args": [
+        3,
+        -1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4a-read-equal-length",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "readBounds",
+      "args": [
+        3,
+        3
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4a-read-large-index",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "readBounds",
+      "args": [
+        3,
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4a-write-negative-index",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "writeBounds",
+      "args": [
+        3,
+        -1,
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4a-write-equal-length",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "writeBounds",
+      "args": [
+        3,
+        3,
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4a-write-large-index",
+      "stage": "m4a",
+      "sources": [
+        "M4aArrays.java"
+      ],
+      "class": "M4aArrays",
+      "method": "writeBounds",
+      "args": [
+        3,
+        2147483647,
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4a-static-prepared-null",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "preparedNull",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-assign-read",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "assignAndRead",
+      "args": [
+        3,
+        2,
+        41
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-local-alias",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "localAlias",
+      "args": [
+        -9
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-field-alias",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "staticAlias",
+      "args": [
+        88
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-field-distinct",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "staticDistinct",
+      "args": [
+        88
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-alias-identity",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "staticIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-distinct-identity",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "staticDistinctIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-helper-return",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "helperReturnedStatic",
+      "args": [
+        4,
+        3,
+        66
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-replace-reference",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "replaceReference",
+      "args": [
+        23
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-final-ref-mutable",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "finalReferenceMutable",
+      "args": [
+        1,
+        70
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-static-initializer-once",
+      "stage": "m4a",
+      "sources": [
+        "M4aStatics.java"
+      ],
+      "class": "M4aStatics",
+      "method": "initializerRanOnce",
+      "args": [
+        5
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-cross-sum",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayRoot.class",
+        "bundle/m4a/helpers/ArrayLibrary.class"
+      ],
+      "method": "createAndSum",
+      "args": [
+        5,
+        -2
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-cross-alias",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayLibrary.class",
+        "bundle/m4a/helpers/ArrayRoot.class"
+      ],
+      "method": "crossClassAlias",
+      "args": [
+        71
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-cross-distinct",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayRoot.class",
+        "bundle/m4a/helpers/ArrayLibrary.class"
+      ],
+      "method": "crossClassDistinct",
+      "args": [
+        71
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-returned-identity",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayLibrary.class",
+        "bundle/m4a/helpers/ArrayRoot.class"
+      ],
+      "method": "returnedIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-returned-distinct",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayRoot.class",
+        "bundle/m4a/helpers/ArrayLibrary.class"
+      ],
+      "method": "returnedDistinct",
+      "args": [
+        3
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-void-mutation",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayLibrary.class",
+        "bundle/m4a/helpers/ArrayRoot.class"
+      ],
+      "method": "voidMutation",
+      "args": [
+        1,
+        20
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-rotate",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayRoot.class",
+        "bundle/m4a/helpers/ArrayLibrary.class"
+      ],
+      "method": "rotateChecksum",
+      "args": [
+        1,
+        2,
+        3
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-recursive-sum",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayLibrary.class",
+        "bundle/m4a/helpers/ArrayRoot.class"
+      ],
+      "method": "recursiveCrossSum",
+      "args": [
+        7,
+        2
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-helper-null-return",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayRoot.class",
+        "bundle/m4a/helpers/ArrayLibrary.class"
+      ],
+      "method": "nullCrossLength",
+      "args": [
+        0
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4a-helper-cross-bounds",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/helpers/ArrayRoot.java",
+        "bundle/m4a/helpers/ArrayLibrary.java"
+      ],
+      "class": "bundle.m4a.helpers.ArrayRoot",
+      "class_files": [
+        "bundle/m4a/helpers/ArrayLibrary.class",
+        "bundle/m4a/helpers/ArrayRoot.class"
+      ],
+      "method": "crossReadBounds",
+      "args": [
+        2,
+        2
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4a-inherited-read",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/inheritance/InheritanceRoot.java",
+        "bundle/m4a/inheritance/ArrayBase.java",
+        "bundle/m4a/inheritance/ArrayLeft.java",
+        "bundle/m4a/inheritance/ArrayRight.java",
+        "bundle/m4a/inheritance/FailingArrayChild.java"
+      ],
+      "class": "bundle.m4a.inheritance.InheritanceRoot",
+      "class_files": [
+        "bundle/m4a/inheritance/InheritanceRoot.class",
+        "bundle/m4a/inheritance/ArrayLeft.class",
+        "bundle/m4a/inheritance/ArrayBase.class",
+        "bundle/m4a/inheritance/ArrayRight.class",
+        "bundle/m4a/inheritance/FailingArrayChild.class"
+      ],
+      "method": "inheritedRead",
+      "args": [
+        2
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-inherited-sibling-shared",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/inheritance/InheritanceRoot.java",
+        "bundle/m4a/inheritance/ArrayBase.java",
+        "bundle/m4a/inheritance/ArrayLeft.java",
+        "bundle/m4a/inheritance/ArrayRight.java",
+        "bundle/m4a/inheritance/FailingArrayChild.java"
+      ],
+      "class": "bundle.m4a.inheritance.InheritanceRoot",
+      "class_files": [
+        "bundle/m4a/inheritance/FailingArrayChild.class",
+        "bundle/m4a/inheritance/ArrayRight.class",
+        "bundle/m4a/inheritance/ArrayBase.class",
+        "bundle/m4a/inheritance/ArrayLeft.class",
+        "bundle/m4a/inheritance/InheritanceRoot.class"
+      ],
+      "method": "siblingSharedWrite",
+      "args": [
+        1,
+        99
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-inherited-sibling-identity",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/inheritance/InheritanceRoot.java",
+        "bundle/m4a/inheritance/ArrayBase.java",
+        "bundle/m4a/inheritance/ArrayLeft.java",
+        "bundle/m4a/inheritance/ArrayRight.java",
+        "bundle/m4a/inheritance/FailingArrayChild.java"
+      ],
+      "class": "bundle.m4a.inheritance.InheritanceRoot",
+      "class_files": [
+        "bundle/m4a/inheritance/InheritanceRoot.class",
+        "bundle/m4a/inheritance/ArrayLeft.class",
+        "bundle/m4a/inheritance/ArrayBase.class",
+        "bundle/m4a/inheritance/ArrayRight.class",
+        "bundle/m4a/inheritance/FailingArrayChild.class"
+      ],
+      "method": "siblingIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-inherited-helper-identity",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/inheritance/InheritanceRoot.java",
+        "bundle/m4a/inheritance/ArrayBase.java",
+        "bundle/m4a/inheritance/ArrayLeft.java",
+        "bundle/m4a/inheritance/ArrayRight.java",
+        "bundle/m4a/inheritance/FailingArrayChild.java"
+      ],
+      "class": "bundle.m4a.inheritance.InheritanceRoot",
+      "class_files": [
+        "bundle/m4a/inheritance/FailingArrayChild.class",
+        "bundle/m4a/inheritance/ArrayRight.class",
+        "bundle/m4a/inheritance/ArrayBase.class",
+        "bundle/m4a/inheritance/ArrayLeft.class",
+        "bundle/m4a/inheritance/InheritanceRoot.class"
+      ],
+      "method": "inheritedHelperIdentity",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-inherited-final-ref-mutable",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/inheritance/InheritanceRoot.java",
+        "bundle/m4a/inheritance/ArrayBase.java",
+        "bundle/m4a/inheritance/ArrayLeft.java",
+        "bundle/m4a/inheritance/ArrayRight.java",
+        "bundle/m4a/inheritance/FailingArrayChild.java"
+      ],
+      "class": "bundle.m4a.inheritance.InheritanceRoot",
+      "class_files": [
+        "bundle/m4a/inheritance/InheritanceRoot.class",
+        "bundle/m4a/inheritance/ArrayLeft.class",
+        "bundle/m4a/inheritance/ArrayBase.class",
+        "bundle/m4a/inheritance/ArrayRight.class",
+        "bundle/m4a/inheritance/FailingArrayChild.class"
+      ],
+      "method": "finalInheritedMutable",
+      "args": [
+        1,
+        -33
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-inherited-replacement",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/inheritance/InheritanceRoot.java",
+        "bundle/m4a/inheritance/ArrayBase.java",
+        "bundle/m4a/inheritance/ArrayLeft.java",
+        "bundle/m4a/inheritance/ArrayRight.java",
+        "bundle/m4a/inheritance/FailingArrayChild.java"
+      ],
+      "class": "bundle.m4a.inheritance.InheritanceRoot",
+      "class_files": [
+        "bundle/m4a/inheritance/FailingArrayChild.class",
+        "bundle/m4a/inheritance/ArrayRight.class",
+        "bundle/m4a/inheritance/ArrayBase.class",
+        "bundle/m4a/inheritance/ArrayLeft.class",
+        "bundle/m4a/inheritance/InheritanceRoot.class"
+      ],
+      "method": "inheritedReplacement",
+      "args": [
+        12
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-inherited-failing-symbolic-child",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/inheritance/InheritanceRoot.java",
+        "bundle/m4a/inheritance/ArrayBase.java",
+        "bundle/m4a/inheritance/ArrayLeft.java",
+        "bundle/m4a/inheritance/ArrayRight.java",
+        "bundle/m4a/inheritance/FailingArrayChild.java"
+      ],
+      "class": "bundle.m4a.inheritance.InheritanceRoot",
+      "class_files": [
+        "bundle/m4a/inheritance/InheritanceRoot.class",
+        "bundle/m4a/inheritance/ArrayLeft.class",
+        "bundle/m4a/inheritance/ArrayBase.class",
+        "bundle/m4a/inheritance/ArrayRight.class",
+        "bundle/m4a/inheritance/FailingArrayChild.class"
+      ],
+      "method": "failingSymbolicChildDoesNotInitialize",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-length",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitRoot.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitMaker.class"
+      ],
+      "method": "initializedLength",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-first-element",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitMaker.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitRoot.class"
+      ],
+      "method": "initializedElement",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-last-element",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitRoot.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitMaker.class"
+      ],
+      "method": "initializedElement",
+      "args": [
+        3
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-prepared-null",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitMaker.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitRoot.class"
+      ],
+      "method": "preparedNull",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-alias",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitRoot.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitMaker.class"
+      ],
+      "method": "initializerAlias",
+      "args": [
+        52
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-final-alias-mutable",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitMaker.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitRoot.class"
+      ],
+      "method": "initializerFinalAlias",
+      "args": [
+        -52
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-helper-returned-field",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitRoot.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitMaker.class"
+      ],
+      "method": "helperReturnedField",
+      "args": [
+        2
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-helper-once",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/init/InitRoot.java",
+        "bundle/m4a/init/InitOwner.java",
+        "bundle/m4a/init/InitMaker.java"
+      ],
+      "class": "bundle.m4a.init.InitRoot",
+      "class_files": [
+        "bundle/m4a/init/InitMaker.class",
+        "bundle/m4a/init/InitOwner.class",
+        "bundle/m4a/init/InitRoot.class"
+      ],
+      "method": "helperCalledOnce",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursion-empty",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/recursion/RecursionRoot.java",
+        "bundle/m4a/recursion/ArrayRecursionA.java",
+        "bundle/m4a/recursion/ArrayRecursionB.java"
+      ],
+      "class": "bundle.m4a.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4a/recursion/RecursionRoot.class",
+        "bundle/m4a/recursion/ArrayRecursionA.class",
+        "bundle/m4a/recursion/ArrayRecursionB.class"
+      ],
+      "method": "mutualFillAndSum",
+      "args": [
+        0,
+        5
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursion-even",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/recursion/RecursionRoot.java",
+        "bundle/m4a/recursion/ArrayRecursionA.java",
+        "bundle/m4a/recursion/ArrayRecursionB.java"
+      ],
+      "class": "bundle.m4a.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4a/recursion/ArrayRecursionB.class",
+        "bundle/m4a/recursion/ArrayRecursionA.class",
+        "bundle/m4a/recursion/RecursionRoot.class"
+      ],
+      "method": "mutualFillAndSum",
+      "args": [
+        6,
+        5
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursion-odd",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/recursion/RecursionRoot.java",
+        "bundle/m4a/recursion/ArrayRecursionA.java",
+        "bundle/m4a/recursion/ArrayRecursionB.java"
+      ],
+      "class": "bundle.m4a.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4a/recursion/RecursionRoot.class",
+        "bundle/m4a/recursion/ArrayRecursionA.class",
+        "bundle/m4a/recursion/ArrayRecursionB.class"
+      ],
+      "method": "mutualFillAndSum",
+      "args": [
+        7,
+        -2
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursion-other-empty",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/recursion/RecursionRoot.java",
+        "bundle/m4a/recursion/ArrayRecursionA.java",
+        "bundle/m4a/recursion/ArrayRecursionB.java"
+      ],
+      "class": "bundle.m4a.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4a/recursion/ArrayRecursionB.class",
+        "bundle/m4a/recursion/ArrayRecursionA.class",
+        "bundle/m4a/recursion/RecursionRoot.class"
+      ],
+      "method": "startFromOtherClass",
+      "args": [
+        0,
+        4
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursion-other-start",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/recursion/RecursionRoot.java",
+        "bundle/m4a/recursion/ArrayRecursionA.java",
+        "bundle/m4a/recursion/ArrayRecursionB.java"
+      ],
+      "class": "bundle.m4a.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4a/recursion/RecursionRoot.class",
+        "bundle/m4a/recursion/ArrayRecursionA.class",
+        "bundle/m4a/recursion/ArrayRecursionB.class"
+      ],
+      "method": "startFromOtherClass",
+      "args": [
+        5,
+        4
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-recursion-alias",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/recursion/RecursionRoot.java",
+        "bundle/m4a/recursion/ArrayRecursionA.java",
+        "bundle/m4a/recursion/ArrayRecursionB.java"
+      ],
+      "class": "bundle.m4a.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4a/recursion/ArrayRecursionB.class",
+        "bundle/m4a/recursion/ArrayRecursionA.class",
+        "bundle/m4a/recursion/RecursionRoot.class"
+      ],
+      "method": "recursiveAlias",
+      "args": [
+        8,
+        3
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4a-init-negative-array",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/errors/NegativeInit.java"
+      ],
+      "class": "bundle.m4a.errors.NegativeInit",
+      "class_files": [
+        "bundle/m4a/errors/NegativeInit.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4a-init-null-array",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/errors/NullInit.java"
+      ],
+      "class": "bundle.m4a.errors.NullInit",
+      "class_files": [
+        "bundle/m4a/errors/NullInit.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4a-init-array-bounds",
+      "stage": "m4a",
+      "sources": [
+        "bundle/m4a/errors/BoundsInit.java"
+      ],
+      "class": "bundle.m4a.errors.BoundsInit",
+      "class_files": [
+        "bundle/m4a/errors/BoundsInit.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
     }
   ]
 }

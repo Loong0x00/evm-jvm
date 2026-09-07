@@ -4,11 +4,11 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 498 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
-73 `m3b`, 85 `m3c`, and 72 `m3d` cases. The 165 smoke cases include 37 from
-`m3d`. Every root entry remains a uniquely named, declared public static
-`(int...)int` method, and guest sources have no `main`. All 426 entries through
-M3c, including their source lists, arguments, budgets, tiers, and outcomes, are
+The manifest has 613 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+73 `m3b`, 85 `m3c`, 72 `m3d`, and 115 `m4a` cases. The 238 smoke cases include
+73 from `m4a`. Every root entry remains a uniquely named, declared public static
+`(int...)int` method, and guest sources have no `main`. All 498 entries through
+M3d, including their source lists, arguments, budgets, tiers, and outcomes, are
 unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
@@ -126,10 +126,43 @@ therefore not claimed as source-level proof of ConstantValue-before-parent
 visibility. The independently owned verifier must redirect a valid raw
 Fieldref/getstatic in test-only class bytes to test that timing rule.
 
-Across all stages there are 475 value outcomes, 12 ArithmeticException outcomes,
-three StackOverflowError outcomes, and eight ExceptionInInitializerError outcomes.
-Every gas limit is finite and at most 50,000,000; every subprocess timeout is at
-most 10 seconds.
+M4a adds 96 value outcomes and 19 actual JVM exception outcomes over 18 new
+trusted Java 8 classes. The fixtures cover zero-filled and zero-length arrays,
+length/read/write, fill/sum/search, two modest four-element sorts, aliases versus
+distinct allocations (including zero-length identity), null comparisons, typed
+locals, and same- and cross-class helper parameters and `int[]` returns. The
+post/preincrement, assignment-expression, chained-assignment, and compound-
+assignment cases deliberately exercise javac's category-1 array stack
+permutations.
+
+Static `int[]` fields cover prepared null, assignment/replacement, aliases,
+helper returns, initializer-built arrays, and mutable elements reached through a
+`final` reference. Bundles cover inherited declaring-owner storage shared by
+siblings, access through a failing symbolic child without initializing that
+child, class-file order permutations, and modest same-/cross-class recursive
+methods carrying array identity through calls. No M4a root accepts or returns a
+reference: every selected entry still has only `int` parameters and an `int`
+result; internal methods additionally use only `int[]` parameters/results and
+`void`.
+
+The 19 M4a exception cases are two genuine
+`java.lang.NegativeArraySizeException`, seven
+`java.lang.ArrayIndexOutOfBoundsException`, seven
+`java.lang.NullPointerException`, and three
+`java.lang.ExceptionInInitializerError` outcomes. They include signed negative,
+equal-length, and large indices, null reads/writes with invalid indices to prove
+null-before-bounds behavior, and separate negative-allocation, null-access, and
+bounds failures while an active initializer executes. There is deliberately no
+host-JVM heap-exhaustion fixture: M4a's EVM logical array/element caps are not a
+reference-JVM OOM contract and belong in focused runtime tests.
+
+Across all stages there are 571 value outcomes, 12 ArithmeticException outcomes,
+three StackOverflowError outcomes, 11 ExceptionInInitializerError outcomes, two
+NegativeArraySizeException outcomes, seven ArrayIndexOutOfBoundsException
+outcomes, and seven NullPointerException outcomes. Every gas limit is finite and
+at most 50,000,000; every subprocess timeout is at most 10 seconds. New arrays
+have at most eight elements, and all fixture loops and recursions are bounded and
+modest.
 
 All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
 direct superclass is `java/lang/Object`. They have zero fields, zero interfaces,
@@ -155,6 +188,12 @@ java -cp "$out" OracleMain bundle.m3d.owner.OwnerRoot fieldThroughFailingChild 9
 java -cp "$out" OracleMain bundle.m3d.reentrant.ReentrantChild childCompleted 2
 java -cp "$out" OracleMain bundle.m3d.external.HiddenAccessRoot publicInheritedField 3
 java -cp "$out" OracleMain bundle.m3d.errors.FailureChild entry 0
+java -cp "$out" OracleMain M4aArrays insertionSort 4 3 2 1
+java -cp "$out" OracleMain M4aArrays nullRead -1
+java -cp "$out" OracleMain bundle.m4a.helpers.ArrayRoot crossClassAlias 71
+java -cp "$out" OracleMain bundle.m4a.inheritance.InheritanceRoot siblingSharedWrite 1 99
+java -cp "$out" OracleMain bundle.m4a.init.InitRoot helperCalledOnce 0
+java -cp "$out" OracleMain bundle.m4a.errors.NegativeInit entry 0
 rm -rf "$out"
 ```
 
@@ -175,14 +214,33 @@ find "$out/bundle/m3d" -name '*.class' -print | sort | while read -r file; do
   class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
   javap -classpath "$out" -c -v -p "$class"
 done
+javap -classpath "$out" -c -v -p M4aArrays M4aStatics
+find "$out/bundle/m4a" -name '*.class' -print | sort | while read -r file; do
+  class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
+  javap -classpath "$out" -c -v -p "$class"
+done
 rm -rf "$out"
 ```
 
-A full local reference compile and 498 fresh `OracleMain` JVM invocations passed
+A full local reference compile and 613 fresh `OracleMain` JVM invocations passed
 for this fixture revision. This checks each manifest result against the actual JVM
-rather than storing hardcoded value answers. The resulting outcomes were 475
-values, 12 `ArithmeticException`, three `StackOverflowError`, and eight
-`ExceptionInInitializerError` results.
+rather than storing hardcoded value answers. The resulting outcomes match the
+cumulative counts above. In particular, the three initializer array failures are
+genuine root `ExceptionInInitializerError` results from `Class.forName`, while
+body array failures are the exact underlying JVM exception classes.
+
+`javap -c -v -p` over the 18 M4a classes found only Java 8 major version 52
+classfiles, zero interfaces, 13 `[I` fields, five `I` fields, seven `<clinit>`
+methods, and three `final` array references whose elements are mutated by cases.
+Aggregate array/reference instruction shapes include 46 `newarray int`, 31
+`arraylength`, 83 `iaload`, 74 `iastore`, 12 `areturn`, seven `aconst_null`,
+seven `dup2`, and eight `dup_x2`, plus typed `aload`/`astore`, reference/null
+branches, and static/call instructions. Every entered method uses only the frozen
+M3d operations plus the exact M4a integer-array/reference operations. The 18
+ordinary unentered constructors contain the only `invokespecial` instructions;
+there is no entered object allocation, other array kind, multidimensional or
+reference array, cast, handler, monitor, native/library call, or category-2
+operation.
 
 `javap -c -v -p` over the 30 M3d classes found 19 `<clinit>` methods, one
 `ConstantValue` attribute, and aggregate instruction shapes of 58 `getstatic`,
@@ -211,8 +269,10 @@ python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All498 cases now pass actual JVM/EVM comparison after M3d parent integration,
-including independent hierarchy/member/init checks. Earlier426 entries are
-unchanged. See `JAVA_EVM_M3D_PLAN.md` for acceptance. The runtime remains over
-mainnet deployment size and runs through local runtime.Execute, not CREATE.
-This remains subset verification, not full JVM conformance.
+All 498 pre-M4a cases passed actual JVM/EVM comparison after M3d parent
+integration, including independent hierarchy/member/init checks. The 115 M4a
+fixtures have passed the actual JVM oracle and classfile-profile checks, but the
+M4a runner/runtime work is separately owned and pending integration; this
+fixture revision does **not** claim an EVM pass. The runtime remains over mainnet
+deployment size and runs through local runtime.Execute, not CREATE. This remains
+subset verification, not full JVM conformance.
