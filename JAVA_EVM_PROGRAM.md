@@ -65,8 +65,9 @@ routine permission to start the next verified increment.
 | V0 / M2a | oracle/replay gates + integer control flow | accepted at 3216753 |
 | M2b | int constants/arithmetic/bitwise/conversions + explicit uncaught arithmetic exception outcome | accepted; JAVA_EVM_M2B_PLAN.md |
 | M3a | same-class static calls, explicit Java frames/returns/recursion | accepted; JAVA_EVM_M3A_PLAN.md |
-| M3b | raw multi-class input, direct EVM-side resolution/linking | active; JAVA_EVM_M3B_PLAN.md |
-| M3c | static fields/state, class initialization and hierarchy prerequisites | queued after M3b |
+| M3b | raw multi-class input, direct EVM-side resolution/linking | accepted; JAVA_EVM_M3B_PLAN.md |
+| M3c | integer static fields/state and ordinary-class initialization | next active batch |
+| M3d | class hierarchy/member resolution and superclass-init prerequisites | queued before heap |
 | M4 | arrays, object allocation/fields, reference values and dispatch | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -78,9 +79,8 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M3a is accepted at **699e367**: 268 fixed oracle cases plus 40 independent
-frame/caller-state probes, exact call diagnostics and frame-cap/OOG boundaries.
-M3b raw-bundle API/linker/harness protocol is frozen in `JAVA_EVM_M3B_PLAN.md`;
-dispatch runtime, fixture and independent verifier workers. Preserve legacy
-single-class behavior. After acceptance, proceed to M3c static fields and class
-initialization as a separate bounded task, without routine user confirmation.
+M3b is integrated and independently accepted: all341 fixed cases, exact bundle
+errors/access checks and30 additional owner/cache/order probes passed. The next
+batch is M3c integer static fields and class initialization for ordinary Object-
+superclass classes. Keep hierarchy/super-init as its own next dependency slice,
+then heap/reference capabilities. Continue without routine user confirmation.

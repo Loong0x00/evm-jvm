@@ -1,9 +1,8 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M3a** (static calls, explicit Java frames, recursion),
-recorded in `JAVA_EVM_M3A_PLAN.md`. Active: **M3b raw multi-class loading/linking**,
-with frozen API/error/worker scopes in `JAVA_EVM_M3B_PLAN.md`.
-Static state/initialization follows as a separate bounded stage.
+Current accepted stage: **M3b raw multi-class loading/linking**, recorded in
+`JAVA_EVM_M3B_PLAN.md`. Next: **M3c integer static fields and class initialization**.
+Inheritance, heap/references and handlers remain later capability slices.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
 superseding earlier stop-after-each-batch instructions. Worker scope comes from
 the current frozen batch plan; wider stages are not conformance claims.
@@ -37,8 +36,10 @@ fixtures here; untrusted external programs/corpora require isolation first.
 At runtime, host only ABI-packs unchanged raw classfiles, method name and int
 arguments. EVM performs class/method/Code/constant-pool resolution, instruction
 predecode, int32 arithmetic/bitwise/conversion/locals, signed conditions, loops
-and returns. Same-class static calls resolve exact signatures inside EVM and use
-independent Java frames (128 active-frame cap). ArithmeticException and
+and returns. `RunClasses`/repeatable CLI `-class` plus explicit `-entry-class`
+accept unchanged raw bundles (max64); EVM resolves declared names/direct owners,
+keeps per-class CP/caches and checks the supported access profile. No host
+classpath fallback. Calls use independent Java frames (128 cap). ArithmeticException and
 StackOverflowError outcomes are determined inside EVM; host only decodes exact
 recognized payloads (never any arbitrary revert). No host Java parsing/extraction/translation/evaluation,
 native Java precompile, or class-specific runtime generation. Host javac and
@@ -54,10 +55,10 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # actual EVM add, sum(100), fibonacci(20)
-make java-smoke      # 55 fixed oracle comparisons
-make java-fast       # 75 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 268 cases (201 through M2b + 67 M3a)
-make java-test       # artifact + focused Go + 21 runner tests + full differential
+make java-smoke      # 87 fixed oracle comparisons
+make java-fast       # 107 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 341 cases (268 through M3a + 73 M3b)
+make java-test       # artifact + focused Go + 26 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```
 

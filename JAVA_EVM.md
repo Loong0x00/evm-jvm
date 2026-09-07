@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M3a)
+# Java inside EVM: staged interpreter (M3b)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -16,10 +16,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 55 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (75 total)
-make java-full       # all 268 differential cases
-make java-test       # artifact check + Go tests + 21 runner tests + all 268 cases
+make java-smoke      # 87 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (107 total)
+make java-full       # all 341 differential cases
+make java-test       # artifact check + Go tests + 26 runner tests + all 341 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -33,7 +33,9 @@ two expected uncaught ArithmeticExceptions. Earlier 82 cases are preserved.
 M3a adds 67 call/frame/recursion cases, bringing the total to 268 (261 values,
 six ArithmeticExceptions and one StackOverflowError). All previous 201 entries
 remain unchanged. Make gates use cumulative `--stage all`; explicit older stages
-still select historical subsets. Tests are bounded evidence, not conformance.
+still select historical subsets. M3b adds 73 raw-bundle cases: 341 total
+(329 values, 10 ArithmeticExceptions, 2 StackOverflowErrors). Previous 268 entries
+are unchanged. Tests are bounded evidence, not conformance.
 
 Additional commands:
 
@@ -50,16 +52,17 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **13,343-byte** interpreter runtime handles all three programs:
+One unchanged **20,649-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 113,895 |
-| Loops.class / sum(100) | 5050 | 1,669,146 |
-| Loops.class / fibonacci(20) | 6765 | 602,675 |
+| Add.class / add(20,22) | 42 | 118,280 |
+| Loops.class / sum(100) | 5050 | 1,840,015 |
+| Loops.class / fibonacci(20) | 6765 | 657,940 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 419,020 |
 
 Runtime SHA-256:
-`e5da633eda34db0ce3a02563fd6276c8016525d441025eb446b578fdef8a390b`
+`47661cc78dd2e19219d4fe4363ae16b81bf4c23f4773e297ca80841a3ca3d06e`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -80,6 +83,32 @@ Java class or argument. Errors in Java parsing/dispatch are EVM reverts with
 Solidity custom-error data. Insufficient gas is actual EVM out-of-gas; an infinite
 Java loop consumes its finite gas budget rather than returning a fake value.
 
+## Raw multi-class input
+
+Repeat `-class` and explicitly name the entry class using JVM internal slashes:
+
+```sh
+build/bin/jvmevm \
+  -class build/java-evm-interpreter/bundle/basic/BasicHelper.class \
+  -class build/java-evm-interpreter/bundle/basic/BasicRoot.class \
+  -entry-class bundle/basic/BasicRoot -method threeArguments -args 1,2,3 -gas 5000000
+```
+
+One file without `-entry-class` retains legacy `Run`. An explicit entry class
+selects `RunClasses`, even for one file; multiple files require it. Go only packs
+raw bytes and provided metadata. EVM discovers declared names, rejects duplicates,
+selects the entry and resolves direct static owners. File names/order do not
+identify classes. Missing owners do not trigger host filesystem/classpath lookup.
+
+Bundle mode allows at most 64 classes, direct Object superclasses, public/package
+access within the supported profile, and per-class CP/method caches and frames.
+External private access and nonpublic cross-package access fail. Entered classes
+with interfaces, `<clinit>` or unsupported superclasses fail explicitly; merely
+supplied but unentered unsupported classes can remain unused. No superclass
+method lookup, field state or initialization execution yet. Known uncaught Java
+outcomes propagate across classes. Legacy external calls still use CallError2;
+bundle structural/missing-class failures use exact LinkError1–5 (see stage plan).
+
 ## Supported semantics and limits
 
 Unambiguous static root, only `int` arguments and an `int` return (internal
@@ -92,7 +121,8 @@ helpers can return void and be overloaded):
 - `ishl`, `ishr`, `iushr`, `iand`, `ior`, `ixor`, `i2b`, `i2c`, `i2s`
 - `ifeq`/`ifne`/`iflt`/`ifge`/`ifgt`/`ifle`, corresponding `if_icmp*`
 - `goto`, `ireturn` (including early returns followed by other code)
-- Same-class tag-10 `invokestatic`, internal void `return`, category-1 `pop`
+- Tag-10 `invokestatic` (same-class or supplied direct bundle owner), internal
+  void `return`, category-1 `pop`
 
 M3a uses independent explicit Java frames in EVM memory: PC, operand stack,
 locals and initialization state. Arguments transfer in descriptor order; value
@@ -123,7 +153,7 @@ INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
 **Deferred:** non-integer constants, wide/goto_w, stack permutation forms, switch,
-other primitive types, external/interface/instance calls, multiple-class loading,
+other primitive types, interface/instance calls, superclass method resolution,
 static state/initialization, arrays, heap/objects, exception handlers, monitors,
 class libraries and deployment workflows.
 
@@ -161,6 +191,10 @@ not fabricated Java linkage exceptions.
 Fixtures and host-only oracle: `jvmevm/testdata/differential/`.
 Runner and protocol/error tests: `tools/java_diff.py`, `tools/test_java_diff.py`.
 Detailed flags/format: [tools/JAVA_DIFF.md](tools/JAVA_DIFF.md).
+
+The oracle executes trusted fixture code on the host JVM; this is not a sandbox
+for arbitrary untrusted Java. Isolate/review external code before using it here.
+The production CLI never invokes the host JVM.
 
 Every selected case executes on real JVM and on the EVM interpreter. Results
 are compared exactly as signed int32; unsupported cases are not silently skipped
@@ -210,7 +244,7 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M3a acceptance is
-recorded in `JAVA_EVM_M3A_PLAN.md`; the next stage is raw multiple-class loading
-and EVM-side linking, followed by static state/initialization. No full-Java claim
-is made and routine per-stage re-confirmation is not required.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M3b acceptance is
+recorded in `JAVA_EVM_M3B_PLAN.md`; the next stage is static fields and class
+initialization. No full-Java claim is made and routine per-stage re-confirmation
+is not required.

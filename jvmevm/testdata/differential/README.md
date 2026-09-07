@@ -112,15 +112,14 @@ rm -rf "$out"
 `CONSTANT_Integer` index greater than 255. Its unselected pool-populating helper
 has no `<clinit>`.
 
-Once the M3b bundle runner/verifier changes are integrated, the cumulative suite
-is selected with:
+The M3b runtime and verifier are integrated. Select the cumulative suite with:
 
 ```sh
 python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-This fixture-only revision establishes reference-JVM data and manifest metadata;
-the pre-M3b runner does not yet understand `m3b` or `class_files`, so it is not
-an EVM-success claim by itself. M3a remains the last integrated EVM result at
-this branch point. This is subset verification, not full JVM conformance.
+All341 cases passed actual JVM/EVM comparison on one generic artifact after
+parent integration, with the prior268 entries unchanged. See
+`JAVA_EVM_M3B_PLAN.md` for independent acceptance. This remains subset
+verification, not full JVM conformance.

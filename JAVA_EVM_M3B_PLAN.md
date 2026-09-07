@@ -160,5 +160,35 @@ directories and run javac on trusted inline sources.
 - Parent review/probes, last-green commit and capability update, then automatically
   proceed to **M3c static fields and class initialization** (new bounded contract).
 
-## Status
-M3b contract frozen; next action is worker dispatch. No M3b implementation claim.
+## Status / independent acceptance
+
+**M3b accepted; parent continues to M3c static state/class initialization.**
+
+- Runtime `d4e3bae` integrated as `abe0e7c`; fixtures `431b79e` as `4cdb581`;
+  verifier `b748d5b` as `113f304`. Runtime merged first; independent tests then
+  compiled and passed against the real RunClasses implementation.
+- Pinned source/artifact match: 20649 bytes, SHA-256
+  `47661cc78dd2e19219d4fe4363ae16b81bf4c23f4773e297ca80841a3ca3d06e`.
+- Parent reviewed host raw-file read/ABI packaging only, per-class Frame identity,
+  CP/selected/ref-cache scoping, declared-name owner resolution and access checks.
+  No host prelinking/classpath fallback or consensus-core changes.
+- Prior268 manifest entries unchanged. Combined full suite passed **341/341**:
+  329 values, 10 ArithmeticExceptions, 2 StackOverflowErrors. Smoke87/87,
+  fast107/107; Go/CLI plus independent bundle validation, 26 enabled Python
+  tests, AOT regression, artifact check and go vet passed.
+- Exact independent LinkError1–5, malformed ClassError, legacy CallError2,
+  signature/ref and cross-package/private/class-access errors passed. Unentered
+  initializer metadata and alternate class order/caches tested without executing
+  unsupported code or assuming host filenames indicate class identity.
+- Parent separately generated30 actual JVM/EVM cases with private same-named
+  helpers in separate classes/packages and varied input order; all passed.
+  Deliberately misleading host filenames still resolved the declared root and
+  matched JVM. Omitting an owner failed inside EVM even though its classfile was
+  physically present next to supplied files: no implicit filesystem lookup.
+  Local evidence: `build/java-diff-parent-m3b/probe-02rvazml/`.
+- `make java-demo` now includes an explicit reordered two-class call:
+  BasicRoot.threeArguments(1,2,3)=10203, 419020 execution gas. Same artifact
+  still runs legacy add/loops under their original gas limits.
+- Initializers, static fields, inheritance/interface resolution, heap/reference
+  types and handlers are not claimed. Bundle validation also rejects entered
+  classes declaring interfaces; full Java access/linking verification is absent.
