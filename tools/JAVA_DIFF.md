@@ -14,15 +14,16 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m2 --tier full
+python3 tools/java_diff.py --stage m3a --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m2b --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m3a --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2`
-selects M1+M2, and `m2b` or `all` selects M1+M2+M2b. A manifest without M2b
-entries therefore continues to run its M1+M2 cases under the new default.
+selects M1+M2, `m2b` selects M1+M2+M2b, and `m3a` or `all` adds M3a. A
+manifest without M3a entries therefore continues to run its older cases under
+the new default.
 `smoke` runs smoke-marked cases, `fast` adds a seeded deterministic sample of at
 most 20 other cases, and `full` runs every case selected by the stage. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
@@ -66,9 +67,11 @@ exception=<fqcn>
 
 The runner accepts an exception as a passing Java outcome only when the
 manifest explicitly expects `java_exception` and the expected, JVM, and EVM
-classes all match. Value/exception disagreements and wrong exception classes
-fail. Nonzero CLI exits, generic reverts, and out-of-gas executions remain EVM
-failures; they are never reclassified as Java exceptions.
+classes all match. M3a uses the same protocol for
+`java.lang.StackOverflowError`; M2b's `java.lang.ArithmeticException` remains
+unchanged. Value/exception disagreements and wrong exception classes fail.
+Nonzero CLI exits, generic reverts, and out-of-gas executions remain EVM
+failures; in particular, out of gas is never reclassified as a stack overflow.
 
 ## Limits and failures
 

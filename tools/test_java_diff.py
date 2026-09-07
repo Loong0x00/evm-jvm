@@ -114,9 +114,11 @@ class MockTools:
                 raise SystemExit(0)
             marker = sys.argv.index("OracleMain")
             method = sys.argv[marker + 2]
-            if mode == "exception" or (mode == "by-method" and method == "divide"):
-                print("exception=" + os.environ.get(
-                    "MOCK_JAVA_EXCEPTION", "java.lang.ArithmeticException"))
+            if mode == "exception" or (
+                    mode == "by-method" and method in ("divide", "recurse")):
+                default = ("java.lang.StackOverflowError" if method == "recurse"
+                           else "java.lang.ArithmeticException")
+                print("exception=" + os.environ.get("MOCK_JAVA_EXCEPTION", default))
                 raise SystemExit(0)
             if mode == "malformed-exception":
                 print("exception=not qualified")
@@ -149,7 +151,9 @@ class MockTools:
                 result += 1
             exception_outcome = mode in ("exception", "exception-gasbad")
             exception_outcome = exception_outcome or (
-                mode in ("by-method", "exception-runtime-change") and method == "divide")
+                mode == "by-method" and method in ("divide", "recurse"))
+            exception_outcome = exception_outcome or (
+                mode == "exception-runtime-change" and method == "divide")
             runtime_hash = "b"*64 if (
                 (mode == "runtime-change" and method == "identity")
                 or (mode == "exception-runtime-change" and method == "divide")
@@ -163,8 +167,9 @@ class MockTools:
             elif mode == "malformed-exception":
                 print("exception=not-qualified")
             elif exception_outcome:
-                print("exception=" + os.environ.get(
-                    "MOCK_EVM_EXCEPTION", "java.lang.ArithmeticException"))
+                default = ("java.lang.StackOverflowError" if method == "recurse"
+                           else "java.lang.ArithmeticException")
+                print("exception=" + os.environ.get("MOCK_EVM_EXCEPTION", default))
             else:
                 print("result=" + str(result))
             print("gas_used=" + ("0" if mode == "exception-gasbad" else "456"))
@@ -231,6 +236,53 @@ class JavaDiffTests(unittest.TestCase):
             self.assertEqual(result["evm_exception"], "java.lang.ArithmeticException")
             self.assertEqual(result["gas_used"], 456)
             self.assertEqual(report["runtime_sha256"], "a" * 64)
+
+    def test_mixed_value_and_known_exceptions_share_runtime_hash(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("value", method="identity", args=[7]),
+                case("arithmetic", stage="m2b", method="divide", args=[7, 0],
+                     expected_kind="java_exception"),
+                case("stack-overflow", stage="m3a", method="recurse", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.StackOverflowError"),
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--tier", "full",
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(report["status_counts"], {"pass": 3})
+            self.assertEqual(report["runtime_sha256"], "a" * 64)
+            self.assertEqual(
+                [result["runtime_sha256"] for result in report["cases"]], ["a" * 64] * 3
+            )
+            self.assertEqual(report["cases"][0]["evm_value"], 7)
+            self.assertEqual(
+                report["cases"][1]["evm_exception"], "java.lang.ArithmeticException"
+            )
+            self.assertEqual(
+                report["cases"][2]["evm_exception"], "java.lang.StackOverflowError"
+            )
+
+    def test_expected_stack_overflow_does_not_accept_actual_oog(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("stack-overflow", stage="m3a", method="recurse", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.StackOverflowError"),
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools,
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "oog"},
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertEqual(report["cases"][0]["status"], "evm_oog")
+            self.assertEqual(report["cases"][0]["runtime_sha256"], "a" * 64)
+            self.assertEqual(report["runtime_sha256"], "a" * 64)
+            self.assertNotIn("evm_exception", report["cases"][0])
 
     def test_wrong_java_exception_class_is_a_mismatch(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -460,28 +512,28 @@ class JavaDiffTests(unittest.TestCase):
         cases += [case(f"m1-{i:02d}", smoke=False) for i in range(25)]
         cases += [case("m2-smoke", stage="m2")]
         cases += [case("m2b-smoke", stage="m2b")]
+        cases += [case("m3a-smoke", stage="m3a")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
         self.assertEqual([x["id"] for x in selected_a], [x["id"] for x in selected_b])
         self.assertNotEqual([x["id"] for x in selected_a], [x["id"] for x in selected_c])
         self.assertEqual(len(selected_a), 21)
-        self.assertEqual(
-            [x["id"] for x in java_diff.select_cases(cases, "m2", "smoke", 56, None)],
-            ["m1-smoke", "m2-smoke"],
-        )
-        self.assertEqual(
-            [x["id"] for x in java_diff.select_cases(cases, "m2b", "smoke", 56, None)],
-            ["m1-smoke", "m2-smoke", "m2b-smoke"],
-        )
-        self.assertEqual(
-            [x["id"] for x in java_diff.select_cases(cases, "all", "smoke", 56, None)],
-            ["m1-smoke", "m2-smoke", "m2b-smoke"],
-        )
+        expected = {
+            "m1": ["m1-smoke"],
+            "m2": ["m1-smoke", "m2-smoke"],
+            "m2b": ["m1-smoke", "m2-smoke", "m2b-smoke"],
+            "m3a": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke"],
+        }
+        for stage, want in expected.items():
+            with self.subTest(stage=stage):
+                selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
+                self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m2b")
+        self.assertEqual(parsed.stage, "m3a")
         with self.assertRaises(java_diff.HarnessError):
-            java_diff.select_cases(cases, "m1", "full", 56, "m2-smoke")
+            java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
 
     def test_manifest_rejects_bool_duplicate_id_escape_and_empty_selection(self):
         bad_mutations = []
