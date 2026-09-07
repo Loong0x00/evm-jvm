@@ -71,11 +71,13 @@ java-build:
 
 java-demo: java-build
 	mkdir -p build/java-evm-interpreter
-	javac --release 8 -d build/java-evm-interpreter examples/java/Add.java jvmevm/testdata/differential/Loops.java jvmevm/testdata/differential/bundle/basic/BasicRoot.java jvmevm/testdata/differential/bundle/basic/BasicHelper.java
+	javac --release 8 -d build/java-evm-interpreter examples/java/Add.java jvmevm/testdata/differential/Loops.java jvmevm/testdata/differential/M4aArrays.java jvmevm/testdata/differential/bundle/basic/BasicRoot.java jvmevm/testdata/differential/bundle/basic/BasicHelper.java
 	build/bin/jvmevm -class build/java-evm-interpreter/Add.class -method add -args 20,22 -gas 2000000
-	build/bin/jvmevm -class build/java-evm-interpreter/Loops.class -method sum -args 100 -gas 2000000
+	# Typed-slot checks raised measured sum(100) execution to ~2.23M gas; no oracle case budgets changed.
+	build/bin/jvmevm -class build/java-evm-interpreter/Loops.class -method sum -args 100 -gas 3000000
 	build/bin/jvmevm -class build/java-evm-interpreter/Loops.class -method fibonacci -args 20 -gas 2000000
 	build/bin/jvmevm -class build/java-evm-interpreter/bundle/basic/BasicHelper.class -class build/java-evm-interpreter/bundle/basic/BasicRoot.class -entry-class bundle/basic/BasicRoot -method threeArguments -args 1,2,3 -gas 5000000
+	build/bin/jvmevm -class build/java-evm-interpreter/M4aArrays.class -method fillSum -args 10,3 -gas 10000000
 
 java-test: java-runtime-check java-build
 	go test -count=1 ./jvmevm ./cmd/jvmevm

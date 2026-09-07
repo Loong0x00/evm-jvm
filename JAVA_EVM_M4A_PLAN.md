@@ -148,3 +148,29 @@ fields and dispatch with a new bounded contract, no routine confirmation.
 
 ## Status
 Contract frozen for M4a dispatch on accepted M3d1c8d990; not implemented yet.
+
+## Accepted integration evidence
+
+Runtime8070872→39aa8d0, fixturesbc328dc→32c8afe, verifier35eede3→7675694.
+Independent parent review found dup_x2's minimum stack arity incorrectly2 instead
+of3; reproduced Solidity Panic0x11, added exact negative regressions for every
+category-1 permutation, fixed834f6bc→fd90e56. Assertions were not weakened.
+
+Logical total-cap tests initially genuinely OOGed at100M. Four max arrays cost
+138,995,136 gas; exceeding total cap after them costs138,964,154 gas. Only those
+new capacity assertions use250M; an explicit100M OOG-not-OOM regression remains.
+The old sum(100) demo now costs2,229,893 gas, above its old2M budget; independently
+confirmed, preserved result5050/input100, raised demo-only budget to3M. No prior
+498 oracle case or gas budget changed. Added a real int-array fillSum demo.
+
+Parent integration reran artifact consistency, focused Go/CLI,29 real/mock Python
+runner tests,613/613 JVM/EVM full cases,238 smoke,258 fast, demo, AOT regression
+and focused vet. Additional44 independent alias/helper-return/final-reference/
+inheritance/init/dup_x2/overflow/null-order probes passed, archive:
+`build/java-diff-parent-m4a/probe-qhurqodg/results/`.
+
+Accepted runtime40205 bytes, SHA256
+`adb926d70915a716ebbb4f2f091584821fb70af82b743efcba084cb2f203a407`.
+Local EVM execution only: artifact still exceeds EIP-170. Known compiler npm
+findings remain; no downgrade, deployment or full-JVM claim. Continue directly
+to bounded ordinary-object/constructor/field work, then virtual dispatch.

@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M3d)
+# Java inside EVM: staged interpreter (M4a)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,7 +9,7 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 32,148-byte runtime
+**Local execution, not mainnet deployment:** the current 40,205-byte runtime
 exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
@@ -21,10 +21,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 165 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (185 total)
-make java-full       # all 498 differential cases
-make java-test       # artifact check + Go tests + 26 runner tests + all 498 cases
+make java-smoke      # 238 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (258 total)
+make java-full       # all 613 differential cases
+make java-test       # artifact check + Go tests + 29 runner tests + all 613 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -43,7 +43,9 @@ still select historical subsets. M3b adds 73 raw-bundle cases: 341 total
 are unchanged. M3c adds 85 field/initializer cases: 426 total (407 values and
 19 known Java exceptions). All prior341 entries remain unchanged. Tests are
 bounded evidence, not conformance. M3d adds72 hierarchy cases:498 total
-(475 values,23 known exceptions); earlier426 entries are unchanged.
+(475 values,23 known exceptions); earlier426 entries are unchanged. M4a adds115
+int-array cases:613 total (571 values,42 known exceptions). Earlier498 entries
+and their budgets remain unchanged.
 
 Additional commands:
 
@@ -60,17 +62,21 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **32,148-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **40,205-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 139,331 |
-| Loops.class / sum(100) | 5050 | 1,847,665 |
-| Loops.class / fibonacci(20) | 6765 | 677,639 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 426,963 |
+| Add.class / add(20,22) | 42 | 148,573 |
+| Loops.class / sum(100) | 5050 | 2,229,893 |
+| Loops.class / fibonacci(20) | 6765 | 789,838 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 452,614 |
+| M4aArrays.class / fillSum(10,3) | 165 | 1,556,502 |
+
+Typed checks raised sum(100) beyond its old2M demo budget, independently confirmed;
+the demo now uses3M. No historical oracle input/budget or semantic assertion changed.
 
 Runtime SHA-256:
-`5540b5b5c5aede45bda17f89fa0b99313ad03d8f9249156ac613c2902031a920`
+`adb926d70915a716ebbb4f2f091584821fb70af82b743efcba084cb2f203a407`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -127,7 +133,7 @@ across classes; legacy external method calls retain CallError2.
 ## Supported semantics and limits
 
 Unambiguous static root, only `int` arguments and an `int` return (internal
-helpers can return void and be overloaded):
+helpers can use I/[I parameters and return I/V/[I, and can be overloaded):
 
 - `iconst_m1` through `iconst_5`, signed `bipush` and `sipush`
 - `iload`, `istore`, including their `_0` through `_3` forms
@@ -138,7 +144,26 @@ helpers can return void and be overloaded):
 - `goto`, `ireturn` (including early returns followed by other code)
 - Tag-10 `invokestatic` (same-class or supplied direct bundle owner), internal
   void `return`, category-1 `pop`
-- `getstatic`, `putstatic` for I fields, category-1 `dup`
+- `getstatic`, `putstatic` for I/[I fields
+- null/aload/astore, int `newarray`, arraylength/iaload/iastore, internal areturn
+- reference equality/null branches, nop, all category-1 pop/dup/swap forms
+
+### Typed integer arrays
+
+Int and reference slots have distinct tags; null is not integer zero. Local,
+field, arithmetic, branch, call and return paths validate kinds. Root signatures
+still accept only int arguments/return, so host numbers cannot forge references.
+Heap identities live inside EVM: aliases share writes, distinct allocations stay
+distinct, helper returns preserve identity, and arrays survive frame returns.
+Static/inherited [I fields and initializer-created arrays use the same heap;
+final references prohibit rebinding, not element mutation.
+
+Array allocation/read/write/identity/null/bounds behavior is implemented in EVM.
+Limits:1024 arrays,65536 elements per array,262144 total elements per invocation.
+No GC; even unreachable allocations count. A fresh invocation resets heap/statics.
+These logical caps do not promise sufficient EVM gas: allocating the total limit
+costs about139M gas with Solidity's word-sized array representation. Cap checks use
+focused EVM-only tests, not dangerous reference-JVM heap exhaustion.
 
 ### Integer static state and class initialization
 
@@ -187,9 +212,9 @@ M2b division truncates toward zero; remainder follows Java's sign rules.
 INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
-**Deferred:** non-integer constants, wide/goto_w, stack permutation forms, switch,
-other primitive types, interface/instance calls,
-non-I field storage, arrays, heap/objects, exception handlers, monitors,
+**Deferred:** non-integer constants, wide/goto_w, category-2 values, switch,
+other primitive/array types, reference/multidimensional arrays, general objects,
+constructors/instance/interface calls, non-I/[I fields, handlers, monitors,
 class libraries and deployment workflows.
 
 This is not a full JVM verifier: no modified-UTF8 validation, general class
@@ -219,6 +244,13 @@ initializer (including from its helper) is wrapped. StackOverflowError is alread
 an Error and is not wrapped. OracleMain also records actual root-initialization
 errors during Class.forName. Retry after failed initialization, Java exception
 objects/causes and thread synchronization are not implemented.
+
+M4a adds kinds4 NegativeArraySizeException,5 ArrayIndexOutOfBoundsException,
+6 NullPointerException,7 OutOfMemoryError. Null checks precede array bounds;
+negative sizes precede positive-cap checks. Non-Error array exceptions escaping
+initializers wrap as EIIE; OOM/StackOverflow remain Errors. EVM OOG is never Java
+OOM. BytecodeError14 rejects kind confusion; ArrayError1 rejects other newarray
+types; defensive ReferenceError1 protects invalid handles.
 
 Call validation has exact `CallError(code,pc)` payloads: malformed reference (1),
 external owner (2), missing exact signature (3), unsupported callee semantics (4),
@@ -284,6 +316,6 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M3d acceptance is
-recorded in `JAVA_EVM_M3D_PLAN.md`; next are typed references and integer-array
-heap operations. No full-Java claim or routine per-stage re-confirmation.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4a acceptance is
+recorded in `JAVA_EVM_M4A_PLAN.md`; next are ordinary object allocation, constructors
+and instance fields/calls. No full-Java claim or routine re-confirmation.
