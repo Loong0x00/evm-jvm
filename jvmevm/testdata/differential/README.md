@@ -4,11 +4,11 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 341 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`, and
-73 `m3b` cases. The 87 smoke cases include 20 from `m3a` and 32 from `m3b`.
+The manifest has 426 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+73 `m3b`, and 85 `m3c` cases. The 128 smoke cases include 41 from `m3c`.
 Every root entry remains a uniquely named public static `(int...)int` method,
-and guest sources have no `main`. The original 268 entries through M3a are
-unchanged.
+and guest sources have no `main`. All 341 entries through M3b, including their
+source lists, arguments, budgets, tiers, and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -66,10 +66,40 @@ The four new arithmetic cases explicitly expect
 - `m3b-error-void-divide-zero`
 
 `m3b-recursion-stack-overflow` explicitly expects
-`java.lang.StackOverflowError`. Across all stages there are 329 value outcomes,
-ten ArithmeticException outcomes, and two StackOverflowError outcomes. Every
-gas limit is finite and at most 50,000,000; every subprocess timeout is at most
-10 seconds.
+`java.lang.StackOverflowError`.
+
+M3c adds 78 value outcomes and seven actual JVM exception outcomes over 28 new
+trusted Java 8 classes. It covers legacy single-class and explicit bundle paths,
+zero-prepared and mutable static `int` fields, `getstatic`, `putstatic`, javac's
+category-1 `dup` post/preincrement shapes, int32 overflow, and fresh process/VM
+state. Bundles exercise public, package, and private-owner accesses, cross-package
+public access, same-named fields in independent owners, class-local state and
+class-file input permutations.
+
+Initialization cases cover root initialization with pending arguments, computed
+final fields, helper calls, repeated active use exactly once, self-reentrant
+prepared-default reads, A/B cycles in both first-use orders, and initialization
+before an actual get, put, or call while caller operands/arguments remain live.
+Supplied but unused failing initializers are not run. `ConstantHolder.VALUE` and
+`M3cStatics.COMPILED_CONSTANT` are genuine javac `ConstantValue` declarations,
+but their Java-source reads compile to constants and therefore are deliberately
+**not** claimed as `getstatic` coverage. Exact `ConstantValue`-plus-`getstatic`
+coverage requires the separately owned test-only raw-classfile mutations.
+
+Five M3c cases expect a genuine
+`java.lang.ExceptionInInitializerError`: two root-initialization probes, two
+nested-owner probes, and one ordinary-helper-during-initialization probe. One
+case keeps arithmetic outside initialization as
+`java.lang.ArithmeticException`; one recursive initializer expects the unwrapped
+`java.lang.StackOverflowError`. `OracleMain` reports genuine
+`ExceptionInInitializerError` and `StackOverflowError` outcomes thrown directly
+by `Class.forName`, while class-not-found and reflection/configuration failures
+remain nonzero stderr failures.
+
+Across all stages there are 407 value outcomes, 11 ArithmeticException outcomes,
+three StackOverflowError outcomes, and five ExceptionInInitializerError outcomes.
+Every gas limit is finite and at most 50,000,000; every subprocess timeout is at
+most 10 seconds.
 
 All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
 direct superclass is `java/lang/Object`. They have zero fields, zero interfaces,
@@ -98,28 +128,39 @@ same-index isolation references with:
 
 ```sh
 out="$(mktemp -d)"
-find jvmevm/testdata/differential/bundle -name '*.java' -print0 \
+find jvmevm/testdata/differential -name '*.java' -print0 \
   | xargs -0 javac --release 8 -d "$out"
 find "$out/bundle" -name '*.class' -print | sort | while read -r file; do
   class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
   javap -classpath "$out" -c -v -p "$class"
 done
+javap -classpath "$out" -c -v -p M3cStatics
 javap -classpath "$out" -c -p bundle.isolation.Alpha bundle.isolation.Beta
 rm -rf "$out"
 ```
+
+A full local reference compile and 426 fresh `OracleMain` JVM invocations passed
+for this fixture revision. `javap -c -v -p` over the 28 M3c classes found 18
+`<clinit>` methods, two `ConstantValue` attributes, and aggregate field shapes of
+83 `getstatic`, 57 `putstatic`, and seven `dup` instructions. All non-constructor
+methods use only the frozen M3c profile plus accepted M3b operations; ordinary
+javac-generated, unentered constructors still contain `aload_0` and
+`invokespecial Object.<init>`. All classes directly extend `java/lang/Object`
+and declare no interfaces.
 
 `WideIntegerConstant.loadWide` remains the javac-produced `ldc_w` fixture with a
 `CONSTANT_Integer` index greater than 255. Its unselected pool-populating helper
 has no `<clinit>`.
 
-The M3b runtime and verifier are integrated. Select the cumulative suite with:
+The M3b runtime and verifier are integrated. Its accepted suite remains:
 
 ```sh
 python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All341 cases passed actual JVM/EVM comparison on one generic artifact after
-parent integration, with the prior268 entries unchanged. See
-`JAVA_EVM_M3B_PLAN.md` for independent acceptance. This remains subset
-verification, not full JVM conformance.
+All 341 M3b-and-earlier cases passed actual JVM/EVM comparison on one generic
+artifact after parent integration. The M3c fixtures and reference outcomes above
+are ready for the pending M3c runner/runtime integration; the old engine is not
+expected to execute the new field/initializer cases. See `JAVA_EVM_M3C_PLAN.md`
+for the frozen scope. This remains subset verification, not full JVM conformance.

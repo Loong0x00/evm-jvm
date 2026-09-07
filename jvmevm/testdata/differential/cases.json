@@ -6140,6 +6140,1712 @@
       "smoke": true,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.ArithmeticException"
+    },
+  {
+      "id": "m3c-legacy-default-zero",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "readDefault",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-default-negative-addend",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "readDefault",
+      "args": [
+        -37
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-write-max",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "writeThenRead",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-write-min",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "writeThenRead",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-postincrement",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "postIncrement",
+      "args": [],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-postincrement-observe",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "postIncrementAndObserve",
+      "args": [],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-preincrement",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "preIncrement",
+      "args": [],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-increment-overflow",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "incrementOverflow",
+      "args": [],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-postincrement-overflow-state",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "postIncrementOverflowState",
+      "args": [],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-postdecrement-underflow-state",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "postDecrementUnderflowState",
+      "args": [],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-computed-final",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "readComputedFinal",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-computed-final-negative",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "readComputedFinal",
+      "args": [
+        -3000
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-constantvalue-inlined-read",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "readCompiledConstant",
+      "args": [
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-access-levels",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "accessLevels",
+      "args": [
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-repeated-mutation-zero",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "repeatedMutation",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-repeated-mutation-positive",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "repeatedMutation",
+      "args": [
+        123456
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-repeated-mutation-negative",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "repeatedMutation",
+      "args": [
+        -76543
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-fresh-reset-first",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "freshResetProbe",
+      "args": [
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-fresh-reset-repeat",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "freshResetProbe",
+      "args": [
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-legacy-fresh-reset-negative",
+      "stage": "m3c",
+      "sources": [
+        "M3cStatics.java"
+      ],
+      "class": "M3cStatics",
+      "method": "freshResetProbe",
+      "args": [
+        -20
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-public-read",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "readPublic",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-public-read-add",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "readPublic",
+      "args": [
+        -101
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-package-read",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "readPackage",
+      "args": [
+        7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-package-read-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "readPackage",
+      "args": [
+        -30
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-private-owner-read",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "readPrivateThroughOwner",
+      "args": [
+        7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-private-owner-read-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "readPrivateThroughOwner",
+      "args": [
+        -100
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-public-write",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "writePublic",
+      "args": [
+        909
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-package-write",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "writePackage",
+      "args": [
+        -808
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-private-owner-write",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "writePrivateThroughOwner",
+      "args": [
+        707
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-mixed",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "mixedAccess",
+      "args": [
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-mixed-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/AccessRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.AccessRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "mixedAccess",
+      "args": [
+        -12
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-cross-package-read",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/external/PublicFieldRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.external.PublicFieldRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessOwner.class",
+        "bundle/m3c/access/external/PublicFieldRoot.class"
+      ],
+      "method": "readAcrossPackage",
+      "args": [
+        22
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-cross-package-read-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/external/PublicFieldRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.external.PublicFieldRoot",
+      "class_files": [
+        "bundle/m3c/access/external/PublicFieldRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "readAcrossPackage",
+      "args": [
+        -1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-cross-package-write",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/external/PublicFieldRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.external.PublicFieldRoot",
+      "class_files": [
+        "bundle/m3c/access/external/PublicFieldRoot.class",
+        "bundle/m3c/access/AccessOwner.class"
+      ],
+      "method": "writeAcrossPackage",
+      "args": [
+        -333
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-access-cross-package-write-max",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/access/external/PublicFieldRoot.java",
+        "bundle/m3c/access/AccessOwner.java"
+      ],
+      "class": "bundle.m3c.access.external.PublicFieldRoot",
+      "class_files": [
+        "bundle/m3c/access/AccessOwner.class",
+        "bundle/m3c/access/external/PublicFieldRoot.class"
+      ],
+      "method": "writeAcrossPackage",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-names-read-both",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/names/NamesRoot.java",
+        "bundle/m3c/names/NamedA.java",
+        "bundle/m3c/names/NamedB.java"
+      ],
+      "class": "bundle.m3c.names.NamesRoot",
+      "class_files": [
+        "bundle/m3c/names/NamesRoot.class",
+        "bundle/m3c/names/NamedA.class",
+        "bundle/m3c/names/NamedB.class"
+      ],
+      "method": "readBoth",
+      "args": [
+        3
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-names-read-both-owner-first",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/names/NamesRoot.java",
+        "bundle/m3c/names/NamedA.java",
+        "bundle/m3c/names/NamedB.java"
+      ],
+      "class": "bundle.m3c.names.NamesRoot",
+      "class_files": [
+        "bundle/m3c/names/NamedA.class",
+        "bundle/m3c/names/NamedB.class",
+        "bundle/m3c/names/NamesRoot.class"
+      ],
+      "method": "readBoth",
+      "args": [
+        -2
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-names-mutate",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/names/NamesRoot.java",
+        "bundle/m3c/names/NamedA.java",
+        "bundle/m3c/names/NamedB.java"
+      ],
+      "class": "bundle.m3c.names.NamesRoot",
+      "class_files": [
+        "bundle/m3c/names/NamedB.class",
+        "bundle/m3c/names/NamesRoot.class",
+        "bundle/m3c/names/NamedA.class"
+      ],
+      "method": "mutateIndependently",
+      "args": [
+        7,
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-names-mutate-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/names/NamesRoot.java",
+        "bundle/m3c/names/NamedA.java",
+        "bundle/m3c/names/NamedB.java"
+      ],
+      "class": "bundle.m3c.names.NamesRoot",
+      "class_files": [
+        "bundle/m3c/names/NamesRoot.class",
+        "bundle/m3c/names/NamedA.class",
+        "bundle/m3c/names/NamedB.class"
+      ],
+      "method": "mutateIndependently",
+      "args": [
+        -5,
+        -9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-names-cache-alternating",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/names/NamesRoot.java",
+        "bundle/m3c/names/NamedA.java",
+        "bundle/m3c/names/NamedB.java"
+      ],
+      "class": "bundle.m3c.names.NamesRoot",
+      "class_files": [
+        "bundle/m3c/names/NamedA.class",
+        "bundle/m3c/names/NamesRoot.class",
+        "bundle/m3c/names/NamedB.class"
+      ],
+      "method": "alternatingCacheProbe",
+      "args": [
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-names-cache-alternating-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/names/NamesRoot.java",
+        "bundle/m3c/names/NamedA.java",
+        "bundle/m3c/names/NamedB.java"
+      ],
+      "class": "bundle.m3c.names.NamesRoot",
+      "class_files": [
+        "bundle/m3c/names/NamedB.class",
+        "bundle/m3c/names/NamedA.class",
+        "bundle/m3c/names/NamesRoot.class"
+      ],
+      "method": "alternatingCacheProbe",
+      "args": [
+        -20
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-root-init-preserves-args",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/RootInitialization.java"
+      ],
+      "class": "bundle.m3c.init.RootInitialization",
+      "class_files": [
+        "bundle/m3c/init/RootInitialization.class"
+      ],
+      "method": "rootArgumentsPreserved",
+      "args": [
+        12,
+        34
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-root-init-preserves-negative-args",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/RootInitialization.java"
+      ],
+      "class": "bundle.m3c.init.RootInitialization",
+      "class_files": [
+        "bundle/m3c/init/RootInitialization.class"
+      ],
+      "method": "rootArgumentsPreserved",
+      "args": [
+        -12,
+        -34
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-root-init-value",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/RootInitialization.java"
+      ],
+      "class": "bundle.m3c.init.RootInitialization",
+      "class_files": [
+        "bundle/m3c/init/RootInitialization.class"
+      ],
+      "method": "rootInitializedValue",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-root-init-value-addend",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/RootInitialization.java"
+      ],
+      "class": "bundle.m3c.init.RootInitialization",
+      "class_files": [
+        "bundle/m3c/init/RootInitialization.class"
+      ],
+      "method": "rootInitializedValue",
+      "args": [
+        99
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-self-prepared-default",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/SelfPrepared.java"
+      ],
+      "class": "bundle.m3c.init.SelfPrepared",
+      "class_files": [
+        "bundle/m3c/init/SelfPrepared.class"
+      ],
+      "method": "encoded",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-self-prepared-default-addend",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/SelfPrepared.java"
+      ],
+      "class": "bundle.m3c.init.SelfPrepared",
+      "class_files": [
+        "bundle/m3c/init/SelfPrepared.class"
+      ],
+      "method": "encoded",
+      "args": [
+        17
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-self-prepared-default-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/SelfPrepared.java"
+      ],
+      "class": "bundle.m3c.init.SelfPrepared",
+      "class_files": [
+        "bundle/m3c/init/SelfPrepared.class"
+      ],
+      "method": "encoded",
+      "args": [
+        -900
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-init-once-calls-and-field",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OnceRoot.java",
+        "bundle/m3c/init/OnceOwner.java"
+      ],
+      "class": "bundle.m3c.init.OnceRoot",
+      "class_files": [
+        "bundle/m3c/init/OnceRoot.class",
+        "bundle/m3c/init/OnceOwner.class"
+      ],
+      "method": "repeatedActiveUse",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-init-once-calls-and-field-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OnceRoot.java",
+        "bundle/m3c/init/OnceOwner.java"
+      ],
+      "class": "bundle.m3c.init.OnceRoot",
+      "class_files": [
+        "bundle/m3c/init/OnceOwner.class",
+        "bundle/m3c/init/OnceRoot.class"
+      ],
+      "method": "repeatedActiveUse",
+      "args": [
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-init-once-repeated-getstatic",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OnceRoot.java",
+        "bundle/m3c/init/OnceOwner.java"
+      ],
+      "class": "bundle.m3c.init.OnceRoot",
+      "class_files": [
+        "bundle/m3c/init/OnceOwner.class",
+        "bundle/m3c/init/OnceRoot.class"
+      ],
+      "method": "repeatedGetstatic",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-init-once-repeated-getstatic-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OnceRoot.java",
+        "bundle/m3c/init/OnceOwner.java"
+      ],
+      "class": "bundle.m3c.init.OnceRoot",
+      "class_files": [
+        "bundle/m3c/init/OnceRoot.class",
+        "bundle/m3c/init/OnceOwner.class"
+      ],
+      "method": "repeatedGetstatic",
+      "args": [
+        -200
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-a",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleRoot.class",
+        "bundle/m3c/init/CycleA.class",
+        "bundle/m3c/init/CycleB.class"
+      ],
+      "method": "firstUseA",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-a-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleB.class",
+        "bundle/m3c/init/CycleRoot.class",
+        "bundle/m3c/init/CycleA.class"
+      ],
+      "method": "firstUseA",
+      "args": [
+        10
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-a-root-last",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleA.class",
+        "bundle/m3c/init/CycleB.class",
+        "bundle/m3c/init/CycleRoot.class"
+      ],
+      "method": "firstUseA",
+      "args": [
+        -4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-a-owner-last",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleRoot.class",
+        "bundle/m3c/init/CycleB.class",
+        "bundle/m3c/init/CycleA.class"
+      ],
+      "method": "firstUseA",
+      "args": [
+        100
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-b",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleRoot.class",
+        "bundle/m3c/init/CycleA.class",
+        "bundle/m3c/init/CycleB.class"
+      ],
+      "method": "firstUseB",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-b-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleA.class",
+        "bundle/m3c/init/CycleRoot.class",
+        "bundle/m3c/init/CycleB.class"
+      ],
+      "method": "firstUseB",
+      "args": [
+        10
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-b-root-last",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleB.class",
+        "bundle/m3c/init/CycleA.class",
+        "bundle/m3c/init/CycleRoot.class"
+      ],
+      "method": "firstUseB",
+      "args": [
+        -4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-cycle-first-b-owner-last",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/CycleRoot.java",
+        "bundle/m3c/init/CycleA.java",
+        "bundle/m3c/init/CycleB.java"
+      ],
+      "class": "bundle.m3c.init.CycleRoot",
+      "class_files": [
+        "bundle/m3c/init/CycleRoot.class",
+        "bundle/m3c/init/CycleA.class",
+        "bundle/m3c/init/CycleB.class"
+      ],
+      "method": "firstUseB",
+      "args": [
+        100
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-get-prefix",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandRoot.class",
+        "bundle/m3c/init/OperandOwner.class"
+      ],
+      "method": "getWithPrefix",
+      "args": [
+        7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-get-prefix-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandOwner.class",
+        "bundle/m3c/init/OperandRoot.class"
+      ],
+      "method": "getWithPrefix",
+      "args": [
+        -9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-put-prefix",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandOwner.class",
+        "bundle/m3c/init/OperandRoot.class"
+      ],
+      "method": "putWithPrefix",
+      "args": [
+        6,
+        12
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-put-prefix-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandRoot.class",
+        "bundle/m3c/init/OperandOwner.class"
+      ],
+      "method": "putWithPrefix",
+      "args": [
+        -5,
+        -8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-call-prefix",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandRoot.class",
+        "bundle/m3c/init/OperandOwner.class"
+      ],
+      "method": "callWithPrefix",
+      "args": [
+        4,
+        5,
+        6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-call-prefix-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandOwner.class",
+        "bundle/m3c/init/OperandRoot.class"
+      ],
+      "method": "callWithPrefix",
+      "args": [
+        -4,
+        -5,
+        -6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-put-after-init",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandOwner.class",
+        "bundle/m3c/init/OperandRoot.class"
+      ],
+      "method": "putThenCheckInitialization",
+      "args": [
+        88
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-operand-put-after-init-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/OperandRoot.java",
+        "bundle/m3c/init/OperandOwner.java"
+      ],
+      "class": "bundle.m3c.init.OperandRoot",
+      "class_files": [
+        "bundle/m3c/init/OperandRoot.class",
+        "bundle/m3c/init/OperandOwner.class"
+      ],
+      "method": "putThenCheckInitialization",
+      "args": [
+        -88
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-computed-final-read",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/ComputedFinalRoot.java",
+        "bundle/m3c/init/ComputedFinalOwner.java"
+      ],
+      "class": "bundle.m3c.init.ComputedFinalRoot",
+      "class_files": [
+        "bundle/m3c/init/ComputedFinalRoot.class",
+        "bundle/m3c/init/ComputedFinalOwner.class"
+      ],
+      "method": "readFinal",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-computed-final-read-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/ComputedFinalRoot.java",
+        "bundle/m3c/init/ComputedFinalOwner.java"
+      ],
+      "class": "bundle.m3c.init.ComputedFinalRoot",
+      "class_files": [
+        "bundle/m3c/init/ComputedFinalOwner.class",
+        "bundle/m3c/init/ComputedFinalRoot.class"
+      ],
+      "method": "readFinal",
+      "args": [
+        -400
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-computed-final-once",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/ComputedFinalRoot.java",
+        "bundle/m3c/init/ComputedFinalOwner.java"
+      ],
+      "class": "bundle.m3c.init.ComputedFinalRoot",
+      "class_files": [
+        "bundle/m3c/init/ComputedFinalOwner.class",
+        "bundle/m3c/init/ComputedFinalRoot.class"
+      ],
+      "method": "readFinalTwice",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-computed-final-once-addend",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/init/ComputedFinalRoot.java",
+        "bundle/m3c/init/ComputedFinalOwner.java"
+      ],
+      "class": "bundle.m3c.init.ComputedFinalRoot",
+      "class_files": [
+        "bundle/m3c/init/ComputedFinalRoot.class",
+        "bundle/m3c/init/ComputedFinalOwner.class"
+      ],
+      "method": "readFinalTwice",
+      "args": [
+        99
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-lazy-inlined-constant",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/lazy/LazyRoot.java",
+        "bundle/m3c/lazy/ConstantHolder.java",
+        "bundle/m3c/lazy/UnusedFailure.java"
+      ],
+      "class": "bundle.m3c.lazy.LazyRoot",
+      "class_files": [
+        "bundle/m3c/lazy/LazyRoot.class",
+        "bundle/m3c/lazy/ConstantHolder.class",
+        "bundle/m3c/lazy/UnusedFailure.class"
+      ],
+      "method": "inlinedConstant",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-lazy-inlined-constant-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/lazy/LazyRoot.java",
+        "bundle/m3c/lazy/ConstantHolder.java",
+        "bundle/m3c/lazy/UnusedFailure.java"
+      ],
+      "class": "bundle.m3c.lazy.LazyRoot",
+      "class_files": [
+        "bundle/m3c/lazy/ConstantHolder.class",
+        "bundle/m3c/lazy/UnusedFailure.class",
+        "bundle/m3c/lazy/LazyRoot.class"
+      ],
+      "method": "inlinedConstant",
+      "args": [
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-lazy-inlined-constant-root-last",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/lazy/LazyRoot.java",
+        "bundle/m3c/lazy/ConstantHolder.java",
+        "bundle/m3c/lazy/UnusedFailure.java"
+      ],
+      "class": "bundle.m3c.lazy.LazyRoot",
+      "class_files": [
+        "bundle/m3c/lazy/UnusedFailure.class",
+        "bundle/m3c/lazy/ConstantHolder.class",
+        "bundle/m3c/lazy/LazyRoot.class"
+      ],
+      "method": "inlinedConstant",
+      "args": [
+        -100
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-lazy-unused-provided-initializer",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/lazy/LazyRoot.java",
+        "bundle/m3c/lazy/ConstantHolder.java",
+        "bundle/m3c/lazy/UnusedFailure.java"
+      ],
+      "class": "bundle.m3c.lazy.LazyRoot",
+      "class_files": [
+        "bundle/m3c/lazy/UnusedFailure.class",
+        "bundle/m3c/lazy/LazyRoot.class",
+        "bundle/m3c/lazy/ConstantHolder.class"
+      ],
+      "method": "ignoreProvidedInitializer",
+      "args": [
+        6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-lazy-unused-provided-initializer-negative",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/lazy/LazyRoot.java",
+        "bundle/m3c/lazy/ConstantHolder.java",
+        "bundle/m3c/lazy/UnusedFailure.java"
+      ],
+      "class": "bundle.m3c.lazy.LazyRoot",
+      "class_files": [
+        "bundle/m3c/lazy/ConstantHolder.class",
+        "bundle/m3c/lazy/LazyRoot.class",
+        "bundle/m3c/lazy/UnusedFailure.class"
+      ],
+      "method": "ignoreProvidedInitializer",
+      "args": [
+        -11
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-error-root-init-arithmetic",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/RootInitArithmetic.java"
+      ],
+      "class": "bundle.m3c.errors.RootInitArithmetic",
+      "class_files": [
+        "bundle/m3c/errors/RootInitArithmetic.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3c-error-root-init-arithmetic-arg",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/RootInitArithmetic.java"
+      ],
+      "class": "bundle.m3c.errors.RootInitArithmetic",
+      "class_files": [
+        "bundle/m3c/errors/RootInitArithmetic.class"
+      ],
+      "method": "entry",
+      "args": [
+        99
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3c-error-nested-init-arithmetic",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/NestedErrorRoot.java",
+        "bundle/m3c/errors/NestedFailure.java"
+      ],
+      "class": "bundle.m3c.errors.NestedErrorRoot",
+      "class_files": [
+        "bundle/m3c/errors/NestedErrorRoot.class",
+        "bundle/m3c/errors/NestedFailure.class"
+      ],
+      "method": "triggerNested",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3c-error-nested-init-arithmetic-reordered",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/NestedErrorRoot.java",
+        "bundle/m3c/errors/NestedFailure.java"
+      ],
+      "class": "bundle.m3c.errors.NestedErrorRoot",
+      "class_files": [
+        "bundle/m3c/errors/NestedFailure.class",
+        "bundle/m3c/errors/NestedErrorRoot.class"
+      ],
+      "method": "triggerNested",
+      "args": [
+        5
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3c-error-helper-init-arithmetic",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/HelperFailureRoot.java",
+        "bundle/m3c/errors/FailureMath.java"
+      ],
+      "class": "bundle.m3c.errors.HelperFailureRoot",
+      "class_files": [
+        "bundle/m3c/errors/HelperFailureRoot.class",
+        "bundle/m3c/errors/FailureMath.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3c-error-arithmetic-outside-init-value",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/ArithmeticOutsideInit.java"
+      ],
+      "class": "bundle.m3c.errors.ArithmeticOutsideInit",
+      "class_files": [
+        "bundle/m3c/errors/ArithmeticOutsideInit.class"
+      ],
+      "method": "divide",
+      "args": [
+        20,
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3c-error-arithmetic-outside-init",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/ArithmeticOutsideInit.java"
+      ],
+      "class": "bundle.m3c.errors.ArithmeticOutsideInit",
+      "class_files": [
+        "bundle/m3c/errors/ArithmeticOutsideInit.class"
+      ],
+      "method": "divide",
+      "args": [
+        20,
+        0
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3c-error-stack-overflow-inside-init",
+      "stage": "m3c",
+      "sources": [
+        "bundle/m3c/errors/InitStackOverflow.java"
+      ],
+      "class": "bundle.m3c.errors.InitStackOverflow",
+      "class_files": [
+        "bundle/m3c/errors/InitStackOverflow.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.StackOverflowError"
     }
   ]
 }

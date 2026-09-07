@@ -12,7 +12,16 @@ public final class OracleMain {
         }
 
         try {
-            Class<?> guestClass = Class.forName(args[0]);
+            Class<?> guestClass;
+            try {
+                guestClass = Class.forName(args[0]);
+            } catch (ExceptionInInitializerError guestFailure) {
+                System.out.println("exception=" + guestFailure.getClass().getName());
+                return;
+            } catch (StackOverflowError guestFailure) {
+                System.out.println("exception=" + guestFailure.getClass().getName());
+                return;
+            }
             Method selected = null;
             for (Method candidate : guestClass.getDeclaredMethods()) {
                 if (candidate.getName().equals(args[1])) {
