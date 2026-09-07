@@ -4427,6 +4427,1719 @@
       "smoke": true,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.StackOverflowError"
+    },
+    {
+      "id": "m3b-basic-order-root-first",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicRoot.class",
+        "bundle/basic/BasicHelper.class"
+      ],
+      "method": "direct",
+      "args": [
+        17
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-order-root-last",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicHelper.class",
+        "bundle/basic/BasicRoot.class"
+      ],
+      "method": "direct",
+      "args": [
+        17
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-direct-negative",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicHelper.class",
+        "bundle/basic/BasicRoot.class"
+      ],
+      "method": "direct",
+      "args": [
+        -41
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-zero-argument",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicRoot.class",
+        "bundle/basic/BasicHelper.class"
+      ],
+      "method": "zeroArgument",
+      "args": [
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-three-arguments",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicHelper.class",
+        "bundle/basic/BasicRoot.class"
+      ],
+      "method": "threeArguments",
+      "args": [
+        1,
+        2,
+        3
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-three-arguments-signed",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicRoot.class",
+        "bundle/basic/BasicHelper.class"
+      ],
+      "method": "threeArguments",
+      "args": [
+        -7,
+        8,
+        -9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-overload-one",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicHelper.class",
+        "bundle/basic/BasicRoot.class"
+      ],
+      "method": "overloadOne",
+      "args": [
+        -12
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-overload-two",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicRoot.class",
+        "bundle/basic/BasicHelper.class"
+      ],
+      "method": "overloadTwo",
+      "args": [
+        9,
+        -4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-two-external-calls",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicHelper.class",
+        "bundle/basic/BasicRoot.class"
+      ],
+      "method": "twoExternalCalls",
+      "args": [
+        4,
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-basic-overflow",
+      "stage": "m3b",
+      "sources": [
+        "bundle/basic/BasicRoot.java",
+        "bundle/basic/BasicHelper.java"
+      ],
+      "class": "bundle.basic.BasicRoot",
+      "class_files": [
+        "bundle/basic/BasicRoot.class",
+        "bundle/basic/BasicHelper.class"
+      ],
+      "method": "twoExternalCalls",
+      "args": [
+        2147483647,
+        -2147483648
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-caller-locals",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/StateHelper.class",
+        "bundle/state/VoidHelper.class",
+        "bundle/state/StateRoot.class"
+      ],
+      "method": "callerLocals",
+      "args": [
+        7,
+        11
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-caller-locals-negative",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/VoidHelper.class",
+        "bundle/state/StateRoot.class",
+        "bundle/state/StateHelper.class"
+      ],
+      "method": "callerLocals",
+      "args": [
+        -30,
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-caller-prefix",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/StateRoot.class",
+        "bundle/state/StateHelper.class",
+        "bundle/state/VoidHelper.class"
+      ],
+      "method": "callerPrefix",
+      "args": [
+        500,
+        7,
+        -9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-caller-prefix-overflow",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/StateHelper.class",
+        "bundle/state/VoidHelper.class",
+        "bundle/state/StateRoot.class"
+      ],
+      "method": "callerPrefix",
+      "args": [
+        2147483647,
+        -2147483648,
+        99
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-two-calls",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/VoidHelper.class",
+        "bundle/state/StateRoot.class",
+        "bundle/state/StateHelper.class"
+      ],
+      "method": "twoCalls",
+      "args": [
+        17,
+        -6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-six-arguments",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/StateHelper.class",
+        "bundle/state/VoidHelper.class",
+        "bundle/state/StateRoot.class"
+      ],
+      "method": "sixArguments",
+      "args": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-void-call",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/VoidHelper.class",
+        "bundle/state/StateRoot.class",
+        "bundle/state/StateHelper.class"
+      ],
+      "method": "voidCall",
+      "args": [
+        -44
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-nested-void",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/StateHelper.class",
+        "bundle/state/VoidHelper.class",
+        "bundle/state/StateRoot.class"
+      ],
+      "method": "nestedVoidCall",
+      "args": [
+        19
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-state-pop-external-result",
+      "stage": "m3b",
+      "sources": [
+        "bundle/state/StateRoot.java",
+        "bundle/state/StateHelper.java",
+        "bundle/state/VoidHelper.java"
+      ],
+      "class": "bundle.state.StateRoot",
+      "class_files": [
+        "bundle/state/StateRoot.class",
+        "bundle/state/StateHelper.class",
+        "bundle/state/VoidHelper.class"
+      ],
+      "method": "discardExternalResult",
+      "args": [
+        37
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-left-right-root-first",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/IsolationRoot.class",
+        "bundle/isolation/Alpha.class",
+        "bundle/isolation/Beta.class"
+      ],
+      "method": "leftRight",
+      "args": [
+        3,
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-left-right-root-last",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/Alpha.class",
+        "bundle/isolation/Beta.class",
+        "bundle/isolation/IsolationRoot.class"
+      ],
+      "method": "leftRight",
+      "args": [
+        3,
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-left-right-signed",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/Beta.class",
+        "bundle/isolation/IsolationRoot.class",
+        "bundle/isolation/Alpha.class"
+      ],
+      "method": "leftRight",
+      "args": [
+        -17,
+        23
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-right-left",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/Beta.class",
+        "bundle/isolation/Alpha.class",
+        "bundle/isolation/IsolationRoot.class"
+      ],
+      "method": "rightLeft",
+      "args": [
+        8,
+        -9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-repeated-owners",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/Alpha.class",
+        "bundle/isolation/IsolationRoot.class",
+        "bundle/isolation/Beta.class"
+      ],
+      "method": "repeatedOwners",
+      "args": [
+        11
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-repeated-extrema",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/Beta.class",
+        "bundle/isolation/Alpha.class",
+        "bundle/isolation/IsolationRoot.class"
+      ],
+      "method": "repeatedOwners",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-same-signature-pairs",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/IsolationRoot.class",
+        "bundle/isolation/Alpha.class",
+        "bundle/isolation/Beta.class"
+      ],
+      "method": "sameSignaturePairs",
+      "args": [
+        12,
+        -7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-isolation-same-signature-overflow",
+      "stage": "m3b",
+      "sources": [
+        "bundle/isolation/IsolationRoot.java",
+        "bundle/isolation/Alpha.java",
+        "bundle/isolation/Beta.java"
+      ],
+      "class": "bundle.isolation.IsolationRoot",
+      "class_files": [
+        "bundle/isolation/Alpha.class",
+        "bundle/isolation/Beta.class",
+        "bundle/isolation/IsolationRoot.class"
+      ],
+      "method": "sameSignaturePairs",
+      "args": [
+        -2147483648,
+        2147483647
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-nested-root-first",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/CycleRoot.class",
+        "bundle/cycle/LayerOne.class",
+        "bundle/cycle/LayerTwo.class",
+        "bundle/cycle/LayerThree.class"
+      ],
+      "method": "nestedChain",
+      "args": [
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-nested-root-last",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/LayerOne.class",
+        "bundle/cycle/LayerTwo.class",
+        "bundle/cycle/LayerThree.class",
+        "bundle/cycle/CycleRoot.class"
+      ],
+      "method": "nestedChain",
+      "args": [
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-nested-negative",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/LayerThree.class",
+        "bundle/cycle/CycleRoot.class",
+        "bundle/cycle/LayerTwo.class",
+        "bundle/cycle/LayerOne.class"
+      ],
+      "method": "nestedChain",
+      "args": [
+        -20
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-walk-zero-depth",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/LayerTwo.class",
+        "bundle/cycle/CycleRoot.class",
+        "bundle/cycle/LayerThree.class",
+        "bundle/cycle/LayerOne.class"
+      ],
+      "method": "cyclicWalk",
+      "args": [
+        9,
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-walk-five",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/LayerThree.class",
+        "bundle/cycle/LayerTwo.class",
+        "bundle/cycle/LayerOne.class",
+        "bundle/cycle/CycleRoot.class"
+      ],
+      "method": "cyclicWalk",
+      "args": [
+        2,
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-walk-twelve",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/LayerOne.class",
+        "bundle/cycle/LayerThree.class",
+        "bundle/cycle/CycleRoot.class",
+        "bundle/cycle/LayerTwo.class"
+      ],
+      "method": "cyclicWalk",
+      "args": [
+        -3,
+        12
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-caller-prefix",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/LayerTwo.class",
+        "bundle/cycle/LayerOne.class",
+        "bundle/cycle/LayerThree.class",
+        "bundle/cycle/CycleRoot.class"
+      ],
+      "method": "cyclicCallerPrefix",
+      "args": [
+        77,
+        4,
+        7
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cycle-caller-prefix-signed",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cycle/CycleRoot.java",
+        "bundle/cycle/LayerOne.java",
+        "bundle/cycle/LayerTwo.java",
+        "bundle/cycle/LayerThree.java"
+      ],
+      "class": "bundle.cycle.CycleRoot",
+      "class_files": [
+        "bundle/cycle/LayerThree.class",
+        "bundle/cycle/CycleRoot.class",
+        "bundle/cycle/LayerOne.class",
+        "bundle/cycle/LayerTwo.class"
+      ],
+      "method": "cyclicCallerPrefix",
+      "args": [
+        -99,
+        -5,
+        9
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-sum-zero",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionA.class",
+        "bundle/recursion/RecursionB.class",
+        "bundle/recursion/RecursionRoot.class"
+      ],
+      "method": "crossSum",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-sum-one",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionB.class",
+        "bundle/recursion/RecursionRoot.class",
+        "bundle/recursion/RecursionA.class"
+      ],
+      "method": "crossSum",
+      "args": [
+        1
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-sum-ten",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionRoot.class",
+        "bundle/recursion/RecursionA.class",
+        "bundle/recursion/RecursionB.class"
+      ],
+      "method": "crossSum",
+      "args": [
+        10
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-sum-twenty-five",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionB.class",
+        "bundle/recursion/RecursionA.class",
+        "bundle/recursion/RecursionRoot.class"
+      ],
+      "method": "crossSum",
+      "args": [
+        25
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-parity-zero",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionA.class",
+        "bundle/recursion/RecursionRoot.class",
+        "bundle/recursion/RecursionB.class"
+      ],
+      "method": "crossParity",
+      "args": [
+        0
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-parity-odd",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionB.class",
+        "bundle/recursion/RecursionA.class",
+        "bundle/recursion/RecursionRoot.class"
+      ],
+      "method": "crossParity",
+      "args": [
+        17
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-parity-even",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionRoot.class",
+        "bundle/recursion/RecursionA.class",
+        "bundle/recursion/RecursionB.class"
+      ],
+      "method": "crossParity",
+      "args": [
+        18
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-frame-isolation",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionA.class",
+        "bundle/recursion/RecursionB.class",
+        "bundle/recursion/RecursionRoot.class"
+      ],
+      "method": "crossFrameIsolation",
+      "args": [
+        5,
+        10
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-recursion-stack-overflow",
+      "stage": "m3b",
+      "sources": [
+        "bundle/recursion/RecursionRoot.java",
+        "bundle/recursion/RecursionA.java",
+        "bundle/recursion/RecursionB.java"
+      ],
+      "class": "bundle.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/recursion/RecursionB.class",
+        "bundle/recursion/RecursionRoot.class",
+        "bundle/recursion/RecursionA.class"
+      ],
+      "method": "crossStackOverflow",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.StackOverflowError"
+    },
+    {
+      "id": "m3b-samepkg-nonpublic-class",
+      "stage": "m3b",
+      "sources": [
+        "bundle/samepkg/PackageRoot.java",
+        "bundle/samepkg/PackageHelper.java",
+        "bundle/samepkg/SamePackagePublic.java"
+      ],
+      "class": "bundle.samepkg.PackageRoot",
+      "class_files": [
+        "bundle/samepkg/PackageHelper.class",
+        "bundle/samepkg/SamePackagePublic.class",
+        "bundle/samepkg/PackageRoot.class"
+      ],
+      "method": "nonpublicClass",
+      "args": [
+        17
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-samepkg-nonpublic-class-negative",
+      "stage": "m3b",
+      "sources": [
+        "bundle/samepkg/PackageRoot.java",
+        "bundle/samepkg/PackageHelper.java",
+        "bundle/samepkg/SamePackagePublic.java"
+      ],
+      "class": "bundle.samepkg.PackageRoot",
+      "class_files": [
+        "bundle/samepkg/SamePackagePublic.class",
+        "bundle/samepkg/PackageRoot.class",
+        "bundle/samepkg/PackageHelper.class"
+      ],
+      "method": "nonpublicClass",
+      "args": [
+        -29
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-samepkg-nonpublic-class-protected",
+      "stage": "m3b",
+      "sources": [
+        "bundle/samepkg/PackageRoot.java",
+        "bundle/samepkg/PackageHelper.java",
+        "bundle/samepkg/SamePackagePublic.java"
+      ],
+      "class": "bundle.samepkg.PackageRoot",
+      "class_files": [
+        "bundle/samepkg/PackageRoot.class",
+        "bundle/samepkg/PackageHelper.class",
+        "bundle/samepkg/SamePackagePublic.class"
+      ],
+      "method": "nonpublicClassProtected",
+      "args": [
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-samepkg-package-method",
+      "stage": "m3b",
+      "sources": [
+        "bundle/samepkg/PackageRoot.java",
+        "bundle/samepkg/PackageHelper.java",
+        "bundle/samepkg/SamePackagePublic.java"
+      ],
+      "class": "bundle.samepkg.PackageRoot",
+      "class_files": [
+        "bundle/samepkg/SamePackagePublic.class",
+        "bundle/samepkg/PackageHelper.class",
+        "bundle/samepkg/PackageRoot.class"
+      ],
+      "method": "packageMethod",
+      "args": [
+        11,
+        -4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-samepkg-package-method-overflow",
+      "stage": "m3b",
+      "sources": [
+        "bundle/samepkg/PackageRoot.java",
+        "bundle/samepkg/PackageHelper.java",
+        "bundle/samepkg/SamePackagePublic.java"
+      ],
+      "class": "bundle.samepkg.PackageRoot",
+      "class_files": [
+        "bundle/samepkg/PackageHelper.class",
+        "bundle/samepkg/PackageRoot.class",
+        "bundle/samepkg/SamePackagePublic.class"
+      ],
+      "method": "packageMethod",
+      "args": [
+        2147483647,
+        -2147483648
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-samepkg-protected-method",
+      "stage": "m3b",
+      "sources": [
+        "bundle/samepkg/PackageRoot.java",
+        "bundle/samepkg/PackageHelper.java",
+        "bundle/samepkg/SamePackagePublic.java"
+      ],
+      "class": "bundle.samepkg.PackageRoot",
+      "class_files": [
+        "bundle/samepkg/SamePackagePublic.class",
+        "bundle/samepkg/PackageRoot.class",
+        "bundle/samepkg/PackageHelper.class"
+      ],
+      "method": "protectedMethod",
+      "args": [
+        -13
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-samepkg-chain",
+      "stage": "m3b",
+      "sources": [
+        "bundle/samepkg/PackageRoot.java",
+        "bundle/samepkg/PackageHelper.java",
+        "bundle/samepkg/SamePackagePublic.java"
+      ],
+      "class": "bundle.samepkg.PackageRoot",
+      "class_files": [
+        "bundle/samepkg/PackageHelper.class",
+        "bundle/samepkg/SamePackagePublic.class",
+        "bundle/samepkg/PackageRoot.class"
+      ],
+      "method": "samePackageChain",
+      "args": [
+        21
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cross-package-direct-root-first",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cross/CrossRoot.java",
+        "bundle/middle/PublicBridge.java",
+        "bundle/publicapi/PublicMath.java"
+      ],
+      "class": "bundle.cross.CrossRoot",
+      "class_files": [
+        "bundle/cross/CrossRoot.class",
+        "bundle/middle/PublicBridge.class",
+        "bundle/publicapi/PublicMath.class"
+      ],
+      "method": "crossPackageDirect",
+      "args": [
+        6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cross-package-direct-root-last",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cross/CrossRoot.java",
+        "bundle/middle/PublicBridge.java",
+        "bundle/publicapi/PublicMath.java"
+      ],
+      "class": "bundle.cross.CrossRoot",
+      "class_files": [
+        "bundle/publicapi/PublicMath.class",
+        "bundle/middle/PublicBridge.class",
+        "bundle/cross/CrossRoot.class"
+      ],
+      "method": "crossPackageDirect",
+      "args": [
+        6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cross-package-direct-negative",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cross/CrossRoot.java",
+        "bundle/middle/PublicBridge.java",
+        "bundle/publicapi/PublicMath.java"
+      ],
+      "class": "bundle.cross.CrossRoot",
+      "class_files": [
+        "bundle/middle/PublicBridge.class",
+        "bundle/cross/CrossRoot.class",
+        "bundle/publicapi/PublicMath.class"
+      ],
+      "method": "crossPackageDirect",
+      "args": [
+        -17
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cross-package-arguments",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cross/CrossRoot.java",
+        "bundle/middle/PublicBridge.java",
+        "bundle/publicapi/PublicMath.java"
+      ],
+      "class": "bundle.cross.CrossRoot",
+      "class_files": [
+        "bundle/publicapi/PublicMath.class",
+        "bundle/cross/CrossRoot.class",
+        "bundle/middle/PublicBridge.class"
+      ],
+      "method": "crossPackageArguments",
+      "args": [
+        31,
+        -9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cross-package-arguments-overflow",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cross/CrossRoot.java",
+        "bundle/middle/PublicBridge.java",
+        "bundle/publicapi/PublicMath.java"
+      ],
+      "class": "bundle.cross.CrossRoot",
+      "class_files": [
+        "bundle/middle/PublicBridge.class",
+        "bundle/publicapi/PublicMath.class",
+        "bundle/cross/CrossRoot.class"
+      ],
+      "method": "crossPackageArguments",
+      "args": [
+        2147483647,
+        -2147483648
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cross-package-nested",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cross/CrossRoot.java",
+        "bundle/middle/PublicBridge.java",
+        "bundle/publicapi/PublicMath.java"
+      ],
+      "class": "bundle.cross.CrossRoot",
+      "class_files": [
+        "bundle/publicapi/PublicMath.class",
+        "bundle/middle/PublicBridge.class",
+        "bundle/cross/CrossRoot.class"
+      ],
+      "method": "crossPackageNested",
+      "args": [
+        12
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-cross-package-caller-state",
+      "stage": "m3b",
+      "sources": [
+        "bundle/cross/CrossRoot.java",
+        "bundle/middle/PublicBridge.java",
+        "bundle/publicapi/PublicMath.java"
+      ],
+      "class": "bundle.cross.CrossRoot",
+      "class_files": [
+        "bundle/middle/PublicBridge.class",
+        "bundle/cross/CrossRoot.class",
+        "bundle/publicapi/PublicMath.class"
+      ],
+      "method": "crossPackageCallerState",
+      "args": [
+        55,
+        -7,
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-private-same-class-root-first",
+      "stage": "m3b",
+      "sources": [
+        "bundle/privatecall/PrivateRoot.java",
+        "bundle/privatecall/PrivatePartner.java"
+      ],
+      "class": "bundle.privatecall.PrivateRoot",
+      "class_files": [
+        "bundle/privatecall/PrivateRoot.class",
+        "bundle/privatecall/PrivatePartner.class"
+      ],
+      "method": "sameClassPrivate",
+      "args": [
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-private-same-class-root-last",
+      "stage": "m3b",
+      "sources": [
+        "bundle/privatecall/PrivateRoot.java",
+        "bundle/privatecall/PrivatePartner.java"
+      ],
+      "class": "bundle.privatecall.PrivateRoot",
+      "class_files": [
+        "bundle/privatecall/PrivatePartner.class",
+        "bundle/privatecall/PrivateRoot.class"
+      ],
+      "method": "sameClassPrivate",
+      "args": [
+        9
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-private-same-class-min",
+      "stage": "m3b",
+      "sources": [
+        "bundle/privatecall/PrivateRoot.java",
+        "bundle/privatecall/PrivatePartner.java"
+      ],
+      "class": "bundle.privatecall.PrivateRoot",
+      "class_files": [
+        "bundle/privatecall/PrivatePartner.class",
+        "bundle/privatecall/PrivateRoot.class"
+      ],
+      "method": "sameClassPrivate",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-private-then-external",
+      "stage": "m3b",
+      "sources": [
+        "bundle/privatecall/PrivateRoot.java",
+        "bundle/privatecall/PrivatePartner.java"
+      ],
+      "class": "bundle.privatecall.PrivateRoot",
+      "class_files": [
+        "bundle/privatecall/PrivateRoot.class",
+        "bundle/privatecall/PrivatePartner.class"
+      ],
+      "method": "privateThenExternal",
+      "args": [
+        4
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-private-external-then-private",
+      "stage": "m3b",
+      "sources": [
+        "bundle/privatecall/PrivateRoot.java",
+        "bundle/privatecall/PrivatePartner.java"
+      ],
+      "class": "bundle.privatecall.PrivateRoot",
+      "class_files": [
+        "bundle/privatecall/PrivatePartner.class",
+        "bundle/privatecall/PrivateRoot.class"
+      ],
+      "method": "externalThenPrivate",
+      "args": [
+        -6
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-private-nested-in-bundle",
+      "stage": "m3b",
+      "sources": [
+        "bundle/privatecall/PrivateRoot.java",
+        "bundle/privatecall/PrivatePartner.java"
+      ],
+      "class": "bundle.privatecall.PrivateRoot",
+      "class_files": [
+        "bundle/privatecall/PrivateRoot.class",
+        "bundle/privatecall/PrivatePartner.class"
+      ],
+      "method": "nestedPrivateInBundle",
+      "args": [
+        20
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-private-cross-void",
+      "stage": "m3b",
+      "sources": [
+        "bundle/privatecall/PrivateRoot.java",
+        "bundle/privatecall/PrivatePartner.java"
+      ],
+      "class": "bundle.privatecall.PrivateRoot",
+      "class_files": [
+        "bundle/privatecall/PrivatePartner.class",
+        "bundle/privatecall/PrivateRoot.class"
+      ],
+      "method": "crossVoidThenPrivate",
+      "args": [
+        37
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-error-cross-divide-value",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ArithmeticLeaf.class",
+        "bundle/errors/ArithmeticRelay.class",
+        "bundle/errors/ErrorRoot.class"
+      ],
+      "method": "crossDivide",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-error-cross-divide-zero",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ArithmeticRelay.class",
+        "bundle/errors/ErrorRoot.class",
+        "bundle/errors/ArithmeticLeaf.class"
+      ],
+      "method": "crossDivide",
+      "args": [
+        123,
+        0
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3b-error-nested-divide-value",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ErrorRoot.class",
+        "bundle/errors/ArithmeticLeaf.class",
+        "bundle/errors/ArithmeticRelay.class"
+      ],
+      "method": "nestedDivide",
+      "args": [
+        -99,
+        7
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-error-nested-divide-zero",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ArithmeticLeaf.class",
+        "bundle/errors/ErrorRoot.class",
+        "bundle/errors/ArithmeticRelay.class"
+      ],
+      "method": "nestedDivide",
+      "args": [
+        1,
+        0
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3b-error-nested-remainder-value",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ArithmeticRelay.class",
+        "bundle/errors/ArithmeticLeaf.class",
+        "bundle/errors/ErrorRoot.class"
+      ],
+      "method": "nestedRemainder",
+      "args": [
+        -29,
+        6
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-error-nested-remainder-zero",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ArithmeticLeaf.class",
+        "bundle/errors/ArithmeticRelay.class",
+        "bundle/errors/ErrorRoot.class"
+      ],
+      "method": "nestedRemainder",
+      "args": [
+        -5,
+        0
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3b-error-void-divide-value",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ArithmeticRelay.class",
+        "bundle/errors/ErrorRoot.class",
+        "bundle/errors/ArithmeticLeaf.class"
+      ],
+      "method": "voidDivide",
+      "args": [
+        77,
+        7
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3b-error-void-divide-zero",
+      "stage": "m3b",
+      "sources": [
+        "bundle/errors/ErrorRoot.java",
+        "bundle/errors/ArithmeticLeaf.java",
+        "bundle/errors/ArithmeticRelay.java"
+      ],
+      "class": "bundle.errors.ErrorRoot",
+      "class_files": [
+        "bundle/errors/ArithmeticLeaf.class",
+        "bundle/errors/ErrorRoot.class",
+        "bundle/errors/ArithmeticRelay.class"
+      ],
+      "method": "voidDivide",
+      "args": [
+        77,
+        0
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
     }
   ]
 }

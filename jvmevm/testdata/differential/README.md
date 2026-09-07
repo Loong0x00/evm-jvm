@@ -4,14 +4,11 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 268 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, and 67
-`m3a` cases. The 55 smoke cases include 20 from `m3a`. Every root entry remains
-a uniquely named static `(int...)int` method, and guest sources have no `main`.
-The M3a roots call same-class static helpers with int parameters and int or void
-returns; helpers may be private or overloaded, but root names are unambiguous.
-The fixtures have no class initializers, exception handlers, objects, arrays,
-fields, `wide`, `switch`, external positive calls, or unsupported stack
-permutation instructions.
+The manifest has 341 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`, and
+73 `m3b` cases. The 87 smoke cases include 20 from `m3a` and 32 from `m3b`.
+Every root entry remains a uniquely named public static `(int...)int` method,
+and guest sources have no `main`. The original 268 entries through M3a are
+unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -37,61 +34,93 @@ to 10. Four cases propagate `java.lang.ArithmeticException` from a callee:
 - `m3a-call-nested-divide-zero`
 - `m3a-void-callee-divide-zero`
 
-`m3a-recursive-stack-overflow` has no guest catch or base case and expects the
-actual reference class `java.lang.StackOverflowError`; its subprocess remains
-bounded by the manifest's 10-second timeout. The M3a runtime contract represents
-this as JavaException kind 2 when its 128-active-frame cap is exceeded. In total,
-the manifest has 261 value outcomes, six ArithmeticException outcomes, and one
-StackOverflowError
-outcome. `OracleMain` reflectively invokes the selected root and reports the
-actual return value or thrown cause class; it does not contain fixture answers.
+`m3a-recursive-stack-overflow` expects the actual reference class
+`java.lang.StackOverflowError`.
 
-Compile the Java 8 fixtures and invoke representative reference outcomes with:
+M3b adds 68 value outcomes and five actual JVM exception outcomes over raw,
+explicit multi-class bundles. Every M3b case uses a dotted binary root name in
+`class` and a nonempty ordered `class_files` list. Lists contain only explicit
+relative paths; they neither request nor rely on host dependency discovery.
+Repeated cases vary order, including roots first, in the middle, and last.
+
+The M3b fixtures cover:
+
+- direct, overloaded, zero-argument, void, and discarded-result calls;
+- caller locals, operand prefixes, argument order, overflow, and nested frames;
+- equal `shared:(I)I` private Methodrefs at constant-pool index 7 in both
+  `bundle.isolation.Alpha` and `bundle.isolation.Beta`, plus same-signature calls
+  to different owners from one root;
+- multi-hop and bounded cyclic `LayerOne -> LayerTwo -> LayerThree -> LayerOne`
+  calls, and modest two-class recursion;
+- public calls across packages; package/protected calls and a nonpublic class
+  within one package; and same-class private helpers while that class is bundled;
+- cross-class propagation of real reference-JVM arithmetic and stack-overflow
+  outcomes.
+
+The four new arithmetic cases explicitly expect
+`java.lang.ArithmeticException`:
+
+- `m3b-error-cross-divide-zero`
+- `m3b-error-nested-divide-zero`
+- `m3b-error-nested-remainder-zero`
+- `m3b-error-void-divide-zero`
+
+`m3b-recursion-stack-overflow` explicitly expects
+`java.lang.StackOverflowError`. Across all stages there are 329 value outcomes,
+ten ArithmeticException outcomes, and two StackOverflowError outcomes. Every
+gas limit is finite and at most 50,000,000; every subprocess timeout is at most
+10 seconds.
+
+All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
+direct superclass is `java/lang/Object`. They have zero fields, zero interfaces,
+and no `<clinit>`. Entered methods use only the accepted M2b instruction set plus
+M3a `invokestatic`, void `return`, and category-1 `pop`. As with ordinary javac
+classes, unselected constructors contain `invokespecial Object.<init>`.
+
+Compile every trusted fixture and invoke representative dotted-name reference
+outcomes with:
 
 ```sh
 out="$(mktemp -d)"
-javac --release 8 -d "$out" jvmevm/testdata/differential/*.java
+find jvmevm/testdata/differential -name '*.java' -print0 \
+  | xargs -0 javac --release 8 -d "$out"
 java -cp "$out" OracleMain IntegerArithmetic multiply -7 6
-java -cp "$out" OracleMain IntegerArithmetic divide 7 0
-java -cp "$out" OracleMain IntegerConversions toChar -1
-java -cp "$out" OracleMain M3aStaticCalls multiArgumentOrder 1 2 3
-java -cp "$out" OracleMain M3aFrames discardInt 37
 java -cp "$out" OracleMain M3aRecursion recursiveFibonacci 10
-java -cp "$out" OracleMain M3aRecursion unboundedRecursion 0
+java -cp "$out" OracleMain bundle.basic.BasicRoot direct 17
+java -cp "$out" OracleMain bundle.cross.CrossRoot crossPackageNested 12
+java -cp "$out" OracleMain bundle.errors.ErrorRoot nestedDivide 1 0
+java -cp "$out" OracleMain bundle.recursion.RecursionRoot crossStackOverflow 0
 rm -rf "$out"
 ```
 
-Inspect the selected bytecode families and the deliberately high constant-pool
-index with:
+Inspect every new class (including private helpers), class metadata, and the two
+same-index isolation references with:
 
 ```sh
 out="$(mktemp -d)"
-javac --release 8 -d "$out" jvmevm/testdata/differential/*.java
-for class in M1Baseline Constants LocalsAndArithmetic Comparisons Loops \
-    IntegerConstants IntegerArithmetic IntegerShifts IntegerBitwise \
-    IntegerConversions M3aStaticCalls M3aFrames M3aRecursion; do
-  javap -classpath "$out" -c -p "$class"
+find jvmevm/testdata/differential/bundle -name '*.java' -print0 \
+  | xargs -0 javac --release 8 -d "$out"
+find "$out/bundle" -name '*.class' -print | sort | while read -r file; do
+  class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
+  javap -classpath "$out" -c -v -p "$class"
 done
-javap -classpath "$out" -v -p WideIntegerConstant \
-  | sed -n '/public static int loadWide/,/LineNumberTable/p'
+javap -classpath "$out" -c -p bundle.isolation.Alpha bundle.isolation.Beta
 rm -rf "$out"
 ```
 
-`WideIntegerConstant.loadWide` is javac-produced `ldc_w` referencing a
-`CONSTANT_Integer` at an index greater than 255. Its preceding unselected
-static int helper deliberately populates the pool, and the class has no
-`<clinit>`. As with every ordinary compiled Java class here, javac also emits an
-unselected `Object` constructor containing reference/call opcodes; constructors
-are not guest entries and are distinct from the inspected selected methods.
+`WideIntegerConstant.loadWide` remains the javac-produced `ldc_w` fixture with a
+`CONSTANT_Integer` index greater than 255. Its unselected pool-populating helper
+has no `<clinit>`.
 
-The selected M3a methods use only the accepted M2b instruction set plus
-`invokestatic` (`0xb8`), void `return` (`0xb1`), and category-1 `pop` (`0x57`).
-Inspect private helpers as well as public roots: calls and recursion depend on
-helper bytecode and exact name-and-descriptor resolution. Ordinary javac
-constructors remain unselected and contain `invokespecial` as noted above.
+Once the M3b bundle runner/verifier changes are integrated, the cumulative suite
+is selected with:
 
-M3a runtime and verifier are integrated: all 268 cases passed actual JVM/EVM
-comparison on one generic interpreter, including callee ArithmeticExceptions
-and StackOverflowError. Prior 201 entries remain unchanged. See
-`JAVA_EVM_M3A_PLAN.md` for independent acceptance. This is subset verification,
-not full JVM conformance.
+```sh
+python3 tools/java_diff.py --stage m3b --tier smoke
+python3 tools/java_diff.py --stage m3b --tier full
+```
+
+This fixture-only revision establishes reference-JVM data and manifest metadata;
+the pre-M3b runner does not yet understand `m3b` or `class_files`, so it is not
+an EVM-success claim by itself. M3a remains the last integrated EVM result at
+this branch point. This is subset verification, not full JVM conformance.
