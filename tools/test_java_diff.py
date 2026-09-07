@@ -44,12 +44,13 @@ public final class Arithmetic {
 
 def case(case_id="m1-add", stage="m1", method="add", args=None, smoke=True,
          timeout=1, expected_kind="value",
-         expected_exception="java.lang.ArithmeticException"):
+         expected_exception="java.lang.ArithmeticException", class_name="Arithmetic",
+         sources=None, class_files=None):
     fixture = {
         "id": case_id,
         "stage": stage,
-        "sources": ["Arithmetic.java"],
-        "class": "Arithmetic",
+        "sources": ["Arithmetic.java"] if sources is None else sources,
+        "class": class_name,
         "method": method,
         "args": [20, 22] if args is None else args,
         "gas_limit": 2_000_000,
@@ -59,6 +60,8 @@ def case(case_id="m1-add", stage="m1", method="add", args=None, smoke=True,
     }
     if expected_kind == "java_exception":
         fixture["expected_exception"] = expected_exception
+    if class_files is not None:
+        fixture["class_files"] = class_files
     return fixture
 
 
@@ -87,15 +90,32 @@ class MockTools:
         self.bin.mkdir()
         executable(self.bin / "javac", r'''
             #!/usr/bin/env python3
-            import pathlib, sys
+            import os, pathlib, re, sys
             if "-version" in sys.argv:
                 print("javac mock-8")
                 raise SystemExit(0)
             out = pathlib.Path(sys.argv[sys.argv.index("-d") + 1])
             out.mkdir(parents=True, exist_ok=True)
+            emitted = []
             for arg in sys.argv:
                 if arg.endswith(".java"):
-                    (out / (pathlib.Path(arg).stem + ".class")).write_bytes(b"raw-class")
+                    source = pathlib.Path(arg)
+                    text = source.read_text(encoding="utf-8")
+                    match = re.search(r"(?m)^\s*package\s+([A-Za-z_$][A-Za-z0-9_$.]*)\s*;", text)
+                    package = [] if match is None else match.group(1).split(".")
+                    relative = pathlib.Path(*package, source.stem + ".class")
+                    target = out / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    if relative.as_posix() != os.environ.get("MOCK_JAVAC_OMIT"):
+                        target.write_bytes(b"raw-class:" + relative.as_posix().encode())
+                        emitted.append(target)
+            link = os.environ.get("MOCK_JAVAC_SYMLINK")
+            if link:
+                target = out / link
+                target.parent.mkdir(parents=True, exist_ok=True)
+                if target.exists() or target.is_symlink():
+                    target.unlink()
+                target.symlink_to(os.environ["MOCK_JAVAC_SYMLINK_TARGET"])
         ''')
         executable(self.bin / "java", r'''
             #!/usr/bin/env python3
@@ -507,12 +527,141 @@ class JavaDiffTests(unittest.TestCase):
                 self.assertEqual(report["cases"][0]["status"], expected)
                 self.assertNotIn("evm", report["cases"][0])
 
+    def test_bundle_packaged_paths_order_argv_and_hash_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            bundle_case = case(
+                "m3b-packaged", stage="m3b", class_name="bundle.Root",
+                sources=["bundle/Root.java", "bundle/Helper.java"],
+                class_files=["bundle/Helper.class", "bundle/Root.class"],
+            )
+            fixtures = FixtureTree(tmp, [bundle_case])
+            package = fixtures.path / "bundle"
+            package.mkdir()
+            (package / "Root.java").write_text(
+                "package bundle; public class Root { public static int add(int a, int b) { return Helper.add(a,b); } }",
+                encoding="utf-8",
+            )
+            (package / "Helper.java").write_text(
+                "package bundle; public class Helper { public static int add(int a, int b) { return a+b; } }",
+                encoding="utf-8",
+            )
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(tmp, fixtures.path, tools, "--tier", "full")
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            result = report["cases"][0]
+            compiled = Path(report["run_directory"]) / "compiled"
+            paths = [compiled / "bundle/Helper.class", compiled / "bundle/Root.class"]
+            expected_argv = [
+                str(tools.evm), "-class", str(paths[0]), "-class", str(paths[1]),
+                "-entry-class", "bundle/Root", "-method", "add", "-args=20,22",
+                "-gas", "2000000",
+            ]
+            self.assertEqual(result["class_path"], str(paths[1]))
+            self.assertEqual(result["class_files"], ["bundle/Helper.class", "bundle/Root.class"])
+            self.assertEqual(result["class_paths"], [str(path) for path in paths])
+            self.assertEqual(result["entry_class"], "bundle/Root")
+            self.assertEqual(result["evm_argv"], expected_argv)
+            self.assertEqual(result["evm"]["argv"], expected_argv)
+            hashes = result["class_file_sha256"]
+            self.assertEqual([item["path"] for item in hashes], result["class_files"])
+            self.assertEqual(
+                [item["sha256"] for item in hashes],
+                [java_diff.sha256_file(path) for path in paths],
+            )
+            self.assertEqual(result["class_sha256"], hashes[1]["sha256"])
+            self.assertEqual(result["oracle"]["argv"][-4:], ["bundle.Root", "add", "20", "22"])
+
+    def test_legacy_and_one_file_bundle_keep_protocol_and_runtime_identity(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("legacy-value", method="identity", args=[7]),
+                case("bundle-exception", stage="m3b", method="divide", args=[7, 0],
+                     expected_kind="java_exception", class_files=["Arithmetic.class"]),
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--tier", "full",
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            legacy, bundle = report["cases"]
+            self.assertNotIn("-entry-class", legacy["evm_argv"])
+            self.assertEqual(legacy["evm_argv"].count("-class"), 1)
+            self.assertEqual(bundle["evm_argv"].count("-class"), 1)
+            self.assertEqual(
+                bundle["evm_argv"][bundle["evm_argv"].index("-entry-class") + 1],
+                "Arithmetic",
+            )
+            self.assertEqual(legacy["runtime_sha256"], "a" * 64)
+            self.assertEqual(bundle["runtime_sha256"], "a" * 64)
+            self.assertEqual(report["runtime_sha256"], "a" * 64)
+            self.assertEqual(bundle["evm_exception"], "java.lang.ArithmeticException")
+
+    def test_class_files_manifest_rejects_empty_duplicates_and_unsafe_paths(self):
+        mutations = [
+            ([], "nonempty array"),
+            (["Arithmetic.class", "Arithmetic.class"], "duplicates"),
+            (["/tmp/Arithmetic.class"], "relative .class path"),
+            (["C:/tmp/Arithmetic.class"], "relative .class path"),
+            (["../Arithmetic.class"], "traversal"),
+            (["pkg/../Arithmetic.class"], "traversal"),
+            (["pkg//Arithmetic.class"], "empty or traversal"),
+            (["Arithmetic.java"], "end in .class"),
+            ([7], "relative .class path"),
+        ]
+        for class_files, message in mutations:
+            with self.subTest(class_files=class_files), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [case(
+                    "bad-bundle", stage="m3b", class_files=class_files,
+                )])
+                with self.assertRaisesRegex(java_diff.HarnessError, message):
+                    java_diff.load_manifest(fixtures.path)
+
+    def test_missing_bundle_output_fails_without_cli_fallback(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [case(
+                "missing-output", stage="m3b",
+                class_files=["Arithmetic.class", "Missing.class"],
+            )])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(tmp, fixtures.path, tools)
+            self.assertNotEqual(completed.returncode, 0)
+            result = report["cases"][0]
+            self.assertEqual(result["status"], "harness_error")
+            self.assertIn("Missing.class", result["detail"])
+            self.assertIn("missing", result["detail"])
+            self.assertNotIn("evm", result)
+
+    def test_bundle_symlink_escape_fails_without_invoking_oracle_or_cli(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [case(
+                "symlink-output", stage="m3b",
+                class_files=["Arithmetic.class", "Escape.class"],
+            )])
+            outside = Path(tmp) / "outside.class"
+            outside.write_bytes(b"not javac output")
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools,
+                env_extra={
+                    "MOCK_JAVAC_SYMLINK": "Escape.class",
+                    "MOCK_JAVAC_SYMLINK_TARGET": str(outside),
+                },
+            )
+            self.assertNotEqual(completed.returncode, 0)
+            result = report["cases"][0]
+            self.assertEqual(result["status"], "harness_error")
+            self.assertIn("escapes", result["detail"])
+            self.assertNotIn("oracle", result)
+            self.assertNotIn("evm", result)
+
     def test_deterministic_fast_sampling_and_cumulative_stages(self):
         cases = [case("m1-smoke")]
         cases += [case(f"m1-{i:02d}", smoke=False) for i in range(25)]
         cases += [case("m2-smoke", stage="m2")]
         cases += [case("m2b-smoke", stage="m2b")]
         cases += [case("m3a-smoke", stage="m3a")]
+        cases += [case("m3b-smoke", stage="m3b")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -524,14 +673,15 @@ class JavaDiffTests(unittest.TestCase):
             "m2": ["m1-smoke", "m2-smoke"],
             "m2b": ["m1-smoke", "m2-smoke", "m2b-smoke"],
             "m3a": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke"],
+            "m3b": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m3a")
+        self.assertEqual(parsed.stage, "m3b")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
 

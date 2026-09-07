@@ -34,6 +34,9 @@ INT32_MIN = -(2**31)
 INT32_MAX = 2**31 - 1
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 JAVA_NAME_RE = re.compile(r"^[A-Za-z_$][A-Za-z0-9_$]*$")
+JAVA_BINARY_NAME_RE = re.compile(
+    r"^[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)*$"
+)
 JAVA_FQCN_RE = re.compile(
     r"^[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+$"
 )
@@ -66,11 +69,45 @@ def confined_file(fixtures: Path, relative: Any, label: str) -> Tuple[str, Path]
     try:
         resolved = (root / rel).resolve(strict=True)
         resolved.relative_to(root)
-    except (FileNotFoundError, RuntimeError, ValueError):
+    except (FileNotFoundError, OSError, RuntimeError, ValueError):
         raise HarnessError(f"{label} is missing or escapes the fixture directory: {relative!r}")
     if not resolved.is_file():
         raise HarnessError(f"{label} is not a file: {relative!r}")
     return relative, resolved
+
+
+def checked_class_relative_path(relative: Any, label: str) -> str:
+    """Validate manifest metadata without looking at or parsing a class file."""
+    if not isinstance(relative, str) or not relative:
+        raise HarnessError(f"{label} must be a nonempty relative .class path")
+    # Manifest class paths are javac-output paths and therefore use '/' even on
+    # hosts where pathlib has other native path rules. Reject normalization so
+    # the recorded and supplied path is exactly the manifest path.
+    if ("\\" in relative or "\x00" in relative or relative.startswith("/")
+            or re.match(r"^[A-Za-z]:/", relative)):
+        raise HarnessError(f"{label} must be a relative .class path: {relative!r}")
+    parts = relative.split("/")
+    if any(part in ("", ".", "..") for part in parts):
+        raise HarnessError(f"{label} contains empty or traversal components: {relative!r}")
+    if not relative.endswith(".class"):
+        raise HarnessError(f"{label} must end in .class: {relative!r}")
+    return relative
+
+
+def confined_compiled_class(classes: Path, relative: str, label: str) -> Path:
+    """Resolve a previously validated class path under this run's output."""
+    root = classes.resolve()
+    candidate = root.joinpath(*relative.split("/"))
+    try:
+        resolved = candidate.resolve(strict=True)
+        resolved.relative_to(root)
+    except (FileNotFoundError, OSError, RuntimeError, ValueError):
+        raise HarnessError(
+            f"{label} is missing or escapes the javac output directory: {relative!r}"
+        )
+    if not resolved.is_file():
+        raise HarnessError(f"{label} is not a compiled file: {relative!r}")
+    return candidate
 
 
 def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]], Path]:
@@ -109,8 +146,8 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
         if case_id in seen_ids:
             raise HarnessError(f"duplicate case id: {case_id}")
         seen_ids.add(case_id)
-        if case["stage"] not in ("m1", "m2", "m2b", "m3a"):
-            raise HarnessError(f"{case_id}: stage must be m1, m2, m2b, or m3a")
+        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b"):
+            raise HarnessError(f"{case_id}: stage must be m1, m2, m2b, m3a, or m3b")
         expected_kind = case["expected_kind"]
         if expected_kind not in ("value", "java_exception"):
             raise HarnessError(
@@ -130,8 +167,11 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
             )
         if not isinstance(case["smoke"], bool):
             raise HarnessError(f"{case_id}: smoke must be a boolean")
-        if not JAVA_NAME_RE.fullmatch(case["class"] if isinstance(case["class"], str) else ""):
-            raise HarnessError(f"{case_id}: class must be a default-package Java class name")
+        if not JAVA_BINARY_NAME_RE.fullmatch(
+                case["class"] if isinstance(case["class"], str) else ""):
+            raise HarnessError(
+                f"{case_id}: class must be an ASCII dotted binary Java class name"
+            )
         if not JAVA_NAME_RE.fullmatch(case["method"] if isinstance(case["method"], str) else ""):
             raise HarnessError(f"{case_id}: method must be a simple Java method name")
         args = case["args"]
@@ -168,6 +208,17 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
             source_paths.append(resolved)
         case["sources"] = checked_sources
         case["_source_paths"] = source_paths
+        if "class_files" in case:
+            raw_class_files = case["class_files"]
+            if not isinstance(raw_class_files, list) or not raw_class_files:
+                raise HarnessError(f"{case_id}: class_files must be a nonempty array")
+            checked_class_files = [
+                checked_class_relative_path(value, f"{case_id}.class_files[{class_index}]")
+                for class_index, value in enumerate(raw_class_files)
+            ]
+            if len(set(checked_class_files)) != len(checked_class_files):
+                raise HarnessError(f"{case_id}: class_files contains duplicates")
+            case["class_files"] = checked_class_files
         cases.append(case)
 
     confined_file(fixtures, "OracleMain.java", "OracleMain.java")
@@ -182,8 +233,10 @@ def select_cases(cases: Sequence[Dict[str, Any]], stage: str, tier: str,
         allowed_stages = {"m1", "m2"}
     elif stage == "m2b":
         allowed_stages = {"m1", "m2", "m2b"}
-    else:
+    elif stage == "m3a":
         allowed_stages = {"m1", "m2", "m2b", "m3a"}
+    else:
+        allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b"}
     stage_cases = [case for case in cases if case["stage"] in allowed_stages]
     if exact_case is not None:
         matches = [case for case in cases if case["id"] == exact_case]
@@ -507,13 +560,33 @@ def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
             "detail": "", "fixture": clean_case(case), "replay_command": replay,
             "gas_limit": case["gas_limit"],
         }
-        class_path = classes / f"{case['class']}.class"
-        if not class_path.is_file():
-            result["detail"] = f"javac did not emit expected class: {class_path.name}"
+        root_relative = case["class"].replace(".", "/") + ".class"
+        try:
+            class_path = confined_compiled_class(
+                classes, root_relative, f"{case['id']} root class"
+            )
+            supplied_paths = []
+            if "class_files" in case:
+                supplied_paths = [
+                    confined_compiled_class(
+                        classes, relative, f"{case['id']}.class_files[{index}]"
+                    )
+                    for index, relative in enumerate(case["class_files"])
+                ]
+        except HarnessError as exc:
+            result["detail"] = str(exc)
             report["cases"].append(result)
             continue
         result["class_path"] = str(class_path)
         result["class_sha256"] = sha256_file(class_path)
+        if "class_files" in case:
+            result["class_files"] = list(case["class_files"])
+            result["class_paths"] = [str(path) for path in supplied_paths]
+            result["class_file_sha256"] = [
+                {"path": relative, "sha256": sha256_file(path)}
+                for relative, path in zip(case["class_files"], supplied_paths)
+            ]
+            result["entry_class"] = case["class"].replace(".", "/")
 
         decimal_args = [str(value) for value in case["args"]]
         oracle_argv = [
@@ -557,10 +630,20 @@ def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
             continue
 
         evm_args = ",".join(decimal_args)
-        evm_argv = [
-            str(evm_bin), "-class", str(class_path), "-method", case["method"],
-            f"-args={evm_args}", "-gas", str(case["gas_limit"]),
-        ]
+        evm_argv = [str(evm_bin)]
+        if "class_files" in case:
+            for supplied_path in supplied_paths:
+                evm_argv.extend(["-class", str(supplied_path)])
+            evm_argv.extend(["-entry-class", result["entry_class"]])
+        else:
+            # Keep the historical one-class CLI invocation byte-for-byte in the
+            # absence of explicit bundle metadata.
+            evm_argv.extend(["-class", str(class_path)])
+        evm_argv.extend([
+            "-method", case["method"], f"-args={evm_args}",
+            "-gas", str(case["gas_limit"]),
+        ])
+        result["evm_argv"] = list(evm_argv)
         evm_record = run_command(evm_argv, float(case["timeout_seconds"]))
         result["evm"] = evm_record
         evm_status, evm_values, evm_detail = parse_evm(evm_record)
@@ -638,7 +721,9 @@ def finish_report(report: Dict[str, Any]) -> Dict[str, Any]:
 
 def parser_for(repo: Path) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--stage", choices=("m1", "m2", "m2b", "m3a", "all"), default="m3a")
+    parser.add_argument(
+        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "all"), default="m3b"
+    )
     parser.add_argument("--tier", choices=("smoke", "fast", "full"), default="smoke")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
     parser.add_argument("--case", help="run one exact case (still subject to --stage)")
