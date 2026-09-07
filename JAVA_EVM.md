@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M2a)
+# Java inside EVM: staged interpreter (M2b)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -16,10 +16,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 16 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (36 total)
-make java-full       # all 82 differential cases
-make java-test       # artifact check + Go tests + 11 runner tests + all 82 cases
+make java-smoke      # 35 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (55 total)
+make java-full       # all 201 differential cases
+make java-test       # artifact check + Go tests + 19 runner tests + all 201 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -27,10 +27,11 @@ Python 3 is needed for differential tests. Node/npm are needed to rebuild/check
 the Solidity artifact (`java-test` includes this check), not for the standalone
 CLI or demo. First-time builds may download Go/compiler dependencies.
 
-Stage M1 covers 12 add/identity cases. Stage M2 is cumulative: these 12 plus 70
-constant/local/arithmetic/comparison/control-flow cases. Before merging M2, V0
-was validated against the unchanged M1 interpreter; M2 then passed the combined
-suite. Tests are bounded evidence, not a full JVM conformance suite.
+Stage M1 covers 12 add/identity cases. Stage M2 includes these plus 70 integer
+control-flow cases. M2b adds 119 integer-expression cases: 201 total, including
+two expected uncaught ArithmeticExceptions. Earlier 82 cases are preserved.
+Make gates use cumulative `--stage all`; direct `--stage m2` still selects the
+historical 82-case subset. Tests are bounded evidence, not full JVM conformance.
 
 Additional commands:
 
@@ -47,16 +48,16 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **7,040-byte** interpreter runtime handles all three programs:
+One unchanged **8,959-byte** interpreter runtime handles all three programs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 55,308 |
-| Loops.class / sum(100) | 5050 | 1,043,858 |
-| Loops.class / fibonacci(20) | 6765 | 375,429 |
+| Add.class / add(20,22) | 42 | 59,325 |
+| Loops.class / sum(100) | 5050 | 1,293,269 |
+| Loops.class / fibonacci(20) | 6765 | 445,283 |
 
 Runtime SHA-256:
-`e04f1a026a1d8c656a487223e4b5a1b89532e62ac255feb3d2fd74391dcf9036`
+`3388269119ae0f38e61e8f31b835af52bff25a295979faac72c4f3b4eb208c97`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -83,7 +84,9 @@ Unambiguous static methods, only `int` arguments and an `int` return:
 
 - `iconst_m1` through `iconst_5`, signed `bipush` and `sipush`
 - `iload`, `istore`, including their `_0` through `_3` forms
-- `iadd`, `isub`, signed-byte `iinc`
+- `ldc` / `ldc_w` for CONSTANT_Integer, resolved inside EVM
+- `iadd`, `isub`, `imul`, `idiv`, `irem`, `ineg`, signed-byte `iinc`
+- `ishl`, `ishr`, `iushr`, `iand`, `ior`, `ixor`, `i2b`, `i2c`, `i2s`
 - `ifeq`/`ifne`/`iflt`/`ifge`/`ifgt`/`ifle`, corresponding `if_icmp*`
 - `goto`, `ireturn` (including early returns followed by other code)
 
@@ -100,16 +103,34 @@ selected Code structure and relevant UTF-8 references are checked. Class
 initializers (`<clinit>`), selected synchronized/native/abstract/non-static/
 overloaded/no-Code methods and exception tables are rejected.
 
-**Deferred:** `ldc`/`ldc_w` (so not arbitrary literal int constants yet), `ineg`,
-multiply/divide/remainder, shifts/bitwise operations, wide/goto_w, switch, other
-primitive types, method calls, arrays, heap/objects, exceptions, monitors, dynamic
-class loading, class libraries and deployment/Minecraft workflows.
+M2b division truncates toward zero; remainder follows Java's sign rules.
+INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
+and byte/short/char conversions preserve their signed/unsigned Java semantics.
+
+**Deferred:** non-integer constants, wide/goto_w, stack permutation forms, switch,
+other primitive types, method calls, arrays, heap/objects, exception handlers,
+monitors, dynamic class loading, class libraries and deployment workflows.
 
 This is not a full JVM verifier: no modified-UTF8 validation, general class
 hierarchy/linking/type verification, full control-flow dataflow verification,
 or validation of every unused member/attribute/constant-pool relationship.
 Inputs should be treated as experimental. A gas-bounded EVM failure is not a
 Java exception implementation.
+
+### Explicit uncaught Java outcomes
+
+Divide/remainder by zero now produces EVM-side `JavaException(uint256)` kind 1.
+The host decodes only the exact known selector/length/kind into
+`Result.ExceptionClass = "java.lang.ArithmeticException"`; it does not evaluate
+the guest instruction. The CLI emits exactly one of `result=<int32>` or
+`exception=<class>`, with the same runtime/gas fields. Known Java outcomes exit 0
+under this method-invocation protocol; EVM/validation/harness failures exit
+nonzero. This is not Java launcher's exit-code compatibility.
+
+The oracle suite explicitly declares expected exception cases and compares
+exception classes from actual JVM and EVM. Unknown payloads, Solidity panics,
+bytecode/class errors and out-of-gas cannot silently become Java exceptions.
+This is **uncaught root arithmetic outcome support only**, not catch/unwinding.
 
 ## Differential verification and replay
 
@@ -164,5 +185,7 @@ Consensus VM core and the M0 host-AOT baseline remain unchanged. M0 is explicitl
 Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
-Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). This batch stops at
-V0 + M2a; the next instruction/runtime slice needs a new bounded task.
+Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
+parent orchestration is now authorized by `JAVA_EVM_PROGRAM.md`. M2b acceptance
+is recorded in `JAVA_EVM_M2B_PLAN.md`; the parent proceeds to static calls/frames
+next rather than waiting for routine re-confirmation. No full-Java claim is made.

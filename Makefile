@@ -79,7 +79,7 @@ java-demo: java-build
 java-test: java-runtime-check java-build
 	go test -count=1 ./jvmevm ./cmd/jvmevm
 	PYTHONDONTWRITEBYTECODE=1 JAVA_DIFF_REAL_EVM_BIN="$(CURDIR)/build/bin/jvmevm" python3 -m unittest discover -s tools -p 'test_java_diff.py'
-	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier full --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-full
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage all --tier full --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-full
 
 java-harness-test: java-build
 	PYTHONDONTWRITEBYTECODE=1 JAVA_DIFF_REAL_EVM_BIN="$(CURDIR)/build/bin/jvmevm" python3 -m unittest discover -s tools -p 'test_java_diff.py'
@@ -88,13 +88,13 @@ java-diff-m1: java-build
 	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m1 --tier full --artifacts build/java-diff-m1
 
 java-smoke: java-build
-	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier smoke --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-smoke
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage all --tier smoke --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-smoke
 
 java-fast: java-build
-	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier fast --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-fast
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage all --tier fast --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-fast
 
 java-full: java-build
-	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier full --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-full
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage all --tier full --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-full
 
 java-runtime-build:
 	cd jvmevm/runtime && npm ci --ignore-scripts && npm run build

@@ -104,5 +104,32 @@ retain the negative-error purpose and make the reason explicit in the diff.
 - Commit local last-green milestone, update profile/queue; **automatically plan
   and dispatch M3a** after acceptance (no routine user re-confirmation).
 
-## Status
-Protocol frozen for the next three workers. No claim M2b is implemented yet.
+## Status / independent acceptance
+
+**M2b accepted. Parent proceeds to M3a; no user re-confirmation required.**
+
+- Runtime worker `2a3420f` integrated as `4ffd330`; fixtures `2a382a5` as
+  `ff6d679`; harness `e9427d7` as `74234d2`. Disjoint write sets reviewed.
+- Parent inspected in-EVM constant lookup, int32 arithmetic/division corner cases,
+  shift/cast handling and exact typed exception decoding. All Java decisions
+  remain in Solidity; host only decodes recognized return/error payloads.
+- Generic runtime is 8959 bytes; pinned rebuild matches SHA-256
+  `3388269119ae0f38e61e8f31b835af52bff25a295979faac72c4f3b4eb208c97`.
+- Original 82 manifest entries compare exactly unchanged against 0338bb2.
+  Full integration suite: **201/201 passed**, 199 values and two JVM/EVM matched
+  `java.lang.ArithmeticException` cases. Exception gas: division 77,908;
+  remainder 78,315 on IntegerArithmetic fixture (class shape affects gas).
+- Focused Go/CLI tests, 19 Python runner tests including real JVM/EVM smoke,
+  artifact consistency, prior AOT tests and `go vet` all passed.
+- Parent independently added 293 temporary JVM/EVM probes: division/remainder
+  extreme-value Cartesian products and signed/unsigned shifts with negative,
+  oversized and masked counts. All passed; 14 were explicit matched Java
+  arithmetic exceptions, not EVM failures. Local replay evidence:
+  `build/java-diff-parent-m2b/probe-0az81fcu/results/report.json`.
+- New tests distinguish invalid constant refs/truncated operands, exact known
+  JavaException payload, unknown kind/selector/length, true EVM errors and OOG.
+  Genuine ldc_w selected pool index >255 is verified, not simulated by host.
+- Main Make smoke/fast/full/test gates now select `--stage all` so future accepted
+  stages cannot be silently omitted; historical explicit stage filters remain.
+- Scope remains integer methods with uncaught root arithmetic outcomes only;
+  no calls, catch/unwind, references/objects, arrays, class libraries or full JVM.

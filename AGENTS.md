@@ -1,10 +1,10 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **V0 + M2a**. Active next batch: **M2b**, with frozen
-worker ownership/protocol in `JAVA_EVM_M2B_PLAN.md`. Continuous parent orchestration
-is authorized by `JAVA_EVM_PROGRAM.md`, superseding earlier stop-after-each-batch
-instructions. `JAVA_EVM_M2_PLAN.md` is the historical accepted-stage record.
-Wider stages are queued goals, not implemented/conformance claims.
+Current accepted stage: **M2b** (integer expressions and uncaught arithmetic
+outcomes), recorded in `JAVA_EVM_M2B_PLAN.md`. Next: **M3a static calls/frames**.
+Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
+superseding earlier stop-after-each-batch instructions. Worker scope comes from
+the current frozen batch plan; wider stages are not conformance claims.
 
 ## Git / ownership
 
@@ -31,9 +31,10 @@ sets; only one worker edits the monolithic Solidity dispatcher at a time.
 - Quickstart/limits: `JAVA_EVM.md`; runner details: `tools/JAVA_DIFF.md`
 
 At runtime, host only ABI-packs unchanged raw classfiles, method name and int
-arguments. EVM performs class/method/Code parsing, instruction predecode,
-constants/local stores, int32 add/subtract/increment, signed conditions, jumps,
-loops and returns. No host Java parsing/extraction/translation/evaluation,
+arguments. EVM performs class/method/Code/constant-pool resolution, instruction
+predecode, int32 arithmetic/bitwise/conversion/locals, signed conditions, loops
+and returns. Uncaught arithmetic exceptions are determined inside EVM; host only
+decodes the exact recognized outcome payload (never any arbitrary revert). No host Java parsing/extraction/translation/evaluation,
 native Java precompile, or class-specific runtime generation. Host javac and
 JVM reflection/oracle runs belong ONLY to building/testing guest inputs.
 
@@ -47,10 +48,10 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # actual EVM add, sum(100), fibonacci(20)
-make java-smoke      # 16 fixed oracle comparisons
-make java-fast       # 36 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 82 cases (12 M1 + 70 M2)
-make java-test       # artifact + focused Go + 11 runner tests + full differential
+make java-smoke      # 35 fixed oracle comparisons
+make java-fast       # 55 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 201 cases (12 M1 + 70 M2 + 119 M2b)
+make java-test       # artifact + focused Go + 19 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```
 

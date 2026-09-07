@@ -58,7 +58,7 @@ static int helper deliberately populates the pool, and the class has no
 unselected `Object` constructor containing reference/call opcodes; constructors
 are not guest entries and are distinct from the inspected selected methods.
 
-The accepted M2a EVM engine predates these new opcodes and cannot run the M2b
-cases until the runtime and exception-aware harness changes are integrated.
-Fixture validation therefore uses the actual `javac`/`java` reference oracle;
-this directory does not claim standalone EVM conformance for M2b.
+The M2b runtime and exception-aware harness are now integrated. All 201 cases
+passed JVM/EVM comparison on the same generic interpreter, including two explicit
+ArithmeticException cases. Run `make java-full`; see `JAVA_EVM_M2B_PLAN.md` for
+independent acceptance. This is subset verification, not full JVM conformance.

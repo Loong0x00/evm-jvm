@@ -63,8 +63,8 @@ routine permission to start the next verified increment.
 | Stage | Goal | State |
 |---|---|---|
 | V0 / M2a | oracle/replay gates + integer control flow | accepted at 3216753 |
-| M2b | int constants/arithmetic/bitwise/conversions + explicit uncaught arithmetic exception outcome | next active batch; JAVA_EVM_M2B_PLAN.md |
-| M3a | same-class static calls, explicit Java frames/returns/recursion | queued after M2b |
+| M2b | int constants/arithmetic/bitwise/conversions + explicit uncaught arithmetic exception outcome | accepted; JAVA_EVM_M2B_PLAN.md |
+| M3a | same-class static calls, explicit Java frames/returns/recursion | next active batch |
 | M3b | raw multi-class input, EVM-side resolution/linking, static state/init | queued |
 | M4 | arrays, object allocation/fields, reference values and dispatch | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
@@ -77,7 +77,8 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-Starting from clean integration branch `java-on-evm` at 3216753. The next action
-is to freeze and dispatch M2b runtime, fixtures and exception-aware oracle runner
-work in three separate worktrees. On successful integration, proceed to M3a
-rather than stopping to ask the user to say 'continue'.
+M2b is integrated and independently accepted: 201 fixed oracle cases plus 293
+parent probes passed, including explicit uncaught arithmetic exceptions. The
+parent's next action is to freeze and dispatch M3a static calls/frames/recursion
+with independent fixtures and protocol/validation work in separate worktrees.
+Do not stop to ask the user to say 'continue'; preserve current last-green gates.
