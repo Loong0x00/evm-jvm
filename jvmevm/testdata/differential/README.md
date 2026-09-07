@@ -4,11 +4,12 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 426 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
-73 `m3b`, and 85 `m3c` cases. The 128 smoke cases include 41 from `m3c`.
-Every root entry remains a uniquely named public static `(int...)int` method,
-and guest sources have no `main`. All 341 entries through M3b, including their
-source lists, arguments, budgets, tiers, and outcomes, are unchanged.
+The manifest has 498 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+73 `m3b`, 85 `m3c`, and 72 `m3d` cases. The 165 smoke cases include 37 from
+`m3d`. Every root entry remains a uniquely named, declared public static
+`(int...)int` method, and guest sources have no `main`. All 426 entries through
+M3c, including their source lists, arguments, budgets, tiers, and outcomes, are
+unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -96,8 +97,37 @@ case keeps arithmetic outside initialization as
 by `Class.forName`, while class-not-found and reflection/configuration failures
 remain nonzero stderr failures.
 
-Across all stages there are 407 value outcomes, 11 ArithmeticException outcomes,
-three StackOverflowError outcomes, and five ExceptionInInitializerError outcomes.
+M3d adds 68 value outcomes and four actual JVM exception outcomes over 30 new
+trusted Java 8 classes. Its two- and three-level ordinary-class hierarchies cover:
+
+- exact first-match resolution for inherited and hidden static fields/methods,
+  plus one- and two-`int` overload descriptors;
+- one declaring-owner field slot observed and mutated through sibling subclasses;
+- inherited field, int-method, and void-method active use through symbolic
+  children, including a child whose own initializer would fail, proving that the
+  resolved declaring owner—not merely the symbolic child—is initialized;
+- superclass-before-subclass traces, a middle class with no `<clinit>`, bundle
+  orders with roots first and last, and duplicate fresh-process probes;
+- parent initialization reads and calls into a child already marked initializing,
+  observing the child's prepared default before its initializer completes;
+- same-package protected static access, cross-package protected static access by
+  a subclass, and public inherited members declared by a nonpublic ancestor and
+  referenced externally through its accessible public child.
+
+Three cases expect `java.lang.ExceptionInInitializerError` from arithmetic in a
+parent initializer before the child initializer can run. One separate hierarchy
+case expects `java.lang.ArithmeticException` from division in entered ordinary
+method code, outside initialization.
+
+`ReentrantChild.COMPILED_CONSTANT` has a real `ConstantValue` attribute and is
+prepared before parent initialization. However, javac compiles the Java-source
+read in `ReentrantParent` to `bipush 7`; it does **not** emit `getstatic` and is
+therefore not claimed as source-level proof of ConstantValue-before-parent
+visibility. The independently owned verifier must redirect a valid raw
+Fieldref/getstatic in test-only class bytes to test that timing rule.
+
+Across all stages there are 475 value outcomes, 12 ArithmeticException outcomes,
+three StackOverflowError outcomes, and eight ExceptionInInitializerError outcomes.
 Every gas limit is finite and at most 50,000,000; every subprocess timeout is at
 most 10 seconds.
 
@@ -120,6 +150,11 @@ java -cp "$out" OracleMain bundle.basic.BasicRoot direct 17
 java -cp "$out" OracleMain bundle.cross.CrossRoot crossPackageNested 12
 java -cp "$out" OracleMain bundle.errors.ErrorRoot nestedDivide 1 0
 java -cp "$out" OracleMain bundle.recursion.RecursionRoot crossStackOverflow 0
+java -cp "$out" OracleMain bundle.m3d.resolve.ResolveLeaf overloadDescriptors 3 4
+java -cp "$out" OracleMain bundle.m3d.owner.OwnerRoot fieldThroughFailingChild 9
+java -cp "$out" OracleMain bundle.m3d.reentrant.ReentrantChild childCompleted 2
+java -cp "$out" OracleMain bundle.m3d.external.HiddenAccessRoot publicInheritedField 3
+java -cp "$out" OracleMain bundle.m3d.errors.FailureChild entry 0
 rm -rf "$out"
 ```
 
@@ -136,17 +171,34 @@ find "$out/bundle" -name '*.class' -print | sort | while read -r file; do
 done
 javap -classpath "$out" -c -v -p M3cStatics
 javap -classpath "$out" -c -p bundle.isolation.Alpha bundle.isolation.Beta
+find "$out/bundle/m3d" -name '*.class' -print | sort | while read -r file; do
+  class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
+  javap -classpath "$out" -c -v -p "$class"
+done
 rm -rf "$out"
 ```
 
-A full local reference compile and 426 fresh `OracleMain` JVM invocations passed
-for this fixture revision. `javap -c -v -p` over the 28 M3c classes found 18
-`<clinit>` methods, two `ConstantValue` attributes, and aggregate field shapes of
-83 `getstatic`, 57 `putstatic`, and seven `dup` instructions. All non-constructor
-methods use only the frozen M3c profile plus accepted M3b operations; ordinary
-javac-generated, unentered constructors still contain `aload_0` and
-`invokespecial Object.<init>`. All classes directly extend `java/lang/Object`
-and declare no interfaces.
+A full local reference compile and 498 fresh `OracleMain` JVM invocations passed
+for this fixture revision. This checks each manifest result against the actual JVM
+rather than storing hardcoded value answers. The resulting outcomes were 475
+values, 12 `ArithmeticException`, three `StackOverflowError`, and eight
+`ExceptionInInitializerError` results.
+
+`javap -c -v -p` over the 30 M3d classes found 19 `<clinit>` methods, one
+`ConstantValue` attribute, and aggregate instruction shapes of 58 `getstatic`,
+41 `putstatic`, and 35 `invokestatic`. Sixteen classes have a supplied ordinary
+superclass and fourteen directly extend `java/lang/Object`; all declare zero
+interfaces. Every entered descriptor uses only `int` and `void`, and all
+non-constructor methods stay within the frozen M3c instruction profile plus the
+accepted M3a/M3b static-call operations. The 30 ordinary javac-generated,
+unentered constructors contain the only `aload_0`/`invokespecial` constructor
+calls. No entered instance call, allocation, reference-array, handler, or
+interface path is introduced.
+
+For the prior M3c set, `javap -c -v -p` over its 28 classes found 18 `<clinit>`
+methods, two `ConstantValue` attributes, and aggregate field shapes of 83
+`getstatic`, 57 `putstatic`, and seven `dup` instructions. Those classes directly
+extend `java/lang/Object` and declare no interfaces.
 
 `WideIntegerConstant.loadWide` remains the javac-produced `ldc_w` fixture with a
 `CONSTANT_Integer` index greater than 255. Its unselected pool-populating helper
@@ -159,8 +211,11 @@ python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All426 cases now pass actual JVM/EVM comparison after M3c parent integration,
-including initializers and known Java outcomes. Earlier341 entries are unchanged.
-See `JAVA_EVM_M3C_PLAN.md` for independent acceptance/follow-up fixes. The runtime
-is over mainnet deployment size and used through local runtime.Execute. This
-remains subset verification, not full JVM conformance.
+All 426 pre-M3d cases pass actual JVM/EVM comparison after M3c parent integration,
+including initializers and known Java outcomes. The 72 M3d cases have passing
+fresh-process JVM oracle results and classfile-profile evidence; the M3c baseline
+runtime cannot execute the new hierarchy cases before the separately owned M3d
+runtime/verifier changes are integrated. Earlier 426 entries are unchanged. See
+`JAVA_EVM_M3D_PLAN.md` for the frozen integration contract. The runtime is over
+mainnet deployment size and used through local runtime.Execute. This remains
+subset verification, not full JVM conformance.

@@ -7846,6 +7846,1681 @@
       "smoke": true,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.StackOverflowError"
+    },
+    {
+      "id": "m3d-resolve-inherited-hidden-fields",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveLeaf.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class"
+      ],
+      "method": "inheritedAndHiddenFields",
+      "args": [
+        5
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-inherited-hidden-fields-negative-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "inheritedAndHiddenFields",
+      "args": [
+        -9
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-distinct-hidden-fields",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "distinctHiddenFields",
+      "args": [
+        4
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-inherited-method",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveLeaf.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class"
+      ],
+      "method": "inheritedMethod",
+      "args": [
+        12
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-inherited-method-negative-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "inheritedMethod",
+      "args": [
+        -8
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-hidden-method-first-match",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "hiddenMethod",
+      "args": [
+        12
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-base-qualified-method",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "baseQualifiedMethod",
+      "args": [
+        12
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-overload-descriptors",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveLeaf.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class"
+      ],
+      "method": "overloadDescriptors",
+      "args": [
+        3,
+        4
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-overload-descriptors-negative-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "overloadDescriptors",
+      "args": [
+        -2,
+        7
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-inherited-initialized-field",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "inheritedInitialized",
+      "args": [
+        6
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-write-inherited",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveLeaf.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class"
+      ],
+      "method": "writeInherited",
+      "args": [
+        77
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-write-inherited-negative-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "writeInherited",
+      "args": [
+        -123
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-write-hidden",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveBase.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveLeaf.class"
+      ],
+      "method": "writeHidden",
+      "args": [
+        44
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-resolve-write-hidden-negative",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/resolve/ResolveLeaf.java",
+        "bundle/m3d/resolve/ResolveMiddle.java",
+        "bundle/m3d/resolve/ResolveBase.java"
+      ],
+      "class": "bundle.m3d.resolve.ResolveLeaf",
+      "class_files": [
+        "bundle/m3d/resolve/ResolveLeaf.class",
+        "bundle/m3d/resolve/ResolveMiddle.class",
+        "bundle/m3d/resolve/ResolveBase.class"
+      ],
+      "method": "writeHidden",
+      "args": [
+        -55
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-write-left-read-right",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedRoot.class",
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedBase.class"
+      ],
+      "method": "writeLeftReadRight",
+      "args": [
+        61
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-write-left-read-right-fresh-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedBase.class",
+        "bundle/m3d/shared/SharedRoot.class"
+      ],
+      "method": "writeLeftReadRight",
+      "args": [
+        61
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-write-right-read-left",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedBase.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRoot.class"
+      ],
+      "method": "writeRightReadLeft",
+      "args": [
+        13
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-write-right-read-left-fresh",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedRoot.class",
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedBase.class"
+      ],
+      "method": "writeRightReadLeft",
+      "args": [
+        13
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-two-writes",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedBase.class",
+        "bundle/m3d/shared/SharedRoot.class"
+      ],
+      "method": "twoWrites",
+      "args": [
+        7,
+        29
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-two-writes-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedBase.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRoot.class"
+      ],
+      "method": "twoWrites",
+      "args": [
+        -4,
+        18
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-void-update",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedRoot.class",
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedBase.class"
+      ],
+      "method": "voidUpdateAcrossSiblings",
+      "args": [
+        9
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-void-update-negative-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedBase.class",
+        "bundle/m3d/shared/SharedRoot.class"
+      ],
+      "method": "voidUpdateAcrossSiblings",
+      "args": [
+        -3
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-inherited-calls",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedBase.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRoot.class"
+      ],
+      "method": "inheritedCallsShareStorage",
+      "args": [
+        5
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-shared-inherited-calls-negative",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/shared/SharedRoot.java",
+        "bundle/m3d/shared/SharedLeft.java",
+        "bundle/m3d/shared/SharedRight.java",
+        "bundle/m3d/shared/SharedBase.java"
+      ],
+      "class": "bundle.m3d.shared.SharedRoot",
+      "class_files": [
+        "bundle/m3d/shared/SharedRoot.class",
+        "bundle/m3d/shared/SharedLeft.class",
+        "bundle/m3d/shared/SharedRight.class",
+        "bundle/m3d/shared/SharedBase.class"
+      ],
+      "method": "inheritedCallsShareStorage",
+      "args": [
+        -8
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-field-through-child",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/OwnerRoot.class",
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/DeclaringBase.class"
+      ],
+      "method": "fieldThroughChild",
+      "args": [
+        4
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-field-through-child-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/DeclaringBase.class",
+        "bundle/m3d/owner/OwnerRoot.class"
+      ],
+      "method": "fieldThroughChild",
+      "args": [
+        -6
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-call-through-child",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/DeclaringBase.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/OwnerRoot.class"
+      ],
+      "method": "callThroughChild",
+      "args": [
+        5
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-call-through-child-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/OwnerRoot.class",
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/DeclaringBase.class"
+      ],
+      "method": "callThroughChild",
+      "args": [
+        -7
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-field-through-failing-child",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/DeclaringBase.class",
+        "bundle/m3d/owner/OwnerRoot.class"
+      ],
+      "method": "fieldThroughFailingChild",
+      "args": [
+        9
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-field-through-failing-child-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/DeclaringBase.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/OwnerRoot.class"
+      ],
+      "method": "fieldThroughFailingChild",
+      "args": [
+        -2
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-call-through-failing-child",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/OwnerRoot.class",
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/DeclaringBase.class"
+      ],
+      "method": "callThroughFailingChild",
+      "args": [
+        8
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-write-through-child",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/DeclaringBase.class",
+        "bundle/m3d/owner/OwnerRoot.class"
+      ],
+      "method": "writeThroughChild",
+      "args": [
+        72
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-write-through-child-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/DeclaringBase.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/OwnerRoot.class"
+      ],
+      "method": "writeThroughChild",
+      "args": [
+        -19
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-owner-void-call-through-child",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/owner/OwnerRoot.java",
+        "bundle/m3d/owner/SymbolicChild.java",
+        "bundle/m3d/owner/FailingSymbolicChild.java",
+        "bundle/m3d/owner/DeclaringBase.java"
+      ],
+      "class": "bundle.m3d.owner.OwnerRoot",
+      "class_files": [
+        "bundle/m3d/owner/OwnerRoot.class",
+        "bundle/m3d/owner/SymbolicChild.class",
+        "bundle/m3d/owner/FailingSymbolicChild.class",
+        "bundle/m3d/owner/DeclaringBase.class"
+      ],
+      "method": "voidCallThroughChild",
+      "args": [
+        88
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-trace-superclass-order",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/trace/TraceRoot.java",
+        "bundle/m3d/trace/TraceChild.java",
+        "bundle/m3d/trace/TraceBase.java"
+      ],
+      "class": "bundle.m3d.trace.TraceRoot",
+      "class_files": [
+        "bundle/m3d/trace/TraceRoot.class",
+        "bundle/m3d/trace/TraceChild.class",
+        "bundle/m3d/trace/TraceBase.class"
+      ],
+      "method": "superclassOrder",
+      "args": [
+        0
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-trace-superclass-order-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/trace/TraceRoot.java",
+        "bundle/m3d/trace/TraceChild.java",
+        "bundle/m3d/trace/TraceBase.java"
+      ],
+      "class": "bundle.m3d.trace.TraceRoot",
+      "class_files": [
+        "bundle/m3d/trace/TraceChild.class",
+        "bundle/m3d/trace/TraceBase.class",
+        "bundle/m3d/trace/TraceRoot.class"
+      ],
+      "method": "superclassOrder",
+      "args": [
+        7
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-trace-only",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/trace/TraceRoot.java",
+        "bundle/m3d/trace/TraceChild.java",
+        "bundle/m3d/trace/TraceBase.java"
+      ],
+      "class": "bundle.m3d.trace.TraceRoot",
+      "class_files": [
+        "bundle/m3d/trace/TraceBase.class",
+        "bundle/m3d/trace/TraceChild.class",
+        "bundle/m3d/trace/TraceRoot.class"
+      ],
+      "method": "traceOnly",
+      "args": [
+        4
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-trace-only-negative",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/trace/TraceRoot.java",
+        "bundle/m3d/trace/TraceChild.java",
+        "bundle/m3d/trace/TraceBase.java"
+      ],
+      "class": "bundle.m3d.trace.TraceRoot",
+      "class_files": [
+        "bundle/m3d/trace/TraceRoot.class",
+        "bundle/m3d/trace/TraceChild.class",
+        "bundle/m3d/trace/TraceBase.class"
+      ],
+      "method": "traceOnly",
+      "args": [
+        -9
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-no-clinit-middle",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/noinit/NoInitRoot.java",
+        "bundle/m3d/noinit/NoInitMiddle.java",
+        "bundle/m3d/noinit/NoInitBase.java"
+      ],
+      "class": "bundle.m3d.noinit.NoInitRoot",
+      "class_files": [
+        "bundle/m3d/noinit/NoInitRoot.class",
+        "bundle/m3d/noinit/NoInitMiddle.class",
+        "bundle/m3d/noinit/NoInitBase.class"
+      ],
+      "method": "noClinitMiddle",
+      "args": [
+        3
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-no-clinit-middle-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/noinit/NoInitRoot.java",
+        "bundle/m3d/noinit/NoInitMiddle.java",
+        "bundle/m3d/noinit/NoInitBase.java"
+      ],
+      "class": "bundle.m3d.noinit.NoInitRoot",
+      "class_files": [
+        "bundle/m3d/noinit/NoInitMiddle.class",
+        "bundle/m3d/noinit/NoInitBase.class",
+        "bundle/m3d/noinit/NoInitRoot.class"
+      ],
+      "method": "noClinitMiddle",
+      "args": [
+        -5
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-no-clinit-inherited-field",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/noinit/NoInitRoot.java",
+        "bundle/m3d/noinit/NoInitMiddle.java",
+        "bundle/m3d/noinit/NoInitBase.java"
+      ],
+      "class": "bundle.m3d.noinit.NoInitRoot",
+      "class_files": [
+        "bundle/m3d/noinit/NoInitBase.class",
+        "bundle/m3d/noinit/NoInitMiddle.class",
+        "bundle/m3d/noinit/NoInitRoot.class"
+      ],
+      "method": "inheritedAfterNoClinit",
+      "args": [
+        6
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-no-clinit-inherited-field-fresh",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/noinit/NoInitRoot.java",
+        "bundle/m3d/noinit/NoInitMiddle.java",
+        "bundle/m3d/noinit/NoInitBase.java"
+      ],
+      "class": "bundle.m3d.noinit.NoInitRoot",
+      "class_files": [
+        "bundle/m3d/noinit/NoInitRoot.class",
+        "bundle/m3d/noinit/NoInitMiddle.class",
+        "bundle/m3d/noinit/NoInitBase.class"
+      ],
+      "method": "inheritedAfterNoClinit",
+      "args": [
+        6
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-reentrant-parent-observed-defaults",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/reentrant/ReentrantChild.java",
+        "bundle/m3d/reentrant/ReentrantParent.java"
+      ],
+      "class": "bundle.m3d.reentrant.ReentrantChild",
+      "class_files": [
+        "bundle/m3d/reentrant/ReentrantChild.class",
+        "bundle/m3d/reentrant/ReentrantParent.class"
+      ],
+      "method": "parentObservedDefaults",
+      "args": [
+        3
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-reentrant-parent-observed-defaults-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/reentrant/ReentrantChild.java",
+        "bundle/m3d/reentrant/ReentrantParent.java"
+      ],
+      "class": "bundle.m3d.reentrant.ReentrantChild",
+      "class_files": [
+        "bundle/m3d/reentrant/ReentrantParent.class",
+        "bundle/m3d/reentrant/ReentrantChild.class"
+      ],
+      "method": "parentObservedDefaults",
+      "args": [
+        -4
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-reentrant-parent-observed-defaults-fresh",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/reentrant/ReentrantChild.java",
+        "bundle/m3d/reentrant/ReentrantParent.java"
+      ],
+      "class": "bundle.m3d.reentrant.ReentrantChild",
+      "class_files": [
+        "bundle/m3d/reentrant/ReentrantChild.class",
+        "bundle/m3d/reentrant/ReentrantParent.class"
+      ],
+      "method": "parentObservedDefaults",
+      "args": [
+        3
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-reentrant-child-completed",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/reentrant/ReentrantChild.java",
+        "bundle/m3d/reentrant/ReentrantParent.java"
+      ],
+      "class": "bundle.m3d.reentrant.ReentrantChild",
+      "class_files": [
+        "bundle/m3d/reentrant/ReentrantParent.class",
+        "bundle/m3d/reentrant/ReentrantChild.class"
+      ],
+      "method": "childCompleted",
+      "args": [
+        2
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-reentrant-child-completed-negative",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/reentrant/ReentrantChild.java",
+        "bundle/m3d/reentrant/ReentrantParent.java"
+      ],
+      "class": "bundle.m3d.reentrant.ReentrantChild",
+      "class_files": [
+        "bundle/m3d/reentrant/ReentrantChild.class",
+        "bundle/m3d/reentrant/ReentrantParent.class"
+      ],
+      "method": "childCompleted",
+      "args": [
+        -7
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-reentrant-child-completed-fresh-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/reentrant/ReentrantChild.java",
+        "bundle/m3d/reentrant/ReentrantParent.java"
+      ],
+      "class": "bundle.m3d.reentrant.ReentrantChild",
+      "class_files": [
+        "bundle/m3d/reentrant/ReentrantParent.class",
+        "bundle/m3d/reentrant/ReentrantChild.class"
+      ],
+      "method": "childCompleted",
+      "args": [
+        2
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-same-package-field",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accessbase/SamePackageRoot.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accessbase.SamePackageRoot",
+      "class_files": [
+        "bundle/m3d/accessbase/SamePackageRoot.class",
+        "bundle/m3d/accessbase/ProtectedBase.class"
+      ],
+      "method": "fieldAccess",
+      "args": [
+        2
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-same-package-field-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accessbase/SamePackageRoot.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accessbase.SamePackageRoot",
+      "class_files": [
+        "bundle/m3d/accessbase/ProtectedBase.class",
+        "bundle/m3d/accessbase/SamePackageRoot.class"
+      ],
+      "method": "fieldAccess",
+      "args": [
+        -3
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-same-package-method",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accessbase/SamePackageRoot.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accessbase.SamePackageRoot",
+      "class_files": [
+        "bundle/m3d/accessbase/SamePackageRoot.class",
+        "bundle/m3d/accessbase/ProtectedBase.class"
+      ],
+      "method": "methodAccess",
+      "args": [
+        6
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-same-package-void",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accessbase/SamePackageRoot.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accessbase.SamePackageRoot",
+      "class_files": [
+        "bundle/m3d/accessbase/ProtectedBase.class",
+        "bundle/m3d/accessbase/SamePackageRoot.class"
+      ],
+      "method": "voidAccess",
+      "args": [
+        71
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-cross-package-field",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accesschild/ProtectedRoot.java",
+        "bundle/m3d/accesschild/ProtectedMiddle.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accesschild.ProtectedRoot",
+      "class_files": [
+        "bundle/m3d/accesschild/ProtectedRoot.class",
+        "bundle/m3d/accesschild/ProtectedMiddle.class",
+        "bundle/m3d/accessbase/ProtectedBase.class"
+      ],
+      "method": "crossPackageField",
+      "args": [
+        5
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-cross-package-field-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accesschild/ProtectedRoot.java",
+        "bundle/m3d/accesschild/ProtectedMiddle.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accesschild.ProtectedRoot",
+      "class_files": [
+        "bundle/m3d/accesschild/ProtectedMiddle.class",
+        "bundle/m3d/accessbase/ProtectedBase.class",
+        "bundle/m3d/accesschild/ProtectedRoot.class"
+      ],
+      "method": "crossPackageField",
+      "args": [
+        -7
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-cross-package-method",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accesschild/ProtectedRoot.java",
+        "bundle/m3d/accesschild/ProtectedMiddle.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accesschild.ProtectedRoot",
+      "class_files": [
+        "bundle/m3d/accessbase/ProtectedBase.class",
+        "bundle/m3d/accesschild/ProtectedMiddle.class",
+        "bundle/m3d/accesschild/ProtectedRoot.class"
+      ],
+      "method": "crossPackageMethod",
+      "args": [
+        8
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-cross-package-method-negative",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accesschild/ProtectedRoot.java",
+        "bundle/m3d/accesschild/ProtectedMiddle.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accesschild.ProtectedRoot",
+      "class_files": [
+        "bundle/m3d/accesschild/ProtectedRoot.class",
+        "bundle/m3d/accesschild/ProtectedMiddle.class",
+        "bundle/m3d/accessbase/ProtectedBase.class"
+      ],
+      "method": "crossPackageMethod",
+      "args": [
+        -9
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-cross-package-void",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accesschild/ProtectedRoot.java",
+        "bundle/m3d/accesschild/ProtectedMiddle.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accesschild.ProtectedRoot",
+      "class_files": [
+        "bundle/m3d/accesschild/ProtectedMiddle.class",
+        "bundle/m3d/accessbase/ProtectedBase.class",
+        "bundle/m3d/accesschild/ProtectedRoot.class"
+      ],
+      "method": "crossPackageVoid",
+      "args": [
+        81
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-protected-cross-package-void-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/accesschild/ProtectedRoot.java",
+        "bundle/m3d/accesschild/ProtectedMiddle.java",
+        "bundle/m3d/accessbase/ProtectedBase.java"
+      ],
+      "class": "bundle.m3d.accesschild.ProtectedRoot",
+      "class_files": [
+        "bundle/m3d/accessbase/ProtectedBase.class",
+        "bundle/m3d/accesschild/ProtectedMiddle.class",
+        "bundle/m3d/accesschild/ProtectedRoot.class"
+      ],
+      "method": "crossPackageVoid",
+      "args": [
+        -21
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-field",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/external/HiddenAccessRoot.class",
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/hidden/HiddenBase.class"
+      ],
+      "method": "publicInheritedField",
+      "args": [
+        3
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-field-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/hidden/HiddenBase.class",
+        "bundle/m3d/external/HiddenAccessRoot.class"
+      ],
+      "method": "publicInheritedField",
+      "args": [
+        -8
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-field-fresh",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/hidden/HiddenBase.class",
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/external/HiddenAccessRoot.class"
+      ],
+      "method": "publicInheritedField",
+      "args": [
+        3
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-method",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/external/HiddenAccessRoot.class",
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/hidden/HiddenBase.class"
+      ],
+      "method": "publicInheritedMethod",
+      "args": [
+        6
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-method-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/hidden/HiddenBase.class",
+        "bundle/m3d/external/HiddenAccessRoot.class"
+      ],
+      "method": "publicInheritedMethod",
+      "args": [
+        -4
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-void",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/hidden/HiddenBase.class",
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/external/HiddenAccessRoot.class"
+      ],
+      "method": "publicInheritedVoid",
+      "args": [
+        63
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-void-negative",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/external/HiddenAccessRoot.class",
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/hidden/HiddenBase.class"
+      ],
+      "method": "publicInheritedVoid",
+      "args": [
+        -17
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-hidden-ancestor-public-method-fresh",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/external/HiddenAccessRoot.java",
+        "bundle/m3d/hidden/PublicChild.java",
+        "bundle/m3d/hidden/HiddenBase.java"
+      ],
+      "class": "bundle.m3d.external.HiddenAccessRoot",
+      "class_files": [
+        "bundle/m3d/hidden/PublicChild.class",
+        "bundle/m3d/hidden/HiddenBase.class",
+        "bundle/m3d/external/HiddenAccessRoot.class"
+      ],
+      "method": "publicInheritedMethod",
+      "args": [
+        6
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-error-parent-initializer-arithmetic",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/errors/FailureChild.java",
+        "bundle/m3d/errors/ParentFailure.java"
+      ],
+      "class": "bundle.m3d.errors.FailureChild",
+      "class_files": [
+        "bundle/m3d/errors/FailureChild.class",
+        "bundle/m3d/errors/ParentFailure.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3d-error-parent-initializer-arithmetic-arg",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/errors/FailureChild.java",
+        "bundle/m3d/errors/ParentFailure.java"
+      ],
+      "class": "bundle.m3d.errors.FailureChild",
+      "class_files": [
+        "bundle/m3d/errors/ParentFailure.class",
+        "bundle/m3d/errors/FailureChild.class"
+      ],
+      "method": "entry",
+      "args": [
+        77
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3d-error-parent-initializer-arithmetic-fresh",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/errors/FailureChild.java",
+        "bundle/m3d/errors/ParentFailure.java"
+      ],
+      "class": "bundle.m3d.errors.FailureChild",
+      "class_files": [
+        "bundle/m3d/errors/FailureChild.class",
+        "bundle/m3d/errors/ParentFailure.class"
+      ],
+      "method": "entry",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m3d-error-normal-arithmetic-value",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/errors/NormalArithmeticRoot.java",
+        "bundle/m3d/errors/NormalParent.java"
+      ],
+      "class": "bundle.m3d.errors.NormalArithmeticRoot",
+      "class_files": [
+        "bundle/m3d/errors/NormalArithmeticRoot.class",
+        "bundle/m3d/errors/NormalParent.class"
+      ],
+      "method": "divide",
+      "args": [
+        20,
+        4
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-error-normal-arithmetic-value-reordered",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/errors/NormalArithmeticRoot.java",
+        "bundle/m3d/errors/NormalParent.java"
+      ],
+      "class": "bundle.m3d.errors.NormalArithmeticRoot",
+      "class_files": [
+        "bundle/m3d/errors/NormalParent.class",
+        "bundle/m3d/errors/NormalArithmeticRoot.class"
+      ],
+      "method": "divide",
+      "args": [
+        -21,
+        3
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3d-error-normal-arithmetic-outside-init",
+      "stage": "m3d",
+      "sources": [
+        "bundle/m3d/errors/NormalArithmeticRoot.java",
+        "bundle/m3d/errors/NormalParent.java"
+      ],
+      "class": "bundle.m3d.errors.NormalArithmeticRoot",
+      "class_files": [
+        "bundle/m3d/errors/NormalParent.class",
+        "bundle/m3d/errors/NormalArithmeticRoot.class"
+      ],
+      "method": "divide",
+      "args": [
+        20,
+        0
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
     }
   ]
 }
