@@ -15,6 +15,8 @@ Primary M1 interpreter path:
 - Java inputs: `examples/java/Add.java`, `examples/java/Identity.java`
 - Boundary, limits, and quickstart: `JAVA_EVM.md`
 - Authoritative completed task record: `JAVA_EVM_INTERPRETER_PLAN.md`
+- Proposed broader roadmap and bounded verification-first agent workflow:
+  `JAVA_EVM_ROADMAP.md` (planning only; not an implementation/conformance claim)
 
 At run time the host may only ABI-pack an unchanged raw classfile, method name,
 and int arguments. The same generic EVM runtime parses the classfile and
