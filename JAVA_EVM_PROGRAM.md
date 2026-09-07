@@ -74,7 +74,7 @@ routine permission to start the next verified increment.
 | M3c | integer static fields/state and ordinary-class initialization | accepted; JAVA_EVM_M3C_PLAN.md |
 | M3d | class hierarchy/member resolution and superclass-init prerequisites | accepted; JAVA_EVM_M3D_PLAN.md |
 | M4a | integer-array heap, typed references, array helpers/statics | active; JAVA_EVM_M4A_PLAN.md |
-| M4b | ordinary object allocation, constructors, instance fields and direct invokespecial calls | next bounded stage |
+| M4b | ordinary object allocation, constructors, instance fields and direct invokespecial calls | frozen in `JAVA_EVM_M4B_PLAN.md`; dispatch3 workers |
 | M4c | invokevirtual dispatch, casts/type tests, then interface/reference-array extensions | queued; freeze separately |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -92,7 +92,7 @@ Parent found and fixed dup_x2 underflow guard rather than weakening verifier.
 Two new total-cap tests require250M finite gas (~139M used); preserve100M OOG
 assertion. Demo sum100 raised2M→3M after measured2,229,893 gas, no oracle changes.
 Runtime40205 bytes remains local-runtime only, not deployed/full Java.
-Next freeze M4b ordinary objects/constructors/fields/direct special calls; split
+M4b contract is frozen in JAVA_EVM_M4B_PLAN.md; dispatch isolated workers. Split
 virtual dispatch into M4c to isolate construction/lifecycle from override rules.
 Keep Sol/high, inherited Fast, disjoint worktrees, exact tests and automatic
 continuation after acceptance; no routine stage confirmation.
