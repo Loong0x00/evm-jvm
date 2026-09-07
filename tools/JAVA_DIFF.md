@@ -9,7 +9,10 @@ parse, translate, or specialize class files.
 Build the CLI separately, then run from the repository root:
 
 ```sh
-go build -o build/bin/jvmevm ./cmd/jvmevm
+make java-smoke  # 16 fixed smoke cases
+make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 to change seed
+make java-full   # all 82 cases, including M1 baseline
+# Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
 python3 tools/java_diff.py --stage m1 --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
@@ -49,8 +52,11 @@ available, fixture source/manifest/class hashes, runtime hash, queried JDK
 versions, exact command argv/stdout/stderr/exit or timeout status, gas limit and
 gas used, per-case classification, and an exact single-case replay command.
 `failures.txt` is a concise human-readable failure list. Compiled fixture
-classes are retained under `compiled/`. The default artifact location is under
-the repository's ignored `build/` tree.
+classes are retained under a new `run-*/compiled/` directory for every run.
+Each run also keeps its own report and failure summary; top-level `report.json`
+and `failures.txt` describe the latest run. Existing compiled directories are
+never deleted or reused. The default `build/java-diff/` and named
+`build/java-diff-*/` artifact directories are explicitly Git-ignored.
 
 Replay is not a hermetic snapshot: the command recompiles fixtures and uses the
 specified CLI. It therefore depends on the current fixture source,
@@ -59,14 +65,15 @@ version output when reproducing an old report.
 
 ## Tests
 
-Mock compiler/JVM/CLI protocol and error-path coverage:
+`make java-harness-test` runs all runner tests including real JVM/EVM smoke.
+Mock compiler/JVM/CLI protocol and error-path coverage alone:
 
 ```sh
 python3 -m unittest discover -s tools -p 'test_java_diff.py'
 ```
 
 The real M1 test creates a temporary manifest, guest source, and `OracleMain`,
-then uses actual `javac`, `java`, and a prebuilt M1 CLI:
+then uses actual `javac`, `java`, and a prebuilt CLI supporting M1 (including M2):
 
 ```sh
 go build -o build/bin/jvmevm ./cmd/jvmevm

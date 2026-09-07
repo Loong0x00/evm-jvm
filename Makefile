@@ -62,17 +62,39 @@ help: Makefile
 	@echo 'Targets:'
 	@sed -n 's/^#?//p' $< | column -t -s ':' |  sort | sed -e 's/^/ /'
 
-# Java-in-EVM interpreter helpers. The java-aot-* targets preserve the M0 baseline.
-.PHONY: java-demo java-test java-runtime-build java-runtime-check java-aot-demo java-aot-test
+# Java-in-EVM staged gates. The java-aot-* targets preserve the M0 baseline.
+.PHONY: java-build java-demo java-test java-runtime-build java-runtime-check java-aot-demo java-aot-test java-harness-test java-diff-m1 java-smoke java-fast java-full
+JAVA_DIFF_SEED ?= 56
 
-java-demo:
-	mkdir -p build/java-evm-interpreter
-	javac --release 8 -d build/java-evm-interpreter examples/java/Add.java
-	go run ./cmd/jvmevm -class build/java-evm-interpreter/Add.class -method add -args 20,22 -gas 2000000
-
-java-test: java-runtime-check
-	go test -count=1 ./jvmevm ./cmd/jvmevm
+java-build:
 	go build -o build/bin/jvmevm ./cmd/jvmevm
+
+java-demo: java-build
+	mkdir -p build/java-evm-interpreter
+	javac --release 8 -d build/java-evm-interpreter examples/java/Add.java jvmevm/testdata/differential/Loops.java
+	build/bin/jvmevm -class build/java-evm-interpreter/Add.class -method add -args 20,22 -gas 2000000
+	build/bin/jvmevm -class build/java-evm-interpreter/Loops.class -method sum -args 100 -gas 2000000
+	build/bin/jvmevm -class build/java-evm-interpreter/Loops.class -method fibonacci -args 20 -gas 2000000
+
+java-test: java-runtime-check java-build
+	go test -count=1 ./jvmevm ./cmd/jvmevm
+	PYTHONDONTWRITEBYTECODE=1 JAVA_DIFF_REAL_EVM_BIN="$(CURDIR)/build/bin/jvmevm" python3 -m unittest discover -s tools -p 'test_java_diff.py'
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier full --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-full
+
+java-harness-test: java-build
+	PYTHONDONTWRITEBYTECODE=1 JAVA_DIFF_REAL_EVM_BIN="$(CURDIR)/build/bin/jvmevm" python3 -m unittest discover -s tools -p 'test_java_diff.py'
+
+java-diff-m1: java-build
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m1 --tier full --artifacts build/java-diff-m1
+
+java-smoke: java-build
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier smoke --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-smoke
+
+java-fast: java-build
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier fast --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-fast
+
+java-full: java-build
+	PYTHONDONTWRITEBYTECODE=1 python3 tools/java_diff.py --stage m2 --tier full --seed $(JAVA_DIFF_SEED) --artifacts build/java-diff-full
 
 java-runtime-build:
 	cd jvmevm/runtime && npm ci --ignore-scripts && npm run build

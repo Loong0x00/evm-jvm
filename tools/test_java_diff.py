@@ -190,6 +190,43 @@ class JavaDiffTests(unittest.TestCase):
                 self.assertIn("stdout", result["oracle"])
                 self.assertIn("stdout", result["evm"])
 
+    def test_repeated_runs_preserve_existing_files_and_archive_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [case()])
+            tools = MockTools(tmp)
+            existing = Path(tmp) / "artifacts/compiled/keep.txt"
+            existing.parent.mkdir(parents=True)
+            existing.write_text("not owned by the runner", encoding="utf-8")
+            first, first_report = self.run_runner(tmp, fixtures.path, tools)
+            second, second_report = self.run_runner(tmp, fixtures.path, tools)
+            self.assertEqual(first.returncode, 0, first.stderr)
+            self.assertEqual(second.returncode, 0, second.stderr)
+            self.assertEqual(existing.read_text(encoding="utf-8"), "not owned by the runner")
+            self.assertNotEqual(first_report["run_directory"], second_report["run_directory"])
+            for report in (first_report, second_report):
+                directory = Path(report["run_directory"])
+                self.assertTrue((directory / "compiled/Arithmetic.class").is_file())
+                archived = json.loads((directory / "report.json").read_text(encoding="utf-8"))
+                self.assertEqual(archived["status_counts"], {"pass": 1})
+
+    def test_success_gas_cannot_exceed_limit(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            too_little_gas = case()
+            too_little_gas["gas_limit"] = 100
+            fixtures = FixtureTree(tmp, [too_little_gas])
+            tools = MockTools(tmp)  # claims success with gas_used=456
+            completed, report = self.run_runner(tmp, fixtures.path, tools)
+            self.assertNotEqual(completed.returncode, 0)
+            self.assertEqual(report["cases"][0]["status"], "evm_malformed")
+
+    def test_revert_data_alone_is_not_a_revert_classification(self):
+        record = {
+            "status": "exited", "returncode": 1, "stdout": "",
+            "stderr": "invalid opcode (revert_data=0x gas_used=99)",
+        }
+        status, _, _ = java_diff.parse_evm(record)
+        self.assertEqual(status, "evm_failure")
+
     def test_mismatch_is_nonzero_and_has_single_case_replay(self):
         with tempfile.TemporaryDirectory() as tmp:
             fixtures = FixtureTree(tmp, [case()])

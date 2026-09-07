@@ -1,131 +1,168 @@
-# Java inside EVM: tiny interpreter (M1)
+# Java inside EVM: staged interpreter (M2a)
 
-This fork contains a generic JVM-subset interpreter compiled to ordinary EVM
-runtime bytecode. At run time the host reads a complete, unchanged `javac`
-`.class` file and ABI-encodes those raw bytes together with an entry-method name
-and signed `int` arguments. The EVM runtime itself scans the classfile and
-constant pool, selects and validates the method and `Code` attribute, dispatches
-JVM instructions, and returns the result. The host does not parse, extract,
-predecode, translate, specialize, or evaluate Java on this path.
+A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
+reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
+arguments. **Classfile parsing, method lookup, instruction predecode, local/stack
+handling, branches, loops and Java computation all execute inside geth's EVM.**
+The host does not parse, translate, specialize or evaluate Java on this path.
 
-This is a **tiny JVM subset, not a full JVM or Java SE implementation**.
+This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
+Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-Prerequisites are Go 1.24+, a JDK supporting `javac --release 8`, Node/npm, and
-make. The checked-in interpreter artifact makes the demo runnable without a
-Solidity compiler install:
+## Quickstart / stage gates
+
+Run from the fork, not the unrelated home-directory Git repository:
 
 ```sh
 cd /home/user/evm-jvm/geth
-make java-demo
+make java-demo       # add(20,22), sum(100), fibonacci(20)
+make java-smoke      # 16 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (36 total)
+make java-full       # all 82 differential cases
+make java-test       # artifact check + Go tests + 11 runner tests + all 82 cases
 ```
 
-Representative output from this tree is:
+Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
+Python 3 is needed for differential tests. Node/npm are needed to rebuild/check
+the Solidity artifact (`java-test` includes this check), not for the standalone
+CLI or demo. First-time builds may download Go/compiler dependencies.
 
-```text
-engine=evm-jvm-subset-interpreter
-runtime_bytes=5044
-runtime_sha256=e93a3281bde126b8ea87972d75e0ac03a53d0de17fbffb6402fce9764bec2c20
-result=42
-gas_used=46391
-```
+Stage M1 covers 12 add/identity cases. Stage M2 is cumulative: these 12 plus 70
+constant/local/arithmetic/comparison/control-flow cases. Before merging M2, V0
+was validated against the unchanged M1 interpreter; M2 then passed the combined
+suite. Tests are bounded evidence, not a full JVM conformance suite.
 
-Gas is measured by geth for the runtime call, including ABI decoding,
-classfile parsing, method lookup, and JVM dispatch. It excludes deployment,
-transaction intrinsic gas, and calldata transaction fees.
-
-Build the standalone CLI and reuse the exact same interpreter with different
-raw classes and arguments:
+Additional commands:
 
 ```sh
-go build -o build/bin/jvmevm ./cmd/jvmevm
-mkdir -p build/java-evm-interpreter
-javac --release 8 -d build/java-evm-interpreter \
-  examples/java/Add.java examples/java/Identity.java
-
-build/bin/jvmevm -class build/java-evm-interpreter/Add.class \
-  -method add -args 2147483647,1
-# result=-2147483648
-
-build/bin/jvmevm -class build/java-evm-interpreter/Identity.class \
-  -method identity -args=-123
-# same runtime_sha256, result=-123
+make java-diff-m1                    # M1 regression cases on the current runtime
+make java-harness-test               # includes real JVM/EVM smoke, not only mocks
+make java-fast JAVA_DIFF_SEED=57      # repeatable alternate sample
+python3 tools/java_diff.py --case m2-fibonacci-20
 ```
 
-The CLI only reads the named file and calls `jvmevm.Run`, which uses geth's ABI
-encoder and `core/vm/runtime.Execute`. Invalid class bytes and unsupported Java
-instructions therefore fail with an EVM revert and Solidity custom-error data,
-not a host classfile-parser error. `-gas` is a finite EVM gas limit; insufficient
-gas is reported as an actual EVM out-of-gas failure.
+The direct runner assumes `make java-build` has built the current CLI. Make
+entry points rebuild it to avoid accidentally testing a stale binary. A full
+merge gate also retains the separate M0 checks: `make java-aot-test`.
 
-## Supported semantics and defensive limits
+## Measured demo results
 
-The selected method must have an unambiguous name, be `static`, accept only
-`int` arguments, and return `int`. Its code can contain only:
+One unchanged **7,040-byte** interpreter runtime handles all three programs:
 
-- `iload` and `iload_0` through `iload_3`
-- `iadd`
-- `ireturn`
+| Raw input / entry | Result | Execution gas |
+|---|---:|---:|
+| Add.class / add(20,22) | 42 | 55,308 |
+| Loops.class / sum(100) | 5050 | 1,043,858 |
+| Loops.class / fibonacci(20) | 6765 | 375,429 |
 
-The interpreter uses 32-bit stack values and unchecked 32-bit addition, giving
-Java `int` wraparound and signed return behavior. It checks classfile bounds,
-constant-pool tags and relevant UTF-8 references, method/descriptor/access
-requirements, argument/local/stack bounds, terminal return shape, and selected
-`Code` structure. Constant pools are capped at 4096 entries and selected
-`max_stack` at 1024.
+Runtime SHA-256:
+`e04f1a026a1d8c656a487223e4b5a1b89532e62ac255feb3d2fd74391dcf9036`
 
-Selected native, abstract, synchronized, non-static, overloaded, no-Code, or
-exception-table methods are rejected. A class declaring `<clinit>` is rejected
-because class-initialization semantics are absent. `imul` and every other JVM
-opcode are rejected by the EVM dispatcher.
+Gas includes ABI decoding, scanning the **whole input class**, instruction
+validation and interpretation. It excludes contract deployment, transaction
+intrinsic gas and calldata transaction fees. Changing a class's other methods or
+metadata can change gas; values above refer to `make java-demo` inputs.
 
-This is not a JVM verifier. It does not validate modified-UTF8 encoding,
-constant-pool relationships irrelevant to selection, class hierarchy or type
-safety, unused methods, most class/field/nested attributes, StackMapTable, or
-all JVM access/linking rules. There are no branches, loops, constants,
-subtraction, calls, arrays, heap/objects, exceptions, monitors, class loading,
-class libraries, on-chain deployment workflow, or Minecraft. Inputs remain
-resource-bounded by EVM gas, but should be treated as experimental.
+Build/use the CLI directly:
+
+```sh
+make java-build
+build/bin/jvmevm -class build/java-evm-interpreter/Loops.class \
+  -method fibonacci -args 20 -gas 2000000
+```
+
+`cmd/jvmevm` reads bytes and calls `jvmevm.Run`, which ABI-encodes input and calls
+`core/vm/runtime.Execute`. The generic runtime is embedded, not generated per
+Java class or argument. Errors in Java parsing/dispatch are EVM reverts with
+Solidity custom-error data. Insufficient gas is actual EVM out-of-gas; an infinite
+Java loop consumes its finite gas budget rather than returning a fake value.
+
+## Supported semantics and limits
+
+Unambiguous static methods, only `int` arguments and an `int` return:
+
+- `iconst_m1` through `iconst_5`, signed `bipush` and `sipush`
+- `iload`, `istore`, including their `_0` through `_3` forms
+- `iadd`, `isub`, signed-byte `iinc`
+- `ifeq`/`ifne`/`iflt`/`ifge`/`ifgt`/`ifle`, corresponding `if_icmp*`
+- `goto`, `ireturn` (including early returns followed by other code)
+
+32-bit arithmetic wraps like Java; comparisons are signed. Branch offsets are
+signed 16-bit, relative to the instruction address. The interpreter validates
+all selected-method instructions, including unreachable instructions, before
+execution and rejects branches into operands or outside the code. Loads and
+increments check local initialization; stores, stack operations and return
+shape are bounded/checked at execution time.
+
+Caps: constant pool 4096 entries; Code 65,535 bytes; selected operand stack and
+locals 1024 each. Gas bounds execution and allocation. Method descriptors,
+selected Code structure and relevant UTF-8 references are checked. Class
+initializers (`<clinit>`), selected synchronized/native/abstract/non-static/
+overloaded/no-Code methods and exception tables are rejected.
+
+**Deferred:** `ldc`/`ldc_w` (so not arbitrary literal int constants yet), `ineg`,
+multiply/divide/remainder, shifts/bitwise operations, wide/goto_w, switch, other
+primitive types, method calls, arrays, heap/objects, exceptions, monitors, dynamic
+class loading, class libraries and deployment/Minecraft workflows.
+
+This is not a full JVM verifier: no modified-UTF8 validation, general class
+hierarchy/linking/type verification, full control-flow dataflow verification,
+or validation of every unused member/attribute/constant-pool relationship.
+Inputs should be treated as experimental. A gas-bounded EVM failure is not a
+Java exception implementation.
+
+## Differential verification and replay
+
+Fixtures and host-only oracle: `jvmevm/testdata/differential/`.
+Runner and protocol/error tests: `tools/java_diff.py`, `tools/test_java_diff.py`.
+Detailed flags/format: [tools/JAVA_DIFF.md](tools/JAVA_DIFF.md).
+
+Every selected case executes on real JVM and on the EVM interpreter. Results
+are compared exactly as signed int32; unsupported cases are not silently skipped
+or counted as passes. Out-of-gas, revert, timeout, unexpected Java exception,
+mismatch and harness failure are distinct non-success categories. A run must
+use the same generic runtime hash throughout.
+
+Artifacts include IDs/seed, source/class hashes, actual Java/Javac versions,
+commands/stdout/stderr, gas and single-case replay commands. The default
+`build/java-diff/` and named `build/java-diff-*/` outputs are Git-ignored. Each run
+creates fresh `run-*/compiled/` output and archives its report; no pre-existing
+compiled directory is deleted. Top-level report files describe the latest run.
+
+Replay recompiles current source with the current toolchain and uses the named
+CLI; it is **not a hermetic snapshot**. Check recorded hashes/versions. Fault-
+injection tests verify wrong answers cause failure and recorded replay commands
+reproduce them. Exact EVM custom-error checks cover malformed branch/local/stack
+cases; the nontermination test verifies real out-of-gas.
 
 ## Runtime source and reproducibility
 
-Source is `jvmevm/runtime/JVMSubsetInterpreter.sol`; the checked-in generic
-runtime is `JVMSubsetInterpreter.runtime.hex`. Its compiler is pinned by
-`package.json` and `package-lock.json` to solc-js 0.8.30
-(`0.8.30+commit.73712a01`). The build uses the standard JSON interface with:
-
-- optimizer enabled, 200 runs
-- `viaIR: true`
-- `evmVersion: cancun`
-- metadata CBOR and metadata bytecode hash disabled
-
-No global npm configuration or globally installed compiler is used. Rebuild or
-check exact source/artifact consistency with:
+Source: `jvmevm/runtime/JVMSubsetInterpreter.sol`.
+Embedded artifact: `jvmevm/runtime/JVMSubsetInterpreter.runtime.hex`.
+Pinned solc-js: 0.8.30 (`0.8.30+commit.73712a01`), optimizer 200 runs, `viaIR:true`,
+Cancun EVM, CBOR/hash metadata disabled. Source rebuild must match the artifact
+byte-for-byte; no global compiler/npm configuration is used.
 
 ```sh
-make java-runtime-build   # regenerates the reviewed artifact
-make java-runtime-check   # fails unless source rebuild is byte-for-byte equal
-make java-test            # consistency check, focused tests, and CLI build
+make java-runtime-build   # regenerate artifact; review changed runtime/hash
+make java-runtime-check   # fail unless source rebuild matches
 ```
 
-`npm ci --ignore-scripts` installs only the lockfile-pinned local build
-dependencies under `jvmevm/runtime/node_modules` (ignored by Git).
-The current lockfile audit reports two findings (one low and one high) through
-solc's `tmp` dependency, involving temporary-file path/symlink handling. These
-Node packages are build-time tools and are not included in the EVM runtime;
-the findings have not been remediated. Do not blindly run `npm audit fix --force`
-(the suggested compiler downgrade would change this pinned build).
+`npm ci --ignore-scripts` installs pinned local build dependencies into ignored
+`jvmevm/runtime/node_modules`. The existing audit reports two findings (one low,
+one high) through solc's `tmp` dependency, involving temporary-file path/symlink
+handling. These remain unremediated build-tool findings, not dependencies in the
+EVM bytecode. Do not blindly apply the suggested forced compiler downgrade.
 
-## M0 host-AOT baseline
+## Git history and next stages
 
-The earlier M0 experiment remains unchanged in `javaevm/` and `cmd/javaevm/`.
-It parses and translates one Java method on the host before EVM execution, so it
-is explicitly not the JVM-inside-EVM path. Its commands are retained only as
-labeled baselines:
+The fork is based on geth v1.16.9 (`95665d5703e1023995a0ff93e4ce9eb77e8a59bd`),
+on local branch `java-on-evm`, remote `upstream`; no remote push was made.
+Consensus VM core and the M0 host-AOT baseline remain unchanged. M0 is explicitly
+**not** the JVM-inside-EVM path; use `make java-aot-demo` / `make java-aot-test`.
 
-```sh
-make java-aot-demo
-make java-aot-test
-```
-
-Neither path changes geth's consensus VM core. The M1 interpreter path is the
-primary `make java-demo` / `make java-test` workflow.
+Three independent worker worktrees supplied fixtures, runtime and runner;
+changes were integrated and verified on the combined revision. Task ownership,
+protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
+Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). This batch stops at
+V0 + M2a; the next instruction/runtime slice needs a new bounded task.

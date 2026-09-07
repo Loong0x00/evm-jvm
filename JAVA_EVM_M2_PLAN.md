@@ -94,9 +94,9 @@ Manifest shape (additional descriptive keys allowed, required keys fixed):
 ## Worker ownership / tasks
 | ID | Owner | Write set | Acceptance | State |
 |---|---|---|---|---|
-| V0-fixtures | fixtures worker | jvmevm/testdata/differential/** only | javac + JVM runs; inspect emitted opcode subset; manifest validation | assigned |
-| M2-runtime | interpreter worker | jvmevm/runtime/JVMSubsetInterpreter.sol, corresponding .runtime.hex, jvmevm/jvmevm_test.go, jvmevm/controlflow_test.go (new) only | reproducible runtime build, M1 + new Go tests, sum/fib, malformed branch/stack/local, OOG | assigned |
-| V0-runner | harness worker | tools/java_diff.py, tools/test_java_diff.py, tools/JAVA_DIFF.md only | own Python tests; mock protocol/error tests; current M1 real EVM smoke using temporary fixtures | assigned |
+| V0-fixtures | fixtures worker | jvmevm/testdata/differential/** only | javac + JVM runs; inspect emitted opcode subset; manifest validation | reviewed / integrated |
+| M2-runtime | interpreter worker | jvmevm/runtime/JVMSubsetInterpreter.sol, corresponding .runtime.hex, jvmevm/jvmevm_test.go, jvmevm/controlflow_test.go (new) only | reproducible runtime build, M1 + new Go tests, sum/fib, malformed branch/stack/local, OOG | reviewed / integrated |
+| V0-runner | harness worker | tools/java_diff.py, tools/test_java_diff.py, tools/JAVA_DIFF.md only | own Python tests; mock protocol/error tests; current M1 real EVM smoke using temporary fixtures | reviewed / integrated |
 
 Workers MUST NOT modify Makefile, AGENTS.md, shared plans/docs or another write
 set. Parent integrates those after cherry-picking scoped commits. No worker may
@@ -119,5 +119,55 @@ creates its own Go test fixtures inline and does not require the other workers.
 5. Commit a clean local checkpoint; report measured results/limitations. Do not
    continue to M3 or Minecraft without another bounded task.
 
-## Status
-Planning and protocol frozen. Worktrees/worker dispatch follow in this batch.
+## Status / independent acceptance
+
+**V0 + M2a accepted; batch stopped. No M3 or Minecraft work started.**
+
+Worker deliveries (separate clean branches/worktrees):
+- Fixtures `9c038a2` → integrated `02ed8c3`: 82 cases (12 M1, 70 M2), 16 smoke.
+- Runner `62f8dc0` → integrated `c17a127`.
+- Runtime `c5ef059` → integrated `c4e39fd`.
+
+### Gate V0 (before runtime integration)
+At integration revision `c17a127`, built the unchanged M1 CLI, enabled the real
+JVM/EVM runner test, and ran all 12 M1 cases. All passed with runtime hash
+`e93a3281bde126b8ea87972d75e0ac03a53d0de17fbffb6402fce9764bec2c20`.
+Evidence: `build/java-diff-v0-m1/report.json` (local ignored artifact; replay may
+need rebuilding that historical CLI).
+
+### Gate M2a (combined revision)
+- Source review confirms all predecode/branch validation/local/stack computation
+  remains in Solidity EVM runtime; production Go ABI runner/CLI and consensus
+  VM core are unchanged from M1. Test-only class mutation is confined to Go tests.
+- Pinned rebuild matches runtime, 7040 bytes, SHA-256
+  `e04f1a026a1d8c656a487223e4b5a1b89532e62ac255feb3d2fd74391dcf9036`.
+- All focused Go tests, `go vet ./jvmevm ./cmd/jvmevm`, separate M0 tests, and
+  differential gates passed: M1 regression 12/12, smoke 16/16, fast 36/36,
+  full 82/82. Runner tests now total 11, all enabled including real JVM/EVM.
+- Same runtime demo: add(20,22)=42 (55,308 gas), fixture Loops.sum(100)=5050
+  (1,043,858), Loops.fibonacci(20)=6765 (375,429). Class shape affects parsing
+  gas, so the runtime worker's different inline Loops fixture has different gas.
+- Negative tests independently strengthened to assert actual EVM
+  `BytecodeError(uint256,uint256)` selectors and the expected error codes for
+  malformed branch/operand/local/stack input, not just any generic revert.
+  Infinite loop consumes its full finite 300,000 gas and fails OOG.
+- Parent additionally generated 195 oracle cases covering the Cartesian product
+  of signed int extremes for all comparisons, iinc bounds, negative counts and
+  Fibonacci overflow; all passed. For example fib(47)=-1323752223 agrees with
+  JVM. Evidence in `build/java-diff-parent-probes/probe-fqnv3exl/results/`.
+- A clearly test-only wrapper deliberately changed actual EVM's displayed 42 to
+  43: runner reported mismatch against JVM 42, exited nonzero, and the stored
+  exact single-case replay reproduced failure. Evidence retained alongside the
+  parent probes. No fault wrapper is used by production/demo commands.
+
+### Parent integration improvements
+- Added explicit ignore rules for differential reports/classes and Python cache.
+- Removed runner deletion/reuse of a user-selected `compiled` directory. Every
+  run allocates fresh `run-*/compiled/` and retains its own report; regression
+  tests ensure prior/unrelated files and prior evidence survive reruns.
+- Tightened classification of EVM errors (presence of `revert_data` alone is not
+  a revert) and reject success output whose gas is zero or exceeds its limit.
+- Added Make smoke/fast/full/M1/runner gates and refreshed current docs/agent map.
+- Existing two compiler-only npm audit findings remain documented; no pin/global
+  settings changes were made. Replay is non-hermetic and relies on current
+  sources/toolchain/CLI; reports capture hashes/versions for comparison.

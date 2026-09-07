@@ -14,8 +14,8 @@ import math
 import random
 import re
 import shlex
-import shutil
 import subprocess
+import tempfile
 import sys
 import time
 from collections import Counter
@@ -71,6 +71,7 @@ def confined_file(fixtures: Path, relative: Any, label: str) -> Tuple[str, Path]
 
 
 def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]], Path]:
+    manifest_path = fixtures / "cases.json"
     try:
         _, manifest_path = confined_file(fixtures, "cases.json", "cases.json")
         raw = manifest_path.read_text(encoding="utf-8")
@@ -281,9 +282,9 @@ def parse_evm(record: Dict[str, Any]) -> Tuple[str, Dict[str, Any], Optional[str
             metadata["gas_used"] = gas
         if runtime_hash is not None:
             metadata["runtime_sha256"] = runtime_hash
-        if "out of gas" in lower or "oog" in lower:
+        if "out of gas" in lower:
             return "evm_oog", metadata, "EVM execution ran out of gas"
-        if "revert" in lower:
+        if "execution reverted" in lower:
             return "evm_revert", metadata, "EVM execution reverted"
         return "evm_failure", metadata, "EVM CLI exited nonzero"
 
@@ -351,9 +352,15 @@ def write_report(artifacts: Path, report: Dict[str, Any]) -> None:
                 failures.append(f"  replay: {case['replay_command']}")
     if report.get("harness_error"):
         failures.append(f"harness_error: {report['harness_error']}")
-    (artifacts / "failures.txt").write_text(
-        ("\n".join(failures) + "\n") if failures else "", encoding="utf-8"
-    )
+    failure_text = ("\n".join(failures) + "\n") if failures else ""
+    (artifacts / "failures.txt").write_text(failure_text, encoding="utf-8")
+    # Keep evidence alongside this run's classes; the top-level files are latest-run pointers.
+    if report.get("run_directory"):
+        archived = Path(report["run_directory"])
+        (archived / "report.json").write_text(
+            json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        (archived / "failures.txt").write_text(failure_text, encoding="utf-8")
 
 
 def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
@@ -405,12 +412,14 @@ def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
             ))
         return 1, finish_report(report)
 
-    classes = artifacts / "compiled"
     try:
-        if classes.exists():
-            # Only this runner-owned output directory is replaced.
-            shutil.rmtree(classes)
-        classes.mkdir(parents=True)
+        artifacts.mkdir(parents=True, exist_ok=True)
+        # --artifacts is user-selectable: never assume an existing directory is ours
+        # to delete. Each invocation gets new output and preserves earlier evidence.
+        run_directory = Path(tempfile.mkdtemp(prefix="run-", dir=artifacts))
+        report["run_directory"] = str(run_directory)
+        classes = run_directory / "compiled"
+        classes.mkdir()
     except OSError as exc:
         detail = f"cannot prepare compile directory: {exc}"
         report["harness_error"] = detail
@@ -507,6 +516,9 @@ def execute(args: argparse.Namespace) -> Tuple[int, Dict[str, Any]]:
         elif evm_status != "value":
             result["status"] = evm_status
             result["detail"] = evm_detail
+        elif not 0 < evm_values["gas_used"] <= case["gas_limit"]:
+            result["status"] = "evm_malformed"
+            result["detail"] = "successful EVM gas_used must be positive and within gas_limit"
         elif evm_values["value"] != oracle_value:
             result["status"] = "mismatch"
             result["detail"] = f"oracle={oracle_value} evm={evm_values['value']}"

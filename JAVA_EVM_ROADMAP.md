@@ -1,7 +1,9 @@
 # Toward broader Java execution inside EVM
 
-Status: research/proposed roadmap only. M1 remains the accepted implementation;
-this document does not claim full Java support or launch an unbounded agent run.
+Status: **V0 + M2a is now accepted**, tracked in `JAVA_EVM_M2_PLAN.md`.
+Three bounded workers delivered fixtures/runtime/runner, followed by independent
+integration tests. Later phases below remain proposals; this document does not
+claim full Java support or authorize an unbounded agent run.
 
 ## Inspiration and source attribution
 
@@ -143,9 +145,13 @@ failure before assigning multiple agents the same bug.
 - Further phases require explicit bounded scopes. No claim that current tools
   already provide the proposed task scheduler, worktrees or replay harness.
 
-## Immediate next step
+## Current checkpoint / next decision
 
-Implement V0 and then the smallest M2 closed loop: `static int sum(int n)` with
-local stores, constants, integer addition, comparison and a bounded loop. Keep
-negative/overflow semantics and gas-exhaustion failure tests. Defer method calls,
-objects and all Minecraft work until that pipeline has independent evidence.
+V0 and M2a closed loops are complete: real EVM sum/Fibonacci, 82 fixed JVM
+comparisons, bounded gas/error tests and replay tooling. See `JAVA_EVM_M2_PLAN.md`
+for accepted scope and evidence. M2's broader integer instruction set is not
+complete (ldc, negation, multiplication/division, shifts/bitwise are still absent).
+
+Stop here for this batch. A next small task can cover another integer opcode
+slice with dedicated semantic/error tests, then method frames/calls. Do not jump
+from control-flow demos to objects, Java SE completeness or Minecraft.

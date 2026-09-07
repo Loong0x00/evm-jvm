@@ -1,46 +1,75 @@
 # Java-inside-EVM agent guide
 
-Current authorized batch: **V0 + M2a**, defined by `JAVA_EVM_M2_PLAN.md`.
-That plan fixes the parallel-worker write sets and fixture/runner interface.
-M1 below is the accepted baseline; do not confuse it with pending M2 support.
+Current accepted stage: **V0 + M2a**. Authoritative batch protocol, worker
+ownership and acceptance: `JAVA_EVM_M2_PLAN.md`. Wider stages in
+`JAVA_EVM_ROADMAP.md` are proposals, not implemented/conformance claims.
 
-Work from this Git repository (`/home/user/evm-jvm/geth`) on branch
-`java-on-evm`. `upstream` is go-ethereum v1.16.9 at
-`95665d5703e1023995a0ff93e4ce9eb77e8a59bd`. Before Git operations, confirm
-`git rev-parse --show-toplevel`; the parent home directory has an unrelated Git
-repository. Use `git status --short --branch`, stage explicit task paths, make
-small verified local commits, and do not push.
+## Git / ownership
 
-Primary M1 interpreter path:
+Canonical integration repository: `/home/user/evm-jvm/geth`, branch
+`java-on-evm`. `upstream` is geth v1.16.9 at
+`95665d5703e1023995a0ff93e4ce9eb77e8a59bd`. First confirm
+`git rev-parse --show-toplevel`; the home directory has an unrelated Git repo.
+Use `git status --short --branch`, stage explicit paths, make small verified
+local commits, do not push or change global configuration.
 
-- Solidity generic interpreter source/artifact/build: `jvmevm/runtime/`
-- Raw-byte ABI runner: `jvmevm/`
+The completed `m2-fixtures`, `m2-runtime`, `m2-harness` branches/worktrees retain
+worker delivery history. For new delegated work, use the explicitly assigned
+worktree based on the latest integration revision, not an old worker tree.
+Worktrees separate edits, not security permissions. Respect frozen task write
+sets; only one worker edits the monolithic Solidity dispatcher at a time.
+
+## Relevant map / execution boundary
+
+- Generic EVM interpreter source/artifact/build: `jvmevm/runtime/`
+- Raw-byte ABI runner and focused/negative tests: `jvmevm/`
 - CLI: `cmd/jvmevm/`
-- Java inputs: `examples/java/Add.java`, `examples/java/Identity.java`
-- Boundary, limits, and quickstart: `JAVA_EVM.md`
-- Authoritative completed task record: `JAVA_EVM_INTERPRETER_PLAN.md`
-- Proposed broader roadmap and bounded verification-first agent workflow:
-  `JAVA_EVM_ROADMAP.md` (planning only; not an implementation/conformance claim)
+- Staged Java inputs + HOST-TEST-ONLY oracle: `jvmevm/testdata/differential/`
+- Differential runner/error tests: `tools/java_diff.py`, `tools/test_java_diff.py`
+- Quickstart/limits: `JAVA_EVM.md`; runner details: `tools/JAVA_DIFF.md`
 
-At run time the host may only ABI-pack an unchanged raw classfile, method name,
-and int arguments. The same generic EVM runtime parses the classfile and
-constant pool, finds Code, and interprets `iload`/short forms, `iadd`, and
-`ireturn` inside geth's EVM. Do not add host parsing, extraction, translation,
-Java/Go evaluation, native precompiles, or specialized runtime generation to
-this path. It is a tiny static-int JVM subset, not a full JVM.
+At runtime, host only ABI-packs unchanged raw classfiles, method name and int
+arguments. EVM performs class/method/Code parsing, instruction predecode,
+constants/local stores, int32 add/subtract/increment, signed conditions, jumps,
+loops and returns. No host Java parsing/extraction/translation/evaluation,
+native Java precompile, or class-specific runtime generation. Host javac and
+JVM reflection/oracle runs belong ONLY to building/testing guest inputs.
 
-Requires Go 1.24+, a JDK supporting `javac --release 8`, Node/npm, and make.
-Run `make java-demo` for the true interpreter `20 + 22 = 42` pipeline and
-`make java-test` for lockfile-pinned source/artifact consistency, uncached
-focused tests, and CLI compilation. Build the CLI alone with
-`go build -o build/bin/jvmevm ./cmd/jvmevm`. Regenerate/check the generic runtime
-with `make java-runtime-build` / `make java-runtime-check`; compiler and settings
-are documented in `JAVA_EVM.md`. Keep consensus VM core unchanged.
+M0 host-AOT remains in `javaevm/` and `cmd/javaevm/`, only under `java-aot-*`
+commands; never present it as the in-EVM interpreter. Keep consensus core intact.
 
-The M0 host-AOT translator remains as a clearly labeled baseline in `javaevm/`
-and `cmd/javaevm/`; use only `make java-aot-demo` and `make java-aot-test` for
-it. Do not muddle M0 AOT claims with the M1 in-EVM interpreter.
+## Commands / gates
 
-Only the integer control-flow slice in `JAVA_EVM_M2_PLAN.md` is now authorized
-beyond M1. Do not expand to calls, arrays, objects, class libraries, deployment,
-or Minecraft. Workers must respect their write sets and stop at the batch gate.
+Go 1.24+, JDK with `javac --release 8`, make; Python 3 for differential tests;
+Node/npm for pinned artifact build/check. Run from your assigned repo root:
+
+```sh
+make java-demo       # actual EVM add, sum(100), fibonacci(20)
+make java-smoke      # 16 fixed oracle comparisons
+make java-fast       # 36 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 82 cases (12 M1 + 70 M2)
+make java-test       # artifact + focused Go + 11 runner tests + full differential
+make java-aot-test   # separate old-path regression
+```
+
+`make java-build` creates ignored `build/bin/jvmevm`. `make java-diff-m1`
+checks M1 cases on the current runtime; `make java-harness-test` includes a real
+JVM/EVM smoke (not just mocks). Runtime rebuild/check:
+`make java-runtime-build` / `make java-runtime-check`. After interpreter edits,
+review generated artifact and update expected runtime hash only from that
+pinned reproducible build. Do not weaken expected outcomes to get green tests.
+
+Single-case replay after building: `python3 tools/java_diff.py --case
+m2-fibonacci-20` (one shell line). Reports under ignored `build/java-diff*/`
+include exact replay commands, sources/runtime hashes, JDK versions and logs.
+Each run preserves its own classes/report. Replay depends on the current
+sources/tools/CLI; it is not a frozen snapshot. Keep output concise and inspect
+saved failures rather than dumping all logs into agent context.
+
+## Stop boundary
+
+V0 + M2a is complete. Do not automatically continue through the roadmap. A new
+bounded plan is needed for remaining integer opcodes, calls/frames, other types,
+arrays/objects, exceptions, libraries, deployment or Minecraft. Do not claim a
+full JVM from current test counts. Preserve finite timeouts/gas and separate
+out-of-gas/unsupported/harness failures from Java semantic results.

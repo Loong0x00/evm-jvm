@@ -4,10 +4,13 @@
 package jvmevm
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"strings"
 	"testing"
+
+	"github.com/ethereum/go-ethereum/crypto"
 )
 
 const controlFlowGasLimit = uint64(5_000_000) // finite test ceiling; loops remain EVM-gas bounded
@@ -143,6 +146,12 @@ func TestM2MalformedCodeRevertsInsideEVM(t *testing.T) {
 	cases["branch-after-code"] = mutateFirstBranch(t, branch, "run", 0x7fff)
 	cases["branch-before-code"] = mutateFirstBranch(t, branch, "run", -0x8000)
 
+	wantCodes := map[string]uint64{
+		"stack-underflow": 3, "local-out-of-range": 8, "local-uninitialized": 11,
+		"stack-overflow": 9, "truncated-one-byte-operand": 2, "truncated-two-byte-operand": 2,
+		"branch-into-operand": 12, "branch-after-code": 12, "branch-before-code": 12,
+	}
+	selector := crypto.Keccak256([]byte("BytecodeError(uint256,uint256)"))[:4]
 	for name, classfile := range cases {
 		t.Run(name, func(t *testing.T) {
 			args := []int32{0}
@@ -153,8 +162,11 @@ func TestM2MalformedCodeRevertsInsideEVM(t *testing.T) {
 			if err == nil || !strings.Contains(err.Error(), "execution reverted") {
 				t.Fatalf("result/error = %+v/%v, want in-EVM bytecode rejection", result, err)
 			}
-			if result.GasUsed == 0 || len(result.RevertData) < 4 {
-				t.Fatalf("result = %+v, want gas and Solidity custom-error data", result)
+			if result.GasUsed == 0 || len(result.RevertData) != 68 || !bytes.Equal(result.RevertData[:4], selector) {
+				t.Fatalf("result = %+v, want gas and BytecodeError(uint256,uint256)", result)
+			}
+			if code := binary.BigEndian.Uint64(result.RevertData[28:36]); code != wantCodes[name] {
+				t.Fatalf("BytecodeError code = %d, want %d (data=%x)", code, wantCodes[name], result.RevertData)
 			}
 		})
 	}
