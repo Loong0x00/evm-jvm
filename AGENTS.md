@@ -1,4 +1,8 @@
-# Java-inside-EVM M1 guide
+# Java-inside-EVM agent guide
+
+Current authorized batch: **V0 + M2a**, defined by `JAVA_EVM_M2_PLAN.md`.
+That plan fixes the parallel-worker write sets and fixture/runner interface.
+M1 below is the accepted baseline; do not confuse it with pending M2 support.
 
 Work from this Git repository (`/home/user/evm-jvm/geth`) on branch
 `java-on-evm`. `upstream` is go-ethereum v1.16.9 at
@@ -37,5 +41,6 @@ The M0 host-AOT translator remains as a clearly labeled baseline in `javaevm/`
 and `cmd/javaevm/`; use only `make java-aot-demo` and `make java-aot-test` for
 it. Do not muddle M0 AOT claims with the M1 in-EVM interpreter.
 
-Do not expand this milestone to loops, arrays, objects, additional arithmetic,
-class libraries, deployment, or Minecraft without a new scoped plan.
+Only the integer control-flow slice in `JAVA_EVM_M2_PLAN.md` is now authorized
+beyond M1. Do not expand to calls, arrays, objects, class libraries, deployment,
+or Minecraft. Workers must respect their write sets and stop at the batch gate.
