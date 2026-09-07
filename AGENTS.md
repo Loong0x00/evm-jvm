@@ -1,7 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M3b raw multi-class loading/linking**, recorded in
-`JAVA_EVM_M3B_PLAN.md`. Next: **M3c integer static fields and class initialization**.
+`JAVA_EVM_M3B_PLAN.md`. Active: **M3c integer static fields and class initialization**,
+with frozen ownership/semantics/errors in `JAVA_EVM_M3C_PLAN.md`.
 Inheritance, heap/references and handlers remain later capability slices.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
 superseding earlier stop-after-each-batch instructions. Worker scope comes from

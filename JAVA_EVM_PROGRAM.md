@@ -66,7 +66,7 @@ routine permission to start the next verified increment.
 | M2b | int constants/arithmetic/bitwise/conversions + explicit uncaught arithmetic exception outcome | accepted; JAVA_EVM_M2B_PLAN.md |
 | M3a | same-class static calls, explicit Java frames/returns/recursion | accepted; JAVA_EVM_M3A_PLAN.md |
 | M3b | raw multi-class input, direct EVM-side resolution/linking | accepted; JAVA_EVM_M3B_PLAN.md |
-| M3c | integer static fields/state and ordinary-class initialization | next active batch |
+| M3c | integer static fields/state and ordinary-class initialization | active; JAVA_EVM_M3C_PLAN.md |
 | M3d | class hierarchy/member resolution and superclass-init prerequisites | queued before heap |
 | M4 | arrays, object allocation/fields, reference values and dispatch | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
@@ -79,8 +79,9 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M3b is integrated and independently accepted: all341 fixed cases, exact bundle
-errors/access checks and30 additional owner/cache/order probes passed. The next
-batch is M3c integer static fields and class initialization for ordinary Object-
-superclass classes. Keep hierarchy/super-init as its own next dependency slice,
-then heap/reference capabilities. Continue without routine user confirmation.
+M3b is accepted at **90ccf13**: all341 fixed cases, exact bundle errors/access
+checks and30 additional owner/cache/order probes passed. M3c static field and
+class-initialization contracts are frozen in `JAVA_EVM_M3C_PLAN.md`; dispatch
+runtime, fixture/oracle and independent verifier work. Keep hierarchy/super-init
+as the next separate dependency slice, then heap/reference capabilities. Proceed
+without routine confirmation; report genuine boundary/performance blockers.
