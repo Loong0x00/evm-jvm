@@ -1,8 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M3c integer statics/class initialization**, recorded in
-`JAVA_EVM_M3C_PLAN.md`. Next: **M3d superclass/member resolution and super-init**,
-with draft contract `JAVA_EVM_M3D_PLAN.md`. Heap/references and handlers follow.
+`JAVA_EVM_M3C_PLAN.md` at600a1e4. Active: **M3d superclass/member resolution and
+super-init**, frozen in `JAVA_EVM_M3D_PLAN.md`. Heap/references and handlers follow.
 Runtime is over EIP170 deployment size: local runtime.Execute only, not mainnet
 CREATE compatibility; no consensus-core or host-Java fallback changes.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,

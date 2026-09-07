@@ -67,7 +67,7 @@ routine permission to start the next verified increment.
 | M3a | same-class static calls, explicit Java frames/returns/recursion | accepted; JAVA_EVM_M3A_PLAN.md |
 | M3b | raw multi-class input, direct EVM-side resolution/linking | accepted; JAVA_EVM_M3B_PLAN.md |
 | M3c | integer static fields/state and ordinary-class initialization | accepted; JAVA_EVM_M3C_PLAN.md |
-| M3d | class hierarchy/member resolution and superclass-init prerequisites | next active; JAVA_EVM_M3D_PLAN.md |
+| M3d | class hierarchy/member resolution and superclass-init prerequisites | active; JAVA_EVM_M3D_PLAN.md |
 | M4 | arrays, object allocation/fields, reference values and dispatch | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -79,9 +79,9 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M3c is integrated and independently accepted:426 fixed cases plus36 parent
-initialization probes; isolated verifier error fixed and REAL legacy missing-
-parent/interface header divergence replaced by explicit rejection. Artifact29899
-bytes is local-runtime only (overEIP170). Next dispatch M3d ordinary hierarchy,
-inherited static member ownership/access and superclass initialization under
-`JAVA_EVM_M3D_PLAN.md`, then heap/references. Keep continuous bounded gates.
+M3c is accepted at **600a1e4**:426 fixed cases plus36 parent initialization
+probes; verifier isolation and real legacy header divergence fixed. Artifact29899
+bytes is local-runtime only (overEIP170). M3d hierarchy/member ownership/access and
+super-init contracts are frozen; dispatch runtime, fixtures and independent
+verifier work. After acceptance, continue to primitive-array/reference heap work,
+without routine confirmation. Keep scoped tests/last-green checkpoints.
