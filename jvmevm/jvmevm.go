@@ -61,6 +61,14 @@ func decodeJavaException(data []byte) (string, bool) {
 		return "java.lang.StackOverflowError", true
 	case 3:
 		return "java.lang.ExceptionInInitializerError", true
+	case 4:
+		return "java.lang.NegativeArraySizeException", true
+	case 5:
+		return "java.lang.ArrayIndexOutOfBoundsException", true
+	case 6:
+		return "java.lang.NullPointerException", true
+	case 7:
+		return "java.lang.OutOfMemoryError", true
 	default:
 		return "", false
 	}

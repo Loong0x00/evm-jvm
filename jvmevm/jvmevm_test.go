@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-const expectedRuntimeHash = "5540b5b5c5aede45bda17f89fa0b99313ad03d8f9249156ac613c2902031a920"
+const expectedRuntimeHash = "dfda0401c9652ec4688799776efaeeb5b3e097ce2c19e4f9d4c251846c6c003b"
 
 func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
 	addClass := compileJava(t, "Add", `public class Add { public static int add(int a, int b) { return a + b; } }`)
@@ -55,16 +55,16 @@ func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
 }
 
 func TestUnsupportedBytecodeAndMalformedClassRevertInsideEVM(t *testing.T) {
-	// Keep this as a true unsupported-opcode probe now that imul is implemented.
-	allocate := compileJava(t, "Allocate", `public class Allocate { public static int allocate(int n) { return new int[n].length; } }`)
+	// Keep this as a true unsupported category-2 conversion probe now that int arrays are implemented.
+	conversion := compileJava(t, "Conversion", `public class Conversion { public static int conversion(int n) { return (int)((long)n + 1L); } }`)
 	for name, tc := range map[string]struct {
 		class  []byte
 		method string
 		args   []int32
 	}{
-		"unsupported-newarray": {allocate, "allocate", []int32{3}},
-		"bad-magic":            {[]byte{0, 1, 2, 3}, "add", []int32{1, 2}},
-		"truncated":            {allocate[:len(allocate)-1], "allocate", []int32{3}},
+		"unsupported-category2-conversion": {conversion, "conversion", []int32{3}},
+		"bad-magic":                        {[]byte{0, 1, 2, 3}, "add", []int32{1, 2}},
+		"truncated":                        {conversion[:len(conversion)-1], "conversion", []int32{3}},
 	} {
 		t.Run(name, func(t *testing.T) {
 			result, err := Run(tc.class, tc.method, tc.args, 2_000_000)

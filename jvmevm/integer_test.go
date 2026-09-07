@@ -104,6 +104,10 @@ func TestJavaExceptionDecoderIsExact(t *testing.T) {
 		1: "java.lang.ArithmeticException",
 		2: "java.lang.StackOverflowError",
 		3: "java.lang.ExceptionInInitializerError",
+		4: "java.lang.NegativeArraySizeException",
+		5: "java.lang.ArrayIndexOutOfBoundsException",
+		6: "java.lang.NullPointerException",
+		7: "java.lang.OutOfMemoryError",
 	} {
 		valid := make([]byte, 36)
 		copy(valid, javaExceptionSelector)

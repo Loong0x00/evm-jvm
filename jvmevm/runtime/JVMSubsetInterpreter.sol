@@ -14,12 +14,20 @@ contract JVMSubsetInterpreter {
     error FieldError(uint256 code, uint256 location);
     error InitError(uint256 code, uint256 classIndex);
     error HierarchyError(uint256 code, uint256 classIndex);
+    error ArrayError(uint256 code, uint256 pc);
+    error ReferenceError(uint256 code, uint256 pc);
 
     uint256 private constant MAX_CONSTANT_POOL = 4096;
     uint256 private constant MAX_CODE = 65535;
     uint256 private constant MAX_STACK = 1024;
     uint256 private constant MAX_LOCALS = 1024;
     uint256 private constant MAX_FRAMES = 128; // root plus Java frames and init continuations
+    uint256 private constant MAX_ARRAYS = 1024;
+    uint256 private constant MAX_ARRAY_LENGTH = 65536;
+    uint256 private constant MAX_ARRAY_ELEMENTS = 262144;
+    uint256 private constant KIND_SHIFT = 32;
+    uint256 private constant KIND_INT = 1;
+    uint256 private constant KIND_REF = 2;
 
     struct Reader {
         bytes data;
@@ -35,7 +43,8 @@ contract JVMSubsetInterpreter {
         uint256 maxStack;
         uint256 maxLocals;
         uint256 argumentCount;
-        uint8 returnKind; // 1 = int, 2 = void
+        uint8[] argumentKinds;
+        uint8 returnKind; // 1 = int, 2 = void, 3 = int[] reference
     }
 
     struct FieldInfo {
@@ -71,8 +80,8 @@ contract JVMSubsetInterpreter {
         uint256 pc;
         uint256 sp;
         uint256 callPC;
-        uint32[] stack;
-        uint32[] locals;
+        uint256[] stack; // low 32 bits payload, kind above it
+        uint256[] locals;
         bool[] initialized;
         bool isInitializer;
         bool isInitContinuation;
@@ -374,10 +383,14 @@ contract JVMSubsetInterpreter {
     {
         uint256 descriptorIndex = (meta >> 32) & 0xffff;
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[descriptorIndex]);
-        (bool valid, uint256 argc, uint8 returnKind) =
+        (bool valid, uint8[] memory argumentKinds, uint8 returnKind) =
             _descriptor(c.data, s.descriptorOffset, s.descriptorLength);
         if (!valid || returnKind != 1) revert MethodError(11);
-        s.argumentCount = argc;
+        for (uint256 i = 0; i < argumentKinds.length; ++i) {
+            if (argumentKinds[i] != KIND_INT) revert MethodError(11);
+        }
+        s.argumentCount = argumentKinds.length;
+        s.argumentKinds = argumentKinds;
         s.returnKind = returnKind;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
@@ -400,15 +413,16 @@ contract JVMSubsetInterpreter {
         ) revert CallError(4, callPC);
         uint256 descriptorIndex = (meta >> 32) & 0xffff;
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[descriptorIndex]);
-        (bool valid, uint256 argc, uint8 returnKind) =
+        (bool valid, uint8[] memory argumentKinds, uint8 returnKind) =
             _descriptor(c.data, s.descriptorOffset, s.descriptorLength);
         if (!valid) revert CallError(4, callPC);
-        s.argumentCount = argc;
+        s.argumentCount = argumentKinds.length;
+        s.argumentKinds = argumentKinds;
         s.returnKind = returnKind;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
         if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
-        if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS || s.maxLocals < argc) {
+        if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS || s.maxLocals < s.argumentCount) {
             revert CallError(4, callPC);
         }
         s.loaded = true;
@@ -427,18 +441,28 @@ contract JVMSubsetInterpreter {
         Frame[] memory frames = new Frame[](MAX_FRAMES);
         frames[0] = _newFrame(rootClass, root, selected[rootClass][root], 0);
         for (uint256 i = 0; i < args.length; ++i) {
-            frames[0].locals[i] = uint32(args[i]);
+            frames[0].locals[i] = _packInt(uint32(args[i]));
             frames[0].initialized[i] = true;
         }
         uint256 depth = 1;
         uint8[] memory initializationState = new uint8[](classes.length);
         bool[] memory initializerStarted = new bool[](classes.length);
-        uint32[][] memory staticValues = new uint32[][](classes.length);
+        uint256[][] memory staticValues = new uint256[][](classes.length);
         uint256[] memory parentLinks = new uint256[](classes.length);
         uint8[] memory hierarchyState = new uint8[](classes.length);
         for (uint256 i = 0; i < classes.length; ++i) {
-            staticValues[i] = new uint32[](classes[i].fields.length); // preparation: default zero
+            staticValues[i] = new uint256[](classes[i].fields.length);
+            for (uint256 j = 0; j < classes[i].fields.length; ++j) {
+                uint8 fieldKind = _fieldKind(classes[i], classes[i].fields[j]);
+                if (fieldKind == KIND_INT) staticValues[i][j] = _packInt(0);
+                else if (fieldKind == KIND_REF) staticValues[i][j] = _packRef(0);
+            }
         }
+        // Handles are one-based, leaving zero as Java null. Allocate the bounded outer table lazily
+        // so scalar-only legacy programs do not pay array-heap memory expansion costs.
+        uint32[][] memory heap;
+        uint256 arrayCount;
+        uint256 totalElements;
         _validateHierarchy(classes, rootClass, parentLinks, hierarchyState);
         depth = _initializeClass(
             classes, staticValues, initializationState, frames, depth, rootClass,
@@ -476,129 +500,205 @@ contract JVMSubsetInterpreter {
                 continue;
             }
             ClassInfo memory c = classes[f.classIndex];
-            Selected memory s = selected[f.classIndex][f.methodIndex];
-            if (f.pc >= s.codeLength) revert BytecodeError(7, f.pc);
+            Selected memory selection = selected[f.classIndex][f.methodIndex];
+            if (f.pc >= selection.codeLength) revert BytecodeError(7, f.pc);
             uint256 opPC = f.pc;
-            uint8 op = uint8(c.data[s.codeOffset + f.pc]);
+            uint8 op = uint8(c.data[selection.codeOffset + f.pc]);
             ++f.pc;
-            if (op >= 0x02 && op <= 0x08) { // iconst_m1 ... iconst_5
+            if (op == 0x00) { // nop
+                continue;
+            } else if (op == 0x01) { // aconst_null
+                f.sp = _push(f.stack, f.sp, _packRef(0), opPC);
+            } else if (op >= 0x02 && op <= 0x08) { // iconst_m1 ... iconst_5
                 uint32 value = op == 0x02 ? type(uint32).max : uint32(op - 0x03);
-                f.sp = _push(f.stack, f.sp, value, opPC);
+                f.sp = _push(f.stack, f.sp, _packInt(value), opPC);
             } else if (op == 0x10) { // bipush
-                f.sp = _push(
-                    f.stack,
-                    f.sp,
-                    uint32(int32(int8(uint8(c.data[s.codeOffset + f.pc])))),
-                    opPC
-                );
+                f.sp = _push(f.stack, f.sp, _packInt(
+                    uint32(int32(int8(uint8(c.data[selection.codeOffset + f.pc]))))
+                ), opPC);
                 ++f.pc;
             } else if (op == 0x11) { // sipush
-                f.sp = _push(
-                    f.stack, f.sp, uint32(int32(_signed16(c.data, s.codeOffset + f.pc))), opPC
-                );
+                f.sp = _push(f.stack, f.sp, _packInt(
+                    uint32(int32(_signed16(c.data, selection.codeOffset + f.pc)))
+                ), opPC);
                 f.pc += 2;
             } else if (op == 0x12 || op == 0x13) { // ldc / ldc_w, Integer only
                 uint256 index;
                 if (op == 0x12) {
-                    index = uint8(c.data[s.codeOffset + f.pc]);
+                    index = uint8(c.data[selection.codeOffset + f.pc]);
                     ++f.pc;
                 } else {
-                    index = _unsigned16(c.data, s.codeOffset + f.pc);
+                    index = _unsigned16(c.data, selection.codeOffset + f.pc);
                     f.pc += 2;
                 }
                 if (index == 0 || index >= c.cp.length || uint8(c.cp[index]) != 3) {
                     revert BytecodeError(13, opPC);
                 }
-                f.sp = _push(f.stack, f.sp, uint32(c.cp[index] >> 8), opPC);
-            } else if (op == 0x15) { // iload
-                uint256 local = uint8(c.data[s.codeOffset + f.pc]);
+                f.sp = _push(f.stack, f.sp, _packInt(uint32(c.cp[index] >> 8)), opPC);
+            } else if (op == 0x15 || op == 0x19) { // iload / aload
+                uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
                 ++f.pc;
-                f.sp = _load(f.stack, f.sp, f.locals, f.initialized, local, opPC);
-            } else if (op >= 0x1a && op <= 0x1d) {
-                f.sp = _load(f.stack, f.sp, f.locals, f.initialized, op - 0x1a, opPC);
-            } else if (op == 0x36) { // istore
-                uint256 local = uint8(c.data[s.codeOffset + f.pc]);
+                f.sp = _loadKind(
+                    f.stack, f.sp, f.locals, f.initialized, local,
+                    op == 0x15 ? KIND_INT : KIND_REF, opPC
+                );
+            } else if (op >= 0x1a && op <= 0x1d) { // iload_0..3
+                f.sp = _loadKind(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x1a, KIND_INT, opPC
+                );
+            } else if (op >= 0x2a && op <= 0x2d) { // aload_0..3
+                f.sp = _loadKind(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x2a, KIND_REF, opPC
+                );
+            } else if (op == 0x2e) { // iaload
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 2], KIND_REF, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                uint256 handle = _payload(f.stack[f.sp - 2]);
+                if (handle == 0) _throwJava(6, frames, depth);
+                _requireValidHandle(handle, arrayCount, opPC);
+                int32 index = int32(uint32(_payload(f.stack[f.sp - 1])));
+                if (index < 0 || uint256(uint32(index)) >= heap[handle].length) {
+                    _throwJava(5, frames, depth);
+                }
+                f.stack[f.sp - 2] = _packInt(heap[handle][uint256(uint32(index))]);
+                --f.sp;
+            } else if (op == 0x36 || op == 0x3a) { // istore / astore
+                uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
                 ++f.pc;
-                f.sp = _store(f.stack, f.sp, f.locals, f.initialized, local, opPC);
-            } else if (op >= 0x3b && op <= 0x3e) {
-                f.sp = _store(f.stack, f.sp, f.locals, f.initialized, op - 0x3b, opPC);
-            } else if (op == 0x57) { // pop (category-1 values are the only values in this stage)
+                f.sp = _storeKind(
+                    f.stack, f.sp, f.locals, f.initialized, local,
+                    op == 0x36 ? KIND_INT : KIND_REF, opPC
+                );
+            } else if (op >= 0x3b && op <= 0x3e) { // istore_0..3
+                f.sp = _storeKind(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x3b, KIND_INT, opPC
+                );
+            } else if (op >= 0x4b && op <= 0x4e) { // astore_0..3
+                f.sp = _storeKind(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x4b, KIND_REF, opPC
+                );
+            } else if (op == 0x4f) { // iastore
+                if (f.sp < 3) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 3], KIND_REF, opPC);
+                _requireKind(f.stack[f.sp - 2], KIND_INT, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                uint256 handle = _payload(f.stack[f.sp - 3]);
+                if (handle == 0) _throwJava(6, frames, depth);
+                _requireValidHandle(handle, arrayCount, opPC);
+                int32 index = int32(uint32(_payload(f.stack[f.sp - 2])));
+                if (index < 0 || uint256(uint32(index)) >= heap[handle].length) {
+                    _throwJava(5, frames, depth);
+                }
+                heap[handle][uint256(uint32(index))] = uint32(_payload(f.stack[f.sp - 1]));
+                f.sp -= 3;
+            } else if (op == 0x57) { // pop
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 --f.sp;
-            } else if (op == 0x59) { // dup, category-1 only
-                if (f.sp == 0) revert BytecodeError(3, opPC);
-                f.sp = _push(f.stack, f.sp, f.stack[f.sp - 1], opPC);
+            } else if (op >= 0x58 && op <= 0x5f) {
+                f.sp = _permuteCategory1(f.stack, f.sp, op, opPC);
             } else if (op == 0x60 || op == 0x64 || op == 0x68) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireIntPair(f.stack, f.sp, opPC);
+                uint32 left = uint32(_payload(f.stack[f.sp - 2]));
+                uint32 right = uint32(_payload(f.stack[f.sp - 1]));
                 unchecked {
-                    if (op == 0x60) f.stack[f.sp - 2] += f.stack[f.sp - 1];
-                    else if (op == 0x64) f.stack[f.sp - 2] -= f.stack[f.sp - 1];
-                    else f.stack[f.sp - 2] *= f.stack[f.sp - 1];
+                    if (op == 0x60) left += right;
+                    else if (op == 0x64) left -= right;
+                    else left *= right;
                 }
+                f.stack[f.sp - 2] = _packInt(left);
                 --f.sp;
             } else if (op == 0x6c || op == 0x70) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
-                int32 dividend = int32(f.stack[f.sp - 2]);
-                int32 divisor = int32(f.stack[f.sp - 1]);
-                if (divisor == 0) {
-                    if (_hasActiveInitializer(frames, depth)) revert JavaException(3);
-                    revert JavaException(1);
-                }
+                _requireIntPair(f.stack, f.sp, opPC);
+                int32 dividend = int32(uint32(_payload(f.stack[f.sp - 2])));
+                int32 divisor = int32(uint32(_payload(f.stack[f.sp - 1])));
+                if (divisor == 0) _throwJava(1, frames, depth);
+                uint32 result;
                 if (dividend == type(int32).min && divisor == -1) {
-                    f.stack[f.sp - 2] = op == 0x6c ? uint32(0x80000000) : 0;
-                } else if (op == 0x6c) {
-                    f.stack[f.sp - 2] = uint32(dividend / divisor);
-                } else {
-                    f.stack[f.sp - 2] = uint32(dividend % divisor);
-                }
+                    result = op == 0x6c ? uint32(0x80000000) : 0;
+                } else if (op == 0x6c) result = uint32(dividend / divisor);
+                else result = uint32(dividend % divisor);
+                f.stack[f.sp - 2] = _packInt(result);
                 --f.sp;
             } else if (op == 0x74) {
                 if (f.sp == 0) revert BytecodeError(3, opPC);
-                unchecked { f.stack[f.sp - 1] = uint32(0) - f.stack[f.sp - 1]; }
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                unchecked {
+                    f.stack[f.sp - 1] = _packInt(uint32(0) - uint32(_payload(f.stack[f.sp - 1])));
+                }
             } else if (op == 0x78 || op == 0x7a || op == 0x7c) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
-                uint256 shift = uint256(f.stack[f.sp - 1] & 31);
-                if (op == 0x78) f.stack[f.sp - 2] <<= shift;
-                else if (op == 0x7a) f.stack[f.sp - 2] = uint32(int32(f.stack[f.sp - 2]) >> shift);
-                else f.stack[f.sp - 2] >>= shift;
+                _requireIntPair(f.stack, f.sp, opPC);
+                uint32 left = uint32(_payload(f.stack[f.sp - 2]));
+                uint256 shift = _payload(f.stack[f.sp - 1]) & 31;
+                if (op == 0x78) left <<= shift;
+                else if (op == 0x7a) left = uint32(int32(left) >> shift);
+                else left >>= shift;
+                f.stack[f.sp - 2] = _packInt(left);
                 --f.sp;
             } else if (op == 0x7e || op == 0x80 || op == 0x82) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
-                if (op == 0x7e) f.stack[f.sp - 2] &= f.stack[f.sp - 1];
-                else if (op == 0x80) f.stack[f.sp - 2] |= f.stack[f.sp - 1];
-                else f.stack[f.sp - 2] ^= f.stack[f.sp - 1];
+                _requireIntPair(f.stack, f.sp, opPC);
+                uint32 left = uint32(_payload(f.stack[f.sp - 2]));
+                uint32 right = uint32(_payload(f.stack[f.sp - 1]));
+                if (op == 0x7e) left &= right;
+                else if (op == 0x80) left |= right;
+                else left ^= right;
+                f.stack[f.sp - 2] = _packInt(left);
                 --f.sp;
-            } else if (op == 0x84) {
-                uint256 local = uint8(c.data[s.codeOffset + f.pc]);
-                int8 amount = int8(uint8(c.data[s.codeOffset + f.pc + 1]));
+            } else if (op == 0x84) { // iinc
+                uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
+                int8 amount = int8(uint8(c.data[selection.codeOffset + f.pc + 1]));
                 if (local >= f.locals.length) revert BytecodeError(8, opPC);
                 if (!f.initialized[local]) revert BytecodeError(11, opPC);
-                unchecked { f.locals[local] += uint32(int32(amount)); }
+                _requireKind(f.locals[local], KIND_INT, opPC);
+                unchecked {
+                    f.locals[local] = _packInt(
+                        uint32(_payload(f.locals[local])) + uint32(int32(amount))
+                    );
+                }
                 f.pc += 2;
             } else if (op == 0x91 || op == 0x92 || op == 0x93) {
                 if (f.sp == 0) revert BytecodeError(3, opPC);
-                if (op == 0x91) f.stack[f.sp - 1] = uint32(int32(int8(uint8(f.stack[f.sp - 1]))));
-                else if (op == 0x92) f.stack[f.sp - 1] = uint32(uint16(f.stack[f.sp - 1]));
-                else f.stack[f.sp - 1] = uint32(int32(int16(uint16(f.stack[f.sp - 1]))));
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                uint32 value = uint32(_payload(f.stack[f.sp - 1]));
+                if (op == 0x91) value = uint32(int32(int8(uint8(value))));
+                else if (op == 0x92) value = uint32(uint16(value));
+                else value = uint32(int32(int16(uint16(value))));
+                f.stack[f.sp - 1] = _packInt(value);
             } else if (op >= 0x99 && op <= 0x9e) {
                 if (f.sp == 0) revert BytecodeError(3, opPC);
-                int32 value = int32(f.stack[f.sp - 1]);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                int32 value = int32(uint32(_payload(f.stack[f.sp - 1])));
                 --f.sp;
                 f.pc = _unaryCondition(op, value)
-                    ? _decodedTarget(c.data, s.codeOffset, opPC) : f.pc + 2;
+                    ? _decodedTarget(c.data, selection.codeOffset, opPC) : f.pc + 2;
             } else if (op >= 0x9f && op <= 0xa4) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
-                int32 left = int32(f.stack[f.sp - 2]);
-                int32 right = int32(f.stack[f.sp - 1]);
+                _requireIntPair(f.stack, f.sp, opPC);
+                int32 left = int32(uint32(_payload(f.stack[f.sp - 2])));
+                int32 right = int32(uint32(_payload(f.stack[f.sp - 1])));
                 f.sp -= 2;
                 f.pc = _binaryCondition(op, left, right)
-                    ? _decodedTarget(c.data, s.codeOffset, opPC) : f.pc + 2;
+                    ? _decodedTarget(c.data, selection.codeOffset, opPC) : f.pc + 2;
+            } else if (op == 0xa5 || op == 0xa6) { // if_acmpeq / if_acmpne
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 2], KIND_REF, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_REF, opPC);
+                _validatePackedRef(f.stack[f.sp - 2], arrayCount, opPC);
+                _validatePackedRef(f.stack[f.sp - 1], arrayCount, opPC);
+                bool equal = _payload(f.stack[f.sp - 2]) == _payload(f.stack[f.sp - 1]);
+                f.sp -= 2;
+                f.pc = ((op == 0xa5) == equal)
+                    ? _decodedTarget(c.data, selection.codeOffset, opPC) : f.pc + 2;
             } else if (op == 0xa7) {
-                f.pc = _decodedTarget(c.data, s.codeOffset, opPC);
+                f.pc = _decodedTarget(c.data, selection.codeOffset, opPC);
             } else if (op == 0xb2 || op == 0xb3) { // getstatic / putstatic
-                uint256 refIndex = _unsigned16(c.data, s.codeOffset + f.pc);
+                uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
                 f.pc += 2;
-                (uint256 fieldClass, uint256 field) = _resolveField(
+                (uint256 fieldClass, uint256 field, uint8 fieldKind) = _resolveField(
                     classes, f.classIndex, refIndex, opPC, fieldCaches[f.classIndex],
                     op == 0xb3, f.isInitializer, parentLinks, hierarchyState
                 );
@@ -609,20 +709,27 @@ contract JVMSubsetInterpreter {
                         parentLinks, hierarchyState
                     );
                     if (depth != oldDepth) {
-                        f.pc = opPC; // retry after initialization; preserve put value and prefixes
+                        f.pc = opPC;
                         continue;
                     }
                 }
                 if (op == 0xb2) {
+                    if (fieldKind == KIND_REF) {
+                        _validatePackedRef(staticValues[fieldClass][field], arrayCount, opPC);
+                    }
                     f.sp = _push(f.stack, f.sp, staticValues[fieldClass][field], opPC);
                 } else {
                     if (f.sp == 0) revert BytecodeError(3, opPC);
+                    _requireKind(f.stack[f.sp - 1], fieldKind, opPC);
+                    if (fieldKind == KIND_REF) {
+                        _validatePackedRef(f.stack[f.sp - 1], arrayCount, opPC);
+                    }
                     staticValues[fieldClass][field] = f.stack[f.sp - 1];
                     --f.sp;
                 }
-            } else if (op == 0xb8) { // invokestatic, CONSTANT_Methodref only
-                uint256 refIndex = _unsigned16(c.data, s.codeOffset + f.pc);
-                f.pc += 2; // exact caller resume PC is retained in its frame
+            } else if (op == 0xb8) { // invokestatic
+                uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
+                f.pc += 2;
                 (uint256 calleeClass, uint256 callee) = _resolveCall(
                     classes, f.classIndex, refIndex, opPC, referenceCaches[f.classIndex], bundleMode,
                     parentLinks, hierarchyState
@@ -639,46 +746,91 @@ contract JVMSubsetInterpreter {
                         parentLinks, hierarchyState
                     );
                     if (depth != oldDepth) {
-                        f.pc = opPC; // retry with arguments and expression prefix untouched
+                        f.pc = opPC;
                         continue;
                     }
                 }
                 if (!selected[calleeClass][callee].loaded) {
-                    selected[calleeClass][callee] =
-                        _loadCallee(classes[calleeClass], callee, opPC);
+                    selected[calleeClass][callee] = _loadCallee(classes[calleeClass], callee, opPC);
                     _predecode(classes[calleeClass], selected[calleeClass][callee]);
                 }
                 Selected memory target = selected[calleeClass][callee];
                 if (f.sp < target.argumentCount) revert BytecodeError(3, opPC);
-                if (depth == MAX_FRAMES) revert JavaException(2);
-                Frame memory child = _newFrame(calleeClass, callee, target, opPC);
                 uint256 base = f.sp - target.argumentCount;
                 for (uint256 i = 0; i < target.argumentCount; ++i) {
-                    child.locals[i] = f.stack[base + i]; // declaration order
+                    _requireKind(f.stack[base + i], target.argumentKinds[i], opPC);
+                    if (target.argumentKinds[i] == KIND_REF) {
+                        _validatePackedRef(f.stack[base + i], arrayCount, opPC);
+                    }
+                }
+                if (depth == MAX_FRAMES) revert JavaException(2);
+                Frame memory child = _newFrame(calleeClass, callee, target, opPC);
+                for (uint256 i = 0; i < target.argumentCount; ++i) {
+                    child.locals[i] = f.stack[base + i];
                     child.initialized[i] = true;
                 }
-                f.sp = base; // expression-prefix operands remain in the caller
+                f.sp = base;
                 frames[depth] = child;
                 ++depth;
-            } else if (op == 0xac || op == 0xb1) { // ireturn / return
-                uint8 actualKind = op == 0xac ? 1 : 2;
-                if (actualKind != s.returnKind) revert CallError(5, opPC);
-                if ((actualKind == 1 && f.sp != 1) || (actualKind == 2 && f.sp != 0)) {
+            } else if (op == 0xac || op == 0xb0 || op == 0xb1) { // ireturn / areturn / return
+                uint8 actualKind = op == 0xac ? uint8(KIND_INT)
+                    : (op == 0xb0 ? uint8(KIND_REF) : uint8(0));
+                uint8 descriptorKind = actualKind == 0 ? 2 : (actualKind == KIND_REF ? 3 : 1);
+                if (descriptorKind != selection.returnKind) revert CallError(5, opPC);
+                if ((actualKind != 0 && f.sp != 1) || (actualKind == 0 && f.sp != 0)) {
                     revert BytecodeError(4, opPC);
                 }
-                if (depth == 1) {
-                    // Root descriptors are required to return int, so void cannot reach here.
-                    return int32(f.stack[0]);
+                uint256 value;
+                if (actualKind != 0) {
+                    _requireKind(f.stack[0], actualKind, opPC);
+                    if (actualKind == KIND_REF) _validatePackedRef(f.stack[0], arrayCount, opPC);
+                    value = f.stack[0];
                 }
-                uint32 value = actualKind == 1 ? f.stack[0] : 0;
+                if (depth == 1) {
+                    // The externally selected root can only return int.
+                    return int32(uint32(_payload(value)));
+                }
                 uint256 callPC = f.callPC;
                 --depth;
-                if (actualKind == 1) {
+                if (actualKind != 0) {
                     Frame memory caller = frames[depth - 1];
                     caller.sp = _push(caller.stack, caller.sp, value, callPC);
                 }
+            } else if (op == 0xbc) { // newarray
+                uint8 atype = uint8(c.data[selection.codeOffset + f.pc]);
+                ++f.pc;
+                if (atype != 10) revert ArrayError(1, opPC);
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                int32 signedLength = int32(uint32(_payload(f.stack[f.sp - 1])));
+                if (signedLength < 0) _throwJava(4, frames, depth);
+                uint256 length = uint256(uint32(signedLength));
+                if (
+                    arrayCount == MAX_ARRAYS || length > MAX_ARRAY_LENGTH
+                        || length > MAX_ARRAY_ELEMENTS - totalElements
+                ) _throwJava(7, frames, depth);
+                if (heap.length == 0) heap = new uint32[][](MAX_ARRAYS + 1);
+                ++arrayCount;
+                totalElements += length;
+                heap[arrayCount] = new uint32[](length);
+                f.stack[f.sp - 1] = _packRef(uint32(arrayCount));
+            } else if (op == 0xbe) { // arraylength
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_REF, opPC);
+                uint256 handle = _payload(f.stack[f.sp - 1]);
+                if (handle == 0) _throwJava(6, frames, depth);
+                _requireValidHandle(handle, arrayCount, opPC);
+                f.stack[f.sp - 1] = _packInt(uint32(heap[handle].length));
+            } else if (op == 0xc6 || op == 0xc7) { // ifnull / ifnonnull
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_REF, opPC);
+                _validatePackedRef(f.stack[f.sp - 1], arrayCount, opPC);
+                bool isNull = _payload(f.stack[f.sp - 1]) == 0;
+                --f.sp;
+                f.pc = ((op == 0xc6) == isNull)
+                    ? _decodedTarget(c.data, selection.codeOffset, opPC) : f.pc + 2;
             } else {
-                revert BytecodeError(6, opPC); // predecode is the primary rejection
+                revert BytecodeError(6, opPC);
             }
         }
         revert BytecodeError(7, 0);
@@ -692,8 +844,8 @@ contract JVMSubsetInterpreter {
         f.classIndex = classIndex;
         f.methodIndex = method;
         f.callPC = callPC;
-        f.stack = new uint32[](s.maxStack);
-        f.locals = new uint32[](s.maxLocals);
+        f.stack = new uint256[](s.maxStack);
+        f.locals = new uint256[](s.maxLocals);
         f.initialized = new bool[](s.maxLocals);
     }
 
@@ -714,10 +866,11 @@ contract JVMSubsetInterpreter {
             revert InitError(1, classIndex);
         }
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[descriptorIndex]);
-        (bool valid, uint256 argc, uint8 returnKind) =
+        (bool valid, uint8[] memory argumentKinds, uint8 returnKind) =
             _descriptor(c.data, s.descriptorOffset, s.descriptorLength);
-        if (!valid || argc != 0 || returnKind != 2) revert InitError(1, classIndex);
+        if (!valid || argumentKinds.length != 0 || returnKind != 2) revert InitError(1, classIndex);
         s.argumentCount = 0;
+        s.argumentKinds = argumentKinds;
         s.returnKind = 2;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
@@ -728,7 +881,7 @@ contract JVMSubsetInterpreter {
 
     function _initializeClass(
         ClassInfo[] memory classes,
-        uint32[][] memory staticValues,
+        uint256[][] memory staticValues,
         uint8[] memory initializationState,
         Frame[] memory frames,
         uint256 depth,
@@ -742,7 +895,9 @@ contract JVMSubsetInterpreter {
             initializationState[current] = 1; // step 6: mark and prepare before its parent
             ClassInfo memory c = classes[current];
             for (uint256 i = 0; i < c.fields.length; ++i) {
-                if (c.fields[i].hasConstant) staticValues[current][i] = c.fields[i].constantValue;
+                if (c.fields[i].hasConstant) {
+                    staticValues[current][i] = _packInt(c.fields[i].constantValue);
+                }
             }
             uint256 link = parentLinks[current];
             bool parentReady = link == type(uint256).max
@@ -952,7 +1107,7 @@ contract JVMSubsetInterpreter {
         bool callerIsInitializer,
         uint256[] memory parentLinks,
         uint8[] memory hierarchyState
-    ) private pure returns (uint256 owner, uint256 field) {
+    ) private pure returns (uint256 owner, uint256 field, uint8 valueKind) {
         ClassInfo memory caller = classes[callerClass];
         if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 9) {
             revert FieldError(1, pc);
@@ -1049,15 +1204,8 @@ contract JVMSubsetInterpreter {
 
         ClassInfo memory targetClass = classes[owner];
         FieldInfo memory resolved = targetClass.fields[field];
-        bool intDescriptor;
-        if (
-            resolved.descriptorIndex != 0 && resolved.descriptorIndex < targetClass.cp.length
-                && uint8(targetClass.cp[resolved.descriptorIndex]) == 1
-        ) {
-            (uint256 off, uint256 n) = _utf(targetClass.cp[resolved.descriptorIndex]);
-            intDescriptor = _equalsLiteral(targetClass.data, off, n, bytes("I"));
-        }
-        if ((resolved.accessFlags & 0x0008) == 0 || !intDescriptor) revert FieldError(3, pc);
+        valueKind = _fieldKind(targetClass, resolved);
+        if ((resolved.accessFlags & 0x0008) == 0 || valueKind == 0) revert FieldError(3, pc);
         if (!_canAccessMember(
             classes, callerClass, owner, resolved.accessFlags, parentLinks, hierarchyState
         )) revert FieldError(4, pc);
@@ -1065,6 +1213,21 @@ contract JVMSubsetInterpreter {
             writeAccess && (resolved.accessFlags & 0x0010) != 0
                 && !(callerIsInitializer && callerClass == owner)
         ) revert FieldError(4, pc);
+    }
+
+    function _fieldKind(ClassInfo memory c, FieldInfo memory field)
+        private
+        pure
+        returns (uint8)
+    {
+        if (
+            field.descriptorIndex == 0 || field.descriptorIndex >= c.cp.length
+                || uint8(c.cp[field.descriptorIndex]) != 1
+        ) return 0;
+        (uint256 off, uint256 n) = _utf(c.cp[field.descriptorIndex]);
+        if (_equalsLiteral(c.data, off, n, bytes("I"))) return uint8(KIND_INT);
+        if (_equalsLiteral(c.data, off, n, bytes("[I"))) return uint8(KIND_REF);
+        return 0;
     }
 
     function _classAccessible(ClassInfo memory caller, ClassInfo memory symbolic)
@@ -1140,8 +1303,12 @@ contract JVMSubsetInterpreter {
             uint8 op = uint8(c.data[s.codeOffset + pc]);
             uint256 width = _instructionWidth(op, pc);
             if (width > s.codeLength - pc) revert BytecodeError(2, pc);
-            if ((op == 0xac && s.returnKind != 1) || (op == 0xb1 && s.returnKind != 2)) {
-                revert CallError(5, pc);
+            if (
+                (op == 0xac && s.returnKind != 1) || (op == 0xb1 && s.returnKind != 2)
+                    || (op == 0xb0 && s.returnKind != 3)
+            ) revert CallError(5, pc);
+            if (op == 0xbc && uint8(c.data[s.codeOffset + pc + 1]) != 10) {
+                revert ArrayError(1, pc);
             }
             if (op == 0x12 || op == 0x13) {
                 uint256 index = op == 0x12
@@ -1157,7 +1324,7 @@ contract JVMSubsetInterpreter {
         while (pc < s.codeLength) {
             uint8 op = uint8(c.data[s.codeOffset + pc]);
             uint256 width = _instructionWidth(op, pc);
-            if (op >= 0x99 && op <= 0xa7) {
+            if ((op >= 0x99 && op <= 0xa7) || op == 0xc6 || op == 0xc7) {
                 uint256 target = _decodedTarget(c.data, s.codeOffset, pc);
                 if (target >= s.codeLength || !starts[target]) revert BytecodeError(12, pc);
             }
@@ -1167,16 +1334,19 @@ contract JVMSubsetInterpreter {
 
     function _instructionWidth(uint8 op, uint256 pc) private pure returns (uint256) {
         if (
-            (op >= 0x02 && op <= 0x08) || (op >= 0x1a && op <= 0x1d)
-                || (op >= 0x3b && op <= 0x3e) || op == 0x57 || op == 0x59 || op == 0x60 || op == 0x64
-                || op == 0x68 || op == 0x6c || op == 0x70 || op == 0x74 || op == 0x78
-                || op == 0x7a || op == 0x7c || op == 0x7e || op == 0x80 || op == 0x82
-                || (op >= 0x91 && op <= 0x93) || op == 0xac || op == 0xb1
+            op <= 0x01 || (op >= 0x02 && op <= 0x08) || (op >= 0x1a && op <= 0x1d)
+                || (op >= 0x2a && op <= 0x2e) || (op >= 0x3b && op <= 0x3e)
+                || (op >= 0x4b && op <= 0x4f) || (op >= 0x57 && op <= 0x60)
+                || op == 0x64 || op == 0x68 || op == 0x6c || op == 0x70 || op == 0x74
+                || op == 0x78 || op == 0x7a || op == 0x7c || op == 0x7e || op == 0x80
+                || op == 0x82 || (op >= 0x91 && op <= 0x93) || op == 0xac
+                || op == 0xb0 || op == 0xb1 || op == 0xbe
         ) return 1;
-        if (op == 0x10 || op == 0x12 || op == 0x15 || op == 0x36) return 2;
+        if (op == 0x10 || op == 0x12 || op == 0x15 || op == 0x19 || op == 0x36
+            || op == 0x3a || op == 0xbc) return 2;
         if (
-            op == 0x11 || op == 0x13 || op == 0x84 || (op >= 0x99 && op <= 0xa4)
-                || op == 0xa7 || op == 0xb2 || op == 0xb3 || op == 0xb8
+            op == 0x11 || op == 0x13 || op == 0x84 || (op >= 0x99 && op <= 0xa7)
+                || op == 0xb2 || op == 0xb3 || op == 0xb8 || op == 0xc6 || op == 0xc7
         ) return 3;
         revert BytecodeError(6, pc);
     }
@@ -1243,23 +1413,46 @@ contract JVMSubsetInterpreter {
     function _descriptor(bytes memory data, uint256 off, uint256 n)
         private
         pure
-        returns (bool valid, uint256 count, uint8 returnKind)
+        returns (bool valid, uint8[] memory argumentKinds, uint8 returnKind)
     {
         if (n < 3 || off > data.length || n > data.length - off || uint8(data[off]) != 0x28) {
-            return (false, 0, 0);
+            return (false, argumentKinds, 0);
         }
         uint256 i = 1;
+        uint256 count;
         while (i < n && uint8(data[off + i]) != 0x29) {
-            if (uint8(data[off + i]) != 0x49) return (false, 0, 0);
+            uint8 descriptorByte = uint8(data[off + i]);
+            if (descriptorByte == 0x49) ++i;
+            else if (
+                descriptorByte == 0x5b && i + 1 < n && uint8(data[off + i + 1]) == 0x49
+            ) i += 2;
+            else return (false, argumentKinds, 0);
             ++count;
-            ++i;
         }
-        if (i + 2 != n || uint8(data[off + i]) != 0x29) return (false, 0, 0);
-        uint8 result = uint8(data[off + i + 1]);
-        if (result == 0x49) returnKind = 1;
-        else if (result == 0x56) returnKind = 2;
-        else return (false, 0, 0);
-        return (true, count, returnKind);
+        if (i >= n || uint8(data[off + i]) != 0x29) {
+            return (false, argumentKinds, 0);
+        }
+        uint256 close = i;
+        argumentKinds = new uint8[](count);
+        i = 1;
+        uint256 at;
+        while (uint8(data[off + i]) != 0x29) {
+            if (uint8(data[off + i]) == 0x49) {
+                argumentKinds[at++] = uint8(KIND_INT);
+                ++i;
+            } else {
+                argumentKinds[at++] = uint8(KIND_REF);
+                i += 2;
+            }
+        }
+        uint8 result = close + 1 < n ? uint8(data[off + close + 1]) : 0;
+        if (close + 2 == n && result == 0x49) returnKind = 1;
+        else if (close + 2 == n && result == 0x56) returnKind = 2;
+        else if (
+            close + 3 == n && result == 0x5b && uint8(data[off + close + 2]) == 0x49
+        ) returnKind = 3;
+        else return (false, argumentKinds, 0);
+        return (true, argumentKinds, returnKind);
     }
 
     function _className(ClassInfo memory c, uint256 classIndex, uint256 at)
@@ -1311,7 +1504,49 @@ contract JVMSubsetInterpreter {
             | (uint32(uint8(data[off + 2])) << 8) | uint32(uint8(data[off + 3]));
     }
 
-    function _push(uint32[] memory stack, uint256 sp, uint32 value, uint256 pc)
+    function _packInt(uint32 value) private pure returns (uint256) {
+        return (KIND_INT << KIND_SHIFT) | uint256(value);
+    }
+
+    function _packRef(uint32 handle) private pure returns (uint256) {
+        return (KIND_REF << KIND_SHIFT) | uint256(handle);
+    }
+
+    function _payload(uint256 value) private pure returns (uint256) {
+        return uint32(value);
+    }
+
+    function _valueKind(uint256 value) private pure returns (uint256) {
+        return value >> KIND_SHIFT;
+    }
+
+    function _requireKind(uint256 value, uint256 wanted, uint256 pc) private pure {
+        if (_valueKind(value) != wanted) revert BytecodeError(14, pc);
+    }
+
+    function _requireIntPair(uint256[] memory stack, uint256 sp, uint256 pc) private pure {
+        _requireKind(stack[sp - 2], KIND_INT, pc);
+        _requireKind(stack[sp - 1], KIND_INT, pc);
+    }
+
+    function _requireValidHandle(uint256 handle, uint256 arrayCount, uint256 pc) private pure {
+        if (handle == 0 || handle > arrayCount) revert ReferenceError(1, pc);
+    }
+
+    function _validatePackedRef(uint256 value, uint256 arrayCount, uint256 pc) private pure {
+        _requireKind(value, KIND_REF, pc);
+        uint256 handle = _payload(value);
+        if (handle != 0 && handle > arrayCount) revert ReferenceError(1, pc);
+    }
+
+    function _throwJava(uint256 kind, Frame[] memory frames, uint256 depth) private pure {
+        if (kind != 2 && kind != 7 && _hasActiveInitializer(frames, depth)) {
+            revert JavaException(3);
+        }
+        revert JavaException(kind);
+    }
+
+    function _push(uint256[] memory stack, uint256 sp, uint256 value, uint256 pc)
         private
         pure
         returns (uint256)
@@ -1321,32 +1556,93 @@ contract JVMSubsetInterpreter {
         return sp + 1;
     }
 
-    function _load(
-        uint32[] memory stack,
+    function _loadKind(
+        uint256[] memory stack,
         uint256 sp,
-        uint32[] memory locals,
+        uint256[] memory locals,
         bool[] memory initialized,
         uint256 local,
+        uint256 wantedKind,
         uint256 pc
     ) private pure returns (uint256) {
         if (local >= locals.length) revert BytecodeError(8, pc);
         if (!initialized[local]) revert BytecodeError(11, pc);
+        _requireKind(locals[local], wantedKind, pc);
         return _push(stack, sp, locals[local], pc);
     }
 
-    function _store(
-        uint32[] memory stack,
+    function _storeKind(
+        uint256[] memory stack,
         uint256 sp,
-        uint32[] memory locals,
+        uint256[] memory locals,
         bool[] memory initialized,
         uint256 local,
+        uint256 wantedKind,
         uint256 pc
     ) private pure returns (uint256) {
         if (local >= locals.length) revert BytecodeError(8, pc);
         if (sp == 0) revert BytecodeError(3, pc);
+        _requireKind(stack[sp - 1], wantedKind, pc);
         locals[local] = stack[sp - 1];
         initialized[local] = true;
         return sp - 1;
+    }
+
+    function _permuteCategory1(uint256[] memory stack, uint256 sp, uint8 op, uint256 pc)
+        private
+        pure
+        returns (uint256)
+    {
+        if (op == 0x58) { // pop2
+            if (sp < 2) revert BytecodeError(3, pc);
+            return sp - 2;
+        }
+        if (op == 0x59) { // dup
+            if (sp == 0) revert BytecodeError(3, pc);
+            return _push(stack, sp, stack[sp - 1], pc);
+        }
+        uint256 need = (op == 0x5a || op == 0x5b || op == 0x5c || op == 0x5f) ? 2
+            : (op == 0x5d ? 3 : 4);
+        if (sp < need) revert BytecodeError(3, pc);
+        if (op == 0x5f) { // swap
+            (stack[sp - 2], stack[sp - 1]) = (stack[sp - 1], stack[sp - 2]);
+            return sp;
+        }
+        uint256 extra = op == 0x5a || op == 0x5b ? 1 : 2;
+        if (extra > stack.length - sp) revert BytecodeError(9, pc);
+        if (op == 0x5a) { // dup_x1: ..., v2, v1 -> ..., v1, v2, v1
+            uint256 v1 = stack[sp - 1];
+            stack[sp] = v1;
+            stack[sp - 1] = stack[sp - 2];
+            stack[sp - 2] = v1;
+        } else if (op == 0x5b) { // dup_x2: ..., v3, v2, v1 -> ..., v1, v3, v2, v1
+            uint256 v1 = stack[sp - 1];
+            stack[sp] = v1;
+            stack[sp - 1] = stack[sp - 2];
+            stack[sp - 2] = stack[sp - 3];
+            stack[sp - 3] = v1;
+        } else if (op == 0x5c) { // dup2
+            stack[sp] = stack[sp - 2];
+            stack[sp + 1] = stack[sp - 1];
+        } else if (op == 0x5d) { // dup2_x1
+            uint256 v2 = stack[sp - 2];
+            uint256 v1 = stack[sp - 1];
+            stack[sp + 1] = v1;
+            stack[sp] = v2;
+            stack[sp - 1] = stack[sp - 3];
+            stack[sp - 2] = v1;
+            stack[sp - 3] = v2;
+        } else { // dup2_x2
+            uint256 v2 = stack[sp - 2];
+            uint256 v1 = stack[sp - 1];
+            stack[sp + 1] = v1;
+            stack[sp] = v2;
+            stack[sp - 1] = stack[sp - 3];
+            stack[sp - 2] = stack[sp - 4];
+            stack[sp - 3] = v1;
+            stack[sp - 4] = v2;
+        }
+        return sp + extra;
     }
 
     function _unaryCondition(uint8 op, int32 value) private pure returns (bool) {
@@ -1415,12 +1711,17 @@ contract JVMSubsetInterpreter {
             field.accessFlags = access;
             field.nameIndex = nameIndex;
             field.descriptorIndex = descriptorIndex;
-            bool supportedStatic = (access & 0x0008) != 0
-                && descriptorIndex != 0 && descriptorIndex < c.cp.length
-                && uint8(c.cp[descriptorIndex]) == 1;
-            if (supportedStatic) {
+            uint8 supportedKind;
+            if (
+                (access & 0x0008) != 0 && descriptorIndex != 0
+                    && descriptorIndex < c.cp.length && uint8(c.cp[descriptorIndex]) == 1
+            ) {
                 (uint256 descriptorOffset, uint256 descriptorLength) = _utf(c.cp[descriptorIndex]);
-                supportedStatic = _equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("I"));
+                if (_equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("I"))) {
+                    supportedKind = uint8(KIND_INT);
+                } else if (
+                    _equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("[I"))
+                ) supportedKind = uint8(KIND_REF);
             }
             for (uint256 a = 0; a < attributesCount; ++a) {
                 uint256 attributeNameIndex = _u2(r);
@@ -1436,8 +1737,10 @@ contract JVMSubsetInterpreter {
                         c.data, attributeNameOffset, attributeNameLength, bytes("ConstantValue")
                     );
                 }
-                if (supportedStatic && isConstantValue) {
-                    if (field.hasConstant || attributeLength != 2) revert FieldError(5, i);
+                if (supportedKind != 0 && isConstantValue) {
+                    if (supportedKind != KIND_INT || field.hasConstant || attributeLength != 2) {
+                        revert FieldError(5, i);
+                    }
                     uint256 constantIndex = _u2(r);
                     if (
                         constantIndex == 0 || constantIndex >= c.cp.length
