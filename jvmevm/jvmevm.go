@@ -59,6 +59,8 @@ func decodeJavaException(data []byte) (string, bool) {
 		return "java.lang.ArithmeticException", true
 	case 2:
 		return "java.lang.StackOverflowError", true
+	case 3:
+		return "java.lang.ExceptionInInitializerError", true
 	default:
 		return "", false
 	}

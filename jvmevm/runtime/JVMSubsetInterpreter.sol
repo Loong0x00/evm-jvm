@@ -11,6 +11,8 @@ contract JVMSubsetInterpreter {
     error JavaException(uint256 kind);
     error CallError(uint256 code, uint256 pc);
     error LinkError(uint256 code, uint256 detail);
+    error FieldError(uint256 code, uint256 location);
+    error InitError(uint256 code, uint256 classIndex);
 
     uint256 private constant MAX_CONSTANT_POOL = 4096;
     uint256 private constant MAX_CODE = 65535;
@@ -35,16 +37,27 @@ contract JVMSubsetInterpreter {
         uint8 returnKind; // 1 = int, 2 = void
     }
 
+    struct FieldInfo {
+        uint16 accessFlags;
+        uint16 nameIndex;
+        uint16 descriptorIndex;
+        bool hasConstant;
+        uint32 constantValue;
+    }
+
     struct ClassInfo {
         bytes data;
         // One packed word per CP slot. Low byte is the tag. Utf8 stores offset/length,
         // Integer stores its 32 bits, and reference entries store their u2 operands.
         uint256[] cp;
+        FieldInfo[] fields;
         // One packed word per method: flags/name/descriptor and lazy Code attribute location.
         uint256[] methods;
         uint256 thisNameOffset;
         uint256 thisNameLength;
+        uint256 initializerPlusOne;
         uint16 accessFlags;
+        bool invalidInitializer;
         bool unsupportedSemantics;
     }
 
@@ -57,6 +70,7 @@ contract JVMSubsetInterpreter {
         uint32[] stack;
         uint32[] locals;
         bool[] initialized;
+        bool isInitializer;
     }
 
     function interpret(bytes calldata rawClass, string calldata entry, int32[] calldata args)
@@ -73,6 +87,7 @@ contract JVMSubsetInterpreter {
         c.cp = _readConstantPool(r);
 
         uint16 classAccess = _u2(r);
+        c.accessFlags = classAccess;
         uint256 thisClass = _u2(r);
         _u2(r); // super_class
         (c.thisNameOffset, c.thisNameLength) = _className(c, thisClass, r.pos);
@@ -81,13 +96,12 @@ contract JVMSubsetInterpreter {
 
         uint256 interfacesCount = _u2(r);
         _skip(r, _checkedMul2(interfacesCount, r.pos));
-        _skipMembers(r); // fields remain unsupported but unused field metadata is tolerated
+        c.fields = _readFields(r, c);
 
         uint256 methodsCount = _u2(r);
         c.methods = new uint256[](methodsCount);
         bytes memory wanted = bytes(entry);
         uint256 rootPlusOne;
-        bool hasClassInitializer;
         for (uint256 m = 0; m < methodsCount; ++m) {
             uint16 access = _u2(r);
             uint256 nameIndex = _u2(r);
@@ -101,7 +115,8 @@ contract JVMSubsetInterpreter {
                 rootPlusOne = m + 1;
             }
             if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("<clinit>"))) {
-                hasClassInitializer = true;
+                if (c.initializerPlusOne != 0) c.invalidInitializer = true;
+                else c.initializerPlusOne = m + 1;
             }
             uint256 packed = uint256(access) | (nameIndex << 16) | (descriptorIndex << 32);
             uint256 codeCount;
@@ -131,7 +146,6 @@ contract JVMSubsetInterpreter {
         _skipAttributes(r); // class attributes
         if (r.pos != c.data.length) revert ClassError(5, r.pos);
         if (rootPlusOne == 0) revert MethodError(1);
-        if (hasClassInitializer) revert MethodError(5); // no class-initialization semantics yet
 
         uint256 root = rootPlusOne - 1;
         uint256 rootMeta = c.methods[root];
@@ -157,7 +171,9 @@ contract JVMSubsetInterpreter {
         selections[0] = selected;
         uint256[][] memory caches = new uint256[][](1);
         caches[0] = referenceCache;
-        return _execute(classes, selections, caches, 0, root, args, false);
+        uint256[][] memory fieldCaches = new uint256[][](1);
+        fieldCaches[0] = new uint256[](c.cp.length);
+        return _execute(classes, selections, caches, fieldCaches, 0, root, args, false);
     }
 
     /// @notice Execute a named class from an unordered bundle of unchanged classfiles.
@@ -215,16 +231,18 @@ contract JVMSubsetInterpreter {
 
         Selected[][] memory selected = new Selected[][](count);
         uint256[][] memory caches = new uint256[][](count);
+        uint256[][] memory fieldCaches = new uint256[][](count);
         // Method selections and reference caches are allocated only as a class is entered.
         selected[rootClass] = new Selected[](classes[rootClass].methods.length);
         caches[rootClass] = new uint256[](classes[rootClass].cp.length);
+        fieldCaches[rootClass] = new uint256[](classes[rootClass].cp.length);
         selected[rootClass][root] = _loadRoot(classes[rootClass], rootMeta);
         Selected memory rootSelection = selected[rootClass][root];
         if (rootSelection.returnKind != 1) revert MethodError(11);
         if (args.length != rootSelection.argumentCount) revert MethodError(9);
         if (rootSelection.maxLocals < rootSelection.argumentCount) revert MethodError(10);
         _predecode(classes[rootClass], rootSelection);
-        return _execute(classes, selected, caches, rootClass, root, args, true);
+        return _execute(classes, selected, caches, fieldCaches, rootClass, root, args, true);
     }
 
     function _parseBundleClass(bytes memory rawClass) private pure returns (ClassInfo memory c) {
@@ -254,7 +272,7 @@ contract JVMSubsetInterpreter {
         uint256 interfacesCount = _u2(r);
         if (interfacesCount != 0) c.unsupportedSemantics = true;
         _skip(r, _checkedMul2(interfacesCount, r.pos));
-        _skipMembers(r);
+        c.fields = _readFields(r, c);
 
         uint256 methodsCount = _u2(r);
         c.methods = new uint256[](methodsCount);
@@ -267,7 +285,8 @@ contract JVMSubsetInterpreter {
             _validUtf8(descriptorIndex, c.cp, r.pos);
             (uint256 nameOffset, uint256 nameLength) = _utf(c.cp[nameIndex]);
             if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("<clinit>"))) {
-                c.unsupportedSemantics = true;
+                if (c.initializerPlusOne != 0) c.invalidInitializer = true;
+                else c.initializerPlusOne = m + 1;
             }
             uint256 packed = uint256(access) | (nameIndex << 16) | (descriptorIndex << 32);
             uint256 codeCount;
@@ -395,6 +414,7 @@ contract JVMSubsetInterpreter {
         ClassInfo[] memory classes,
         Selected[][] memory selected,
         uint256[][] memory referenceCaches,
+        uint256[][] memory fieldCaches,
         uint256 rootClass,
         uint256 root,
         int32[] calldata args,
@@ -407,6 +427,15 @@ contract JVMSubsetInterpreter {
             frames[0].initialized[i] = true;
         }
         uint256 depth = 1;
+        uint8[] memory initializationState = new uint8[](classes.length);
+        uint32[][] memory staticValues = new uint32[][](classes.length);
+        for (uint256 i = 0; i < classes.length; ++i) {
+            staticValues[i] = new uint32[](classes[i].fields.length); // preparation: default zero
+        }
+        depth = _initializeClass(
+            classes, selected, referenceCaches, fieldCaches, staticValues,
+            initializationState, frames, depth, rootClass
+        );
 
         while (depth != 0) {
             Frame memory f = frames[depth - 1];
@@ -460,6 +489,9 @@ contract JVMSubsetInterpreter {
             } else if (op == 0x57) { // pop (category-1 values are the only values in this stage)
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 --f.sp;
+            } else if (op == 0x59) { // dup, category-1 only
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                f.sp = _push(f.stack, f.sp, f.stack[f.sp - 1], opPC);
             } else if (op == 0x60 || op == 0x64 || op == 0x68) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
                 unchecked {
@@ -472,7 +504,10 @@ contract JVMSubsetInterpreter {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
                 int32 dividend = int32(f.stack[f.sp - 2]);
                 int32 divisor = int32(f.stack[f.sp - 1]);
-                if (divisor == 0) revert JavaException(1);
+                if (divisor == 0) {
+                    if (_hasActiveInitializer(frames, depth)) revert JavaException(3);
+                    revert JavaException(1);
+                }
                 if (dividend == type(int32).min && divisor == -1) {
                     f.stack[f.sp - 2] = op == 0x6c ? uint32(0x80000000) : 0;
                 } else if (op == 0x6c) {
@@ -524,6 +559,31 @@ contract JVMSubsetInterpreter {
                     ? _decodedTarget(c.data, s.codeOffset, opPC) : f.pc + 2;
             } else if (op == 0xa7) {
                 f.pc = _decodedTarget(c.data, s.codeOffset, opPC);
+            } else if (op == 0xb2 || op == 0xb3) { // getstatic / putstatic
+                uint256 refIndex = _unsigned16(c.data, s.codeOffset + f.pc);
+                f.pc += 2;
+                (uint256 fieldClass, uint256 field) = _resolveField(
+                    classes, f.classIndex, refIndex, opPC, fieldCaches[f.classIndex],
+                    op == 0xb3, f.isInitializer, bundleMode
+                );
+                if (initializationState[fieldClass] == 0) {
+                    uint256 oldDepth = depth;
+                    depth = _initializeClass(
+                        classes, selected, referenceCaches, fieldCaches, staticValues,
+                        initializationState, frames, depth, fieldClass
+                    );
+                    if (depth != oldDepth) {
+                        f.pc = opPC; // retry after initialization; preserve put value and prefixes
+                        continue;
+                    }
+                }
+                if (op == 0xb2) {
+                    f.sp = _push(f.stack, f.sp, staticValues[fieldClass][field], opPC);
+                } else {
+                    if (f.sp == 0) revert BytecodeError(3, opPC);
+                    staticValues[fieldClass][field] = f.stack[f.sp - 1];
+                    --f.sp;
+                }
             } else if (op == 0xb8) { // invokestatic, CONSTANT_Methodref only
                 uint256 refIndex = _unsigned16(c.data, s.codeOffset + f.pc);
                 f.pc += 2; // exact caller resume PC is retained in its frame
@@ -533,6 +593,18 @@ contract JVMSubsetInterpreter {
                 if (selected[calleeClass].length == 0) {
                     selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                    fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                }
+                if (initializationState[calleeClass] == 0) {
+                    uint256 oldDepth = depth;
+                    depth = _initializeClass(
+                        classes, selected, referenceCaches, fieldCaches, staticValues,
+                        initializationState, frames, depth, calleeClass
+                    );
+                    if (depth != oldDepth) {
+                        f.pc = opPC; // retry with arguments and expression prefix untouched
+                        continue;
+                    }
                 }
                 if (!selected[calleeClass][callee].loaded) {
                     selected[calleeClass][callee] =
@@ -563,6 +635,7 @@ contract JVMSubsetInterpreter {
                 }
                 uint32 value = actualKind == 1 ? f.stack[0] : 0;
                 uint256 callPC = f.callPC;
+                if (f.isInitializer) initializationState[f.classIndex] = 2;
                 --depth;
                 if (actualKind == 1) {
                     Frame memory caller = frames[depth - 1];
@@ -586,6 +659,80 @@ contract JVMSubsetInterpreter {
         f.stack = new uint32[](s.maxStack);
         f.locals = new uint32[](s.maxLocals);
         f.initialized = new bool[](s.maxLocals);
+    }
+
+    function _loadInitializer(ClassInfo memory c, uint256 method, uint256 classIndex)
+        private
+        pure
+        returns (Selected memory s)
+    {
+        if (c.invalidInitializer) revert InitError(1, classIndex);
+        uint256 meta = c.methods[method];
+        uint16 access = uint16(meta);
+        if (
+            (access & 0x0008) == 0 || (access & (0x0020 | 0x0100 | 0x0400)) != 0
+                || _methodCodeCount(meta) != 1
+        ) revert InitError(1, classIndex);
+        uint256 descriptorIndex = (meta >> 32) & 0xffff;
+        if (descriptorIndex == 0 || descriptorIndex >= c.cp.length || uint8(c.cp[descriptorIndex]) != 1) {
+            revert InitError(1, classIndex);
+        }
+        (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[descriptorIndex]);
+        (bool valid, uint256 argc, uint8 returnKind) =
+            _descriptor(c.data, s.descriptorOffset, s.descriptorLength);
+        if (!valid || argc != 0 || returnKind != 2) revert InitError(1, classIndex);
+        s.argumentCount = 0;
+        s.returnKind = 2;
+        uint256 start = (meta >> 48) & 0xffffffffffffffff;
+        uint256 length = (meta >> 112) & 0xffffffff;
+        if (!_readCallCode(c.data, start, length, s)) revert InitError(1, classIndex);
+        if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS) revert InitError(1, classIndex);
+        s.loaded = true;
+    }
+
+    function _initializeClass(
+        ClassInfo[] memory classes,
+        Selected[][] memory selected,
+        uint256[][] memory referenceCaches,
+        uint256[][] memory fieldCaches,
+        uint32[][] memory staticValues,
+        uint8[] memory initializationState,
+        Frame[] memory frames,
+        uint256 depth,
+        uint256 classIndex
+    ) private pure returns (uint256) {
+        if (initializationState[classIndex] != 0) return depth; // initialized or same-thread reentrant
+        initializationState[classIndex] = 1;
+        ClassInfo memory c = classes[classIndex];
+        for (uint256 i = 0; i < c.fields.length; ++i) {
+            if (c.fields[i].hasConstant) staticValues[classIndex][i] = c.fields[i].constantValue;
+        }
+        if (c.initializerPlusOne == 0) {
+            initializationState[classIndex] = 2;
+            return depth;
+        }
+        if (selected[classIndex].length == 0) {
+            selected[classIndex] = new Selected[](c.methods.length);
+            referenceCaches[classIndex] = new uint256[](c.cp.length);
+            fieldCaches[classIndex] = new uint256[](c.cp.length);
+        }
+        uint256 method = c.initializerPlusOne - 1;
+        selected[classIndex][method] = _loadInitializer(c, method, classIndex);
+        _predecode(c, selected[classIndex][method]);
+        if (depth == MAX_FRAMES) revert JavaException(2);
+        Frame memory initializer = _newFrame(classIndex, method, selected[classIndex][method], 0);
+        initializer.isInitializer = true;
+        frames[depth] = initializer;
+        return depth + 1;
+    }
+
+    function _hasActiveInitializer(Frame[] memory frames, uint256 depth)
+        private
+        pure
+        returns (bool)
+    {
+        for (uint256 i = 0; i < depth; ++i) if (frames[i].isInitializer) return true;
+        return false;
     }
 
     function _resolveCall(
@@ -658,6 +805,10 @@ contract JVMSubsetInterpreter {
         ) revert CallError(1, pc);
         (uint256 nameOffset, uint256 nameLength) = _utf(caller.cp[nameIndex]);
         (uint256 descriptorOffset, uint256 descriptorLength) = _utf(caller.cp[descriptorIndex]);
+        if (
+            _equalsLiteral(caller.data, nameOffset, nameLength, bytes("<clinit>"))
+                || _equalsLiteral(caller.data, nameOffset, nameLength, bytes("<init>"))
+        ) revert CallError(4, pc);
         ClassInfo memory target = classes[owner];
         uint256 foundPlusOne;
         for (uint256 i = 0; i < target.methods.length; ++i) {
@@ -695,6 +846,119 @@ contract JVMSubsetInterpreter {
             revert CallError(4, pc);
         }
         cache[refIndex] = ((owner + 1) << 128) | foundPlusOne;
+    }
+
+    function _resolveField(
+        ClassInfo[] memory classes,
+        uint256 callerClass,
+        uint256 refIndex,
+        uint256 pc,
+        uint256[] memory cache,
+        bool writeAccess,
+        bool callerIsInitializer,
+        bool bundleMode
+    ) private pure returns (uint256 owner, uint256 field) {
+        ClassInfo memory caller = classes[callerClass];
+        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 9) {
+            revert FieldError(1, pc);
+        }
+        if (cache[refIndex] != 0) {
+            owner = (cache[refIndex] >> 128) - 1;
+            field = uint128(cache[refIndex]) - 1;
+        } else {
+            uint256 ref = caller.cp[refIndex];
+            uint256 ownerClassIndex = (ref >> 8) & 0xffff;
+            uint256 nameAndTypeIndex = (ref >> 24) & 0xffff;
+            if (
+                ownerClassIndex == 0 || ownerClassIndex >= caller.cp.length
+                    || uint8(caller.cp[ownerClassIndex]) != 7 || nameAndTypeIndex == 0
+                    || nameAndTypeIndex >= caller.cp.length
+                    || uint8(caller.cp[nameAndTypeIndex]) != 12
+            ) revert FieldError(1, pc);
+            uint256 ownerNameIndex = (caller.cp[ownerClassIndex] >> 8) & 0xffff;
+            if (
+                ownerNameIndex == 0 || ownerNameIndex >= caller.cp.length
+                    || uint8(caller.cp[ownerNameIndex]) != 1
+            ) revert FieldError(1, pc);
+            (uint256 ownerOffset, uint256 ownerLength) = _utf(caller.cp[ownerNameIndex]);
+            if (_equalsSlice(
+                caller.data, ownerOffset, ownerLength, caller.thisNameOffset, caller.thisNameLength
+            )) {
+                owner = callerClass;
+            } else {
+                bool foundOwner;
+                for (uint256 i = 0; i < classes.length; ++i) {
+                    if (_equalsCross(
+                        caller.data, ownerOffset, ownerLength, classes[i].data,
+                        classes[i].thisNameOffset, classes[i].thisNameLength
+                    )) {
+                        owner = i;
+                        foundOwner = true;
+                        break;
+                    }
+                }
+                if (!foundOwner) revert LinkError(4, pc);
+            }
+            if (bundleMode) _requireSupportedClass(classes[owner], owner);
+
+            uint256 nat = caller.cp[nameAndTypeIndex];
+            uint256 nameIndex = (nat >> 8) & 0xffff;
+            uint256 descriptorIndex = (nat >> 24) & 0xffff;
+            if (
+                nameIndex == 0 || nameIndex >= caller.cp.length || uint8(caller.cp[nameIndex]) != 1
+                    || descriptorIndex == 0 || descriptorIndex >= caller.cp.length
+                    || uint8(caller.cp[descriptorIndex]) != 1
+            ) revert FieldError(1, pc);
+            (uint256 nameOffset, uint256 nameLength) = _utf(caller.cp[nameIndex]);
+            (uint256 descriptorOffset, uint256 descriptorLength) = _utf(caller.cp[descriptorIndex]);
+            ClassInfo memory target = classes[owner];
+            uint256 foundPlusOne;
+            for (uint256 i = 0; i < target.fields.length; ++i) {
+                FieldInfo memory candidate = target.fields[i];
+                if (
+                    candidate.nameIndex == 0 || candidate.nameIndex >= target.cp.length
+                        || uint8(target.cp[candidate.nameIndex]) != 1 || candidate.descriptorIndex == 0
+                        || candidate.descriptorIndex >= target.cp.length
+                        || uint8(target.cp[candidate.descriptorIndex]) != 1
+                ) continue;
+                (uint256 candidateNameOffset, uint256 candidateNameLength) =
+                    _utf(target.cp[candidate.nameIndex]);
+                if (!_equalsCross(
+                    target.data, candidateNameOffset, candidateNameLength,
+                    caller.data, nameOffset, nameLength
+                )) continue;
+                (uint256 candidateDescriptorOffset, uint256 candidateDescriptorLength) =
+                    _utf(target.cp[candidate.descriptorIndex]);
+                if (!_equalsCross(
+                    target.data, candidateDescriptorOffset, candidateDescriptorLength,
+                    caller.data, descriptorOffset, descriptorLength
+                )) continue;
+                if (foundPlusOne != 0) revert FieldError(2, pc);
+                foundPlusOne = i + 1;
+            }
+            if (foundPlusOne == 0) revert FieldError(2, pc);
+            field = foundPlusOne - 1;
+            cache[refIndex] = ((owner + 1) << 128) | foundPlusOne;
+        }
+
+        ClassInfo memory targetClass = classes[owner];
+        FieldInfo memory resolved = targetClass.fields[field];
+        bool intDescriptor;
+        if (
+            resolved.descriptorIndex != 0 && resolved.descriptorIndex < targetClass.cp.length
+                && uint8(targetClass.cp[resolved.descriptorIndex]) == 1
+        ) {
+            (uint256 off, uint256 n) = _utf(targetClass.cp[resolved.descriptorIndex]);
+            intDescriptor = _equalsLiteral(targetClass.data, off, n, bytes("I"));
+        }
+        if ((resolved.accessFlags & 0x0008) == 0 || !intDescriptor) revert FieldError(3, pc);
+        if (owner != callerClass && !_canAccess(caller, targetClass, resolved.accessFlags)) {
+            revert FieldError(4, pc);
+        }
+        if (
+            writeAccess && (resolved.accessFlags & 0x0010) != 0
+                && !(callerIsInitializer && callerClass == owner)
+        ) revert FieldError(4, pc);
     }
 
     function _canAccess(ClassInfo memory caller, ClassInfo memory target, uint16 methodAccess)
@@ -780,7 +1044,7 @@ contract JVMSubsetInterpreter {
     function _instructionWidth(uint8 op, uint256 pc) private pure returns (uint256) {
         if (
             (op >= 0x02 && op <= 0x08) || (op >= 0x1a && op <= 0x1d)
-                || (op >= 0x3b && op <= 0x3e) || op == 0x57 || op == 0x60 || op == 0x64
+                || (op >= 0x3b && op <= 0x3e) || op == 0x57 || op == 0x59 || op == 0x60 || op == 0x64
                 || op == 0x68 || op == 0x6c || op == 0x70 || op == 0x74 || op == 0x78
                 || op == 0x7a || op == 0x7c || op == 0x7e || op == 0x80 || op == 0x82
                 || (op >= 0x91 && op <= 0x93) || op == 0xac || op == 0xb1
@@ -788,7 +1052,7 @@ contract JVMSubsetInterpreter {
         if (op == 0x10 || op == 0x12 || op == 0x15 || op == 0x36) return 2;
         if (
             op == 0x11 || op == 0x13 || op == 0x84 || (op >= 0x99 && op <= 0xa4)
-                || op == 0xa7 || op == 0xb8
+                || op == 0xa7 || op == 0xb2 || op == 0xb3 || op == 0xb8
         ) return 3;
         revert BytecodeError(6, pc);
     }
@@ -1009,6 +1273,60 @@ contract JVMSubsetInterpreter {
         returns (bool)
     {
         return _equals(data, off, n, literal);
+    }
+
+    function _readFields(Reader memory r, ClassInfo memory c)
+        private
+        pure
+        returns (FieldInfo[] memory fields)
+    {
+        uint256 count = _u2(r);
+        fields = new FieldInfo[](count);
+        for (uint256 i = 0; i < count; ++i) {
+            uint16 access = _u2(r);
+            uint16 nameIndex = _u2(r);
+            uint16 descriptorIndex = _u2(r);
+            uint256 attributesCount = _u2(r);
+            FieldInfo memory field;
+            field.accessFlags = access;
+            field.nameIndex = nameIndex;
+            field.descriptorIndex = descriptorIndex;
+            bool supportedStatic = (access & 0x0008) != 0
+                && descriptorIndex != 0 && descriptorIndex < c.cp.length
+                && uint8(c.cp[descriptorIndex]) == 1;
+            if (supportedStatic) {
+                (uint256 descriptorOffset, uint256 descriptorLength) = _utf(c.cp[descriptorIndex]);
+                supportedStatic = _equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("I"));
+            }
+            for (uint256 a = 0; a < attributesCount; ++a) {
+                uint256 attributeNameIndex = _u2(r);
+                uint256 attributeLength = _u4(r);
+                bool isConstantValue;
+                if (
+                    attributeNameIndex != 0 && attributeNameIndex < c.cp.length
+                        && uint8(c.cp[attributeNameIndex]) == 1
+                ) {
+                    (uint256 attributeNameOffset, uint256 attributeNameLength) =
+                        _utf(c.cp[attributeNameIndex]);
+                    isConstantValue = _equalsLiteral(
+                        c.data, attributeNameOffset, attributeNameLength, bytes("ConstantValue")
+                    );
+                }
+                if (supportedStatic && isConstantValue) {
+                    if (field.hasConstant || attributeLength != 2) revert FieldError(5, i);
+                    uint256 constantIndex = _u2(r);
+                    if (
+                        constantIndex == 0 || constantIndex >= c.cp.length
+                            || uint8(c.cp[constantIndex]) != 3
+                    ) revert FieldError(5, i);
+                    field.hasConstant = true;
+                    field.constantValue = uint32(c.cp[constantIndex] >> 8);
+                } else {
+                    _skip(r, attributeLength);
+                }
+            }
+            fields[i] = field;
+        }
     }
 
     function _skipMembers(Reader memory r) private pure {

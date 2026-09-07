@@ -93,15 +93,16 @@ func TestRunClassesDefaultPackageAndCrossClassRecursionOutcomes(t *testing.T) {
 
 func TestRunClassesFrozenLinkErrorsAndLazyUnsupportedClasses(t *testing.T) {
 	base := compileJavaSources(t, map[string]string{
-		"a/Root.java": `package a; public class Root { public static int run(int x) { return b.Peer.go(x); } }`,
-		"b/Peer.java": `package b; public class Peer { public static int go(int x) { return x + 1; } }`,
-		"Unused.java": `public class Unused { static int value = 7; public static int get(int x) { return x; } }`,
-		"Caller.java": `public class Caller { public static int run(int x) { return Unused.get(x); } }`,
-		"Base.java":   `public class Base { }`,
-		"Child.java":  `public class Child extends Base { public static int run(int x) { return x; } }`,
-		"Face.java":   `public interface Face { static int run(int x) { return x; } }`,
+		"a/Root.java":       `package a; public class Root { public static int run(int x) { return b.Peer.go(x); } }`,
+		"b/Peer.java":       `package b; public class Peer { public static int go(int x) { return x + 1; } }`,
+		"Initialized.java":  `public class Initialized { static int value = 7; public static int get(int x) { return x + value; } }`,
+		"Caller.java":       `public class Caller { public static int run(int x) { return Initialized.get(x); } }`,
+		"Synchronized.java": `public class Synchronized { public synchronized static int get(int x) { return x; } }`,
+		"Base.java":         `public class Base { }`,
+		"Child.java":        `public class Child extends Base { public static int run(int x) { return x; } }`,
+		"Face.java":         `public interface Face { static int run(int x) { return x; } }`,
 	})
-	root, peer, unsupported := base["a/Root"], base["b/Peer"], base["Unused"]
+	root, peer, initialized := base["a/Root"], base["b/Peer"], base["Initialized"]
 
 	assertBundleError(t, nil, "a/Root", "run", nil, "LinkError(uint256,uint256)", 1, 0)
 	tooMany := make([][]byte, 65)
@@ -119,13 +120,23 @@ func TestRunClassesFrozenLinkErrorsAndLazyUnsupportedClasses(t *testing.T) {
 	}
 	assertBundleError(t, [][]byte{root}, "a/Root", "run", []int32{1}, "LinkError(uint256,uint256)", 4, uint64(callPC))
 
-	// Unsupported class semantics are tolerated while the class is supplied but never entered.
-	ok, err := RunClasses([][]byte{unsupported, root, peer}, "a/Root", "run", []int32{41}, 30_000_000)
+	// A supplied initializer is lazy, but runs when its class is actually entered.
+	ok, err := RunClasses([][]byte{initialized, root, peer}, "a/Root", "run", []int32{41}, 30_000_000)
 	if err != nil || ok.Value != 42 {
-		t.Fatalf("unused unsupported class affected execution: %+v/%v", ok, err)
+		t.Fatalf("unused initializer affected execution: %+v/%v", ok, err)
 	}
-	assertBundleError(t, [][]byte{root, unsupported}, "Unused", "get", []int32{7}, "LinkError(uint256,uint256)", 5, 1)
-	assertBundleError(t, [][]byte{base["Caller"], unsupported}, "Caller", "run", []int32{7}, "LinkError(uint256,uint256)", 5, 1)
+	entered, err := RunClasses([][]byte{root, initialized}, "Initialized", "get", []int32{7}, 30_000_000)
+	if err != nil || entered.Value != 14 {
+		t.Fatalf("entered initializer result = %+v/%v, want 14", entered, err)
+	}
+	called, err := RunClasses([][]byte{base["Caller"], initialized}, "Caller", "run", []int32{7}, 30_000_000)
+	if err != nil || called.Value != 14 {
+		t.Fatalf("callee initializer result = %+v/%v, want 14", called, err)
+	}
+	unsupportedResult, unsupportedErr := RunClasses(
+		[][]byte{base["Synchronized"]}, "Synchronized", "get", []int32{7}, 30_000_000,
+	)
+	assertErrorSelector(t, unsupportedResult, unsupportedErr, "MethodError(uint256)")
 	assertBundleError(t, [][]byte{base["Base"], base["Child"]}, "Child", "run", []int32{7}, "LinkError(uint256,uint256)", 5, 1)
 	assertBundleError(t, [][]byte{base["Face"]}, "Face", "run", []int32{7}, "LinkError(uint256,uint256)", 5, 0)
 

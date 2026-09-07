@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-const expectedRuntimeHash = "47661cc78dd2e19219d4fe4363ae16b81bf4c23f4773e297ca80841a3ca3d06e"
+const expectedRuntimeHash = "43d6f7b4f03d4a17554e370e6aa4d982a0d6e64944b8667cd86ef15abb23ec4e"
 
 func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
 	addClass := compileJava(t, "Add", `public class Add { public static int add(int a, int b) { return a + b; } }`)
@@ -89,11 +89,11 @@ func TestOutOfGasIsEVMFailure(t *testing.T) {
 	}
 }
 
-func TestRejectsUnsupportedSelectedMethodSemantics(t *testing.T) {
-	withInit := compileJava(t, "WithInit", `public class WithInit { static int x = 1; public static int identity(int a) { return a; } }`)
-	result, err := Run(withInit, "identity", []int32{7}, 2_000_000)
-	if err == nil || !strings.Contains(err.Error(), "execution reverted") || len(result.RevertData) < 4 {
-		t.Fatalf("class initializer result/error = %+v/%v, want in-EVM rejection", result, err)
+func TestSelectedClassInitializerRunsInsideEVM(t *testing.T) {
+	withInit := compileJava(t, "WithInit", `public class WithInit { static int x = 1; public static int identity(int a) { return a + x; } }`)
+	result, err := Run(withInit, "identity", []int32{7}, 5_000_000)
+	if err != nil || result.Value != 8 || result.ExceptionClass != "" {
+		t.Fatalf("class initializer result/error = %+v/%v, want value 8", result, err)
 	}
 }
 

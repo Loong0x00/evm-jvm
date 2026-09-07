@@ -103,6 +103,7 @@ func TestJavaExceptionDecoderIsExact(t *testing.T) {
 	for kind, want := range map[byte]string{
 		1: "java.lang.ArithmeticException",
 		2: "java.lang.StackOverflowError",
+		3: "java.lang.ExceptionInInitializerError",
 	} {
 		valid := make([]byte, 36)
 		copy(valid, javaExceptionSelector)
