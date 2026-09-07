@@ -44,5 +44,11 @@ HOST: decode result and display measured gas
 6. Parent independently inspects host-vs-EVM boundary and reruns focused tests/demo and selected differential/error cases.
 
 ## Status
-- Worker implementation complete and locally verified; parent acceptance review pending.
+- Worker implementation committed as `11e2e888c3fd9ecf56c32a65866e150750b20295`; independent parent acceptance passed.
 - Implemented as a generic Solidity 0.8.30 runtime with unchanged raw-class ABI input, in-EVM classfile/method/Code parsing and in-EVM JVM opcode dispatch. M0 remains a labeled baseline.
+- Parent inspected `cmd/jvmevm` → `jvmevm.Run`: only raw file read, ABI packing, generic `runtime.Execute`, and result decoding. Solidity `interpret` and `_execute` perform class scanning and Java dispatch. No changes to `core/vm`, `javaevm`, or `cmd/javaevm` relative to M0.
+- Independently reran `make java-test`, `make java-demo`, `make java-aot-test`, and `go vet ./jvmevm ./cmd/jvmevm`; all passed. Pinned source rebuild matches the 5044-byte runtime with SHA-256 `e93a3281bde126b8ea87972d75e0ac03a53d0de17fbffb6402fce9764bec2c20`.
+- Demo returned 42 with 46,391 execution gas. Parent compiled an additional multi-method Probe class and compared 30 add inputs (5 edge cases and 25 seeded random pairs) against actual host JVM as test oracle: all matched with the same runtime hash.
+- The same artifact also executed a separate Identity class (-123, 46,213 gas), and Probe.fifth using general `iload` for argument index 4 (INT_MIN, 82,308 gas). No interpreter rebuild or host class processing was used.
+- Eight independent CLI cases (multiply, synchronized method, overloaded name, long descriptor, missing method, wrong argument count, bad magic, truncated class) reverted inside EVM. A 100-gas run failed with actual EVM out-of-gas consuming 100.
+- Known caveat: local compiler dependency audit reports low/high findings through `solc`/`tmp`; these are build-time Node dependencies, not included in EVM runtime. No forced compiler downgrade or dependency change was made as part of acceptance.

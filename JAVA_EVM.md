@@ -109,6 +109,11 @@ make java-test            # consistency check, focused tests, and CLI build
 
 `npm ci --ignore-scripts` installs only the lockfile-pinned local build
 dependencies under `jvmevm/runtime/node_modules` (ignored by Git).
+The current lockfile audit reports two findings (one low and one high) through
+solc's `tmp` dependency, involving temporary-file path/symlink handling. These
+Node packages are build-time tools and are not included in the EVM runtime;
+the findings have not been remediated. Do not blindly run `npm audit fix --force`
+(the suggested compiler downgrade would change this pinned build).
 
 ## M0 host-AOT baseline
 
