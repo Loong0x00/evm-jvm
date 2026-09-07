@@ -3309,6 +3309,1124 @@
       "timeout_seconds": 10,
       "smoke": true,
       "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-order-basic",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "multiArgumentOrder",
+      "args": [
+        1,
+        2,
+        3
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-order-signed",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "multiArgumentOrder",
+      "args": [
+        -7,
+        8,
+        -9
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-order-overflow",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "multiArgumentOrder",
+      "args": [
+        2147483647,
+        -2147483648,
+        99
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-permutation-basic",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "multiArgumentPermutation",
+      "args": [
+        4,
+        5,
+        6
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-permutation-signed",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "multiArgumentPermutation",
+      "args": [
+        -10,
+        20,
+        -30
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-zero-arg-prefix",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "zeroArgumentCall",
+      "args": [
+        41
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-zero-arg-negative-prefix",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "zeroArgumentCall",
+      "args": [
+        -314160
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-zero-arg-root",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "zeroOnly",
+      "args": [],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-private-positive",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "privateHelperCall",
+      "args": [
+        17
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-private-overflow",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "privateHelperCall",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-overload-one",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "overloadOne",
+      "args": [
+        -12
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-overload-two",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "overloadTwo",
+      "args": [
+        9,
+        -4
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-overload-three",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "overloadThree",
+      "args": [
+        7,
+        -8,
+        9
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-nested-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "nestedCall",
+      "args": [
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-nested-negative",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "nestedCall",
+      "args": [
+        -25
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-deep-positive",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "deepNestedCall",
+      "args": [
+        13
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-deep-negative",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "deepNestedCall",
+      "args": [
+        -101
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-caller-prefix-order",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "callerPrefix",
+      "args": [
+        12,
+        7,
+        -3
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-caller-prefix-negative",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "callerPrefix",
+      "args": [
+        -8,
+        -20,
+        30
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-two-prefix-results",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "twoCallPrefix",
+      "args": [
+        4,
+        9
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-two-prefix-overflow",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "twoCallPrefix",
+      "args": [
+        2147483647,
+        -2147483648
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-six-argument-order",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "sixArguments",
+      "args": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-six-argument-signed",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "sixArguments",
+      "args": [
+        -1,
+        20,
+        -300,
+        4000,
+        -50000,
+        600000
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-returned-arithmetic-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "returnedArithmetic",
+      "args": [
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-returned-arithmetic-overflow",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "returnedArithmetic",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-callee-divide-value",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "calleeDivide",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-callee-divide-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "calleeDivide",
+      "args": [
+        123,
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3a-call-callee-remainder-value",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "calleeRemainder",
+      "args": [
+        -29,
+        6
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-call-callee-remainder-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "calleeRemainder",
+      "args": [
+        -5,
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3a-call-nested-divide-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aStaticCalls.java"
+      ],
+      "class": "M3aStaticCalls",
+      "method": "callThroughDivide",
+      "args": [
+        1,
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3a-frame-caller-locals-positive",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "callerLocalIsolation",
+      "args": [
+        7,
+        11
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-frame-caller-locals-negative",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "callerLocalIsolation",
+      "args": [
+        -30,
+        9
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-frame-parameter-positive",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "parameterIsolation",
+      "args": [
+        23
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-frame-parameter-overflow",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "parameterIsolation",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-void-zero-arg",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "voidNoArgs",
+      "args": [
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-void-zero-arg-max",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "voidNoArgs",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-void-one-arg-negative",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "voidOne",
+      "args": [
+        -44
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-void-one-arg-min",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "voidOne",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-void-nested-positive",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "nestedVoidCall",
+      "args": [
+        19
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-void-nested-negative",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "nestedVoidCall",
+      "args": [
+        -19
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-pop-discard-int",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "discardInt",
+      "args": [
+        37
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-pop-discard-int-max",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "discardInt",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-pop-discard-nested-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "discardNested",
+      "args": [
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-pop-discard-nested-negative",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "discardNested",
+      "args": [
+        -999
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-frame-prefix-call",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "prefixAndCall",
+      "args": [
+        500,
+        7,
+        -9
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-frame-prefix-two-calls",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "prefixAcrossTwoCalls",
+      "args": [
+        17,
+        -6
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-void-callee-divide-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aFrames.java"
+      ],
+      "class": "M3aFrames",
+      "method": "voidDivide",
+      "args": [
+        77,
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m3a-recursive-sum-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveSum",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-sum-one",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveSum",
+      "args": [
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-sum-ten",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveSum",
+      "args": [
+        10
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-factorial-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFactorial",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-factorial-one",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFactorial",
+      "args": [
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-factorial-five",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFactorial",
+      "args": [
+        5
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-factorial-ten",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFactorial",
+      "args": [
+        10
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-fibonacci-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFibonacci",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-fibonacci-one",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFibonacci",
+      "args": [
+        1
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-fibonacci-two",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFibonacci",
+      "args": [
+        2
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-fibonacci-seven",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFibonacci",
+      "args": [
+        7
+      ],
+      "gas_limit": 45000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-fibonacci-ten",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFibonacci",
+      "args": [
+        10
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-mutual-recursion-zero",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "mutualParity",
+      "args": [
+        0
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-mutual-recursion-odd",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "mutualParity",
+      "args": [
+        7
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-mutual-recursion-even",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "mutualParity",
+      "args": [
+        8
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-mutual-recursion-deep",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "mutualParity",
+      "args": [
+        31
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-gcd-basic",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveGcd",
+      "args": [
+        48,
+        18
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-gcd-deeper",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveGcd",
+      "args": [
+        1071,
+        462
+      ],
+      "gas_limit": 35000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-frame-isolation",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "recursiveFrameIsolation",
+      "args": [
+        5,
+        8
+      ],
+      "gas_limit": 40000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m3a-recursive-stack-overflow",
+      "stage": "m3a",
+      "sources": [
+        "M3aRecursion.java"
+      ],
+      "class": "M3aRecursion",
+      "method": "unboundedRecursion",
+      "args": [
+        0
+      ],
+      "gas_limit": 50000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.StackOverflowError"
     }
   ]
 }
