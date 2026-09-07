@@ -71,4 +71,4 @@ java-demo:
 	go run ./cmd/javaevm -class build/java-evm/Add.class -method add -args 20,22 -gas 100000
 
 java-test:
-	go test ./javaevm
+	go test -count=1 ./javaevm ./cmd/javaevm
