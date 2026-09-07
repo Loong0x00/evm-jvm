@@ -15,16 +15,16 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m3d --tier full
+python3 tools/java_diff.py --stage m4a --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m3d --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4a --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
-M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, and `m3d`
-or `all` adds M3d. A manifest without entries in the newest stage continues to
-run its older cases under the new default. `smoke` runs smoke-marked cases,
+M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
+M3d, and `m4a` or `all` adds M4a. A manifest without entries in the newest
+stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
@@ -94,6 +94,20 @@ reverts are not accepted reference-Java outcomes and cannot pass by matching an
 arbitrary EVM failure. Only the exact value or named Java exception protocol
 below is comparable by the differential oracle.
 
+## M4a integer-array cases
+
+M4a retains the schema-1 root protocol: entry methods still accept only signed
+`int` arguments and return `int`. Array references are created and manipulated
+inside guest bytecode and are never serialized as host arguments, results, or
+heap identifiers. Single-class and ordered raw-bundle handling, source/class
+hashes, runtime identity checks, and replay commands are unchanged.
+
+The reference JVM is used for ordinary array values and for real
+`NegativeArraySizeException`, `ArrayIndexOutOfBoundsException`, and
+`NullPointerException` comparisons. EVM logical-cap `OutOfMemoryError` probes
+are focused mock/Go tests only: the runner must not attempt to exhaust the host
+JVM heap, whose policy is not the interpreter's fixed resource profile.
+
 ## Outcome protocol
 
 Existing value cases retain `expected_kind: "value"`. An explicitly expected
@@ -130,13 +144,19 @@ expects `java_exception` and the expected, JVM, and EVM classes all match. M3c
 adds `java.lang.ExceptionInInitializerError`; M3d preserves that outcome when
 arithmetic escapes a superclass initializer. `java.lang.StackOverflowError`
 remains unwrapped. M2b's `java.lang.ArithmeticException` outside initialization
-remains unchanged. The fixture oracle may report the two initializer-time Error
-outcomes from `Class.forName`, before reflective invocation. Oracle process,
+remains unchanged. M4a additionally recognizes exact
+`java.lang.NegativeArraySizeException`,
+`java.lang.ArrayIndexOutOfBoundsException`, `java.lang.NullPointerException`,
+and `java.lang.OutOfMemoryError` outcomes. The first three, like arithmetic,
+become `java.lang.ExceptionInInitializerError` when they escape active class
+initialization; `OutOfMemoryError` and `StackOverflowError` remain unwrapped.
+The fixture oracle may report the two initializer-time Error outcomes from
+`Class.forName`, before reflective invocation. Oracle process,
 configuration, or malformed-output errors still fail and are never converted
 into expected outcomes. Value/exception disagreements, wrong wrapping, and
 wrong exception classes fail. Nonzero CLI exits, generic reverts, and out-of-gas
 executions remain EVM failures; out of gas is never reclassified as a Java
-exception.
+exception or an `OutOfMemoryError`.
 
 ## Limits and failures
 

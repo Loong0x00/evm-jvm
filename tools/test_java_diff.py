@@ -139,14 +139,23 @@ class MockTools:
                 raise SystemExit(0)
             marker = sys.argv.index("OracleMain")
             method = sys.argv[marker + 2]
+            known = {
+                "divide": "java.lang.ArithmeticException",
+                "recurse": "java.lang.StackOverflowError",
+                "initFail": "java.lang.ExceptionInInitializerError",
+                "negativeArray": "java.lang.NegativeArraySizeException",
+                "arrayBounds": "java.lang.ArrayIndexOutOfBoundsException",
+                "nullArray": "java.lang.NullPointerException",
+                "logicalOOM": "java.lang.OutOfMemoryError",
+                "initArrayFailure": "java.lang.ExceptionInInitializerError",
+                "initLogicalOOM": "java.lang.OutOfMemoryError",
+            }
             if mode in ("exception", "root-init-eiie") or (
-                    mode == "by-method" and method in ("divide", "recurse", "initFail")):
-                if mode == "root-init-eiie" or method == "initFail":
+                    mode == "by-method" and method in known):
+                if mode == "root-init-eiie":
                     default = "java.lang.ExceptionInInitializerError"
-                elif method == "recurse":
-                    default = "java.lang.StackOverflowError"
                 else:
-                    default = "java.lang.ArithmeticException"
+                    default = known.get(method, "java.lang.ArithmeticException")
                 print("exception=" + os.environ.get("MOCK_JAVA_EXCEPTION", default))
                 raise SystemExit(0)
             if mode == "malformed-exception":
@@ -178,9 +187,20 @@ class MockTools:
             result = values[0] if method == "identity" else sum(values)
             if mode == "mismatch":
                 result += 1
+            known = {
+                "divide": "java.lang.ArithmeticException",
+                "recurse": "java.lang.StackOverflowError",
+                "initFail": "java.lang.ExceptionInInitializerError",
+                "negativeArray": "java.lang.NegativeArraySizeException",
+                "arrayBounds": "java.lang.ArrayIndexOutOfBoundsException",
+                "nullArray": "java.lang.NullPointerException",
+                "logicalOOM": "java.lang.OutOfMemoryError",
+                "initArrayFailure": "java.lang.ExceptionInInitializerError",
+                "initLogicalOOM": "java.lang.OutOfMemoryError",
+            }
             exception_outcome = mode in ("exception", "exception-gasbad", "root-init-eiie")
             exception_outcome = exception_outcome or (
-                mode == "by-method" and method in ("divide", "recurse", "initFail"))
+                mode == "by-method" and method in known)
             exception_outcome = exception_outcome or (
                 mode == "exception-runtime-change" and method == "divide")
             runtime_hash = "b"*64 if (
@@ -196,12 +216,10 @@ class MockTools:
             elif mode == "malformed-exception":
                 print("exception=not-qualified")
             elif exception_outcome:
-                if mode == "root-init-eiie" or method == "initFail":
+                if mode == "root-init-eiie":
                     default = "java.lang.ExceptionInInitializerError"
-                elif method == "recurse":
-                    default = "java.lang.StackOverflowError"
                 else:
-                    default = "java.lang.ArithmeticException"
+                    default = known.get(method, "java.lang.ArithmeticException")
                 print("exception=" + os.environ.get("MOCK_EVM_EXCEPTION", default))
             else:
                 print("result=" + str(result))
@@ -314,6 +332,100 @@ class JavaDiffTests(unittest.TestCase):
             self.assertEqual(
                 report["cases"][3]["evm_exception"],
                 "java.lang.ExceptionInInitializerError",
+            )
+
+    def test_m4a_known_array_outcomes_match_by_exact_class(self):
+        expected = {
+            "negativeArray": "java.lang.NegativeArraySizeException",
+            "arrayBounds": "java.lang.ArrayIndexOutOfBoundsException",
+            "nullArray": "java.lang.NullPointerException",
+            # Logical-cap OOM is deliberately mock-only: exhausting the host JVM
+            # heap is neither safe nor equivalent to the EVM resource profile.
+            "logicalOOM": "java.lang.OutOfMemoryError",
+            "initArrayFailure": "java.lang.ExceptionInInitializerError",
+            "initLogicalOOM": "java.lang.OutOfMemoryError",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("m4a-" + method, stage="m4a", method=method, args=[],
+                     expected_kind="java_exception", expected_exception=exception)
+                for method, exception in expected.items()
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--stage", "m4a", "--tier", "full",
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(report["status_counts"], {"pass": len(expected)})
+            self.assertEqual(
+                [result["evm_exception"] for result in report["cases"]],
+                list(expected.values()),
+            )
+
+    def test_m4a_oom_is_not_wrapped_and_oog_is_not_an_oom(self):
+        fixture_case = case(
+            "m4a-init-oom", stage="m4a", method="initLogicalOOM", args=[],
+            expected_kind="java_exception", expected_exception="java.lang.OutOfMemoryError",
+        )
+        scenarios = [
+            ("by-method", {}, 0, "pass"),
+            ("by-method", {"MOCK_EVM_EXCEPTION": "java.lang.ExceptionInInitializerError"},
+             1, "mismatch"),
+            ("oog", {}, 1, "evm_oog"),
+        ]
+        for mode, extra, returncode, status in scenarios:
+            with self.subTest(mode=mode, extra=extra), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [fixture_case])
+                tools = MockTools(tmp)
+                completed, report = self.run_runner(
+                    tmp, fixtures.path, tools,
+                    env_extra={
+                        "MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": mode, **extra,
+                    },
+                )
+                self.assertEqual(completed.returncode == 0, returncode == 0)
+                self.assertEqual(report["cases"][0]["status"], status)
+                if mode == "oog":
+                    self.assertNotIn("evm_exception", report["cases"][0])
+
+    def test_real_jvm_array_exceptions_match_mock_evm_without_host_oom(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("m4a-real-negative", stage="m4a", method="negativeArray", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.NegativeArraySizeException"),
+                case("m4a-real-bounds", stage="m4a", method="arrayBounds", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.ArrayIndexOutOfBoundsException"),
+                case("m4a-real-null", stage="m4a", method="nullArray", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.NullPointerException"),
+            ])
+            (fixtures.path / "Arithmetic.java").write_text("""
+public final class Arithmetic {
+  public static int negativeArray() { return new int[-1].length; }
+  public static int arrayBounds() { return (new int[1])[1]; }
+  public static int nullArray() { int[] value = null; return value.length; }
+}
+""", encoding="utf-8")
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--stage", "m4a", "--tier", "full",
+                env_extra={
+                    "PATH": os.environ.get("PATH", ""),
+                    "MOCK_EVM_MODE": "by-method",
+                },
+            )
+            self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+            self.assertEqual(report["status_counts"], {"pass": 3})
+            self.assertEqual(
+                [result["oracle_exception"] for result in report["cases"]],
+                [
+                    "java.lang.NegativeArraySizeException",
+                    "java.lang.ArrayIndexOutOfBoundsException",
+                    "java.lang.NullPointerException",
+                ],
             )
 
     def test_expected_stack_overflow_does_not_accept_actual_oog(self):
@@ -710,6 +822,7 @@ class JavaDiffTests(unittest.TestCase):
         cases += [case("m3b-smoke", stage="m3b")]
         cases += [case("m3c-smoke", stage="m3c")]
         cases += [case("m3d-smoke", stage="m3d")]
+        cases += [case("m4a-smoke", stage="m4a")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -724,14 +837,15 @@ class JavaDiffTests(unittest.TestCase):
             "m3b": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke"],
             "m3c": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke"],
             "m3d": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke"],
+            "m4a": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m3d")
+        self.assertEqual(parsed.stage, "m4a")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
 
