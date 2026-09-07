@@ -1,68 +1,126 @@
-# Java on EVM: M0
+# Java inside EVM: tiny interpreter (M1)
 
-This local harness demonstrates a real path from Java source to execution in the
-geth EVM. Prerequisites: Go 1.24+, a JDK with `javac --release 8` support
-(e.g. JDK 17 or 21), and `make` on PATH. The first Go build downloads dependencies.
-Run from the fork's root, not the parent home-directory Git repository:
+This fork contains a generic JVM-subset interpreter compiled to ordinary EVM
+runtime bytecode. At run time the host reads a complete, unchanged `javac`
+`.class` file and ABI-encodes those raw bytes together with an entry-method name
+and signed `int` arguments. The EVM runtime itself scans the classfile and
+constant pool, selects and validates the method and `Code` attribute, dispatches
+JVM instructions, and returns the result. The host does not parse, extract,
+predecode, translate, specialize, or evaluate Java on this path.
+
+This is a **tiny JVM subset, not a full JVM or Java SE implementation**.
+
+Prerequisites are Go 1.24+, a JDK supporting `javac --release 8`, Node/npm, and
+make. The checked-in interpreter artifact makes the demo runnable without a
+Solidity compiler install:
 
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo
-# or explicitly:
-mkdir -p build/java-evm
-javac --release 8 -d build/java-evm examples/java/Add.java
-go run ./cmd/javaevm -class build/java-evm/Add.class -method add -args 20,22 -gas 100000
 ```
 
-The command prints standard EVM **runtime bytecode**, the signed Java `int`
-result, and measured EVM execution gas (48 for this addition demo). This excludes
-transaction intrinsic gas, calldata transaction fees, and deployment costs.
-It executes through `core/vm/runtime.Execute`, not through the host Java runtime.
-The demo and focused tests invoke `javac` only to produce classfile inputs.
+Representative output from this tree is:
 
-Reuse the classfile with different runtime arguments:
+```text
+engine=evm-jvm-subset-interpreter
+runtime_bytes=5044
+runtime_sha256=e93a3281bde126b8ea87972d75e0ac03a53d0de17fbffb6402fce9764bec2c20
+result=42
+gas_used=46391
+```
+
+Gas is measured by geth for the runtime call, including ABI decoding,
+classfile parsing, method lookup, and JVM dispatch. It excludes deployment,
+transaction intrinsic gas, and calldata transaction fees.
+
+Build the standalone CLI and reuse the exact same interpreter with different
+raw classes and arguments:
 
 ```sh
-go run ./cmd/javaevm -class build/java-evm/Add.class -args=-7,2
-# result=-5, gas_used=48
+go build -o build/bin/jvmevm ./cmd/jvmevm
+mkdir -p build/java-evm-interpreter
+javac --release 8 -d build/java-evm-interpreter \
+  examples/java/Add.java examples/java/Identity.java
+
+build/bin/jvmevm -class build/java-evm-interpreter/Add.class \
+  -method add -args 2147483647,1
+# result=-2147483648
+
+build/bin/jvmevm -class build/java-evm-interpreter/Identity.class \
+  -method identity -args=-123
+# same runtime_sha256, result=-123
 ```
 
-## M0 subset and limits
+The CLI only reads the named file and calls `jvmevm.Run`, which uses geth's ABI
+encoder and `core/vm/runtime.Execute`. Invalid class bytes and unsupported Java
+instructions therefore fail with an EVM revert and Solidity custom-error data,
+not a host classfile-parser error. `-gas` is a finite EVM gas limit; insufficient
+gas is reported as an actual EVM out-of-gas failure.
 
-The selected method must be an unambiguous `static` method with only `int`
-arguments and an `int` return. Its `Code` attribute may contain only `iload`
-(including `_0` through `_3`), `iadd`, and `ireturn`. The translator ignores
-unused methods, such as javac's default object constructor. Unsupported selected
-method bytecodes, bad magic/truncated classfiles, bad argument counts, and EVM
-out-of-gas return clear errors. Parsing performs basic structural checks, not
-full JVM bytecode verification (constant-pool references, max_stack/max_locals,
-and access flags are not fully validated). Treat inputs as trusted experiments.
-This translates an isolated method: class initialization, synchronization, and
-exception-table semantics are not implemented. Use simple classes without those
-features; their absence is not fully enforced by the parser.
+## Supported semantics and defensive limits
 
-Each Java `int` is masked to 32 bits after a load and addition, so addition
-wraps and negative operands/results have Java `int32` semantics. Arguments are
-32-byte calldata words; one generated program is reusable with different
-arguments. This is a local EVM harness, not on-chain deployment, a general
-classfile reader, a class library, or a complete JVM.
+The selected method must have an unambiguous name, be `static`, accept only
+`int` arguments, and return `int`. Its code can contain only:
 
-## Tests
+- `iload` and `iload_0` through `iload_3`
+- `iadd`
+- `ireturn`
+
+The interpreter uses 32-bit stack values and unchecked 32-bit addition, giving
+Java `int` wraparound and signed return behavior. It checks classfile bounds,
+constant-pool tags and relevant UTF-8 references, method/descriptor/access
+requirements, argument/local/stack bounds, terminal return shape, and selected
+`Code` structure. Constant pools are capped at 4096 entries and selected
+`max_stack` at 1024.
+
+Selected native, abstract, synchronized, non-static, overloaded, no-Code, or
+exception-table methods are rejected. A class declaring `<clinit>` is rejected
+because class-initialization semantics are absent. `imul` and every other JVM
+opcode are rejected by the EVM dispatcher.
+
+This is not a JVM verifier. It does not validate modified-UTF8 encoding,
+constant-pool relationships irrelevant to selection, class hierarchy or type
+safety, unused methods, most class/field/nested attributes, StackMapTable, or
+all JVM access/linking rules. There are no branches, loops, constants,
+subtraction, calls, arrays, heap/objects, exceptions, monitors, class loading,
+class libraries, on-chain deployment workflow, or Minecraft. Inputs remain
+resource-bounded by EVM gas, but should be treated as experimental.
+
+## Runtime source and reproducibility
+
+Source is `jvmevm/runtime/JVMSubsetInterpreter.sol`; the checked-in generic
+runtime is `JVMSubsetInterpreter.runtime.hex`. Its compiler is pinned by
+`package.json` and `package-lock.json` to solc-js 0.8.30
+(`0.8.30+commit.73712a01`). The build uses the standard JSON interface with:
+
+- optimizer enabled, 200 runs
+- `viaIR: true`
+- `evmVersion: cancun`
+- metadata CBOR and metadata bytecode hash disabled
+
+No global npm configuration or globally installed compiler is used. Rebuild or
+check exact source/artifact consistency with:
 
 ```sh
-make java-test
+make java-runtime-build   # regenerates the reviewed artifact
+make java-runtime-check   # fails unless source rebuild is byte-for-byte equal
+make java-test            # consistency check, focused tests, and CLI build
 ```
 
-Focused tests compile Java 8 classfiles and execute them in geth's EVM. They
-cover `20+22`, negative operands, `INT_MAX+1`, code reuse with dynamic arguments,
-unsupported `imul`, malformed/truncated class input, and out-of-gas.
+`npm ci --ignore-scripts` installs only the lockfile-pinned local build
+dependencies under `jvmevm/runtime/node_modules` (ignored by Git).
 
-## Provenance and next steps
+## M0 host-AOT baseline
 
-Based on go-ethereum upstream tag `v1.16.9`, commit
-`95665d5703e1023995a0ff93e4ce9eb77e8a59bd`. This is a shallow local fork on branch
-`java-on-evm`, with remote `upstream`; no hosted fork or remote push was made.
-M0 changes no consensus VM core. Check work with `git status --short --branch`;
-keep follow-up changes in small, tested local commits.
-Possible future milestones only: constants/subtraction, comparisons/loops,
-static calls, then heap/objects.
+The earlier M0 experiment remains unchanged in `javaevm/` and `cmd/javaevm/`.
+It parses and translates one Java method on the host before EVM execution, so it
+is explicitly not the JVM-inside-EVM path. Its commands are retained only as
+labeled baselines:
+
+```sh
+make java-aot-demo
+make java-aot-test
+```
+
+Neither path changes geth's consensus VM core. The M1 interpreter path is the
+primary `make java-demo` / `make java-test` workflow.

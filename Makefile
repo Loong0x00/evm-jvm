@@ -62,13 +62,29 @@ help: Makefile
 	@echo 'Targets:'
 	@sed -n 's/^#?//p' $< | column -t -s ':' |  sort | sed -e 's/^/ /'
 
-# Focused Java-on-EVM M0 helpers.
-.PHONY: java-demo java-test
+# Java-in-EVM interpreter helpers. The java-aot-* targets preserve the M0 baseline.
+.PHONY: java-demo java-test java-runtime-build java-runtime-check java-aot-demo java-aot-test
 
 java-demo:
+	mkdir -p build/java-evm-interpreter
+	javac --release 8 -d build/java-evm-interpreter examples/java/Add.java
+	go run ./cmd/jvmevm -class build/java-evm-interpreter/Add.class -method add -args 20,22 -gas 2000000
+
+java-test: java-runtime-check
+	go test -count=1 ./jvmevm ./cmd/jvmevm
+	go build -o build/bin/jvmevm ./cmd/jvmevm
+
+java-runtime-build:
+	cd jvmevm/runtime && npm ci --ignore-scripts && npm run build
+
+java-runtime-check:
+	cd jvmevm/runtime && npm ci --ignore-scripts && npm run check
+
+java-aot-demo:
 	mkdir -p build/java-evm
 	javac --release 8 -d build/java-evm examples/java/Add.java
 	go run ./cmd/javaevm -class build/java-evm/Add.class -method add -args 20,22 -gas 100000
 
-java-test:
+java-aot-test:
 	go test -count=1 ./javaevm ./cmd/javaevm
+	go build -o build/bin/javaevm ./cmd/javaevm

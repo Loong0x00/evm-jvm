@@ -1,0 +1,125 @@
+// Copyright 2026 The go-ethereum Authors
+// This file is part of go-ethereum.
+
+package jvmevm
+
+import (
+	"bytes"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+const expectedRuntimeHash = "e93a3281bde126b8ea87972d75e0ac03a53d0de17fbffb6402fce9764bec2c20"
+
+func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
+	addClass := compileJava(t, "Add", `public class Add { public static int add(int a, int b) { return a + b; } }`)
+	identityClass := compileJava(t, "Identity", `public class Identity { public static int identity(int b) { return b; } }`)
+	if bytes.Equal(addClass, identityClass) {
+		t.Fatal("javac unexpectedly produced identical classes")
+	}
+	runtimeBefore, err := Runtime()
+	if err != nil {
+		t.Fatal(err)
+	}
+	cases := []struct {
+		class  []byte
+		method string
+		args   []int32
+		want   int32
+	}{
+		{addClass, "add", []int32{20, 22}, 42},
+		{addClass, "add", []int32{-7, 2}, -5},
+		{addClass, "add", []int32{2147483647, 1}, -2147483648},
+		{identityClass, "identity", []int32{-123456789}, -123456789},
+		{identityClass, "identity", []int32{77}, 77},
+	}
+	for _, tc := range cases {
+		result, err := Run(tc.class, tc.method, tc.args, 2_000_000)
+		if err != nil {
+			t.Fatalf("%s%v: %v", tc.method, tc.args, err)
+		}
+		if result.Value != tc.want || result.GasUsed == 0 {
+			t.Fatalf("%s%v = %+v, want value %d and measured gas", tc.method, tc.args, result, tc.want)
+		}
+		if result.RuntimeSHA256 != expectedRuntimeHash {
+			t.Fatalf("runtime hash = %s, want %s", result.RuntimeSHA256, expectedRuntimeHash)
+		}
+	}
+	runtimeAfter, _ := Runtime()
+	if !bytes.Equal(runtimeBefore, runtimeAfter) {
+		t.Fatal("generic interpreter runtime changed between classes or arguments")
+	}
+}
+
+func TestUnsupportedBytecodeAndMalformedClassRevertInsideEVM(t *testing.T) {
+	multiply := compileJava(t, "Multiply", `public class Multiply { public static int multiply(int a, int b) { return a * b; } }`)
+	for name, tc := range map[string]struct {
+		class  []byte
+		method string
+		args   []int32
+	}{
+		"unsupported-imul": {multiply, "multiply", []int32{6, 7}},
+		"bad-magic":        {[]byte{0, 1, 2, 3}, "add", []int32{1, 2}},
+		"truncated":        {multiply[:len(multiply)-1], "multiply", []int32{6, 7}},
+	} {
+		t.Run(name, func(t *testing.T) {
+			result, err := Run(tc.class, tc.method, tc.args, 2_000_000)
+			if err == nil || !strings.Contains(err.Error(), "execution reverted") {
+				t.Fatalf("error = %v, want EVM execution revert", err)
+			}
+			if result.GasUsed == 0 || len(result.RevertData) < 4 {
+				t.Fatalf("result = %+v, want measured EVM gas and Solidity custom-error revert data", result)
+			}
+		})
+	}
+}
+
+func TestOutOfGasIsEVMFailure(t *testing.T) {
+	classfile := compileJava(t, "Add", `public class Add { public static int add(int a, int b) { return a + b; } }`)
+	result, err := Run(classfile, "add", []int32{20, 22}, 100)
+	if err == nil || !strings.Contains(err.Error(), "out of gas") {
+		t.Fatalf("error = %v, want EVM out of gas", err)
+	}
+	if result.GasUsed != 100 {
+		t.Fatalf("gas used = %d, want full gas limit 100", result.GasUsed)
+	}
+}
+
+func TestRejectsUnsupportedSelectedMethodSemantics(t *testing.T) {
+	withInit := compileJava(t, "WithInit", `public class WithInit { static int x = 1; public static int identity(int a) { return a; } }`)
+	result, err := Run(withInit, "identity", []int32{7}, 2_000_000)
+	if err == nil || !strings.Contains(err.Error(), "execution reverted") || len(result.RevertData) < 4 {
+		t.Fatalf("class initializer result/error = %+v/%v, want in-EVM rejection", result, err)
+	}
+}
+
+func TestCheckedInRuntimeHash(t *testing.T) {
+	hash, err := RuntimeHash()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if hash != expectedRuntimeHash {
+		t.Fatalf("runtime hash = %s, want %s; rebuild and review artifact", hash, expectedRuntimeHash)
+	}
+}
+
+func compileJava(t *testing.T, name, source string) []byte {
+	t.Helper()
+	dir := t.TempDir()
+	path := filepath.Join(dir, name+".java")
+	if err := os.WriteFile(path, []byte(source), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command("javac", "--release", "8", "-d", dir, path)
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("javac failed: %v\n%s", err, output)
+	}
+	classfile, err := os.ReadFile(filepath.Join(dir, name+".class"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return classfile
+}
