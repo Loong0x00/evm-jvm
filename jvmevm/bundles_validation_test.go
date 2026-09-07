@@ -82,16 +82,6 @@ func TestRunClassesRejectsEnteredUnsupportedClassSemanticsAtInputIndex(t *testin
 			entryClass: "entered/Face", classNames: []string{"entered/Plain", "entered/Face"},
 		},
 		{
-			name: "class-initializer",
-			sources: map[string]string{
-				"entered/Plain.java": `package entered; public final class Plain { public static int run() { return 1; } }`,
-				"entered/WithInit.java": `package entered; public final class WithInit {
-					static int marker = 7; public static int run() { return marker; }
-				}`,
-			},
-			entryClass: "entered/WithInit", classNames: []string{"entered/Plain", "entered/WithInit"},
-		},
-		{
 			name: "non-Object-superclass",
 			sources: map[string]string{
 				"entered/Parent.java": `package entered; public class Parent { }`,
@@ -112,6 +102,25 @@ func TestRunClassesRejectsEnteredUnsupportedClassSemanticsAtInputIndex(t *testin
 			result, err := RunClasses(inputs, tc.entryClass, "run", nil, bundleValidationGasLimit)
 			assertBundleValidationError(t, result, err, "LinkError(uint256,uint256)", 5, 1)
 		})
+	}
+}
+
+func TestRunClassesAcceptsFormerlyRejectedClassInitializer(t *testing.T) {
+	classes := compileBundleValidationJava(t, map[string]string{
+		"entered/Plain.java": `package entered; public final class Plain { public static int run() { return 1; } }`,
+		"entered/WithInit.java": `package entered; public final class WithInit {
+			static int marker = 7; public static int run() { return marker; }
+		}`,
+	}, "entered/Plain", "entered/WithInit")
+	result, err := RunClasses(
+		[][]byte{classes["entered/Plain"], classes["entered/WithInit"]},
+		"entered/WithInit", "run", nil, bundleValidationGasLimit,
+	)
+	if err != nil {
+		t.Fatalf("formerly rejected initializer failed: %v (result=%+v)", err, result)
+	}
+	if result.ExceptionClass != "" || result.Value != 7 || result.GasUsed == 0 || len(result.RevertData) != 0 {
+		t.Fatalf("result = %+v, want initialized value 7", result)
 	}
 }
 

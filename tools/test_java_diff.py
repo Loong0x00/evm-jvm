@@ -22,7 +22,12 @@ ORACLE_SOURCE = """
 import java.lang.reflect.*;
 public final class OracleMain {
   public static void main(String[] a) throws Exception {
-    Class<?> c = Class.forName(a[0]);
+    Class<?> c;
+    try { c = Class.forName(a[0]); }
+    catch (ExceptionInInitializerError | StackOverflowError e) {
+      System.out.println("exception=" + e.getClass().getName());
+      return;
+    }
     Class<?>[] p = new Class<?>[a.length - 2];
     Object[] v = new Object[a.length - 2];
     for (int i = 0; i < p.length; i++) { p[i] = int.class; v[i] = Integer.valueOf(a[i+2]); }
@@ -134,10 +139,14 @@ class MockTools:
                 raise SystemExit(0)
             marker = sys.argv.index("OracleMain")
             method = sys.argv[marker + 2]
-            if mode == "exception" or (
-                    mode == "by-method" and method in ("divide", "recurse")):
-                default = ("java.lang.StackOverflowError" if method == "recurse"
-                           else "java.lang.ArithmeticException")
+            if mode in ("exception", "root-init-eiie") or (
+                    mode == "by-method" and method in ("divide", "recurse", "initFail")):
+                if mode == "root-init-eiie" or method == "initFail":
+                    default = "java.lang.ExceptionInInitializerError"
+                elif method == "recurse":
+                    default = "java.lang.StackOverflowError"
+                else:
+                    default = "java.lang.ArithmeticException"
                 print("exception=" + os.environ.get("MOCK_JAVA_EXCEPTION", default))
                 raise SystemExit(0)
             if mode == "malformed-exception":
@@ -169,9 +178,9 @@ class MockTools:
             result = values[0] if method == "identity" else sum(values)
             if mode == "mismatch":
                 result += 1
-            exception_outcome = mode in ("exception", "exception-gasbad")
+            exception_outcome = mode in ("exception", "exception-gasbad", "root-init-eiie")
             exception_outcome = exception_outcome or (
-                mode == "by-method" and method in ("divide", "recurse"))
+                mode == "by-method" and method in ("divide", "recurse", "initFail"))
             exception_outcome = exception_outcome or (
                 mode == "exception-runtime-change" and method == "divide")
             runtime_hash = "b"*64 if (
@@ -187,8 +196,12 @@ class MockTools:
             elif mode == "malformed-exception":
                 print("exception=not-qualified")
             elif exception_outcome:
-                default = ("java.lang.StackOverflowError" if method == "recurse"
-                           else "java.lang.ArithmeticException")
+                if mode == "root-init-eiie" or method == "initFail":
+                    default = "java.lang.ExceptionInInitializerError"
+                elif method == "recurse":
+                    default = "java.lang.StackOverflowError"
+                else:
+                    default = "java.lang.ArithmeticException"
                 print("exception=" + os.environ.get("MOCK_EVM_EXCEPTION", default))
             else:
                 print("result=" + str(result))
@@ -239,21 +252,31 @@ class JavaDiffTests(unittest.TestCase):
                 self.assertIn("stdout", result["evm"])
 
     def test_matching_expected_java_exception_passes_with_metadata(self):
+        # Class.forName can fail before Method.invoke. That genuine initializer
+        # outcome must not be confused with an oracle process/configuration error.
         with tempfile.TemporaryDirectory() as tmp:
             fixtures = FixtureTree(tmp, [
-                case("m2b-div-zero", stage="m2b", method="divide", args=[7, 0],
-                     expected_kind="java_exception"),
+                case("m3c-root-init", stage="m3c", method="initFail", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.ExceptionInInitializerError"),
             ])
             tools = MockTools(tmp)
             completed, report = self.run_runner(
                 tmp, fixtures.path, tools,
-                env_extra={"MOCK_JAVA_MODE": "exception", "MOCK_EVM_MODE": "exception"},
+                env_extra={
+                    "MOCK_JAVA_MODE": "root-init-eiie",
+                    "MOCK_EVM_MODE": "root-init-eiie",
+                },
             )
             self.assertEqual(completed.returncode, 0, completed.stderr)
             result = report["cases"][0]
             self.assertEqual(result["status"], "pass")
-            self.assertEqual(result["oracle_exception"], "java.lang.ArithmeticException")
-            self.assertEqual(result["evm_exception"], "java.lang.ArithmeticException")
+            self.assertEqual(
+                result["oracle_exception"], "java.lang.ExceptionInInitializerError"
+            )
+            self.assertEqual(
+                result["evm_exception"], "java.lang.ExceptionInInitializerError"
+            )
             self.assertEqual(result["gas_used"], 456)
             self.assertEqual(report["runtime_sha256"], "a" * 64)
 
@@ -266,6 +289,9 @@ class JavaDiffTests(unittest.TestCase):
                 case("stack-overflow", stage="m3a", method="recurse", args=[],
                      expected_kind="java_exception",
                      expected_exception="java.lang.StackOverflowError"),
+                case("initializer-error", stage="m3c", method="initFail", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.ExceptionInInitializerError"),
             ])
             tools = MockTools(tmp)
             completed, report = self.run_runner(
@@ -273,10 +299,10 @@ class JavaDiffTests(unittest.TestCase):
                 env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
             )
             self.assertEqual(completed.returncode, 0, completed.stderr)
-            self.assertEqual(report["status_counts"], {"pass": 3})
+            self.assertEqual(report["status_counts"], {"pass": 4})
             self.assertEqual(report["runtime_sha256"], "a" * 64)
             self.assertEqual(
-                [result["runtime_sha256"] for result in report["cases"]], ["a" * 64] * 3
+                [result["runtime_sha256"] for result in report["cases"]], ["a" * 64] * 4
             )
             self.assertEqual(report["cases"][0]["evm_value"], 7)
             self.assertEqual(
@@ -285,24 +311,44 @@ class JavaDiffTests(unittest.TestCase):
             self.assertEqual(
                 report["cases"][2]["evm_exception"], "java.lang.StackOverflowError"
             )
+            self.assertEqual(
+                report["cases"][3]["evm_exception"],
+                "java.lang.ExceptionInInitializerError",
+            )
 
     def test_expected_stack_overflow_does_not_accept_actual_oog(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            fixtures = FixtureTree(tmp, [
-                case("stack-overflow", stage="m3a", method="recurse", args=[],
-                     expected_kind="java_exception",
-                     expected_exception="java.lang.StackOverflowError"),
-            ])
-            tools = MockTools(tmp)
-            completed, report = self.run_runner(
-                tmp, fixtures.path, tools,
-                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "oog"},
-            )
-            self.assertNotEqual(completed.returncode, 0)
-            self.assertEqual(report["cases"][0]["status"], "evm_oog")
-            self.assertEqual(report["cases"][0]["runtime_sha256"], "a" * 64)
-            self.assertEqual(report["runtime_sha256"], "a" * 64)
-            self.assertNotIn("evm_exception", report["cases"][0])
+        fixture_case = case(
+            "stack-overflow", stage="m3c", method="recurse", args=[],
+            expected_kind="java_exception",
+            expected_exception="java.lang.StackOverflowError",
+        )
+        scenarios = [
+            ("oog", {}, "evm_oog"),
+            ("by-method", {"MOCK_EVM_EXCEPTION": "java.lang.ExceptionInInitializerError"},
+             "mismatch"),
+        ]
+        for mode, environment, status in scenarios:
+            with self.subTest(mode=mode), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [fixture_case])
+                tools = MockTools(tmp)
+                completed, report = self.run_runner(
+                    tmp, fixtures.path, tools,
+                    env_extra={
+                        "MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": mode,
+                        **environment,
+                    },
+                )
+                self.assertNotEqual(completed.returncode, 0)
+                result = report["cases"][0]
+                self.assertEqual(result["status"], status)
+                self.assertEqual(result["runtime_sha256"], "a" * 64)
+                self.assertEqual(report["runtime_sha256"], "a" * 64)
+                if mode == "oog":
+                    self.assertNotIn("evm_exception", result)
+                else:
+                    self.assertEqual(
+                        result["evm_exception"], "java.lang.ExceptionInInitializerError"
+                    )
 
     def test_wrong_java_exception_class_is_a_mismatch(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -662,6 +708,7 @@ class JavaDiffTests(unittest.TestCase):
         cases += [case("m2b-smoke", stage="m2b")]
         cases += [case("m3a-smoke", stage="m3a")]
         cases += [case("m3b-smoke", stage="m3b")]
+        cases += [case("m3c-smoke", stage="m3c")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -674,14 +721,15 @@ class JavaDiffTests(unittest.TestCase):
             "m2b": ["m1-smoke", "m2-smoke", "m2b-smoke"],
             "m3a": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke"],
             "m3b": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke"],
+            "m3c": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m3b")
+        self.assertEqual(parsed.stage, "m3c")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
 

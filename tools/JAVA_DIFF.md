@@ -15,17 +15,18 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m3b --tier full
+python3 tools/java_diff.py --stage m3c --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m3b --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m3c --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
-M2, `m2b` adds M2b, `m3a` adds M3a, and `m3b` or `all` adds M3b. A manifest
-without entries in the newest stage continues to run its older cases under the
-new default. `smoke` runs smoke-marked cases, `fast` adds a seeded deterministic
-sample of at most 20 other cases, and `full` runs every selected case. `--case`
+M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, and `m3c` or `all` adds
+M3c. A manifest without entries in the newest stage continues to run its older
+cases under the new default. `smoke` runs smoke-marked cases, `fast` adds a
+seeded deterministic sample of at most 20 other cases, and `full` runs every
+selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
 selection is an error.
 
@@ -111,12 +112,17 @@ exception=<fqcn>
 ```
 
 The runner accepts an exception as passing only when the manifest explicitly
-expects `java_exception` and the expected, JVM, and EVM classes all match. M3a
-and M3b use the same protocol for `java.lang.StackOverflowError`; M2b's
-`java.lang.ArithmeticException` remains unchanged. Value/exception
-disagreements and wrong exception classes fail. Nonzero CLI exits, generic
-reverts, and out-of-gas executions remain EVM failures; out of gas is never
-reclassified as stack overflow.
+expects `java_exception` and the expected, JVM, and EVM classes all match. M3c
+adds `java.lang.ExceptionInInitializerError`; arithmetic escaping an active
+initializer is wrapped as that class, while `java.lang.StackOverflowError`
+remains unwrapped. M2b's `java.lang.ArithmeticException` outside initialization
+remains unchanged. The fixture oracle may report the two initializer-time Error
+outcomes from `Class.forName`, before reflective invocation. Oracle process,
+configuration, or malformed-output errors still fail and are never converted
+into expected outcomes. Value/exception disagreements, wrong wrapping, and
+wrong exception classes fail. Nonzero CLI exits, generic reverts, and out-of-gas
+executions remain EVM failures; out of gas is never reclassified as a Java
+exception.
 
 ## Limits and failures
 
