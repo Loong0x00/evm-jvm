@@ -89,12 +89,14 @@ contract JVMSubsetInterpreter {
         uint16 classAccess = _u2(r);
         c.accessFlags = classAccess;
         uint256 thisClass = _u2(r);
-        _u2(r); // super_class
+        uint256 superClass = _u2(r);
         (c.thisNameOffset, c.thisNameLength) = _className(c, thisClass, r.pos);
         // This stage executes an ordinary class, not an interface.
         if ((classAccess & 0x0200) != 0) revert MethodError(7);
+        bool unsupportedSuperclass = _hasUnsupportedSuperclass(c, superClass, r.pos);
 
         uint256 interfacesCount = _u2(r);
+        if (unsupportedSuperclass || interfacesCount != 0) revert LinkError(5, 0);
         _skip(r, _checkedMul2(interfacesCount, r.pos));
         c.fields = _readFields(r, c);
 
@@ -258,16 +260,7 @@ contract JVMSubsetInterpreter {
         uint256 superClass = _u2(r);
         (c.thisNameOffset, c.thisNameLength) = _className(c, thisClass, r.pos);
         if ((c.accessFlags & 0x0200) != 0) c.unsupportedSemantics = true;
-        if (superClass == 0) {
-            if (!_equalsLiteral(c.data, c.thisNameOffset, c.thisNameLength, bytes("java/lang/Object"))) {
-                c.unsupportedSemantics = true;
-            }
-        } else {
-            (uint256 superOffset, uint256 superLength) = _className(c, superClass, r.pos);
-            if (!_equalsLiteral(c.data, superOffset, superLength, bytes("java/lang/Object"))) {
-                c.unsupportedSemantics = true;
-            }
-        }
+        if (_hasUnsupportedSuperclass(c, superClass, r.pos)) c.unsupportedSemantics = true;
 
         uint256 interfacesCount = _u2(r);
         if (interfacesCount != 0) c.unsupportedSemantics = true;
@@ -315,6 +308,20 @@ contract JVMSubsetInterpreter {
 
     function _requireSupportedClass(ClassInfo memory c, uint256 classIndex) private pure {
         if (c.unsupportedSemantics) revert LinkError(5, classIndex);
+    }
+
+    function _hasUnsupportedSuperclass(ClassInfo memory c, uint256 superClass, uint256 at)
+        private
+        pure
+        returns (bool)
+    {
+        if (superClass == 0) {
+            return !_equalsLiteral(
+                c.data, c.thisNameOffset, c.thisNameLength, bytes("java/lang/Object")
+            );
+        }
+        (uint256 superOffset, uint256 superLength) = _className(c, superClass, at);
+        return !_equalsLiteral(c.data, superOffset, superLength, bytes("java/lang/Object"));
     }
 
     function _sameClassName(ClassInfo memory a, ClassInfo memory b) private pure returns (bool) {
