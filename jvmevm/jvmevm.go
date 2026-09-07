@@ -48,16 +48,20 @@ func decodeJavaException(data []byte) (string, bool) {
 	if len(data) != 4+32 || !bytes.Equal(data[:4], javaExceptionSelector) {
 		return "", false
 	}
-	// The Solidity kind is uint256. Kind 1 is the only frozen, known outcome.
+	// The Solidity kind is uint256. Decode only exact frozen, known outcomes.
 	for _, b := range data[4 : len(data)-1] {
 		if b != 0 {
 			return "", false
 		}
 	}
-	if data[len(data)-1] != 1 {
+	switch data[len(data)-1] {
+	case 1:
+		return "java.lang.ArithmeticException", true
+	case 2:
+		return "java.lang.StackOverflowError", true
+	default:
 		return "", false
 	}
-	return "java.lang.ArithmeticException", true
 }
 
 var (

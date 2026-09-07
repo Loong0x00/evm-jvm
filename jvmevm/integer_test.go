@@ -100,15 +100,24 @@ public class DivideByZero {
 }
 
 func TestJavaExceptionDecoderIsExact(t *testing.T) {
+	for kind, want := range map[byte]string{
+		1: "java.lang.ArithmeticException",
+		2: "java.lang.StackOverflowError",
+	} {
+		valid := make([]byte, 36)
+		copy(valid, javaExceptionSelector)
+		valid[35] = kind
+		if class, ok := decodeJavaException(valid); !ok || class != want {
+			t.Fatalf("kind %d payload decoded as %q/%v, want %q/true", kind, class, ok, want)
+		}
+	}
+
 	valid := make([]byte, 36)
 	copy(valid, javaExceptionSelector)
 	valid[35] = 1
-	if class, ok := decodeJavaException(valid); !ok || class != "java.lang.ArithmeticException" {
-		t.Fatalf("valid payload decoded as %q/%v", class, ok)
-	}
 	mutations := map[string]func([]byte) []byte{
 		"unknown-selector": func(p []byte) []byte { p[0] ^= 0xff; return p },
-		"unknown-kind":     func(p []byte) []byte { p[35] = 2; return p },
+		"unknown-kind":     func(p []byte) []byte { p[35] = 255; return p },
 		"noncanonical-kind": func(p []byte) []byte {
 			p[4] = 1
 			return p

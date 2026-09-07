@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-const expectedRuntimeHash = "3388269119ae0f38e61e8f31b835af52bff25a295979faac72c4f3b4eb208c97"
+const expectedRuntimeHash = "e5da633eda34db0ce3a02563fd6276c8016525d441025eb446b578fdef8a390b"
 
 func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
 	addClass := compileJava(t, "Add", `public class Add { public static int add(int a, int b) { return a + b; } }`)
