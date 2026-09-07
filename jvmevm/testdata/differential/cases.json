@@ -11694,6 +11694,2376 @@
       "smoke": true,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4b-core-default-int",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "defaultInt",
+      "args": [
+        9
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-default-object-null",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "defaultObjectNull",
+      "args": [
+        11
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-default-array-null",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "defaultArrayNull",
+      "args": [
+        12
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-default-cell-null",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "defaultCellNull",
+      "args": [
+        13
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-constructor-value",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "constructorValue",
+      "args": [
+        -37
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-constructor-pair",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "constructorPair",
+      "args": [
+        7,
+        -3
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-write-read-int",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "writeReadInt",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-assignment-expression",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "assignmentExpression",
+      "args": [
+        -11
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-post-increment",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "postIncrement",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-pre-increment",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "preIncrement",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-alias-write",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "aliasWrite",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-distinct-objects",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "distinctObjects",
+      "args": [
+        55
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-same-identity",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "sameIdentity",
+      "args": [
+        21
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-distinct-identity",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "distinctIdentity",
+      "args": [
+        22
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-null-identity",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "nullIdentity",
+      "args": [
+        23
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-reference-field-alias",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "referenceFieldAlias",
+      "args": [
+        90
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-reference-field-replace",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "referenceFieldReplace",
+      "args": [
+        -4
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-object-stores-object",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "objectStoresObject",
+      "args": [
+        24
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-object-stores-array",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "objectStoresArray",
+      "args": [
+        25
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-array-field-alias",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "arrayFieldAlias",
+      "args": [
+        -99
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-mixed-heap-identity",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "mixedHeapIdentity",
+      "args": [
+        26
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-object-static-transport",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "objectStaticTransport",
+      "args": [
+        27
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-array-static-transport",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "arrayStaticTransport",
+      "args": [
+        1234
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-cell-static-transport",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "cellStaticTransport",
+      "args": [
+        -5678
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-static-field-accessor",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "staticFieldAccessor",
+      "args": [
+        81
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-args",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "privateArgs",
+      "args": [
+        20,
+        15
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-recursion",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "privateRecursion",
+      "args": [
+        6
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-reference-return",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "privateReferenceReturn",
+      "args": [
+        -71
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-object-return",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "privateObjectReturn",
+      "args": [
+        28
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-array-return",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "privateArrayReturn",
+      "args": [
+        314
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-void",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "privateVoid",
+      "args": [
+        -271
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-constructor-value-min",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "constructorValue",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-alias-write-max",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class"
+      ],
+      "method": "aliasWrite",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-args-overflow",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreRoot.class",
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class"
+      ],
+      "method": "privateArgs",
+      "args": [
+        2147483647,
+        1
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-core-private-recursion-zero",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4b.core.CoreRoot",
+      "class_files": [
+        "bundle/m4b/core/CoreCell.class",
+        "bundle/m4b/core/CorePair.class",
+        "bundle/m4b/core/CoreRoot.class"
+      ],
+      "method": "privateRecursion",
+      "args": [
+        0
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-base-fields",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class"
+      ],
+      "method": "baseFields",
+      "args": [
+        3
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-this-chain",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class"
+      ],
+      "method": "thisChain",
+      "args": [
+        2
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-default-before-writes",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class"
+      ],
+      "method": "defaultBeforeWrites",
+      "args": [
+        44
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-ctor-argument-order",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class"
+      ],
+      "method": "ctorArgumentOrder",
+      "args": [
+        1,
+        2,
+        3
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-hidden-base",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class"
+      ],
+      "method": "hiddenBase",
+      "args": [
+        10
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-hidden-middle",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class"
+      ],
+      "method": "hiddenMiddle",
+      "args": [
+        10
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-hidden-child",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class"
+      ],
+      "method": "hiddenChild",
+      "args": [
+        10
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-hidden-independent",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class"
+      ],
+      "method": "hiddenIndependent",
+      "args": [
+        7
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-inherited-reference",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class"
+      ],
+      "method": "inheritedReference",
+      "args": [
+        -6
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-super-constructor-publishes",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class"
+      ],
+      "method": "superConstructorPublishes",
+      "args": [
+        12
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-direct-super-selection",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class"
+      ],
+      "method": "directSuperSelection",
+      "args": [
+        5
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-private-child-helper",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class"
+      ],
+      "method": "privateChildHelper",
+      "args": [
+        8
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-inherited-final-read",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class"
+      ],
+      "method": "inheritedFinalRead",
+      "args": [
+        9
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-ctor-allocated-argument",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class"
+      ],
+      "method": "ctorAllocatedArgument",
+      "args": [
+        -20
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-nested-allocation",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class"
+      ],
+      "method": "nestedAllocation",
+      "args": [
+        30
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-hidden-independent-negative",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class"
+      ],
+      "method": "hiddenIndependent",
+      "args": [
+        -8
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-ctor-argument-order-mixed",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorMiddle.class",
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class"
+      ],
+      "method": "ctorArgumentOrder",
+      "args": [
+        -2,
+        0,
+        9
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-ctor-direct-super-selection-overflow",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/constructors/CtorRoot.java"
+      ],
+      "class": "bundle.m4b.constructors.CtorRoot",
+      "class_files": [
+        "bundle/m4b/constructors/CtorChild.class",
+        "bundle/m4b/constructors/CoreToken.class",
+        "bundle/m4b/constructors/DefaultWitness.class",
+        "bundle/m4b/constructors/ArgumentOwner.class",
+        "bundle/m4b/constructors/CtorRoot.class",
+        "bundle/m4b/constructors/CtorBase.class",
+        "bundle/m4b/constructors/CtorMiddle.class"
+      ],
+      "method": "directSuperSelection",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-constructor-final",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalParent.class",
+        "bundle/m4b/finals/FinalChild.class",
+        "bundle/m4b/finals/FinalRoot.class",
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class"
+      ],
+      "method": "constructorFinal",
+      "args": [
+        -13
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-initialized-final",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalChild.class",
+        "bundle/m4b/finals/FinalRoot.class",
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class",
+        "bundle/m4b/finals/FinalParent.class"
+      ],
+      "method": "initializedFinal",
+      "args": [
+        5
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-final-reference",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalRoot.class",
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class",
+        "bundle/m4b/finals/FinalParent.class",
+        "bundle/m4b/finals/FinalChild.class"
+      ],
+      "method": "finalReference",
+      "args": [
+        33
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-final-array-mutation",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class",
+        "bundle/m4b/finals/FinalParent.class",
+        "bundle/m4b/finals/FinalChild.class",
+        "bundle/m4b/finals/FinalRoot.class"
+      ],
+      "method": "finalArrayMutation",
+      "args": [
+        -1
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-final-object-mutation",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalCell.class",
+        "bundle/m4b/finals/FinalParent.class",
+        "bundle/m4b/finals/FinalChild.class",
+        "bundle/m4b/finals/FinalRoot.class",
+        "bundle/m4b/finals/FinalHolder.class"
+      ],
+      "method": "finalObjectMutation",
+      "args": [
+        7
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-distinct-final-storage",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalParent.class",
+        "bundle/m4b/finals/FinalChild.class",
+        "bundle/m4b/finals/FinalRoot.class",
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class"
+      ],
+      "method": "distinctFinalStorage",
+      "args": [
+        99
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-final-alias",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalChild.class",
+        "bundle/m4b/finals/FinalRoot.class",
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class",
+        "bundle/m4b/finals/FinalParent.class"
+      ],
+      "method": "finalAlias",
+      "args": [
+        41
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-inherited-final",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalRoot.class",
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class",
+        "bundle/m4b/finals/FinalParent.class",
+        "bundle/m4b/finals/FinalChild.class"
+      ],
+      "method": "inheritedFinal",
+      "args": [
+        12
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-final-final-object-mutation-overflow",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/finals/FinalRoot.java"
+      ],
+      "class": "bundle.m4b.finals.FinalRoot",
+      "class_files": [
+        "bundle/m4b/finals/FinalHolder.class",
+        "bundle/m4b/finals/FinalCell.class",
+        "bundle/m4b/finals/FinalParent.class",
+        "bundle/m4b/finals/FinalChild.class",
+        "bundle/m4b/finals/FinalRoot.class"
+      ],
+      "method": "finalObjectMutation",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-prepared-null",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class"
+      ],
+      "method": "preparedNull",
+      "args": [
+        51
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-initializer-allocation",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class"
+      ],
+      "method": "initializerAllocation",
+      "args": [
+        2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-initializer-array-in-object",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class"
+      ],
+      "method": "initializerArrayInObject",
+      "args": [
+        -88
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-static-alias",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class"
+      ],
+      "method": "staticAlias",
+      "args": [
+        52
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-static-replacement",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class"
+      ],
+      "method": "staticReplacement",
+      "args": [
+        17
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-helper-returns-object",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class"
+      ],
+      "method": "helperReturnsObject",
+      "args": [
+        -90
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-reentrant-prepared-null",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class"
+      ],
+      "method": "reentrantPreparedNull",
+      "args": [
+        53
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-reentrant-allocated-alias",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class"
+      ],
+      "method": "reentrantAllocatedAlias",
+      "args": [
+        54
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-superclass-initialization-order",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class"
+      ],
+      "method": "superclassInitializationOrder",
+      "args": [
+        3
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-superclass-object-ready",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class"
+      ],
+      "method": "superclassObjectReady",
+      "args": [
+        4
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-new-triggers-initialization",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class"
+      ],
+      "method": "newTriggersInitialization",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-initialized-once",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class"
+      ],
+      "method": "initializedOnce",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-static-object-to-object",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/MutableOwner.class",
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class"
+      ],
+      "method": "staticObjectToObject",
+      "args": [
+        55
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-init-static-array-to-object",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/init/InitRoot.java"
+      ],
+      "class": "bundle.m4b.init.InitRoot",
+      "class_files": [
+        "bundle/m4b/init/ReentrantOwner.class",
+        "bundle/m4b/init/InitParent.class",
+        "bundle/m4b/init/InitChild.class",
+        "bundle/m4b/init/LazyAllocated.class",
+        "bundle/m4b/init/OnceObject.class",
+        "bundle/m4b/init/InitRoot.class",
+        "bundle/m4b/init/InitCell.class",
+        "bundle/m4b/init/PreparedOwner.class",
+        "bundle/m4b/init/AllocOwner.class",
+        "bundle/m4b/init/MutableOwner.class"
+      ],
+      "method": "staticArrayToObject",
+      "args": [
+        56
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-error-constructor-arithmetic",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class"
+      ],
+      "method": "constructorArithmetic",
+      "args": [
+        40,
+        0
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m4b-error-constructor-null-read",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class"
+      ],
+      "method": "constructorNullRead",
+      "args": [
+        1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4b-error-super-constructor-arithmetic",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class"
+      ],
+      "method": "superConstructorArithmetic",
+      "args": [
+        40,
+        0
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m4b-error-null-get-field",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class"
+      ],
+      "method": "nullGetField",
+      "args": [
+        2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4b-error-null-put-field",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class"
+      ],
+      "method": "nullPutField",
+      "args": [
+        3
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4b-error-null-reference-get-field",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class"
+      ],
+      "method": "nullReferenceGetField",
+      "args": [
+        4
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4b-error-null-private-special",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class"
+      ],
+      "method": "nullPrivateSpecial",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4b-error-valid-private-special",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class"
+      ],
+      "method": "validPrivateSpecial",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-error-clinit-constructor-arithmetic",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class"
+      ],
+      "method": "clinitConstructorArithmetic",
+      "args": [
+        7
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4b-error-clinit-constructor-npe",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class"
+      ],
+      "method": "clinitConstructorNpe",
+      "args": [
+        8
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4b-error-constructor-after-allocation",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class"
+      ],
+      "method": "constructorAfterAllocation",
+      "args": [
+        9
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-error-constructor-arithmetic-value",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/FailingParent.class",
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class"
+      ],
+      "method": "constructorArithmetic",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-error-super-constructor-arithmetic-value",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4b.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4b/errors/FailingChild.class",
+        "bundle/m4b/errors/ArithmeticInit.class",
+        "bundle/m4b/errors/NullInit.class",
+        "bundle/m4b/errors/ErrorRoot.class",
+        "bundle/m4b/errors/ErrorCell.class",
+        "bundle/m4b/errors/NullReadingCtor.class",
+        "bundle/m4b/errors/FailingParent.class"
+      ],
+      "method": "superConstructorArithmetic",
+      "args": [
+        81,
+        9
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-cross-access-public-constructor-field",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/child/CrossAccessRoot.java",
+        "bundle/m4b/access/api/PublicObject.java",
+        "bundle/m4b/access/base/ProtectedBase.java"
+      ],
+      "class": "bundle.m4b.access.child.CrossAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/base/ProtectedBase.class",
+        "bundle/m4b/access/child/CrossAccessRoot.class",
+        "bundle/m4b/access/api/PublicObject.class"
+      ],
+      "method": "publicConstructorField",
+      "args": [
+        70
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-cross-access-public-field-write",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/child/CrossAccessRoot.java",
+        "bundle/m4b/access/api/PublicObject.java",
+        "bundle/m4b/access/base/ProtectedBase.java"
+      ],
+      "class": "bundle.m4b.access.child.CrossAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/child/CrossAccessRoot.class",
+        "bundle/m4b/access/api/PublicObject.class",
+        "bundle/m4b/access/base/ProtectedBase.class"
+      ],
+      "method": "publicFieldWrite",
+      "args": [
+        -70
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-cross-access-public-reference-field",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/child/CrossAccessRoot.java",
+        "bundle/m4b/access/api/PublicObject.java",
+        "bundle/m4b/access/base/ProtectedBase.java"
+      ],
+      "class": "bundle.m4b.access.child.CrossAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/api/PublicObject.class",
+        "bundle/m4b/access/base/ProtectedBase.class",
+        "bundle/m4b/access/child/CrossAccessRoot.class"
+      ],
+      "method": "publicReferenceField",
+      "args": [
+        61
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-cross-access-public-static-accessor",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/child/CrossAccessRoot.java",
+        "bundle/m4b/access/api/PublicObject.java",
+        "bundle/m4b/access/base/ProtectedBase.java"
+      ],
+      "class": "bundle.m4b.access.child.CrossAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/base/ProtectedBase.class",
+        "bundle/m4b/access/child/CrossAccessRoot.class",
+        "bundle/m4b/access/api/PublicObject.class"
+      ],
+      "method": "publicStaticAccessor",
+      "args": [
+        72
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-cross-access-public-static-transport",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/child/CrossAccessRoot.java",
+        "bundle/m4b/access/api/PublicObject.java",
+        "bundle/m4b/access/base/ProtectedBase.java"
+      ],
+      "class": "bundle.m4b.access.child.CrossAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/child/CrossAccessRoot.class",
+        "bundle/m4b/access/api/PublicObject.class",
+        "bundle/m4b/access/base/ProtectedBase.class"
+      ],
+      "method": "publicStaticTransport",
+      "args": [
+        62
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-cross-access-protected-field",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/child/CrossAccessRoot.java",
+        "bundle/m4b/access/api/PublicObject.java",
+        "bundle/m4b/access/base/ProtectedBase.java"
+      ],
+      "class": "bundle.m4b.access.child.CrossAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/api/PublicObject.class",
+        "bundle/m4b/access/base/ProtectedBase.class",
+        "bundle/m4b/access/child/CrossAccessRoot.class"
+      ],
+      "method": "protectedField",
+      "args": [
+        73
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-cross-access-protected-direct-super",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/child/CrossAccessRoot.java",
+        "bundle/m4b/access/api/PublicObject.java",
+        "bundle/m4b/access/base/ProtectedBase.java"
+      ],
+      "class": "bundle.m4b.access.child.CrossAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/base/ProtectedBase.class",
+        "bundle/m4b/access/child/CrossAccessRoot.class",
+        "bundle/m4b/access/api/PublicObject.class"
+      ],
+      "method": "protectedDirectSuper",
+      "args": [
+        74
+      ],
+      "gas_limit": 65000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-same-access-package-constructor",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/same/SameAccessRoot.java"
+      ],
+      "class": "bundle.m4b.access.same.SameAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/same/SameAccessRoot.class",
+        "bundle/m4b/access/same/PackageObject.class"
+      ],
+      "method": "packageConstructor",
+      "args": [
+        80
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-same-access-package-field-write",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/same/SameAccessRoot.java"
+      ],
+      "class": "bundle.m4b.access.same.SameAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/same/PackageObject.class",
+        "bundle/m4b/access/same/SameAccessRoot.class"
+      ],
+      "method": "packageFieldWrite",
+      "args": [
+        -80
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-same-access-package-reference",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/same/SameAccessRoot.java"
+      ],
+      "class": "bundle.m4b.access.same.SameAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/same/SameAccessRoot.class",
+        "bundle/m4b/access/same/PackageObject.class"
+      ],
+      "method": "packageReference",
+      "args": [
+        63
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4b-same-access-same-package-protected",
+      "stage": "m4b",
+      "sources": [
+        "bundle/m4b/access/same/SameAccessRoot.java"
+      ],
+      "class": "bundle.m4b.access.same.SameAccessRoot",
+      "class_files": [
+        "bundle/m4b/access/same/PackageObject.class",
+        "bundle/m4b/access/same/SameAccessRoot.class"
+      ],
+      "method": "samePackageProtected",
+      "args": [
+        82
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }

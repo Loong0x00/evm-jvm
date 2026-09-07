@@ -4,12 +4,12 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 613 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
-73 `m3b`, 85 `m3c`, 72 `m3d`, and 115 `m4a` cases. The 238 smoke cases include
-73 from `m4a`. Every root entry remains a uniquely named, declared public static
-`(int...)int` method, and guest sources have no `main`. All 498 entries through
-M3d, including their source lists, arguments, budgets, tiers, and outcomes, are
-unchanged.
+The manifest has 713 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, and 100 `m4b` cases. The 289 smoke
+cases include 51 from `m4b`. Every root entry remains a uniquely named, declared
+public static `(int...)int` method, and guest sources have no `main`. All 613
+entries through M4a, including their source lists, arguments, budgets, tiers,
+and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -156,12 +156,60 @@ bounds failures while an active initializer executes. There is deliberately no
 host-JVM heap-exhaustion fixture: M4a's EVM logical array/element caps are not a
 reference-JVM OOM contract and belong in focused runtime tests.
 
-Across all stages there are 571 value outcomes, 12 ArithmeticException outcomes,
-three StackOverflowError outcomes, 11 ExceptionInInitializerError outcomes, two
+M4b adds 91 value outcomes and nine actual JVM exception outcomes over nine new
+trusted Java 8 sources, which emit 37 ordinary classfiles. It exercises:
+
+- default `int`, object, and `int[]` instance fields; constructor writes and
+  argument order; field assignment/increment stack shapes; aliases, distinct
+  objects, null, identity, and replacement;
+- ordinary objects and `int[]` values transported through typed and `Object`
+  locals, instance/static fields, private instance methods, and static helpers,
+  including interleaved object/array allocations and mixed-heap identity;
+- private instance helpers with integer/reference arguments and returns, void
+  mutation, and bounded recursion, all selected as Java 8 `invokespecial`;
+- `this(...)` and `super(...)` constructor chains, constructor-time nested
+  allocation, inherited fields, three independently hidden same-name field
+  slots, inherited finals, and direct-super selection of the immediate parent's
+  implementation under `ACC_SUPER`;
+- constructor-assigned and declaration-initialized final instance fields,
+  inherited finals, final object/array references, and mutation of their targets;
+- prepared-null and mutable static object fields, initializer allocation,
+  reentrant prepared-state observation, initializer aliases, superclass-before-
+  subclass initialization, initialization on `new`, and once-only initialization;
+- valid package-private, protected, and public field/constructor accesses in the
+  same package and across packages, plus public static accessors rather than
+  excluded public instance calls.
+
+Two cases propagate `java.lang.ArithmeticException` from ordinary constructors,
+five propagate `java.lang.NullPointerException` from a constructor, null
+`getfield`, null `putfield`, nested null field access, or a null private-special
+receiver, and two report `java.lang.ExceptionInInitializerError` when constructor
+ArithmeticException/NPE occurs during active class initialization. Value variants
+separately prove the same ordinary constructor paths complete normally.
+
+The M4b manifest bundle paths cover exactly these emitted classfiles:
+
+- `bundle/m4b/core/{CoreRoot,CoreCell,CorePair}.class`
+- `bundle/m4b/constructors/{CtorRoot,CtorBase,CtorMiddle,CtorChild,CoreToken,DefaultWitness,ArgumentOwner}.class`
+- `bundle/m4b/finals/{FinalRoot,FinalHolder,FinalCell,FinalParent,FinalChild}.class`
+- `bundle/m4b/init/{InitRoot,InitCell,PreparedOwner,AllocOwner,MutableOwner,ReentrantOwner,InitParent,InitChild,LazyAllocated,OnceObject}.class`
+- `bundle/m4b/errors/{ErrorRoot,ErrorCell,NullReadingCtor,FailingParent,FailingChild,ArithmeticInit,NullInit}.class`
+- `bundle/m4b/access/api/PublicObject.class`,
+  `bundle/m4b/access/base/ProtectedBase.class`,
+  `bundle/m4b/access/child/CrossAccessRoot.class`, and
+  `bundle/m4b/access/same/{SameAccessRoot,PackageObject}.class`
+
+Every case has an explicit ordered `class_files` bundle, with permutations that
+place the entry root first, in the middle, or last. No fixture supplies
+`java/lang/Object.class`; M4b therefore also exercises the runtime's separately
+owned embedded minimal Object bootstrap path.
+
+Across all stages there are 662 value outcomes, 14 ArithmeticException outcomes,
+three StackOverflowError outcomes, 13 ExceptionInInitializerError outcomes, two
 NegativeArraySizeException outcomes, seven ArrayIndexOutOfBoundsException
-outcomes, and seven NullPointerException outcomes. Every gas limit is finite and
-at most 50,000,000; every subprocess timeout is at most 10 seconds. New arrays
-have at most eight elements, and all fixture loops and recursions are bounded and
+outcomes, and 12 NullPointerException outcomes. Every gas limit is finite and at
+most 70,000,000; every subprocess timeout is at most 10 seconds. New arrays have
+at most eight elements, and all fixture loops and recursions are bounded and
 modest.
 
 All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
@@ -194,6 +242,11 @@ java -cp "$out" OracleMain bundle.m4a.helpers.ArrayRoot crossClassAlias 71
 java -cp "$out" OracleMain bundle.m4a.inheritance.InheritanceRoot siblingSharedWrite 1 99
 java -cp "$out" OracleMain bundle.m4a.init.InitRoot helperCalledOnce 0
 java -cp "$out" OracleMain bundle.m4a.errors.NegativeInit entry 0
+java -cp "$out" OracleMain bundle.m4b.core.CoreRoot privateRecursion 6
+java -cp "$out" OracleMain bundle.m4b.constructors.CtorRoot directSuperSelection 5
+java -cp "$out" OracleMain bundle.m4b.init.InitRoot reentrantPreparedNull 53
+java -cp "$out" OracleMain bundle.m4b.errors.ErrorRoot nullPrivateSpecial 5
+java -cp "$out" OracleMain bundle.m4b.access.child.CrossAccessRoot protectedDirectSuper 74
 rm -rf "$out"
 ```
 
@@ -219,15 +272,34 @@ find "$out/bundle/m4a" -name '*.class' -print | sort | while read -r file; do
   class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
   javap -classpath "$out" -c -v -p "$class"
 done
+find "$out/bundle/m4b" -name '*.class' -print | sort | while read -r file; do
+  class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
+  javap -classpath "$out" -c -v -p "$class"
+done
 rm -rf "$out"
 ```
 
 A full local reference compile and 613 fresh `OracleMain` JVM invocations passed
-for this fixture revision. This checks each manifest result against the actual JVM
-rather than storing hardcoded value answers. The resulting outcomes match the
-cumulative counts above. In particular, the three initializer array failures are
-genuine root `ExceptionInInitializerError` results from `Class.forName`, while
-body array failures are the exact underlying JVM exception classes.
+for the prior accepted fixture revision. For M4b, seven fresh per-bundle
+`javac --release 8` compilations followed by 100 separate `OracleMain` JVM
+invocations with a finite 64 MiB heap and per-case timeout all passed. This checks
+each manifest result against the actual JVM rather than storing hardcoded value
+answers. The M4b run produced 91 values and exactly the nine declared exception
+outcomes; the ordered `(case id, value)` results have SHA256
+`2bc61e2e626632aa337aaeb845e7c83f3bb0c0ea7de76a2aa39324aaa5a64151`.
+The resulting outcomes match the cumulative counts above.
+
+`javap -c -v -p` over all 37 emitted M4b classes found only Java 8 major version
+52 classfiles and zero interfaces. Aggregate selected-profile instruction shapes
+include 100 `new`, 112 `getfield`, 62 `putfield`, 157 `invokespecial`, 12
+`invokestatic`, seven `newarray int`, five `iaload`, five `iastore`, nine
+`areturn`, and six `aconst_null`. Inspection found zero `invokevirtual`,
+`invokeinterface`, `checkcast`, `instanceof`, reference/multidimensional array,
+handler/throw, monitor, invokedynamic, or excluded library-API calls (the
+required constructor chains end at `Object.<init>()V`). In particular,
+`CtorChild.directSuper` names `CtorMiddle.selected:(I)I`, and private helper
+calls and recursion use `invokespecial`; public cross-package behavior uses
+fields, constructors, and static helpers only.
 
 `javap -c -v -p` over the 18 M4a classes found only Java 8 major version 52
 classfiles, zero interfaces, 13 `[I` fields, five `I` fields, seven `<clinit>`
@@ -269,10 +341,10 @@ python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All 498 pre-M4a cases passed actual JVM/EVM comparison after M3d parent
-integration, including independent hierarchy/member/init checks. The 115 M4a
-fixtures have passed the actual JVM oracle and classfile-profile checks, but the
-M4a runner/runtime work is separately owned and pending integration; this
-fixture revision does **not** claim an EVM pass. The runtime remains over mainnet
-deployment size and runs through local runtime.Execute, not CREATE. This remains
-subset verification, not full JVM conformance.
+All 613 cases through M4a are the accepted baseline. The 100 M4b fixtures have
+passed the actual JVM oracle and classfile-profile checks, but the baseline
+runner intentionally rejects the new stage until separately owned verifier and
+runtime integration; this fixture revision does **not** claim an M4b EVM pass.
+The runtime remains over mainnet deployment size and runs through local
+runtime.Execute, not CREATE. This remains subset verification, not full JVM
+conformance.
