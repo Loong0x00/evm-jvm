@@ -29,7 +29,7 @@ class Parent {
 	}, "Child", `System.out.print(Child.run());`, "7")
 
 	result, err := Run(classfile, "run", nil, headerProfileGasLimit)
-	assertSolidityError(t, result, err, "LinkError(uint256,uint256)", 5, 0)
+	assertSolidityError(t, result, err, "HierarchyError(uint256,uint256)", 1, 0)
 	t.Logf("legacy custom-super guard gas=%d", result.GasUsed)
 }
 
@@ -81,7 +81,7 @@ func TestLegacyRunHeaderProfileValidationAndCompatibility(t *testing.T) {
 	zeroSuper := append([]byte(nil), plain...)
 	binary.BigEndian.PutUint16(zeroSuper[accessOffset+4:], 0)
 	zeroResult, zeroErr := Run(zeroSuper, "run", nil, headerProfileGasLimit)
-	assertSolidityError(t, zeroResult, zeroErr, "LinkError(uint256,uint256)", 5, 0)
+	assertSolidityError(t, zeroResult, zeroErr, "HierarchyError(uint256,uint256)", 4, 0)
 
 	marker := compileJava(t, "DirectFace", `public interface DirectFace {
 	static int run() { return 1; }

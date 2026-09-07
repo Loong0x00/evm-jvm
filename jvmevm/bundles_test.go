@@ -137,7 +137,12 @@ func TestRunClassesFrozenLinkErrorsAndLazyUnsupportedClasses(t *testing.T) {
 		[][]byte{base["Synchronized"]}, "Synchronized", "get", []int32{7}, 30_000_000,
 	)
 	assertErrorSelector(t, unsupportedResult, unsupportedErr, "MethodError(uint256)")
-	assertBundleError(t, [][]byte{base["Base"], base["Child"]}, "Child", "run", []int32{7}, "LinkError(uint256,uint256)", 5, 1)
+	inherited, err := RunClasses(
+		[][]byte{base["Base"], base["Child"]}, "Child", "run", []int32{7}, 30_000_000,
+	)
+	if err != nil || inherited.Value != 7 {
+		t.Fatalf("supplied ordinary superclass result = %+v/%v, want 7", inherited, err)
+	}
 	assertBundleError(t, [][]byte{base["Face"]}, "Face", "run", []int32{7}, "LinkError(uint256,uint256)", 5, 0)
 
 	bad := append([]byte(nil), peer...)
