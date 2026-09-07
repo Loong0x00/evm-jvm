@@ -1,8 +1,9 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M3a** (static calls, explicit Java frames, recursion),
-recorded in `JAVA_EVM_M3A_PLAN.md`. Next: **M3b raw multi-class loading/linking**;
-static state/initialization follows as a separate bounded stage.
+recorded in `JAVA_EVM_M3A_PLAN.md`. Active: **M3b raw multi-class loading/linking**,
+with frozen API/error/worker scopes in `JAVA_EVM_M3B_PLAN.md`.
+Static state/initialization follows as a separate bounded stage.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
 superseding earlier stop-after-each-batch instructions. Worker scope comes from
 the current frozen batch plan; wider stages are not conformance claims.
@@ -21,6 +22,8 @@ worker delivery history. For new delegated work, use the explicitly assigned
 worktree based on the latest integration revision, not an old worker tree.
 Worktrees separate edits, not security permissions. Respect frozen task write
 sets; only one worker edits the monolithic Solidity dispatcher at a time.
+The differential oracle executes Java on the host: use only trusted generated
+fixtures here; untrusted external programs/corpora require isolation first.
 
 ## Relevant map / execution boundary
 
