@@ -1,7 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M2b** (integer expressions and uncaught arithmetic
-outcomes), recorded in `JAVA_EVM_M2B_PLAN.md`. Next: **M3a static calls/frames**.
+outcomes), recorded in `JAVA_EVM_M2B_PLAN.md`. Active: **M3a static calls/frames**,
+with frozen worker scopes and error/interface contracts in `JAVA_EVM_M3A_PLAN.md`.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
 superseding earlier stop-after-each-batch instructions. Worker scope comes from
 the current frozen batch plan; wider stages are not conformance claims.

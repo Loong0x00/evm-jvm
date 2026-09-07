@@ -64,7 +64,7 @@ routine permission to start the next verified increment.
 |---|---|---|
 | V0 / M2a | oracle/replay gates + integer control flow | accepted at 3216753 |
 | M2b | int constants/arithmetic/bitwise/conversions + explicit uncaught arithmetic exception outcome | accepted; JAVA_EVM_M2B_PLAN.md |
-| M3a | same-class static calls, explicit Java frames/returns/recursion | next active batch |
+| M3a | same-class static calls, explicit Java frames/returns/recursion | active batch; JAVA_EVM_M3A_PLAN.md |
 | M3b | raw multi-class input, EVM-side resolution/linking, static state/init | queued |
 | M4 | arrays, object allocation/fields, reference values and dispatch | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
@@ -77,8 +77,9 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M2b is integrated and independently accepted: 201 fixed oracle cases plus 293
-parent probes passed, including explicit uncaught arithmetic exceptions. The
-parent's next action is to freeze and dispatch M3a static calls/frames/recursion
-with independent fixtures and protocol/validation work in separate worktrees.
-Do not stop to ask the user to say 'continue'; preserve current last-green gates.
+M2b is integrated and independently accepted at **3e53fae**: 201 fixed oracle
+cases plus 293 parent probes passed, including explicit uncaught arithmetic
+exceptions. M3a protocol is frozen in `JAVA_EVM_M3A_PLAN.md`; dispatch runtime,
+fixtures and independent verifier workers in separate worktrees. After M3a
+acceptance, proceed to the next class/runtime dependency slice rather than asking
+for routine 'continue' permission. Keep the current last-green gates.
