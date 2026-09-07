@@ -1601,8 +1601,8 @@ contract JVMSubsetInterpreter {
             if (sp == 0) revert BytecodeError(3, pc);
             return _push(stack, sp, stack[sp - 1], pc);
         }
-        uint256 need = (op == 0x5a || op == 0x5b || op == 0x5c || op == 0x5f) ? 2
-            : (op == 0x5d ? 3 : 4);
+        uint256 need = (op == 0x5a || op == 0x5c || op == 0x5f) ? 2
+            : (op == 0x5b || op == 0x5d ? 3 : 4);
         if (sp < need) revert BytecodeError(3, pc);
         if (op == 0x5f) { // swap
             (stack[sp - 2], stack[sp - 1]) = (stack[sp - 1], stack[sp - 2]);

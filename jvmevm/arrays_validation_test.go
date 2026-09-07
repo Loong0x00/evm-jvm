@@ -15,7 +15,10 @@ import (
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-const verifyM4aGasLimit = uint64(100_000_000)
+const (
+	verifyM4aGasLimit         = uint64(100_000_000)
+	verifyM4aCapacityGasLimit = uint64(250_000_000)
+)
 
 // All Java below is trusted test input. Test-only bytecode mutation is used only
 // to isolate verifier failures that javac cannot emit. Production Run/RunClasses
@@ -232,12 +235,22 @@ func TestVerifyM4aLogicalHeapCapsAndNoGCAccounting(t *testing.T) {
 	verifyM4aAssertException(t, func() (Result, error) {
 		return Run(classfile, "arrays", []int32{1025}, verifyM4aGasLimit)
 	}, "java.lang.OutOfMemoryError", 7)
-	verifyM4aAssertValue(t, func() (Result, error) {
-		return Run(classfile, "exactTotal", nil, verifyM4aGasLimit)
-	}, 262144)
-	verifyM4aAssertException(t, func() (Result, error) {
-		return Run(classfile, "overTotal", nil, verifyM4aGasLimit)
-	}, "java.lang.OutOfMemoryError", 7)
+	// Four maximum-size arrays are within the logical cap, but EVM memory's
+	// quadratic expansion cost genuinely exceeds the generic 100M test budget.
+	lowGasResult, lowGasErr := Run(classfile, "exactTotal", nil, verifyM4aGasLimit)
+	if lowGasErr == nil || !errors.Is(lowGasErr, vm.ErrOutOfGas) {
+		t.Fatalf("exactTotal at 100M result/error = %+v/%v, want true EVM out of gas", lowGasResult, lowGasErr)
+	}
+	if lowGasResult.ExceptionClass != "" || len(lowGasResult.RevertData) != 0 {
+		t.Fatalf("exactTotal OOG was mislabeled as Java OOM: %+v", lowGasResult)
+	}
+
+	exactResult, exactErr := Run(classfile, "exactTotal", nil, verifyM4aCapacityGasLimit)
+	verifyM4aAssertValue(t, func() (Result, error) { return exactResult, exactErr }, 262144)
+	t.Logf("exactTotal gas used with %d budget: %d", verifyM4aCapacityGasLimit, exactResult.GasUsed)
+	overResult, overErr := Run(classfile, "overTotal", nil, verifyM4aCapacityGasLimit)
+	verifyM4aAssertException(t, func() (Result, error) { return overResult, overErr }, "java.lang.OutOfMemoryError", 7)
+	t.Logf("overTotal gas used with %d budget: %d", verifyM4aCapacityGasLimit, overResult.GasUsed)
 	// The 1025 allocations above are unreachable immediately, but still count:
 	// this stage deliberately has no GC. A fresh invocation resets the counter.
 	verifyM4aAssertValue(t, func() (Result, error) {
@@ -329,6 +342,43 @@ func TestVerifyM4aAllCategoryOneStackPermutationFormsPreserveValueAndKind(t *tes
 			verifyM4aAssertValue(t, func() (Result, error) {
 				return Run(classfile, tc.name, nil, verifyM4aGasLimit)
 			}, tc.want)
+		})
+	}
+}
+
+func TestVerifyM4aAllCategoryOneStackPermutationUnderflows(t *testing.T) {
+	original := verifyM4aCompileStackFixture(t, []string{
+		"popUnderflow", "pop2Underflow", "dupUnderflow", "dupX1Underflow", "dupX2Underflow",
+		"dup2Underflow", "dup2X1Underflow", "dup2X2Underflow", "swapUnderflow",
+	})
+	tests := []struct {
+		name string
+		op   byte
+		need int
+	}{
+		{"popUnderflow", 0x57, 1},
+		{"pop2Underflow", 0x58, 2},
+		{"dupUnderflow", 0x59, 1},
+		{"dupX1Underflow", 0x5a, 2},
+		{"dupX2Underflow", 0x5b, 3},
+		{"dup2Underflow", 0x5c, 2},
+		{"dup2X1Underflow", 0x5d, 3},
+		{"dup2X2Underflow", 0x5e, 4},
+		{"swapUnderflow", 0x5f, 2},
+	}
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			// Supply exactly one fewer category-1 value than the form requires.
+			code := make([]byte, 0, tc.need+1)
+			for i := 1; i < tc.need; i++ {
+				code = append(code, 0x04) // iconst_1
+			}
+			pc := uint64(len(code))
+			code = append(code, tc.op, 0xac)
+			classfile := verifyM4aRewriteCode(t, original, tc.name, "()I", code)
+			verifyM4aAssertError(t, func() (Result, error) {
+				return Run(classfile, tc.name, nil, verifyM4aGasLimit)
+			}, "BytecodeError(uint256,uint256)", 3, pc)
 		})
 	}
 }
