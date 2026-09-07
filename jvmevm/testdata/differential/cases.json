@@ -1,0 +1,1343 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "m1-identity-zero",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "identity",
+      "args": [
+        0
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-identity-positive",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "identity",
+      "args": [
+        123456789
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-identity-negative",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "identity",
+      "args": [
+        -987654321
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-identity-max",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "identity",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-identity-min",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "identity",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-add-basic",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "add",
+      "args": [
+        20,
+        22
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-add-zeroes",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "add",
+      "args": [
+        0,
+        0
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-add-mixed-sign",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "add",
+      "args": [
+        -200,
+        75
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-add-negative",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "add",
+      "args": [
+        -1000000,
+        -2000000
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-add-overflow-positive",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "add",
+      "args": [
+        2147483647,
+        1
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-add-overflow-negative",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "add",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m1-add-max-pair",
+      "stage": "m1",
+      "sources": [
+        "M1Baseline.java"
+      ],
+      "class": "M1Baseline",
+      "method": "add",
+      "args": [
+        2147483647,
+        2147483647
+      ],
+      "gas_limit": 2000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-constant-minus-one",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "minusOne",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-constant-zero",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "zero",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-constant-one",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "one",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-constant-two",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "two",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-constant-three",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "three",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-constant-four",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "four",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-constant-five",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "five",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-bipush-add",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "addByte",
+      "args": [
+        23
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-bipush-add-overflow",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "addByte",
+      "args": [
+        2147483600
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-bipush-negative",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "addNegativeByte",
+      "args": [
+        -23
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sipush-add",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "addShort",
+      "args": [
+        1234
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sipush-add-overflow",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "addShort",
+      "args": [
+        2147480000
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sipush-subtract",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "subtractShort",
+      "args": [
+        -1234
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sipush-negative",
+      "stage": "m2",
+      "sources": [
+        "Constants.java"
+      ],
+      "class": "Constants",
+      "method": "negativeShort",
+      "args": [],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-subtract-basic",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "subtract",
+      "args": [
+        100,
+        58
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-subtract-negative",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "subtract",
+      "args": [
+        -200,
+        75
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-subtract-overflow-positive",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "subtract",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-subtract-overflow-negative",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "subtract",
+      "args": [
+        -2147483648,
+        1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-store-local-zero",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "store0",
+      "args": [
+        11,
+        -22
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-store-local-one",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "store1",
+      "args": [
+        -33,
+        44
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-store-local-two",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "store2",
+      "args": [
+        100,
+        23,
+        -999
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-store-local-three",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "store3",
+      "args": [
+        10,
+        20,
+        12,
+        -999
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-generic-locals-basic",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "genericLocals",
+      "args": [
+        10,
+        20,
+        30,
+        40
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-generic-locals-wrap",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "genericLocals",
+      "args": [
+        2147483647,
+        1,
+        -2,
+        3
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-one",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "increment",
+      "args": [
+        41
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-one-overflow",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "increment",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-minus-one",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "decrement",
+      "args": [
+        -41
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-minus-one-overflow",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "decrement",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-positive-127",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "increment127",
+      "args": [
+        1000
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-positive-127-overflow",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "increment127",
+      "args": [
+        2147483600
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-negative-128",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "decrement128",
+      "args": [
+        -1000
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-iinc-negative-128-overflow",
+      "stage": "m2",
+      "sources": [
+        "LocalsAndArithmetic.java"
+      ],
+      "class": "LocalsAndArithmetic",
+      "method": "decrement128",
+      "args": [
+        -2147483600
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-eq-zero-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "equalZero",
+      "args": [
+        0
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-eq-zero-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "equalZero",
+      "args": [
+        7
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-ne-zero-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "notEqualZero",
+      "args": [
+        7
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-ne-zero-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "notEqualZero",
+      "args": [
+        0
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-lt-zero-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessThanZero",
+      "args": [
+        -1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-lt-zero-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessThanZero",
+      "args": [
+        0
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-ge-zero-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterOrEqualZero",
+      "args": [
+        0
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-ge-zero-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterOrEqualZero",
+      "args": [
+        -1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-gt-zero-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterThanZero",
+      "args": [
+        1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-gt-zero-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterThanZero",
+      "args": [
+        0
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-le-zero-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessOrEqualZero",
+      "args": [
+        0
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-unary-le-zero-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessOrEqualZero",
+      "args": [
+        1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-eq-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "equal",
+      "args": [
+        -2147483648,
+        -2147483648
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-eq-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "equal",
+      "args": [
+        1,
+        2
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-ne-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "notEqual",
+      "args": [
+        1,
+        2
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-ne-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "notEqual",
+      "args": [
+        7,
+        7
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-lt-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessThan",
+      "args": [
+        -2147483648,
+        2147483647
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-lt-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessThan",
+      "args": [
+        2,
+        1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-ge-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterOrEqual",
+      "args": [
+        2147483647,
+        -2147483648
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-ge-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterOrEqual",
+      "args": [
+        -2,
+        -1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-gt-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterThan",
+      "args": [
+        1,
+        -1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-gt-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "greaterThan",
+      "args": [
+        -1,
+        1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-le-true",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessOrEqual",
+      "args": [
+        -1,
+        1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-binary-le-false",
+      "stage": "m2",
+      "sources": [
+        "Comparisons.java"
+      ],
+      "class": "Comparisons",
+      "method": "lessOrEqual",
+      "args": [
+        1,
+        -1
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sum-0",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "sum",
+      "args": [
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sum-1",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "sum",
+      "args": [
+        1
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sum-10",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "sum",
+      "args": [
+        10
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sum-25",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "sum",
+      "args": [
+        25
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-sum-100",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "sum",
+      "args": [
+        100
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-fibonacci-0",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "fibonacci",
+      "args": [
+        0
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-fibonacci-1",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "fibonacci",
+      "args": [
+        1
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-fibonacci-2",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "fibonacci",
+      "args": [
+        2
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-fibonacci-10",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "fibonacci",
+      "args": [
+        10
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-fibonacci-20",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "fibonacci",
+      "args": [
+        20
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-fibonacci-30",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "fibonacci",
+      "args": [
+        30
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-select-zero",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "select",
+      "args": [
+        0,
+        42,
+        -42
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-select-nonzero-positive",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "select",
+      "args": [
+        7,
+        42,
+        -42
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2-select-nonzero-negative",
+      "stage": "m2",
+      "sources": [
+        "Loops.java"
+      ],
+      "class": "Loops",
+      "method": "select",
+      "args": [
+        -7,
+        42,
+        -42
+      ],
+      "gas_limit": 4000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    }
+  ]
+}
