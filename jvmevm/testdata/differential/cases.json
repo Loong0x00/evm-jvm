@@ -1338,6 +1338,1977 @@
       "timeout_seconds": 10,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-positive",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "positiveLdc",
+      "args": [],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-negative",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "negativeLdc",
+      "args": [],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-max",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "maxLdc",
+      "args": [],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-min",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "minLdc",
+      "args": [],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-high-bit-pattern",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "highBitPattern",
+      "args": [],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-alternating-bits",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "alternatingBits",
+      "args": [],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-add",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "addLdc",
+      "args": [
+        23
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-add-overflow",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConstants.java"
+      ],
+      "class": "IntegerConstants",
+      "method": "addLdc",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ldc-wide-index",
+      "stage": "m2b",
+      "sources": [
+        "WideIntegerConstant.java"
+      ],
+      "class": "WideIntegerConstant",
+      "method": "loadWide",
+      "args": [],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-zero-min",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        0,
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-one-max",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        1,
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-negone-min-wrap",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        -1,
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-max-two-wrap",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        2147483647,
+        2
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-min-two-wrap",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        -2147483648,
+        2
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-mixed-sign",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        -7,
+        6
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-both-negative",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        -7,
+        -6
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-square-overflow",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        46341,
+        46341
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-power-overflow-zero",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        65536,
+        65536
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-imul-large-mixed",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "multiply",
+      "args": [
+        123456789,
+        -17
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-exact",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        42,
+        6
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-truncate",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        7,
+        3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-negative-dividend",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        -7,
+        3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-negative-divisor",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        7,
+        -3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-both-negative",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        -7,
+        -3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-min-negone",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-min-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        -2147483648,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-max-negone",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-smaller-than-divisor",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        1,
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-zero-dividend",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        0,
+        -7
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-max-two",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        2147483647,
+        2
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-idiv-zero-divisor",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "divide",
+      "args": [
+        7,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m2b-irem-positive",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        43,
+        6
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-truncate-pair",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        7,
+        3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-negative-dividend",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        -7,
+        3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-negative-divisor",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        7,
+        -3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-both-negative",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        -7,
+        -3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-min-negone",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-min-three",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        -2147483648,
+        3
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-max-negone",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-smaller-than-divisor",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        1,
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-zero-dividend",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        0,
+        -7
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-max-two",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        2147483647,
+        2
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-irem-zero-divisor",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "remainder",
+      "args": [
+        7,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m2b-ineg-zero",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "negate",
+      "args": [
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ineg-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "negate",
+      "args": [
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ineg-negone",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "negate",
+      "args": [
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ineg-max",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "negate",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ineg-min-wrap",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "negate",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ineg-positive",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "negate",
+      "args": [
+        123456789
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ineg-negative",
+      "stage": "m2b",
+      "sources": [
+        "IntegerArithmetic.java"
+      ],
+      "class": "IntegerArithmetic",
+      "method": "negate",
+      "args": [
+        -123456789
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-zero-distance",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        1,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-thirty-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        1,
+        31
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-thirty-two",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        1,
+        32
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-thirty-three",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        1,
+        33
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-negative-distance",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        1,
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-negative-value",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        -1,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-max-overflow",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        2147483647,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-min-overflow",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        -2147483648,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-pattern-four",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        305419896,
+        4
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishl-large-distance",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftLeft",
+      "args": [
+        305419896,
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-min-zero",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-min-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -2147483648,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-min-thirty-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -2147483648,
+        31
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-min-thirty-two",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -2147483648,
+        32
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-min-thirty-three",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -2147483648,
+        33
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-min-negative-distance",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-max-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        2147483647,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-negone-large-distance",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -1,
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-positive-pattern-four",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        305419896,
+        4
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ishr-negative-pattern-four",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRight",
+      "args": [
+        -305419896,
+        4
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-min-zero",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-min-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -2147483648,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-min-thirty-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -2147483648,
+        31
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-min-thirty-two",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -2147483648,
+        32
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-min-thirty-three",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -2147483648,
+        33
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-min-negative-distance",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-negone-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -1,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-negone-thirty-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -1,
+        31
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-max-one",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        2147483647,
+        1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iushr-negative-pattern-four",
+      "stage": "m2b",
+      "sources": [
+        "IntegerShifts.java"
+      ],
+      "class": "IntegerShifts",
+      "method": "shiftRightUnsigned",
+      "args": [
+        -305419896,
+        4
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iand-zeroes",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "and",
+      "args": [
+        0,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iand-all-ones-and-zero",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "and",
+      "args": [
+        -1,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iand-opposite-signs",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "and",
+      "args": [
+        -2147483648,
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iand-alternating",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "and",
+      "args": [
+        1431655765,
+        -1431655766
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-iand-mixed-patterns",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "and",
+      "args": [
+        305419896,
+        -2023406815
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ior-zeroes",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "or",
+      "args": [
+        0,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ior-all-ones-and-zero",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "or",
+      "args": [
+        -1,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ior-opposite-signs",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "or",
+      "args": [
+        -2147483648,
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ior-alternating",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "or",
+      "args": [
+        1431655765,
+        -1431655766
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ior-mixed-patterns",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "or",
+      "args": [
+        305419896,
+        -2023406815
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ixor-zeroes",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "xor",
+      "args": [
+        0,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ixor-all-ones-and-zero",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "xor",
+      "args": [
+        -1,
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ixor-opposite-signs",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "xor",
+      "args": [
+        -2147483648,
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ixor-alternating",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "xor",
+      "args": [
+        1431655765,
+        -1431655766
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-ixor-mixed-patterns",
+      "stage": "m2b",
+      "sources": [
+        "IntegerBitwise.java"
+      ],
+      "class": "IntegerBitwise",
+      "method": "xor",
+      "args": [
+        305419896,
+        -2023406815
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-0",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-127",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        127
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-128",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        128
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-255",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        255
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-256",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        256
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-neg1",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-min",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2b-max",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toByte",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-0",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-65535",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        65535
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-65536",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        65536
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-neg1",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-min",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-max",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-305419896",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        305419896
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2c-neg123456789",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toChar",
+      "args": [
+        -123456789
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-0",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        0
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-32767",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        32767
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-32768",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        32768
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-65535",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        65535
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-65536",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        65536
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-neg1",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        -1
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-min",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        -2147483648
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m2b-i2s-max",
+      "stage": "m2b",
+      "sources": [
+        "IntegerConversions.java"
+      ],
+      "class": "IntegerConversions",
+      "method": "toShort",
+      "args": [
+        2147483647
+      ],
+      "gas_limit": 6000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
     }
   ]
 }
