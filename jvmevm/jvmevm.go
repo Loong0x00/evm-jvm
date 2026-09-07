@@ -8,7 +8,7 @@
 
 // Package jvmevm runs the generic, tiny JVM-subset interpreter whose checked-in
 // Solidity-compiled runtime executes inside geth's EVM. The host only ABI-packs
-// an unchanged classfile, method name, and int arguments.
+// unchanged classfiles, explicit entry metadata, and int arguments.
 package jvmevm
 
 import (
@@ -32,7 +32,7 @@ import (
 //go:embed runtime/JVMSubsetInterpreter.runtime.hex
 var runtimeHex string
 
-const interpreterABI = `[{"inputs":[{"internalType":"bytes","name":"rawClass","type":"bytes"},{"internalType":"string","name":"entry","type":"string"},{"internalType":"int32[]","name":"args","type":"int32[]"}],"name":"interpret","outputs":[{"internalType":"int32","name":"","type":"int32"}],"stateMutability":"pure","type":"function"}]`
+const interpreterABI = `[{"inputs":[{"internalType":"bytes","name":"rawClass","type":"bytes"},{"internalType":"string","name":"entry","type":"string"},{"internalType":"int32[]","name":"args","type":"int32[]"}],"name":"interpret","outputs":[{"internalType":"int32","name":"","type":"int32"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"bytes[]","name":"rawClasses","type":"bytes[]"},{"internalType":"string","name":"entryClass","type":"string"},{"internalType":"string","name":"entry","type":"string"},{"internalType":"int32[]","name":"args","type":"int32[]"}],"name":"interpretClasses","outputs":[{"internalType":"int32","name":"","type":"int32"}],"stateMutability":"pure","type":"function"}]`
 
 type Result struct {
 	Value          int32
@@ -110,6 +110,17 @@ func RuntimeHash() (string, error) {
 // the generic interpreter as EVM runtime bytecode. It does not inspect or alter
 // the classfile and does not execute Java on the host.
 func Run(classfile []byte, method string, args []int32, gasLimit uint64) (Result, error) {
+	return run("interpret", gasLimit, classfile, method, args)
+}
+
+// RunClasses ABI-encodes unchanged classfile bytes and the explicit JVM internal
+// entry-class name. Class declarations and call owners are inspected and linked
+// only by the EVM runtime.
+func RunClasses(classfiles [][]byte, entryClass, method string, args []int32, gasLimit uint64) (Result, error) {
+	return run("interpretClasses", gasLimit, classfiles, entryClass, method, args)
+}
+
+func run(method string, gasLimit uint64, inputs ...interface{}) (Result, error) {
 	code, contract, err := loadRuntime()
 	if err != nil {
 		return Result{}, err
@@ -119,7 +130,7 @@ func Run(classfile []byte, method string, args []int32, gasLimit uint64) (Result
 	if gasLimit == 0 {
 		return result, fmt.Errorf("gas limit must be greater than zero")
 	}
-	input, err := contract.Pack("interpret", classfile, method, args)
+	input, err := contract.Pack(method, inputs...)
 	if err != nil {
 		return result, fmt.Errorf("ABI-pack interpreter input: %w", err)
 	}
@@ -137,7 +148,7 @@ func Run(classfile []byte, method string, args []int32, gasLimit uint64) (Result
 		}
 		return result, fmt.Errorf("interpreter EVM execution failed: %w (revert_data=0x%x)", execErr, output)
 	}
-	values, err := contract.Methods["interpret"].Outputs.Unpack(output)
+	values, err := contract.Methods[method].Outputs.Unpack(output)
 	if err != nil {
 		return result, fmt.Errorf("decode interpreter EVM result: %w", err)
 	}

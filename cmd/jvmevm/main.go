@@ -1,8 +1,8 @@
 // Copyright 2026 The go-ethereum Authors
 // This file is part of go-ethereum.
 
-// jvmevm sends an unchanged classfile to a generic JVM-subset interpreter
-// implemented in EVM bytecode. It never parses or translates Java on the host.
+// jvmevm sends unchanged classfiles to a generic JVM-subset interpreter
+// implemented in EVM bytecode. It never parses, links, or translates Java on the host.
 package main
 
 import (
@@ -15,25 +15,43 @@ import (
 	"github.com/ethereum/go-ethereum/jvmevm"
 )
 
+type classPaths []string
+
+func (p *classPaths) String() string { return strings.Join(*p, ",") }
+func (p *classPaths) Set(value string) error {
+	*p = append(*p, value)
+	return nil
+}
+
 func main() {
-	classPath := flag.String("class", "", "path to an unchanged javac .class file")
+	var classes classPaths
+	flag.Var(&classes, "class", "path to an unchanged javac .class file (repeat for bundles)")
+	entryClass := flag.String("entry-class", "", "explicit JVM internal entry class name for bundle mode")
 	method := flag.String("method", "", "unambiguous static method name")
 	argText := flag.String("args", "", "comma-separated signed int32 arguments")
 	gas := flag.Uint64("gas", 2_000_000, "EVM gas limit")
 	flag.Parse()
-	if *classPath == "" || *method == "" {
-		fmt.Fprintln(os.Stderr, "usage: jvmevm -class Add.class -method add [-args 20,22] [-gas 2000000]")
+	if len(classes) == 0 || *method == "" || (len(classes) > 1 && *entryClass == "") {
+		fmt.Fprintln(os.Stderr, "usage: jvmevm -class Add.class [-class Helper.class -entry-class pkg/Add] -method add [-args 20,22] [-gas 2000000]")
 		os.Exit(2)
 	}
 	args, err := parseArgs(*argText)
 	if err != nil {
 		fatal(err)
 	}
-	classfile, err := os.ReadFile(*classPath)
-	if err != nil {
-		fatal(fmt.Errorf("read raw classfile: %w", err))
+	classfiles := make([][]byte, len(classes))
+	for i, path := range classes {
+		classfiles[i], err = os.ReadFile(path)
+		if err != nil {
+			fatal(fmt.Errorf("read raw classfile %q: %w", path, err))
+		}
 	}
-	result, err := jvmevm.Run(classfile, *method, args, *gas)
+	var result jvmevm.Result
+	if *entryClass == "" {
+		result, err = jvmevm.Run(classfiles[0], *method, args, *gas)
+	} else {
+		result, err = jvmevm.RunClasses(classfiles, *entryClass, *method, args, *gas)
+	}
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "jvmevm: %v (gas_used=%d runtime_sha256=%s)\n", err, result.GasUsed, result.RuntimeSHA256)
 		os.Exit(1)
