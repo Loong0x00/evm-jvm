@@ -159,8 +159,8 @@ python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All 341 M3b-and-earlier cases passed actual JVM/EVM comparison on one generic
-artifact after parent integration. The M3c fixtures and reference outcomes above
-are ready for the pending M3c runner/runtime integration; the old engine is not
-expected to execute the new field/initializer cases. See `JAVA_EVM_M3C_PLAN.md`
-for the frozen scope. This remains subset verification, not full JVM conformance.
+All426 cases now pass actual JVM/EVM comparison after M3c parent integration,
+including initializers and known Java outcomes. Earlier341 entries are unchanged.
+See `JAVA_EVM_M3C_PLAN.md` for independent acceptance/follow-up fixes. The runtime
+is over mainnet deployment size and used through local runtime.Execute. This
+remains subset verification, not full JVM conformance.

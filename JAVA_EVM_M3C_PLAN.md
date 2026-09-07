@@ -163,5 +163,45 @@ fields (javac normally inlines constants), but never in production APIs.
   size/deployment caveat, scope and last-green commit, then continue to hierarchy
   prerequisites/heap in a fresh bounded plan without routine confirmation.
 
-## Status
-M3c contract frozen for dispatch; no initialization implementation claim yet.
+## Status / independent acceptance
+
+**M3c accepted after independent fixes; continue to M3d hierarchy prerequisites.**
+
+- Runtime135fe43 integrated3676463; fixturesd442719→55ed126;
+  verifier7134bef→e2fc661. Old341 manifest entries remain unchanged.
+- Initial combined Go gate found a verifier-isolation error: a non-I field probe
+  also emitted unimplemented l2i, so predecode correctly failed first. Follow-up
+  verifier3ed2487→4a46313 changed that probe to getstatic B + ireturn, kept exact
+  FieldError3, and retained a separate exact BytecodeError(6,3) l2i-order test.
+- Parent then found a REAL legacy header gap: custom-super/interface initializers
+  were silently omitted, giving0 where actual JVM gave7/9. Follow-up runtime
+  guard4b3ae0f→f156299 validates superclass metadata and rejects unsupported
+  legacy headers with LinkError(5,0), preserving MethodError7 for direct interface
+  roots. No host parent loading or fake success. Parent/probe evidence and new
+  header_profile_test.go guard this until M3d provides actual hierarchy support.
+- Final pinned artifact: **29899 bytes**, SHA-256
+  `92735b7f7272587b3e4109a3cbfd84d9fa5e019e40b0392f3a8d030799e76796`.
+  Above EIP170's24576 deployment limit: accepted only in this direct temporary
+  runtime.Execute/SetCode harness. No CREATE/mainnet deployment claim/core changes.
+- Final make java-test passes focused Go/CLI and independent static/header
+  validations, 26 enabled Python tests, and **426/426** actual JVM/EVM outcomes:
+  407 values, 11 ArithmeticExceptions, 3 StackOverflowErrors, 5 EIIEs. Prior341
+  inputs/budgets preserved. AOT, focused vet and artifact rebuild checks pass.
+- Parent reviewed static storage/ConstantValue timing, retry-PC/operand retention,
+  same-thread initializing state, final-write permission after cache hits, actual
+  initializer frames and exact error/outcome decoding. Independent tests include
+  FieldError1–5/InitError1, static-nonfinal ConstantValue, ignored instance value,
+  helper final-write denial, initialization cycles/laziness/reset, EIIE vs Error/OOG.
+- Parent generated36 new JVM/EVM initialization-trace/cycle/postincrement/overflow
+  cases with shuffled bundles and fresh runs: all passed. Local replay evidence:
+  `build/java-diff-parent-m3c/probe-t_rixta4/results/`. Header divergence/guard
+  evidence: `build/java-diff-parent-m3c-header/probe-26p490yl/`.
+- Pre-header-guard runtime worker measured old341 aggregate gas +4.14% with all
+  budgets passing; final header guard adds small validation cost. No semantic
+  expectations or historical budgets were weakened. Demo remains within limits.
+- Worker additionally attempted broad upstream checks: reported a node test blocked
+  by an existing port7878 listener and an existing logger vet warning. These are
+  outside this scoped acceptance; no unrelated service/config/core changes made.
+- Still no superclass/interface semantics, heap/reference types, handlers, retry
+  of failed initialization, full exception objects/causes, class library or JVM
+  conformance claim. Those remain queued capability work.

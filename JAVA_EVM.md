@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M3b)
+# Java inside EVM: staged interpreter (M3c)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,6 +9,11 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
+**Local execution, not mainnet deployment:** the current 29,899-byte runtime
+exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
+runtime code directly into its temporary state; no CREATE/deployment is tested.
+Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:
@@ -16,10 +21,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 87 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (107 total)
-make java-full       # all 341 differential cases
-make java-test       # artifact check + Go tests + 26 runner tests + all 341 cases
+make java-smoke      # 128 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (148 total)
+make java-full       # all 426 differential cases
+make java-test       # artifact check + Go tests + 26 runner tests + all 426 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -35,7 +40,9 @@ six ArithmeticExceptions and one StackOverflowError). All previous 201 entries
 remain unchanged. Make gates use cumulative `--stage all`; explicit older stages
 still select historical subsets. M3b adds 73 raw-bundle cases: 341 total
 (329 values, 10 ArithmeticExceptions, 2 StackOverflowErrors). Previous 268 entries
-are unchanged. Tests are bounded evidence, not conformance.
+are unchanged. M3c adds 85 field/initializer cases: 426 total (407 values and
+19 known Java exceptions). All prior341 entries remain unchanged. Tests are
+bounded evidence, not conformance.
 
 Additional commands:
 
@@ -52,17 +59,17 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **20,649-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **29,899-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 118,280 |
-| Loops.class / sum(100) | 5050 | 1,840,015 |
-| Loops.class / fibonacci(20) | 6765 | 657,940 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 419,020 |
+| Add.class / add(20,22) | 42 | 135,243 |
+| Loops.class / sum(100) | 5050 | 1,849,082 |
+| Loops.class / fibonacci(20) | 6765 | 675,003 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 435,415 |
 
 Runtime SHA-256:
-`47661cc78dd2e19219d4fe4363ae16b81bf4c23f4773e297ca80841a3ca3d06e`
+`92735b7f7272587b3e4109a3cbfd84d9fa5e019e40b0392f3a8d030799e76796`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -103,11 +110,12 @@ identify classes. Missing owners do not trigger host filesystem/classpath lookup
 Bundle mode allows at most 64 classes, direct Object superclasses, public/package
 access within the supported profile, and per-class CP/method caches and frames.
 External private access and nonpublic cross-package access fail. Entered classes
-with interfaces, `<clinit>` or unsupported superclasses fail explicitly; merely
-supplied but unentered unsupported classes can remain unused. No superclass
-method lookup, field state or initialization execution yet. Known uncaught Java
-outcomes propagate across classes. Legacy external calls still use CallError2;
-bundle structural/missing-class failures use exact LinkError1–5 (see stage plan).
+with interfaces or unsupported superclasses fail explicitly; merely supplied but
+unentered unsupported classes can remain unused. The legacy one-class path now
+checks superclass/interface metadata too: it must not ignore their missing
+initialization effects and return a false value. No superclass method search yet.
+Known uncaught Java outcomes propagate across classes. Legacy external calls still
+use CallError2; bundle structural/missing-class failures use LinkError1–5.
 
 ## Supported semantics and limits
 
@@ -123,6 +131,22 @@ helpers can return void and be overloaded):
 - `goto`, `ireturn` (including early returns followed by other code)
 - Tag-10 `invokestatic` (same-class or supplied direct bundle owner), internal
   void `return`, category-1 `pop`
+- `getstatic`, `putstatic` for I fields, category-1 `dup`
+
+### Integer static state and class initialization
+
+Static storage is shared across frames for one invocation, fresh on the next
+Run/RunClasses. Supported fields prepare to zero; static I ConstantValues are
+applied when initialization starts (also when ACC_FINAL is absent), before
+`<clinit>`. Instance ConstantValue attributes are ignored. Active use initializes
+only the owner, once; same-thread reentrant/cyclic requests observe prepared state
+without restarting initializers. Root/call/get/put operands and PC survive deferred
+initialization. Unused supplied initializers are not eagerly run.
+
+Final writes require the actual declaring class's `<clinit>`, not a helper called
+by it or cached read permission. FieldError1–5/InitError1 distinguish malformed
+references, field/type/access/constant and initializer metadata failures. These
+are EVM errors, not invented Java linkage outcomes.
 
 M3a uses independent explicit Java frames in EVM memory: PC, operand stack,
 locals and initialization state. Arguments transfer in descriptor order; value
@@ -144,9 +168,9 @@ Caps: constant pool 4096 entries; Code 65,535 bytes; selected operand stack and
 locals 1024 each; 128 active Java frames including root. Gas bounds execution
 and allocation. Stack capacity does not claim to match OpenJDK's configuration.
 Method descriptors, entered Code structure and relevant UTF-8 references are
-checked. Class initializers (`<clinit>`), overloaded root names, entered
-synchronized/native/abstract/non-static/no-Code methods and exception tables are
-rejected; overloaded internal helpers are supported.
+checked. Overloaded root names, entered synchronized/native/abstract/non-static/
+no-Code methods and exception tables are rejected; overloaded internal helpers
+are supported. `<clinit>` is VM-scheduled, not directly invocable by guest code.
 
 M2b division truncates toward zero; remainder follows Java's sign rules.
 INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
@@ -154,7 +178,7 @@ and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
 **Deferred:** non-integer constants, wide/goto_w, stack permutation forms, switch,
 other primitive types, interface/instance calls, superclass method resolution,
-static state/initialization, arrays, heap/objects, exception handlers, monitors,
+non-I field storage, arrays, heap/objects, exception handlers, monitors,
 class libraries and deployment workflows.
 
 This is not a full JVM verifier: no modified-UTF8 validation, general class
@@ -179,6 +203,11 @@ bytecode/class errors and out-of-gas cannot silently become Java exceptions.
 Kind 2 now represents `java.lang.StackOverflowError` when pushing beyond the
 128-frame cap. Kind 1 propagates from callees. These are **uncaught outcomes
 only**, not catch/handler support; a lower gas limit can fail OOG first.
+Kind 3 is `ExceptionInInitializerError`: genuine arithmetic escaping an active
+initializer (including from its helper) is wrapped. StackOverflowError is already
+an Error and is not wrapped. OracleMain also records actual root-initialization
+errors during Class.forName. Retry after failed initialization, Java exception
+objects/causes and thread synchronization are not implemented.
 
 Call validation has exact `CallError(code,pc)` payloads: malformed reference (1),
 external owner (2), missing exact signature (3), unsupported callee semantics (4),
@@ -244,7 +273,7 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M3b acceptance is
-recorded in `JAVA_EVM_M3B_PLAN.md`; the next stage is static fields and class
-initialization. No full-Java claim is made and routine per-stage re-confirmation
-is not required.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M3c acceptance is
+recorded in `JAVA_EVM_M3C_PLAN.md`; the next stage is ordinary superclass chains,
+inherited static members and superclass initialization. No full-Java claim is
+made and routine per-stage re-confirmation is not required.

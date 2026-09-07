@@ -1,9 +1,10 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M3b raw multi-class loading/linking**, recorded in
-`JAVA_EVM_M3B_PLAN.md`. Active: **M3c integer static fields and class initialization**,
-with frozen ownership/semantics/errors in `JAVA_EVM_M3C_PLAN.md`.
-Inheritance, heap/references and handlers remain later capability slices.
+Current accepted stage: **M3c integer statics/class initialization**, recorded in
+`JAVA_EVM_M3C_PLAN.md`. Next: **M3d superclass/member resolution and super-init**,
+with draft contract `JAVA_EVM_M3D_PLAN.md`. Heap/references and handlers follow.
+Runtime is over EIP170 deployment size: local runtime.Execute only, not mainnet
+CREATE compatibility; no consensus-core or host-Java fallback changes.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
 superseding earlier stop-after-each-batch instructions. Worker scope comes from
 the current frozen batch plan; wider stages are not conformance claims.
@@ -42,7 +43,9 @@ accept unchanged raw bundles (max64); EVM resolves declared names/direct owners,
 keeps per-class CP/caches and checks the supported access profile. No host
 classpath fallback. Calls use independent Java frames (128 cap). ArithmeticException and
 StackOverflowError outcomes are determined inside EVM; host only decodes exact
-recognized payloads (never any arbitrary revert). No host Java parsing/extraction/translation/evaluation,
+recognized payloads (never any arbitrary revert). Integer statics and lazy/reentrant
+<clinit> execute in EVM; initializer ArithmeticException wraps as known EIIE kind3,
+but Error/OOG are not mislabeled. Statics reset per VM invocation. No host Java parsing/extraction/translation/evaluation,
 native Java precompile, or class-specific runtime generation. Host javac and
 JVM reflection/oracle runs belong ONLY to building/testing guest inputs.
 
@@ -56,9 +59,9 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # actual EVM add, sum(100), fibonacci(20)
-make java-smoke      # 87 fixed oracle comparisons
-make java-fast       # 107 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 341 cases (268 through M3a + 73 M3b)
+make java-smoke      # 128 fixed oracle comparisons
+make java-fast       # 148 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 426 cases (341 through M3b + 85 M3c)
 make java-test       # artifact + focused Go + 26 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```

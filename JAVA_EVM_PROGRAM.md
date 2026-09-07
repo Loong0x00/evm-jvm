@@ -66,8 +66,8 @@ routine permission to start the next verified increment.
 | M2b | int constants/arithmetic/bitwise/conversions + explicit uncaught arithmetic exception outcome | accepted; JAVA_EVM_M2B_PLAN.md |
 | M3a | same-class static calls, explicit Java frames/returns/recursion | accepted; JAVA_EVM_M3A_PLAN.md |
 | M3b | raw multi-class input, direct EVM-side resolution/linking | accepted; JAVA_EVM_M3B_PLAN.md |
-| M3c | integer static fields/state and ordinary-class initialization | active; JAVA_EVM_M3C_PLAN.md |
-| M3d | class hierarchy/member resolution and superclass-init prerequisites | queued before heap |
+| M3c | integer static fields/state and ordinary-class initialization | accepted; JAVA_EVM_M3C_PLAN.md |
+| M3d | class hierarchy/member resolution and superclass-init prerequisites | next active; JAVA_EVM_M3D_PLAN.md |
 | M4 | arrays, object allocation/fields, reference values and dispatch | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -79,9 +79,9 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M3b is accepted at **90ccf13**: all341 fixed cases, exact bundle errors/access
-checks and30 additional owner/cache/order probes passed. M3c static field and
-class-initialization contracts are frozen in `JAVA_EVM_M3C_PLAN.md`; dispatch
-runtime, fixture/oracle and independent verifier work. Keep hierarchy/super-init
-as the next separate dependency slice, then heap/reference capabilities. Proceed
-without routine confirmation; report genuine boundary/performance blockers.
+M3c is integrated and independently accepted:426 fixed cases plus36 parent
+initialization probes; isolated verifier error fixed and REAL legacy missing-
+parent/interface header divergence replaced by explicit rejection. Artifact29899
+bytes is local-runtime only (overEIP170). Next dispatch M3d ordinary hierarchy,
+inherited static member ownership/access and superclass initialization under
+`JAVA_EVM_M3D_PLAN.md`, then heap/references. Keep continuous bounded gates.
