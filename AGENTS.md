@@ -1,10 +1,9 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M4a typed integer arrays**, recorded in
-`JAVA_EVM_M4A_PLAN.md` at c97e2db:613 cases plus44 independent probes.
-Active: **M4b objects/constructors/fields/direct special calls**, frozen in
-`JAVA_EVM_M4B_PLAN.md`. Virtual dispatch is next, then remaining types/handlers
-and class libraries. Sol/high workers currently inherit enabled Codex Fast
+Current accepted stage: **M4b ordinary objects/constructors/fields/special calls**,
+recorded in `JAVA_EVM_M4B_PLAN.md`:713 cases plus46 independent object probes.
+Next: **M4c virtual dispatch/casts/type tests**; interface/remaining types/handlers
+and class libraries follow. Sol/high workers currently inherit enabled Codex Fast
 (priority request, backend acceptance not guaranteed); do not lower reasoning.
 Runtime is over EIP170 deployment size: local runtime.Execute only, not mainnet
 CREATE compatibility; no consensus-core or host-Java fallback changes.
@@ -27,7 +26,7 @@ worktree based on the latest integration revision, not an old worker tree.
 Worktrees separate edits, not security permissions. Respect frozen task write
 sets; only one worker edits the monolithic Solidity dispatcher at a time.
 Disjoint Go files still share a package namespace: give new test helpers a
-stage/role prefix (e.g. runtimeM4b* vs verifyM4b*) to avoid integration collisions.
+stage/role prefix (e.g. runtimeM4c* vs verifyM4c*) to avoid integration collisions.
 The differential oracle executes Java on the host: use only trusted generated
 fixtures here; untrusted external programs/corpora require isolation first.
 
@@ -64,10 +63,10 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # EVM arithmetic, bundle call and int-array examples
-make java-smoke      # 238 fixed oracle comparisons
-make java-fast       # 258 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 613 cases through M4a
-make java-test       # artifact + focused Go + 29 runner tests + full differential
+make java-smoke      # 289 fixed oracle comparisons
+make java-fast       # 309 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 713 cases through M4b
+make java-test       # artifact + focused Go + 31 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```
 

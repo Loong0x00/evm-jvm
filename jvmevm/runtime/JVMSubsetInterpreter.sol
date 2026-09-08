@@ -1239,7 +1239,7 @@ contract JVMSubsetInterpreter {
     ) private pure returns (Selected memory s) {
         uint256 meta = c.methods[method];
         uint16 access = uint16(meta);
-        if ((access & 0x0008) != 0 || (access & (0x0100 | 0x0400)) != 0
+        if ((access & 0x0008) != 0 || (access & (0x0020 | 0x0100 | 0x0400)) != 0
             || _methodCodeCount(meta) != 1) revert CallError(4, callPC);
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[(meta >> 32) & 0xffff]);
         if (!_descriptor(c.data, s.descriptorOffset, s.descriptorLength, s)) {

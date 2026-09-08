@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M4a)
+# Java inside EVM: staged interpreter (M4b)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,7 +9,7 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 40,205-byte runtime
+**Local execution, not mainnet deployment:** the current 57,900-byte runtime
 exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
@@ -21,10 +21,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 238 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (258 total)
-make java-full       # all 613 differential cases
-make java-test       # artifact check + Go tests + 29 runner tests + all 613 cases
+make java-smoke      # 289 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (309 total)
+make java-full       # all 713 differential cases
+make java-test       # artifact check + Go tests + 31 runner tests + all 713 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -62,21 +62,21 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **40,205-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **57,900-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 148,573 |
-| Loops.class / sum(100) | 5050 | 2,229,893 |
-| Loops.class / fibonacci(20) | 6765 | 789,838 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 452,614 |
-| M4aArrays.class / fillSum(10,3) | 165 | 1,556,502 |
+| Add.class / add(20,22) | 42 | 196,334 |
+| Loops.class / sum(100) | 5050 | 2,266,415 |
+| Loops.class / fibonacci(20) | 6765 | 835,635 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 510,147 |
+| M4aArrays.class / fillSum(10,3) | 165 | 2,064,177 |
 
 Typed checks raised sum(100) beyond its old2M demo budget, independently confirmed;
 the demo now uses3M. No historical oracle input/budget or semantic assertion changed.
 
 Runtime SHA-256:
-`adb926d70915a716ebbb4f2f091584821fb70af82b743efcba084cb2f203a407`
+`df00b2bf5208c28b4923bd305e3f3605780f1ad3d924e52fcf45acacede98eca`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -133,7 +133,7 @@ across classes; legacy external method calls retain CallError2.
 ## Supported semantics and limits
 
 Unambiguous static root, only `int` arguments and an `int` return (internal
-helpers can use I/[I parameters and return I/V/[I, and can be overloaded):
+helpers can use I/[I/Lclass; parameters and return I/V/[I/Lclass;, and be overloaded):
 
 - `iconst_m1` through `iconst_5`, signed `bipush` and `sipush`
 - `iload`, `istore`, including their `_0` through `_3` forms
@@ -213,8 +213,8 @@ INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
 **Deferred:** non-integer constants, wide/goto_w, category-2 values, switch,
-other primitive/array types, reference/multidimensional arrays, general objects,
-constructors/instance/interface calls, non-I/[I fields, handlers, monitors,
+other primitive/array types, reference/multidimensional arrays, virtual/interface
+calls, casts/type tests, non-I/[I/Lclass; fields, handlers, monitors,
 class libraries and deployment workflows.
 
 This is not a full JVM verifier: no modified-UTF8 validation, general class
@@ -316,6 +316,26 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4a acceptance is
-recorded in `JAVA_EVM_M4A_PLAN.md`; next are ordinary object allocation, constructors
-and instance fields/calls. No full-Java claim or routine re-confirmation.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4b acceptance is
+recorded in `JAVA_EVM_M4B_PLAN.md`; next are virtual dispatch and casts/type tests.
+No full-Java claim or routine re-confirmation.
+
+## M4b ordinary objects and direct instance calls
+
+713 cumulative JVM/EVM cases plus46 independent object probes passed. Supports
+new/getfield/putfield/invokespecial, constructors/this/super/private calls,
+I/[I/Lclass; storage/arguments/returns, inherited and hidden instance fields,
+reference assignability, final writes and per-frame uninitialized-reference rules.
+Synchronized entered methods are explicitly rejected; monitors are not ignored.
+
+A95-byte minimal java/lang/Object.class is embedded, parsed and its constructor
+executed inside EVM through ordinary frames. It is appended only if not supplied;
+source/hex/embedded bytes are reproducibly checked with javac before solc. No host
+shortcut or full Object/JRE API is implied. User bundle limit remains64 classes.
+
+Object limits:1024 objects,1024 instance fields each,65536 total instance slots;
+array limits unchanged and independent. Unified handles, no GC, reset each run.
+Cached base-first layouts preserve defaults/hidden fields;64 objects with1024
+fields use about62.13M gas. OOM caps remain distinct from EVM OOG. ObjectError
+rejects unsupported allocation/constructor forms; ReferenceError2 rejects class
+assignment mismatch. Root remains static int-only. Runtime remains over EIP-170.

@@ -1005,3 +1005,15 @@ func verifyM4bUint256(t *testing.T, word []byte) uint64 {
 	}
 	return binary.BigEndian.Uint64(word[24:])
 }
+
+func TestVerifyM4bSynchronizedSpecialCalleeRejected(t *testing.T) {
+	classfile := compileJava(t, "SyncPrivate", `public final class SyncPrivate {
+        private synchronized int f(int x) { return x + 1; }
+        public static int run(int x) { return new SyncPrivate().f(x); }
+    }`)
+	parsed := parseStaticsClass(t, classfile)
+	_, pc := verifyM4bMemberInstruction(t, parsed, parsed.method(t, "run", "(I)I"), verifyM4bInvokespecial, "f", "(I)I")
+	verifyM4bAssertError(t, func() (Result, error) {
+		return Run(classfile, "run", []int32{41}, verifyM4bGasLimit)
+	}, "CallError(uint256,uint256)", 4, uint64(pc))
+}

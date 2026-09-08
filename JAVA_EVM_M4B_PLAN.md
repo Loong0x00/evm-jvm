@@ -237,3 +237,16 @@ Current runtime57900 bytes, SHA256
 Review worker is read-only in m4b-independent-review, also proposing the M4c
 virtual-dispatch/cast contract. Last accepted stage remains M4a until final review;
 then record acceptance/update quickstart and freeze/dispatch M4c automatically.
+
+## Final acceptance
+Read-only independent review found a synchronized private-method acceptance bug.
+Parent reproduced result42 instead of rejection, added exact CallError4/call-PC
+regression, and included ACC_SYNCHRONIZED in the special-callee exclusion mask.
+This is a real supported-profile guard fix, not a monitor implementation.
+
+Parent reran ALL gates and46 probes after the fix:713 full,289 smoke,309 fast,
+31 Python, Go/CLI, bootstrap/artifact consistency, demos, AOT and focused vet green.
+Accepted runtime57900 bytes, SHA256
+`df00b2bf5208c28b4923bd305e3f3605780f1ad3d924e52fcf45acacede98eca`.
+Independent reviewer found no further demonstrated contract failure. M4b accepted;
+continue automatically to bounded M4c virtual dispatch/checkcast/instanceof.
