@@ -793,8 +793,8 @@ contract JVMSubsetInterpreter {
                             classes, throwing.classIndex, throwingSelection, hi,
                             parentLinks, hierarchyState, arena.throwableClass
                         );
-                        matches = _objectIsClassParsed(
-                            classes, arena.heap.classes[arena.pending.ref], catchClass
+                        matches = _typeAssignable(
+                            classes, arena.heap.classes[arena.pending.ref], catchClass, parentLinks
                         );
                     }
                     if (!matches) continue;
@@ -829,8 +829,8 @@ contract JVMSubsetInterpreter {
                 uint256 failedHandle = throwing.thisHandle;
                 if (throwing.isInitializer) {
                     initializationState[throwing.classIndex] = 3;
-                    if (!_objectIsClassParsed(
-                        classes, arena.heap.classes[arena.pending.ref], arena.errorClass
+                    if (!_typeAssignable(
+                        classes, arena.heap.classes[arena.pending.ref], arena.errorClass, parentLinks
                     )) {
                         nextHandle = _raiseJava(
                             3, callerPC, arena, classes, objectHeap, heapKinds,
@@ -5422,23 +5422,6 @@ contract JVMSubsetInterpreter {
         }
         s.handlerClassesPlusOne[entryIndex] = target + 1;
         return target;
-    }
-
-    function _objectIsClassParsed(
-        ClassInfo[] memory classes, uint256 dynamicClass, uint256 wantedClass
-    ) private pure returns (bool) {
-        uint256 current = dynamicClass;
-        for (uint256 steps = 0; steps < classes.length; ++steps) {
-            if (current == wantedClass) return true;
-            ClassInfo memory c = classes[current];
-            if (!c.hasSuperclass) return false;
-            (bool found, uint256 parent) = _findClass(
-                classes, c.data, c.superNameOffset, c.superNameLength
-            );
-            if (!found) return false;
-            current = parent;
-        }
-        return false;
     }
 
     function _poisonAliases(Frame memory caller, uint256 handle) private pure {
