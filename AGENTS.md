@@ -1,8 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M5b-b long arrays**, recorded in
-`JAVA_EVM_M5BB_PLAN.md`:1593 cases plus48 independent probes. Next: variable-width
-control flow (switch/goto_w/wide), then bounded IEEE/handlers/library stages.
+`JAVA_EVM_M5BB_PLAN.md`:1593 cases plus48 independent probes. Active M5c-a variable
+control flow, frozen in `JAVA_EVM_M5CA_PLAN.md`; IEEE/handlers/library stages follow.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
