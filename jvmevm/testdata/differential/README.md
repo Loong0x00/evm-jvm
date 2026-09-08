@@ -4,13 +4,13 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 1,493 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+The manifest has 1,593 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
 73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, 100 `m4d`,
-68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, 120 `m5a`, and 110 `m5ba`
-cases. M5b-a adds 55 smoke-marked cases. Every root entry remains a declared
-public static `(int...)int` method, including public interface roots, and guest
-sources have no `main`. All 1,383 entries through M5a, including sources,
-arguments, budgets, tiers, and outcomes, are unchanged.
+68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, 120 `m5a`, 110 `m5ba`, and
+100 `m5bb` cases. M5b-b adds 50 smoke-marked cases. Every root entry remains a
+declared public static `(int...)int` method, including public interface roots,
+and guest sources have no `main`. All 1,493 entries through M5b-a, including
+sources, arguments, budgets, tiers, and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -387,11 +387,39 @@ operand across initialization. No M5b-a fixture uses a long array or `[J` field,
 `newarray` type 11, float/double, boxing, switch, `wide`, handler, monitor, or
 non-Object JRE method call.
 
-Across all stages there are 1,363 value outcomes, 18 ArithmeticException
-outcomes, six StackOverflowError outcomes, 29 ExceptionInInitializerError
-outcomes, 13 NegativeArraySizeException outcomes, 14
-ArrayIndexOutOfBoundsException outcomes, 27 NullPointerException outcomes, 11
-ClassCastException outcomes, and 12 ArrayStoreException outcomes. Every gas
+M5b-b adds 81 value outcomes and 19 actual JVM exception outcomes over six new
+trusted Java 8 sources, which emit 27 classfiles. Rank-one long arrays cover
+zero/MIN/MAX/patterned 64-bit cells, default zeroes, zero-length identity,
+aliases, signed sums/searches/sorts, and post/preincrement, compound, assignment,
+and chained-assignment category-2 array stack shapes. Internal `[J` and mixed
+`J`/`[J` values cross static, private-special, virtual, interface, default,
+direct-interface-super, interface-static, constructor, field, and initializer
+boundaries while all selected roots retain the int-only ABI.
+
+Full and partial rank-two/rank-three arrays cover default null leaves, distinct
+rows, jagged aliases, covariance through `Object[]` and marker arrays, identity-
+preserving casts, compatible/null stores, and rejected unlike primitive leaves.
+Static, instance, inherited, hidden, interface-final, constructor-final, and
+initialized array fields include mutable final targets, replacement, once-only
+initialization, and prepared-null reentry. Mixed object, int, reference, narrow-
+primitive, and long-array allocation orders exercise both long-first and long-
+last heap use. Fixture allocations remain deliberately modest: shared quota and
+logical-OOM boundaries are Go-only checks and are not host-JVM OOM fixtures.
+
+The 19 M5b-b outcomes are five `NullPointerException`, four
+`ArrayIndexOutOfBoundsException`, three `NegativeArraySizeException`, two each
+of direct `ArithmeticException`, `ArrayStoreException`, and
+`ClassCastException`, and one `ExceptionInInitializerError`. Null accesses use
+invalid indices, multidimensional allocation includes a negative later count
+after a zero outer count, and simple long-array stores prove RHS long division
+by zero occurs before null or bounds checking. The initializer wrapper likewise
+comes from RHS arithmetic before a null array store check.
+
+Across all stages there are 1,444 value outcomes, 20 ArithmeticException
+outcomes, six StackOverflowError outcomes, 30 ExceptionInInitializerError
+outcomes, 16 NegativeArraySizeException outcomes, 18
+ArrayIndexOutOfBoundsException outcomes, 32 NullPointerException outcomes, 13
+ClassCastException outcomes, and 14 ArrayStoreException outcomes. Every gas
 limit is finite and at most 70,000,000; every subprocess timeout is at most 10
 seconds. New arrays have at most eight elements, and all finite fixture loops and
 successful recursions are bounded and modest; explicitly expected stack-overflow
@@ -741,12 +769,37 @@ most 9 stack words and 8 local words). Inspection found no `[J`, long-array
 opcode, float/double descriptor, boxing, switch, actual `wide` opcode, handler,
 monitor, explicit throw, invokedynamic, or non-Object JRE method reference.
 
-All 1,383 cases through M5a are the accepted baseline. The baseline runner
-intentionally rejects `--stage m5ba` as an unknown stage until the separately
-owned verifier lands; the evidence above is reference-JVM-only and this fixture
-revision does **not** claim an M5b-a EVM pass. Raw malformed tag-5 holes,
-`ldc2_w` errors, root-`J` rejection, illegal category forms, and local-overlap
-invalidations remain verifier-owned probes rather than being falsified as fresh
-javac outcomes. The runtime remains over mainnet deployment size and runs
-through local runtime.Execute, not CREATE. This remains subset verification, not
-full JVM conformance.
+For M5b-b, one fresh OpenJDK 8 `javac -source 8 -target 8 -g:none` compilation
+was followed by 100 separate bounded `OracleMain` processes on OpenJDK 8
+1.8.0_504 and Java 21.0.9. Every process used `-Xmx64m` and a ten-second outer
+timeout. Both runs matched all manifest outcome kinds and produced identical
+ordered outputs: 81 values and the 19 declared exceptions, with SHA256
+`07d7ce93164c6d85a77cd7253b5b711feea28ecc5202f40f8053d51b51dcf9fc`.
+The compact canonical JSON SHA256 of the unchanged old 1,493-entry prefix is
+`74b81b6ed2136a0335cb86ded26bf1bf8600599dde0f1ca8b175f06077d66e0e`,
+identical before and after the append.
+
+Isolated Java 8 compilation of each of the six new source lists exactly matched
+its manifest classfile set. `javap -c -v -p` and raw classfile inspection over
+all 27 emitted classes found only major version 52, with maximum Code limits of
+nine stack words and seven local words. It counted 62 `newarray long`, 97
+`laload`, 118 `lastore`, 13 `multianewarray`, 15 `checkcast`, nine `instanceof`,
+and six `invokeinterface` instructions. Constant-pool tags 9/10/11 numbered
+32/54/7. Raw b9 inspection confirmed a zero trailing byte and exact count bytes:
+`([J)[J` uses 2, `([JJ)[J` and `([JJ)J` use 4, and `(J[JI)J` uses 5, proving
+`[J` consumes one argument slot while `J` consumes two. Symbolic owners and
+field/method descriptors retain the intended ordinary/interface classes and
+`[J`/nested-long-array identities. Inspection found no exception handler,
+explicit throw, float/double array or descriptor, boxing, switch, actual `wide`,
+monitor, native/synchronized method, invokedynamic, or non-Object JRE method
+reference.
+
+All 1,493 cases through M5b-a are the accepted baseline. The baseline runner
+intentionally rejects manifest stage `m5bb` until the separately owned verifier
+lands; the evidence above is reference-JVM-only and this fixture revision does
+**not** claim an M5b-b EVM pass. Raw malformed long-array operands, wrong opcode
+and array-kind combinations, root-`J`/root-`[J` rejection, rank-255 boundaries,
+and shared quota/OOM behavior remain verifier/runtime-owned probes rather than
+being falsified as fresh javac outcomes. The runtime remains over mainnet
+deployment size and runs through local runtime.Execute, not CREATE. This remains
+subset verification, not full JVM conformance.

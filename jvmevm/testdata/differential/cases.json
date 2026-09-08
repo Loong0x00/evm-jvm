@@ -35348,6 +35348,2270 @@
       "smoke": false,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.StackOverflowError"
+    },
+    {
+      "id": "m5bb-basic-patterns-zero",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "patterns",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-patterns-minus-seventeen",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "patterns",
+      "args": [
+        -17
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-store-min",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "storeLoad",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-store-max",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "storeLoad",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-store-high-bits",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "storeLoad",
+      "args": [
+        -1985229329,
+        19088743
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-default-zero-length",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "defaultZero",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-default-four",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "defaultZero",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-zero-length-distinct",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "zeroLengthDistinct",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-aliases",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "aliases",
+      "args": [
+        305419896,
+        -1985229329
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-distinct",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "distinct",
+      "args": [
+        -2147483648,
+        1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-signed-sum-positive",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "signedSum",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-signed-sum-negative",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "signedSum",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-search-negative",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "signedSearch",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-search-positive",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "signedSearch",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-search-missing",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "signedSearch",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-small-sort-positive",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "smallSort",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-small-sort-negative",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "smallSort",
+      "args": [
+        -11
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-postincrement-wrap",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "postIncrement",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-postincrement-high",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "postIncrement",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-preincrement-wrap",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "preIncrement",
+      "args": [
+        -1,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-preincrement-low",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "preIncrement",
+      "args": [
+        0,
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-compound-positive",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "compoundAssignment",
+      "args": [
+        305419896,
+        -1985229329,
+        7
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-compound-negative",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "compoundAssignment",
+      "args": [
+        -2147483648,
+        1,
+        -7
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-assignment-expression",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "assignmentExpression",
+      "args": [
+        -1,
+        324508639
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-chained-assignment",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "chainedAssignment",
+      "args": [
+        19088743,
+        -1985229329
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-basic-null-read-negative",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "nullRead",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5bb-basic-null-read-large",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "nullRead",
+      "args": [
+        99
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5bb-basic-null-write-negative",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "nullWrite",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5bb-basic-null-length",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "nullLength",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5bb-basic-bounds-read-negative",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "boundsRead",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5bb-basic-bounds-read-equal",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "boundsRead",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5bb-basic-bounds-write-equal",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "boundsWrite",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5bb-basic-negative-length",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "negativeLength",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5bb-basic-arithmetic-before-null-store",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "arithmeticBeforeNullStore",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m5bb-basic-arithmetic-before-bounds-store",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/basic/LongArrayRoot.java"
+      ],
+      "class": "bundle.m5bb.basic.LongArrayRoot",
+      "method": "arithmeticBeforeBoundsStore",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/basic/LongArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m5bb-calls-static",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "staticCall",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/CallRoot.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-private-special",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "privateSpecialCall",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-virtual-base",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "virtualBase",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-virtual-override",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "virtualOverride",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/CallRoot.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-interface-base",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "interfaceBase",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-interface-override",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "interfaceOverride",
+      "args": [
+        -17
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-default",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "defaultCall",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/CallRoot.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-interface-default-site",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "interfaceDefaultSite",
+      "args": [
+        23
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-direct-interface-super",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "directInterfaceSuper",
+      "args": [
+        29
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-interface-static",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "interfaceStatic",
+      "args": [
+        -31
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/CallRoot.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-constructor-arguments",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "constructorArguments",
+      "args": [
+        37
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-constructor-chain",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "constructorChain",
+      "args": [
+        -41
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-array-return",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "arrayReturnTransport",
+      "args": [
+        43
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/CallRoot.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-mixed-argument-order",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "mixedArgumentOrder",
+      "args": [
+        -47
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-void-mutation",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "voidMutation",
+      "args": [
+        53
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-interface-identity",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "arrayIdentityAcrossInterface",
+      "args": [
+        -59
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/CallRoot.class",
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-calls-static-high-bits",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5bb.calls.CallRoot",
+      "method": "staticCall",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5bb/calls/ArrayCallFace.class",
+        "bundle/m5bb/calls/CallBase.class",
+        "bundle/m5bb/calls/CallChild.class",
+        "bundle/m5bb/calls/DefaultOnly.class",
+        "bundle/m5bb/calls/DirectDefault.class",
+        "bundle/m5bb/calls/CallHelpers.class",
+        "bundle/m5bb/calls/ArrayConstructed.class",
+        "bundle/m5bb/calls/ArrayConstructedChild.class",
+        "bundle/m5bb/calls/CallRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-static-prepared-null",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "staticPreparedNull",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/FieldRoot.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-static-write",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "staticWrite",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-static-replace",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "staticReplace",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-instance-default",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "instanceDefault",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/FieldRoot.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-instance-write",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "instanceWrite",
+      "args": [
+        -11
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-final-constructor",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "finalConstructor",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-final-element-mutation",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "finalElementMutation",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/FieldRoot.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-static-final-element-mutation",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "staticFinalElementMutation",
+      "args": [
+        -19
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-initialized-array",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "initializedArray",
+      "args": [
+        23
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-initializer-once",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "initializerOnce",
+      "args": [
+        29
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/FieldRoot.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-reentrant-prepared-null",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "reentrantPreparedNull",
+      "args": [
+        -31
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-inherited-owner",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "inheritedOwner",
+      "args": [
+        37
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-hidden-fields",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "hiddenFields",
+      "args": [
+        -41
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/FieldRoot.class",
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-interface-final-mutation",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.FieldRoot",
+      "method": "interfaceFinalMutation",
+      "args": [
+        43
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArrayFields.class",
+        "bundle/m5bb/fields/FinalArray.class",
+        "bundle/m5bb/fields/StaticFinalArray.class",
+        "bundle/m5bb/fields/InitializedArray.class",
+        "bundle/m5bb/fields/ReentrantArray.class",
+        "bundle/m5bb/fields/InheritedBase.class",
+        "bundle/m5bb/fields/InheritedChild.class",
+        "bundle/m5bb/fields/HiddenBase.class",
+        "bundle/m5bb/fields/HiddenChild.class",
+        "bundle/m5bb/fields/ArrayFieldFace.class",
+        "bundle/m5bb/fields/ArrayFieldMaker.class",
+        "bundle/m5bb/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-fields-arithmetic-init-wrapped",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/fields/ArithmeticInitRoot.java"
+      ],
+      "class": "bundle.m5bb.fields.ArithmeticInitRoot",
+      "method": "entry",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5bb/fields/ArithmeticInitRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5bb-nested-partial-two-zero",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "partialTwo",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-partial-two-three",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "partialTwo",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-full-two-zero-outer",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "fullTwo",
+      "args": [
+        0,
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-full-two-zero-inner",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "fullTwo",
+      "args": [
+        2,
+        0
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-full-two-values",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "fullTwo",
+      "args": [
+        2,
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-distinct-rows",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "distinctRows",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-partial-three-zero",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "partialThree",
+      "args": [
+        0,
+        2
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-partial-three-values",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "partialThree",
+      "args": [
+        2,
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-full-three",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "fullThree",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-jagged-mutation",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "jaggedMutation",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-long-array-markers",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "longArrayMarkers",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-matrix-markers",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "matrixMarkers",
+      "args": [
+        -17
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-cast-long-identity",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "castLongIdentity",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-cast-matrix-identity",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "castMatrixIdentity",
+      "args": [
+        -23
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-compatible-row-store",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "compatibleStore",
+      "args": [
+        29
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-null-row-store",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "nullStore",
+      "args": [
+        -31
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-nested-incompatible-row-store",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "incompatibleRowStore",
+      "args": [
+        37
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5bb-nested-incompatible-higher-store",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "incompatibleHigherStore",
+      "args": [
+        -41
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5bb-nested-cast-int-array-to-long",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "castIntArrayToLong",
+      "args": [
+        43
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m5bb-nested-cast-int-matrix-to-long",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "castIntMatrixToLong",
+      "args": [
+        -47
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m5bb-nested-negative-outer",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "negativeOuter",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5bb-nested-negative-inner-after-zero-outer",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "negativeInnerAfterZeroOuter",
+      "args": [
+        0,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5bb-nested-nested-null-read",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "nestedNullRead",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5bb-nested-nested-bounds-write",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "nestedBoundsWrite",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/DimensionTrace.class",
+        "bundle/m5bb/nested/NestedRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5bb-nested-dimensions-left-to-right",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5bb.nested.NestedRoot",
+      "method": "dimensionsLeftToRight",
+      "args": [
+        2,
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/nested/NestedRoot.class",
+        "bundle/m5bb/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-object-int-ref-long",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "objectIntRefLong",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationRoot.class",
+        "bundle/m5bb/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-long-object-ref",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "longObjectRef",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationCell.class",
+        "bundle/m5bb/allocation/AllocationRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-narrow-then-long",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "narrowThenLong",
+      "args": [
+        257
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationCell.class",
+        "bundle/m5bb/allocation/AllocationRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-long-then-narrow",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "longThenNarrow",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationRoot.class",
+        "bundle/m5bb/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-ref-matrix-long-object",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "refMatrixLongObject",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationCell.class",
+        "bundle/m5bb/allocation/AllocationRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-mixed-identity",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "mixedIdentity",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationCell.class",
+        "bundle/m5bb/allocation/AllocationRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-defaults-stay-distinct",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "defaultsStayDistinct",
+      "args": [
+        -17
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationRoot.class",
+        "bundle/m5bb/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5bb-allocation-aliases-across-object-array",
+      "stage": "m5bb",
+      "sources": [
+        "bundle/m5bb/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5bb.allocation.AllocationRoot",
+      "method": "aliasesAcrossObjectArray",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5bb/allocation/AllocationCell.class",
+        "bundle/m5bb/allocation/AllocationRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }
