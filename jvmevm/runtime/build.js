@@ -27,6 +27,16 @@ const bootstraps = [
     name: 'Serializable', packagePath: ['java', 'io'],
     expectedSource: 'package java.io; public interface Serializable {}\n',
     bytes: 72, hash: '90bd3c397ef8d1f81a72b59b80c6a96ac158ac9fc97c95851d246eff8e66a70a'
+  },
+  {
+    name: 'Float', packagePath: ['java', 'lang'],
+    expectedSource: 'package java.lang; public final class Float { private Float() {} public static native float intBitsToFloat(int bits); public static native int floatToRawIntBits(float value); }\n',
+    bytes: 197, hash: '437d784b11d0b632017a94cc2c0d99b35cd93c39f49b98b0660e4316d9960dd4'
+  },
+  {
+    name: 'Double', packagePath: ['java', 'lang'],
+    expectedSource: 'package java.lang; public final class Double { private Double() {} public static native double longBitsToDouble(long bits); public static native long doubleToRawLongBits(double value); }\n',
+    bytes: 202, hash: 'd9ac93be34df21e1ec5872e307f67b1301c0606c1ccd57ee6a61030b0aa45363'
   }
 ];
 const source = fs.readFileSync(path.join(dir, sourceName), 'utf8');

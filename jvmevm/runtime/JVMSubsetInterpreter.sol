@@ -41,10 +41,15 @@ contract JVMSubsetInterpreter {
     uint256 private constant KIND_UNINIT = 3;
     uint256 private constant KIND_LONG = 4;
     uint256 private constant KIND_LONG_TAIL = 5;
+    uint256 private constant KIND_FLOAT = 6;
+    uint256 private constant KIND_DOUBLE = 7;
+    uint256 private constant KIND_DOUBLE_TAIL = 8;
     uint8 private constant HEAP_ARRAY = 1;
     uint8 private constant HEAP_OBJECT = 2;
     uint8 private constant PRIMITIVE_BYTE = 0x42; // B
     uint8 private constant PRIMITIVE_CHAR = 0x43; // C
+    uint8 private constant PRIMITIVE_DOUBLE = 0x44; // D
+    uint8 private constant PRIMITIVE_FLOAT = 0x46; // F
     uint8 private constant PRIMITIVE_INT = 0x49; // I
     uint8 private constant PRIMITIVE_LONG = 0x4a; // J
     uint8 private constant PRIMITIVE_SHORT = 0x53; // S
@@ -84,7 +89,7 @@ contract JVMSubsetInterpreter {
         uint8[] argumentKinds;
         uint256[] argumentTypeOffsets;
         uint256[] argumentTypeLengths;
-        uint8 returnKind; // 1 = computational int, 2 = void, 3 = reference, 4 = long
+        uint8 returnKind; // 1=int, 2=void, 3=reference, 4=long, 5=float, 6=double
         uint8 returnSubtype; // exact I/Z/B/C/S descriptor for computational-int returns
         uint256 returnTypeOffset;
         uint256 returnTypeLength;
@@ -248,14 +253,19 @@ contract JVMSubsetInterpreter {
         bool suppliedObject = _isObjectClass(c);
         bool suppliedCloneable = _isNamedClass(c, bytes("java/lang/Cloneable"));
         bool suppliedSerializable = _isNamedClass(c, bytes("java/io/Serializable"));
+        bool suppliedFloat = _isNamedClass(c, bytes("java/lang/Float"));
+        bool suppliedDouble = _isNamedClass(c, bytes("java/lang/Double"));
         uint256 classCount = 1 + (suppliedObject ? 0 : 1)
-            + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1);
+            + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
+            + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1);
         ClassInfo[] memory classes = new ClassInfo[](classCount);
         classes[0] = c;
         uint256 bootstrapAt = 1;
         if (!suppliedObject) classes[bootstrapAt++] = _parseBundleClass(_bootstrapObject());
         if (!suppliedCloneable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapCloneable());
-        if (!suppliedSerializable) classes[bootstrapAt] = _parseBundleClass(_bootstrapSerializable());
+        if (!suppliedSerializable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapSerializable());
+        if (!suppliedFloat) classes[bootstrapAt++] = _parseBundleClass(_bootstrapFloat());
+        if (!suppliedDouble) classes[bootstrapAt] = _parseBundleClass(_bootstrapDouble());
         Selected[][] memory selections = new Selected[][](classCount);
         selections[0] = selected;
         uint256[][] memory caches = new uint256[][](classCount);
@@ -281,6 +291,8 @@ contract JVMSubsetInterpreter {
         bool suppliedObject;
         bool suppliedCloneable;
         bool suppliedSerializable;
+        bool suppliedFloat;
+        bool suppliedDouble;
         bytes memory wantedClass = bytes(entryClass);
         for (uint256 i = 0; i < inputCount; ++i) {
             users[i] = _parseBundleClass(rawClasses[i]);
@@ -290,6 +302,8 @@ contract JVMSubsetInterpreter {
             if (_isObjectClass(users[i])) suppliedObject = true;
             if (_isNamedClass(users[i], bytes("java/lang/Cloneable"))) suppliedCloneable = true;
             if (_isNamedClass(users[i], bytes("java/io/Serializable"))) suppliedSerializable = true;
+            if (_isNamedClass(users[i], bytes("java/lang/Float"))) suppliedFloat = true;
+            if (_isNamedClass(users[i], bytes("java/lang/Double"))) suppliedDouble = true;
             if (
                 _equals(
                     users[i].data,
@@ -301,13 +315,16 @@ contract JVMSubsetInterpreter {
         }
         if (entryPlusOne == 0) revert LinkError(3, 0);
         uint256 count = inputCount + (suppliedObject ? 0 : 1)
-            + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1);
+            + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
+            + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1);
         ClassInfo[] memory classes = new ClassInfo[](count);
         for (uint256 i = 0; i < inputCount; ++i) classes[i] = users[i];
         uint256 bootstrapAt = inputCount;
         if (!suppliedObject) classes[bootstrapAt++] = _parseBundleClass(_bootstrapObject());
         if (!suppliedCloneable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapCloneable());
-        if (!suppliedSerializable) classes[bootstrapAt] = _parseBundleClass(_bootstrapSerializable());
+        if (!suppliedSerializable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapSerializable());
+        if (!suppliedFloat) classes[bootstrapAt++] = _parseBundleClass(_bootstrapFloat());
+        if (!suppliedDouble) classes[bootstrapAt] = _parseBundleClass(_bootstrapDouble());
         uint256 rootClass = entryPlusOne - 1;
         _requireSupportedClass(classes[rootClass], rootClass);
 
@@ -527,6 +544,58 @@ contract JVMSubsetInterpreter {
         s.loaded = true;
     }
 
+    function _nativeBinding(ClassInfo memory c, uint256 method)
+        private pure returns (uint8)
+    {
+        uint256 meta = c.methods[method];
+        if ((uint16(meta) & 0x0100) == 0) return 0; // ordinary Code always wins
+        (uint256 nameOffset, uint256 nameLength) = _utf(c.cp[(meta >> 16) & 0xffff]);
+        (uint256 descriptorOffset, uint256 descriptorLength) =
+            _utf(c.cp[(meta >> 32) & 0xffff]);
+        if (_isNamedClass(c, bytes("java/lang/Float"))) {
+            if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("intBitsToFloat"))
+                && _equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("(I)F"))) {
+                return 1;
+            }
+            if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("floatToRawIntBits"))
+                && _equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("(F)I"))) {
+                return 2;
+            }
+        } else if (_isNamedClass(c, bytes("java/lang/Double"))) {
+            if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("longBitsToDouble"))
+                && _equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("(J)D"))) {
+                return 3;
+            }
+            if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("doubleToRawLongBits"))
+                && _equalsLiteral(c.data, descriptorOffset, descriptorLength, bytes("(D)J"))) {
+                return 4;
+            }
+        }
+        return 0;
+    }
+
+    function _validateNativeBinding(ClassInfo memory c, uint256 method, uint256 callPC)
+        private pure
+    {
+        uint16 access = uint16(c.methods[method]);
+        if ((access & 0x0109) != 0x0109 || (access & (0x0002 | 0x0004 | 0x0020 | 0x0400)) != 0
+            || _methodCodeCount(c.methods[method]) != 0) revert CallError(4, callPC);
+    }
+
+    function _loadNativeCallee(ClassInfo memory c, uint256 method, uint256 callPC)
+        private pure returns (Selected memory s)
+    {
+        _validateNativeBinding(c, method, callPC);
+        uint256 meta = c.methods[method];
+        (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[(meta >> 32) & 0xffff]);
+        if (!_descriptor(c.data, s.descriptorOffset, s.descriptorLength, s)
+            || s.argumentKinds.length != 1 || s.argumentWords > MAX_LOCALS) {
+            revert CallError(4, callPC);
+        }
+        s.argumentCount = 1;
+        s.loaded = true;
+    }
+
     function _execute(
         ClassInfo[] memory classes,
         Selected[][] memory selected,
@@ -556,6 +625,8 @@ contract JVMSubsetInterpreter {
                 if (fieldKind == KIND_INT) staticValues[i][j] = _packInt(0);
                 else if (fieldKind == KIND_REF) staticValues[i][j] = _packRef(0);
                 else if (fieldKind == KIND_LONG) staticValues[i][j] = _packLong(0);
+                else if (fieldKind == KIND_FLOAT) staticValues[i][j] = _packFloat(0);
+                else if (fieldKind == KIND_DOUBLE) staticValues[i][j] = _packDouble(0);
             }
         }
         // Arrays and objects share one one-based, unforgeable handle namespace. The independent
@@ -669,7 +740,7 @@ contract JVMSubsetInterpreter {
                     uint32(int32(_signed16(c.data, selection.codeOffset + f.pc)))
                 ), opPC);
                 f.pc += 2;
-            } else if (op == 0x12 || op == 0x13) { // ldc / ldc_w, Integer only
+            } else if (op == 0x12 || op == 0x13) { // ldc / ldc_w, Integer or Float
                 uint256 index;
                 if (op == 0x12) {
                     index = uint8(c.data[selection.codeOffset + f.pc]);
@@ -678,25 +749,37 @@ contract JVMSubsetInterpreter {
                     index = _unsigned16(c.data, selection.codeOffset + f.pc);
                     f.pc += 2;
                 }
-                if (index == 0 || index >= c.cp.length || uint8(c.cp[index]) != 3) {
-                    revert BytecodeError(13, opPC);
-                }
-                f.sp = _push(f.stack, f.sp, _packInt(uint32(c.cp[index] >> 8)), opPC);
-            } else if (op == 0x14) { // ldc2_w (CONSTANT_Long only)
+                if (index == 0 || index >= c.cp.length) revert BytecodeError(13, opPC);
+                uint8 tag = uint8(c.cp[index]);
+                if (tag != 3 && tag != 4) revert BytecodeError(13, opPC);
+                f.sp = _push(f.stack, f.sp, tag == 3
+                    ? _packInt(uint32(c.cp[index] >> 8))
+                    : _packFloat(uint32(c.cp[index] >> 8)), opPC);
+            } else if (op == 0x14) { // ldc2_w (CONSTANT_Long or Double)
                 uint256 index = _unsigned16(c.data, selection.codeOffset + f.pc);
                 f.pc += 2;
-                if (index == 0 || index >= c.cp.length || uint8(c.cp[index]) != 5) {
-                    revert BytecodeError(13, opPC);
-                }
-                f.sp = _push(f.stack, f.sp, _packLong(uint64(c.cp[index] >> 8)), opPC);
-            } else if (op == 0x15 || op == 0x16 || op == 0x19) { // iload / lload / aload
+                if (index == 0 || index >= c.cp.length) revert BytecodeError(13, opPC);
+                uint8 tag = uint8(c.cp[index]);
+                if (tag != 5 && tag != 6) revert BytecodeError(13, opPC);
+                f.sp = _push(f.stack, f.sp, tag == 5
+                    ? _packLong(uint64(c.cp[index] >> 8))
+                    : _packDouble(uint64(c.cp[index] >> 8)), opPC);
+            } else if (op >= 0x15 && op <= 0x19) { // iload / lload / fload / dload / aload
                 uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
                 ++f.pc;
-                f.sp = op == 0x19
-                    ? _loadReference(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                    : (op == 0x16
-                        ? _loadLong(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                        : _loadKind(f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC));
+                if (op == 0x19) f.sp = _loadReference(
+                    f.stack, f.sp, f.locals, f.initialized, local, opPC
+                );
+                else if (op == 0x16) f.sp = _loadLong(
+                    f.stack, f.sp, f.locals, f.initialized, local, opPC
+                );
+                else if (op == 0x18) f.sp = _loadDouble(
+                    f.stack, f.sp, f.locals, f.initialized, local, opPC
+                );
+                else f.sp = _loadKind(
+                    f.stack, f.sp, f.locals, f.initialized, local,
+                    op == 0x17 ? KIND_FLOAT : KIND_INT, opPC
+                );
             } else if (op >= 0x1a && op <= 0x1d) { // iload_0..3
                 f.sp = _loadKind(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x1a, KIND_INT, opPC
@@ -738,14 +821,22 @@ contract JVMSubsetInterpreter {
                         ? _packRef(uint32(cell))
                         : _packInt(_normalizeInt(uint32(cell), uint8(leafType))));
                 --f.sp;
-            } else if (op == 0x36 || op == 0x37 || op == 0x3a) { // istore / lstore / astore
+            } else if (op >= 0x36 && op <= 0x3a) { // istore/lstore/fstore/dstore/astore
                 uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
                 ++f.pc;
-                f.sp = op == 0x3a
-                    ? _storeReference(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                    : (op == 0x37
-                        ? _storeLong(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                        : _storeKind(f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC));
+                if (op == 0x3a) f.sp = _storeReference(
+                    f.stack, f.sp, f.locals, f.initialized, local, opPC
+                );
+                else if (op == 0x37) f.sp = _storeLong(
+                    f.stack, f.sp, f.locals, f.initialized, local, opPC
+                );
+                else if (op == 0x39) f.sp = _storeDouble(
+                    f.stack, f.sp, f.locals, f.initialized, local, opPC
+                );
+                else f.sp = _storeKind(
+                    f.stack, f.sp, f.locals, f.initialized, local,
+                    op == 0x38 ? KIND_FLOAT : KIND_INT, opPC
+                );
             } else if (op >= 0x3b && op <= 0x3e) { // istore_0..3
                 f.sp = _storeKind(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x3b, KIND_INT, opPC
@@ -973,27 +1064,35 @@ contract JVMSubsetInterpreter {
             } else if (op == 0xc4) { // wide local access / iinc
                 uint8 embedded = uint8(c.data[selection.codeOffset + f.pc]);
                 uint256 local = _unsigned16(c.data, selection.codeOffset + f.pc + 1);
-                if (embedded == 0x15 || embedded == 0x16 || embedded == 0x19) {
-                    f.sp = embedded == 0x19
-                        ? _loadReference(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                        : (embedded == 0x16
-                            ? _loadLong(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                            : _loadKind(
-                                f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC
-                            ));
+                if (embedded >= 0x15 && embedded <= 0x19) {
+                    if (embedded == 0x19) f.sp = _loadReference(
+                        f.stack, f.sp, f.locals, f.initialized, local, opPC
+                    );
+                    else if (embedded == 0x16) f.sp = _loadLong(
+                        f.stack, f.sp, f.locals, f.initialized, local, opPC
+                    );
+                    else if (embedded == 0x18) f.sp = _loadDouble(
+                        f.stack, f.sp, f.locals, f.initialized, local, opPC
+                    );
+                    else f.sp = _loadKind(
+                        f.stack, f.sp, f.locals, f.initialized, local,
+                        embedded == 0x17 ? KIND_FLOAT : KIND_INT, opPC
+                    );
                     f.pc += 3;
-                } else if (embedded == 0x36 || embedded == 0x37 || embedded == 0x3a) {
-                    f.sp = embedded == 0x3a
-                        ? _storeReference(
-                            f.stack, f.sp, f.locals, f.initialized, local, opPC
-                        )
-                        : (embedded == 0x37
-                            ? _storeLong(
-                                f.stack, f.sp, f.locals, f.initialized, local, opPC
-                            )
-                            : _storeKind(
-                                f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC
-                            ));
+                } else if (embedded >= 0x36 && embedded <= 0x3a) {
+                    if (embedded == 0x3a) f.sp = _storeReference(
+                        f.stack, f.sp, f.locals, f.initialized, local, opPC
+                    );
+                    else if (embedded == 0x37) f.sp = _storeLong(
+                        f.stack, f.sp, f.locals, f.initialized, local, opPC
+                    );
+                    else if (embedded == 0x39) f.sp = _storeDouble(
+                        f.stack, f.sp, f.locals, f.initialized, local, opPC
+                    );
+                    else f.sp = _storeKind(
+                        f.stack, f.sp, f.locals, f.initialized, local,
+                        embedded == 0x38 ? KIND_FLOAT : KIND_INT, opPC
+                    );
                     f.pc += 3;
                 } else { // the predecoder admits only supported wide iinc here
                     if (local >= f.locals.length) revert BytecodeError(8, opPC);
@@ -1132,7 +1231,7 @@ contract JVMSubsetInterpreter {
                     classes, heapClasses[handle], fieldClass, field, parentLinks, opPC
                 );
                 if (op == 0xb4) {
-                    if (fieldKind == KIND_LONG) _requireExtraWords(f.stack, f.sp, 1, opPC);
+                    if (_isCategory2Kind(fieldKind)) _requireExtraWords(f.stack, f.sp, 1, opPC);
                     f.stack[receiverSlot] = objectHeap[handle][objectOffset];
                 } else {
                     uint256 fieldValue = f.stack[f.sp - 1];
@@ -1374,17 +1473,25 @@ contract JVMSubsetInterpreter {
                     classes, f.classIndex, refIndex, opPC, referenceCaches[f.classIndex], bundleMode,
                     parentLinks, hierarchyState
                 );
-                _validateStaticCalleeMetadata(classes[calleeClass], callee, opPC);
+                uint8 nativeBinding = _nativeBinding(classes[calleeClass], callee);
+                if (nativeBinding == 0) _validateStaticCalleeMetadata(
+                    classes[calleeClass], callee, opPC
+                );
+                else _validateNativeBinding(classes[calleeClass], callee, opPC);
                 if (selected[calleeClass].length == 0) {
                     selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
                     fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
                 }
-                // Finish selected-method descriptor/Code validation before an
+                // Finish selected-method descriptor/Code/native validation before an
                 // active-use initialization can produce unrelated side effects.
                 if (!selected[calleeClass][callee].loaded) {
-                    selected[calleeClass][callee] = _loadCallee(classes[calleeClass], callee, opPC);
-                    _predecode(classes[calleeClass], selected[calleeClass][callee]);
+                    selected[calleeClass][callee] = nativeBinding == 0
+                        ? _loadCallee(classes[calleeClass], callee, opPC)
+                        : _loadNativeCallee(classes[calleeClass], callee, opPC);
+                    if (nativeBinding == 0) {
+                        _predecode(classes[calleeClass], selected[calleeClass][callee]);
+                    }
                 }
                 if (initializationState[calleeClass] == 0) {
                     uint256 oldDepth = depth;
@@ -1411,6 +1518,15 @@ contract JVMSubsetInterpreter {
                     }
                 }
                 if (depth == MAX_FRAMES) revert JavaException(2);
+                if (nativeBinding != 0) {
+                    uint64 raw = uint64(_payload(f.stack[base]));
+                    if (nativeBinding == 1) f.stack[base] = _packFloat(uint32(raw));
+                    else if (nativeBinding == 2) f.stack[base] = _packInt(uint32(raw));
+                    else if (nativeBinding == 3) f.stack[base] = _packDouble(raw);
+                    else f.stack[base] = _packLong(raw);
+                    f.sp = base + 1;
+                    continue;
+                }
                 Frame memory child = _newFrame(calleeClass, callee, target, opPC);
                 _copyArguments(child, target, f.stack, base, 0);
                 f.sp = base;
@@ -1486,13 +1602,18 @@ contract JVMSubsetInterpreter {
                 f.sp = base;
                 frames[depth] = child;
                 ++depth;
-            } else if (op == 0xac || op == 0xad || op == 0xb0 || op == 0xb1) {
-                // ireturn / lreturn / areturn / return
+            } else if (op >= 0xac && op <= 0xb1) {
+                // ireturn / lreturn / freturn / dreturn / areturn / return
                 uint8 actualKind = op == 0xac ? uint8(KIND_INT)
                     : (op == 0xad ? uint8(KIND_LONG)
-                        : (op == 0xb0 ? uint8(KIND_REF) : uint8(0)));
+                        : (op == 0xae ? uint8(KIND_FLOAT)
+                            : (op == 0xaf ? uint8(KIND_DOUBLE)
+                                : (op == 0xb0 ? uint8(KIND_REF) : uint8(0)))));
                 uint8 descriptorKind = actualKind == 0 ? 2
-                    : (actualKind == KIND_REF ? 3 : (actualKind == KIND_LONG ? 4 : 1));
+                    : (actualKind == KIND_REF ? 3
+                        : (actualKind == KIND_LONG ? 4
+                            : (actualKind == KIND_FLOAT ? 5
+                                : (actualKind == KIND_DOUBLE ? 6 : 1))));
                 if (descriptorKind != selection.returnKind) revert CallError(5, opPC);
                 if ((actualKind != 0 && f.sp != 1) || (actualKind == 0 && f.sp != 0)) {
                     revert BytecodeError(4, opPC);
@@ -1679,6 +1800,97 @@ contract JVMSubsetInterpreter {
                 --f.sp;
                 f.pc = ((op == 0xc6) == isNull)
                     ? _decodedTarget(c.data, selection.codeOffset, opPC) : f.pc + 2;
+            } else if (op == 0x76 || op == 0x77) { // fneg / dneg: sign flip only
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                uint256 wanted = op == 0x76 ? KIND_FLOAT : KIND_DOUBLE;
+                _requireKind(f.stack[f.sp - 1], wanted, opPC);
+                uint64 sign = op == 0x76 ? uint64(0x80000000) : uint64(0x8000000000000000);
+                uint64 bits = uint64(_payload(f.stack[f.sp - 1])) ^ sign;
+                f.stack[f.sp - 1] = op == 0x76 ? _packFloat(uint32(bits)) : _packDouble(bits);
+            } else if (op == 0x86 || op == 0x87) { // i2f / i2d
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                uint32 raw = uint32(_payload(f.stack[f.sp - 1]));
+                f.stack[f.sp - 1] = op == 0x86
+                    ? _packFloat(uint32(_signedIntegerToIEEE(uint64(raw), 32, 24, 127, 23)))
+                    : _packDouble(_signedIntegerToIEEE(uint64(raw), 32, 53, 1023, 52));
+                if (op == 0x87 && _stackWords(f.stack, f.sp) > f.stack.length) {
+                    revert BytecodeError(9, opPC);
+                }
+            } else if (op == 0x89 || op == 0x8a) { // l2f / l2d
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_LONG, opPC);
+                uint64 raw = uint64(_payload(f.stack[f.sp - 1]));
+                f.stack[f.sp - 1] = op == 0x89
+                    ? _packFloat(uint32(_signedIntegerToIEEE(raw, 64, 24, 127, 23)))
+                    : _packDouble(_signedIntegerToIEEE(raw, 64, 53, 1023, 52));
+            } else if (op == 0x8b || op == 0x8c) { // f2i / f2l
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_FLOAT, opPC);
+                uint64 converted = _ieeeToSignedInteger(
+                    uint64(uint32(_payload(f.stack[f.sp - 1]))), 8, 23, op == 0x8b ? 32 : 64
+                );
+                f.stack[f.sp - 1] = op == 0x8b
+                    ? _packInt(uint32(converted)) : _packLong(converted);
+                if (op == 0x8c && _stackWords(f.stack, f.sp) > f.stack.length) {
+                    revert BytecodeError(9, opPC);
+                }
+            } else if (op == 0x8d) { // f2d
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_FLOAT, opPC);
+                f.stack[f.sp - 1] = _packDouble(_floatToDoubleBits(
+                    uint32(_payload(f.stack[f.sp - 1]))
+                ));
+                if (_stackWords(f.stack, f.sp) > f.stack.length) revert BytecodeError(9, opPC);
+            } else if (op == 0x8e || op == 0x8f) { // d2i / d2l
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_DOUBLE, opPC);
+                uint64 converted = _ieeeToSignedInteger(
+                    uint64(_payload(f.stack[f.sp - 1])), 11, 52, op == 0x8e ? 32 : 64
+                );
+                f.stack[f.sp - 1] = op == 0x8e
+                    ? _packInt(uint32(converted)) : _packLong(converted);
+            } else if (op == 0x90) { // d2f
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_DOUBLE, opPC);
+                f.stack[f.sp - 1] = _packFloat(_doubleToFloatBits(
+                    uint64(_payload(f.stack[f.sp - 1]))
+                ));
+            } else if (op >= 0x95 && op <= 0x98) { // fcmp*/dcmp*
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                bool doubles = op >= 0x97;
+                uint256 wanted = doubles ? KIND_DOUBLE : KIND_FLOAT;
+                _requireKind(f.stack[f.sp - 2], wanted, opPC);
+                _requireKind(f.stack[f.sp - 1], wanted, opPC);
+                int8 compared = _compareIEEE(
+                    uint64(_payload(f.stack[f.sp - 2])),
+                    uint64(_payload(f.stack[f.sp - 1])), doubles ? 11 : 8,
+                    doubles ? 52 : 23, op == 0x95 || op == 0x97
+                );
+                f.stack[f.sp - 2] = _packInt(uint32(int32(compared)));
+                --f.sp;
+            } else if (op >= 0x0b && op <= 0x0d) { // fconst_0..2
+                uint32 value = op == 0x0b ? 0 : (op == 0x0c ? 0x3f800000 : 0x40000000);
+                f.sp = _push(f.stack, f.sp, _packFloat(value), opPC);
+            } else if (op == 0x0e || op == 0x0f) { // dconst_0, dconst_1
+                f.sp = _push(f.stack, f.sp,
+                    _packDouble(op == 0x0e ? uint64(0) : uint64(0x3ff0000000000000)), opPC);
+            } else if (op >= 0x22 && op <= 0x25) { // fload_0..3
+                f.sp = _loadKind(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x22, KIND_FLOAT, opPC
+                );
+            } else if (op >= 0x26 && op <= 0x29) { // dload_0..3
+                f.sp = _loadDouble(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x26, opPC
+                );
+            } else if (op >= 0x43 && op <= 0x46) { // fstore_0..3
+                f.sp = _storeKind(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x43, KIND_FLOAT, opPC
+                );
+            } else if (op >= 0x47 && op <= 0x4a) { // dstore_0..3
+                f.sp = _storeDouble(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x47, opPC
+                );
             } else {
                 revert BytecodeError(6, opPC);
             }
@@ -1748,7 +1960,11 @@ contract JVMSubsetInterpreter {
                     uint8 constantKind = _fieldKind(c, c.fields[i]);
                     staticValues[current][i] = constantKind == KIND_LONG
                         ? _packLong(c.fields[i].constantValue)
-                        : _packInt(uint32(c.fields[i].constantValue));
+                        : (constantKind == KIND_DOUBLE
+                            ? _packDouble(c.fields[i].constantValue)
+                            : (constantKind == KIND_FLOAT
+                                ? _packFloat(uint32(c.fields[i].constantValue))
+                                : _packInt(uint32(c.fields[i].constantValue))));
                 }
             }
             uint256 link = parentLinks[current];
@@ -2743,7 +2959,11 @@ contract JVMSubsetInterpreter {
         if (sameOwner) {
             owner = callerClass;
         } else {
-            if (!bundleMode) revert CallError(2, pc);
+            if (!bundleMode
+                && !_equalsLiteral(caller.data, ownerOffset, ownerLength, bytes("java/lang/Float"))
+                && !_equalsLiteral(caller.data, ownerOffset, ownerLength, bytes("java/lang/Double"))) {
+                revert CallError(2, pc);
+            }
             bool foundOwner;
             for (uint256 i = 0; i < classes.length; ++i) {
                 if (_equalsCross(
@@ -3410,7 +3630,9 @@ contract JVMSubsetInterpreter {
                     uint8 kind = _fieldKind(c, field);
                     // _instanceFieldCount already rejected unsupported instance descriptors.
                     values[cursor] = kind == KIND_INT ? _packInt(0)
-                        : (kind == KIND_LONG ? _packLong(0) : _packRef(0));
+                        : (kind == KIND_LONG ? _packLong(0)
+                            : (kind == KIND_FLOAT ? _packFloat(0)
+                                : (kind == KIND_DOUBLE ? _packDouble(0) : _packRef(0))));
                 }
             }
             uint256 link = parentLinks[current];
@@ -3621,6 +3843,7 @@ contract JVMSubsetInterpreter {
             if (width > s.codeLength - pc) revert BytecodeError(2, pc);
             if (
                 (op == 0xac && s.returnKind != 1) || (op == 0xad && s.returnKind != 4)
+                    || (op == 0xae && s.returnKind != 5) || (op == 0xaf && s.returnKind != 6)
                     || (op == 0xb1 && s.returnKind != 2) || (op == 0xb0 && s.returnKind != 3)
             ) revert CallError(5, pc);
             if (op == 0xbc && _newArrayPrimitive(uint8(c.data[s.codeOffset + pc + 1])) == 0) {
@@ -3630,8 +3853,9 @@ contract JVMSubsetInterpreter {
                 uint256 index = op == 0x12
                     ? uint8(c.data[s.codeOffset + pc + 1])
                     : _unsigned16(c.data, s.codeOffset + pc + 1);
-                uint8 wantedTag = op == 0x14 ? 5 : 3;
-                if (index == 0 || index >= c.cp.length || uint8(c.cp[index]) != wantedTag) {
+                uint8 tag = index < c.cp.length ? uint8(c.cp[index]) : 0;
+                bool validTag = op == 0x14 ? (tag == 5 || tag == 6) : (tag == 3 || tag == 4);
+                if (index == 0 || !validTag) {
                     revert BytecodeError(13, pc);
                 }
             }
@@ -3668,19 +3892,17 @@ contract JVMSubsetInterpreter {
         }
         if (op == 0xc4) return _wideInstructionWidth(data, codeOffset, codeLength, pc);
         if (
-            op <= 0x01 || (op >= 0x02 && op <= 0x0a) || (op >= 0x1a && op <= 0x21)
-                || (op >= 0x2a && op <= 0x2f) || (op >= 0x32 && op <= 0x35)
-                || (op >= 0x3b && op <= 0x42)
-                || (op >= 0x4b && op <= 0x50) || (op >= 0x53 && op <= 0x56)
+            op <= 0x01 || (op >= 0x02 && op <= 0x0f) || (op >= 0x1a && op <= 0x2f)
+                || (op >= 0x32 && op <= 0x35) || (op >= 0x3b && op <= 0x50)
+                || (op >= 0x53 && op <= 0x56)
                 || (op >= 0x57 && op <= 0x61) || (op >= 0x64 && op <= 0x65)
                 || (op >= 0x68 && op <= 0x69) || (op >= 0x6c && op <= 0x6d)
-                || (op >= 0x70 && op <= 0x71) || (op >= 0x74 && op <= 0x75)
-                || (op >= 0x78 && op <= 0x83) || op == 0x85 || op == 0x88
-                || (op >= 0x91 && op <= 0x94) || op == 0xac || op == 0xad
-                || op == 0xb0 || op == 0xb1 || op == 0xbe
+                || (op >= 0x70 && op <= 0x71) || (op >= 0x74 && op <= 0x77)
+                || (op >= 0x78 && op <= 0x83) || (op >= 0x85 && op <= 0x98)
+                || (op >= 0xac && op <= 0xb1) || op == 0xbe
         ) return 1;
-        if (op == 0x10 || op == 0x12 || op == 0x15 || op == 0x16 || op == 0x19
-            || op == 0x36 || op == 0x37 || op == 0x3a || op == 0xbc) return 2;
+        if (op == 0x10 || op == 0x12 || (op >= 0x15 && op <= 0x19)
+            || (op >= 0x36 && op <= 0x3a) || op == 0xbc) return 2;
         if (
             op == 0x11 || op == 0x13 || op == 0x14 || op == 0x84 || (op >= 0x99 && op <= 0xa7)
                 || op == 0xb2 || op == 0xb3 || op == 0xb4 || op == 0xb5
@@ -3732,10 +3954,9 @@ contract JVMSubsetInterpreter {
         uint256 remaining = codeLength - pc;
         if (remaining < 2) revert BytecodeError(2, pc);
         uint8 embedded = uint8(data[codeOffset + pc + 1]);
-        bool supported = embedded == 0x15 || embedded == 0x16 || embedded == 0x19
-            || embedded == 0x36 || embedded == 0x37 || embedded == 0x3a || embedded == 0x84;
-        bool recognizedUnsupported = embedded == 0x17 || embedded == 0x18
-            || embedded == 0x38 || embedded == 0x39 || embedded == 0xa9;
+        bool supported = (embedded >= 0x15 && embedded <= 0x19)
+            || (embedded >= 0x36 && embedded <= 0x3a) || embedded == 0x84;
+        bool recognizedUnsupported = embedded == 0xa9;
         if (!supported && !recognizedUnsupported) revert BytecodeError(15, pc);
         uint256 width = embedded == 0x84 ? 6 : 4;
         if (width > remaining) revert BytecodeError(2, pc);
@@ -3867,7 +4088,7 @@ contract JVMSubsetInterpreter {
             s.argumentKinds[at] = kind;
             s.argumentTypeOffsets[at] = off + i;
             s.argumentTypeLengths[at] = width;
-            s.argumentWords += kind == KIND_LONG ? 2 : 1;
+            s.argumentWords += _isCategory2Kind(kind) ? 2 : 1;
             i += width;
             ++at;
         }
@@ -3877,7 +4098,9 @@ contract JVMSubsetInterpreter {
         if (resultOff + 1 == off + n && _isIntLike(result)) {
             s.returnKind = 1;
             s.returnSubtype = result;
-        } else if (resultOff + 1 == off + n && result == 0x4a) s.returnKind = 4;
+        } else if (resultOff + 1 == off + n && result == PRIMITIVE_LONG) s.returnKind = 4;
+        else if (resultOff + 1 == off + n && result == PRIMITIVE_FLOAT) s.returnKind = 5;
+        else if (resultOff + 1 == off + n && result == PRIMITIVE_DOUBLE) s.returnKind = 6;
         else if (resultOff + 1 == off + n && result == 0x56) s.returnKind = 2;
         else {
             (bool ok, uint256 width, uint8 kind) = _descriptorType(data, resultOff, off + n, false);
@@ -3914,7 +4137,9 @@ contract JVMSubsetInterpreter {
         if (off >= end) return (false, 0, 0);
         uint8 b = uint8(data[off]);
         if (_isIntLike(b)) return (true, 1, uint8(KIND_INT));
-        if (b == 0x4a) return (true, 1, uint8(KIND_LONG));
+        if (b == PRIMITIVE_LONG) return (true, 1, uint8(KIND_LONG));
+        if (b == PRIMITIVE_FLOAT) return (true, 1, uint8(KIND_FLOAT));
+        if (b == PRIMITIVE_DOUBLE) return (true, 1, uint8(KIND_DOUBLE));
         if (allowVoid && b == 0x56) return (true, 1, 0);
         if (b == 0x5b) {
             uint256 dimensions;
@@ -3924,7 +4149,8 @@ contract JVMSubsetInterpreter {
             }
             if (off + dimensions >= end) return (false, 0, 0);
             uint8 leaf = uint8(data[off + dimensions]);
-            if (_isIntLike(leaf) || leaf == PRIMITIVE_LONG) {
+            if (_isIntLike(leaf) || leaf == PRIMITIVE_LONG
+                || leaf == PRIMITIVE_FLOAT || leaf == PRIMITIVE_DOUBLE) {
                 return (true, dimensions + 1, uint8(KIND_REF));
             }
             if (leaf != 0x4c) return (false, 0, 0);
@@ -4036,6 +4262,166 @@ contract JVMSubsetInterpreter {
             | (uint32(uint8(data[off + 2])) << 8) | uint32(uint8(data[off + 3]));
     }
 
+    function _highestBit(uint64 value) private pure returns (uint256 bit) {
+        // All callers exclude zero; this loop is bounded by the 64-bit value representation.
+        while (value > 1) {
+            value >>= 1;
+            ++bit;
+        }
+    }
+
+    function _roundRightEven(uint64 value, uint256 shift) private pure returns (uint64) {
+        if (shift == 0) return value;
+        if (shift > 64) return 0;
+        if (shift == 64) {
+            uint64 half64 = uint64(1) << 63;
+            return value > half64 ? 1 : 0; // an exact half rounds to the even zero
+        }
+        uint64 quotient = value >> shift;
+        uint64 mask = (uint64(1) << shift) - 1;
+        uint64 remainder = value & mask;
+        uint64 half = uint64(1) << (shift - 1);
+        if (remainder > half || (remainder == half && (quotient & 1) != 0)) ++quotient;
+        return quotient;
+    }
+
+    function _signedIntegerToIEEE(
+        uint64 raw, uint256 width, uint256 precision, uint256 bias, uint256 fractionBits
+    ) private pure returns (uint64) {
+        uint64 signBit = width == 32 ? uint64(1) << 31 : uint64(1) << 63;
+        uint64 widthMask = width == 32 ? uint64(type(uint32).max) : type(uint64).max;
+        raw &= widthMask;
+        bool negative = (raw & signBit) != 0;
+        uint64 magnitude;
+        unchecked { magnitude = negative ? ((~raw & widthMask) + 1) : raw; }
+        if (magnitude == 0) return 0;
+        uint256 exponent = _highestBit(magnitude);
+        uint64 significand;
+        if (exponent + 1 > precision) {
+            significand = _roundRightEven(magnitude, exponent + 1 - precision);
+        } else {
+            significand = magnitude << (precision - exponent - 1);
+        }
+        if (significand == (uint64(1) << precision)) {
+            significand >>= 1;
+            ++exponent;
+        }
+        uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+        uint64 sign = negative ? uint64(1) << (fractionBits + (fractionBits == 23 ? 8 : 11)) : 0;
+        return sign | (uint64(exponent + bias) << fractionBits) | (significand & fractionMask);
+    }
+
+    function _ieeeToSignedInteger(
+        uint64 raw, uint256 exponentBits, uint256 fractionBits, uint256 targetBits
+    ) private pure returns (uint64) {
+        uint256 signShift = exponentBits + fractionBits;
+        bool negative = ((raw >> signShift) & 1) != 0;
+        uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+        uint64 fraction = raw & fractionMask;
+        uint256 exponentMask = (uint256(1) << exponentBits) - 1;
+        uint256 encodedExponent = (uint256(raw) >> fractionBits) & exponentMask;
+        uint64 minimum = uint64(1) << (targetBits - 1);
+        uint64 maximum = minimum - 1;
+        if (encodedExponent == exponentMask) {
+            if (fraction != 0) return 0;
+            return negative ? minimum : maximum;
+        }
+        int256 exponent = encodedExponent == 0
+            ? int256(1) - int256(exponentMask >> 1)
+            : int256(encodedExponent) - int256(exponentMask >> 1);
+        if (exponent < 0) return 0;
+        if (exponent >= int256(targetBits - 1)) return negative ? minimum : maximum;
+        uint64 significand = encodedExponent == 0
+            ? fraction : ((uint64(1) << fractionBits) | fraction);
+        uint64 magnitude = uint256(exponent) >= fractionBits
+            ? significand << (uint256(exponent) - fractionBits)
+            : significand >> (fractionBits - uint256(exponent));
+        if (!negative) return magnitude;
+        unchecked { return ~magnitude + 1; }
+    }
+
+    function _floatToDoubleBits(uint32 raw) private pure returns (uint64) {
+        uint64 sign = (uint64(raw >> 31)) << 63;
+        uint256 encodedExponent = (raw >> 23) & 0xff;
+        uint64 fraction = uint64(raw & 0x7fffff);
+        if (encodedExponent == 0xff) {
+            if (fraction != 0) return 0x7ff8000000000000;
+            return sign | 0x7ff0000000000000;
+        }
+        if (encodedExponent == 0) {
+            if (fraction == 0) return sign;
+            uint256 top = _highestBit(fraction);
+            int256 exponent = int256(top) - 149;
+            uint64 normalized = fraction << (52 - top);
+            return sign | (uint64(uint256(exponent + 1023)) << 52)
+                | (normalized & 0x000fffffffffffff);
+        }
+        return sign | (uint64(encodedExponent - 127 + 1023) << 52) | (fraction << 29);
+    }
+
+    function _doubleToFloatBits(uint64 raw) private pure returns (uint32) {
+        uint32 sign = uint32(raw >> 63) << 31;
+        uint256 encodedExponent = (raw >> 52) & 0x7ff;
+        uint64 fraction = raw & 0x000fffffffffffff;
+        if (encodedExponent == 0x7ff) {
+            if (fraction != 0) return 0x7fc00000;
+            return sign | 0x7f800000;
+        }
+        uint64 significand;
+        int256 scale;
+        if (encodedExponent == 0) {
+            if (fraction == 0) return sign;
+            significand = fraction;
+            scale = -1074;
+        } else {
+            significand = (uint64(1) << 52) | fraction;
+            scale = int256(encodedExponent) - 1023 - 52;
+        }
+        uint256 top = _highestBit(significand);
+        int256 exponent = int256(top) + scale;
+        if (exponent >= -126) {
+            uint64 rounded = top > 23
+                ? _roundRightEven(significand, top - 23)
+                : significand << (23 - top);
+            if (rounded == (uint64(1) << 24)) {
+                rounded >>= 1;
+                ++exponent;
+            }
+            if (exponent > 127) return sign | 0x7f800000;
+            return sign | (uint32(uint256(exponent + 127)) << 23)
+                | uint32(rounded & 0x7fffff);
+        }
+        int256 subnormalShift = scale + 149;
+        uint64 subnormal = subnormalShift >= 0
+            ? significand << uint256(subnormalShift)
+            : _roundRightEven(significand, uint256(-subnormalShift));
+        if (subnormal >= (uint64(1) << 23)) return sign | 0x00800000;
+        return sign | uint32(subnormal);
+    }
+
+    function _compareIEEE(
+        uint64 left, uint64 right, uint256 exponentBits, uint256 fractionBits, bool nanLow
+    ) private pure returns (int8) {
+        uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+        uint256 exponentMask = (uint256(1) << exponentBits) - 1;
+        bool leftNaN = ((uint256(left) >> fractionBits) & exponentMask) == exponentMask
+            && (left & fractionMask) != 0;
+        bool rightNaN = ((uint256(right) >> fractionBits) & exponentMask) == exponentMask
+            && (right & fractionMask) != 0;
+        if (leftNaN || rightNaN) return nanLow ? int8(-1) : int8(1);
+        uint64 signBit = uint64(1) << (exponentBits + fractionBits);
+        uint64 magnitudeMask = signBit - 1;
+        uint64 leftMagnitude = left & magnitudeMask;
+        uint64 rightMagnitude = right & magnitudeMask;
+        if (leftMagnitude == 0 && rightMagnitude == 0) return 0;
+        if (left == right) return 0;
+        bool leftNegative = (left & signBit) != 0;
+        bool rightNegative = (right & signBit) != 0;
+        if (leftNegative != rightNegative) return leftNegative ? int8(-1) : int8(1);
+        if (!leftNegative) return leftMagnitude < rightMagnitude ? int8(-1) : int8(1);
+        return leftMagnitude > rightMagnitude ? int8(-1) : int8(1);
+    }
+
     function _newArrayPrimitive(uint8 atype) private pure returns (uint8) {
         if (atype == 4) return PRIMITIVE_BOOLEAN;
         if (atype == 5) return PRIMITIVE_CHAR;
@@ -4068,6 +4454,14 @@ contract JVMSubsetInterpreter {
 
     function _packLong(uint64 value) private pure returns (uint256) {
         return (KIND_LONG << KIND_SHIFT) | uint256(value);
+    }
+
+    function _packFloat(uint32 value) private pure returns (uint256) {
+        return (KIND_FLOAT << KIND_SHIFT) | uint256(value);
+    }
+
+    function _packDouble(uint64 value) private pure returns (uint256) {
+        return (KIND_DOUBLE << KIND_SHIFT) | uint256(value);
     }
 
     function _payload(uint256 value) private pure returns (uint256) {
@@ -4126,7 +4520,7 @@ contract JVMSubsetInterpreter {
         returns (uint256)
     {
         uint256 words = _stackWords(stack, sp);
-        uint256 added = _valueKind(value) == KIND_LONG ? 2 : 1;
+        uint256 added = _isCategory2Kind(_valueKind(value)) ? 2 : 1;
         if (words > stack.length || added > stack.length - words) revert BytecodeError(9, pc);
         stack[sp] = value;
         return sp + 1;
@@ -4134,13 +4528,18 @@ contract JVMSubsetInterpreter {
 
     function _stackWords(uint256[] memory stack, uint256 sp) private pure returns (uint256 words) {
         for (uint256 i = 0; i < sp; ++i) {
-            words += _valueKind(stack[i]) == KIND_LONG ? 2 : 1;
+            words += _isCategory2Kind(_valueKind(stack[i])) ? 2 : 1;
         }
     }
 
     function _isCategory1(uint256 value) private pure returns (bool) {
         uint256 kind = _valueKind(value);
-        return kind == KIND_INT || kind == KIND_REF || kind == KIND_UNINIT;
+        return kind == KIND_INT || kind == KIND_REF || kind == KIND_UNINIT
+            || kind == KIND_FLOAT;
+    }
+
+    function _isCategory2Kind(uint256 kind) private pure returns (bool) {
+        return kind == KIND_LONG || kind == KIND_DOUBLE;
     }
 
     function _loadLong(
@@ -4159,13 +4558,43 @@ contract JVMSubsetInterpreter {
         uint256[] memory stack, uint256 sp, uint256[] memory locals,
         bool[] memory initialized, uint256 local, uint256 pc
     ) private pure returns (uint256) {
+        return _storeCategory2(
+            stack, sp, locals, initialized, local, KIND_LONG, KIND_LONG_TAIL, pc
+        );
+    }
+
+    function _loadDouble(
+        uint256[] memory stack, uint256 sp, uint256[] memory locals,
+        bool[] memory initialized, uint256 local, uint256 pc
+    ) private pure returns (uint256) {
+        if (local >= locals.length || local + 1 >= locals.length) revert BytecodeError(8, pc);
+        if (!initialized[local]) revert BytecodeError(11, pc);
+        _requireKind(locals[local], KIND_DOUBLE, pc);
+        if (!initialized[local + 1]) revert BytecodeError(11, pc);
+        _requireKind(locals[local + 1], KIND_DOUBLE_TAIL, pc);
+        return _push(stack, sp, locals[local], pc);
+    }
+
+    function _storeDouble(
+        uint256[] memory stack, uint256 sp, uint256[] memory locals,
+        bool[] memory initialized, uint256 local, uint256 pc
+    ) private pure returns (uint256) {
+        return _storeCategory2(
+            stack, sp, locals, initialized, local, KIND_DOUBLE, KIND_DOUBLE_TAIL, pc
+        );
+    }
+
+    function _storeCategory2(
+        uint256[] memory stack, uint256 sp, uint256[] memory locals,
+        bool[] memory initialized, uint256 local, uint256 kind, uint256 tail, uint256 pc
+    ) private pure returns (uint256) {
         if (local >= locals.length || local + 1 >= locals.length) revert BytecodeError(8, pc);
         if (sp == 0) revert BytecodeError(3, pc);
-        _requireKind(stack[sp - 1], KIND_LONG, pc);
+        _requireKind(stack[sp - 1], kind, pc);
         _invalidateLocal(locals, initialized, local);
         _invalidateLocal(locals, initialized, local + 1);
         locals[local] = stack[sp - 1];
-        locals[local + 1] = KIND_LONG_TAIL << KIND_SHIFT;
+        locals[local + 1] = tail << KIND_SHIFT;
         initialized[local] = true;
         initialized[local + 1] = true;
         return sp - 1;
@@ -4179,8 +4608,9 @@ contract JVMSubsetInterpreter {
             uint256 value = stack[stackAt + i];
             child.locals[localAt] = value;
             child.initialized[localAt] = true;
-            if (target.argumentKinds[i] == KIND_LONG) {
-                child.locals[localAt + 1] = KIND_LONG_TAIL << KIND_SHIFT;
+            if (_isCategory2Kind(target.argumentKinds[i])) {
+                child.locals[localAt + 1] = (target.argumentKinds[i] == KIND_LONG
+                    ? KIND_LONG_TAIL : KIND_DOUBLE_TAIL) << KIND_SHIFT;
                 child.initialized[localAt + 1] = true;
                 localAt += 2;
             } else {
@@ -4264,7 +4694,7 @@ contract JVMSubsetInterpreter {
         if (sp == 0) revert BytecodeError(3, pc);
         uint256 v1 = stack[sp - 1];
         bool c1 = _isCategory1(v1);
-        bool c2 = _valueKind(v1) == KIND_LONG;
+        bool c2 = _isCategory2Kind(_valueKind(v1));
         if (!c1 && !c2) revert BytecodeError(14, pc);
 
         if (op == 0x58) { // pop2: one category-2 or two category-1 values
@@ -4297,7 +4727,7 @@ contract JVMSubsetInterpreter {
             if (!c1) revert BytecodeError(14, pc);
             if (sp < 2) revert BytecodeError(3, pc);
             uint256 v2 = stack[sp - 2];
-            if (_valueKind(v2) == KIND_LONG) {
+            if (_isCategory2Kind(_valueKind(v2))) {
                 _requireExtraWords(stack, sp, 1, pc);
                 stack[sp - 2] = v1; stack[sp - 1] = v2; stack[sp] = v1;
                 return sp + 1;
@@ -4348,7 +4778,7 @@ contract JVMSubsetInterpreter {
         if (c2) {
             if (sp < 2) revert BytecodeError(3, pc);
             uint256 v2 = stack[sp - 2];
-            if (_valueKind(v2) == KIND_LONG) {
+            if (_isCategory2Kind(_valueKind(v2))) {
                 _requireExtraWords(stack, sp, 2, pc);
                 stack[sp - 2] = v1; stack[sp - 1] = v2; stack[sp] = v1;
                 return sp + 1;
@@ -4367,7 +4797,7 @@ contract JVMSubsetInterpreter {
         if (!_isCategory1(v2)) revert BytecodeError(14, pc);
         if (sp < 3) revert BytecodeError(3, pc);
         uint256 v3 = stack[sp - 3];
-        if (_valueKind(v3) == KIND_LONG) {
+        if (_isCategory2Kind(_valueKind(v3))) {
             _requireExtraWords(stack, sp, 2, pc);
             stack[sp - 3] = v2; stack[sp - 2] = v1; stack[sp - 1] = v3;
             stack[sp] = v2; stack[sp + 1] = v1;
@@ -4395,10 +4825,10 @@ contract JVMSubsetInterpreter {
     ) private pure {
         if (initialized[local]) {
             uint256 kind = _valueKind(locals[local]);
-            if (kind == KIND_LONG && local + 1 < locals.length) {
+            if (_isCategory2Kind(kind) && local + 1 < locals.length) {
                 locals[local + 1] = 0;
                 initialized[local + 1] = false;
-            } else if (kind == KIND_LONG_TAIL && local != 0) {
+            } else if ((kind == KIND_LONG_TAIL || kind == KIND_DOUBLE_TAIL) && local != 0) {
                 locals[local - 1] = 0;
                 initialized[local - 1] = false;
             }
@@ -4501,22 +4931,27 @@ contract JVMSubsetInterpreter {
                     );
                 }
                 if (supportedKind != 0 && isConstantValue) {
-                    if ((supportedKind != KIND_INT && supportedKind != KIND_LONG)
+                    if ((supportedKind != KIND_INT && supportedKind != KIND_LONG
+                            && supportedKind != KIND_FLOAT && supportedKind != KIND_DOUBLE)
                         || field.hasConstant || attributeLength != 2) {
                         revert FieldError(5, i);
                     }
                     uint256 constantIndex = _u2(r);
-                    uint8 wantedTag = supportedKind == KIND_LONG ? 5 : 3;
+                    uint8 wantedTag = supportedKind == KIND_LONG ? 5
+                        : (supportedKind == KIND_DOUBLE ? 6
+                            : (supportedKind == KIND_FLOAT ? 4 : 3));
                     if (
                         constantIndex == 0 || constantIndex >= c.cp.length
                             || uint8(c.cp[constantIndex]) != wantedTag
                     ) revert FieldError(5, i);
                     field.hasConstant = true;
-                    field.constantValue = supportedKind == KIND_LONG
+                    field.constantValue = (supportedKind == KIND_LONG || supportedKind == KIND_DOUBLE)
                         ? uint64(c.cp[constantIndex] >> 8)
-                        : uint64(_normalizeInt(
-                            uint32(c.cp[constantIndex] >> 8), uint8(c.data[descriptorOffset])
-                        ));
+                        : (supportedKind == KIND_FLOAT
+                            ? uint64(uint32(c.cp[constantIndex] >> 8))
+                            : uint64(_normalizeInt(
+                                uint32(c.cp[constantIndex] >> 8), uint8(c.data[descriptorOffset])
+                            )));
                 } else {
                     _skip(r, attributeLength);
                 }
@@ -4589,5 +5024,13 @@ contract JVMSubsetInterpreter {
 
     function _bootstrapSerializable() private pure returns (bytes memory) {
         return hex"cafebabe0000003400050700020100146a6176612f696f2f53657269616c697a61626c650700040100106a6176612f6c616e672f4f626a6563740601000100030000000000000000";
+    }
+
+    function _bootstrapFloat() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000e0a000200030700040c000500060100106a6176612f6c616e672f4f626a6563740100063c696e69743e01000328295607000801000f6a6176612f6c616e672f466c6f6174010004436f646501000e696e7442697473546f466c6f617401000428492946010011666c6f6174546f526177496e744269747301000428462949003100070002000000000003000200050006000100090000001100010001000000052ab70001b1000000000109000a000b00000109000c000d00000000";
+    }
+
+    function _bootstrapDouble() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000e0a000200030700040c000500060100106a6176612f6c616e672f4f626a6563740100063c696e69743e0100032829560700080100106a6176612f6c616e672f446f75626c65010004436f64650100106c6f6e6742697473546f446f75626c65010004284a2944010013646f75626c65546f5261774c6f6e67426974730100042844294a003100070002000000000003000200050006000100090000001100010001000000052ab70001b1000000000109000a000b00000109000c000d00000000";
     }
 }
