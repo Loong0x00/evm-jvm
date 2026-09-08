@@ -59,6 +59,7 @@ func TestVerifyM5ccCriticalExactBitPatterns(t *testing.T) {
 	}{
 		{"add-half-even", "fadd", 0x3f800000, 0x33800000, 0x3f800000},
 		{"add-half-odd-rounds-up", "fadd", 0x3f800001, 0x33800000, 0x3f800002},
+		{"add-half-plus-sticky-rounds-up", "fadd", 0x3f800000, 0x33800001, 0x3f800001},
 		{"add-exact-cancel-positive-zero", "fadd", 0x3f800000, 0xbf800000, 0x00000000},
 		{"add-two-negative-zeros", "fadd", 0x80000000, 0x80000000, 0x80000000},
 		{"add-subnormal-to-min-normal", "fadd", 0x007fffff, 0x00000001, 0x00800000},
@@ -68,13 +69,17 @@ func TestVerifyM5ccCriticalExactBitPatterns(t *testing.T) {
 		{"sub-negative-zero-positive-zero", "fsub", 0x80000000, 0x00000000, 0x80000000},
 		{"sub-negative-zero-negative-zero", "fsub", 0x80000000, 0x80000000, 0x00000000},
 		{"sub-near-cancellation", "fsub", 0x3f800001, 0x3f800000, 0x34000000},
+		{"sub-minnormal-largest-subnormal", "fsub", 0x00800000, 0x007fffff, 0x00000001},
+		{"sub-half-plus-sticky-rounds-down", "fsub", 0x3f800000, 0x33000001, 0x3f7fffff},
 		{"sub-qnan-canonical", "fsub", 0xffc12345, 0x3f800000, 0x7fc00000},
+		{"sub-snan-canonical", "fsub", 0x7f800001, 0x3f800000, 0x7fc00000},
 		{"mul-min-normal-half", "fmul", 0x00800000, 0x3f000000, 0x00400000},
 		{"mul-min-subnormal-half-tie", "fmul", 0x00000001, 0x3f000000, 0x00000000},
 		{"mul-min-subnormal-one-point-five", "fmul", 0x00000001, 0x3fc00000, 0x00000002},
 		{"mul-negative-zero", "fmul", 0x80000000, 0x40400000, 0x80000000},
 		{"mul-zero-infinity", "fmul", 0x00000000, 0x7f800000, 0x7fc00000},
 		{"div-min-normal-two", "fdiv", 0x00800000, 0x40000000, 0x00400000},
+		{"div-one-third-guard-sticky", "fdiv", 0x3f800000, 0x40400000, 0x3eaaaaab},
 		{"div-three-minsub-two", "fdiv", 0x00000003, 0x40000000, 0x00000002},
 		{"div-finite-positive-zero", "fdiv", 0x3f800000, 0x00000000, 0x7f800000},
 		{"div-finite-negative-zero", "fdiv", 0x3f800000, 0x80000000, 0xff800000},
@@ -105,6 +110,7 @@ func TestVerifyM5ccCriticalExactBitPatterns(t *testing.T) {
 	}{
 		{"add-half-even", "dadd", 0x3ff0000000000000, 0x3ca0000000000000, 0x3ff0000000000000},
 		{"add-half-odd-rounds-up", "dadd", 0x3ff0000000000001, 0x3ca0000000000000, 0x3ff0000000000002},
+		{"add-half-plus-sticky-rounds-up", "dadd", 0x3ff0000000000000, 0x3ca0000000000001, 0x3ff0000000000001},
 		{"add-exact-cancel-positive-zero", "dadd", 0x3ff0000000000000, 0xbff0000000000000, 0x0000000000000000},
 		{"add-two-negative-zeros", "dadd", 0x8000000000000000, 0x8000000000000000, 0x8000000000000000},
 		{"add-subnormal-to-min-normal", "dadd", 0x000fffffffffffff, 1, 0x0010000000000000},
@@ -114,12 +120,16 @@ func TestVerifyM5ccCriticalExactBitPatterns(t *testing.T) {
 		{"sub-negative-zero-positive-zero", "dsub", 0x8000000000000000, 0, 0x8000000000000000},
 		{"sub-negative-zero-negative-zero", "dsub", 0x8000000000000000, 0x8000000000000000, 0},
 		{"sub-near-cancellation", "dsub", 0x3ff0000000000001, 0x3ff0000000000000, 0x3cb0000000000000},
+		{"sub-minnormal-largest-subnormal", "dsub", 0x0010000000000000, 0x000fffffffffffff, 1},
+		{"sub-half-plus-sticky-rounds-down", "dsub", 0x3ff0000000000000, 0x3c90000000000001, 0x3fefffffffffffff},
 		{"sub-qnan-canonical", "dsub", 0xfff8123456789abc, 0x3ff0000000000000, 0x7ff8000000000000},
+		{"sub-snan-canonical", "dsub", 0x7ff0000000000001, 0x3ff0000000000000, 0x7ff8000000000000},
 		{"mul-min-normal-half", "dmul", 0x0010000000000000, 0x3fe0000000000000, 0x0008000000000000},
 		{"mul-min-subnormal-half-tie", "dmul", 1, 0x3fe0000000000000, 0},
 		{"mul-min-subnormal-one-point-five", "dmul", 1, 0x3ff8000000000000, 2},
 		{"mul-zero-infinity", "dmul", 0, 0x7ff0000000000000, 0x7ff8000000000000},
 		{"div-min-normal-two", "ddiv", 0x0010000000000000, 0x4000000000000000, 0x0008000000000000},
+		{"div-one-third-guard-sticky", "ddiv", 0x3ff0000000000000, 0x4008000000000000, 0x3fd5555555555555},
 		{"div-three-minsub-two", "ddiv", 3, 0x4000000000000000, 2},
 		{"div-finite-negative-zero", "ddiv", 0x3ff0000000000000, 0x8000000000000000, 0xfff0000000000000},
 		{"div-zero-zero-is-value", "ddiv", 0, 0, 0x7ff8000000000000},
@@ -181,6 +191,52 @@ func TestVerifyM5ccSeededFiniteVectorsMatchJava8And21Exactly(t *testing.T) {
 			a, b := verifyM5ccRandomFinite64(rng), verifyM5ccRandomFinite64(rng)
 			if b&0x7fffffffffffffff == 0 {
 				b = 1
+			}
+			args := verifyM5ccDoubleArgs(a, b)
+			want := oracle.long(t, method, args)
+			t.Run(fmt.Sprintf("%s-%d-%016x-%016x", method, i, a, b), func(t *testing.T) {
+				verifyM5ccAssertDouble(t, classfile, method, args, want, verifyM5ccGasLimit)
+			})
+		}
+	}
+}
+
+func TestVerifyM5ccSeededRawVectorsMatchJava8And21BitExactly(t *testing.T) {
+	classfile := verifyM5ccArithmeticClass(t)
+	oracle := verifyM5ccNewOracle(t, classfile)
+	rng := rand.New(rand.NewSource(0x5cc5a17))
+	for _, method := range []string{"fadd", "fsub", "fmul", "fdiv", "frem"} {
+		for i := 0; i < 4; i++ {
+			a, b := rng.Uint32(), rng.Uint32()
+			switch i {
+			case 1: // generated NaN: payload/sign may vary across JVMs, value class may not
+				a = rng.Uint32()&0x807fffff | 0x7f800001
+			case 2: // special signed infinity/zero interaction
+				a = rng.Uint32()&0x80000000 | 0x7f800000
+				b = rng.Uint32() & 0x80000000
+			case 3: // exact subnormal/finite path
+				a = rng.Uint32()&0x807fffff | 1
+				b = rng.Uint32()&0x807fffff | 0x3f000000
+			}
+			args := []int32{int32(a), int32(b)}
+			want := int32(oracle.floatBits(t, method, args))
+			t.Run(fmt.Sprintf("%s-%d-%08x-%08x", method, i, a, b), func(t *testing.T) {
+				verifyM5ccAssertValue(t, classfile, method, args, want, verifyM5ccGasLimit)
+			})
+		}
+	}
+	for _, method := range []string{"dadd", "dsub", "dmul", "ddiv", "drem"} {
+		for i := 0; i < 4; i++ {
+			a, b := rng.Uint64(), rng.Uint64()
+			switch i {
+			case 1:
+				a = rng.Uint64()&0x800fffffffffffff | 0x7ff0000000000001
+			case 2:
+				a = rng.Uint64()&0x8000000000000000 | 0x7ff0000000000000
+				b = rng.Uint64() & 0x8000000000000000
+			case 3:
+				a = rng.Uint64()&0x800fffffffffffff | 1
+				b = rng.Uint64()&0x800fffffffffffff | 0x3fe0000000000000
 			}
 			args := verifyM5ccDoubleArgs(a, b)
 			want := oracle.long(t, method, args)

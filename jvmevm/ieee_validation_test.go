@@ -700,7 +700,7 @@ func TestVerifyM5cbSixtyFourUserClassesAppendFiveInternalsAndDoubleUsesTwoWords(
 	}, 0x56789abc)
 }
 
-func TestVerifyM5cbDeferredArithmeticArraysAndOtherNativesStayRejected(t *testing.T) {
+func TestVerifyM5cbArithmeticAcceptedArraysAndOtherNativesStayRejected(t *testing.T) {
 	classes := verifyM5cbCompile(t, map[string]string{
 		"DeferredM5cb.java": `public final class DeferredM5cb {
 			public static int arithmetic(int x){return Float.floatToRawIntBits(Float.intBitsToFloat(x)+1.0f);}
@@ -710,9 +710,10 @@ func TestVerifyM5cbDeferredArithmeticArraysAndOtherNativesStayRejected(t *testin
 	}, "DeferredM5cb")
 	classfile := classes["DeferredM5cb"]
 	parsed := parseStaticsClass(t, classfile)
-	arithmeticPC := verifyM5cbInstructionPC(t, parsed.method(t, "arithmetic", "(I)I").code, 0x62, 0)
-	verifyM5cbAssertError(t, func() (Result, error) { return Run(classfile, "arithmetic", []int32{1}, verifyM5cbGasLimit) },
-		"BytecodeError(uint256,uint256)", 6, uint64(arithmeticPC))
+	verifyM5cbJava8Outcome(t, [][]byte{classfile}, "DeferredM5cb", "arithmetic", []int32{1}, 1065353216)
+	verifyM5cbAssertValue(t, func() (Result, error) {
+		return Run(classfile, "arithmetic", []int32{1}, verifyM5cbGasLimit)
+	}, 1065353216)
 	for _, method := range []string{"floatArray", "doubleArray"} {
 		code := parsed.method(t, method, "()I").code
 		pc := verifyM5cbInstructionPC(t, code, 0xbc, 0)

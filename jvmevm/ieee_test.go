@@ -133,10 +133,13 @@ public class IEEEFlow {
  public static int add(int x){ return Float.floatToRawIntBits(Float.intBitsToFloat(x)+1.0f); }
  public static int array(int x){ float[] a=new float[1]; a[0]=Float.intBitsToFloat(x); return Float.floatToRawIntBits(a[0]); }
 }`)
-	for _, method := range []string{"add", "array"} {
-		if _, err := Run(deferred, method, []int32{1}, 20_000_000); err == nil {
-			t.Fatalf("%s unexpectedly accepted deferred IEEE arithmetic/arrays", method)
-		}
+	verifyM5baJava8Outcome(t, [][]byte{deferred}, "DeferredFP", "add", []int32{1}, "value=1065353216")
+	result, err := Run(deferred, "add", []int32{1}, 20_000_000)
+	if err != nil || result.Value != 1065353216 || result.ExceptionClass != "" || len(result.RevertData) != 0 {
+		t.Fatalf("scalar IEEE add result/error = %+v/%v, want exact Java bits 1065353216", result, err)
+	}
+	if _, err := Run(deferred, "array", []int32{1}, 20_000_000); err == nil {
+		t.Fatal("float array unexpectedly accepted")
 	}
 }
 
