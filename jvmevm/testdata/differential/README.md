@@ -4,12 +4,12 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 892 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
-73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, and 100 `m4d`
-cases. The 381 smoke-marked cases include 50 from `m4d`. Every root entry remains
-a declared public static `(int...)int` method, and guest sources have no `main`.
-All 792 entries through M4c, including their source lists, arguments, budgets,
-tiers, and outcomes, are unchanged.
+The manifest has 960 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, 100 `m4d`,
+and 68 `m4e` cases. The 415 smoke-marked cases include 34 from `m4e`. Every root
+entry remains a declared public static `(int...)int` method, and guest sources
+have no `main`. All 892 entries through M4d, including their source lists,
+arguments, budgets, tiers, and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -255,10 +255,30 @@ The 15 M4d outcomes are two `NegativeArraySizeException`, three
 `Child[]` widened through `Object[]`, nested-array incompatibility, and explicit
 null-before-bounds and bounds-before-incompatible-store ordering.
 
-Across all stages there are 818 value outcomes, 14 ArithmeticException outcomes,
-three StackOverflowError outcomes, 16 ExceptionInInitializerError outcomes, four
+M4e adds 59 value outcomes and nine actual JVM exception outcomes over six new
+trusted Java 8 sources, which emit 22 ordinary classfiles. Every case executes a
+real `multianewarray`, directly in its root or in an entered helper or class
+initializer. Full and partial rank-two through rank-four int and ordinary-class
+arrays cover lengths, defaults, writes, distinct generated children (including
+empty children), zero outer/inner/middle dimensions, null partial-rank leaves,
+aliasing, and jagged mutation. Rank-three int/reference covariance, casts, type
+tests, and nested stores include three `ArrayStoreException` and one
+`ClassCastException` outcome. Nested references also cross instance/static/final
+fields and static, private-special, and virtual helper arguments and returns.
+
+Component allocation includes abstract and failing-initializer classes without
+running component initializers or constructors. Separate holder initializers
+allocate int and reference matrices. Dimension expressions prove left-to-right
+count evaluation. Four direct `NegativeArraySizeException` cases cover negative
+outer/inner counts and later negative counts after a zero outer or middle count;
+one initializer-time negative count is reported as
+`ExceptionInInitializerError`. Public cross-package component arrays cover full
+and partial allocation without host classpath discovery.
+
+Across all stages there are 877 value outcomes, 14 ArithmeticException outcomes,
+three StackOverflowError outcomes, 17 ExceptionInInitializerError outcomes, eight
 NegativeArraySizeException outcomes, ten ArrayIndexOutOfBoundsException outcomes,
-19 NullPointerException outcomes, five ClassCastException outcomes, and three
+19 NullPointerException outcomes, six ClassCastException outcomes, and six
 ArrayStoreException outcomes. Every gas limit is finite and at most 70,000,000;
 every subprocess timeout is at most 10 seconds. New arrays have at most eight
 elements, and all fixture loops and recursions are bounded and modest.
@@ -372,6 +392,29 @@ The canonical JSON SHA256 of the unchanged old 792-entry prefix is
 identical to the M4c base revision. The baseline M4c runner intentionally rejects
 stage `m4d` and `ArrayStoreException` until the separately owned verifier lands;
 these are reference-JVM checks, not an EVM-green claim.
+
+For M4e, one fresh compilation of all 153 trusted fixture sources with
+`javac --release 8` was followed by 68 separate `OracleMain` JVM processes, each
+with a 64 MiB maximum heap and a ten-second outer timeout. All 68 matched the
+manifest: 59 values and exactly the nine declared exceptions. The ordered
+`(case id, value-or-exception)` results have SHA256
+`dcc917e97b1828f86ac40e0688896b289db21b2cf62bf1a4763d07dfbf17106d`.
+The canonical JSON SHA256 of the unchanged old 892-entry prefix is
+`194aebc17a953f42c2370748a577e53bb20edb587b88de582e921b66c8115ae0`,
+identical to base revision `8b42dc8`. The baseline M4d runner intentionally
+rejects stage `m4e` until separately owned runtime/verifier integration; these
+are trusted reference-JVM checks, not an EVM-green claim.
+
+`javap -c -v -p` over all 22 emitted M4e classes found only Java 8 major version
+52 classfiles, zero declared interfaces, and 69 actual `multianewarray`
+instructions: 51 with dimensions two, 17 with dimensions three, and one with
+dimensions four. The operands name int or ordinary-class array descriptors of
+rank two through four, including full and partial allocations. Inspection found
+only `int` among `newarray` primitive operands, and no interface/dynamic calls,
+monitors, throws, handlers, class literals, or non-Object JRE method references.
+Constant-pool call owners retain the intended fixture static, private-special,
+and virtual helper owners and nested-array descriptors. Each manifest source
+bundle's exact emitted classfile set matches its explicit `class_files` list.
 
 `javap -c -v -p` over all 30 emitted M4d classes found only Java 8 major version
 52 classfiles and zero declared interfaces. Aggregate relevant instruction shapes

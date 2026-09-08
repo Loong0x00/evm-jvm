@@ -18251,6 +18251,1543 @@
         603
       ],
       "smoke": false
+    },
+    {
+      "id": "m4e-int2-lengths",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "int2Lengths",
+      "args": [
+        2,
+        3
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-int2-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "int2Defaults",
+      "args": [
+        101
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-int2-write",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "int2Write",
+      "args": [
+        -102
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-int3-lengths",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "int3Lengths",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-int3-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "int3Defaults",
+      "args": [
+        103
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-int3-write",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "int3Write",
+      "args": [
+        -104
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-int4-write",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "int4Write",
+      "args": [
+        105
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-reference2-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "reference2Defaults",
+      "args": [
+        106
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-reference2-write",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "reference2Write",
+      "args": [
+        -107
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-reference3-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "reference3Defaults",
+      "args": [
+        108
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-reference3-write",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "reference3Write",
+      "args": [
+        109
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-zero-outer-int",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "zeroOuterInt",
+      "args": [
+        110
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-zero-outer-reference",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "zeroOuterReference",
+      "args": [
+        111
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-zero-inner-int",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "zeroInnerInt",
+      "args": [
+        112
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-zero-inner-reference",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "zeroInnerReference",
+      "args": [
+        113
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-distinct-empty-children",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "distinctEmptyChildren",
+      "args": [
+        114
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-zero-middle-distinct",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "zeroMiddleDistinct",
+      "args": [
+        115
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-zero-deep-distinct",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "zeroDeepDistinct",
+      "args": [
+        116
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-partial-int-null-leaves",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "partialIntNullLeaves",
+      "args": [
+        117
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-partial-reference-null-leaves",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "partialReferenceNullLeaves",
+      "args": [
+        118
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-partial-then-fill",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "partialThenFill",
+      "args": [
+        -119
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-alias-generated-rows",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "aliasGeneratedRows",
+      "args": [
+        120
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-mutate-to-jagged",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "mutateToJagged",
+      "args": [
+        121
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-distinct-generated-rows",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4e.core.CoreRoot",
+      "method": "distinctGeneratedRows",
+      "args": [
+        122
+      ],
+      "class_files": [
+        "bundle/m4e/core/CoreRoot.class",
+        "bundle/m4e/core/CoreCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-child-matrix-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "childMatrixDefaults",
+      "args": [
+        201
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-child-matrix-to-base",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "childMatrixToBase",
+      "args": [
+        202
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-child-matrix-to-object-array",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "childMatrixToObjectArray",
+      "args": [
+        203
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-child-cube-to-base",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "childCubeToBase",
+      "args": [
+        204
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-child-cube-type-tests",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "childCubeTypeTests",
+      "args": [
+        205
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-child-matrix-cast-identity",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "childMatrixCastIdentity",
+      "args": [
+        206
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-primitive-cube-type-tests",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "primitiveCubeTypeTests",
+      "args": [
+        207
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-primitive-cube-cast-identity",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "primitiveCubeCastIdentity",
+      "args": [
+        -208
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-partial-child-cube-covariance",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "partialChildCubeCovariance",
+      "args": [
+        209
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-abstract-component-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "abstractComponentDefaults",
+      "args": [
+        210
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-valid-grand-store",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "validGrandStore",
+      "args": [
+        211
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-wrong-outer-row-store",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "wrongOuterRowStore",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4e-wrong-leaf-store",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "wrongLeafStore",
+      "args": [
+        212
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4e-wrong-cube-plane-store",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "wrongCubePlaneStore",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4e-cast-primitive-cube-to-object-cube",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4e.covariance.CovarianceRoot",
+      "method": "castPrimitiveCubeToObjectCube",
+      "args": [
+        213
+      ],
+      "class_files": [
+        "bundle/m4e/covariance/CovarianceRoot.class",
+        "bundle/m4e/covariance/CovBase.class",
+        "bundle/m4e/covariance/CovChild.class",
+        "bundle/m4e/covariance/CovGrand.class",
+        "bundle/m4e/covariance/CovAbstract.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m4e-static-argument",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "staticArgument",
+      "args": [
+        301
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-static-return",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "staticReturn",
+      "args": [
+        -302
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-private-special-argument",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "privateSpecialArgument",
+      "args": [
+        303
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-private-special-return",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "privateSpecialReturn",
+      "args": [
+        304
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-virtual-argument",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "virtualArgument",
+      "args": [
+        -305
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-virtual-return",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "virtualReturn",
+      "args": [
+        306
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-instance-field",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "instanceField",
+      "args": [
+        307
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-static-field",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "staticField",
+      "args": [
+        -308
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-final-field",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "finalField",
+      "args": [
+        309
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-object-field",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "objectField",
+      "args": [
+        310
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-field-alias-mutation",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "fieldAliasMutation",
+      "args": [
+        311
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-helper-preserves-partial-null",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4e.transport.TransportRoot",
+      "method": "helperPreservesPartialNull",
+      "args": [
+        -312
+      ],
+      "class_files": [
+        "bundle/m4e/transport/TransportRoot.class",
+        "bundle/m4e/transport/TransportCell.class",
+        "bundle/m4e/transport/TransportHolder.class",
+        "bundle/m4e/transport/TransportHelpers.class",
+        "bundle/m4e/transport/TransportVirtualBase.class",
+        "bundle/m4e/transport/TransportVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-component-no-initialization",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "componentNoInitialization",
+      "args": [
+        401
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-component-no-constructor",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "componentNoConstructor",
+      "args": [
+        402
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-failing-component-no-initialization",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "failingComponentNoInitialization",
+      "args": [
+        403
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-abstract-component-no-initialization",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "abstractComponentNoInitialization",
+      "args": [
+        404
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-partial-component-no-initialization",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "partialComponentNoInitialization",
+      "args": [
+        405
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-initializer-allocated-lengths",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "initializerAllocatedLengths",
+      "args": [
+        406
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-initializer-allocated-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "initializerAllocatedDefaults",
+      "args": [
+        407
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-initializer-reference-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "initializerReferenceDefaults",
+      "args": [
+        408
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-dimension-evaluation-order",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "dimensionEvaluationOrder",
+      "args": [
+        2,
+        3
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-negative-outer",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "negativeOuter",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4e-negative-inner",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "negativeInner",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4e-initializer-negative",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "initializerNegative",
+      "args": [
+        409
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4e-cross-package-defaults",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/crosscomponent/api/PublicComponent.java",
+        "bundle/m4e/crosscomponent/root/CrossComponentRoot.java"
+      ],
+      "class": "bundle.m4e.crosscomponent.root.CrossComponentRoot",
+      "method": "crossPackageDefaults",
+      "args": [
+        501
+      ],
+      "class_files": [
+        "bundle/m4e/crosscomponent/root/CrossComponentRoot.class",
+        "bundle/m4e/crosscomponent/api/PublicComponent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-cross-package-store",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/crosscomponent/api/PublicComponent.java",
+        "bundle/m4e/crosscomponent/root/CrossComponentRoot.java"
+      ],
+      "class": "bundle.m4e.crosscomponent.root.CrossComponentRoot",
+      "method": "crossPackageStore",
+      "args": [
+        -502
+      ],
+      "class_files": [
+        "bundle/m4e/crosscomponent/root/CrossComponentRoot.class",
+        "bundle/m4e/crosscomponent/api/PublicComponent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-cross-package-partial",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/crosscomponent/api/PublicComponent.java",
+        "bundle/m4e/crosscomponent/root/CrossComponentRoot.java"
+      ],
+      "class": "bundle.m4e.crosscomponent.root.CrossComponentRoot",
+      "method": "crossPackagePartial",
+      "args": [
+        503
+      ],
+      "class_files": [
+        "bundle/m4e/crosscomponent/root/CrossComponentRoot.class",
+        "bundle/m4e/crosscomponent/api/PublicComponent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4e-zero-outer-negative-inner",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "zeroOuterNegativeInner",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4e-zero-middle-negative-deep",
+      "stage": "m4e",
+      "sources": [
+        "bundle/m4e/init/InitRoot.java"
+      ],
+      "class": "bundle.m4e.init.InitRoot",
+      "method": "zeroMiddleNegativeDeep",
+      "args": [
+        -4
+      ],
+      "class_files": [
+        "bundle/m4e/init/InitRoot.class",
+        "bundle/m4e/init/InitProbe.class",
+        "bundle/m4e/init/QuietComponent.class",
+        "bundle/m4e/init/FailingComponent.class",
+        "bundle/m4e/init/QuietAbstract.class",
+        "bundle/m4e/init/AllocatingHolder.class",
+        "bundle/m4e/init/NegativeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
     }
   ]
 }
