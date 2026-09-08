@@ -15,18 +15,18 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m5cb --tier full
+python3 tools/java_diff.py --stage m5cc --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m5cb --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m5cc --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
 `m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, `m4fc` adds M4f-c,
 `m5a` adds M5a, `m5ba` adds M5b-a, `m5bb` adds M5b-b, `m5ca` adds M5c-a,
-and `m5cb` or `all` adds M5c-b. A manifest without entries in the newest stage continues to run its
+`m5cb` adds M5c-b, and `m5cc` or `all` adds M5c-c. A manifest without entries in the newest stage continues to run its
 older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -360,6 +360,39 @@ signaling-NaN payload parity across all Java 8 implementations. Exact EVM raw
 payload checks are separate focused tests; fresh-JVM differential exact patterns
 use finite values, infinities, signed zeros, and quiet NaNs. Fixtures stay
 bounded and must never induce host memory exhaustion.
+
+## M5c-c scalar software IEEE arithmetic
+
+M5c-c remains additive schema 1 and cumulative over M5c-b. It adds scalar
+`fadd`/`dadd`, `fsub`/`dsub`, `fmul`/`dmul`, `fdiv`/`ddiv`, and
+`frem`/`drem`; roots are still exact static `(I...)I` wrappers and expose raw
+results through the four existing EVM raw-bit services. No native binding,
+exception kind, host ABI, or output form is added. Float/double arrays and
+unknown native methods remain rejected.
+
+Every operation uses the standard binary32 or binary64 value set and rounds
+finite arithmetic once, nearest with ties to even, including gradual underflow,
+signed zero, and overflow to infinity. Floating division by zero produces IEEE
+values and never `ArithmeticException`. Java `%` uses an exact mathematical
+quotient truncated toward zero; it is not IEEE nearest-quotient remainder and
+must not be implemented from an already rounded `fdiv`/`ddiv` result.
+
+Finite values, infinities, and both zero signs remain bit-exact oracle outcomes.
+An arithmetic operation with a NaN operand or an invalid combination has the
+EVM policy result `0x7fc00000` or `0x7ff8000000000000`. Because Java does not
+specify generated NaN payload bits, trusted fixture wrappers may canonicalize
+**only the raw result of the arithmetic operation when it classifies as NaN**
+before returning its integer word. They must not normalize finite values,
+infinities, either zero sign, raw transport, or unrelated integer outputs, and
+they make no signaling-NaN transport portability claim. The Python runner does
+not infer that an arbitrary signed-int result represents floating bits and does
+not perform host floating-point normalization.
+
+M5c-c fixtures remain trusted and finite. Fixed worst-case operation gas checks
+are focused Go validation tests, including a 20,000,000-gas single-operation
+ceiling and a 100,000,000-gas ceiling for 16 uncoalesced remainders on the same
+original operands. They are not permission to increase old fixture budgets or
+to use host memory exhaustion.
 
 ## Outcome protocol
 
