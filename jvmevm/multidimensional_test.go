@@ -332,13 +332,20 @@ func TestRuntimeM4eStructuralDimensionsStackAndBoundaries(t *testing.T) {
 			return Run(out, "run", []int32{-1, -1}, runtimeM4eGasLimit)
 		}, "java.lang.NegativeArraySizeException", 4)
 	})
-	t.Run("deferred-long-primitive", func(t *testing.T) {
+	t.Run("long-primitive", func(t *testing.T) {
 		out := append([]byte(nil), base...)
 		class := parseCallTestClass(t, out)
 		nameIndex := binary.BigEndian.Uint16(out[class.cpOffsets[arrayIndex]+1:])
 		copy(out[class.cpOffsets[nameIndex]+3:], []byte("[[J"))
+		verifyM5baJava8Outcome(t, [][]byte{out}, "MultiValidation", "run", []int32{1, 1}, "value=1")
 		result, err := Run(out, "run", []int32{1, 1}, runtimeM4eGasLimit)
-		runtimeM4eWantSolidityError(t, result, err, "TypeError(uint256,uint256)", 2, uint64(pc))
+		if err != nil || result.ExceptionClass != "" || result.Value != 1 {
+			t.Fatalf("long multianewarray = %+v/%v, want 1", result, err)
+		}
+		verifyM5baJava8Outcome(t, [][]byte{out}, "MultiValidation", "run", []int32{-1, 1}, "exception=java.lang.NegativeArraySizeException")
+		verifyM4eAssertException(t, func() (Result, error) {
+			return Run(out, "run", []int32{-1, 1}, runtimeM4eGasLimit)
+		}, "java.lang.NegativeArraySizeException", 4)
 	})
 
 	underflow := runtimeM4eReplaceMethodCode(t, base, "room", []byte{0x04, 0xc5, byte(arrayIndex >> 8), byte(arrayIndex), 0x02, 0xbe, 0xac})

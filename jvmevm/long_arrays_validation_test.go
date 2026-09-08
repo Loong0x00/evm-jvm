@@ -105,8 +105,8 @@ func TestVerifyM5bbArrayReferencesAcrossFieldsReturnsAndEveryCallMode(t *testing
 			private long[] special(long[] x){x[0]+=6L;return x;} static long[] direct(long[] x){x[0]+=7L;return x;}
 			static long mixed(long x,long[] a,int y){return x+a[0]+y;} static long[] viaInterface(I i,long[] a){return i.iface(a);}
 			static int fold(long x){return (int)(x^(x>>>32));}
-			public static int run(int seed){long[] a=new long[1];a[0]=((long)seed<<40)+9;shared=a;Root r=new Root(a);C c=new C(a);
-				I.stat(a);r.special(a);c.virtual(a);viaInterface(c,a);c.def(a);direct(a);long q=c.scalar(a[0]);r.fin[0]++;
+			public static int run(int seed){long[] a=new long[1];a[0]=((long)seed<<40)+9;shared=a;Root r=new Root(a);C c=new C(a);I i=c;
+				I.stat(a);r.special(a);c.virtual(a);viaInterface(i,a);i.def(a);direct(a);long q=i.scalar(a[0]);r.fin[0]++;
 				return fold(mixed(q,shared,seed))+(r.fin==shared?1:0);}
 			public static int takes(long[] x){return x.length;} public static long[] returns(){return new long[1];}
 			public static int takesLong(long x){return (int)x;} public static long returnsLong(){return 1L;}
@@ -329,7 +329,7 @@ func TestVerifyM5bbFirstAllocationKindsSharedCapsOneElementNoGCResetAndOOG(t *te
 			public static int exactElements(){Object x=null;for(int k=0;k<4;k++)x=new long[65536];return 262144+(x==null?0:0);}
 			public static int overElements(){Object x=null;for(int k=0;k<4;k++)x=new long[65536];x=new int[1];return x==null?0:1;}
 			public static int arraysAndObjects(){Object a=null,o=null;for(int k=0;k<1024;k++)a=(k&1)==0?(Object)new long[0]:(Object)new int[0];
-				for(int k=0;k<1024;k++)o=new LongArrayCaps();return (a==null?0:1)+(o==null?0:1);}
+				for(int k=0;k<1024;k++)o=new Object();return (a==null?0:1)+(o==null?0:1);}
 		}`,
 	}, "LongArrayCaps")["LongArrayCaps"]
 	for _, method := range []string{"objectFirst", "longFirst", "intFirst", "refFirst"} {
@@ -348,7 +348,12 @@ func TestVerifyM5bbFirstAllocationKindsSharedCapsOneElementNoGCResetAndOOG(t *te
 	// element, not two category words or eight byte-counted elements.
 	verifyM5bbAssertValue(t, func() (Result, error) { return Run(classfile, "exactElements", nil, verifyM5bbCapacityGasLimit) }, 262144)
 	verifyM5bbAssertException(t, func() (Result, error) { return Run(classfile, "overElements", nil, verifyM5bbCapacityGasLimit) }, "java.lang.OutOfMemoryError", 7)
-	verifyM5bbAssertValue(t, func() (Result, error) { return Run(classfile, "arraysAndObjects", nil, verifyM5bbCapacityGasLimit) }, 2)
+	// Use zero-field bootstrap Object instances so this shared-quota probe spends
+	// its finite budget on 1024 arrays plus 1024 objects, not guest constructor
+	// field initialization already covered by the first-allocation probes above.
+	verifyM5bbAssertValue(t, func() (Result, error) {
+		return Run(classfile, "arraysAndObjects", nil, verifyM5bbCapacityGasLimit)
+	}, 2)
 	// Unreachable allocations count in one invocation, while a fresh invocation resets.
 	verifyM5bbAssertValue(t, func() (Result, error) {
 		return Run(classfile, "mixedArrays", []int32{1024}, verifyM5bbCapacityGasLimit)

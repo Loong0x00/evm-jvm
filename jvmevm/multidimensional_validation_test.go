@@ -215,9 +215,10 @@ func TestVerifyM4eStructuralCPDescriptorDimensionsAndTruncation(t *testing.T) {
 			verifyM4eAssertError(t, func() (Result, error) { return Run(bad, "run", nil, verifyM4eGasLimit) }, "ArrayError(uint256,uint256)", 3, uint64(pc))
 		})
 	}
-	// Other primitive leaves are well-formed array descriptors but deferred.
-	deferred := verifyM4eRetargetName(t, original, "run", "[[J")
-	verifyM4eAssertError(t, func() (Result, error) { return Run(deferred, "run", nil, verifyM4eGasLimit) }, "TypeError(uint256,uint256)", 2, uint64(pc))
+	// A long primitive leaf is supported from M5b-b.
+	longs := verifyM4eRetargetName(t, original, "run", "[[J")
+	verifyM5baJava8Outcome(t, [][]byte{longs}, "MultiStructure", "run", nil, "value=1")
+	verifyM4eAssertValue(t, func() (Result, error) { return Run(longs, "run", nil, verifyM4eGasLimit) }, 1)
 
 	for operands := 0; operands <= 2; operands++ {
 		t.Run(fmt.Sprintf("truncated-%d-operands", operands), func(t *testing.T) {

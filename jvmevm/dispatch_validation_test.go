@@ -563,15 +563,11 @@ func TestVerifyM4cDeferredInterfaceAndArrayTargetsRejectOnlyNonNull(t *testing.T
 	verifyM4cAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4bBundle(classes), "deferred/Root", "objectInterface", nil, verifyM4cGasLimit)
 	}, 0)
-	for _, method := range []string{"objectLongs"} {
-		t.Run(method, func(t *testing.T) {
-			m := parseStaticsClass(t, classes["deferred/Root"]).namedMethod(t, method)
-			pc := verifyM4cFirstTypeOpcode(t, m.code)
-			verifyM4cAssertError(t, func() (Result, error) {
-				return RunClasses(verifyM4bBundle(classes), "deferred/Root", method, nil, verifyM4cGasLimit)
-			}, "TypeError(uint256,uint256)", 2, uint64(pc))
-		})
-	}
+	// [J is supported from M5b-b; an ordinary Object is simply not a long[].
+	verifyM5baJava8Outcome(t, verifyM4bBundle(classes), "deferred.Root", "objectLongs", nil, "value=0")
+	verifyM4cAssertValue(t, func() (Result, error) {
+		return RunClasses(verifyM4bBundle(classes), "deferred/Root", "objectLongs", nil, verifyM4cGasLimit)
+	}, 0)
 }
 
 func TestVerifyM4cCastOperandsMalformedNamesKindsTruncationAndBranchesExact(t *testing.T) {

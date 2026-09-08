@@ -738,7 +738,7 @@ func TestVerifyM5baLongFieldsConstantValueCachesFinalAccessAndInitialization(t *
 		"java.lang.ExceptionInInitializerError", 3)
 }
 
-func TestVerifyM5baLongFieldIsOneObjectQuotaSlotAndArraysRemainDeferred(t *testing.T) {
+func TestVerifyM5baLongFieldIsOneObjectQuotaSlotAndDeferredIEEEArrays(t *testing.T) {
 	for _, count := range []int{1024, 1025} {
 		t.Run(strconv.Itoa(count), func(t *testing.T) {
 			var source strings.Builder
@@ -759,8 +759,16 @@ func TestVerifyM5baLongFieldIsOneObjectQuotaSlotAndArraysRemainDeferred(t *testi
 
 	base := verifyM5baRawFixture(t)
 	longArray := verifyM5baRewriteCode(t, base, "padding", "()I", []byte{0x04, 0xbc, 11, 0xbe, 0xac}, 2, 1)
-	verifyM5baAssertError(t, func() (Result, error) { return Run(longArray, "padding", nil, verifyM5baGasLimit) },
-		"ArrayError(uint256,uint256)", 1, 1)
+	longOracle := verifyM5baCompile(t, map[string]string{
+		"M5baLongArrayOracle.java": `public final class M5baLongArrayOracle { public static int run(){return new long[1].length;} }`,
+	}, "M5baLongArrayOracle")["M5baLongArrayOracle"]
+	oracleCode := parseStaticsClass(t, longOracle).namedMethod(t, "run").code
+	oraclePC := verifyM5baInstructionPC(t, oracleCode, 0xbc, 0)
+	if oracleCode[oraclePC+1] != 11 {
+		t.Fatalf("javac long[] atype=%d want 11", oracleCode[oraclePC+1])
+	}
+	verifyM5baJava8Outcome(t, [][]byte{longOracle}, "M5baLongArrayOracle", "run", nil, "value=1")
+	verifyM5baAssertValue(t, func() (Result, error) { return Run(longArray, "padding", nil, verifyM5baGasLimit) }, 1)
 
 	guards := verifyM5baCompile(t, map[string]string{
 		"DeferredJFD.java": `public final class DeferredJFD {
@@ -769,7 +777,9 @@ func TestVerifyM5baLongFieldIsOneObjectQuotaSlotAndArraysRemainDeferred(t *testi
 			public static int doubles(){Object x=new int[0];return x instanceof double[]?1:0;}
 		}`,
 	}, "DeferredJFD")["DeferredJFD"]
-	for _, method := range []string{"longs", "floats", "doubles"} {
+	verifyM5baJava8Outcome(t, [][]byte{guards}, "DeferredJFD", "longs", nil, "value=0")
+	verifyM5baAssertValue(t, func() (Result, error) { return Run(guards, "longs", nil, verifyM5baGasLimit) }, 0)
+	for _, method := range []string{"floats", "doubles"} {
 		pc := verifyM5baInstructionPC(t, parseStaticsClass(t, guards).namedMethod(t, method).code, 0xc1, 0)
 		verifyM5baAssertError(t, func() (Result, error) { return Run(guards, method, nil, verifyM5baGasLimit) },
 			"TypeError(uint256,uint256)", 2, uint64(pc))

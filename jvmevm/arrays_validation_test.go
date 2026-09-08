@@ -521,7 +521,7 @@ func TestVerifyM4aArrayAtypeTruncationAndNewBranchTargets(t *testing.T) {
 			return Run(classfile, "atype", nil, verifyM4aGasLimit)
 		}, 1)
 	})
-	for _, atype := range []byte{6, 7, 11} {
+	for _, atype := range []byte{6, 7} {
 		t.Run(fmt.Sprintf("unsupported-atype-%d", atype), func(t *testing.T) {
 			code := []byte{0x04, 0xbc, atype, 0xbe, 0xac}
 			classfile := verifyM4aRewriteCode(t, original, "atype", "()I", code)
@@ -530,6 +530,20 @@ func TestVerifyM4aArrayAtypeTruncationAndNewBranchTargets(t *testing.T) {
 			}, "ArrayError(uint256,uint256)", 1, 1)
 		})
 	}
+	t.Run("long-atype-11", func(t *testing.T) {
+		code := []byte{0x04, 0xbc, 11, 0xbe, 0xac}
+		classfile := verifyM4aRewriteCode(t, original, "atype", "()I", code)
+		oracle := compileJava(t, "M4aLongAtypeOracle", `public final class M4aLongAtypeOracle { public static int run(){return new long[1].length;} }`)
+		oracleCode := parseStaticsClass(t, oracle).namedMethod(t, "run").code
+		oraclePC := verifyM4aOpcodePC(t, oracleCode, 0xbc, 0)
+		if oracleCode[oraclePC+1] != 11 {
+			t.Fatalf("javac long[] atype=%d want 11", oracleCode[oraclePC+1])
+		}
+		verifyM5baJava8Outcome(t, [][]byte{oracle}, "M4aLongAtypeOracle", "run", nil, "value=1")
+		verifyM4aAssertValue(t, func() (Result, error) {
+			return Run(classfile, "atype", nil, verifyM4aGasLimit)
+		}, 1)
+	})
 	t.Run("truncated-newarray", func(t *testing.T) {
 		classfile := verifyM4aRewriteAtEnd(t, original, "truncatedArray", 0xbc)
 		pc := uint64(len(parseStaticsClass(t, classfile).method(t, "truncatedArray", "()I").code) - 1)

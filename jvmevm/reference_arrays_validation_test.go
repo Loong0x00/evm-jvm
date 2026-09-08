@@ -313,16 +313,15 @@ func TestVerifyM4dDeferredInterfacePrimitiveAndInaccessibleComponents(t *testing
         }`,
 	}, "deferref/I", "deferref/Target", "deferuser/Root")
 	root := classes["deferuser/Root"]
-	// Interface components are supported from M4f-a; primitive long[] is not.
+	// Interface components are supported from M4f-a and primitive long[]
+	// components from M5b-b.
 	verifyM4dAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4dBundle(classes), "deferuser/Root", "iface", nil, verifyM4dGasLimit)
 	}, 0)
-	for _, method := range []string{"primitive"} {
-		pc, _ := verifyM4dAnewarraySite(t, root, method)
-		verifyM4dAssertError(t, func() (Result, error) {
-			return RunClasses(verifyM4dBundle(classes), "deferuser/Root", method, nil, verifyM4dGasLimit)
-		}, "TypeError(uint256,uint256)", 2, uint64(pc))
-	}
+	verifyM5baJava8Outcome(t, verifyM4dBundle(classes), "deferuser.Root", "primitive", nil, "value=0")
+	verifyM4dAssertValue(t, func() (Result, error) {
+		return RunClasses(verifyM4dBundle(classes), "deferuser/Root", "primitive", nil, verifyM4dGasLimit)
+	}, 0)
 	inaccessible := verifyM4dMutate(t, classes["deferref/Target"], func(raw []byte, c staticsClass) {
 		flags := binary.BigEndian.Uint16(raw[c.cpEnd:])
 		binary.BigEndian.PutUint16(raw[c.cpEnd:], flags&^accPublic)

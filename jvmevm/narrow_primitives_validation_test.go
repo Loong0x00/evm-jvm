@@ -502,13 +502,25 @@ func TestVerifyM5aAtypesUnsupportedTargetsRank255AndExactBranchBoundaries(t *tes
 		public static int typeDouble(){Object x=new int[1];return x instanceof double[]?1:0;}
 		public static int padding(){int x=0;`+strings.Repeat("x=x+1;", 420)+`return x;}
 	}`)
-	for _, atype := range []byte{0, 3, 6, 7, 11, 12, 255} {
+	for _, atype := range []byte{0, 3, 6, 7, 12, 255} {
 		t.Run(fmt.Sprintf("atype-%d", atype), func(t *testing.T) {
 			bad := verifyM5aRewriteMethodPrefix(t, original, "padding", "()I", []byte{0x04, verifyM5aNewarray, atype, 0xbe, 0xac}, 2, 0)
 			verifyM5aAssertError(t, func() (Result, error) { return Run(bad, "padding", nil, verifyM5aGasLimit) }, "ArrayError(uint256,uint256)", 1, 1)
 		})
 	}
-	for _, method := range []string{"typeLong", "typeFloat", "typeDouble"} {
+	longArray := verifyM5aRewriteMethodPrefix(t, original, "padding", "()I", []byte{0x04, verifyM5aNewarray, 11, 0xbe, 0xac}, 2, 0)
+	longOracle := compileJava(t, "M5aLongArrayOracle", `public final class M5aLongArrayOracle { public static int run(){return new long[1].length;} }`)
+	oracleCode := parseStaticsClass(t, longOracle).namedMethod(t, "run").code
+	oraclePC := verifyM5aInstructionPC(t, oracleCode, verifyM5aNewarray, 0)
+	if oracleCode[oraclePC+1] != 11 {
+		t.Fatalf("javac long[] atype=%d want 11", oracleCode[oraclePC+1])
+	}
+	verifyM5aJava8Outcome(t, [][]byte{longOracle}, "M5aLongArrayOracle", "run", nil, "value=1")
+	verifyM5aAssertValue(t, func() (Result, error) { return Run(longArray, "padding", nil, verifyM5aGasLimit) }, 1)
+
+	verifyM5aJava8Outcome(t, [][]byte{original}, "NarrowArrayShape", "typeLong", nil, "value=0")
+	verifyM5aAssertValue(t, func() (Result, error) { return Run(original, "typeLong", nil, verifyM5aGasLimit) }, 0)
+	for _, method := range []string{"typeFloat", "typeDouble"} {
 		pc := verifyM5aInstructionPC(t, parseStaticsClass(t, original).namedMethod(t, method).code, 0xc1, 0)
 		verifyM5aAssertError(t, func() (Result, error) { return Run(original, method, nil, verifyM5aGasLimit) }, "TypeError(uint256,uint256)", 2, uint64(pc))
 	}

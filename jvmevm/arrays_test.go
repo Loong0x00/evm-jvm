@@ -277,10 +277,12 @@ func TestRuntimeM4aExactArrayAndKindValidationErrors(t *testing.T) {
 	array := compileJava(t, "ArrayType", `public class ArrayType { public static int run(int n){return new int[n].length;} }`)
 	parsed := parseTestClass(t, array)
 	pc := bytes.IndexByte(parsed.methodCode(t, "run"), 0xbc)
-	badType := append([]byte(nil), array...)
-	badType[parsed.codeOffsets["run"]+pc+1] = 11
-	result, err := Run(badType, "run", []int32{1}, 20_000_000)
-	assertSolidityError(t, result, err, "ArrayError(uint256,uint256)", 1, uint64(pc))
+	longType := append([]byte(nil), array...)
+	longType[parsed.codeOffsets["run"]+pc+1] = 11
+	result, err := Run(longType, "run", []int32{1}, 20_000_000)
+	if err != nil || result.ExceptionClass != "" || result.Value != 1 {
+		t.Fatalf("long newarray = %+v/%v, want 1", result, err)
+	}
 	truncated := runtimeM4aReplaceMethodCode(t, base, "run", nil)
 	truncatedParsed := parseTestClass(t, truncated)
 	truncatedPC := truncatedParsed.codeLengths["run"] - 1

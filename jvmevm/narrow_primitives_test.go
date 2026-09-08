@@ -418,7 +418,9 @@ func TestRuntimeM5aWrongPrimitiveArrayOpcodeRankAndKinds(t *testing.T) {
 
 	badAtype := append([]byte(nil), base...)
 	newPC := bytes.IndexByte(parsed.methodCode(t, "run"), 0xbc)
+	storePC := bytes.IndexByte(parsed.methodCode(t, "run"), 0x4f)
 	badAtype[parsed.codeOffsets["run"]+newPC+1] = 11
 	result, err = Run(badAtype, "run", []int32{0}, runtimeM5aGasLimit)
-	runtimeM4dWantSolidityError(t, result, err, "ArrayError(uint256,uint256)", 1, uint64(newPC))
+	// Allocation succeeds, but iastore must not reinterpret a long[] cell.
+	runtimeM4dWantSolidityError(t, result, err, "ReferenceError(uint256,uint256)", 1, uint64(storePC))
 }
