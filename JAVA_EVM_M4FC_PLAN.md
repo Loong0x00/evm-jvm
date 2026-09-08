@@ -156,3 +156,17 @@ Parent owns AGENTS/plans/quickstart/Makefile and integration/independent review.
 One Solidity writer; no spawning/peer writes/push/global config/untrusted Java.
 All agents Sol/high WITHOUT Fast; commit scoped paths and report real SHA/size/
 checks/limits/failures honestly. No full-JVM/deployment claim.
+
+## Accepted integration evidence
+Runtime0633278→80fe607, fixturesa0918f7→336a4dd, verifier actual
+4b9d68b7b202ce439ef9a7b20ac75b77f5b81e9b→07f0496 (report SHA corrected locally).
+Review8fd0c29→965f51c updated only obsolete interface static/root/field guards;
+malformed CP tag9 Call1 retained plus CP11/class-owner Interface1 assertions;
+missing-method probe uses a valid absent name. JVM8/source expectations verified,
+no runtime changes or demonstrated frozen-contract defect.
+Parent final artifact/3bootstraps, Go/CLI,36 Python,1263 full,567 smoke,587 fast,
+demos,AOT,focused vet and48 independent probes passed:
+`build/java-diff-parent-m4fc/probe-0x87xny3/results-final/`.
+Prior1163 inputs/outcomes/budgets unchanged. Accepted runtime100297 bytes SHA256
+`efc31ddc4e43d80b459cd1f851c505f47470e24d15b85915539db6818959ba5f`.
+Next narrow int-like primitive types before category2/IEEE work. ALL agents NO Fast.

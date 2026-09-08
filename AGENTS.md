@@ -1,9 +1,9 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M4f-b defaults/mandatory initialization**, recorded in
-`JAVA_EVM_M4FB_PLAN.md`:1163 cases plus48 independent probes. Active M4f-c interface
-statics/declaring-owner initialization, frozen in `JAVA_EVM_M4FC_PLAN.md`. Java8 required for evolved-default
-error probes; remaining primitive values/handlers/libraries follow separately.
+Current accepted stage: **M4f-c interface static members**, recorded in
+`JAVA_EVM_M4FC_PLAN.md`:1263 cases plus48 independent probes. Next: Z/B/C/S int-like
+values/fields/arrays, then category-2/IEEE values/handlers/libraries. Java8 remains
+required for evolved-interface exact error probes.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
@@ -28,7 +28,7 @@ worktree based on the latest integration revision, not an old worker tree.
 Worktrees separate edits, not security permissions. Respect frozen task write
 sets; only one worker edits the monolithic Solidity dispatcher at a time.
 Disjoint Go files still share a package namespace: give new test helpers a
-stage/role prefix (e.g. runtimeM4fc* vs verifyM4fc*) to avoid integration collisions.
+stage/role prefix (e.g. runtimeM5a* vs verifyM5a*) to avoid integration collisions.
 The differential oracle executes Java on the host: use only trusted generated
 fixtures here; untrusted external programs/corpora require isolation first.
 
@@ -65,9 +65,9 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # EVM arithmetic, bundle call and int-array examples
-make java-smoke      # 517 fixed oracle comparisons
-make java-fast       # 537 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 1163 cases through M4f-b
+make java-smoke      # 567 fixed oracle comparisons
+make java-fast       # 587 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 1263 cases through M4f-c
 make java-test       # artifact + focused Go + 36 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```

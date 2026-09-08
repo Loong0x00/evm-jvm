@@ -81,8 +81,9 @@ routine permission to start the next verified increment.
 | M4e | multianewarray | accepted;960 cases plus48 independent probes |
 | M4f-a | interface graph/abstract calls/type compatibility | accepted;1059 cases plus48 independent probes |
 | M4f-b | defaults and required default-interface initialization | accepted;1163 cases plus48 independent probes |
-| M4f-c | interface static members/initialization | frozen in `JAVA_EVM_M4FC_PLAN.md`; dispatch3 workers |
-| M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
+| M4f-c | interface static members/initialization | accepted;1263 cases plus48 independent probes |
+| M5a | Z/B/C/S int-like types/fields/arrays | next bounded stage |
+| M5b+ | category-2/IEEE values, catch/throw/unwind and remaining instructions | queued; freeze dependency-ordered batches |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -92,11 +93,11 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M4f-b accepted:1163 JVM/EVM cases plus48 probes,36 Python,517 smoke/537 fast,
-Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Test-scope/CP/obsolete expectations
-corrected with exact assertions/Java8 evidence, runtime unchanged after audit.
-Runtime100472 bytes remains local-runtime only, not full JVM/deployment. Prior1059
-inputs/outcomes/budgets unchanged. M4f-c frozen in JAVA_EVM_M4FC_PLAN.md; dispatch3 workers for
-actual declaring-owner initialization; then remaining primitive values/handlers.
+M4f-c accepted:1263 JVM/EVM cases plus48 probes,36 Python,567 smoke/587 fast,
+Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Obsolete guards explicitly updated
+with JVM evidence; malformed-tag/wrong-kind/final/staticness coverage retained.
+Runtime100297 bytes remains local-runtime only, not full JVM/deployment. Prior1163
+fixture entries/budgets unchanged. Next M5a int-like Z/B/C/S fields/descriptors/
+arrays/return narrowing (root ABI stays I-only), then category2/IEEE/handlers.
 ALL NEW workers Sol/high WITHOUT Fast; verify disabled preference. Continuous
 verified progression, no routine confirmation.
