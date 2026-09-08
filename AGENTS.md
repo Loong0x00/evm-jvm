@@ -4,8 +4,9 @@ Current accepted stage: **M4c virtual dispatch/casts/type tests**, recorded in
 `JAVA_EVM_M4C_PLAN.md`:792 cases plus48 independent probes. Active M4d reference
 arrays, frozen in `JAVA_EVM_M4D_PLAN.md`,
 then separate multianewarray/interface/value-type/handler/class-library stages.
-Sol/high workers currently inherit enabled Codex Fast
-(priority request, backend acceptance not guaranteed); do not lower reasoning.
+New workers keep Sol/high but MUST NOT request Fast/priority (latest user
+instruction overrides historical stage plans). Do not pass --fast or re-enable
+the disabled preference. Existing running workers need not be restarted.
 Runtime is over EIP170 deployment size: local runtime.Execute only, not mainnet
 CREATE compatibility; no consensus-core or host-Java fallback changes.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,

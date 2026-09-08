@@ -7,11 +7,12 @@ Minecraft**, without stopping for confirmation after every small accepted stage.
 This supersedes earlier per-batch 'stop and wait' instructions. Stages and tests
 remain bounded; acceptance of one stage triggers planning/dispatch of the next.
 Default worker model remains `openai-codex/gpt-5.6-sol`, reasoning `high`.
-Latest speed request: use Codex Fast without lowering reasoning. Installed
-pi-codex-fast-mode is enabled in its user-owned state; new Pi workers load it
-and request service_tier=priority. Parent verified eligibility/payload transform
-preserves high. This requests a paid tier, not proof of backend acceptance;
-no global/provider/auth configuration was changed. Recheck preference on dispatch.
+Latest speed request supersedes earlier Fast instructions: NEW agents must NOT
+request Codex Fast/priority. Keep the same Sol model and high reasoning. Persisted
+Fast state was verified already disabled; do not pass --fast or re-enable it.
+Existing running agents are not restarted or reconfigured by this request.
+Recheck disabled preference before future dispatch; older frozen plans' Fast
+wording records historical launches and does not override this latest directive.
 
 ## Execution invariant
 Guest classfiles are supplied unchanged. Class parsing/linking, Java bytecode
@@ -95,5 +96,5 @@ Fixed negative-test exact-signature isolation, array-receiver deferral order and
 255-dimensional structural bound. No prior713 case/budget changes.
 Runtime74469 bytes remains local-runtime only, not deployed/full Java.
 M4d frozen in JAVA_EVM_M4D_PLAN.md; dispatch3 workers. Keep
-multianewarray and interfaces separately bounded. Sol/high inherited Fast,
+multianewarray and interfaces separately bounded. Sol/high without Fast for new agents,
 isolated worktrees and automatic verified continuation, no routine confirmation.
