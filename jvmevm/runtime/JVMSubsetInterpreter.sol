@@ -502,6 +502,11 @@ contract JVMSubsetInterpreter {
         uint256 totalElements;
         uint256 objectCount;
         uint256 totalFieldSlots;
+        // Build each dynamic class's default instance layout once. Copying the packed defaults
+        // per allocation is linear; repeatedly resolving every descriptor and recomputing every
+        // declaration offset made the 65,536-slot logical boundary needlessly quadratic.
+        uint256[][] memory objectFieldDefaults = new uint256[][](classes.length);
+        bool[] memory objectLayoutsLoaded = new bool[](classes.length);
         _validateHierarchy(classes, rootClass, parentLinks, hierarchyState);
         depth = _initializeClass(
             classes, staticValues, initializationState, frames, depth, rootClass,
@@ -738,9 +743,9 @@ contract JVMSubsetInterpreter {
                 uint256 allocatedClass = _resolveNewClass(
                     classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
                 );
-                uint256 fieldSlots = _instanceFieldCount(
-                    classes, allocatedClass, parentLinks, opPC
-                );
+                uint256 fieldSlots = objectLayoutsLoaded[allocatedClass]
+                    ? objectFieldDefaults[allocatedClass].length
+                    : _instanceFieldCount(classes, allocatedClass, parentLinks, opPC);
                 if (initializationState[allocatedClass] == 0) {
                     uint256 oldDepth = depth;
                     depth = _initializeClass(
@@ -752,8 +757,15 @@ contract JVMSubsetInterpreter {
                         continue;
                     }
                 }
-                if (objectCount == MAX_OBJECTS || fieldSlots > MAX_OBJECT_FIELD_SLOTS - totalFieldSlots) {
+                if (fieldSlots > MAX_OBJECT_FIELDS || objectCount == MAX_OBJECTS
+                    || fieldSlots > MAX_OBJECT_FIELD_SLOTS - totalFieldSlots) {
                     _throwJava(7, frames, depth);
+                }
+                if (!objectLayoutsLoaded[allocatedClass]) {
+                    objectFieldDefaults[allocatedClass] = _objectFieldDefaults(
+                        classes, allocatedClass, fieldSlots, parentLinks
+                    );
+                    objectLayoutsLoaded[allocatedClass] = true;
                 }
                 if (heapKinds.length == 0) {
                     heapKinds = new uint8[](MAX_HANDLES + 1);
@@ -767,9 +779,9 @@ contract JVMSubsetInterpreter {
                 heapKinds[nextHandle] = HEAP_OBJECT;
                 heapClasses[nextHandle] = allocatedClass;
                 objectHeap[nextHandle] = new uint256[](fieldSlots);
-                _initializeObjectFields(
-                    classes, allocatedClass, objectHeap[nextHandle], parentLinks
-                );
+                for (uint256 i = 0; i < fieldSlots; ++i) {
+                    objectHeap[nextHandle][i] = objectFieldDefaults[allocatedClass][i];
+                }
                 f.sp = _push(f.stack, f.sp, (KIND_UNINIT << KIND_SHIFT) | nextHandle, opPC);
             } else if (op == 0xb2 || op == 0xb3) { // getstatic / putstatic
                 uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
@@ -1708,7 +1720,6 @@ contract JVMSubsetInterpreter {
                 if ((c.fields[i].accessFlags & 0x0008) == 0) {
                     if (_fieldKind(c, c.fields[i]) == 0) revert ObjectError(2, pc);
                     ++count;
-                    if (count > MAX_OBJECT_FIELDS) revert ObjectError(2, pc);
                 }
             }
             uint256 link = parentLinks[current];
@@ -1752,21 +1763,24 @@ contract JVMSubsetInterpreter {
         }
     }
 
-    function _initializeObjectFields(
-        ClassInfo[] memory classes, uint256 dynamicClass, uint256[] memory values,
+    function _objectFieldDefaults(
+        ClassInfo[] memory classes, uint256 dynamicClass, uint256 fieldCount,
         uint256[] memory parentLinks
-    ) private pure {
-        // Offsets are declaration-based, so initialization order is immaterial.
+    ) private pure returns (uint256[] memory values) {
+        values = new uint256[](fieldCount);
+        // Layout is base-first. Walking child-to-root and each declaration in reverse lets a
+        // single descending cursor fill those offsets without an O(fields^2) offset lookup.
+        uint256 cursor = values.length;
         uint256 current = dynamicClass;
         while (true) {
             ClassInfo memory c = classes[current];
-            for (uint256 i = 0; i < c.fields.length; ++i) {
-                if ((c.fields[i].accessFlags & 0x0008) == 0) {
-                    uint256 off = _instanceFieldOffset(
-                        classes, dynamicClass, current, i, parentLinks, 0
-                    );
-                    uint8 kind = _fieldKind(c, c.fields[i]);
-                    values[off] = kind == KIND_INT ? _packInt(0) : _packRef(0);
+            for (uint256 i = c.fields.length; i != 0; --i) {
+                FieldInfo memory field = c.fields[i - 1];
+                if ((field.accessFlags & 0x0008) == 0) {
+                    --cursor;
+                    uint8 kind = _fieldKind(c, field);
+                    // _instanceFieldCount already rejected unsupported instance descriptors.
+                    values[cursor] = kind == KIND_INT ? _packInt(0) : _packRef(0);
                 }
             }
             uint256 link = parentLinks[current];
@@ -1798,7 +1812,7 @@ contract JVMSubsetInterpreter {
         if (handle == 0) return;
         if (handle > nextHandle || heapKinds[handle] == 0) revert ReferenceError(1, pc);
         if (_equalsLiteral(descriptorData, descriptorOffset, descriptorLength, bytes("[I"))) {
-            if (heapKinds[handle] != HEAP_ARRAY) revert ReferenceError(2, pc);
+            if (heapKinds[handle] != HEAP_ARRAY) revert ReferenceError(1, pc);
             return;
         }
         if (descriptorLength < 3 || uint8(descriptorData[descriptorOffset]) != 0x4c
@@ -1810,7 +1824,7 @@ contract JVMSubsetInterpreter {
         if (_equalsLiteral(descriptorData, nameOffset, nameLength, bytes("java/lang/Object"))) {
             return; // both supported array and ordinary object values are Objects
         }
-        if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(2, pc);
+        if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, pc);
         (bool found, uint256 wantedClass) = _findClass(classes, descriptorData, nameOffset, nameLength);
         if (!found) revert LinkError(4, pc);
         if (!_objectIsClass(heapClasses[handle], wantedClass, parentLinks)) {

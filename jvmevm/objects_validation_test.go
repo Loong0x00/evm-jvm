@@ -35,6 +35,7 @@ func TestVerifyM4bOrdinaryObjectsDefaultsIdentityHiddenLayoutAndConstantValue(t 
 		"objbasic/Base.java": `package objbasic; public class Base {
             public int inherited; public int hidden; public final int initialized; public final int ignored = 41;
             public Base(int x) { inherited = x; hidden = x + 1; initialized = x + 3; }
+            public static int readIgnored(Base b) { return b.inherited; }
         }`,
 		"objbasic/Child.java": `package objbasic; public final class Child extends Base {
             public int hidden; public int untouched; public int[] array; public Base ref;
@@ -44,7 +45,7 @@ func TestVerifyM4bOrdinaryObjectsDefaultsIdentityHiddenLayoutAndConstantValue(t 
             static int inspect(Child c) {
                 return c.inherited * 100000 + ((Base)c).hidden * 10000 + c.hidden * 1000
                     + c.untouched * 100 + (c.array == null ? 10 : 0)
-                    + (c.ref == null ? 1 : 0) + c.ignored + c.initialized;
+                    + (c.ref == null ? 1 : 0) + Base.readIgnored(c) + c.initialized;
             }
             public static int run(int x) {
                 Child a = new Child(x); Child alias = a; Child b = new Child(x);
@@ -53,16 +54,22 @@ func TestVerifyM4bOrdinaryObjectsDefaultsIdentityHiddenLayoutAndConstantValue(t 
         }`,
 	}, "objbasic/Base", "objbasic/Child", "objbasic/Root")
 	verifyM4bAssertNoVirtual(t, classes)
-	// ignored has ConstantValue 41 in the classfile but is an instance field. Its
-	// constructor assignment is deliberately removed, proving allocation uses
-	// the JVM default zero rather than ConstantValue preparation.
+	// ignored has ConstantValue 41 in the classfile but is an instance field. Remove
+	// its complete javac-generated assignment, then retarget the helper's ordinary
+	// getfield from inherited to ignored. (A source-level read of a constant variable
+	// would be inlined as Objects.requireNonNull plus 41 and would not test the heap.)
 	base := verifyM4bMutate(t, classes["objbasic/Base"], func(out []byte, c staticsClass) {
-		m := c.method(t, "<init>", "(I)V")
-		_, pc := verifyM4bMemberInstruction(t, c, m, verifyM4bPutfield, "ignored", "I")
-		if pc < 2 || pc+2 >= len(m.code) {
-			t.Fatalf("unexpected ignored assignment: %x", m.code)
+		ctor := c.method(t, "<init>", "(I)V")
+		ignoredRef, pc := verifyM4bMemberInstruction(t, c, ctor, verifyM4bPutfield, "ignored", "I")
+		if pc < 3 || pc+2 >= len(ctor.code) {
+			t.Fatalf("unexpected ignored assignment: %x", ctor.code)
 		}
-		m.code[pc-2], m.code[pc-1], m.code[pc], m.code[pc+1], m.code[pc+2] = 0, 0, 0, 0, 0
+		for i := pc - 3; i <= pc+2; i++ {
+			ctor.code[i] = 0
+		}
+		read := c.method(t, "readIgnored", "(Lobjbasic/Base;)I")
+		_, readPC := verifyM4bMemberInstruction(t, c, read, verifyM4bGetfield, "inherited", "I")
+		binary.BigEndian.PutUint16(read.code[readPC+1:], ignoredRef)
 	})
 	bundle := [][]byte{classes["objbasic/Child"], classes["objbasic/Root"], base}
 	// inspect(3) = 345017; identity suffix = 11. The initialized final is
@@ -186,7 +193,7 @@ func TestVerifyM4bConstructorAliasesAndImmediateCallerInitialization(t *testing.
 	code := []byte{
 		verifyM4bNew, byte(newRef >> 8), byte(newRef), 0x59, 0x4c, 0x59, 0x1a,
 		verifyM4bInvokespecial, byte(ctorRef >> 8), byte(ctorRef), 0x2b, 0xa6, 0, 8,
-		0xb8, byte(readRef >> 8), byte(readRef), 0xac, 0x57, 0x02, 0xac,
+		0x2b, 0xb8, byte(readRef >> 8), byte(readRef), 0xac, 0x02, 0xac,
 	}
 	classfile := verifyM4bRewriteCode(t, original, "run", "(I)I", code)
 	verifyM4bAssertValue(t, func() (Result, error) {
@@ -277,7 +284,9 @@ func TestVerifyM4bConstructorOwnerAndReturnLifecycleErrorsAreExact(t *testing.T)
 	_, superPC := verifyM4bMemberInstruction(t, aParsed, aCtor, verifyM4bInvokespecial, "<init>", "()V")
 	noSuper := verifyM4bMutate(t, a, func(out []byte, c staticsClass) {
 		m := c.method(t, "<init>", "()V")
-		m.code[superPC], m.code[superPC+1], m.code[superPC+2] = 0, 0, 0
+		// Consume the transported uninitialized-this value so the intended missing
+		// super lifecycle error wins over an unrelated nonempty-return-stack error.
+		m.code[superPC], m.code[superPC+1], m.code[superPC+2] = 0x57, 0, 0
 	})
 	returnPC := verifyM4bOpcodePC(t, parseStaticsClass(t, noSuper).method(t, "<init>", "()V").code, 0xb1, 0)
 	verifyM4bAssertError(t, func() (Result, error) {
@@ -308,6 +317,9 @@ func TestVerifyM4bNullWrongKindWrongClassAndValueKindsAreExact(t *testing.T) {
 		m := c.method(t, "arrayReceiver", "()I")
 		_, pc := verifyM4bMemberInstruction(t, c, m, verifyM4bNew, "kinds/A", "")
 		m.code[pc], m.code[pc+1], m.code[pc+2] = 0x04, 0xbc, 10
+		// Remove dup + A.<init>; otherwise the initialized array is rejected as a
+		// constructor receiver before it reaches the intended typed call boundary.
+		m.code[pc+3], m.code[pc+4], m.code[pc+5], m.code[pc+6] = 0, 0, 0, 0
 	})
 	verifyM4bAssertError(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["kinds/A"], classes["kinds/B"], arrayRoot},
@@ -462,10 +474,15 @@ func TestVerifyM4bProtectedReceiverAndPrivateDirectAccessRules(t *testing.T) {
 		return RunClasses([][]byte{classes["accesssub/Child"], privateField}, "accesssub/Child", "bad", nil, verifyM4bGasLimit)
 	}, "FieldError(uint256,uint256)", 4, uint64(privateFieldPC))
 
-	// Retarget only bad's allocation and constructor to Base. The symbolic
-	// protected member still resolves through Child/Base, but a Base receiver is
-	// not Child-or-subclass, so the cross-package protected receiver check fails.
+	// Retarget bad's allocation/constructor and the fieldref's symbolic owner to
+	// Base. A Base receiver satisfies field resolution but is not Child-or-subclass,
+	// so the intended cross-package protected receiver check is the first failure.
 	badChild := verifyM4bRetargetAllocation(t, classes["accesssub/Child"], "bad", "accesssub/Child", "accessbase/Base")
+	badChild = verifyM4bMutate(t, badChild, func(out []byte, c staticsClass) {
+		m := c.method(t, "bad", "()I")
+		fieldRef, _ := verifyM4bMemberInstruction(t, c, m, verifyM4bGetfield, "value", "I")
+		binary.BigEndian.PutUint16(out[c.entry(t, fieldRef).offset+1:], verifyM4bClassIndex(t, c, "accessbase/Base"))
+	})
 	badPC := verifyM4bOpcodePC(t, parseStaticsClass(t, badChild).method(t, "bad", "()I").code, verifyM4bGetfield, 0)
 	verifyM4bAssertError(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["accessbase/Base"], badChild}, "accesssub/Child", "bad", nil, verifyM4bGasLimit)
