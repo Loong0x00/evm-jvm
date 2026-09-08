@@ -14064,6 +14064,1878 @@
       "timeout_seconds": 10,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m4c-base-receiver",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class"
+      ],
+      "method": "baseReceiver",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-child-receiver",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class"
+      ],
+      "method": "childReceiver",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-grand-receiver",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class"
+      ],
+      "method": "grandReceiver",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-inherited-receiver",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class"
+      ],
+      "method": "inheritedReceiver",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-final-receiver",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class"
+      ],
+      "method": "finalReceiver",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-alternating-base-child",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class"
+      ],
+      "method": "alternatingBaseChild",
+      "args": [
+        2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-alternating-child-base",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class"
+      ],
+      "method": "alternatingChildBase",
+      "args": [
+        -2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-alternating-grand-inherited",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class"
+      ],
+      "method": "alternatingGrandInherited",
+      "args": [
+        3
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-repeated-alternation",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class"
+      ],
+      "method": "repeatedAlternation",
+      "args": [
+        4
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-selected-state",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class"
+      ],
+      "method": "selectedState",
+      "args": [
+        17
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-inherited-state",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchGrand.class",
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class"
+      ],
+      "method": "inheritedState",
+      "args": [
+        -17
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-null-virtual",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m4c.dispatch.DispatchRoot",
+      "class_files": [
+        "bundle/m4c/dispatch/DispatchInherited.class",
+        "bundle/m4c/dispatch/FinalBase.class",
+        "bundle/m4c/dispatch/FinalChild.class",
+        "bundle/m4c/dispatch/DispatchRoot.class",
+        "bundle/m4c/dispatch/DispatchBase.class",
+        "bundle/m4c/dispatch/DispatchChild.class",
+        "bundle/m4c/dispatch/DispatchGrand.class"
+      ],
+      "method": "nullVirtual",
+      "args": [
+        9
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4c-int-args-base",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class"
+      ],
+      "method": "intArgsBase",
+      "args": [
+        7,
+        -3
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-int-args-child",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class"
+      ],
+      "method": "intArgsChild",
+      "args": [
+        7,
+        -3
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-void-base",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class"
+      ],
+      "method": "voidBase",
+      "args": [
+        21
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-void-child",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class"
+      ],
+      "method": "voidChild",
+      "args": [
+        21
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cell-argument-base",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class"
+      ],
+      "method": "cellArgumentBase",
+      "args": [
+        30
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cell-argument-child",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class"
+      ],
+      "method": "cellArgumentChild",
+      "args": [
+        30
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-object-argument-identity",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class"
+      ],
+      "method": "objectArgumentIdentity",
+      "args": [
+        41
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-object-array-identity",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class"
+      ],
+      "method": "objectArrayIdentity",
+      "args": [
+        42
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-array-argument-base",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class"
+      ],
+      "method": "arrayArgumentBase",
+      "args": [
+        -43
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-array-argument-child",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class"
+      ],
+      "method": "arrayArgumentChild",
+      "args": [
+        44
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-ordinary-reference-return",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class"
+      ],
+      "method": "ordinaryReferenceReturn",
+      "args": [
+        45
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-null-reference-argument",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureCell.class",
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class"
+      ],
+      "method": "nullReferenceArgument",
+      "args": [
+        46
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-alternating-signatures",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4c.signatures.SignatureRoot",
+      "class_files": [
+        "bundle/m4c/signatures/SignatureRoot.class",
+        "bundle/m4c/signatures/SignatureBase.class",
+        "bundle/m4c/signatures/SignatureChild.class",
+        "bundle/m4c/signatures/SignatureCell.class"
+      ],
+      "method": "alternatingSignatures",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-base-recursive",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m4c.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4c/recursion/RecursionRoot.class",
+        "bundle/m4c/recursion/RecursiveBase.class",
+        "bundle/m4c/recursion/RecursiveChild.class",
+        "bundle/m4c/recursion/RecursiveGrand.class"
+      ],
+      "method": "baseRecursive",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-child-recursive",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m4c.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4c/recursion/RecursiveBase.class",
+        "bundle/m4c/recursion/RecursiveChild.class",
+        "bundle/m4c/recursion/RecursiveGrand.class",
+        "bundle/m4c/recursion/RecursionRoot.class"
+      ],
+      "method": "childRecursive",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-grand-recursive",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m4c.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4c/recursion/RecursiveChild.class",
+        "bundle/m4c/recursion/RecursiveGrand.class",
+        "bundle/m4c/recursion/RecursionRoot.class",
+        "bundle/m4c/recursion/RecursiveBase.class"
+      ],
+      "method": "grandRecursive",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-alternating-bounce",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m4c.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4c/recursion/RecursiveGrand.class",
+        "bundle/m4c/recursion/RecursionRoot.class",
+        "bundle/m4c/recursion/RecursiveBase.class",
+        "bundle/m4c/recursion/RecursiveChild.class"
+      ],
+      "method": "alternatingBounce",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-reverse-bounce",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m4c.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4c/recursion/RecursionRoot.class",
+        "bundle/m4c/recursion/RecursiveBase.class",
+        "bundle/m4c/recursion/RecursiveChild.class",
+        "bundle/m4c/recursion/RecursiveGrand.class"
+      ],
+      "method": "reverseBounce",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-recursive-reference-return",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m4c.recursion.RecursionRoot",
+      "class_files": [
+        "bundle/m4c/recursion/RecursiveBase.class",
+        "bundle/m4c/recursion/RecursiveChild.class",
+        "bundle/m4c/recursion/RecursiveGrand.class",
+        "bundle/m4c/recursion/RecursionRoot.class"
+      ],
+      "method": "recursiveReferenceReturn",
+      "args": [
+        7
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-inherited-protected",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/protectedbase/ProtectedBase.java",
+        "bundle/m4c/protectedchild/ProtectedRoot.java"
+      ],
+      "class": "bundle.m4c.protectedchild.ProtectedRoot",
+      "class_files": [
+        "bundle/m4c/protectedchild/ProtectedRoot.class",
+        "bundle/m4c/protectedbase/ProtectedBase.class",
+        "bundle/m4c/protectedchild/ProtectedLeaf.class"
+      ],
+      "method": "inheritedProtected",
+      "args": [
+        51
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-selected-protected-override",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/protectedbase/ProtectedBase.java",
+        "bundle/m4c/protectedchild/ProtectedRoot.java"
+      ],
+      "class": "bundle.m4c.protectedchild.ProtectedRoot",
+      "class_files": [
+        "bundle/m4c/protectedbase/ProtectedBase.class",
+        "bundle/m4c/protectedchild/ProtectedLeaf.class",
+        "bundle/m4c/protectedchild/ProtectedRoot.class"
+      ],
+      "method": "selectedProtectedOverride",
+      "args": [
+        52
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-protected-void-inherited",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/protectedbase/ProtectedBase.java",
+        "bundle/m4c/protectedchild/ProtectedRoot.java"
+      ],
+      "class": "bundle.m4c.protectedchild.ProtectedRoot",
+      "class_files": [
+        "bundle/m4c/protectedchild/ProtectedLeaf.class",
+        "bundle/m4c/protectedchild/ProtectedRoot.class",
+        "bundle/m4c/protectedbase/ProtectedBase.class"
+      ],
+      "method": "protectedVoidInherited",
+      "args": [
+        53
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-protected-void-override",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/protectedbase/ProtectedBase.java",
+        "bundle/m4c/protectedchild/ProtectedRoot.java"
+      ],
+      "class": "bundle.m4c.protectedchild.ProtectedRoot",
+      "class_files": [
+        "bundle/m4c/protectedchild/ProtectedRoot.class",
+        "bundle/m4c/protectedbase/ProtectedBase.class",
+        "bundle/m4c/protectedchild/ProtectedLeaf.class"
+      ],
+      "method": "protectedVoidOverride",
+      "args": [
+        54
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-alternating-protected",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/protectedbase/ProtectedBase.java",
+        "bundle/m4c/protectedchild/ProtectedRoot.java"
+      ],
+      "class": "bundle.m4c.protectedchild.ProtectedRoot",
+      "class_files": [
+        "bundle/m4c/protectedbase/ProtectedBase.class",
+        "bundle/m4c/protectedchild/ProtectedLeaf.class",
+        "bundle/m4c/protectedchild/ProtectedRoot.class"
+      ],
+      "method": "alternatingProtected",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-bridge-selects-b",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/bridgeok/p/A.java",
+        "bundle/m4c/bridgeok/p/B.java",
+        "bundle/m4c/bridgeok/q/C.java"
+      ],
+      "class": "bundle.m4c.bridgeok.q.C",
+      "class_files": [
+        "bundle/m4c/bridgeok/p/A.class",
+        "bundle/m4c/bridgeok/q/C.class",
+        "bundle/m4c/bridgeok/p/B.class"
+      ],
+      "method": "bridgeSelectsB",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-bridge-selects-c",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/bridgeok/p/A.java",
+        "bundle/m4c/bridgeok/p/B.java",
+        "bundle/m4c/bridgeok/q/C.java"
+      ],
+      "class": "bundle.m4c.bridgeok.q.C",
+      "class_files": [
+        "bundle/m4c/bridgeok/q/C.class",
+        "bundle/m4c/bridgeok/p/B.class",
+        "bundle/m4c/bridgeok/p/A.class"
+      ],
+      "method": "bridgeSelectsC",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-bridge-alternates",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/bridgeok/p/A.java",
+        "bundle/m4c/bridgeok/p/B.java",
+        "bundle/m4c/bridgeok/q/C.java"
+      ],
+      "class": "bundle.m4c.bridgeok.q.C",
+      "class_files": [
+        "bundle/m4c/bridgeok/p/B.class",
+        "bundle/m4c/bridgeok/p/A.class",
+        "bundle/m4c/bridgeok/q/C.class"
+      ],
+      "method": "bridgeAlternates",
+      "args": [
+        6
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-gap-keeps-a-for-b",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/bridgegap/p/A.java",
+        "bundle/m4c/bridgegap/q/B.java",
+        "bundle/m4c/bridgegap/q/C.java"
+      ],
+      "class": "bundle.m4c.bridgegap.q.C",
+      "class_files": [
+        "bundle/m4c/bridgegap/q/B.class",
+        "bundle/m4c/bridgegap/p/A.class",
+        "bundle/m4c/bridgegap/q/C.class"
+      ],
+      "method": "gapKeepsAForB",
+      "args": [
+        8
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-gap-keeps-a-for-c",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/bridgegap/p/A.java",
+        "bundle/m4c/bridgegap/q/B.java",
+        "bundle/m4c/bridgegap/q/C.java"
+      ],
+      "class": "bundle.m4c.bridgegap.q.C",
+      "class_files": [
+        "bundle/m4c/bridgegap/p/A.class",
+        "bundle/m4c/bridgegap/q/C.class",
+        "bundle/m4c/bridgegap/q/B.class"
+      ],
+      "method": "gapKeepsAForC",
+      "args": [
+        8
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-direct-b-slot",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/bridgegap/p/A.java",
+        "bundle/m4c/bridgegap/q/B.java",
+        "bundle/m4c/bridgegap/q/C.java"
+      ],
+      "class": "bundle.m4c.bridgegap.q.C",
+      "class_files": [
+        "bundle/m4c/bridgegap/q/C.class",
+        "bundle/m4c/bridgegap/q/B.class",
+        "bundle/m4c/bridgegap/p/A.class"
+      ],
+      "method": "directBSlot",
+      "args": [
+        8
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-gap-alternates",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/bridgegap/p/A.java",
+        "bundle/m4c/bridgegap/q/B.java",
+        "bundle/m4c/bridgegap/q/C.java"
+      ],
+      "class": "bundle.m4c.bridgegap.q.C",
+      "class_files": [
+        "bundle/m4c/bridgegap/q/B.class",
+        "bundle/m4c/bridgegap/p/A.class",
+        "bundle/m4c/bridgegap/q/C.class"
+      ],
+      "method": "gapAlternates",
+      "args": [
+        8
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-resolved-abstract-override",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class"
+      ],
+      "method": "resolvedAbstractOverride",
+      "args": [
+        61
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-resolved-abstract-grand-override",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class"
+      ],
+      "method": "resolvedAbstractGrandOverride",
+      "args": [
+        62
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-resolved-native-override",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class"
+      ],
+      "method": "resolvedNativeOverride",
+      "args": [
+        63
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-resolved-native-grand-inherited",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class"
+      ],
+      "method": "resolvedNativeGrandInherited",
+      "args": [
+        64
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-resolved-synchronized-override",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class"
+      ],
+      "method": "resolvedSynchronizedOverride",
+      "args": [
+        65
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-resolved-synchronized-grand-inherited",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class"
+      ],
+      "method": "resolvedSynchronizedGrandInherited",
+      "args": [
+        66
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-null-resolved-abstract",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class"
+      ],
+      "method": "nullResolvedAbstract",
+      "args": [
+        1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4c-null-resolved-native",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/SynchronizedBase.class",
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class"
+      ],
+      "method": "nullResolvedNative",
+      "args": [
+        2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4c-null-resolved-synchronized",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/resolved/ResolvedRoot.java"
+      ],
+      "class": "bundle.m4c.resolved.ResolvedRoot",
+      "class_files": [
+        "bundle/m4c/resolved/SynchronizedChild.class",
+        "bundle/m4c/resolved/SynchronizedGrand.class",
+        "bundle/m4c/resolved/ResolvedRoot.class",
+        "bundle/m4c/resolved/AbstractBase.class",
+        "bundle/m4c/resolved/AbstractChild.class",
+        "bundle/m4c/resolved/AbstractGrand.class",
+        "bundle/m4c/resolved/NativeBase.class",
+        "bundle/m4c/resolved/NativeChild.class",
+        "bundle/m4c/resolved/NativeGrand.class",
+        "bundle/m4c/resolved/SynchronizedBase.class"
+      ],
+      "method": "nullResolvedSynchronized",
+      "args": [
+        3
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4c-child-sees-zero",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m4c.constructors.ConstructorRoot",
+      "class_files": [
+        "bundle/m4c/constructors/ConstructorRoot.class",
+        "bundle/m4c/constructors/ConstructorBase.class",
+        "bundle/m4c/constructors/ConstructorChild.class",
+        "bundle/m4c/constructors/ConstructorGrand.class",
+        "bundle/m4c/constructors/ConstructorToken.class"
+      ],
+      "method": "childSeesZero",
+      "args": [
+        71
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-child-sees-null",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m4c.constructors.ConstructorRoot",
+      "class_files": [
+        "bundle/m4c/constructors/ConstructorBase.class",
+        "bundle/m4c/constructors/ConstructorChild.class",
+        "bundle/m4c/constructors/ConstructorGrand.class",
+        "bundle/m4c/constructors/ConstructorToken.class",
+        "bundle/m4c/constructors/ConstructorRoot.class"
+      ],
+      "method": "childSeesNull",
+      "args": [
+        72
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-callback-write-then-initializer",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m4c.constructors.ConstructorRoot",
+      "class_files": [
+        "bundle/m4c/constructors/ConstructorChild.class",
+        "bundle/m4c/constructors/ConstructorGrand.class",
+        "bundle/m4c/constructors/ConstructorToken.class",
+        "bundle/m4c/constructors/ConstructorRoot.class",
+        "bundle/m4c/constructors/ConstructorBase.class"
+      ],
+      "method": "callbackWriteThenInitializer",
+      "args": [
+        73
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-callback-observed-write",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m4c.constructors.ConstructorRoot",
+      "class_files": [
+        "bundle/m4c/constructors/ConstructorGrand.class",
+        "bundle/m4c/constructors/ConstructorToken.class",
+        "bundle/m4c/constructors/ConstructorRoot.class",
+        "bundle/m4c/constructors/ConstructorBase.class",
+        "bundle/m4c/constructors/ConstructorChild.class"
+      ],
+      "method": "callbackObservedWrite",
+      "args": [
+        74
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-initialized-after-callback",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m4c.constructors.ConstructorRoot",
+      "class_files": [
+        "bundle/m4c/constructors/ConstructorToken.class",
+        "bundle/m4c/constructors/ConstructorRoot.class",
+        "bundle/m4c/constructors/ConstructorBase.class",
+        "bundle/m4c/constructors/ConstructorChild.class",
+        "bundle/m4c/constructors/ConstructorGrand.class"
+      ],
+      "method": "initializedAfterCallback",
+      "args": [
+        75
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-grand-sees-defaults",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m4c.constructors.ConstructorRoot",
+      "class_files": [
+        "bundle/m4c/constructors/ConstructorRoot.class",
+        "bundle/m4c/constructors/ConstructorBase.class",
+        "bundle/m4c/constructors/ConstructorChild.class",
+        "bundle/m4c/constructors/ConstructorGrand.class",
+        "bundle/m4c/constructors/ConstructorToken.class"
+      ],
+      "method": "grandSeesDefaults",
+      "args": [
+        76
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-grand-initialized-after-callback",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m4c.constructors.ConstructorRoot",
+      "class_files": [
+        "bundle/m4c/constructors/ConstructorBase.class",
+        "bundle/m4c/constructors/ConstructorChild.class",
+        "bundle/m4c/constructors/ConstructorGrand.class",
+        "bundle/m4c/constructors/ConstructorToken.class",
+        "bundle/m4c/constructors/ConstructorRoot.class"
+      ],
+      "method": "grandInitializedAfterCallback",
+      "args": [
+        77
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-dog-true",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class"
+      ],
+      "method": "instanceDogTrue",
+      "args": [
+        81
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-animal-true",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class"
+      ],
+      "method": "instanceAnimalTrue",
+      "args": [
+        82
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-cat-false",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class"
+      ],
+      "method": "instanceCatFalse",
+      "args": [
+        83
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-object-from-class",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class"
+      ],
+      "method": "instanceObjectFromClass",
+      "args": [
+        84
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-array-true",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class"
+      ],
+      "method": "instanceArrayTrue",
+      "args": [
+        85
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-object-from-array",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class"
+      ],
+      "method": "instanceObjectFromArray",
+      "args": [
+        86
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-array-false-for-object",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class"
+      ],
+      "method": "instanceArrayFalseForObject",
+      "args": [
+        87
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-class-false-for-array",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class"
+      ],
+      "method": "instanceClassFalseForArray",
+      "args": [
+        88
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-null-class",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class"
+      ],
+      "method": "instanceNullClass",
+      "args": [
+        89
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-instance-null-array",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class"
+      ],
+      "method": "instanceNullArray",
+      "args": [
+        90
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cast-dog-identity",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class"
+      ],
+      "method": "castDogIdentity",
+      "args": [
+        91
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cast-animal-identity",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class"
+      ],
+      "method": "castAnimalIdentity",
+      "args": [
+        92
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cast-array-identity",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class"
+      ],
+      "method": "castArrayIdentity",
+      "args": [
+        -93
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cast-null-class",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class"
+      ],
+      "method": "castNullClass",
+      "args": [
+        94
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cast-null-array",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class"
+      ],
+      "method": "castNullArray",
+      "args": [
+        95
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4c-cast-sibling-fails",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class"
+      ],
+      "method": "castSiblingFails",
+      "args": [
+        1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m4c-cast-object-to-array-fails",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class"
+      ],
+      "method": "castObjectToArrayFails",
+      "args": [
+        2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m4c-cast-array-to-class-fails",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class"
+      ],
+      "method": "castArrayToClassFails",
+      "args": [
+        3
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m4c-initializer-cast-fails",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/TypeCat.class",
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class"
+      ],
+      "method": "initializerCastFails",
+      "args": [
+        4
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4c-cast-then-virtual",
+      "stage": "m4c",
+      "sources": [
+        "bundle/m4c/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4c.types.TypeRoot",
+      "class_files": [
+        "bundle/m4c/types/FailingCastHolder.class",
+        "bundle/m4c/types/TypeRoot.class",
+        "bundle/m4c/types/TypeAnimal.class",
+        "bundle/m4c/types/TypeDog.class",
+        "bundle/m4c/types/TypeCat.class"
+      ],
+      "method": "castThenVirtual",
+      "args": [
+        96
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }

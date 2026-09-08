@@ -4,12 +4,12 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 713 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
-73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, and 100 `m4b` cases. The 289 smoke
-cases include 51 from `m4b`. Every root entry remains a uniquely named, declared
-public static `(int...)int` method, and guest sources have no `main`. All 613
-entries through M4a, including their source lists, arguments, budgets, tiers,
-and outcomes, are unchanged.
+The manifest has 792 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, and 79 `m4c` cases. The
+331 smoke cases include 42 from `m4c`. Every root entry remains a declared public
+static `(int...)int` method, and guest sources have no `main`. All 713 entries
+through M4b, including their source lists, arguments, budgets, tiers, and
+outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -201,16 +201,43 @@ The M4b manifest bundle paths cover exactly these emitted classfiles:
 
 Every case has an explicit ordered `class_files` bundle, with permutations that
 place the entry root first, in the middle, or last. No fixture supplies
-`java/lang/Object.class`; M4b therefore also exercises the runtime's separately
+`java/lang/Object.class`; M4b and M4c therefore exercise the runtime's separately
 owned embedded minimal Object bootstrap path.
 
-Across all stages there are 662 value outcomes, 14 ArithmeticException outcomes,
-three StackOverflowError outcomes, 13 ExceptionInInitializerError outcomes, two
+M4c adds 71 value outcomes and eight actual JVM exception outcomes over 14 new
+trusted Java 8 sources, which emit 44 ordinary classfiles. Its 79 cases cover:
+
+- base, child, grandchild, inherited, and final virtual selection, including
+  repeated alternation among dynamic receiver classes at one symbolic call site;
+- integer, void, ordinary-reference, `Object`, and `int[]` arguments/returns on
+  ordinary object receivers, plus bounded virtual recursion;
+- legal cross-package protected calls, the transitive
+  `p.A(package) -> p.B(public) -> q.C` override chain, and the contrasting
+  `p.A(package) -> q.B -> q.C` non-override gap;
+- abstract, native, and synchronized resolved declarations whose dynamically
+  selected implementation is ordinary, plus null receiver calls that never
+  select the unsupported declaration body;
+- constructor-time virtual callbacks that observe derived `int` zero and object
+  null defaults before derived field initializers execute;
+- ordinary-class, `java/lang/Object`, and `[I` type tests, identity-preserving
+  ordinary/array casts, normal true/false combinations, and class/array mismatch
+  failures. Java source widening conversions do not emit a redundant
+  `checkcast java/lang/Object`; Object target coverage is therefore via genuine
+  `instanceof java/lang/Object` instructions.
+
+The eight outcomes are four `java.lang.NullPointerException`, three direct
+`java.lang.ClassCastException`, and one
+`java.lang.ExceptionInInitializerError` wrapping a cast failure in active class
+initialization. No case selects a native or synchronized implementation for a
+value outcome, and no actual receiver is an array.
+
+Across all stages there are 733 value outcomes, 14 ArithmeticException outcomes,
+three StackOverflowError outcomes, 14 ExceptionInInitializerError outcomes, two
 NegativeArraySizeException outcomes, seven ArrayIndexOutOfBoundsException
-outcomes, and 12 NullPointerException outcomes. Every gas limit is finite and at
-most 70,000,000; every subprocess timeout is at most 10 seconds. New arrays have
-at most eight elements, and all fixture loops and recursions are bounded and
-modest.
+outcomes, 16 NullPointerException outcomes, and three ClassCastException
+outcomes. Every gas limit is finite and at most 70,000,000; every subprocess
+timeout is at most 10 seconds. New arrays have at most eight elements, and all
+fixture loops and recursions are bounded and modest.
 
 All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
 direct superclass is `java/lang/Object`. They have zero fields, zero interfaces,
@@ -247,6 +274,13 @@ java -cp "$out" OracleMain bundle.m4b.constructors.CtorRoot directSuperSelection
 java -cp "$out" OracleMain bundle.m4b.init.InitRoot reentrantPreparedNull 53
 java -cp "$out" OracleMain bundle.m4b.errors.ErrorRoot nullPrivateSpecial 5
 java -cp "$out" OracleMain bundle.m4b.access.child.CrossAccessRoot protectedDirectSuper 74
+java -cp "$out" OracleMain bundle.m4c.dispatch.DispatchRoot alternatingBaseChild 2
+java -cp "$out" OracleMain bundle.m4c.bridgeok.q.C bridgeSelectsC 6
+java -cp "$out" OracleMain bundle.m4c.bridgegap.q.C gapKeepsAForC 8
+java -cp "$out" OracleMain bundle.m4c.resolved.ResolvedRoot resolvedNativeOverride 63
+java -cp "$out" OracleMain bundle.m4c.constructors.ConstructorRoot childSeesNull 72
+java -cp "$out" OracleMain bundle.m4c.types.TypeRoot castArrayIdentity -93
+java -cp "$out" OracleMain bundle.m4c.types.TypeRoot castSiblingFails 1
 rm -rf "$out"
 ```
 
@@ -276,6 +310,10 @@ find "$out/bundle/m4b" -name '*.class' -print | sort | while read -r file; do
   class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
   javap -classpath "$out" -c -v -p "$class"
 done
+find "$out/bundle/m4c" -name '*.class' -print | sort | while read -r file; do
+  class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
+  javap -classpath "$out" -c -v -p "$class"
+done
 rm -rf "$out"
 ```
 
@@ -288,6 +326,29 @@ answers. The M4b run produced 91 values and exactly the nine declared exception
 outcomes; the ordered `(case id, value)` results have SHA256
 `2bc61e2e626632aa337aaeb845e7c83f3bb0c0ea7de76a2aa39324aaa5a64151`.
 The resulting outcomes match the cumulative counts above.
+
+For M4c, one fresh compilation of all 140 trusted fixture sources with
+`javac --release 8` was followed by 79 separate `OracleMain` JVM processes, each
+with a 64 MiB maximum heap and a ten-second timeout. All 79 matched the manifest:
+71 values, four NullPointerExceptions, three ClassCastExceptions, and one
+ExceptionInInitializerError. The ordered `(case id, value-or-exception)` results
+have SHA256 `6b2eeb6053c5e37959f64621412ecd661e741f414039a6bdeeeb7dda9b75b751`.
+The canonical JSON SHA256 of the old 713-entry prefix is
+`4a62dba268fcbfdd613203ee191f1cc31643d6b0cf34c6ae358dd92858caab7e`,
+identical to the same prefix at the M4b base revision.
+
+`javap -c -v -p` over all 44 emitted M4c classes found only Java 8 major version
+52 classfiles and zero declared interfaces or exception tables. It found 38
+`invokevirtual`, ten `checkcast`, and ten `instanceof` instructions. Full
+constant-pool inspection confirmed the intended symbolic owners, including
+`DispatchBase.select`, inherited `FinalChild.fixed`, `ProtectedRoot.score`, both
+`A.slot` package-private sites, all three unusual resolved `apply` declarations,
+constructor callbacks, and `TypeAnimal.virtualValue`; all other method references
+name fixture classes or `java/lang/Object.<init>`. There are no interface calls,
+reference/multidimensional/other-primitive array allocations, monitor bytecodes,
+throws, invokedynamic instructions, or non-Object JRE method references. The
+sole synchronized and native declarations are the deliberately resolved base
+methods; every selected value-producing override is ordinary.
 
 `javap -c -v -p` over all 37 emitted M4b classes found only Java 8 major version
 52 classfiles and zero interfaces. Aggregate selected-profile instruction shapes
@@ -341,10 +402,10 @@ python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All 613 cases through M4a are the accepted baseline. The 100 M4b fixtures have
-passed the actual JVM oracle and classfile-profile checks, but the baseline
-runner intentionally rejects the new stage until separately owned verifier and
-runtime integration; this fixture revision does **not** claim an M4b EVM pass.
-The runtime remains over mainnet deployment size and runs through local
-runtime.Execute, not CREATE. This remains subset verification, not full JVM
-conformance.
+All 713 cases through M4b are the accepted baseline. The 79 M4c fixtures have
+passed the actual JVM oracle and full classfile/constant-pool profile checks, but
+the baseline runner intentionally rejects stage `m4c` until separately owned
+verifier and runtime integration; this fixture revision does **not** claim an
+M4c EVM pass. The runtime remains over mainnet deployment size and runs through
+local runtime.Execute, not CREATE. This remains subset verification, not full
+JVM conformance.
