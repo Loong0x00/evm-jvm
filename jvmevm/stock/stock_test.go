@@ -575,10 +575,14 @@ func stockHarnessAssertEventMatchesCheckpoint(t *testing.T, event stockHarnessEv
 
 func stockHarnessAssertInitialCheckpoint(t *testing.T, checkpoint stockHarnessCheckpoint, moduleHash, payloadHash common.Hash) {
 	t.Helper()
-	zero := stockHarnessZeroMachine()
-	if checkpoint.Epoch != 0 || checkpoint.TotalSteps != 0 || !reflect.DeepEqual(checkpoint.Machine, zero) {
+	// ABI-decoded big.Int zero and new(big.Int) can differ in internal nil/empty
+	// word slices. Check numeric/canonical state, not math/big representation.
+	machine := checkpoint.Machine
+	if checkpoint.Epoch != 0 || checkpoint.TotalSteps != 0 || machine.PC != 0 ||
+		machine.SP != 0 || machine.Initialized != 0 || machine.Done || machine.Result != 0 {
 		t.Fatalf("noncanonical initial checkpoint: %+v", checkpoint)
 	}
+	stockHarnessAssertCanonicalMachine(t, machine)
 	if want := stockHarnessStateDigest(t, moduleHash, payloadHash, checkpoint.Machine, 0, 0); checkpoint.StateDigest != want {
 		t.Fatalf("initial digest got %x want %x", checkpoint.StateDigest, want)
 	}
