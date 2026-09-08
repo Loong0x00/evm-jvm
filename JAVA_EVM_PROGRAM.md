@@ -78,7 +78,7 @@ routine permission to start the next verified increment.
 | M4b | ordinary object allocation, constructors, instance fields and direct invokespecial calls | accepted;713 cases plus46 independent probes |
 | M4c | invokevirtual dispatch, casts/type tests | accepted;792 cases plus48 independent probes |
 | M4d | reference arrays/covariance/ArrayStoreException | accepted;892 cases plus48 independent probes |
-| M4e | multianewarray | queued; separate allocation-order review |
+| M4e | multianewarray | frozen in `JAVA_EVM_M4E_PLAN.md`; dispatch3 workers |
 | M4f | interfaces | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -94,7 +94,7 @@ M4d accepted:892 JVM/EVM cases plus48 independent probes,34 Python tests,
 381 smoke/401 fast, exact Go validation, artifact/bootstrap/demos/AOT/vet green.
 Four proven test-setup issues corrected; runtime unchanged after independent audit.
 Prior792 inputs/outcomes/budgets unchanged. Runtime76800 bytes is local-runtime
-only, not deployed/full Java. Next freeze/dispatch M4e multianewarray with explicit
+only, not deployed/full Java. M4e frozen in JAVA_EVM_M4E_PLAN.md; dispatch3 workers with explicit
 resolution/rank/count/zero/negative/partial-shape/aggregate-limit ordering.
 ALL NEW workers Sol/high WITHOUT Fast; recheck disabled state before dispatch.
 Continue automatically after verified stages, no routine confirmation.

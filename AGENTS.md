@@ -1,7 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M4d reference arrays/covariance**, recorded in
-`JAVA_EVM_M4D_PLAN.md`:892 cases plus48 independent probes. Next: multianewarray,
+`JAVA_EVM_M4D_PLAN.md`:892 cases plus48 independent probes. Active M4e
+multianewarray, frozen in `JAVA_EVM_M4E_PLAN.md`,
 then separate interface/value-type/handler/class-library stages.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
