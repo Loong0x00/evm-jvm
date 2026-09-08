@@ -138,8 +138,9 @@ public class IEEEFlow {
 	if err != nil || result.Value != 1065353216 || result.ExceptionClass != "" || len(result.RevertData) != 0 {
 		t.Fatalf("scalar IEEE add result/error = %+v/%v, want exact Java bits 1065353216", result, err)
 	}
-	if _, err := Run(deferred, "array", []int32{1}, 20_000_000); err == nil {
-		t.Fatal("float array unexpectedly accepted")
+	arrayResult, err := Run(deferred, "array", []int32{1}, 20_000_000)
+	if err != nil || arrayResult.Value != 1 || arrayResult.ExceptionClass != "" || len(arrayResult.RevertData) != 0 {
+		t.Fatalf("float array result/error = %+v/%v, want exact raw bits 1", arrayResult, err)
 	}
 }
 

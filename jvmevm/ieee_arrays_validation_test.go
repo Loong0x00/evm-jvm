@@ -361,6 +361,20 @@ func TestVerifyM5cdOpcodeKindsCategoryTwoPrefixesLocalsAtypesAndPCs(t *testing.T
 	dconstPC := verifyM5cdInstructionPC(t, capacityCode, 0x0f, 0)
 	verifyM5cdAssertError(t, func() (Result, error) { return Run(capacity, "padding", nil, verifyM5cdGasLimit) }, "BytecodeError(uint256,uint256)", 9, uint64(dconstPC))
 
+	// dstore into an overlapping local pair invalidates both pre-existing
+	// category-two values. This independently protects D's head/tail identity.
+	for _, tc := range []struct {
+		name string
+		code []byte
+		kind uint64
+	}{
+		{"dstore-overlaps-left", []byte{0x0f, 0x47, 0x0f, 0x49, 0x0f, 0x48, 0x26, 0x8e, 0xac}, 11},
+		{"dstore-overlaps-right-head", []byte{0x0f, 0x47, 0x0f, 0x49, 0x0f, 0x48, 0x28, 0x8e, 0xac}, 14},
+	} {
+		bad := verifyM5cdRewriteCode(t, base, "padding", "()I", tc.code, 6, 4)
+		verifyM5cdAssertError(t, func() (Result, error) { return Run(bad, "padding", nil, verifyM5cdGasLimit) }, "BytecodeError(uint256,uint256)", tc.kind, 6)
+	}
+
 	// Every JVM newarray atype is now valid; no accidental 6/7-only whitelist.
 	for atype := byte(4); atype <= 11; atype++ {
 		code := []byte{0x04, verifyM5cdNewarray, atype, 0xbe, 0xac}
@@ -388,7 +402,10 @@ func TestVerifyM5cdOpcodeKindsCategoryTwoPrefixesLocalsAtypesAndPCs(t *testing.T
 func TestVerifyM5cdNullBoundsEvaluationInitializationRegistryAndDeferredFeatures(t *testing.T) {
 	classes := verifyM5cdCompile(t, map[string]string{
 		"VerifyM5cdFaults.java": `public final class VerifyM5cdFaults {
-			static int zero(){return 0;} static float fzero(){return 0f;} static double dzero(){return 0d;}
+			static int trace; static int zero(){return 0;} static float fzero(){return 0f;} static double dzero(){return 0d;}
+			static float[] fa(){trace=trace*10+1;return new float[1];} static double[] da(){trace=trace*10+1;return new double[1];} static long[] ja(){trace=trace*10+1;return new long[1];}
+			static int ix(){trace=trace*10+2;return 0;} static float fv(){trace=trace*10+3;return -0.0f;} static double dv(){trace=trace*10+3;return -0.0d;} static long jv(){trace=trace*10+3;return 7L;}
+			public static int storeOrderF(){trace=0;fa()[ix()]=fv();return trace;} public static int storeOrderD(){trace=0;da()[ix()]=dv();return trace;} public static int storeOrderJ(){trace=0;ja()[ix()]=jv();return trace;}
 			public static int negativeF(int n){return new float[n].length;} public static int negativeD(int n){return new double[n].length;}
 			public static int loadNullF(int i){float[] a=null;return (int)a[i];} public static int loadNullD(int i){double[] a=null;return (int)a[i];}
 			public static int storeNullF(int i){float[] a=null;a[i]=1f;return 1;} public static int storeNullD(int i){double[] a=null;a[i]=1d;return 1;}
@@ -403,6 +420,10 @@ func TestVerifyM5cdNullBoundsEvaluationInitializationRegistryAndDeferredFeatures
 		"UnknownM5cdRoot.java":          `public final class UnknownM5cdRoot {public static int run(){return UnknownM5cdNative.arrayBits(new float[1]);}}`,
 	}, "VerifyM5cdFaults", "VerifyM5cdInitArithmetic", "UnknownM5cdNative", "UnknownM5cdRoot")
 	faults := classes["VerifyM5cdFaults"]
+	for _, method := range []string{"storeOrderF", "storeOrderD", "storeOrderJ"} {
+		verifyM5cdJava8Outcome(t, [][]byte{faults}, "VerifyM5cdFaults", method, nil, "value=123")
+		verifyM5cdRunValue(t, faults, method, nil, 123, verifyM5cdSimpleGasLimit)
+	}
 	for _, method := range []string{"negativeF", "negativeD"} {
 		verifyM5cdAssertException(t, func() (Result, error) { return Run(faults, method, []int32{-1}, verifyM5cdGasLimit) }, "java.lang.NegativeArraySizeException", 4)
 	}

@@ -783,9 +783,8 @@ func TestVerifyM5baLongFieldIsOneObjectQuotaSlotAndDeferredIEEEArrays(t *testing
 	verifyM5baJava8Outcome(t, [][]byte{guards}, "DeferredJFD", "longs", nil, "value=0")
 	verifyM5baAssertValue(t, func() (Result, error) { return Run(guards, "longs", nil, verifyM5baGasLimit) }, 0)
 	for _, method := range []string{"floats", "doubles"} {
-		pc := verifyM5baInstructionPC(t, parseStaticsClass(t, guards).namedMethod(t, method).code, 0xc1, 0)
-		verifyM5baAssertError(t, func() (Result, error) { return Run(guards, method, nil, verifyM5baGasLimit) },
-			"TypeError(uint256,uint256)", 2, uint64(pc))
+		verifyM5baJava8Outcome(t, [][]byte{guards}, "DeferredJFD", method, nil, "value=0")
+		verifyM5baAssertValue(t, func() (Result, error) { return Run(guards, method, nil, verifyM5baGasLimit) }, 0)
 	}
 }
 

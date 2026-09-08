@@ -410,9 +410,12 @@ func TestVerifyM5ccRegistryAndDeferredBoundariesRemainExact(t *testing.T) {
 	classfile := classes["DeferredM5cc"]
 	parsed := parseStaticsClass(t, classfile)
 	for _, method := range []string{"fa", "da"} {
-		pc := verifyM5cbInstructionPC(t, parsed.method(t, method, "()I").code, 0xbc, 0)
-		verifyM5cbAssertError(t, func() (Result, error) { return Run(classfile, method, nil, verifyM5ccGasLimit) },
-			"ArrayError(uint256,uint256)", 1, uint64(pc))
+		code := parsed.method(t, method, "()I").code
+		pc := verifyM5cbInstructionPC(t, code, 0xbc, 0)
+		if code[pc+1] != 6 && code[pc+1] != 7 {
+			t.Fatalf("%s atype=%d want F/D", method, code[pc+1])
+		}
+		verifyM5cbAssertValue(t, func() (Result, error) { return Run(classfile, method, nil, verifyM5ccGasLimit) }, 1)
 	}
 	otherPC := verifyM5cbMemberPC(t, parsed, parsed.method(t, "other", "(I)I"), 0xb8, 10, "floatToIntBits", "(F)I")
 	verifyM5cbAssertError(t, func() (Result, error) { return Run(classfile, "other", []int32{1}, verifyM5ccGasLimit) },

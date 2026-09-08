@@ -427,11 +427,11 @@ func TestVerifyM5bbRank255MultianewarrayPredecodeTruncationAndDeferredFD(t *test
 	for _, atype := range []byte{6, 7} {
 		code := []byte{0x04, verifyM5bbNewarray, atype, 0xbe, 0xac}
 		classfile := verifyM5bbRewriteCode(t, base, "padding", "()I", code, 2, 1)
-		verifyM5bbAssertError(t, func() (Result, error) { return Run(classfile, "padding", nil, verifyM5bbGasLimit) }, "ArrayError(uint256,uint256)", 1, 1)
+		verifyM5bbAssertValue(t, func() (Result, error) { return Run(classfile, "padding", nil, verifyM5bbGasLimit) }, 1)
 	}
 	for _, method := range []string{"typeFloat", "typeDouble"} {
-		pc := verifyM5bbInstructionPC(t, parseStaticsClass(t, base).namedMethod(t, method).code, 0xc1, 0)
-		verifyM5bbAssertError(t, func() (Result, error) { return Run(base, method, nil, verifyM5bbGasLimit) }, "TypeError(uint256,uint256)", 2, uint64(pc))
+		verifyM5bbJava8Outcome(t, [][]byte{base}, "LongArrayStructure", method, nil, "value=0")
+		verifyM5bbAssertValue(t, func() (Result, error) { return Run(base, method, nil, verifyM5bbGasLimit) }, 0)
 	}
 	// [J is no longer deferred: a non-null unlike primitive must simply test false.
 	verifyM5bbJava8Outcome(t, [][]byte{base}, "LongArrayStructure", "typeLong", nil, "value=0")

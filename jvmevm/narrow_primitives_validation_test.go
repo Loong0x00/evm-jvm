@@ -502,10 +502,16 @@ func TestVerifyM5aAtypesUnsupportedTargetsRank255AndExactBranchBoundaries(t *tes
 		public static int typeDouble(){Object x=new int[1];return x instanceof double[]?1:0;}
 		public static int padding(){int x=0;`+strings.Repeat("x=x+1;", 420)+`return x;}
 	}`)
-	for _, atype := range []byte{0, 3, 6, 7, 12, 255} {
-		t.Run(fmt.Sprintf("atype-%d", atype), func(t *testing.T) {
+	for _, atype := range []byte{0, 3, 12, 255} {
+		t.Run(fmt.Sprintf("invalid-atype-%d", atype), func(t *testing.T) {
 			bad := verifyM5aRewriteMethodPrefix(t, original, "padding", "()I", []byte{0x04, verifyM5aNewarray, atype, 0xbe, 0xac}, 2, 0)
 			verifyM5aAssertError(t, func() (Result, error) { return Run(bad, "padding", nil, verifyM5aGasLimit) }, "ArrayError(uint256,uint256)", 1, 1)
+		})
+	}
+	for _, atype := range []byte{6, 7} {
+		t.Run(fmt.Sprintf("ieee-atype-%d", atype), func(t *testing.T) {
+			classfile := verifyM5aRewriteMethodPrefix(t, original, "padding", "()I", []byte{0x04, verifyM5aNewarray, atype, 0xbe, 0xac}, 2, 0)
+			verifyM5aAssertValue(t, func() (Result, error) { return Run(classfile, "padding", nil, verifyM5aGasLimit) }, 1)
 		})
 	}
 	longArray := verifyM5aRewriteMethodPrefix(t, original, "padding", "()I", []byte{0x04, verifyM5aNewarray, 11, 0xbe, 0xac}, 2, 0)
@@ -521,8 +527,8 @@ func TestVerifyM5aAtypesUnsupportedTargetsRank255AndExactBranchBoundaries(t *tes
 	verifyM5aJava8Outcome(t, [][]byte{original}, "NarrowArrayShape", "typeLong", nil, "value=0")
 	verifyM5aAssertValue(t, func() (Result, error) { return Run(original, "typeLong", nil, verifyM5aGasLimit) }, 0)
 	for _, method := range []string{"typeFloat", "typeDouble"} {
-		pc := verifyM5aInstructionPC(t, parseStaticsClass(t, original).namedMethod(t, method).code, 0xc1, 0)
-		verifyM5aAssertError(t, func() (Result, error) { return Run(original, method, nil, verifyM5aGasLimit) }, "TypeError(uint256,uint256)", 2, uint64(pc))
+		verifyM5aJava8Outcome(t, [][]byte{original}, "NarrowArrayShape", method, nil, "value=0")
+		verifyM5aAssertValue(t, func() (Result, error) { return Run(original, method, nil, verifyM5aGasLimit) }, 0)
 	}
 
 	truncated := verifyM5aRewriteAtEnd(t, original, "padding", "()I", []byte{verifyM5aNewarray})
