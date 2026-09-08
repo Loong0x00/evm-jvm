@@ -32799,6 +32799,2555 @@
       "smoke": false,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5ba-basic-const-zero",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "constZero",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-const-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "constOne",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-const-minus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "constMinusOne",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-const-max",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "constMax",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-const-min",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "constMin",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-const-bit32",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "constBit32",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-const-patterns",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "constPatterns",
+      "args": [
+        -17
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-add-max-plus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "addJoined",
+      "args": [
+        2147483647,
+        -1,
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-add-minus-one-plus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "addJoined",
+      "args": [
+        -1,
+        -1,
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-subtract-min-minus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "subtractJoined",
+      "args": [
+        -2147483648,
+        0,
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-subtract-patterns",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "subtractJoined",
+      "args": [
+        19088743,
+        -1985229329,
+        -19088744,
+        1985229328
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-multiply-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "multiply",
+      "args": [
+        46341,
+        46341
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-multiply-int-min-minus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "multiply",
+      "args": [
+        -2147483648,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-multiply-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "multiply",
+      "args": [
+        -123456789,
+        31
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-multiply-wrap",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "multiplyWrap",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-negate-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "negateJoined",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-negate-wide",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "negateJoined",
+      "args": [
+        -2147483648,
+        7
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-negate-min",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "negateMin",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-and-patterns",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "andJoined",
+      "args": [
+        305419896,
+        -1985229329,
+        -1,
+        252645135
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-or-patterns",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "orJoined",
+      "args": [
+        305419896,
+        -1985229329,
+        -2147483648,
+        252645135
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-xor-patterns",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "xorJoined",
+      "args": [
+        305419896,
+        -1985229329,
+        -1,
+        252645135
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-divide-positive-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "divide",
+      "args": [
+        17,
+        5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-divide-negative-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "divide",
+      "args": [
+        -17,
+        5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-divide-positive-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "divide",
+      "args": [
+        17,
+        -5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-divide-negative-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "divide",
+      "args": [
+        -17,
+        -5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-remainder-positive-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "remainder",
+      "args": [
+        17,
+        5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-remainder-negative-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "remainder",
+      "args": [
+        -17,
+        5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-remainder-positive-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "remainder",
+      "args": [
+        17,
+        -5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-remainder-negative-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "remainder",
+      "args": [
+        -17,
+        -5
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-divide-wide-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "divideWide",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-divide-wide-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "divideWide",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-remainder-wide-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "remainderWide",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-remainder-wide-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "remainderWide",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-min-divide-minus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "minDivideMinusOne",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-min-remainder-minus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "minRemainderMinusOne",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-divide-zero",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "divideZero",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m5ba-basic-remainder-zero",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "remainderZero",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m5ba-basic-shift-left-63",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "shiftLeft",
+      "args": [
+        0,
+        1,
+        63
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-shift-left-64",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "shiftLeft",
+      "args": [
+        305419896,
+        -1985229329,
+        64
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-shift-right-negative-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "shiftRight",
+      "args": [
+        -2147483648,
+        1,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-shift-right-64",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "shiftRight",
+      "args": [
+        -1,
+        0,
+        64
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-unsigned-shift-right-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "unsignedShiftRight",
+      "args": [
+        -2147483648,
+        1,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-unsigned-shift-right-65",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "unsignedShiftRight",
+      "args": [
+        -1,
+        -1,
+        65
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-compare-equal",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "compare",
+      "args": [
+        1,
+        2,
+        1,
+        2
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-compare-negative-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "compare",
+      "args": [
+        -1,
+        0,
+        0,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-compare-low-unsigned-less",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "compare",
+      "args": [
+        0,
+        1,
+        0,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-compare-high-dominates",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "compare",
+      "args": [
+        2,
+        -1,
+        1,
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-compare-min-max",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "compareExtremes",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-compare-max-min",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "compareExtremes",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-i2l-zero",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "intToLong",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-i2l-minus-one",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "intToLong",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-i2l-int-min",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "intToLong",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-l2i-low-zero",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "longToInt",
+      "args": [
+        305419896,
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-l2i-low-negative",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "longToInt",
+      "args": [
+        0,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-l2i-low-pattern",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "longToInt",
+      "args": [
+        -1,
+        324508639
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-odd-local-positive",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "oddLocal",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-local-postincrement",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "localPostIncrement",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-local-preincrement",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "localPreIncrement",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-local-assignment-expression",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "localAssignmentExpression",
+      "args": [
+        123456789
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-discard-long-result",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "discardLongResult",
+      "args": [
+        -77
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-modest-loop-zero",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "modestLoop",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-basic-modest-loop-eight",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/basic/LongRoot.java"
+      ],
+      "class": "bundle.m5ba.basic.LongRoot",
+      "method": "modestLoop",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5ba/basic/LongRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-static-default",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "staticDefault",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-static-write",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "staticWrite",
+      "args": [
+        -19
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-static-postincrement",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "staticPostIncrement",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-static-compound",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "staticCompound",
+      "args": [
+        33
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-static-assignment-expression",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "staticAssignmentExpression",
+      "args": [
+        -41
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-instance-default",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "instanceDefault",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-instance-write",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "instanceWrite",
+      "args": [
+        29
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-instance-postincrement",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "instancePostIncrement",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-instance-assignment-expression",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "instanceAssignmentExpression",
+      "args": [
+        51
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-chained-instance-assignment",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "chainedInstanceAssignment",
+      "args": [
+        -63
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-final-constructor",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "finalConstructor",
+      "args": [
+        71
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-hidden-static",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "hiddenStatic",
+      "args": [
+        83
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-hidden-instance",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "hiddenInstance",
+      "args": [
+        -97
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-class-constantvalue",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "classConstant",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-interface-constantvalue",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "interfaceConstant",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-interface-dynamic",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "interfaceDynamic",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-interface-hidden",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "interfaceHidden",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-fields-inherited-owner-through-child",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5ba.fields.FieldRoot",
+      "method": "inheritedOwnerThroughChild",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5ba/fields/FieldRoot.class",
+        "bundle/m5ba/fields/LongFields.class",
+        "bundle/m5ba/fields/FinalLong.class",
+        "bundle/m5ba/fields/HiddenBase.class",
+        "bundle/m5ba/fields/HiddenChild.class",
+        "bundle/m5ba/fields/LongConstants.class",
+        "bundle/m5ba/fields/LongConstantFace.class",
+        "bundle/m5ba/fields/FieldTrace.class",
+        "bundle/m5ba/fields/DynamicLongFace.class",
+        "bundle/m5ba/fields/HiddenLongParent.class",
+        "bundle/m5ba/fields/HiddenLongChild.class",
+        "bundle/m5ba/fields/InheritedLongBase.class",
+        "bundle/m5ba/fields/InheritedLongChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-static",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "staticCall",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-static-mixed",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "staticMixedCall",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-private-special",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "privateSpecialCall",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-virtual-base",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "virtualBase",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-virtual-override",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "virtualOverride",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-interface-base",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "interfaceBase",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-interface-override",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "interfaceOverride",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-default",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "defaultCall",
+      "args": [
+        23
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-interface-default-site",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "interfaceDefaultCall",
+      "args": [
+        29
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-direct-interface-super",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "directInterfaceSuper",
+      "args": [
+        31
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-interface-static",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "interfaceStatic",
+      "args": [
+        37
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-constructor-arguments",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "constructorArguments",
+      "args": [
+        41
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-constructor-chain",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "constructorChain",
+      "args": [
+        43
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-long-return-transport",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "longReturnTransport",
+      "args": [
+        47
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-alternating",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5ba.dispatch.DispatchRoot",
+      "method": "alternatingDispatch",
+      "args": [
+        53
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/DispatchRoot.class",
+        "bundle/m5ba/dispatch/DispatchFace.class",
+        "bundle/m5ba/dispatch/DispatchBase.class",
+        "bundle/m5ba/dispatch/DispatchChild.class",
+        "bundle/m5ba/dispatch/DispatchBox.class",
+        "bundle/m5ba/dispatch/DispatchConstructed.class",
+        "bundle/m5ba/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-dispatch-public-interface-root",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/dispatch/PublicLongApi.java"
+      ],
+      "class": "bundle.m5ba.dispatch.PublicLongApi",
+      "method": "interfaceRoot",
+      "args": [
+        -59
+      ],
+      "class_files": [
+        "bundle/m5ba/dispatch/PublicLongApi.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-class-default-order",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "classOrder",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-repeated-use-once",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "repeatedUse",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-reentrant-prepared-default",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "reentrantPreparedDefault",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-cycle-a-first",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "cycleAFirst",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-cycle-b-first",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "cycleBFirst",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-interface-own-skips-parent",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "interfaceOwnSkipsParent",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-inherited-interface-owner",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "inheritedInterfaceOwner",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-pending-long-prefix",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/InitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.InitRoot",
+      "method": "pendingLongPrefix",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5ba/init/InitRoot.class",
+        "bundle/m5ba/init/InitState.class",
+        "bundle/m5ba/init/OrderParent.class",
+        "bundle/m5ba/init/OrderDefault.class",
+        "bundle/m5ba/init/OrderChild.class",
+        "bundle/m5ba/init/OnceLong.class",
+        "bundle/m5ba/init/ReentrantLong.class",
+        "bundle/m5ba/init/CycleA.class",
+        "bundle/m5ba/init/CycleB.class",
+        "bundle/m5ba/init/ActiveParent.class",
+        "bundle/m5ba/init/ActiveChild.class",
+        "bundle/m5ba/init/PrefixOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-init-arithmetic-wrapped",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/init/ArithmeticInitRoot.java"
+      ],
+      "class": "bundle.m5ba.init.ArithmeticInitRoot",
+      "method": "entry",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5ba/init/ArithmeticInitRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5ba-recursion-factorial-ten",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m5ba.recursion.RecursionRoot",
+      "method": "factorialDigest",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5ba/recursion/RecursionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-recursion-fibonacci-ten",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m5ba.recursion.RecursionRoot",
+      "method": "fibonacciDigest",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5ba/recursion/RecursionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-recursion-long-prefix",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m5ba.recursion.RecursionRoot",
+      "method": "recursivePrefix",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5ba/recursion/RecursionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-recursion-mutual",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m5ba.recursion.RecursionRoot",
+      "method": "mutualDigest",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5ba/recursion/RecursionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ba-recursion-stack-overflow",
+      "stage": "m5ba",
+      "sources": [
+        "bundle/m5ba/recursion/RecursionRoot.java"
+      ],
+      "class": "bundle.m5ba.recursion.RecursionRoot",
+      "method": "stackOverflow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ba/recursion/RecursionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.StackOverflowError"
     }
   ]
 }

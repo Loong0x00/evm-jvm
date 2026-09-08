@@ -4,13 +4,13 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 1,383 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+The manifest has 1,493 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
 73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, 100 `m4d`,
-68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, and 120 `m5a` cases. M5a adds
-60 smoke-marked cases. Every root entry remains a declared public static
-`(int...)int` method, including public interface roots, and guest sources have no
-`main`. All 1,263 entries through M4f-c, including sources, arguments, budgets,
-tiers, and outcomes, are unchanged.
+68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, 120 `m5a`, and 110 `m5ba`
+cases. M5b-a adds 55 smoke-marked cases. Every root entry remains a declared
+public static `(int...)int` method, including public interface roots, and guest
+sources have no `main`. All 1,383 entries through M5a, including sources,
+arguments, budgets, tiers, and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -365,14 +365,37 @@ raw `getstatic` or mutated-ConstantValue evidence. Likewise, valid Java source
 produces only canonical booleans and explicit source-required argument
 conversions; noncanonical raw values remain verifier-owned mutation probes.
 
-Across all stages there are 1,257 value outcomes, 16 ArithmeticException
-outcomes, five StackOverflowError outcomes, 28 ExceptionInInitializerError
+M5b-a adds 106 value outcomes, two direct `ArithmeticException` outcomes, one
+`ExceptionInInitializerError` wrapping long division by zero during class
+initialization, and one `StackOverflowError`. Its scalar-long cases cover tag-5
+boundary and patterned constants (loaded with `lconst_*` and `ldc2_w`), modulo
+64-bit arithmetic, signed comparisons, `MIN_VALUE / -1`, zero divisors, shift
+masking, `i2l`, and `l2i` high/low folds. Odd-index locals, long post/preincrement,
+assignment expressions, discarded long returns, and field expressions exercise
+javac's category-2 local, `dup2`, `dup2_x1`, and `pop2` forms.
+
+Long values cross static, private-special, virtual, interface, default,
+direct-interface-super, interface-static, constructor, recursive, and mixed
+`J`/`I`/reference call boundaries. The `(JIL...;)J` interface site has the
+required count byte 5, while the `(JI)J` default site has count 4. Fields include
+prepared static and instance defaults, writes, increments, finals, class and
+interface `ConstantValue` declarations, inherited declaring owners, and hidden
+static/instance/interface names. Initialization cases cover superclass/default-
+interface/class order, once-only use, prepared-default reentry, class cycles,
+interface-parent omission versus inherited-owner active use, and a pending long
+operand across initialization. No M5b-a fixture uses a long array or `[J` field,
+`newarray` type 11, float/double, boxing, switch, `wide`, handler, monitor, or
+non-Object JRE method call.
+
+Across all stages there are 1,363 value outcomes, 18 ArithmeticException
+outcomes, six StackOverflowError outcomes, 29 ExceptionInInitializerError
 outcomes, 13 NegativeArraySizeException outcomes, 14
 ArrayIndexOutOfBoundsException outcomes, 27 NullPointerException outcomes, 11
 ClassCastException outcomes, and 12 ArrayStoreException outcomes. Every gas
 limit is finite and at most 70,000,000; every subprocess timeout is at most 10
-seconds. New arrays have at most eight elements, and all fixture loops and
-recursions are bounded and modest.
+seconds. New arrays have at most eight elements, and all finite fixture loops and
+successful recursions are bounded and modest; explicitly expected stack-overflow
+cases recurse until the reference JVM throws.
 
 All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
 direct superclass is `java/lang/Object`. They have zero fields, zero interfaces,
@@ -467,6 +490,10 @@ find "$out/bundle/m4fa" -name '*.class' -print | sort | while read -r file; do
   javap -classpath "$out" -c -v -p "$class"
 done
 find "$out/bundle/m4fb" -name '*.class' -print | sort | while read -r file; do
+  class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
+  javap -classpath "$out" -c -v -p "$class"
+done
+find "$out/bundle/m5ba" -name '*.class' -print | sort | while read -r file; do
   class="${file#"$out"/}"; class="${class%.class}"; class="${class//\//.}"
   javap -classpath "$out" -c -v -p "$class"
 done
@@ -694,12 +721,32 @@ python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All 1,263 cases through M4f-c are the accepted baseline. The 120 M5a fixtures
-have passed both Java 8 and Java 21 reference oracles plus classfile/constant-pool
-profile checks, but the baseline runner intentionally rejects stage `m5a` until
-the separately owned verifier and runtime integrate it; this fixture revision
-does **not** claim an M5a EVM pass. Raw noncanonical arguments/booleans,
-ConstantValue mutations, and binary-evolution errors remain Go-owned probes
-rather than being falsified as fresh javac outcomes. The runtime remains over
-mainnet deployment size and runs through local runtime.Execute, not CREATE. This
-remains subset verification, not full JVM conformance.
+For M5b-a, one fresh OpenJDK 8 `javac -source 8 -target 8 -g:none` compilation
+was followed by 110 separate bounded `OracleMain` processes on OpenJDK 8
+1.8.0_504 and Java 21.0.9. Every process used `-Xmx64m` and a ten-second outer
+timeout. Both runs matched all manifest outcome kinds and produced identical
+ordered outputs: 106 values and the four declared exception outcomes, with
+SHA256 `93a269d209d79b284c1994b4b6454d74683c04745d173ab0e3a3b69ff113d224`.
+The sorted compact canonical JSON SHA256 of the unchanged old 1,383-entry prefix
+is `3acee2e957ebc44611168fac006c97de730e497217e3c9c2bbd4ba7692b63565`,
+identical to base revision `54afeb0`.
+
+Isolated Java 8 compilation of each of the seven new source lists exactly matched
+its manifest classfile set. `javap -c -v -p` over all 36 emitted M5b-a classes
+found only major version 52 and nine interfaces. It found tag-5 constants with
+reserved following indices, `lconst_0`, `lconst_1`, `ldc2_w`, all scoped long
+arithmetic/conversion instructions, long fields, all intended call owners, and
+long local pairs starting at odd indices. Method Code limits remain small (at
+most 9 stack words and 8 local words). Inspection found no `[J`, long-array
+opcode, float/double descriptor, boxing, switch, actual `wide` opcode, handler,
+monitor, explicit throw, invokedynamic, or non-Object JRE method reference.
+
+All 1,383 cases through M5a are the accepted baseline. The baseline runner
+intentionally rejects `--stage m5ba` as an unknown stage until the separately
+owned verifier lands; the evidence above is reference-JVM-only and this fixture
+revision does **not** claim an M5b-a EVM pass. Raw malformed tag-5 holes,
+`ldc2_w` errors, root-`J` rejection, illegal category forms, and local-overlap
+invalidations remain verifier-owned probes rather than being falsified as fresh
+javac outcomes. The runtime remains over mainnet deployment size and runs
+through local runtime.Execute, not CREATE. This remains subset verification, not
+full JVM conformance.
