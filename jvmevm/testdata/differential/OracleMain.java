@@ -21,6 +21,15 @@ public final class OracleMain {
             } catch (StackOverflowError guestFailure) {
                 System.out.println("exception=" + guestFailure.getClass().getName());
                 return;
+            } catch (AbstractMethodError guestFailure) {
+                System.out.println("exception=" + guestFailure.getClass().getName());
+                return;
+            } catch (IncompatibleClassChangeError guestFailure) {
+                System.out.println("exception=" + guestFailure.getClass().getName());
+                return;
+            } catch (NoClassDefFoundError guestFailure) {
+                System.out.println("exception=" + guestFailure.getClass().getName());
+                return;
             }
             Method selected = null;
             for (Method candidate : guestClass.getDeclaredMethods()) {

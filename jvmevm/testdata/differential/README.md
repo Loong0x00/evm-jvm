@@ -4,13 +4,13 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 1,811 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+The manifest has 2,231 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
 73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, 100 `m4d`,
 68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, 120 `m5a`, 110 `m5ba`, 100
-`m5bb`, 88 `m5ca`, and 130 `m5cb` cases. M5c-b adds 66 smoke-marked cases.
-Every root entry remains a declared public static `(int...)int` method,
-including public interface roots, and guest sources have no `main`. All 1,681
-pre-M5c-b entries, including sources, arguments, budgets, tiers, and outcomes,
+`m5bb`, 88 `m5ca`, 130 `m5cb`, 160 `m5cc`, 120 `m5cd`, and 140 `m5da`
+cases. Every root entry remains a declared public static `(int...)int` method,
+including public interface roots, and guest sources have no `main`. All 2,091
+pre-M5d-a entries, including sources, arguments, budgets, tiers, and outcomes,
 are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
@@ -1018,3 +1018,100 @@ At this fixture-only revision the baseline runner intentionally rejects stage
 `m5cd`; the checks above are bounded trusted reference-JVM evidence. They do not
 claim an EVM pass, signaling-NaN cross-JVM behavior, logical-quota/OOM coverage,
 mainnet deployment compatibility, or general Java support.
+
+## M5d-a implicit-exception and handler fixtures
+
+M5d-a appends 140 trusted Java 8 cases from 11 sources (64 emitted guest
+classfiles), leaving every parsed object in the accepted 2,091-case prefix
+exactly equal to base revision `1353b03`. There are 127 value outcomes and 13
+uncaught Java outcomes: one ArithmeticException, two NullPointerException, one
+each ArrayIndexOutOfBoundsException, NegativeArraySizeException,
+ClassCastException, and ArrayStoreException, four
+ExceptionInInitializerError, and two NoClassDefFoundError. Ninety-five new
+cases are smoke-marked. Ordinary cases use a finite 60,000,000 gas/15 second
+bound and initialization cases use 80,000,000 gas/20 seconds; these are fixture
+bounds, not measured baseline EVM gas.
+
+The source fixtures cover all non-resource implicit kinds reachable from
+ordinary Java source in this slice, with exact catches and matches through
+IndexOutOfBoundsException, RuntimeException, Exception, Throwable, LinkageError,
+and Error. They exercise classfile-ordered exact/fallback and multi-catch tables,
+nesting, overlapping compiler cleanup ranges, javac 8 catch-all finally tables,
+rethrow, null `athrow`, fresh identity, handler faults, side effects before a
+fault, end-exclusive ranges, and complete operand-prefix clearing. A handler
+retains live I/F/D/J locals (the Java 8 class has a full stack-map frame with
+`int, int, long, float, double`) and uses them after unwind.
+
+Captured VM exceptions travel without construction through locals, static and
+instance fields, Throwable/Object arrays, arguments, returns, checked casts, and
+repeated cross-frame rethrows. Static, virtual, interface, interface-default,
+direct-interface-super, private-special, constructor, and interface-static call
+sites all have bounded unwind cases. Constructor fixtures distinguish body,
+argument, `this(...)`, super-argument, and superclass-body failures caught by
+the caller; separate constructors catch only after a normal `super(...)` return
+and continue. User subclasses of Throwable, Error, RuntimeException, and
+ArithmeticException occur only as ordered catch types. Their compiler-emitted
+constructors are never entered and no Throwable object is created by guest
+source.
+
+Initialization fixtures cover a fault caught inside `<clinit>`, continuation
+after that catch, fresh EIIE followed by fresh NCDFE in the same invocation,
+NCDFE matching through its exact type and canonical supertypes, active-use
+get/put/call/new forms, an EIIE identity propagated unchanged through a
+dependent initializer, reentrant prepared/default reads, superclass and
+default-declaring-interface prerequisites, a supplied but unused failing class,
+and four failures before root method entry. One root-initialization case lets an
+actual NCDFE escape after a dependency has become erroneous. `OracleMain` was
+therefore extended only inside its `Class.forName` initialization block, with
+explicit AME, ICCE, and NCDFE catches. Missing classes, bad arguments, missing or
+inaccessible entry methods, reflection failures, and unrelated Errors retain
+the prior harness-failure paths.
+
+Fresh OpenJDK 8 1.8.0_504 (`javac -source 8 -target 8 -g:none`) and Java 21.0.9
+(`javac --release 8 -g:none`) compilations were each followed by 140 separate
+`OracleMain` processes. All 280 bounded invocations matched their manifest kind,
+and the two JVMs produced identical ordered `id<TAB>outcome` records with
+SHA256 `7350165011f8a5b477597a1db69e5b82d8b51b5d0c3fb1f6700d5bc721b692f3`.
+Evidence is under ignored `build/java-diff-m5da-fixture-oracle/`. The sorted
+source-hash manifest (11 files) has SHA256
+`4d46534b317ba91802a0ac576567d0b1221877d96cf856e3681c38de72be976f`;
+the Java 8 and Java 21 class-hash manifests (64 files each) have SHA256
+`3f9c57304d7f233a3497ec669b67279e82789da28dc8d22afba1db345c5b509f` and
+`82dc4ac4a6a1809051bf7bf42837ff44048444f1d00ac8068d666c470f28d979`.
+All 64 Java 8 classes are major version 52, every manifest class path exists,
+and the largest per-case bundle is 20 classes. Full `javap -c -v -p` evidence
+contains all four invoke opcodes, 19 `athrow` instructions and five catch-all
+rows, with no jsr, ret, monitor, or invokedynamic opcode. Apart from ordinary
+Object constructors and the never-entered user-Throwable constructor metadata,
+there is no JRE method call in guest classes.
+
+The compact sorted canonical JSON SHA256 of the unchanged 2,091-entry prefix is
+`df6a8e3adce6f8085e9730c262e9894fefd0602253d19b699e0dc22e80fa2025`.
+The corresponding 140-case suffix SHA256 is
+`69bd596fe106295968132f57409cb11eac495b2770acea3d8127917fd5cc8b0e`,
+and its ordered ID SHA256 is
+`14ee38aac1100e17613959079c2b0a76d1cf2275c353b40ce832c4df9acf2d31`.
+
+ICCE and AME require binary evolution and cannot honestly be produced by one
+fresh joint schema-1 source compilation. The frozen, separately compiled Java 8
+preflight is retained at
+`m5da-oracles/build/java-diff-m5da-oracle-preflight`: its trusted source and
+evidence archives have SHA256
+`b1ebda62c51c10794153d0785e8432ce8f5d4b70fe065ac053539a841b4e149d` and
+`7ecf6e00d5b70b4c481dfeed402286b1fef27e284b47d4ee681fdd358a8a634a`.
+The preserved-old-class AME oracle agrees on Java 8/21 (`direct=121`, then AME,
+then NCDFE). The preserved-old-class ICCE oracle is Java-8-authoritative
+(`direct=111`, then ICCE, then NCDFE); Java 21 instead reports AME for the
+initializer trigger, the expected secondary-version difference. Those
+class-replacement probes remain focused runtime/verifier tests rather than fake
+fresh-source differential cases; no harness schema or production host path is
+changed here.
+
+There is deliberately no new host OOM or SOE exhaustion case. Arena, ordinary
+heap quota, frame cap, malformed handler tables, lazy missing catch types, and
+binary-evolution replacement are runtime/verifier-owned probes. At this
+fixture-only revision the baseline runner rejects stage `m5da` before EVM
+execution because its stage/kind allowlists have not yet landed, and the
+baseline runtime lacks handlers. The reference evidence above does not claim an
+EVM pass, alter expected outcomes to appear green, or claim general Java or
+mainnet deployment support.

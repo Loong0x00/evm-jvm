@@ -48535,6 +48535,3645 @@
       "smoke": false,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5da-faults-arithmetic-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "arithmeticExact",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-remainder-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "remainderExact",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-arithmetic-runtime",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "arithmeticRuntime",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-arithmetic-exception",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "arithmeticException",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-arithmetic-throwable",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "arithmeticThrowable",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-array-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullArrayExact",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-field-runtime",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullFieldRuntime",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-bounds-exact-negative",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "boundsExact",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-bounds-index-super",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "boundsIndexSuper",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-bounds-runtime",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "boundsRuntime",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-store-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "storeExact",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-store-exception",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "storeException",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-cast-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "castExact",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-cast-throwable",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "castThrowable",
+      "args": [
+        -4
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-negative-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "negativeExact",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-negative-ref-runtime",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "negativeRefRuntime",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-negative-multi-exception",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "negativeMultiException",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-uncaught-arithmetic",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "uncaughtArithmetic",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m5da-faults-uncaught-null",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "uncaughtNull",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5da-faults-uncaught-bounds",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "uncaughtBounds",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5da-faults-uncaught-store",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "uncaughtStore",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5da-faults-uncaught-cast",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "uncaughtCast",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m5da-faults-uncaught-negative",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "uncaughtNegative",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5da-handlers-ordered-exact-first",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "orderedExactFirst",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-ordered-super-fallback",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "orderedSuperFallback",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-ordered-throwable-fallback",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "orderedThrowableFallback",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-multi-arithmetic",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "multiArithmetic",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-multi-null",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "multiNull",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-nested-inner",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "nestedInner",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-nested-outer",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "nestedOuter",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-rethrow-outer",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "rethrowOuter",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-finally-on-return",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "finallyOnReturn",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-finally-rethrow",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "finallyRethrow",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-finally-nested-fault",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "finallyNestedFault",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-catchall-via-finally",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "catchAllViaFinally",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-handler-end-exclusive",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "handlerEndExclusive",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-handler-start-inclusive",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "handlerStartInclusive",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-operand-prefix-clear",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "operandPrefixCleared",
+      "args": [
+        15
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-deep-operand-prefix-clear",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "deepOperandPrefixCleared",
+      "args": [
+        -15
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-category-fdj-locals",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "categoryLocals",
+      "args": [
+        16
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-locals-remain-mutable",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "localsRemainMutable",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-side-effects-before-fault",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "sideEffectsBeforeFault",
+      "args": [
+        18
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-handler-fault-uncaught",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "handlerCanFault",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5da-handlers-outer-catches-handler-fault",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "outerCatchesHandlerFault",
+      "args": [
+        20
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-duplicate-sites-arithmetic",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "duplicateSites",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-handlers-duplicate-sites-null",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/handlers/HandlerRoot.java"
+      ],
+      "class": "bundle.m5da.handlers.HandlerRoot",
+      "method": "duplicateSites",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/handlers/HandlerRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-static-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "staticCall",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-staticvoid-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "staticVoidCall",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-nestedstatic-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "nestedStaticCall",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-virtual-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "virtualCall",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-virtualinherited-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "virtualInheritedCall",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-interface-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "interfaceCall",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-interfacedefault-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "interfaceDefaultCall",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-interfacesuper-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "interfaceSuperCall",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-privatespecial-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "privateSpecialCall",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-constructor-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "constructorCall",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-static-prefix",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "staticPrefix",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-virtual-prefix",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "virtualPrefix",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-interface-prefix",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "interfacePrefix",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-private-prefix",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "privatePrefix",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-constructor-prefix",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "constructorPrefix",
+      "args": [
+        15
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-identitystatic",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "identityStatic",
+      "args": [
+        16
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-identityvirtual",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "identityVirtual",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-identityinterface",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "identityInterface",
+      "args": [
+        18
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-calloutsiderange",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "callOutsideRange",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-calleecatches-own",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "calleeCatchesOwn",
+      "args": [
+        20
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-local-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "localIdentity",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-staticfield-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "staticFieldIdentity",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-instancefield-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "instanceFieldIdentity",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-throwablearray-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "throwableArrayIdentity",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-objectarraycast-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "objectArrayCastIdentity",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-argumentreturn-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "argumentReturnIdentity",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-runtimecast-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "runtimeCastIdentity",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-arithmeticcast-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "arithmeticCastIdentity",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-aliases-identity",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "aliasesIdentity",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-distinct-fresh",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "distinctFresh",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-three-fresh",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "threeFresh",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-rethrowno-fresh",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "rethrowNoFresh",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-null-athrowexact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "nullAthrowExact",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-transport-null-athrow-fresh",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5da.transport.TransportRoot",
+      "method": "nullAthrowFresh",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m5da/transport/TransportRoot.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-caller-catches-body",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "callerCatchesBody",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-caller-catches-argument",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "callerCatchesArgument",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-caller-catches-superargument",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "callerCatchesSuperArgument",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-caller-catches-superbody",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "callerCatchesSuperBody",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-caller-catches-thischain",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "callerCatchesThisChain",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-postsuper-catch-arithmetic",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "postsuperCatchArithmetic",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-postsuper-catch-null",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "postsuperCatchNull",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-postsuperfinally-catch",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "postsuperFinallyCatch",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-failedthen-fresh",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "failedThenFresh",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-aliasnotpublished",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "aliasNotPublished",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-helperbeforesupernormal",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "helperBeforeSuperNormal",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-constructors-nestedallocation-failure",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/constructors/ConstructorRoot.java"
+      ],
+      "class": "bundle.m5da.constructors.ConstructorRoot",
+      "method": "nestedAllocationFailure",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5da/constructors/ConstructorRoot.class",
+        "bundle/m5da/constructors/BodyFailure.class",
+        "bundle/m5da/constructors/ArgumentFailure.class",
+        "bundle/m5da/constructors/SuperValue.class",
+        "bundle/m5da/constructors/SuperArgumentFailure.class",
+        "bundle/m5da/constructors/SuperNullBody.class",
+        "bundle/m5da/constructors/SuperBodyChild.class",
+        "bundle/m5da/constructors/ThisChainFailure.class",
+        "bundle/m5da/constructors/PostSuperCatch.class",
+        "bundle/m5da/constructors/PostSuperNullCatch.class",
+        "bundle/m5da/constructors/PostSuperFinally.class",
+        "bundle/m5da/constructors/GoodAfterFailure.class",
+        "bundle/m5da/constructors/Holder.class",
+        "bundle/m5da/constructors/HelperBeforeSuper.class",
+        "bundle/m5da/constructors/OuterAllocation.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-inside-arithmetic",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "insideArithmetic",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-inside-null",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "insideNull",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-self-first-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "selfFirstSecond",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-self-catch-linkage",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "selfCatchLinkage",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-self-catch-error",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "selfCatchError",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-self-catch-throwable",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "selfCatchThrowable",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-uncaught-self",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "uncaughtSelf",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5da-init-uncaught-second-self",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "uncaughtSecondSelf",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NoClassDefFoundError"
+    },
+    {
+      "id": "m5da-init-failed-get-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "failedGetSecond",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-failed-put-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "failedPutSecond",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-failed-invoke-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "failedInvokeSecond",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-failed-new-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "failedNewSecond",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-ncdfe-linkage",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "ncdfeLinkage",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-ncdfe-error",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "ncdfeError",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-ncdfe-throwable",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "ncdfeThrowable",
+      "args": [
+        15
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-active-catch-completes",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "activeCatchCompletes",
+      "args": [
+        16
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-active-catch-dependency-later",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "activeCatchDependencyLater",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-dependent-error-unwrapped",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "dependentErrorUnwrapped",
+      "args": [
+        18
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-dependent-first-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "dependentFirstSecond",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-reentry-prepared",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "reentryPrepared",
+      "args": [
+        20
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-reentry-completed",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "reentryCompleted",
+      "args": [
+        21
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-super-first-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "superFirstSecond",
+      "args": [
+        22
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-default-first-second",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "defaultFirstSecond",
+      "args": [
+        23
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-unused-failure-not-entered",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "unusedFailureNotEntered",
+      "args": [
+        24
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-init-caught-then-continue",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/init/InitRoot.java"
+      ],
+      "class": "bundle.m5da.init.InitRoot",
+      "method": "caughtThenContinue",
+      "args": [
+        25
+      ],
+      "class_files": [
+        "bundle/m5da/init/InitRoot.class",
+        "bundle/m5da/init/InitFaults.class",
+        "bundle/m5da/init/InsideArithmetic.class",
+        "bundle/m5da/init/InsideNull.class",
+        "bundle/m5da/init/BadSelf.class",
+        "bundle/m5da/init/FailedUses.class",
+        "bundle/m5da/init/ActiveDependency.class",
+        "bundle/m5da/init/ActiveCatch.class",
+        "bundle/m5da/init/ErrorOrigin.class",
+        "bundle/m5da/init/ErrorHolder.class",
+        "bundle/m5da/init/ErrorDependent.class",
+        "bundle/m5da/init/ReentryA.class",
+        "bundle/m5da/init/ReentryB.class",
+        "bundle/m5da/init/BadSuper.class",
+        "bundle/m5da/init/BadSub.class",
+        "bundle/m5da/init/BadDefault.class",
+        "bundle/m5da/init/BadDefaultImpl.class",
+        "bundle/m5da/init/NeverUsedFailure.class",
+        "bundle/m5da/init/Unrelated.class",
+        "bundle/m5da/init/ContinueAfterCatch.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-rootinit-root-arithmetic-not-entered",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/rootinit/RootArithmetic.java"
+      ],
+      "class": "bundle.m5da.rootinit.RootArithmetic",
+      "method": "run",
+      "args": [
+        31
+      ],
+      "class_files": [
+        "bundle/m5da/rootinit/RootArithmetic.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5da-rootinit-root-super-not-entered",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/rootinit/RootSuper.java"
+      ],
+      "class": "bundle.m5da.rootinit.RootSuper",
+      "method": "run",
+      "args": [
+        32
+      ],
+      "class_files": [
+        "bundle/m5da/rootinit/RootSuper.class",
+        "bundle/m5da/rootinit/RootBadSuper.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5da-rootinit-root-default-not-entered",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/rootinit/RootDefault.java"
+      ],
+      "class": "bundle.m5da.rootinit.RootDefault",
+      "method": "run",
+      "args": [
+        33
+      ],
+      "class_files": [
+        "bundle/m5da/rootinit/RootDefault.class",
+        "bundle/m5da/rootinit/RootBadDefault.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5da-types-user-arithmetic-skipped",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/types/UserCatchRoot.java"
+      ],
+      "class": "bundle.m5da.types.UserCatchRoot",
+      "method": "userArithmeticSkipped",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/types/UserCatchRoot.class",
+        "bundle/m5da/types/UserArithmetic.class",
+        "bundle/m5da/types/UserRuntime.class",
+        "bundle/m5da/types/UserError.class",
+        "bundle/m5da/types/UserThrowable.class",
+        "bundle/m5da/types/UserFailing.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-types-user-runtime-skipped",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/types/UserCatchRoot.java"
+      ],
+      "class": "bundle.m5da.types.UserCatchRoot",
+      "method": "userRuntimeSkipped",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/types/UserCatchRoot.class",
+        "bundle/m5da/types/UserArithmetic.class",
+        "bundle/m5da/types/UserRuntime.class",
+        "bundle/m5da/types/UserError.class",
+        "bundle/m5da/types/UserThrowable.class",
+        "bundle/m5da/types/UserFailing.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-types-user-error-skipped",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/types/UserCatchRoot.java"
+      ],
+      "class": "bundle.m5da.types.UserCatchRoot",
+      "method": "userErrorSkipped",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/types/UserCatchRoot.class",
+        "bundle/m5da/types/UserArithmetic.class",
+        "bundle/m5da/types/UserRuntime.class",
+        "bundle/m5da/types/UserError.class",
+        "bundle/m5da/types/UserThrowable.class",
+        "bundle/m5da/types/UserFailing.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-types-user-throwable-skipped",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/types/UserCatchRoot.java"
+      ],
+      "class": "bundle.m5da.types.UserCatchRoot",
+      "method": "userThrowableSkipped",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/types/UserCatchRoot.class",
+        "bundle/m5da/types/UserArithmetic.class",
+        "bundle/m5da/types/UserRuntime.class",
+        "bundle/m5da/types/UserError.class",
+        "bundle/m5da/types/UserThrowable.class",
+        "bundle/m5da/types/UserFailing.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-calls-interface-static-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5da.calls.CallRoot",
+      "method": "interfaceStaticCall",
+      "args": [
+        21
+      ],
+      "class_files": [
+        "bundle/m5da/calls/CallRoot.class",
+        "bundle/m5da/calls/CallFace.class",
+        "bundle/m5da/calls/CallBase.class",
+        "bundle/m5da/calls/CallChild.class",
+        "bundle/m5da/calls/DefaultCall.class",
+        "bundle/m5da/calls/DirectDefault.class",
+        "bundle/m5da/calls/FailingCallCtor.class",
+        "bundle/m5da/calls/ThrowableCarrier.class",
+        "bundle/m5da/calls/ThrowFace.class",
+        "bundle/m5da/calls/CallHelper.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-rootinit-root-ncdfe-not-entered",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/rootinit/RootNoClassDef.java"
+      ],
+      "class": "bundle.m5da.rootinit.RootNoClassDef",
+      "method": "run",
+      "args": [
+        34
+      ],
+      "class_files": [
+        "bundle/m5da/rootinit/RootNoClassDef.class",
+        "bundle/m5da/rootinit/RootFailedDependency.class"
+      ],
+      "gas_limit": 80000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NoClassDefFoundError"
+    },
+    {
+      "id": "m5da-faults-long-divide-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "longDivideExact",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-long-remainder-exact",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "longRemainderExact",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-array-load",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullArrayLoad",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-array-store",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullArrayStore",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-putfield",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullPutField",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-virtual-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullVirtualCall",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-interface-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullInterfaceCall",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-null-private-special-call",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "nullPrivateSpecialCall",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-bounds-store",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "boundsStore",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-bounds-long-load",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "boundsLongLoad",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-negative-object-array",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "negativeObjectArray",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-negative-multi-outer",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "negativeMultiOuter",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-negative-multi-inner",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "negativeMultiInner",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5da-faults-primitive-array-cast",
+      "stage": "m5da",
+      "sources": [
+        "bundle/m5da/faults/FaultRoot.java"
+      ],
+      "class": "bundle.m5da.faults.FaultRoot",
+      "method": "primitiveArrayCast",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m5da/faults/FaultRoot.class",
+        "bundle/m5da/faults/FaultRoot$ValueFace.class",
+        "bundle/m5da/faults/FaultRoot$Base.class",
+        "bundle/m5da/faults/FaultRoot$Child.class"
+      ],
+      "gas_limit": 60000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }
