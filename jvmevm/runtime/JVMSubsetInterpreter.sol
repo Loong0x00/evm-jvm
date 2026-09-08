@@ -45,6 +45,12 @@ contract JVMSubsetInterpreter {
         uint256 leafClassPlusOne;
     }
 
+    struct MultiArrayPlan {
+        uint256[] counts;
+        uint256 arrays;
+        uint256 elements;
+    }
+
     struct Reader {
         bytes data;
         uint256 pos;
@@ -1193,6 +1199,50 @@ contract JVMSubsetInterpreter {
                 arrayLeafClasses[nextHandle] = allocatedType.leafClassPlusOne;
                 arrayHeap[nextHandle] = new uint32[](length);
                 f.stack[f.sp - 1] = _packRef(uint32(nextHandle));
+            } else if (op == 0xc5) { // multianewarray
+                uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
+                uint8 dimensions = uint8(c.data[selection.codeOffset + f.pc + 2]);
+                f.pc += 3;
+                ArrayType memory allocatedType = _resolveMultiArrayType(
+                    classes, f.classIndex, refIndex, dimensions, opPC,
+                    parentLinks, hierarchyState
+                );
+                if (f.sp < dimensions) revert BytecodeError(3, opPC);
+                uint256 base = f.sp - dimensions;
+                MultiArrayPlan memory plan;
+                plan.counts = new uint256[](dimensions);
+                bool negative;
+                for (uint256 i = 0; i < dimensions; ++i) {
+                    _requireKind(f.stack[base + i], KIND_INT, opPC);
+                    int32 signedCount = int32(uint32(_payload(f.stack[base + i])));
+                    if (signedCount < 0) negative = true;
+                    else plan.counts[i] = uint256(uint32(signedCount));
+                }
+                // Every count is type-checked and inspected before either quota planning or
+                // allocation. In particular, a zero outer dimension does not hide a later
+                // negative dimension, and an over-cap positive count does not win over NASE.
+                if (negative) _throwJava(4, frames, depth);
+                (plan.arrays, plan.elements) = _planMultiArray(
+                    plan.counts, arrayCount, totalElements
+                );
+                if (plan.arrays == 0) _throwJava(7, frames, depth);
+                if (heapKinds.length == 0) {
+                    heapKinds = new uint8[](MAX_HANDLES + 1);
+                    heapClasses = new uint256[](MAX_HANDLES + 1);
+                    arrayRanks = new uint8[](MAX_HANDLES + 1);
+                    arrayLeafClasses = new uint256[](MAX_HANDLES + 1);
+                    arrayHeap = new uint32[][](MAX_HANDLES + 1);
+                    objectHeap = new uint256[][](MAX_HANDLES + 1);
+                }
+                uint256 rootHandle = nextHandle + 1;
+                nextHandle = _allocateMultiArray(
+                    arrayHeap, heapKinds, arrayRanks, arrayLeafClasses,
+                    nextHandle, allocatedType, plan.counts
+                );
+                arrayCount += plan.arrays;
+                totalElements += plan.elements;
+                f.sp = base + 1;
+                f.stack[base] = _packRef(uint32(rootHandle));
             } else if (op == 0xbe) { // arraylength
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_REF, opPC);
@@ -2172,6 +2222,78 @@ contract JVMSubsetInterpreter {
         out.leafClassPlusOne = leafClass + 1;
     }
 
+    function _resolveMultiArrayType(
+        ClassInfo[] memory classes, uint256 callerClass, uint256 refIndex, uint8 dimensions,
+        uint256 pc, uint256[] memory parentLinks, uint8[] memory hierarchyState
+    ) private pure returns (ArrayType memory out) {
+        ClassInfo memory caller = classes[callerClass];
+        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 7) {
+            revert TypeError(1, pc);
+        }
+        uint256 nameIndex = (caller.cp[refIndex] >> 8) & 0xffff;
+        if (nameIndex == 0 || nameIndex >= caller.cp.length
+            || uint8(caller.cp[nameIndex]) != 1) revert TypeError(1, pc);
+        (uint256 off, uint256 n) = _utf(caller.cp[nameIndex]);
+        if (n == 0 || uint8(caller.data[off]) != 0x5b) {
+            if (!_validInternalName(caller.data, off, n)) revert TypeError(1, pc);
+            revert ArrayError(3, pc);
+        }
+        (bool structural,, uint8 rank,,,) = _arrayClassShape(caller.data, off, n);
+        if (!structural) revert TypeError(1, pc);
+        if (dimensions == 0 || dimensions > rank) revert ArrayError(3, pc);
+        return _resolveArrayClassType(
+            classes, callerClass, caller.data, off, n, pc, parentLinks, hierarchyState
+        );
+    }
+
+    function _planMultiArray(
+        uint256[] memory counts, uint256 arrayCount, uint256 totalElements
+    ) private pure returns (uint256 arrays, uint256 elements) {
+        uint256 multiplicity = 1;
+        for (uint256 level = 0; level < counts.length && multiplicity != 0; ++level) {
+            // A zero return is an unambiguous OOM sentinel: every legal plan contains its root.
+            if (multiplicity > MAX_ARRAYS - arrayCount - arrays) return (0, 0);
+            uint256 length = counts[level];
+            if (length > MAX_ARRAY_LENGTH) return (0, 0);
+            uint256 remainingElements = MAX_ARRAY_ELEMENTS - totalElements - elements;
+            if (length != 0 && multiplicity > remainingElements / length) return (0, 0);
+            uint256 levelElements = multiplicity * length;
+            arrays += multiplicity;
+            elements += levelElements;
+            // Only arrays reachable through actually materialized parent slots are planned.
+            // Thus [0][huge] has one legal empty root while all counts were still validated.
+            multiplicity = levelElements;
+        }
+    }
+
+    function _allocateMultiArray(
+        uint32[][] memory arrayHeap, uint8[] memory heapKinds,
+        uint8[] memory arrayRanks, uint256[] memory arrayLeafClasses,
+        uint256 nextHandle, ArrayType memory allocatedType, uint256[] memory counts
+    ) private pure returns (uint256) {
+        uint256 multiplicity = 1;
+        uint256 previousStart;
+        for (uint256 level = 0; level < counts.length && multiplicity != 0; ++level) {
+            uint256 currentStart = nextHandle + 1;
+            uint256 length = counts[level];
+            for (uint256 i = 0; i < multiplicity; ++i) {
+                ++nextHandle;
+                heapKinds[nextHandle] = HEAP_ARRAY;
+                arrayRanks[nextHandle] = allocatedType.rank - uint8(level);
+                arrayLeafClasses[nextHandle] = allocatedType.leafClassPlusOne;
+                arrayHeap[nextHandle] = new uint32[](length);
+                if (level != 0) {
+                    uint256 parentLength = counts[level - 1];
+                    uint256 parent = previousStart + i / parentLength;
+                    arrayHeap[parent][i % parentLength] = uint32(nextHandle);
+                }
+            }
+            previousStart = currentStart;
+            multiplicity *= length; // bounded by the successful quota preflight
+        }
+        return nextHandle;
+    }
+
     function _resolveANewArrayType(
         ClassInfo[] memory classes, uint256 callerClass, uint256 refIndex, uint256 pc,
         uint256[] memory parentLinks, uint8[] memory hierarchyState
@@ -2448,6 +2570,7 @@ contract JVMSubsetInterpreter {
                 || op == 0xb6 || op == 0xb7 || op == 0xb8 || op == 0xbb || op == 0xbd
                 || op == 0xc0 || op == 0xc1 || op == 0xc6 || op == 0xc7
         ) return 3;
+        if (op == 0xc5) return 4;
         revert BytecodeError(6, pc);
     }
 
