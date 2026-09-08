@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M4c)
+# Java inside EVM: staged interpreter (M4d)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,7 +9,7 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 74,469-byte runtime
+**Local execution, not mainnet deployment:** the current 76,800-byte runtime
 exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
@@ -21,10 +21,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 331 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (351 total)
-make java-full       # all 792 differential cases
-make java-test       # artifact check + Go tests + 34 runner tests + all 792 cases
+make java-smoke      # 381 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (401 total)
+make java-full       # all 892 differential cases
+make java-test       # artifact check + Go tests + 34 runner tests + all 892 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -62,21 +62,21 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **74,469-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **76,800-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 196,581 |
-| Loops.class / sum(100) | 5050 | 2,269,737 |
-| Loops.class / fibonacci(20) | 6765 | 836,222 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 511,083 |
-| M4aArrays.class / fillSum(10,3) | 165 | 2,067,619 |
+| Add.class / add(20,22) | 42 | 197,216 |
+| Loops.class / sum(100) | 5050 | 2,314,148 |
+| Loops.class / fibonacci(20) | 6765 | 848,935 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 513,798 |
+| M4aArrays.class / fillSum(10,3) | 165 | 2,343,478 |
 
 Typed checks raised sum(100) beyond its old2M demo budget, independently confirmed;
 the demo now uses3M. No historical oracle input/budget or semantic assertion changed.
 
 Runtime SHA-256:
-`1e5736e346cea2c55a2aed3963822a1bf9be66eb57c0031b4c64603d64f5c941`
+`79ab08d94ba5af8ece1560a7a95e0859844844474601215afae6f3bc8b51997f`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -133,7 +133,7 @@ across classes; legacy external method calls retain CallError2.
 ## Supported semantics and limits
 
 Unambiguous static root, only `int` arguments and an `int` return (internal
-helpers can use I/[I/Lclass; parameters and return I/V/[I/Lclass;, and be overloaded):
+helpers can use int/supported reference parameters, return int/void/references, and be overloaded):
 
 - `iconst_m1` through `iconst_5`, signed `bipush` and `sipush`
 - `iload`, `istore`, including their `_0` through `_3` forms
@@ -213,8 +213,8 @@ INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
 **Deferred:** non-integer constants, wide/goto_w, category-2 values, switch,
-other primitive/array types, reference/multidimensional arrays, interface calls,
-array-receiver virtual calls, non-I/[I/Lclass; fields, handlers, monitors,
+other primitive/array leaf types, multianewarray, interface calls,
+array-receiver virtual calls, non-int/non-reference fields, handlers, monitors,
 class libraries and deployment workflows.
 
 This is not a full JVM verifier: no modified-UTF8 validation, general class
@@ -316,8 +316,8 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4c acceptance is
-recorded in `JAVA_EVM_M4C_PLAN.md`; next are reference arrays.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4d acceptance is
+recorded in `JAVA_EVM_M4D_PLAN.md`; next is multianewarray.
 No full-Java claim or routine re-confirmation.
 
 ## M4b ordinary objects and direct instance calls
@@ -353,4 +353,20 @@ checkcast/instanceof support ordinary classes, Object and int[]. Null casts reta
 null without resolving a well-formed missing target; non-null type resolution
 does not initialize the target. Invalid casts produce exact ClassCastException
 kind8, wrapped as EIIE when escaping an initializer. Array type names are limited
-to255 dimensions structurally; other array types still lack execution support.
+to255 dimensions structurally; M4d below extends supported array execution.
+
+## M4d reference arrays
+
+892 cumulative JVM/EVM cases plus48 independent reference-array probes passed.
+anewarray/aaload/aastore and generic arraylength support class/Object arrays and
+nested references such as int[][], assembled one level at a time. Recursive
+covariance applies consistently to fields/calls/returns/casts/type tests. Stores
+check the actual allocated component type, producing ArrayStoreException kind9
+(or EIIE when escaping class initialization); null/bounds precede store checks.
+Component classes resolve even for zero/negative lengths but are not initialized;
+abstract class components are valid. All new operations remain inside EVM.
+
+Int/reference arrays share1024 total array allocations and262144 total elements,
+with65536 per array; object limits are independent. No GC. Structural rank255
+is supported; anewarray producing rank256 rejects explicitly. Interfaces and
+other primitive leaves remain deferred; no broader Object/JRE APIs added.

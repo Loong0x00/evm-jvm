@@ -160,3 +160,20 @@ expected red; preserve exact tests and report failure map, not weakened assertio
 Parent owns plans/AGENTS/quickstart/Makefile, integration and independent review.
 No worker spawning, peer writes, remote pushes, global settings or untrusted Java.
 Work only assigned tree, commit owned paths, report real checks/hash/size/limits.
+
+## Accepted integration evidence
+Runtime eaa8574→9bb6e8f, fixturesa4dfb10→8abc2bf, verifiere2c32a6→44fa72a.
+Followup2631302→92d9032 repaired proven test-only defects: kind9 now known (unknown
+probe uses255), statically impossible instanceof expressions widened to Object,
+wrong-heap store probes given the correct value kind, exact uninitialized store
+PC derived as8. No runtime behavior or expected semantic outcome was weakened.
+Independent runtime audit found no demonstrated in-scope defect.
+
+Parent final gates passed: bootstrap/artifact, focused Go/CLI,34 Python,892/892
+full,381 smoke,401 fast,demos,AOT,focused vet and48 independent covariance/virtual/
+nested-reference/no-init/ordering/cast probes:
+`build/java-diff-parent-m4d/probe-hoqvg688/results-final/`.
+Prior792 entries/budgets unchanged. Accepted runtime76800 bytes SHA256
+`79ab08d94ba5af8ece1560a7a95e0859844844474601215afae6f3bc8b51997f`.
+Next M4e multianewarray separately. Latest user directive: ALL NEW workers
+Sol/high WITHOUT Fast; existing historical Fast text does not override it.

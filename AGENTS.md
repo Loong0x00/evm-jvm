@@ -1,9 +1,8 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M4c virtual dispatch/casts/type tests**, recorded in
-`JAVA_EVM_M4C_PLAN.md`:792 cases plus48 independent probes. Active M4d reference
-arrays, frozen in `JAVA_EVM_M4D_PLAN.md`,
-then separate multianewarray/interface/value-type/handler/class-library stages.
+Current accepted stage: **M4d reference arrays/covariance**, recorded in
+`JAVA_EVM_M4D_PLAN.md`:892 cases plus48 independent probes. Next: multianewarray,
+then separate interface/value-type/handler/class-library stages.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
@@ -28,7 +27,7 @@ worktree based on the latest integration revision, not an old worker tree.
 Worktrees separate edits, not security permissions. Respect frozen task write
 sets; only one worker edits the monolithic Solidity dispatcher at a time.
 Disjoint Go files still share a package namespace: give new test helpers a
-stage/role prefix (e.g. runtimeM4d* vs verifyM4d*) to avoid integration collisions.
+stage/role prefix (e.g. runtimeM4e* vs verifyM4e*) to avoid integration collisions.
 The differential oracle executes Java on the host: use only trusted generated
 fixtures here; untrusted external programs/corpora require isolation first.
 
@@ -65,9 +64,9 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # EVM arithmetic, bundle call and int-array examples
-make java-smoke      # 331 fixed oracle comparisons
-make java-fast       # 351 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 792 cases through M4c
+make java-smoke      # 381 fixed oracle comparisons
+make java-fast       # 401 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 892 cases through M4d
 make java-test       # artifact + focused Go + 34 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```
