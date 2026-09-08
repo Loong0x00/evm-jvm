@@ -170,3 +170,17 @@ verifyM4fb* helpers. Existing runtime baseline red expected, no blanket reverts.
 Parent owns plans/AGENTS/quickstart/Makefile and explicit obsolete-test updates.
 One Solidity writer, no spawning/peer writes/push/global settings/untrusted Java.
 All agents Sol/high WITHOUT Fast, report real commits/SHA/size/tests/failures.
+
+## Accepted integration evidence
+Runtimeb7d9588→6915689,fixturesb2fd525→4ea4f49,verifierc1768c5→7e88278.
+Review43a3990→3d4344f corrected out-of-profile interface static zero factory to
+ordinary Helper, exact CP10 special error, missing indirect-interface CP target,
+and justified obsolete default/AME/CP11/unknown-kind expectations. Malformed tag9
+coverage retained alongside new CP11/class-owner InterfaceError1. Java8 oracles and
+process bounds verified; no runtime changes or demonstrated runtime defect.
+Parent final artifact/3bootstraps, Go/CLI,36 Python,1163 full,517 smoke,537 fast,
+demos,AOT,focused vet and48 independent probes all passed:
+`build/java-diff-parent-m4fb/probe-_z8nedqv/results-final/`.
+Prior1059 case entries/budgets unchanged. Accepted runtime100472 bytes SHA256
+`32a0d8e90202b8538653b236e9142efc53760293dd837faf122ce8998dd6d847`.
+Next M4f-c interface statics/fields/declaring-owner initialization. NO Fast.

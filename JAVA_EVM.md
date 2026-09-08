@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M4f-a)
+# Java inside EVM: staged interpreter (M4f-b)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,7 +9,7 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 92,828-byte runtime
+**Local execution, not mainnet deployment:** the current 100,472-byte runtime
 exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
@@ -21,10 +21,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 465 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (485 total)
-make java-full       # all 1059 differential cases
-make java-test       # artifact check + Go tests + 34 runner tests + all 1059 cases
+make java-smoke      # 517 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (537 total)
+make java-full       # all 1163 differential cases
+make java-test       # artifact check + Go tests + 36 runner tests + all 1163 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -62,21 +62,21 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **92,828-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **100,472-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 234,357 |
-| Loops.class / sum(100) | 5050 | 2,351,251 |
-| Loops.class / fibonacci(20) | 6765 | 886,044 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 557,254 |
-| M4aArrays.class / fillSum(10,3) | 165 | 2,393,710 |
+| Add.class / add(20,22) | 42 | 239,222 |
+| Loops.class / sum(100) | 5050 | 2,356,133 |
+| Loops.class / fibonacci(20) | 6765 | 890,929 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 564,066 |
+| M4aArrays.class / fillSum(10,3) | 165 | 2,401,841 |
 
 Typed checks raised sum(100) beyond its old2M demo budget, independently confirmed;
 the demo now uses3M. No historical oracle input/budget or semantic assertion changed.
 
 Runtime SHA-256:
-`ea6c940d05f098fe27485d20dadaeaa5f0e1e6c42627da8627632d7f8ce3abe7`
+`32a0d8e90202b8538653b236e9142efc53760293dd837faf122ce8998dd6d847`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -213,7 +213,7 @@ INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
 **Deferred:** non-integer constants, wide/goto_w, category-2 values, switch,
-other primitive/array leaf types, default methods/interface statics,
+other primitive/array leaf types, interface statics,
 array-receiver virtual calls, non-int/non-reference fields, handlers, monitors,
 class libraries and deployment workflows.
 
@@ -316,8 +316,8 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4f-a acceptance is
-recorded in `JAVA_EVM_M4FA_PLAN.md`; next are defaults with required initialization.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4f-b acceptance is
+recorded in `JAVA_EVM_M4FB_PLAN.md`; next are interface static members.
 No full-Java claim or routine re-confirmation.
 
 ## M4b ordinary objects and direct instance calls
@@ -396,3 +396,19 @@ superinterface closure, including supplied valid marker definitions. No clone,
 serialization or broader Object API is implied. User limit64 remains, up to3
 internal bootstrap slots. Array receiver dispatch and interface statics remain
 deferred. Legacy interface roots retain MethodError7; bundle roots LinkError5.
+
+## M4f-b defaults and required initialization
+
+1163 cumulative JVM/EVM cases plus48 independent default/init probes passed.
+Default selection handles class precedence, maximally-specific interfaces,
+abstract suppression and I.super. Class initialization performs superclass then
+ordered/deduplicated default-DECLARING interface initialization, including synthetic
+bridges, then class <clinit>. Merely inheriting a default does not initialize an
+interface. Reentrancy and exact initializer outcomes remain in EVM.
+
+ICCE10/AME11 are canonical Java Errors and remain unwrapped through initializers;
+Java8 binary-evolution probes verify their target semantics (Java21 can differ).
+Self-owned interface fields are allowed only in that interface's <clinit> for now;
+external fields/static calls remain deferred. Earlier M4f-a default rejection was
+superseded, not silently bypassed. Native/synchronized/private interface bodies,
+array receiver dispatch and broader JRE APIs remain unsupported.
