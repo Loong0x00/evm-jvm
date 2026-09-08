@@ -2898,11 +2898,25 @@ contract JVMSubsetInterpreter {
         private pure returns (bool)
     {
         if (_isObjectClass(classes[wanted])) return true;
-        bool marker = _isNamedClass(classes[wanted], bytes("java/lang/Cloneable"))
+        bool wantedMarker = _isNamedClass(classes[wanted], bytes("java/lang/Cloneable"))
             || _isNamedClass(classes[wanted], bytes("java/io/Serializable"));
-        if (!marker) return false;
-        if (!_isInterface(classes[wanted])) revert InterfaceError(1, wanted);
-        return true;
+        if (!_isInterface(classes[wanted])) {
+            if (wantedMarker) revert InterfaceError(1, wanted);
+            return false;
+        }
+
+        // Array classes directly implement the two canonical marker interfaces. Their
+        // ordinary superinterface closure applies too when a supplied marker extends
+        // another interface; checking only the two marker names loses that assignability.
+        bool assignable;
+        for (uint256 i = 0; i < classes.length; ++i) {
+            if (!_isNamedClass(classes[i], bytes("java/lang/Cloneable"))
+                && !_isNamedClass(classes[i], bytes("java/io/Serializable"))) continue;
+            if (!_isInterface(classes[i])) revert InterfaceError(1, i);
+            _validateInterfaceClosure(classes, i, new uint256[](classes.length));
+            if (_interfaceExtends(classes, i, wanted)) assignable = true;
+        }
+        return assignable;
     }
 
     function _arrayHasReferenceComponents(uint8 rank, uint256 leafClassPlusOne)

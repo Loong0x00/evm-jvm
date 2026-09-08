@@ -495,6 +495,22 @@ func TestVerifyM4faSuppliedMarkerMustParseAsAnInterface(t *testing.T) {
 	}, "InterfaceError(uint256,uint256)", 1, 0)
 }
 
+func TestVerifyM4faArrayMarkersIncludeSuppliedSuperinterfaceClosure(t *testing.T) {
+	classes := compileBundleValidationJava(t, map[string]string{
+		"marker/Parent.java":       `package marker; public interface Parent { }`,
+		"java/lang/Cloneable.java": `package java.lang; public interface Cloneable extends marker.Parent { }`,
+		"marker/Root.java": `package marker; public final class Root {
+			public static int run(){
+				Object ints=new int[0]; Object rows=new int[0][]; Parent cast=(Parent)ints;
+				return (ints instanceof Parent?1:0)+(rows instanceof Parent[]?2:0)+(cast==ints?4:0);
+			}
+		}`,
+	}, "marker/Parent", "java/lang/Cloneable", "marker/Root")
+	verifyM4faAssertValue(t, func() (Result, error) {
+		return RunClasses(verifyM4faBundle(classes), "marker/Root", "run", nil, verifyM4faGasLimit)
+	}, 7)
+}
+
 func TestVerifyM4faSixtyFourUserInputsStillAppendThreeBootClasses(t *testing.T) {
 	sources := map[string]string{"cap/Root.java": `package cap; public final class Root { public static int run(){Object x=new int[0];return x instanceof Cloneable && x instanceof java.io.Serializable?1:0;} }`}
 	names := []string{"cap/Root"}
