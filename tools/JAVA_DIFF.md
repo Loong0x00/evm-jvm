@@ -15,18 +15,19 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m5bb --tier full
+python3 tools/java_diff.py --stage m5ca --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m5bb --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m5ca --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
 `m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, `m4fc` adds M4f-c,
-`m5a` adds M5a, `m5ba` adds M5b-a, and `m5bb` or `all` adds M5b-b. A manifest without entries in the newest stage continues to run its older cases
-under the new default. `smoke` runs smoke-marked cases,
+`m5a` adds M5a, `m5ba` adds M5b-a, `m5bb` adds M5b-b, and `m5ca` or `all`
+adds M5c-a. A manifest without entries in the newest stage continues to run its
+older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
@@ -303,6 +304,25 @@ Go/mock probes and must not exhaust host JVM memory. Float/double arrays and IEE
 values remain deferred. No outcome name or wire form is added: schema 1 and
 exact exception kinds 1 through 11 are unchanged, while OOG and arbitrary
 reverts remain engine failures.
+
+## M5c-a variable-width control flow
+
+M5c-a keeps additive schema 1, cumulative selection, the exact static `(I...)I`
+root ABI, and the unchanged ordered-classfile protocol. Trusted finite Java 8
+fixtures may use integer `tableswitch`/`lookupswitch`, `goto_w`, and `wide` forms
+of the already-supported integer, long, and reference local operations. Switch
+padding bytes are data and may be nonzero. The runner does not parse instruction
+boundaries, switch tables, branch targets, local indices, or embedded `wide`
+opcodes; all predecode, structural validation, and execution remain inside EVM.
+
+Float/double local forms, `jsr`, `jsr_w`, `ret`, and return-address values remain
+unsupported. Malformed switch/wide structures are focused Go validation probes,
+not differential-oracle inputs or claims of a complete classfile verifier.
+Long-distance and high-local valid raw probes remain trusted, bounded Java 8
+inputs. Existing code, stack, local, frame, heap, gas, and timeout limits are not
+increased, and host memory exhaustion is never used as an oracle. M5c-a adds no
+outcome name or wire form: schema 1 and exact Java exception kinds 1 through 11
+remain unchanged, while OOG and arbitrary reverts remain engine failures.
 
 ## Outcome protocol
 
