@@ -139,3 +139,21 @@ new jvmevm/variable_controlflow_validation_test.go verifyM5ca* helpers; baseline
 red expected. Parent owns plans/AGENTS/quickstart/Makefile/integration/profile updates.
 One Solidity writer, no spawning/peer writes/push/global config/untrusted Java.
 All agents Sol/high WITHOUT Fast; scoped commits and honest SHA/size/checks/errors.
+
+## Accepted integration evidence
+Runtimea4bf175→caf2f8b,fixtures461a3c1→c63d08e,verifier5021d8f→c5bf48a.
+Review96f1813→115e683 fixed y initialization and included nested Box; JVM-verified
+expectations preserved. Generic second-pass start-map traversal avoids width
+redecoding; common iinc moved to dispatch front with one instruction per iteration.
+Large forward taken119101982→68530373 gas, backward twice166313134→88410696;
+all fixtures/input/100M budgets unchanged. No AOT/coalescing/skipped guest work.
+Nonzero padding proved with ONLY padding mutated in original major52 Code and
+StackMapTable, Java8/21 accepted; prior major49 oracle rewriting explained the
+legacy verifier discrepancy. No incorrect EVM-only-as-JVM claim retained.
+Parent final artifact/3bootstraps, Go/CLI,36 Python,1681 full,773 smoke,793 fast,
+demos,AOT,focused vet and48 independent probes passed:
+`build/java-diff-parent-m5ca/probe-prcg3zbf/results-final/`.
+Prior1593 fixtures/budgets unchanged. Runtime116023 bytes SHA256
+`1ea50d09775eb2422f618d4bb0fd0b1d7b867083c19a48c2e0b84f7390e2753d`.
+Next explicit pure-EVM IEEE raw-bit service/representation/conversion contract;
+no host math/native precompile permitted. All agents NO Fast.

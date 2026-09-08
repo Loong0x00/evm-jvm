@@ -85,8 +85,9 @@ routine permission to start the next verified increment.
 | M5a | Z/B/C/S int-like types/fields/arrays | accepted;1383 cases plus48 independent probes |
 | M5b-a | scalar long/category-2 stack/locals/calls/fields | accepted;1493 cases plus48 independent probes |
 | M5b-b | long arrays | accepted;1593 cases plus48 independent probes |
-| M5c-a | switch/goto_w/wide variable-width control flow | frozen in `JAVA_EVM_M5CA_PLAN.md`; dispatch3 workers |
-| M5c-b+ | IEEE representation/conversions/arithmetic, handlers and remaining instructions | queued; freeze dependency-ordered batches |
+| M5c-a | switch/goto_w/wide variable-width control flow | accepted;1681 cases plus48 independent probes |
+| M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | next bounded stage |
+| M5c-c+ | software IEEE arithmetic, IEEE arrays, handlers and remaining instructions | queued; freeze separately |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -96,11 +97,12 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M5b-b accepted:1593 JVM/EVM cases plus48 probes,36 Python,732 smoke/752 fast,
-Go/CLI/artifact/3bootstraps/demos/AOT/vet green. b9 probe corrected; cap test retains
-1024arrays+1024objects/250M budget, isolated zero-field Object overhead. No audit
-runtime defect. Runtime111218 bytes, local-runtime only, not full JVM/deployment.
-Prior1493 fixtures/budgets unchanged. M5c-a frozen in JAVA_EVM_M5CA_PLAN.md; dispatch3 workers
-before bounded IEEE work. All NEW workers Sol/high WITHOUT Fast. Named java-fast
-is allowed fixture tier, not priority. Automatic verified progression, no routine
-confirmation. Demo sum1002986502gas close to3M; report measured regressions.
+M5c-a accepted:1681 JVM/EVM cases plus48 probes,36 Python,773 smoke/793 fast,
+Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Large-Code OOG fixed generically
+(predecode reuse/iinc dispatch), same cases/budgets; major52 nonzero-padding
+Java8/21 parity confirmed. Runtime116023 bytes, local-runtime only/not full JVM.
+Prior1593 fixtures/budgets unchanged. Next M5c-b scalar IEEE bit representation,
+conversions/comparison and explicitly bounded EVM-only raw-bit APIs; arithmetic
+and arrays follow separately. No host math/AOT/native precompile/JRE fallback.
+All NEW workers Sol/high WITHOUT Fast; named java-fast is only fixture tier.
+Automatic verified progression, no routine confirmation.
