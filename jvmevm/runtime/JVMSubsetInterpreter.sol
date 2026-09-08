@@ -959,6 +959,53 @@ contract JVMSubsetInterpreter {
                     ? _decodedTarget(c.data, selection.codeOffset, opPC) : f.pc + 2;
             } else if (op == 0xa7) {
                 f.pc = _decodedTarget(c.data, selection.codeOffset, opPC);
+            } else if (op == 0xaa || op == 0xab) { // tableswitch / lookupswitch
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                int32 key = int32(uint32(_payload(f.stack[f.sp - 1])));
+                --f.sp;
+                f.pc = _decodedSwitchTarget(
+                    c.data, selection.codeOffset, opPC, key, op == 0xab
+                );
+            } else if (op == 0xc4) { // wide local access / iinc
+                uint8 embedded = uint8(c.data[selection.codeOffset + f.pc]);
+                uint256 local = _unsigned16(c.data, selection.codeOffset + f.pc + 1);
+                if (embedded == 0x15 || embedded == 0x16 || embedded == 0x19) {
+                    f.sp = embedded == 0x19
+                        ? _loadReference(f.stack, f.sp, f.locals, f.initialized, local, opPC)
+                        : (embedded == 0x16
+                            ? _loadLong(f.stack, f.sp, f.locals, f.initialized, local, opPC)
+                            : _loadKind(
+                                f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC
+                            ));
+                    f.pc += 3;
+                } else if (embedded == 0x36 || embedded == 0x37 || embedded == 0x3a) {
+                    f.sp = embedded == 0x3a
+                        ? _storeReference(
+                            f.stack, f.sp, f.locals, f.initialized, local, opPC
+                        )
+                        : (embedded == 0x37
+                            ? _storeLong(
+                                f.stack, f.sp, f.locals, f.initialized, local, opPC
+                            )
+                            : _storeKind(
+                                f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC
+                            ));
+                    f.pc += 3;
+                } else { // the predecoder admits only supported wide iinc here
+                    if (local >= f.locals.length) revert BytecodeError(8, opPC);
+                    if (!f.initialized[local]) revert BytecodeError(11, opPC);
+                    _requireKind(f.locals[local], KIND_INT, opPC);
+                    int16 amount = _signed16(c.data, selection.codeOffset + f.pc + 3);
+                    unchecked {
+                        f.locals[local] = _packInt(
+                            uint32(_payload(f.locals[local])) + uint32(int32(amount))
+                        );
+                    }
+                    f.pc += 5;
+                }
+            } else if (op == 0xc8) { // goto_w
+                f.pc = _decodedWideTarget(c.data, selection.codeOffset, opPC, opPC + 1);
             } else if (op == 0xbb) { // new
                 uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
                 f.pc += 2;
@@ -3567,7 +3614,7 @@ contract JVMSubsetInterpreter {
         while (pc < s.codeLength) {
             starts[pc] = true;
             uint8 op = uint8(c.data[s.codeOffset + pc]);
-            uint256 width = _instructionWidth(op, pc);
+            uint256 width = _instructionWidth(c.data, s.codeOffset, s.codeLength, op, pc);
             if (width > s.codeLength - pc) revert BytecodeError(2, pc);
             if (
                 (op == 0xac && s.returnKind != 1) || (op == 0xad && s.returnKind != 4)
@@ -3590,16 +3637,30 @@ contract JVMSubsetInterpreter {
         pc = 0;
         while (pc < s.codeLength) {
             uint8 op = uint8(c.data[s.codeOffset + pc]);
-            uint256 width = _instructionWidth(op, pc);
+            uint256 width = _instructionWidth(c.data, s.codeOffset, s.codeLength, op, pc);
             if ((op >= 0x99 && op <= 0xa7) || op == 0xc6 || op == 0xc7) {
-                uint256 target = _decodedTarget(c.data, s.codeOffset, pc);
-                if (target >= s.codeLength || !starts[target]) revert BytecodeError(12, pc);
+                _requireDecodedTarget(
+                    _decodedTarget(c.data, s.codeOffset, pc), starts, s.codeLength, pc
+                );
+            } else if (op == 0xc8) {
+                _requireDecodedTarget(
+                    _decodedWideTarget(c.data, s.codeOffset, pc, pc + 1),
+                    starts, s.codeLength, pc
+                );
+            } else if (op == 0xaa || op == 0xab) {
+                _validateSwitchTargets(c.data, s.codeOffset, s.codeLength, pc, starts, op == 0xab);
             }
             pc += width;
         }
     }
 
-    function _instructionWidth(uint8 op, uint256 pc) private pure returns (uint256) {
+    function _instructionWidth(
+        bytes memory data, uint256 codeOffset, uint256 codeLength, uint8 op, uint256 pc
+    ) private pure returns (uint256) {
+        if (op == 0xaa || op == 0xab) {
+            return _switchInstructionWidth(data, codeOffset, codeLength, pc, op == 0xab);
+        }
+        if (op == 0xc4) return _wideInstructionWidth(data, codeOffset, codeLength, pc);
         if (
             op <= 0x01 || (op >= 0x02 && op <= 0x0a) || (op >= 0x1a && op <= 0x21)
                 || (op >= 0x2a && op <= 0x2f) || (op >= 0x32 && op <= 0x35)
@@ -3621,8 +3682,95 @@ contract JVMSubsetInterpreter {
                 || op == 0xc0 || op == 0xc1 || op == 0xc6 || op == 0xc7
         ) return 3;
         if (op == 0xc5) return 4;
-        if (op == 0xb9) return 5;
+        if (op == 0xb9 || op == 0xc8) return 5;
         revert BytecodeError(6, pc);
+    }
+
+    function _switchInstructionWidth(
+        bytes memory data, uint256 codeOffset, uint256 codeLength, uint256 pc, bool lookup
+    ) private pure returns (uint256) {
+        uint256 padding = (4 - ((pc + 1) % 4)) % 4;
+        uint256 header = 1 + padding;
+        uint256 fixedSize = lookup ? 8 : 12;
+        uint256 remaining = codeLength - pc;
+        if (header > remaining || fixedSize > remaining - header) revert BytecodeError(2, pc);
+        uint256 at = codeOffset + pc + header;
+        if (lookup) {
+            int32 signedPairs = _signed32(data, at + 4);
+            if (signedPairs < 0) revert BytecodeError(15, pc);
+            uint256 pairs = uint256(uint32(signedPairs));
+            uint256 payloadRemaining = remaining - header - fixedSize;
+            if (pairs > payloadRemaining / 8) revert BytecodeError(2, pc);
+            if (pairs != 0) {
+                int32 prior = _signed32(data, at + 8);
+                for (uint256 i = 1; i < pairs; ++i) {
+                    int32 key = _signed32(data, at + 8 + i * 8);
+                    if (key <= prior) revert BytecodeError(15, pc);
+                    prior = key;
+                }
+            }
+            return header + fixedSize + pairs * 8;
+        }
+        int32 low = _signed32(data, at + 4);
+        int32 high = _signed32(data, at + 8);
+        if (low > high) revert BytecodeError(15, pc);
+        uint256 count = uint256(int256(high) - int256(low) + 1);
+        uint256 payloadRemaining = remaining - header - fixedSize;
+        if (count > payloadRemaining / 4) revert BytecodeError(2, pc);
+        return header + fixedSize + count * 4;
+    }
+
+    function _wideInstructionWidth(
+        bytes memory data, uint256 codeOffset, uint256 codeLength, uint256 pc
+    ) private pure returns (uint256) {
+        uint256 remaining = codeLength - pc;
+        if (remaining < 2) revert BytecodeError(2, pc);
+        uint8 embedded = uint8(data[codeOffset + pc + 1]);
+        bool supported = embedded == 0x15 || embedded == 0x16 || embedded == 0x19
+            || embedded == 0x36 || embedded == 0x37 || embedded == 0x3a || embedded == 0x84;
+        bool recognizedUnsupported = embedded == 0x17 || embedded == 0x18
+            || embedded == 0x38 || embedded == 0x39 || embedded == 0xa9;
+        if (!supported && !recognizedUnsupported) revert BytecodeError(15, pc);
+        uint256 width = embedded == 0x84 ? 6 : 4;
+        if (width > remaining) revert BytecodeError(2, pc);
+        if (recognizedUnsupported) revert BytecodeError(6, pc);
+        return width;
+    }
+
+    function _validateSwitchTargets(
+        bytes memory data, uint256 codeOffset, uint256 codeLength, uint256 pc,
+        bool[] memory starts, bool lookup
+    ) private pure {
+        uint256 padding = (4 - ((pc + 1) % 4)) % 4;
+        uint256 at = pc + 1 + padding;
+        _requireDecodedTarget(
+            _decodedWideTarget(data, codeOffset, pc, at), starts, codeLength, pc
+        );
+        if (lookup) {
+            uint256 pairs = uint256(uint32(_signed32(data, codeOffset + at + 4)));
+            for (uint256 i = 0; i < pairs; ++i) {
+                _requireDecodedTarget(
+                    _decodedWideTarget(data, codeOffset, pc, at + 12 + i * 8),
+                    starts, codeLength, pc
+                );
+            }
+        } else {
+            int32 low = _signed32(data, codeOffset + at + 4);
+            int32 high = _signed32(data, codeOffset + at + 8);
+            uint256 count = uint256(int256(high) - int256(low) + 1);
+            for (uint256 i = 0; i < count; ++i) {
+                _requireDecodedTarget(
+                    _decodedWideTarget(data, codeOffset, pc, at + 12 + i * 4),
+                    starts, codeLength, pc
+                );
+            }
+        }
+    }
+
+    function _requireDecodedTarget(
+        uint256 target, bool[] memory starts, uint256 codeLength, uint256 pc
+    ) private pure {
+        if (target >= codeLength || !starts[target]) revert BytecodeError(12, pc);
     }
 
     function _readCode(bytes memory data, uint256 start, uint256 length, Selected memory s)
@@ -3831,8 +3979,46 @@ contract JVMSubsetInterpreter {
         return uint256(target);
     }
 
+    function _decodedWideTarget(
+        bytes memory data, uint256 codeOffset, uint256 pc, uint256 offsetPC
+    ) private pure returns (uint256) {
+        int256 target = int256(pc) + int256(_signed32(data, codeOffset + offsetPC));
+        if (target < 0 || target > int256(MAX_CODE)) revert BytecodeError(12, pc);
+        return uint256(target);
+    }
+
+    function _decodedSwitchTarget(
+        bytes memory data, uint256 codeOffset, uint256 pc, int32 key, bool lookup
+    ) private pure returns (uint256) {
+        uint256 padding = (4 - ((pc + 1) % 4)) % 4;
+        uint256 at = pc + 1 + padding;
+        uint256 offsetPC = at;
+        if (lookup) {
+            uint256 pairs = uint256(uint32(_signed32(data, codeOffset + at + 4)));
+            for (uint256 i = 0; i < pairs; ++i) {
+                int32 candidate = _signed32(data, codeOffset + at + 8 + i * 8);
+                if (candidate == key) {
+                    offsetPC = at + 12 + i * 8;
+                    break;
+                }
+                if (candidate > key) break;
+            }
+        } else {
+            int32 low = _signed32(data, codeOffset + at + 4);
+            int32 high = _signed32(data, codeOffset + at + 8);
+            if (key >= low && key <= high) {
+                offsetPC = at + 12 + uint256(int256(key) - int256(low)) * 4;
+            }
+        }
+        return _decodedWideTarget(data, codeOffset, pc, offsetPC);
+    }
+
     function _signed16(bytes memory data, uint256 off) private pure returns (int16) {
         return int16(_unsigned16(data, off));
+    }
+
+    function _signed32(bytes memory data, uint256 off) private pure returns (int32) {
+        return int32(_unsigned32(data, off));
     }
 
     function _unsigned16(bytes memory data, uint256 off) private pure returns (uint16) {
