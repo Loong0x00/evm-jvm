@@ -1,8 +1,9 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M4f-a abstract interfaces**, recorded in
-`JAVA_EVM_M4FA_PLAN.md`:1059 cases plus48 independent probes. Next: defaults with
-mandatory interface initialization, then interface statics and remaining JVM work.
+`JAVA_EVM_M4FA_PLAN.md`:1059 cases plus48 independent probes. Active M4f-b defaults
+with mandatory initialization, frozen in `JAVA_EVM_M4FB_PLAN.md`; interface statics
+and remaining JVM work follow. Java8 is required for evolved-default error probes.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.

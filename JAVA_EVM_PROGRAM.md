@@ -80,7 +80,7 @@ routine permission to start the next verified increment.
 | M4d | reference arrays/covariance/ArrayStoreException | accepted;892 cases plus48 independent probes |
 | M4e | multianewarray | accepted;960 cases plus48 independent probes |
 | M4f-a | interface graph/abstract calls/type compatibility | accepted;1059 cases plus48 independent probes |
-| M4f-b | defaults and required default-interface initialization | queued |
+| M4f-b | defaults and required default-interface initialization | frozen in `JAVA_EVM_M4FB_PLAN.md`; dispatch3 workers |
 | M4f-c | interface static members/initialization | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -96,7 +96,7 @@ M4f-a accepted:1059 JVM/EVM cases plus48 probes,34 Python,465 smoke/485 fast,
 exact Go validation, artifact/3bootstraps/demos/AOT/vet green. Four obsolete blanket
 interface negatives narrowly updated; independent review fixed supplied marker
 superinterface closure. Runtime92828 bytes, local-runtime only, not full Java.
-Prior960 cases/budgets unchanged. Next M4f-b defaults WITH mandatory default-bearing
+Prior960 cases/budgets unchanged. M4f-b frozen in JAVA_EVM_M4FB_PLAN.md; dispatch3 workers for default-bearing
 interface initialization; statics M4f-c. Exact binary-evolution error probes use
 installed Java8 (/usr/lib/jvm/java-8-openjdk/bin/java), not Java21 assumptions.
 ALL NEW workers Sol/high WITHOUT Fast; recheck disabled preference. Continuous
