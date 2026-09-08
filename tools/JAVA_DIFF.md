@@ -15,18 +15,18 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m5ca --tier full
+python3 tools/java_diff.py --stage m5cb --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m5ca --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m5cb --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
 `m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, `m4fc` adds M4f-c,
-`m5a` adds M5a, `m5ba` adds M5b-a, `m5bb` adds M5b-b, and `m5ca` or `all`
-adds M5c-a. A manifest without entries in the newest stage continues to run its
+`m5a` adds M5a, `m5ba` adds M5b-a, `m5bb` adds M5b-b, `m5ca` adds M5c-a,
+and `m5cb` or `all` adds M5c-b. A manifest without entries in the newest stage continues to run its
 older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -323,6 +323,43 @@ inputs. Existing code, stack, local, frame, heap, gas, and timeout limits are no
 increased, and host memory exhaustion is never used as an oracle. M5c-a adds no
 outcome name or wire form: schema 1 and exact Java exception kinds 1 through 11
 remain unchanged, while OOG and arbitrary reverts remain engine failures.
+
+## M5c-b scalar IEEE values and bounded raw-bit services
+
+M5c-b retains schema 1, cumulative selection, exact static `(I...)I` roots,
+ordered unchanged-classfile bundles, and exception kinds 1 through 11. Trusted,
+bounded Java 8 fixtures expose float/double results as integer words. Scalar
+binary32/binary64 constants, locals, fields, internal calls, returns, conversions,
+comparisons, and sign negation execute inside EVM. The runner does not parse IEEE
+bits, perform host floating-point operations, reinterpret descriptors, or
+normalize finite results. Roots with `F`, `D`, or `J` arguments/results remain
+rejected; wrapper roots accept/return signed int32 words.
+
+Exact raw-bit observation is limited to four EVM-native registrations:
+`Float.intBitsToFloat(I)F`, `Float.floatToRawIntBits(F)I`,
+`Double.longBitsToDouble(J)D`, and `Double.doubleToRawLongBits(D)J`. Minimal
+trusted `java/lang/Float` and `java/lang/Double` class images are appended by the
+runtime only when absent; user-supplied classes are not replaced. A supplied
+ordinary Code implementation with the same owner/name/descriptor executes as
+ordinary guest Code. No other native/JRE method, host math, JNI/precompile, or
+fallback is enabled. Floating-point arithmetic and float/double arrays remain
+deferred and rejected.
+
+Finite results, infinities, and signed zero are compared bit-exactly. Integer to
+floating and double-to-float conversions use binary IEEE round-to-nearest,
+ties-to-even; floating-to-integer conversions truncate toward zero, saturate at
+the target bounds, and map NaN to zero. Comparisons follow `cmpl`/`cmpg` NaN
+directions and treat the two zeros equal; negation flips only the sign bit.
+Conversion-produced NaNs use the documented EVM canonical quiet encodings
+`0x7fc00000` and `0x7ff8000000000000`. Oracle wrappers may canonicalize only
+where the Java specification leaves a conversion NaN payload unspecified.
+
+Raw transport preserves payload and sign in the EVM. Signaling NaNs can be
+quieted by some JVM/hardware paths, so differential fixtures do not claim exact
+signaling-NaN payload parity across all Java 8 implementations. Exact EVM raw
+payload checks are separate focused tests; fresh-JVM differential exact patterns
+use finite values, infinities, signed zeros, and quiet NaNs. Fixtures stay
+bounded and must never induce host memory exhaustion.
 
 ## Outcome protocol
 
