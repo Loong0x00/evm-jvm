@@ -1,7 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M5c-c software IEEE arithmetic**, recorded in
-`JAVA_EVM_M5CC_PLAN.md`:1971 cases plus960 independent parent probes. Next F/D arrays,
+`JAVA_EVM_M5CC_PLAN.md`:1971 cases plus960 independent parent probes. Active M5c-d
+F/D arrays, frozen in `JAVA_EVM_M5CD_PLAN.md`,
 then exception/unwind/library stages. Four exact EVM raw-bit bindings only; no host
 math/JRE fallback. Five raw bootstrap images verified.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user

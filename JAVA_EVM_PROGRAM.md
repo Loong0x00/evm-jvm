@@ -88,7 +88,7 @@ routine permission to start the next verified increment.
 | M5c-a | switch/goto_w/wide variable-width control flow | accepted;1681 cases plus48 independent probes |
 | M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | accepted;1811 cases plus216 independent probes |
 | M5c-c | software scalar IEEE arithmetic | accepted;1971 cases plus960 parent probes |
-| M5c-d | IEEE arrays | next bounded stage |
+| M5c-d | IEEE arrays | frozen in `JAVA_EVM_M5CD_PLAN.md`; dispatch3 workers |
 | M5d+ | exception/unwind and remaining JVM/library features | queued; freeze separately |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -103,7 +103,7 @@ M5c-c accepted:1971 JVM/EVM cases plus960 parent probes,36 Python,864 smoke/884f
 Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Obsolete arithmetic guards updated,
 extra IEEE corner/seeded regressions and bounded gas proved; no runtime audit defect.
 Runtime136564 bytes, local-runtime only/not full JVM. Prior1811 inputs/budgets same.
-Next M5c-d F/D arrays/raw storage/category/quotas, then bounded exception/unwind
+M5c-d frozen in JAVA_EVM_M5CD_PLAN.md; dispatch3 workers, then bounded exception/unwind
 foundation. Four raw-bit native services ONLY, no host math/JRE fallback. NEW
 agents Sol/high WITHOUT Fast; named java-fast is fixture tier. Automatic verified
 progression, no routine confirmation.
