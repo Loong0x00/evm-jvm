@@ -79,7 +79,7 @@ routine permission to start the next verified increment.
 | M4c | invokevirtual dispatch, casts/type tests | accepted;792 cases plus48 independent probes |
 | M4d | reference arrays/covariance/ArrayStoreException | accepted;892 cases plus48 independent probes |
 | M4e | multianewarray | accepted;960 cases plus48 independent probes |
-| M4f-a | interface graph/abstract calls/type compatibility | frozen in `JAVA_EVM_M4FA_PLAN.md`; dispatch3 workers |
+| M4f-a | interface graph/abstract calls/type compatibility | accepted;1059 cases plus48 independent probes |
 | M4f-b | defaults and required default-interface initialization | queued |
 | M4f-c | interface static members/initialization | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
@@ -92,11 +92,12 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M4e accepted:960 JVM/EVM cases plus48 independent probes,34 Python tests,
-415 smoke/435 fast, exact Go validation, artifact/bootstrap/demos/AOT/vet green.
-Actual JVM corrected arithmetic oracle231 (not238); explicit row guards added.
-Runtime80614 bytes is local-runtime only, not deployed/full Java. Prior892 case
-inputs/outcomes/budgets unchanged. M4f-a frozen in JAVA_EVM_M4FA_PLAN.md; dispatch3 workers,
-then defaults+mandatory initialization, then static interface members separately.
-ALL NEW workers Sol/high WITHOUT Fast; recheck disabled state before dispatch.
-Continue automatically after verified stages, no routine confirmation.
+M4f-a accepted:1059 JVM/EVM cases plus48 probes,34 Python,465 smoke/485 fast,
+exact Go validation, artifact/3bootstraps/demos/AOT/vet green. Four obsolete blanket
+interface negatives narrowly updated; independent review fixed supplied marker
+superinterface closure. Runtime92828 bytes, local-runtime only, not full Java.
+Prior960 cases/budgets unchanged. Next M4f-b defaults WITH mandatory default-bearing
+interface initialization; statics M4f-c. Exact binary-evolution error probes use
+installed Java8 (/usr/lib/jvm/java-8-openjdk/bin/java), not Java21 assumptions.
+ALL NEW workers Sol/high WITHOUT Fast; recheck disabled preference. Continuous
+verified progression, no routine confirmation or full-JVM/deployment claim.

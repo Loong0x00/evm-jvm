@@ -1,9 +1,8 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M4e multianewarray**, recorded in
-`JAVA_EVM_M4E_PLAN.md`:960 cases plus48 independent probes. Active M4f-a abstract
-interface graph/calls, frozen in `JAVA_EVM_M4FA_PLAN.md`; defaults/interface statics
-and remaining value types/handlers/libraries follow separately.
+Current accepted stage: **M4f-a abstract interfaces**, recorded in
+`JAVA_EVM_M4FA_PLAN.md`:1059 cases plus48 independent probes. Next: defaults with
+mandatory interface initialization, then interface statics and remaining JVM work.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
@@ -28,7 +27,7 @@ worktree based on the latest integration revision, not an old worker tree.
 Worktrees separate edits, not security permissions. Respect frozen task write
 sets; only one worker edits the monolithic Solidity dispatcher at a time.
 Disjoint Go files still share a package namespace: give new test helpers a
-stage/role prefix (e.g. runtimeM4fa* vs verifyM4fa*) to avoid integration collisions.
+stage/role prefix (e.g. runtimeM4fb* vs verifyM4fb*) to avoid integration collisions.
 The differential oracle executes Java on the host: use only trusted generated
 fixtures here; untrusted external programs/corpora require isolation first.
 
@@ -65,9 +64,9 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # EVM arithmetic, bundle call and int-array examples
-make java-smoke      # 415 fixed oracle comparisons
-make java-fast       # 435 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 960 cases through M4e
+make java-smoke      # 465 fixed oracle comparisons
+make java-fast       # 485 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 1059 cases through M4f-a
 make java-test       # artifact + focused Go + 34 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```

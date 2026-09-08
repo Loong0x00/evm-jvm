@@ -193,3 +193,21 @@ Parent owns plans/AGENTS/quickstart/Makefile, approved profile-negative updates 
 integration/independent review. No subagents/peer writes/push/global settings/
 untrusted oracle runs. Sol/high WITHOUT Fast. Commit scoped files and honestly
 report hash/size/bootstrap checks/results/known failures. No full-JVM claim.
+
+## Accepted integration evidence
+Runtime72a013a→11f7195,fixtures5c29d35→40cc503,verifier8f451c5→e0fb54f.
+Parent71f5302 explicitly updated4 obsolete blanket-interface negatives to precise
+implemented behavior: instanceof empty interface0, omitted edge Link4, I[0][-1]
+NASE4, I[0]length0; long/inaccessible/default guards retained. Legacy root interface
+still MethodError7 (existing early selector); bundle interface root LinkError5.
+
+Independent review f3889e8→aeea0ed found/fixed array marker-superinterface closure
+for supplied valid Cloneable extends Parent; type test/cast/rank covariance score7
+regression. Parent final artifact/all3 bootstraps, Go/CLI,34 Python,1059/1059 full,
+465 smoke,485 fast,demos,AOT,focused vet and48 independent probes all passed:
+`build/java-diff-parent-m4fa/probe-e5mlffn2/results-final/`.
+Prior960 entries/budgets unchanged. Accepted runtime92828 bytes SHA256
+`ea6c940d05f098fe27485d20dadaeaa5f0e1e6c42627da8627632d7f8ce3abe7`.
+Next defaults+mandatory initialization. Local Java8 at
+/usr/lib/jvm/java-8-openjdk/bin/java (1.8.0_504) available for exact JVM8 linkage
+probes; Java21 can differ on evolved conflicting defaults. All agents NO Fast.
