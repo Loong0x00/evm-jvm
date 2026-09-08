@@ -83,7 +83,7 @@ routine permission to start the next verified increment.
 | M4f-b | defaults and required default-interface initialization | accepted;1163 cases plus48 independent probes |
 | M4f-c | interface static members/initialization | accepted;1263 cases plus48 independent probes |
 | M5a | Z/B/C/S int-like types/fields/arrays | accepted;1383 cases plus48 independent probes |
-| M5b-a | scalar long/category-2 stack/locals/calls/fields | next bounded stage |
+| M5b-a | scalar long/category-2 stack/locals/calls/fields | frozen in `JAVA_EVM_M5BA_PLAN.md`; dispatch3 workers |
 | M5b-b | long arrays | queued |
 | M5c+ | IEEE values, catch/throw/unwind and remaining instructions | queued; freeze dependency-ordered batches |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
@@ -99,7 +99,7 @@ M5a accepted:1383 JVM/EVM cases plus48 probes,36 Python,627 smoke/647 fast,
 Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Three obsolete primitive guards
 updated with Java8 proof while preserving deferred/wide/error coverage; no audit
 runtime defect. Runtime103667 bytes, local-runtime only, not full JVM/deployment.
-Prior1263 fixtures/budgets unchanged. Next M5b-a scalar long/category2 foundation,
+Prior1263 fixtures/budgets unchanged. M5b-a frozen in JAVA_EVM_M5BA_PLAN.md; dispatch3 workers,
 then long arrays separately. JVMS8 local/category2/stack forms checked against
 Oracle spec; root ABI remains exact(I...)I. ALL NEW workers Sol/high WITHOUT Fast.
 Continue verified progression automatically, no routine confirmation.

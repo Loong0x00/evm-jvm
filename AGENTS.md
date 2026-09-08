@@ -1,8 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M5a narrow primitives**, recorded in
-`JAVA_EVM_M5A_PLAN.md`:1383 cases plus48 independent probes. Next: scalar long/
-category-2 foundation, then long arrays, IEEE values/handlers/libraries. Java8
+`JAVA_EVM_M5A_PLAN.md`:1383 cases plus48 independent probes. Active M5b-a scalar
+long/category2, frozen in `JAVA_EVM_M5BA_PLAN.md`; long arrays/IEEE/handlers follow. Java8
 remains the exact oracle for evolved-interface and raw-bytecode semantic probes.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
