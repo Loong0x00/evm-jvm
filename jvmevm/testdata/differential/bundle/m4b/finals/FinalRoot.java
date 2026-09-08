@@ -54,12 +54,15 @@ class FinalCell {
 
 class FinalHolder {
     public final int number;
-    public final int initialized = 17;
+    // Non-constant final: force an actual getfield, not javac's constant folding
+    // with an out-of-profile java/util/Objects.requireNonNull call.
+    public final int initialized;
     public final FinalCell cell;
     public final int[] array;
 
     FinalHolder(int value) {
         number = value;
+        initialized = 17;
         cell = new FinalCell(value);
         array = new int[1];
     }
