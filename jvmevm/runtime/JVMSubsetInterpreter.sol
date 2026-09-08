@@ -19,6 +19,9 @@ contract JVMSubsetInterpreter {
     error ObjectError(uint256 code, uint256 pc);
     error TypeError(uint256 code, uint256 pc);
     error InterfaceError(uint256 code, uint256 location);
+    error HandlerError(
+        uint256 code, uint256 classIndex, uint256 methodIndex, uint256 entryIndex
+    );
 
     uint256 private constant MAX_CONSTANT_POOL = 4096;
     uint256 private constant MAX_CODE = 65535;
@@ -31,7 +34,12 @@ contract JVMSubsetInterpreter {
     uint256 private constant MAX_OBJECTS = 1024;
     uint256 private constant MAX_OBJECT_FIELDS = 1024;
     uint256 private constant MAX_OBJECT_FIELD_SLOTS = 65536;
-    uint256 private constant MAX_HANDLES = MAX_ARRAYS + MAX_OBJECTS;
+    uint256 private constant MAX_EXCEPTION_OBJECTS = 256;
+    uint256 private constant MAX_EXCEPTION_FIELD_SLOTS = 262144;
+    uint256 private constant MAX_EXCEPTION_HANDLERS = 256;
+    uint256 private constant MAX_HANDLES = MAX_ARRAYS + MAX_OBJECTS
+        + MAX_EXCEPTION_OBJECTS + 1; // one reserved emergency OOM
+    uint256 private constant ROOT_FAULT_SENTINEL = type(uint256).max;
     // A runtime value is a 64-bit payload plus an internal kind. Category-2 longs
     // remain one indivisible EVM value, while stack/local capacity is charged in
     // JVM words by the helpers below.
@@ -46,6 +54,7 @@ contract JVMSubsetInterpreter {
     uint256 private constant KIND_DOUBLE_TAIL = 8;
     uint8 private constant HEAP_ARRAY = 1;
     uint8 private constant HEAP_OBJECT = 2;
+    uint256 private constant HEAP_OBJECT_MARKER = uint256(1) << 255;
     uint8 private constant PRIMITIVE_BYTE = 0x42; // B
     uint8 private constant PRIMITIVE_CHAR = 0x43; // C
     uint8 private constant PRIMITIVE_DOUBLE = 0x44; // D
@@ -93,6 +102,15 @@ contract JVMSubsetInterpreter {
         uint8 returnSubtype; // exact I/Z/B/C/S descriptor for computational-int returns
         uint256 returnTypeOffset;
         uint256 returnTypeLength;
+        // Code exception_table entries retain classfile order. Resolution is lazy
+        // and applies only after the protected range is reached during unwind.
+        uint16[] handlerStarts;
+        uint16[] handlerEnds;
+        uint16[] handlerPCs;
+        uint16[] handlerCatchTypes;
+        uint256[] handlerClassesPlusOne;
+        uint256 declaringClass;
+        uint256 methodIndex;
     }
 
     struct FieldInfo {
@@ -137,7 +155,35 @@ contract JVMSubsetInterpreter {
         bool isInitContinuation;
         bool isConstructor;
         bool isConstructorLinked;
+        bool entered; // false only for the dormant root during its initialization
         uint256 thisHandle;
+    }
+
+    struct PendingException {
+        bool active;
+        uint256 kind;
+        uint256 ref;
+        uint256 faultPC;
+    }
+
+    struct HeapRegistry {
+        uint64[][] arrayHeap;
+        uint256[][] objectHeap;
+        uint256[] metadata;
+        uint256[] classes;
+        uint8[] ranks;
+    }
+
+    struct ExceptionArena {
+        PendingException pending;
+        HeapRegistry heap;
+        uint256 objectCount;
+        uint256 fieldSlots;
+        uint256 emergencyRef;
+        uint256 nextHandle;
+        uint256 throwableClass;
+        uint256 errorClass;
+        uint256[] classesByKind;
     }
 
     // A finite IEEE value is significand * 2^scale. The significand is at most
@@ -159,6 +205,7 @@ contract JVMSubsetInterpreter {
         uint256 nameLength;
         uint256 descriptorOffset;
         uint256 descriptorLength;
+        uint256 javaFault;
     }
 
     function interpret(bytes calldata rawClass, string calldata entry, int32[] calldata args)
@@ -239,6 +286,7 @@ contract JVMSubsetInterpreter {
         }
         _skipAttributes(r); // class attributes
         if (r.pos != c.data.length) revert ClassError(5, r.pos);
+        if (_isReservedThrowableClass(c)) revert LinkError(6, 0);
         if (rootPlusOne == 0) revert MethodError(1);
 
         uint256 root = rootPlusOne - 1;
@@ -251,7 +299,7 @@ contract JVMSubsetInterpreter {
         }
 
         Selected[] memory selected = new Selected[](methodsCount);
-        selected[root] = _loadRoot(c, rootMeta);
+        selected[root] = _loadRoot(c, rootMeta, 0, root);
         if (!_isExactIntRoot(c, selected[root])) revert MethodError(11);
         if (args.length != selected[root].argumentCount) revert MethodError(9);
         if (selected[root].maxLocals < selected[root].argumentWords) revert MethodError(10);
@@ -265,7 +313,7 @@ contract JVMSubsetInterpreter {
         bool suppliedSerializable = _isNamedClass(c, bytes("java/io/Serializable"));
         bool suppliedFloat = _isNamedClass(c, bytes("java/lang/Float"));
         bool suppliedDouble = _isNamedClass(c, bytes("java/lang/Double"));
-        uint256 classCount = 1 + (suppliedObject ? 0 : 1)
+        uint256 classCount = 20 + (suppliedObject ? 0 : 1)
             + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
             + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1);
         ClassInfo[] memory classes = new ClassInfo[](classCount);
@@ -275,14 +323,17 @@ contract JVMSubsetInterpreter {
         if (!suppliedCloneable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapCloneable());
         if (!suppliedSerializable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapSerializable());
         if (!suppliedFloat) classes[bootstrapAt++] = _parseBundleClass(_bootstrapFloat());
-        if (!suppliedDouble) classes[bootstrapAt] = _parseBundleClass(_bootstrapDouble());
+        if (!suppliedDouble) classes[bootstrapAt++] = _parseBundleClass(_bootstrapDouble());
+        _appendThrowableBootstraps(classes, bootstrapAt);
         Selected[][] memory selections = new Selected[][](classCount);
         selections[0] = selected;
         uint256[][] memory caches = new uint256[][](classCount);
         caches[0] = referenceCache;
         uint256[][] memory fieldCaches = new uint256[][](classCount);
         fieldCaches[0] = new uint256[](c.cp.length);
-        return _execute(classes, selections, caches, fieldCaches, 0, root, args, false);
+        return _execute(
+            classes, selections, caches, fieldCaches, 0, root, args, false, bootstrapAt
+        );
     }
 
     /// @notice Execute a named class from an unordered bundle of unchanged classfiles.
@@ -306,6 +357,7 @@ contract JVMSubsetInterpreter {
         bytes memory wantedClass = bytes(entryClass);
         for (uint256 i = 0; i < inputCount; ++i) {
             users[i] = _parseBundleClass(rawClasses[i]);
+            if (_isReservedThrowableClass(users[i])) revert LinkError(6, i);
             for (uint256 j = 0; j < i; ++j) {
                 if (_sameClassName(users[i], users[j])) revert LinkError(2, i);
             }
@@ -324,7 +376,7 @@ contract JVMSubsetInterpreter {
             ) entryPlusOne = i + 1;
         }
         if (entryPlusOne == 0) revert LinkError(3, 0);
-        uint256 count = inputCount + (suppliedObject ? 0 : 1)
+        uint256 count = inputCount + 19 + (suppliedObject ? 0 : 1)
             + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
             + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1);
         ClassInfo[] memory classes = new ClassInfo[](count);
@@ -334,7 +386,8 @@ contract JVMSubsetInterpreter {
         if (!suppliedCloneable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapCloneable());
         if (!suppliedSerializable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapSerializable());
         if (!suppliedFloat) classes[bootstrapAt++] = _parseBundleClass(_bootstrapFloat());
-        if (!suppliedDouble) classes[bootstrapAt] = _parseBundleClass(_bootstrapDouble());
+        if (!suppliedDouble) classes[bootstrapAt++] = _parseBundleClass(_bootstrapDouble());
+        _appendThrowableBootstraps(classes, bootstrapAt);
         uint256 rootClass = entryPlusOne - 1;
         _requireSupportedClass(classes[rootClass], rootClass);
 
@@ -366,13 +419,17 @@ contract JVMSubsetInterpreter {
         selected[rootClass] = new Selected[](classes[rootClass].methods.length);
         caches[rootClass] = new uint256[](classes[rootClass].cp.length);
         fieldCaches[rootClass] = new uint256[](classes[rootClass].cp.length);
-        selected[rootClass][root] = _loadRoot(classes[rootClass], rootMeta);
+        selected[rootClass][root] = _loadRoot(
+            classes[rootClass], rootMeta, rootClass, root
+        );
         Selected memory rootSelection = selected[rootClass][root];
         if (!_isExactIntRoot(classes[rootClass], rootSelection)) revert MethodError(11);
         if (args.length != rootSelection.argumentCount) revert MethodError(9);
         if (rootSelection.maxLocals < rootSelection.argumentWords) revert MethodError(10);
         _predecode(classes[rootClass], rootSelection);
-        return _execute(classes, selected, caches, fieldCaches, rootClass, root, args, true);
+        return _execute(
+            classes, selected, caches, fieldCaches, rootClass, root, args, true, bootstrapAt
+        );
     }
 
     function _parseBundleClass(bytes memory rawClass) private pure returns (ClassInfo memory c) {
@@ -463,10 +520,40 @@ contract JVMSubsetInterpreter {
         return (c.accessFlags & 0x0200) != 0;
     }
 
+    function _isReservedThrowableClass(ClassInfo memory c) private pure returns (bool) {
+        bytes memory d = c.data;
+        uint256 o = c.thisNameOffset;
+        uint256 n = c.thisNameLength;
+        return _equalsLiteral(d, o, n, bytes("java/lang/Throwable"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/Error"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/VirtualMachineError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/StackOverflowError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/OutOfMemoryError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/LinkageError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/ExceptionInInitializerError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/IncompatibleClassChangeError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/NoClassDefFoundError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/AbstractMethodError"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/Exception"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/RuntimeException"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/ArithmeticException"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/NullPointerException"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/NegativeArraySizeException"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/ClassCastException"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/ArrayStoreException"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/IndexOutOfBoundsException"))
+            || _equalsLiteral(d, o, n, bytes("java/lang/ArrayIndexOutOfBoundsException"));
+    }
+
     function _findClass(
         ClassInfo[] memory classes, bytes memory nameData, uint256 nameOffset, uint256 nameLength
     ) private pure returns (bool found, uint256 classIndex) {
         for (uint256 i = 0; i < classes.length; ++i) {
+            // Canonical Throwable images occupy raw-only slots until resolution
+            // reaches them. They still go through the ordinary in-EVM parser.
+            if (classes[i].cp.length == 0 && classes[i].data.length != 0) {
+                classes[i] = _parseBundleClass(classes[i].data);
+            }
             if (_equalsCross(nameData, nameOffset, nameLength, classes[i].data,
                 classes[i].thisNameOffset, classes[i].thisNameLength)) return (true, i);
         }
@@ -510,11 +597,11 @@ contract JVMSubsetInterpreter {
         }
     }
 
-    function _loadRoot(ClassInfo memory c, uint256 meta)
-        private
-        pure
-        returns (Selected memory s)
-    {
+    function _loadRoot(
+        ClassInfo memory c, uint256 meta, uint256 classIndex, uint256 methodIndex
+    ) private pure returns (Selected memory s) {
+        s.declaringClass = classIndex;
+        s.methodIndex = methodIndex;
         uint256 descriptorIndex = (meta >> 32) & 0xffff;
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[descriptorIndex]);
         if (!_descriptor(c.data, s.descriptorOffset, s.descriptorLength, s)
@@ -522,17 +609,17 @@ contract JVMSubsetInterpreter {
         s.argumentCount = s.argumentKinds.length;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
-        _readCode(c.data, start, length, s);
+        _readCode(c, start, length, s);
         if (s.maxStack > MAX_STACK) revert BytecodeError(1, 0);
         if (s.maxLocals > MAX_LOCALS) revert BytecodeError(10, 0);
         s.loaded = true;
     }
 
-    function _loadCallee(ClassInfo memory c, uint256 method, uint256 callPC)
-        private
-        pure
-        returns (Selected memory s)
-    {
+    function _loadCallee(
+        ClassInfo memory c, uint256 method, uint256 callPC, uint256 classIndex
+    ) private pure returns (Selected memory s) {
+        s.declaringClass = classIndex;
+        s.methodIndex = method;
         uint256 meta = c.methods[method];
         uint16 access = uint16(meta);
         if (
@@ -547,7 +634,7 @@ contract JVMSubsetInterpreter {
         s.argumentCount = s.argumentKinds.length;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
-        if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
+        if (!_readCallCode(c, start, length, s)) revert CallError(4, callPC);
         if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS || s.maxLocals < s.argumentWords) {
             revert CallError(4, callPC);
         }
@@ -614,7 +701,8 @@ contract JVMSubsetInterpreter {
         uint256 rootClass,
         uint256 root,
         int32[] calldata args,
-        bool bundleMode
+        bool bundleMode,
+        uint256 throwableBootstrapAt
     ) private pure returns (int32) {
         Frame[] memory frames = new Frame[](MAX_FRAMES);
         frames[0] = _newFrame(rootClass, root, selected[rootClass][root], 0);
@@ -645,7 +733,7 @@ contract JVMSubsetInterpreter {
         // metadata prevents int/reference cells from being reinterpreted as longs.
         uint64[][] memory arrayHeap;
         uint256[][] memory objectHeap;
-        uint8[] memory heapKinds;
+        uint256[] memory heapKinds;
         uint256[] memory heapClasses;
         uint8[] memory arrayRanks;
         uint256[] memory arrayLeafTypes;
@@ -660,12 +748,104 @@ contract JVMSubsetInterpreter {
         uint256[][] memory objectFieldDefaults = new uint256[][](classes.length);
         bool[] memory objectLayoutsLoaded = new bool[](classes.length);
         _validateHierarchy(classes, rootClass, parentLinks, hierarchyState);
+
+        // Registry tables stay lazy for scalar programs. Their first setup reserves
+        // handle 1 as the real emergency OOM before any guest allocation.
+        ExceptionArena memory arena;
+        arena.classesByKind = new uint256[](13);
+        _configureExceptionClasses(arena, throwableBootstrapAt);
+
+        frames[0].entered = false;
         depth = _initializeClass(
             classes, staticValues, initializationState, frames, depth, rootClass,
-            parentLinks, hierarchyState
+            parentLinks, hierarchyState, arena, ROOT_FAULT_SENTINEL,
+            objectHeap, heapKinds, heapClasses, arrayLeafTypes, nextHandle
         );
+        nextHandle = arena.nextHandle;
+        if (!arena.pending.active && depth == 1) frames[0].entered = true;
 
         while (depth != 0) {
+            if (arena.pending.active) {
+                Frame memory throwing = frames[depth - 1];
+                if (throwing.isInitContinuation) {
+                    if (initializationState[throwing.classIndex] == 1) {
+                        initializationState[throwing.classIndex] = 3;
+                    }
+                    arena.pending.faultPC = throwing.callPC;
+                    --depth;
+                    if (depth == 0) revert JavaException(arena.pending.kind);
+                    continue;
+                }
+                if (!throwing.entered) {
+                    --depth;
+                    if (depth == 0) revert JavaException(arena.pending.kind);
+                    continue;
+                }
+                Selected memory throwingSelection =
+                    selected[throwing.classIndex][throwing.methodIndex];
+                bool caught;
+                for (uint256 hi = 0; hi < throwingSelection.handlerStarts.length; ++hi) {
+                    if (arena.pending.faultPC < throwingSelection.handlerStarts[hi]
+                        || arena.pending.faultPC >= throwingSelection.handlerEnds[hi]) continue;
+                    bool matches = throwingSelection.handlerCatchTypes[hi] == 0;
+                    if (!matches) {
+                        uint256 catchClass = _resolveCatchClass(
+                            classes, throwing.classIndex, throwingSelection, hi,
+                            parentLinks, hierarchyState, arena.throwableClass
+                        );
+                        matches = _objectIsClassParsed(
+                            classes, arena.heap.classes[arena.pending.ref], catchClass
+                        );
+                    }
+                    if (!matches) continue;
+                    if (throwing.isConstructor && !throwing.isConstructorLinked) {
+                        revert HandlerError(
+                            8, throwing.classIndex, throwing.methodIndex, hi
+                        );
+                    }
+                    // A caught reference makes the lazy shared registry reachable
+                    // by subsequent guest bytecodes.
+                    objectHeap = arena.heap.objectHeap;
+                    arrayLeafTypes = arena.heap.metadata;
+                    heapKinds = arrayLeafTypes;
+                    heapClasses = arena.heap.classes;
+                    arrayHeap = arena.heap.arrayHeap;
+                    arrayRanks = arena.heap.ranks;
+                    nextHandle = arena.nextHandle;
+                    throwing.sp = 0;
+                    throwing.pc = throwingSelection.handlerPCs[hi];
+                    throwing.sp = _push(
+                        throwing.stack, throwing.sp, _packRef(uint32(arena.pending.ref)),
+                        arena.pending.faultPC
+                    );
+                    arena.pending.active = false;
+                    caught = true;
+                    break;
+                }
+                if (caught) continue;
+
+                uint256 callerPC = throwing.callPC;
+                bool failedConstructor = throwing.isConstructor;
+                uint256 failedHandle = throwing.thisHandle;
+                if (throwing.isInitializer) {
+                    initializationState[throwing.classIndex] = 3;
+                    if (!_objectIsClassParsed(
+                        classes, arena.heap.classes[arena.pending.ref], arena.errorClass
+                    )) {
+                        nextHandle = _raiseJava(
+                            3, callerPC, arena, classes, objectHeap, heapKinds,
+                            heapClasses, arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                        );
+                    }
+                }
+                --depth;
+                if (failedConstructor && depth != 0) {
+                    _poisonAliases(frames[depth - 1], failedHandle);
+                }
+                arena.pending.faultPC = callerPC;
+                if (depth == 0) revert JavaException(arena.pending.kind);
+                continue;
+            }
             Frame memory f = frames[depth - 1];
             if (f.isInitContinuation) {
                 uint256 initializingClass = f.classIndex;
@@ -678,10 +858,13 @@ contract JVMSubsetInterpreter {
                     (bool hasDefaultPrerequisite, uint256 defaultPrerequisite) =
                         _nextDefaultInterface(classes, initializingClass, initializationState);
                     if (hasDefaultPrerequisite) {
+                        arena.nextHandle = nextHandle;
                         depth = _initializeClass(
                             classes, staticValues, initializationState, frames, depth,
-                            defaultPrerequisite, parentLinks, hierarchyState
+                            defaultPrerequisite, parentLinks, hierarchyState, arena, f.callPC,
+                            objectHeap, heapKinds, heapClasses, arrayLeafTypes, nextHandle
                         );
+                        nextHandle = arena.nextHandle;
                         continue;
                     }
                 }
@@ -696,10 +879,16 @@ contract JVMSubsetInterpreter {
                     selected[initializingClass][initializerMethod] =
                         _loadInitializer(initializing, initializerMethod, initializingClass);
                     _predecode(initializing, selected[initializingClass][initializerMethod]);
-                    if (depth == MAX_FRAMES) revert JavaException(2);
+                    if (depth == MAX_FRAMES) {
+                        nextHandle = _raiseJava(
+                            2, f.callPC, arena, classes, objectHeap, heapKinds,
+                            heapClasses, arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                        );
+                        continue;
+                    }
                     Frame memory initializer = _newFrame(
                         initializingClass, initializerMethod,
-                        selected[initializingClass][initializerMethod], 0
+                        selected[initializingClass][initializerMethod], f.callPC
                     );
                     initializer.isInitializer = true;
                     frames[depth] = initializer;
@@ -708,6 +897,7 @@ contract JVMSubsetInterpreter {
                 }
                 initializationState[initializingClass] = 2;
                 --depth;
+                if (depth == 1 && !frames[0].entered) frames[0].entered = true;
                 continue;
             }
             ClassInfo memory c = classes[f.classIndex];
@@ -808,7 +998,11 @@ contract JVMSubsetInterpreter {
                 _requireKind(f.stack[f.sp - 2], KIND_REF, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
                 uint256 handle = _payload(f.stack[f.sp - 2]);
-                if (handle == 0) _throwJava(6, frames, depth);
+                if (handle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 _requireHeapKind(handle, heapKinds, nextHandle, HEAP_ARRAY, opPC);
                 uint8 rank = arrayRanks[handle];
                 uint256 leafType = arrayLeafTypes[handle];
@@ -825,7 +1019,11 @@ contract JVMSubsetInterpreter {
                 if (!matching) revert ReferenceError(1, opPC);
                 int32 index = int32(uint32(_payload(f.stack[f.sp - 1])));
                 if (index < 0 || uint256(uint32(index)) >= arrayHeap[handle].length) {
-                    _throwJava(5, frames, depth);
+                    nextHandle = _raiseJava(
+                        5, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 }
                 uint64 cell = arrayHeap[handle][uint256(uint32(index))];
                 if (op == 0x2f) f.stack[f.sp - 2] = _packLong(cell);
@@ -877,7 +1075,11 @@ contract JVMSubsetInterpreter {
                     // receiver/bounds/store checks; initialized null remains a valid value.
                     _validatePackedRef(f.stack[f.sp - 1], heapKinds, nextHandle, opPC);
                 }
-                if (handle == 0) _throwJava(6, frames, depth);
+                if (handle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 _requireHeapKind(handle, heapKinds, nextHandle, HEAP_ARRAY, opPC);
                 uint8 rank = arrayRanks[handle];
                 uint256 leafType = arrayLeafTypes[handle];
@@ -894,12 +1096,20 @@ contract JVMSubsetInterpreter {
                 if (!matching) revert ReferenceError(1, opPC);
                 int32 index = int32(uint32(_payload(f.stack[f.sp - 2])));
                 if (index < 0 || uint256(uint32(index)) >= arrayHeap[handle].length) {
-                    _throwJava(5, frames, depth);
+                    nextHandle = _raiseJava(
+                        5, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 }
                 if (op == 0x53 && !_valueFitsArrayComponent(
                     classes, f.stack[f.sp - 1], rank, leafType,
                     heapKinds, heapClasses, arrayRanks, arrayLeafTypes, parentLinks
-                )) _throwJava(9, frames, depth);
+                )) nextHandle = _raiseJava(
+                        9, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 uint64 stored = uint64(_payload(f.stack[f.sp - 1]));
                 if (op != 0x50 && op != 0x51 && op != 0x52 && !referenceComponents) {
                     stored = uint64(_normalizeInt(uint32(stored), uint8(leafType)));
@@ -955,7 +1165,11 @@ contract JVMSubsetInterpreter {
                 _requireIntPair(f.stack, f.sp, opPC);
                 int32 dividend = int32(uint32(_payload(f.stack[f.sp - 2])));
                 int32 divisor = int32(uint32(_payload(f.stack[f.sp - 1])));
-                if (divisor == 0) _throwJava(1, frames, depth);
+                if (divisor == 0) nextHandle = _raiseJava(
+                        1, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 uint32 result;
                 if (dividend == type(int32).min && divisor == -1) {
                     result = op == 0x6c ? uint32(0x80000000) : 0;
@@ -968,7 +1182,11 @@ contract JVMSubsetInterpreter {
                 _requireLongPair(f.stack, f.sp, opPC);
                 int64 dividend = int64(uint64(_payload(f.stack[f.sp - 2])));
                 int64 divisor = int64(uint64(_payload(f.stack[f.sp - 1])));
-                if (divisor == 0) _throwJava(1, frames, depth);
+                if (divisor == 0) nextHandle = _raiseJava(
+                        1, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 uint64 result;
                 if (dividend == type(int64).min && divisor == -1) {
                     result = op == 0x6d ? uint64(0x8000000000000000) : 0;
@@ -1141,17 +1359,29 @@ contract JVMSubsetInterpreter {
                 uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
                 f.pc += 2;
                 uint256 allocatedClass = _resolveNewClass(
-                    classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
+                    classes, f.classIndex, refIndex, opPC, referenceCaches[f.classIndex],
+                    parentLinks, hierarchyState
                 );
                 uint256 fieldSlots = objectLayoutsLoaded[allocatedClass]
                     ? objectFieldDefaults[allocatedClass].length
                     : _instanceFieldCount(classes, allocatedClass, parentLinks, opPC);
+                if (initializationState[allocatedClass] == 3) {
+                    nextHandle = _raiseJava(
+                        12, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 if (initializationState[allocatedClass] == 0) {
                     uint256 oldDepth = depth;
+                    arena.nextHandle = nextHandle;
                     depth = _initializeClass(
                         classes, staticValues, initializationState, frames, depth, allocatedClass,
-                        parentLinks, hierarchyState
+                        parentLinks, hierarchyState, arena, opPC, objectHeap, heapKinds,
+                        heapClasses, arrayLeafTypes, nextHandle
                     );
+                    nextHandle = arena.nextHandle;
+                    if (arena.pending.active) continue;
                     if (depth != oldDepth) {
                         f.pc = opPC;
                         continue;
@@ -1159,7 +1389,21 @@ contract JVMSubsetInterpreter {
                 }
                 if (fieldSlots > MAX_OBJECT_FIELDS || objectCount == MAX_OBJECTS
                     || fieldSlots > MAX_OBJECT_FIELD_SLOTS - totalFieldSlots) {
-                    _throwJava(7, frames, depth);
+                    nextHandle = _raiseJava(
+                        7, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
+                }
+                _ensureExceptionRegistry(arena, classes, parentLinks, hierarchyState);
+                if (heapKinds.length == 0) {
+                    arrayHeap = arena.heap.arrayHeap;
+                    objectHeap = arena.heap.objectHeap;
+                    arrayLeafTypes = arena.heap.metadata;
+                    heapKinds = arrayLeafTypes;
+                    heapClasses = arena.heap.classes;
+                    arrayRanks = arena.heap.ranks;
+                    nextHandle = arena.nextHandle;
                 }
                 if (!objectLayoutsLoaded[allocatedClass]) {
                     objectFieldDefaults[allocatedClass] = _objectFieldDefaults(
@@ -1167,18 +1411,11 @@ contract JVMSubsetInterpreter {
                     );
                     objectLayoutsLoaded[allocatedClass] = true;
                 }
-                if (heapKinds.length == 0) {
-                    heapKinds = new uint8[](MAX_HANDLES + 1);
-                    heapClasses = new uint256[](MAX_HANDLES + 1);
-                    arrayRanks = new uint8[](MAX_HANDLES + 1);
-                    arrayLeafTypes = new uint256[](MAX_HANDLES + 1);
-                    arrayHeap = new uint64[][](MAX_HANDLES + 1);
-                    objectHeap = new uint256[][](MAX_HANDLES + 1);
-                }
                 ++objectCount;
                 ++nextHandle;
+                arena.nextHandle = nextHandle;
                 totalFieldSlots += fieldSlots;
-                heapKinds[nextHandle] = HEAP_OBJECT;
+                arrayLeafTypes[nextHandle] = HEAP_OBJECT_MARKER;
                 heapClasses[nextHandle] = allocatedClass;
                 objectHeap[nextHandle] = new uint256[](fieldSlots);
                 for (uint256 i = 0; i < fieldSlots; ++i) {
@@ -1192,12 +1429,23 @@ contract JVMSubsetInterpreter {
                     classes, f.classIndex, refIndex, opPC, fieldCaches[f.classIndex],
                     op == 0xb3, true, f.isInitializer, parentLinks, hierarchyState
                 );
+                if (initializationState[fieldClass] == 3) {
+                    nextHandle = _raiseJava(
+                        12, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 if (initializationState[fieldClass] == 0) {
                     uint256 oldDepth = depth;
+                    arena.nextHandle = nextHandle;
                     depth = _initializeClass(
                         classes, staticValues, initializationState, frames, depth, fieldClass,
-                        parentLinks, hierarchyState
+                        parentLinks, hierarchyState, arena, opPC, objectHeap, heapKinds,
+                        heapClasses, arrayLeafTypes, nextHandle
                     );
+                    nextHandle = arena.nextHandle;
+                    if (arena.pending.active) continue;
                     if (depth != oldDepth) {
                         f.pc = opPC;
                         continue;
@@ -1246,7 +1494,11 @@ contract JVMSubsetInterpreter {
                 bool preSuperWrite = op == 0xb5 && receiverKind == KIND_UNINIT
                     && f.isConstructor && f.thisHandle == handle && f.classIndex == fieldClass;
                 if (!preSuperWrite) _requireKind(receiver, KIND_REF, opPC);
-                if (handle == 0) _throwJava(6, frames, depth);
+                if (handle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 _requireHeapKind(handle, heapKinds, nextHandle, HEAP_OBJECT, opPC);
                 if (!_objectIsClass(heapClasses[handle], symbolicClass, parentLinks)) {
                     revert ReferenceError(2, opPC);
@@ -1288,6 +1540,13 @@ contract JVMSubsetInterpreter {
                 VirtualResolution memory resolved = _resolveVirtual(
                     classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
                 );
+                if (resolved.javaFault != 0) {
+                    nextHandle = _raiseJava(
+                        resolved.javaFault, opPC, arena, classes, objectHeap, heapKinds,
+                        heapClasses, arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 Selected memory signature = _loadVirtualSignature(
                     classes[resolved.owner], resolved.method, opPC
                 );
@@ -1307,14 +1566,18 @@ contract JVMSubsetInterpreter {
                     }
                 }
                 uint256 handle = _payload(receiver);
-                if (handle == 0) _throwJava(6, frames, depth);
+                if (handle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 _validatePackedRef(receiver, heapKinds, nextHandle, opPC);
-                if (heapKinds[handle] == HEAP_ARRAY) {
+                if (_heapKindAt(heapKinds[handle]) == HEAP_ARRAY) {
                     // A valid array receiver is deliberately deferred after symbolic
                     // method resolution, before ordinary-object assignability/selection.
                     revert CallError(4, opPC);
                 }
-                if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, opPC);
+                if (_heapKindAt(heapKinds[handle]) != HEAP_OBJECT) revert ReferenceError(1, opPC);
                 uint256 dynamicClass = heapClasses[handle];
                 if (!_objectIsClass(dynamicClass, resolved.symbolic, parentLinks)) {
                     revert ReferenceError(2, opPC);
@@ -1327,6 +1590,13 @@ contract JVMSubsetInterpreter {
                 (uint256 calleeClass, uint256 callee) = _selectVirtual(
                     classes, dynamicClass, resolved, parentLinks, opPC
                 );
+                if (calleeClass == type(uint256).max) {
+                    nextHandle = _raiseJava(
+                        callee, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 if (selected[calleeClass].length == 0) {
                     selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
@@ -1334,14 +1604,20 @@ contract JVMSubsetInterpreter {
                 }
                 if (!selected[calleeClass][callee].loaded) {
                     selected[calleeClass][callee] = _loadVirtualCallee(
-                        classes[calleeClass], callee, opPC
+                        classes[calleeClass], callee, opPC, calleeClass
                     );
                     _predecode(classes[calleeClass], selected[calleeClass][callee]);
                 }
                 Selected memory target = selected[calleeClass][callee];
                 if (!_sameMethodDescriptor(classes[resolved.owner], resolved.method,
                     classes[calleeClass], callee)) revert CallError(4, opPC);
-                if (depth == MAX_FRAMES) revert JavaException(2);
+                if (depth == MAX_FRAMES) {
+                    nextHandle = _raiseJava(
+                        2, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 Frame memory child = _newFrame(calleeClass, callee, target, opPC);
                 child.locals[0] = receiver;
                 child.initialized[0] = true;
@@ -1359,6 +1635,13 @@ contract JVMSubsetInterpreter {
                         classes, f.classIndex, f.methodIndex, refIndex, opPC,
                         parentLinks, hierarchyState
                     );
+                    if (interfaceResolved.javaFault != 0) {
+                        nextHandle = _raiseJava(
+                            interfaceResolved.javaFault, opPC, arena, classes, objectHeap,
+                            heapKinds, heapClasses, arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                        );
+                        continue;
+                    }
                     Selected memory interfaceSignature = _loadVirtualSignature(
                         classes[interfaceResolved.owner], interfaceResolved.method, opPC
                     );
@@ -1383,7 +1666,11 @@ contract JVMSubsetInterpreter {
                         }
                     }
                     uint256 interfaceHandle = _payload(interfaceReceiver);
-                    if (interfaceHandle == 0) _throwJava(6, frames, depth);
+                    if (interfaceHandle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                     if (interfaceReceiver != f.locals[0]) revert CallError(4, opPC);
                     _requireHeapKind(
                         interfaceHandle, heapKinds, nextHandle, HEAP_OBJECT, opPC
@@ -1398,12 +1685,18 @@ contract JVMSubsetInterpreter {
                     }
                     if (!selected[interfaceClass][interfaceMethod].loaded) {
                         selected[interfaceClass][interfaceMethod] = _loadVirtualCallee(
-                            classes[interfaceClass], interfaceMethod, opPC
+                            classes[interfaceClass], interfaceMethod, opPC, interfaceClass
                         );
                         _predecode(classes[interfaceClass], selected[interfaceClass][interfaceMethod]);
                     }
                     Selected memory interfaceTarget = selected[interfaceClass][interfaceMethod];
-                    if (depth == MAX_FRAMES) revert JavaException(2);
+                    if (depth == MAX_FRAMES) {
+                    nextHandle = _raiseJava(
+                        2, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                     Frame memory interfaceChild = _newFrame(
                         interfaceClass, interfaceMethod, interfaceTarget, opPC
                     );
@@ -1419,7 +1712,8 @@ contract JVMSubsetInterpreter {
                 }
                 (uint256 calleeClass, uint256 callee, uint256 symbolicClass, bool isConstructor) =
                     _resolveSpecial(
-                        classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
+                        classes, f.classIndex, refIndex, opPC, referenceCaches[f.classIndex],
+                        parentLinks, hierarchyState
                     );
                 _validateSpecialCalleeMetadata(
                     classes[calleeClass], callee, opPC, isConstructor
@@ -1431,7 +1725,7 @@ contract JVMSubsetInterpreter {
                 }
                 if (!selected[calleeClass][callee].loaded) {
                     selected[calleeClass][callee] = _loadSpecialCallee(
-                        classes[calleeClass], callee, opPC, isConstructor
+                        classes[calleeClass], callee, opPC, isConstructor, calleeClass
                     );
                     _predecode(classes[calleeClass], selected[calleeClass][callee]);
                 }
@@ -1461,7 +1755,11 @@ contract JVMSubsetInterpreter {
                         && !constructingThis) revert CallError(4, opPC);
                 } else {
                     _requireKind(receiver, KIND_REF, opPC);
-                    if (handle == 0) _throwJava(6, frames, depth);
+                    if (handle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                     _requireHeapKind(handle, heapKinds, nextHandle, HEAP_OBJECT, opPC);
                     if (!_objectIsClass(heapClasses[handle], symbolicClass, parentLinks)) {
                         revert ReferenceError(2, opPC);
@@ -1484,12 +1782,19 @@ contract JVMSubsetInterpreter {
                         );
                     }
                 }
-                if (depth == MAX_FRAMES) revert JavaException(2);
+                if (depth == MAX_FRAMES) {
+                    nextHandle = _raiseJava(
+                        2, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 Frame memory child = _newFrame(calleeClass, callee, target, opPC);
                 child.locals[0] = isConstructor && _isObjectClass(classes[calleeClass])
                     ? _packRef(uint32(handle)) : receiver;
                 child.initialized[0] = true;
                 child.isConstructor = isConstructor;
+                child.isConstructorLinked = isConstructor && _isObjectClass(classes[calleeClass]);
                 child.thisHandle = handle;
                 _copyArguments(child, target, f.stack, base + 1, 1);
                 f.sp = base;
@@ -1516,18 +1821,29 @@ contract JVMSubsetInterpreter {
                 // active-use initialization can produce unrelated side effects.
                 if (!selected[calleeClass][callee].loaded) {
                     selected[calleeClass][callee] = nativeBinding == 0
-                        ? _loadCallee(classes[calleeClass], callee, opPC)
+                        ? _loadCallee(classes[calleeClass], callee, opPC, calleeClass)
                         : _loadNativeCallee(classes[calleeClass], callee, opPC);
                     if (nativeBinding == 0) {
                         _predecode(classes[calleeClass], selected[calleeClass][callee]);
                     }
                 }
+                if (initializationState[calleeClass] == 3) {
+                    nextHandle = _raiseJava(
+                        12, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 if (initializationState[calleeClass] == 0) {
                     uint256 oldDepth = depth;
+                    arena.nextHandle = nextHandle;
                     depth = _initializeClass(
                         classes, staticValues, initializationState, frames, depth, calleeClass,
-                        parentLinks, hierarchyState
+                        parentLinks, hierarchyState, arena, opPC, objectHeap, heapKinds,
+                        heapClasses, arrayLeafTypes, nextHandle
                     );
+                    nextHandle = arena.nextHandle;
+                    if (arena.pending.active) continue;
                     if (depth != oldDepth) {
                         f.pc = opPC;
                         continue;
@@ -1546,7 +1862,13 @@ contract JVMSubsetInterpreter {
                         );
                     }
                 }
-                if (depth == MAX_FRAMES) revert JavaException(2);
+                if (depth == MAX_FRAMES) {
+                    nextHandle = _raiseJava(
+                        2, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 if (nativeBinding != 0) {
                     uint64 raw = uint64(_payload(f.stack[base]));
                     if (nativeBinding == 1) f.stack[base] = _packFloat(uint32(raw));
@@ -1569,6 +1891,13 @@ contract JVMSubsetInterpreter {
                 VirtualResolution memory resolved = _resolveInterfaceCall(
                     classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
                 );
+                if (resolved.javaFault != 0) {
+                    nextHandle = _raiseJava(
+                        resolved.javaFault, opPC, arena, classes, objectHeap, heapKinds,
+                        heapClasses, arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 Selected memory signature = _loadVirtualSignature(
                     classes[resolved.owner], resolved.method, opPC
                 );
@@ -1592,15 +1921,19 @@ contract JVMSubsetInterpreter {
                     }
                 }
                 uint256 handle = _payload(receiver);
-                if (handle == 0) _throwJava(6, frames, depth);
+                if (handle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 _validatePackedRef(receiver, heapKinds, nextHandle, opPC);
-                if (heapKinds[handle] == HEAP_ARRAY) {
+                if (_heapKindAt(heapKinds[handle]) == HEAP_ARRAY) {
                     if (!_arrayImplementsClass(classes, resolved.symbolic)) {
                         revert ReferenceError(2, opPC);
                     }
                     revert CallError(4, opPC);
                 }
-                if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, opPC);
+                if (_heapKindAt(heapKinds[handle]) != HEAP_OBJECT) revert ReferenceError(1, opPC);
                 uint256 dynamicClass = heapClasses[handle];
                 if (!_classImplements(classes, dynamicClass, resolved.symbolic, parentLinks)) {
                     revert ReferenceError(2, opPC);
@@ -1609,6 +1942,13 @@ contract JVMSubsetInterpreter {
                     classes, dynamicClass, c.data, resolved.nameOffset, resolved.nameLength,
                     resolved.descriptorOffset, resolved.descriptorLength, parentLinks, opPC
                 );
+                if (calleeClass == type(uint256).max) {
+                    nextHandle = _raiseJava(
+                        callee, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 if (selected[calleeClass].length == 0) {
                     selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
@@ -1616,14 +1956,20 @@ contract JVMSubsetInterpreter {
                 }
                 if (!selected[calleeClass][callee].loaded) {
                     selected[calleeClass][callee] = _loadVirtualCallee(
-                        classes[calleeClass], callee, opPC
+                        classes[calleeClass], callee, opPC, calleeClass
                     );
                     _predecode(classes[calleeClass], selected[calleeClass][callee]);
                 }
                 Selected memory target = selected[calleeClass][callee];
                 if (!_sameMethodDescriptor(classes[resolved.owner], resolved.method,
                     classes[calleeClass], callee)) revert CallError(4, opPC);
-                if (depth == MAX_FRAMES) revert JavaException(2);
+                if (depth == MAX_FRAMES) {
+                    nextHandle = _raiseJava(
+                        2, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
                 Frame memory child = _newFrame(calleeClass, callee, target, opPC);
                 child.locals[0] = receiver;
                 child.initialized[0] = true;
@@ -1700,24 +2046,36 @@ contract JVMSubsetInterpreter {
                     );
                 }
                 int32 signedLength = int32(uint32(_payload(f.stack[f.sp - 1])));
-                if (signedLength < 0) _throwJava(4, frames, depth);
+                if (signedLength < 0) nextHandle = _raiseJava(
+                        4, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 uint256 length = uint256(uint32(signedLength));
                 if (
                     arrayCount == MAX_ARRAYS || length > MAX_ARRAY_LENGTH
                         || length > MAX_ARRAY_ELEMENTS - totalElements
-                ) _throwJava(7, frames, depth);
-                if (heapKinds.length == 0) {
-                    heapKinds = new uint8[](MAX_HANDLES + 1);
-                    heapClasses = new uint256[](MAX_HANDLES + 1);
-                    arrayRanks = new uint8[](MAX_HANDLES + 1);
-                    arrayLeafTypes = new uint256[](MAX_HANDLES + 1);
-                    arrayHeap = new uint64[][](MAX_HANDLES + 1);
-                    objectHeap = new uint256[][](MAX_HANDLES + 1);
+                ) nextHandle = _raiseJava(
+                        7, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
+                _ensureExceptionRegistry(arena, classes, parentLinks, hierarchyState);
+                if (arena.heap.arrayHeap.length == 0) {
+                    arena.heap.arrayHeap = new uint64[][](MAX_HANDLES + 1);
+                    arena.heap.ranks = new uint8[](MAX_HANDLES + 1);
                 }
+                arrayHeap = arena.heap.arrayHeap;
+                objectHeap = arena.heap.objectHeap;
+                arrayLeafTypes = arena.heap.metadata;
+                heapKinds = arrayLeafTypes;
+                heapClasses = arena.heap.classes;
+                arrayRanks = arena.heap.ranks;
+                nextHandle = arena.nextHandle;
                 ++arrayCount;
                 ++nextHandle;
+                arena.nextHandle = nextHandle;
                 totalElements += length;
-                heapKinds[nextHandle] = HEAP_ARRAY;
                 arrayRanks[nextHandle] = allocatedType.rank;
                 arrayLeafTypes[nextHandle] = allocatedType.leafType;
                 arrayHeap[nextHandle] = new uint64[](length);
@@ -1744,24 +2102,37 @@ contract JVMSubsetInterpreter {
                 // Every count is type-checked and inspected before either quota planning or
                 // allocation. In particular, a zero outer dimension does not hide a later
                 // negative dimension, and an over-cap positive count does not win over NASE.
-                if (negative) _throwJava(4, frames, depth);
+                if (negative) nextHandle = _raiseJava(
+                        4, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 (plan.arrays, plan.elements) = _planMultiArray(
                     plan.counts, arrayCount, totalElements
                 );
-                if (plan.arrays == 0) _throwJava(7, frames, depth);
-                if (heapKinds.length == 0) {
-                    heapKinds = new uint8[](MAX_HANDLES + 1);
-                    heapClasses = new uint256[](MAX_HANDLES + 1);
-                    arrayRanks = new uint8[](MAX_HANDLES + 1);
-                    arrayLeafTypes = new uint256[](MAX_HANDLES + 1);
-                    arrayHeap = new uint64[][](MAX_HANDLES + 1);
-                    objectHeap = new uint256[][](MAX_HANDLES + 1);
+                if (plan.arrays == 0) nextHandle = _raiseJava(
+                        7, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
+                _ensureExceptionRegistry(arena, classes, parentLinks, hierarchyState);
+                if (arena.heap.arrayHeap.length == 0) {
+                    arena.heap.arrayHeap = new uint64[][](MAX_HANDLES + 1);
+                    arena.heap.ranks = new uint8[](MAX_HANDLES + 1);
                 }
+                arrayHeap = arena.heap.arrayHeap;
+                objectHeap = arena.heap.objectHeap;
+                arrayLeafTypes = arena.heap.metadata;
+                heapKinds = arrayLeafTypes;
+                heapClasses = arena.heap.classes;
+                arrayRanks = arena.heap.ranks;
+                nextHandle = arena.nextHandle;
                 uint256 rootHandle = nextHandle + 1;
                 nextHandle = _allocateMultiArray(
                     arrayHeap, heapKinds, arrayRanks, arrayLeafTypes,
                     nextHandle, allocatedType, plan.counts
                 );
+                arena.nextHandle = nextHandle;
                 arrayCount += plan.arrays;
                 totalElements += plan.elements;
                 f.sp = base + 1;
@@ -1770,9 +2141,33 @@ contract JVMSubsetInterpreter {
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_REF, opPC);
                 uint256 handle = _payload(f.stack[f.sp - 1]);
-                if (handle == 0) _throwJava(6, frames, depth);
+                if (handle == 0) nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 _requireHeapKind(handle, heapKinds, nextHandle, HEAP_ARRAY, opPC);
                 f.stack[f.sp - 1] = _packInt(uint32(arrayHeap[handle].length));
+            } else if (op == 0xbf) { // athrow
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                uint256 thrown = f.stack[f.sp - 1];
+                _requireKind(thrown, KIND_REF, opPC);
+                uint256 thrownHandle = _payload(thrown);
+                if (thrownHandle == 0) {
+                    nextHandle = _raiseJava(
+                        6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                    continue;
+                }
+                _validatePackedRef(thrown, heapKinds, nextHandle, opPC);
+                uint256 rethrownKind = arrayLeafTypes[thrownHandle] & 0xff;
+                if (_heapKindAt(arrayLeafTypes[thrownHandle]) != HEAP_OBJECT
+                    || rethrownKind == 0) revert BytecodeError(14, opPC);
+                arena.pending = PendingException(
+                    true, rethrownKind, thrownHandle, opPC
+                );
+                continue;
             } else if (op == 0xc0 || op == 0xc1) { // checkcast / instanceof
                 uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
                 f.pc += 2;
@@ -1793,7 +2188,7 @@ contract JVMSubsetInterpreter {
                         classes, f.classIndex, c.data, targetOffset, targetLength, opPC,
                         parentLinks, hierarchyState
                     );
-                    assignable = heapKinds[handle] == HEAP_ARRAY && _arrayTypeAssignable(
+                    assignable = _heapKindAt(heapKinds[handle]) == HEAP_ARRAY && _arrayTypeAssignable(
                         classes, arrayRanks[handle], arrayLeafTypes[handle],
                         wantedArray.rank, wantedArray.leafType, parentLinks
                     );
@@ -1808,9 +2203,9 @@ contract JVMSubsetInterpreter {
                         revert TypeError(2, opPC);
                     }
                     _validateHierarchy(classes, targetClass, parentLinks, hierarchyState);
-                    if (heapKinds[handle] == HEAP_ARRAY) {
+                    if (_heapKindAt(heapKinds[handle]) == HEAP_ARRAY) {
                         assignable = _arrayImplementsClass(classes, targetClass);
-                    } else if (heapKinds[handle] == HEAP_OBJECT) {
+                    } else if (_heapKindAt(heapKinds[handle]) == HEAP_OBJECT) {
                         assignable = _typeAssignable(
                             classes, heapClasses[handle], targetClass, parentLinks
                         );
@@ -1819,7 +2214,11 @@ contract JVMSubsetInterpreter {
                 if (op == 0xc1) {
                     f.stack[f.sp - 1] = _packInt(assignable ? 1 : 0);
                 } else if (!assignable) {
-                    _throwJava(8, frames, depth);
+                    nextHandle = _raiseJava(
+                        8, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                        arrayLeafTypes, parentLinks, hierarchyState, nextHandle
+                    );
+                if (arena.pending.active) continue;
                 }
             } else if (op == 0xc6 || op == 0xc7) { // ifnull / ifnonnull
                 if (f.sp == 0) revert BytecodeError(3, opPC);
@@ -1938,6 +2337,7 @@ contract JVMSubsetInterpreter {
         f.stack = new uint256[](s.maxStack);
         f.locals = new uint256[](s.maxLocals);
         f.initialized = new bool[](s.maxLocals);
+        f.entered = true;
     }
 
     function _loadInitializer(ClassInfo memory c, uint256 method, uint256 classIndex)
@@ -1945,6 +2345,8 @@ contract JVMSubsetInterpreter {
         pure
         returns (Selected memory s)
     {
+        s.declaringClass = classIndex;
+        s.methodIndex = method;
         if (c.invalidInitializer) revert InitError(1, classIndex);
         uint256 meta = c.methods[method];
         uint16 access = uint16(meta);
@@ -1962,28 +2364,50 @@ contract JVMSubsetInterpreter {
         s.argumentCount = 0;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
-        if (!_readCallCode(c.data, start, length, s)) revert InitError(1, classIndex);
+        if (!_readCallCode(c, start, length, s)) revert InitError(1, classIndex);
         if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS) revert InitError(1, classIndex);
         s.loaded = true;
     }
 
     function _initializeClass(
-        ClassInfo[] memory classes,
-        uint256[][] memory staticValues,
-        uint8[] memory initializationState,
-        Frame[] memory frames,
-        uint256 depth,
-        uint256 classIndex,
-        uint256[] memory parentLinks,
-        uint8[] memory hierarchyState
+        ClassInfo[] memory classes, uint256[][] memory staticValues,
+        uint8[] memory initializationState, Frame[] memory frames, uint256 depth,
+        uint256 classIndex, uint256[] memory parentLinks, uint8[] memory hierarchyState,
+        ExceptionArena memory arena, uint256 requestPC, uint256[][] memory objectHeap,
+        uint256[] memory heapKinds, uint256[] memory heapClasses,
+        uint256[] memory exceptionKinds, uint256 ignoredNextHandle
     ) private pure returns (uint256) {
+        ignoredNextHandle; // nextHandle is carried in arena across initializer scheduling.
         _validateHierarchy(classes, classIndex, parentLinks, hierarchyState);
         uint256 current = classIndex;
-        while (initializationState[current] == 0) {
-            // Mark C active before requesting its superclass. This is observable by
-            // reentrant initialization reached through a superclass or interface.
-            initializationState[current] = 1;
+        while (true) {
+            uint8 state = initializationState[current];
+            if (state == 1 || state == 2) return depth;
+            if (state == 3) {
+                arena.nextHandle = _raiseJava(
+                    12, requestPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                    exceptionKinds, parentLinks, hierarchyState, arena.nextHandle
+                );
+                return depth;
+            }
             ClassInfo memory c = classes[current];
+            uint256 link = parentLinks[current];
+            bool parentReady = _isInterface(c) || link == type(uint256).max
+                || (link != 0 && initializationState[link - 1] == 2);
+            (bool hasDefaultPrerequisite,) = _isInterface(c)
+                ? (false, uint256(0))
+                : _nextDefaultInterface(classes, current, initializationState);
+            bool needsFrame = c.initializerPlusOne != 0 || !parentReady
+                || hasDefaultPrerequisite;
+            // Capacity is checked before preparation or state 1 is installed.
+            if (needsFrame && depth == MAX_FRAMES) {
+                arena.nextHandle = _raiseJava(
+                    2, requestPC, arena, classes, objectHeap, heapKinds, heapClasses,
+                    exceptionKinds, parentLinks, hierarchyState, arena.nextHandle
+                );
+                return depth;
+            }
+            initializationState[current] = 1;
             for (uint256 i = 0; i < c.fields.length; ++i) {
                 if ((c.fields[i].accessFlags & 0x0008) != 0 && c.fields[i].hasConstant) {
                     uint8 constantKind = _fieldKind(c, c.fields[i]);
@@ -1996,29 +2420,19 @@ contract JVMSubsetInterpreter {
                                 : _packInt(uint32(c.fields[i].constantValue))));
                 }
             }
-            uint256 link = parentLinks[current];
-            bool parentReady = _isInterface(c) || link == type(uint256).max
-                || (link != 0 && initializationState[link - 1] != 0);
-            (bool hasDefaultPrerequisite,) = _isInterface(c)
-                ? (false, uint256(0))
-                : _nextDefaultInterface(classes, current, initializationState);
-            if (c.initializerPlusOne == 0 && parentReady && !hasDefaultPrerequisite) {
+            if (!needsFrame) {
                 initializationState[current] = 2;
                 return depth;
             }
-            if (depth == MAX_FRAMES) revert JavaException(2);
             Frame memory continuation;
             continuation.classIndex = current;
+            continuation.callPC = requestPC;
             continuation.isInitContinuation = true;
             frames[depth] = continuation;
             ++depth;
-            // Interfaces initialize themselves only; their parent traversal belongs to
-            // the enclosing ordinary-class prerequisite calculation.
             if (_isInterface(c) || link == type(uint256).max || link == 0) return depth;
             current = link - 1;
-            if (initializationState[current] != 0) return depth;
         }
-        return depth;
     }
 
     function _declaresDefault(ClassInfo memory c) private pure returns (bool) {
@@ -2063,15 +2477,6 @@ contract JVMSubsetInterpreter {
                 }
             }
         }
-    }
-
-    function _hasActiveInitializer(Frame[] memory frames, uint256 depth)
-        private
-        pure
-        returns (bool)
-    {
-        for (uint256 i = 0; i < depth; ++i) if (frames[i].isInitializer) return true;
-        return false;
     }
 
     function _validateHierarchy(
@@ -2296,8 +2701,11 @@ contract JVMSubsetInterpreter {
     }
 
     function _loadSpecialCallee(
-        ClassInfo memory c, uint256 method, uint256 callPC, bool isConstructor
+        ClassInfo memory c, uint256 method, uint256 callPC, bool isConstructor,
+        uint256 classIndex
     ) private pure returns (Selected memory s) {
+        s.declaringClass = classIndex;
+        s.methodIndex = method;
         _validateSpecialCalleeMetadata(c, method, callPC, isConstructor);
         uint256 meta = c.methods[method];
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[(meta >> 32) & 0xffff]);
@@ -2308,7 +2716,7 @@ contract JVMSubsetInterpreter {
         s.argumentCount = s.argumentKinds.length;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
-        if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
+        if (!_readCallCode(c, start, length, s)) revert CallError(4, callPC);
         if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS
             || s.maxLocals < s.argumentWords + 1) revert CallError(4, callPC);
         s.loaded = true;
@@ -2426,7 +2834,7 @@ contract JVMSubsetInterpreter {
                 abstractMethod = methods[i];
             }
         }
-        if (concreteCount > 1) revert JavaException(10);
+        if (concreteCount > 1) return (false, type(uint256).max, 10);
         if (concreteCount == 1) return (true, concreteOwner, concreteMethod);
         if (hasAbstract) return (true, abstractOwner, abstractMethod);
     }
@@ -2453,7 +2861,7 @@ contract JVMSubsetInterpreter {
                     }
                     if ((access & 0x0400) != 0) {
                         if (_methodCodeCount(meta) != 0) revert CallError(4, pc);
-                        revert JavaException(11);
+                        return (type(uint256).max, 11);
                     }
                     if (_methodCodeCount(meta) != 1) revert CallError(4, pc);
                     uint256 ancestor = current;
@@ -2484,10 +2892,11 @@ contract JVMSubsetInterpreter {
                 classes, dynamicClass, false, nameData, nameOffset, nameLength,
                 descriptorOffset, descriptorLength, parentLinks, pc
             );
-        if (!inheritedDefault) revert JavaException(11);
+        if (interfaceOwner == type(uint256).max) return (interfaceOwner, interfaceMethod);
+        if (!inheritedDefault) return (type(uint256).max, 11);
         uint256 selectedMeta = classes[interfaceOwner].methods[interfaceMethod];
         if ((uint16(selectedMeta) & 0x0400) != 0 || _methodCodeCount(selectedMeta) == 0) {
-            revert JavaException(11);
+            return (type(uint256).max, 11);
         }
         return (interfaceOwner, interfaceMethod);
     }
@@ -2508,19 +2917,19 @@ contract JVMSubsetInterpreter {
         s.argumentCount = s.argumentKinds.length;
     }
 
-    function _loadVirtualCallee(ClassInfo memory c, uint256 method, uint256 callPC)
-        private
-        pure
-        returns (Selected memory s)
-    {
+    function _loadVirtualCallee(
+        ClassInfo memory c, uint256 method, uint256 callPC, uint256 classIndex
+    ) private pure returns (Selected memory s) {
         uint256 meta = c.methods[method];
         uint16 access = uint16(meta);
         if ((access & (0x0002 | 0x0008 | 0x0020 | 0x0100 | 0x0400)) != 0
             || _methodCodeCount(meta) != 1) revert CallError(4, callPC);
         s = _loadVirtualSignature(c, method, callPC);
+        s.declaringClass = classIndex;
+        s.methodIndex = method;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
-        if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
+        if (!_readCallCode(c, start, length, s)) revert CallError(4, callPC);
         if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS
             || s.maxLocals < s.argumentWords + 1) revert CallError(4, callPC);
         s.loaded = true;
@@ -2596,6 +3005,10 @@ contract JVMSubsetInterpreter {
                     classes, symbolic, false, caller.data, out.nameOffset, out.nameLength,
                     out.descriptorOffset, out.descriptorLength, parentLinks, pc
                 );
+            if (interfaceOwner == type(uint256).max) {
+                out.javaFault = interfaceMethod;
+                return out;
+            }
             if (!foundInterface) revert CallError(3, pc);
             out.owner = interfaceOwner;
             out.method = interfaceMethod;
@@ -2683,6 +3096,10 @@ contract JVMSubsetInterpreter {
                         classes, symbolic, true, caller.data, out.nameOffset, out.nameLength,
                         out.descriptorOffset, out.descriptorLength, parentLinks, pc
                     );
+                if (interfaceOwner == type(uint256).max) {
+                    out.javaFault = interfaceMethod;
+                    return out;
+                }
                 if (!inherited) revert CallError(3, pc);
                 out.owner = interfaceOwner;
                 out.method = interfaceMethod;
@@ -2741,7 +3158,7 @@ contract JVMSubsetInterpreter {
         uint256 selectedMeta = classes[owner].methods[method];
         if ((uint16(selectedMeta) & 0x0400) != 0) {
             if (_methodCodeCount(selectedMeta) != 0) revert CallError(4, pc);
-            revert JavaException(11);
+            return (type(uint256).max, 11);
         }
     }
 
@@ -2840,6 +3257,10 @@ contract JVMSubsetInterpreter {
                     classes, symbolic, true, caller.data, out.nameOffset, out.nameLength,
                     out.descriptorOffset, out.descriptorLength, parentLinks, pc
                 );
+            if (inheritedOwner == type(uint256).max) {
+                out.javaFault = inheritedMethod;
+                return out;
+            }
             if (!inherited) revert CallError(3, pc);
             out.owner = inheritedOwner;
             out.method = inheritedMethod;
@@ -2853,15 +3274,23 @@ contract JVMSubsetInterpreter {
             if ((access & 0x0400) != 0 && _methodCodeCount(meta) != 0) {
                 revert CallError(4, pc);
             }
-            revert JavaException(11);
+            out.javaFault = 11;
+            return out;
         }
         if (_methodCodeCount(meta) != 1) revert CallError(4, pc);
     }
 
     function _resolveSpecial(
         ClassInfo[] memory classes, uint256 callerClass, uint256 refIndex, uint256 pc,
-        uint256[] memory parentLinks, uint8[] memory hierarchyState
+        uint256[] memory cache, uint256[] memory parentLinks, uint8[] memory hierarchyState
     ) private pure returns (uint256 owner, uint256 method, uint256 symbolic, bool isConstructor) {
+        if (refIndex < cache.length && cache[refIndex] != 0) {
+            uint256 packed = cache[refIndex];
+            return (
+                uint32(packed) - 1, uint32(packed >> 32) - 1,
+                uint32(packed >> 64) - 1, ((packed >> 96) & 1) != 0
+            );
+        }
         ClassInfo memory caller = classes[callerClass];
         if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 10) {
             revert CallError(1, pc);
@@ -2944,6 +3373,8 @@ contract JVMSubsetInterpreter {
             uint16(classes[owner].methods[method]), parentLinks, hierarchyState)) {
             revert CallError(4, pc);
         }
+        cache[refIndex] = (owner + 1) | ((method + 1) << 32)
+            | ((symbolic + 1) << 64) | (isConstructor ? uint256(1) << 96 : 0);
     }
 
     function _resolveCall(
@@ -3361,8 +3792,9 @@ contract JVMSubsetInterpreter {
 
     function _resolveNewClass(
         ClassInfo[] memory classes, uint256 callerClass, uint256 refIndex, uint256 pc,
-        uint256[] memory parentLinks, uint8[] memory hierarchyState
+        uint256[] memory cache, uint256[] memory parentLinks, uint8[] memory hierarchyState
     ) private pure returns (uint256 target) {
+        if (refIndex < cache.length && cache[refIndex] != 0) return cache[refIndex] - 1;
         ClassInfo memory caller = classes[callerClass];
         if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 7) {
             revert ObjectError(1, pc);
@@ -3378,8 +3810,20 @@ contract JVMSubsetInterpreter {
         target = resolved;
         _validateHierarchy(classes, target, parentLinks, hierarchyState);
         ClassInfo memory targetClass = classes[target];
+        uint256 throwableClass = type(uint256).max;
+        for (uint256 i = 0; i < classes.length; ++i) {
+            if (_isNamedClass(classes[i], bytes("java/lang/Throwable"))) {
+                throwableClass = i;
+                break;
+            }
+        }
         if (!_classAccessible(caller, targetClass) || (targetClass.accessFlags & 0x0400) != 0
-            || (targetClass.accessFlags & 0x0200) != 0) revert ObjectError(2, pc);
+            || (targetClass.accessFlags & 0x0200) != 0
+            || (throwableClass != type(uint256).max
+                && _objectIsClass(target, throwableClass, parentLinks))) {
+            revert ObjectError(2, pc);
+        }
+        cache[refIndex] = target + 1;
     }
 
     function _validInternalName(bytes memory data, uint256 off, uint256 n)
@@ -3526,7 +3970,7 @@ contract JVMSubsetInterpreter {
     }
 
     function _allocateMultiArray(
-        uint64[][] memory arrayHeap, uint8[] memory heapKinds,
+        uint64[][] memory arrayHeap, uint256[] memory heapKinds,
         uint8[] memory arrayRanks, uint256[] memory arrayLeafTypes,
         uint256 nextHandle, ArrayType memory allocatedType, uint256[] memory counts
     ) private pure returns (uint256) {
@@ -3537,7 +3981,6 @@ contract JVMSubsetInterpreter {
             uint256 length = counts[level];
             for (uint256 i = 0; i < multiplicity; ++i) {
                 ++nextHandle;
-                heapKinds[nextHandle] = HEAP_ARRAY;
                 arrayRanks[nextHandle] = allocatedType.rank - uint8(level);
                 arrayLeafTypes[nextHandle] = allocatedType.leafType;
                 arrayHeap[nextHandle] = new uint64[](length);
@@ -3781,28 +4224,28 @@ contract JVMSubsetInterpreter {
 
     function _valueFitsArrayComponent(
         ClassInfo[] memory classes, uint256 value, uint8 arrayRank,
-        uint256 arrayLeafType, uint8[] memory heapKinds,
+        uint256 arrayLeafType, uint256[] memory heapKinds,
         uint256[] memory heapClasses, uint8[] memory arrayRanks,
         uint256[] memory arrayLeafTypes, uint256[] memory parentLinks
     ) private pure returns (bool) {
         uint256 handle = _payload(value);
         if (handle == 0) return true;
         if (arrayRank > 1) {
-            return heapKinds[handle] == HEAP_ARRAY && _arrayTypeAssignable(
+            return _heapKindAt(heapKinds[handle]) == HEAP_ARRAY && _arrayTypeAssignable(
                 classes, arrayRanks[handle], arrayLeafTypes[handle],
                 arrayRank - 1, arrayLeafType, parentLinks
             );
         }
         // A rank-one reference array has a class or interface component.
         uint256 wantedClass = arrayLeafType - ARRAY_CLASS_BASE;
-        if (heapKinds[handle] == HEAP_ARRAY) return _arrayImplementsClass(classes, wantedClass);
-        return heapKinds[handle] == HEAP_OBJECT
+        if (_heapKindAt(heapKinds[handle]) == HEAP_ARRAY) return _arrayImplementsClass(classes, wantedClass);
+        return _heapKindAt(heapKinds[handle]) == HEAP_OBJECT
             && _typeAssignable(classes, heapClasses[handle], wantedClass, parentLinks);
     }
 
     function _requireAssignable(
         ClassInfo[] memory classes, uint256 value, bytes memory descriptorData,
-        uint256 descriptorOffset, uint256 descriptorLength, uint8[] memory heapKinds,
+        uint256 descriptorOffset, uint256 descriptorLength, uint256[] memory heapKinds,
         uint256[] memory heapClasses, uint8[] memory arrayRanks,
         uint256[] memory arrayLeafTypes, uint256 nextHandle,
         uint256[] memory parentLinks, uint256 pc
@@ -3810,14 +4253,14 @@ contract JVMSubsetInterpreter {
         _requireKind(value, KIND_REF, pc);
         uint256 handle = _payload(value);
         if (handle == 0) return;
-        if (handle > nextHandle || heapKinds[handle] == 0) revert ReferenceError(1, pc);
+        if (handle > nextHandle || _heapKindAt(heapKinds[handle]) == 0) revert ReferenceError(1, pc);
         if (descriptorLength != 0 && uint8(descriptorData[descriptorOffset]) == 0x5b) {
             (bool structural, bool supported, uint8 wantedRank, uint8 primitiveLeaf,
                 uint256 leafOffset, uint256 leafLength) = _arrayClassShape(
                     descriptorData, descriptorOffset, descriptorLength
                 );
             if (!structural || !supported) revert ReferenceError(2, pc);
-            if (heapKinds[handle] != HEAP_ARRAY) revert ReferenceError(1, pc);
+            if (_heapKindAt(heapKinds[handle]) != HEAP_ARRAY) revert ReferenceError(1, pc);
             uint256 wantedLeafType = primitiveLeaf;
             if (primitiveLeaf == 0) {
                 (bool found, uint256 wantedLeafClass) = _findClass(
@@ -3844,13 +4287,13 @@ contract JVMSubsetInterpreter {
         (bool found, uint256 wantedClass) = _findClass(classes, descriptorData, nameOffset, nameLength);
         if (!found) revert LinkError(4, pc);
         _validateHierarchy(classes, wantedClass, parentLinks, new uint8[](classes.length));
-        if (heapKinds[handle] == HEAP_ARRAY) {
+        if (_heapKindAt(heapKinds[handle]) == HEAP_ARRAY) {
             if (_isObjectClass(classes[wantedClass])) return;
             if (!_isInterface(classes[wantedClass])) revert ReferenceError(1, pc);
             if (!_arrayImplementsClass(classes, wantedClass)) revert ReferenceError(2, pc);
             return;
         }
-        if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, pc);
+        if (_heapKindAt(heapKinds[handle]) != HEAP_OBJECT) revert ReferenceError(1, pc);
         if (!_typeAssignable(classes, heapClasses[handle], wantedClass, parentLinks)) {
             revert ReferenceError(2, pc);
         }
@@ -3909,6 +4352,22 @@ contract JVMSubsetInterpreter {
                 _validateSwitchTargets(c.data, s.codeOffset, s.codeLength, pc, starts, op == 0xab);
             }
         }
+        uint256 whole = type(uint256).max;
+        if (s.handlerStarts.length != 0 && s.maxStack < 1) {
+            revert HandlerError(7, s.declaringClass, s.methodIndex, whole);
+        }
+        for (uint256 i = 0; i < s.handlerStarts.length; ++i) {
+            uint256 startPC = s.handlerStarts[i];
+            uint256 endPC = s.handlerEnds[i];
+            uint256 targetPC = s.handlerPCs[i];
+            if (startPC >= endPC || endPC > s.codeLength || targetPC >= s.codeLength) {
+                revert HandlerError(2, s.declaringClass, s.methodIndex, i);
+            }
+            if (!starts[startPC] || !starts[targetPC]
+                || (endPC != s.codeLength && !starts[endPC])) {
+                revert HandlerError(3, s.declaringClass, s.methodIndex, i);
+            }
+        }
     }
 
     function _instructionWidth(
@@ -3923,7 +4382,7 @@ contract JVMSubsetInterpreter {
                 || (op >= 0x3b && op <= 0x56)
                 || (op >= 0x57 && op <= 0x77)
                 || (op >= 0x78 && op <= 0x83) || (op >= 0x85 && op <= 0x98)
-                || (op >= 0xac && op <= 0xb1) || op == 0xbe
+                || (op >= 0xac && op <= 0xb1) || op == 0xbe || op == 0xbf
         ) return 1;
         if (op == 0x10 || op == 0x12 || (op >= 0x15 && op <= 0x19)
             || (op >= 0x36 && op <= 0x3a) || op == 0xbc) return 2;
@@ -4024,10 +4483,10 @@ contract JVMSubsetInterpreter {
         if (target >= codeLength || !starts[target]) revert BytecodeError(12, pc);
     }
 
-    function _readCode(bytes memory data, uint256 start, uint256 length, Selected memory s)
-        private
-        pure
+    function _readCode(ClassInfo memory c, uint256 start, uint256 length, Selected memory s)
+        private pure
     {
+        bytes memory data = c.data;
         if (start > type(uint256).max - length || start + length > data.length) {
             revert ClassError(6, start);
         }
@@ -4042,8 +4501,11 @@ contract JVMSubsetInterpreter {
         s.codeOffset = r.pos;
         s.codeLength = codeLength;
         r.pos += codeLength;
-        uint256 exceptionCount = _u2Bounded(r, end);
-        if (exceptionCount != 0) revert MethodError(8);
+        if (end - r.pos < 2) {
+            revert HandlerError(1, s.declaringClass, s.methodIndex, type(uint256).max);
+        }
+        uint256 count = _u2Bounded(r, end);
+        _readHandlers(c, r, end, count, s);
         uint256 nestedCount = _u2Bounded(r, end);
         for (uint256 i = 0; i < nestedCount; ++i) {
             _u2Bounded(r, end);
@@ -4054,11 +4516,10 @@ contract JVMSubsetInterpreter {
         if (r.pos != end) revert ClassError(9, r.pos);
     }
 
-    function _readCallCode(bytes memory data, uint256 start, uint256 length, Selected memory s)
-        private
-        pure
-        returns (bool)
+    function _readCallCode(ClassInfo memory c, uint256 start, uint256 length, Selected memory s)
+        private pure returns (bool)
     {
+        bytes memory data = c.data;
         if (start > data.length || length > data.length - start || length < 8) return false;
         uint256 end = start + length;
         uint256 p = start;
@@ -4069,9 +4530,16 @@ contract JVMSubsetInterpreter {
         s.codeOffset = p;
         s.codeLength = codeLength;
         p += codeLength;
-        if (end - p < 2) return false;
-        uint256 exceptionCount = _unsigned16(data, p); p += 2;
-        if (exceptionCount != 0 || end - p < 2) return false;
+        if (end - p < 2) {
+            revert HandlerError(1, s.declaringClass, s.methodIndex, type(uint256).max);
+        }
+        uint256 count = _unsigned16(data, p); p += 2;
+        Reader memory r = Reader(data, p);
+        _readHandlers(c, r, end, count, s);
+        p = r.pos;
+        if (end - p < 2) {
+            revert HandlerError(1, s.declaringClass, s.methodIndex, type(uint256).max);
+        }
         uint256 nestedCount = _unsigned16(data, p); p += 2;
         for (uint256 i = 0; i < nestedCount; ++i) {
             if (end - p < 6) return false;
@@ -4081,6 +4549,40 @@ contract JVMSubsetInterpreter {
             p += n;
         }
         return p == end;
+    }
+
+    function _readHandlers(
+        ClassInfo memory c, Reader memory r, uint256 end, uint256 count, Selected memory s
+    ) private pure {
+        uint256 whole = type(uint256).max;
+        if (count > MAX_EXCEPTION_HANDLERS || count > (end - r.pos) / 8
+            || end - r.pos - count * 8 < 2) {
+            revert HandlerError(1, s.declaringClass, s.methodIndex, whole);
+        }
+        s.handlerStarts = new uint16[](count);
+        s.handlerEnds = new uint16[](count);
+        s.handlerPCs = new uint16[](count);
+        s.handlerCatchTypes = new uint16[](count);
+        s.handlerClassesPlusOne = new uint256[](count);
+        for (uint256 i = 0; i < count; ++i) {
+            s.handlerStarts[i] = _u2Bounded(r, end);
+            s.handlerEnds[i] = _u2Bounded(r, end);
+            s.handlerPCs[i] = _u2Bounded(r, end);
+            uint256 catchType = _u2Bounded(r, end);
+            s.handlerCatchTypes[i] = uint16(catchType);
+            if (catchType == 0) continue;
+            if (catchType >= c.cp.length || uint8(c.cp[catchType]) != 7) {
+                revert HandlerError(4, s.declaringClass, s.methodIndex, i);
+            }
+            uint256 nameIndex = (c.cp[catchType] >> 8) & 0xffff;
+            if (nameIndex == 0 || nameIndex >= c.cp.length || uint8(c.cp[nameIndex]) != 1) {
+                revert HandlerError(4, s.declaringClass, s.methodIndex, i);
+            }
+            (uint256 off, uint256 n) = _utf(c.cp[nameIndex]);
+            if (!_validInternalName(c.data, off, n)) {
+                revert HandlerError(4, s.declaringClass, s.methodIndex, i);
+            }
+        }
     }
 
     function _descriptor(bytes memory data, uint256 off, uint256 n, Selected memory s)
@@ -4786,32 +5288,171 @@ contract JVMSubsetInterpreter {
         _requireKind(stack[sp - 1], KIND_LONG, pc);
     }
 
+    function _heapKindAt(uint256 metadata) private pure returns (uint8) {
+        if (metadata == 0) return 0;
+        return (metadata & HEAP_OBJECT_MARKER) != 0 ? HEAP_OBJECT : HEAP_ARRAY;
+    }
+
     function _requireHeapKind(
-        uint256 handle, uint8[] memory heapKinds, uint256 nextHandle, uint8 wanted, uint256 pc
+        uint256 handle, uint256[] memory heapKinds, uint256 nextHandle, uint8 wanted, uint256 pc
     ) private pure {
-        if (handle == 0 || handle > nextHandle || heapKinds[handle] != wanted) {
+        if (handle == 0 || handle > nextHandle
+            || _heapKindAt(heapKinds[handle]) != wanted) {
             revert ReferenceError(1, pc);
         }
     }
 
     function _validatePackedRef(
-        uint256 value, uint8[] memory heapKinds, uint256 nextHandle, uint256 pc
+        uint256 value, uint256[] memory heapKinds, uint256 nextHandle, uint256 pc
     ) private pure {
         _requireKind(value, KIND_REF, pc);
         uint256 handle = _payload(value);
-        if (handle != 0 && (handle > nextHandle || heapKinds[handle] == 0)) {
+        if (handle != 0 && (handle > nextHandle || _heapKindAt(heapKinds[handle]) == 0)) {
             revert ReferenceError(1, pc);
         }
     }
 
-    function _throwJava(uint256 kind, Frame[] memory frames, uint256 depth) private pure {
-        // JVM Error subclasses escape initialization unchanged. Ordinary runtime
-        // exceptions are wrapped as ExceptionInInitializerError.
-        if (kind != 2 && kind != 7 && kind != 10 && kind != 11
-            && _hasActiveInitializer(frames, depth)) {
-            revert JavaException(3);
+    function _configureExceptionClasses(
+        ExceptionArena memory arena, uint256 at
+    ) private pure {
+        arena.throwableClass = at;
+        arena.errorClass = at + 1;
+        arena.classesByKind[1] = at + 12; // ArithmeticException
+        arena.classesByKind[2] = at + 3;  // StackOverflowError
+        arena.classesByKind[3] = at + 6;  // ExceptionInInitializerError
+        arena.classesByKind[4] = at + 14; // NegativeArraySizeException
+        arena.classesByKind[5] = at + 18; // ArrayIndexOutOfBoundsException
+        arena.classesByKind[6] = at + 13; // NullPointerException
+        arena.classesByKind[7] = at + 4;  // OutOfMemoryError
+        arena.classesByKind[8] = at + 15; // ClassCastException
+        arena.classesByKind[9] = at + 16; // ArrayStoreException
+        arena.classesByKind[10] = at + 7; // IncompatibleClassChangeError
+        arena.classesByKind[11] = at + 9; // AbstractMethodError
+        arena.classesByKind[12] = at + 8; // NoClassDefFoundError
+    }
+
+    function _ensureExceptionRegistry(
+        ExceptionArena memory arena, ClassInfo[] memory classes,
+        uint256[] memory parentLinks, uint8[] memory hierarchyState
+    ) private pure {
+        if (arena.heap.metadata.length != 0) return;
+        uint256 oomClass = arena.classesByKind[7];
+        if (classes[oomClass].cp.length == 0) {
+            classes[oomClass] = _parseBundleClass(classes[oomClass].data);
         }
-        revert JavaException(kind);
+        arena.heap.objectHeap = new uint256[][](MAX_HANDLES + 1);
+        arena.heap.metadata = new uint256[](MAX_HANDLES + 1);
+        arena.heap.classes = new uint256[](MAX_HANDLES + 1);
+        _validateHierarchy(classes, arena.classesByKind[7], parentLinks, hierarchyState);
+        uint256 fields = _instanceFieldCount(
+            classes, arena.classesByKind[7], parentLinks, ROOT_FAULT_SENTINEL
+        );
+        if (fields > MAX_EXCEPTION_FIELD_SLOTS) revert ObjectError(2, ROOT_FAULT_SENTINEL);
+        arena.nextHandle = 1;
+        arena.emergencyRef = 1;
+        arena.fieldSlots = fields;
+        arena.heap.metadata[1] = HEAP_OBJECT_MARKER | 7;
+        arena.heap.classes[1] = arena.classesByKind[7];
+        arena.heap.objectHeap[1] = _objectFieldDefaults(
+            classes, arena.classesByKind[7], fields, parentLinks
+        );
+    }
+
+    function _raiseJava(
+        uint256 kind, uint256 faultPC, ExceptionArena memory arena,
+        ClassInfo[] memory classes, uint256[][] memory objectHeap,
+        uint256[] memory heapKinds, uint256[] memory heapClasses,
+        uint256[] memory exceptionKinds, uint256[] memory parentLinks,
+        uint8[] memory hierarchyState, uint256 nextHandle
+    ) private pure returns (uint256) {
+        _ensureExceptionRegistry(arena, classes, parentLinks, hierarchyState);
+        objectHeap = arena.heap.objectHeap;
+        heapKinds = arena.heap.metadata;
+        heapClasses = arena.heap.classes;
+        exceptionKinds = arena.heap.metadata;
+        if (nextHandle < arena.nextHandle) nextHandle = arena.nextHandle;
+        uint256 dynamicClass = arena.classesByKind[kind];
+        if (classes[dynamicClass].cp.length == 0) {
+            classes[dynamicClass] = _parseBundleClass(classes[dynamicClass].data);
+        }
+        _validateHierarchy(classes, dynamicClass, parentLinks, hierarchyState);
+        uint256 fields = _instanceFieldCount(classes, dynamicClass, parentLinks, faultPC);
+        if (arena.objectCount == MAX_EXCEPTION_OBJECTS
+            || fields > MAX_EXCEPTION_FIELD_SLOTS - arena.fieldSlots) {
+            arena.pending = PendingException(true, 7, arena.emergencyRef, faultPC);
+            return nextHandle;
+        }
+        if (nextHandle >= MAX_HANDLES) {
+            arena.pending = PendingException(true, 7, arena.emergencyRef, faultPC);
+            return nextHandle;
+        }
+        ++nextHandle;
+        arena.nextHandle = nextHandle;
+        ++arena.objectCount;
+        arena.fieldSlots += fields;
+        heapClasses[nextHandle] = dynamicClass;
+        exceptionKinds[nextHandle] = HEAP_OBJECT_MARKER | kind;
+        objectHeap[nextHandle] = _objectFieldDefaults(
+            classes, dynamicClass, fields, parentLinks
+        );
+        arena.pending = PendingException(true, kind, nextHandle, faultPC);
+        return nextHandle;
+    }
+
+    function _resolveCatchClass(
+        ClassInfo[] memory classes, uint256 currentClass, Selected memory s,
+        uint256 entryIndex, uint256[] memory parentLinks, uint8[] memory hierarchyState,
+        uint256 throwableClass
+    ) private pure returns (uint256 resolved) {
+        uint256 cached = s.handlerClassesPlusOne[entryIndex];
+        if (cached != 0) return cached - 1;
+        ClassInfo memory current = classes[currentClass];
+        uint256 cpIndex = s.handlerCatchTypes[entryIndex];
+        uint256 nameIndex = (current.cp[cpIndex] >> 8) & 0xffff;
+        (uint256 off, uint256 n) = _utf(current.cp[nameIndex]);
+        (bool found, uint256 target) = _findClass(classes, current.data, off, n);
+        if (!found) revert HandlerError(5, currentClass, s.methodIndex, entryIndex);
+        if (target != currentClass && !_classAccessible(current, classes[target])) {
+            revert HandlerError(9, currentClass, s.methodIndex, entryIndex);
+        }
+        _validateHierarchy(classes, target, parentLinks, hierarchyState);
+        if (_isInterface(classes[target])
+            || !_objectIsClass(target, throwableClass, parentLinks)) {
+            revert HandlerError(6, currentClass, s.methodIndex, entryIndex);
+        }
+        s.handlerClassesPlusOne[entryIndex] = target + 1;
+        return target;
+    }
+
+    function _objectIsClassParsed(
+        ClassInfo[] memory classes, uint256 dynamicClass, uint256 wantedClass
+    ) private pure returns (bool) {
+        uint256 current = dynamicClass;
+        for (uint256 steps = 0; steps < classes.length; ++steps) {
+            if (current == wantedClass) return true;
+            ClassInfo memory c = classes[current];
+            if (!c.hasSuperclass) return false;
+            (bool found, uint256 parent) = _findClass(
+                classes, c.data, c.superNameOffset, c.superNameLength
+            );
+            if (!found) return false;
+            current = parent;
+        }
+        return false;
+    }
+
+    function _poisonAliases(Frame memory caller, uint256 handle) private pure {
+        for (uint256 i = 0; i < caller.locals.length; ++i) {
+            if (caller.initialized[i] && _payload(caller.locals[i]) == handle
+                && _valueKind(caller.locals[i]) == KIND_UNINIT) {
+                caller.initialized[i] = false;
+                caller.locals[i] = 0;
+            }
+        }
+        for (uint256 i = 0; i < caller.sp; ++i) {
+            if (_payload(caller.stack[i]) == handle
+                && _valueKind(caller.stack[i]) == KIND_UNINIT) caller.stack[i] = 0;
+        }
     }
 
     function _push(uint256[] memory stack, uint256 sp, uint256 value, uint256 pc)
@@ -5314,6 +5955,28 @@ contract JVMSubsetInterpreter {
         return _u4(r);
     }
 
+    function _appendThrowableBootstraps(ClassInfo[] memory classes, uint256 at) private pure {
+        classes[at++].data = _bootstrapThrowable();
+        classes[at++].data = _bootstrapError();
+        classes[at++].data = _bootstrapVirtualMachineError();
+        classes[at++].data = _bootstrapStackOverflowError();
+        classes[at++].data = _bootstrapOutOfMemoryError();
+        classes[at++].data = _bootstrapLinkageError();
+        classes[at++].data = _bootstrapExceptionInInitializerError();
+        classes[at++].data = _bootstrapIncompatibleClassChangeError();
+        classes[at++].data = _bootstrapNoClassDefFoundError();
+        classes[at++].data = _bootstrapAbstractMethodError();
+        classes[at++].data = _bootstrapException();
+        classes[at++].data = _bootstrapRuntimeException();
+        classes[at++].data = _bootstrapArithmeticException();
+        classes[at++].data = _bootstrapNullPointerException();
+        classes[at++].data = _bootstrapNegativeArraySizeException();
+        classes[at++].data = _bootstrapClassCastException();
+        classes[at++].data = _bootstrapArrayStoreException();
+        classes[at++].data = _bootstrapIndexOutOfBoundsException();
+        classes[at++].data = _bootstrapArrayIndexOutOfBoundsException();
+    }
+
     function _bootstrapObject() private pure returns (bytes memory) {
         return hex"cafebabe0000003400060700020100106a6176612f6c616e672f4f626a6563740100063c696e69743e010003282956010004436f6465002100010000000000000001000100030004000100050000000d0000000100000001b1000000000000";
     }
@@ -5332,5 +5995,81 @@ contract JVMSubsetInterpreter {
 
     function _bootstrapDouble() private pure returns (bytes memory) {
         return hex"cafebabe00000034000e0a000200030700040c000500060100106a6176612f6c616e672f4f626a6563740100063c696e69743e0100032829560700080100106a6176612f6c616e672f446f75626c65010004436f64650100106c6f6e6742697473546f446f75626c65010004284a2944010013646f75626c65546f5261774c6f6e67426974730100042844294a003100070002000000000003000200050006000100090000001100010001000000052ab70001b1000000000109000a000b00000109000c000d00000000";
+    }
+
+    function _bootstrapThrowable() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000c0a000200030700040c000500060100106a6176612f6c616e672f4f626a6563740100063c696e69743e0100032829560700080100136a6176612f6c616e672f5468726f7761626c6507000a0100146a6176612f696f2f53657269616c697a61626c65010004436f646500210007000200010009000000010001000500060001000b0000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100136a6176612f6c616e672f5468726f7761626c650100063c696e69743e01000328295607000801000f6a6176612f6c616e672f4572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapVirtualMachineError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601000f6a6176612f6c616e672f4572726f720100063c696e69743e01000328295607000801001d6a6176612f6c616e672f5669727475616c4d616368696e654572726f72010004436f6465042100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapStackOverflowError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001d6a6176612f6c616e672f5669727475616c4d616368696e654572726f720100063c696e69743e01000328295607000801001c6a6176612f6c616e672f537461636b4f766572666c6f774572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapOutOfMemoryError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001d6a6176612f6c616e672f5669727475616c4d616368696e654572726f720100063c696e69743e01000328295607000801001a6a6176612f6c616e672f4f75744f664d656d6f72794572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapLinkageError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601000f6a6176612f6c616e672f4572726f720100063c696e69743e0100032829560700080100166a6176612f6c616e672f4c696e6b6167654572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapExceptionInInitializerError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100166a6176612f6c616e672f4c696e6b6167654572726f720100063c696e69743e0100032829560700080100256a6176612f6c616e672f457863657074696f6e496e496e697469616c697a65724572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapIncompatibleClassChangeError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100166a6176612f6c616e672f4c696e6b6167654572726f720100063c696e69743e0100032829560700080100266a6176612f6c616e672f496e636f6d70617469626c65436c6173734368616e67654572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapNoClassDefFoundError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100166a6176612f6c616e672f4c696e6b6167654572726f720100063c696e69743e01000328295607000801001e6a6176612f6c616e672f4e6f436c617373446566466f756e644572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapAbstractMethodError() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100266a6176612f6c616e672f496e636f6d70617469626c65436c6173734368616e67654572726f720100063c696e69743e01000328295607000801001d6a6176612f6c616e672f41627374726163744d6574686f644572726f72010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100136a6176612f6c616e672f5468726f7761626c650100063c696e69743e0100032829560700080100136a6176612f6c616e672f457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapRuntimeException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100136a6176612f6c616e672f457863657074696f6e0100063c696e69743e01000328295607000801001a6a6176612f6c616e672f52756e74696d65457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapArithmeticException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001a6a6176612f6c616e672f52756e74696d65457863657074696f6e0100063c696e69743e01000328295607000801001d6a6176612f6c616e672f41726974686d65746963457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapNullPointerException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001a6a6176612f6c616e672f52756e74696d65457863657074696f6e0100063c696e69743e01000328295607000801001e6a6176612f6c616e672f4e756c6c506f696e746572457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapNegativeArraySizeException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001a6a6176612f6c616e672f52756e74696d65457863657074696f6e0100063c696e69743e0100032829560700080100246a6176612f6c616e672f4e65676174697665417272617953697a65457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapClassCastException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001a6a6176612f6c616e672f52756e74696d65457863657074696f6e0100063c696e69743e01000328295607000801001c6a6176612f6c616e672f436c61737343617374457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapArrayStoreException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001a6a6176612f6c616e672f52756e74696d65457863657074696f6e0100063c696e69743e01000328295607000801001d6a6176612f6c616e672f417272617953746f7265457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapIndexOutOfBoundsException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c0005000601001a6a6176612f6c616e672f52756e74696d65457863657074696f6e0100063c696e69743e0100032829560700080100236a6176612f6c616e672f496e6465784f75744f66426f756e6473457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
+    }
+
+    function _bootstrapArrayIndexOutOfBoundsException() private pure returns (bytes memory) {
+        return hex"cafebabe00000034000a0a000200030700040c000500060100236a6176612f6c616e672f496e6465784f75744f66426f756e6473457863657074696f6e0100063c696e69743e0100032829560700080100286a6176612f6c616e672f4172726179496e6465784f75744f66426f756e6473457863657074696f6e010004436f6465002100070002000000000001000100050006000100090000001100010001000000052ab70001b1000000000000";
     }
 }

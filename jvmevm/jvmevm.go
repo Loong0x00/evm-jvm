@@ -77,6 +77,8 @@ func decodeJavaException(data []byte) (string, bool) {
 		return "java.lang.IncompatibleClassChangeError", true
 	case 11:
 		return "java.lang.AbstractMethodError", true
+	case 12:
+		return "java.lang.NoClassDefFoundError", true
 	default:
 		return "", false
 	}
