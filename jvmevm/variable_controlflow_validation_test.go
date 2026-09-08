@@ -122,6 +122,57 @@ func TestVerifyM5caTableAndLookupSwitchAlignmentSignedKeysAndPadding(t *testing.
 	}
 }
 
+func TestVerifyM5caNonzeroPaddingMajor52SpecAndHotSpotBoundary(t *testing.T) {
+	original := verifyM5baCompile(t, map[string]string{
+		"VerifyM5caPadding52.java": `public final class VerifyM5caPadding52 {
+			public static int table(int x){switch(x){case 0:return 10;case 1:return 11;case 2:return 12;case 3:return 13;default:return 14;}}
+			public static int lookup(int x){switch(x){case -100:return 20;case 100:return 21;default:return 22;}}
+		}`,
+	}, "VerifyM5caPadding52")["VerifyM5caPadding52"]
+	if major := binary.BigEndian.Uint16(original[6:8]); major != 52 {
+		t.Fatalf("trusted --release 8 probe major=%d want 52", major)
+	}
+
+	for _, tc := range []struct {
+		method string
+		opcode byte
+		arg    int32
+		want   int32
+	}{
+		{"table", 0xaa, 1, 11},
+		{"lookup", 0xab, 100, 21},
+	} {
+		t.Run(tc.method, func(t *testing.T) {
+			// Preserve the original javac Code, StackMapTable, and major version;
+			// mutate only the instruction's alignment padding bytes.
+			mutated := append([]byte(nil), original...)
+			code := parseStaticsClass(t, mutated).namedMethod(t, tc.method).code
+			opPC := verifyM5caInstructionPC(t, code, tc.opcode, 0)
+			header := opPC + 1 + (4-((opPC+1)%4))%4
+			if header == opPC+1 {
+				t.Fatalf("%s switch unexpectedly has no padding", tc.method)
+			}
+			for pc := opPC + 1; pc < header; pc++ {
+				if code[pc] != 0 {
+					t.Fatalf("javac %s padding[%d]=0x%02x want zero before mutation", tc.method, pc-opPC-1, code[pc])
+				}
+				code[pc] = byte(0x70 + pc-opPC)
+			}
+
+			verifyM5baJava8Outcome(t, [][]byte{original}, "VerifyM5caPadding52", tc.method,
+				[]int32{tc.arg}, "value="+strconv.FormatInt(int64(tc.want), 10))
+			// This unchanged-major-52 class retains javac's valid StackMapTable.
+			// HotSpot 8 accepts the nonzero bytes, matching SE8 6.5 and 4.9.1's
+			// alignment-only rule. This avoids confusing padding with the stale
+			// frames in broader raw Code rewrites, which require the major-49
+			// old-verifier helper used by malformed-structure probes.
+			verifyM5baJava8Outcome(t, [][]byte{mutated}, "VerifyM5caPadding52", tc.method,
+				[]int32{tc.arg}, "value="+strconv.FormatInt(int64(tc.want), 10))
+			verifyM5caAssertValue(t, mutated, tc.method, []int32{tc.arg}, tc.want)
+		})
+	}
+}
+
 func TestVerifyM5caSwitchPreservesPrefixesAndGuestEffects(t *testing.T) {
 	base := verifyM5caRawFixture(t, 500)
 
@@ -158,12 +209,13 @@ func TestVerifyM5caSwitchPreservesPrefixesAndGuestEffects(t *testing.T) {
 		"effects/Root.java": `package effects; public final class Root {
 			static int state=initialize(); static int initialize(){return 40;} static int helper(int x){return x+state;}
 			static final class Box { int x; Box(int x){this.x=x;} }
-			public static int dense(int x){int y;switch(x){case -1:y=1;break;case 0:y=2;case 1:y+=3;break;default:y=4;}return helper(y)+new Box(5).x;}
+			public static int dense(int x){int y=0;switch(x){case -1:y=1;break;case 0:y=2;case 1:y+=3;break;case 2:y=6;break;default:y=4;}return helper(y)+new Box(5).x;}
 			public static int sparse(int x){switch(x){case -100:return helper(1);case 200:return new Box(helper(2)).x;default:return helper(3);}}
-			public static int nestedLoop(int x){int r=0;for(int i=0;i<3;i++){switch(x+i){case -1:r+=1;break;case 0:r+=2;break;default:r+=3;}}switch(r){case 3:return helper(r);case 7:return helper(r+1);default:return helper(r+2);}}
+			public static int nestedLoop(int x){int r=0;for(int i=0;i<3;i++){switch(x+i){case -1:r+=1;break;case 0:r+=2;break;default:r+=3;}}switch(r){case 3:return helper(r);case 4:case 5:case 6:return helper(r+2);case 7:return helper(r+1);default:return helper(r+2);}}
 		}`,
-	}, "effects/Root")
+	}, "effects/Root", "effects/Root$Box")
 	root := classes["effects/Root"]
+	bundle := verifyM5baBundle(classes)
 	denseCode := parseStaticsClass(t, root).namedMethod(t, "dense").code
 	sparseCode := parseStaticsClass(t, root).namedMethod(t, "sparse").code
 	verifyM5caRequireOpcode(t, denseCode, 0xaa)
@@ -174,15 +226,19 @@ func TestVerifyM5caSwitchPreservesPrefixesAndGuestEffects(t *testing.T) {
 	for _, tc := range []struct {
 		method string
 		arg    int32
+		want   int32
 	}{
-		{"dense", -1}, {"dense", 0}, {"dense", 1}, {"dense", 7},
-		{"sparse", -100}, {"sparse", 200}, {"sparse", 0},
-		{"nestedLoop", -1}, {"nestedLoop", 5},
+		{"dense", -1, 46}, {"dense", 0, 50}, {"dense", 1, 48}, {"dense", 2, 51}, {"dense", 7, 49},
+		{"sparse", -100, 41}, {"sparse", 200, 42}, {"sparse", 0, 43},
+		{"nestedLoop", -1, 48}, {"nestedLoop", 5, 51},
 	} {
-		want := verifyM5baJava8Int(t, [][]byte{root}, "effects.Root", tc.method, []int32{tc.arg})
+		jvmWant := verifyM5baJava8Int(t, bundle, "effects.Root", tc.method, []int32{tc.arg})
+		if jvmWant != tc.want {
+			t.Fatalf("JVM %s(%d)=%d want intended fallthrough/effect value %d", tc.method, tc.arg, jvmWant, tc.want)
+		}
 		verifyM5baAssertValue(t, func() (Result, error) {
-			return Run(root, tc.method, []int32{tc.arg}, verifyM5caGasLimit)
-		}, want)
+			return RunClasses(bundle, "effects/Root", tc.method, []int32{tc.arg}, verifyM5caGasLimit)
+		}, tc.want)
 	}
 }
 

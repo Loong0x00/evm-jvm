@@ -635,7 +635,22 @@ contract JVMSubsetInterpreter {
             uint256 opPC = f.pc;
             uint8 op = uint8(c.data[selection.codeOffset + f.pc]);
             ++f.pc;
-            if (op == 0x00) { // nop
+            // Keep the common compiler-emitted local increment near dispatch entry.
+            // This is still one ordinary JVM instruction per interpreter iteration;
+            // it only avoids traversing unrelated arithmetic dispatch branches.
+            if (op == 0x84) { // iinc
+                uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
+                int8 amount = int8(uint8(c.data[selection.codeOffset + f.pc + 1]));
+                if (local >= f.locals.length) revert BytecodeError(8, opPC);
+                if (!f.initialized[local]) revert BytecodeError(11, opPC);
+                _requireKind(f.locals[local], KIND_INT, opPC);
+                unchecked {
+                    f.locals[local] = _packInt(
+                        uint32(_payload(f.locals[local])) + uint32(int32(amount))
+                    );
+                }
+                f.pc += 2;
+            } else if (op == 0x00) { // nop
                 continue;
             } else if (op == 0x01) { // aconst_null
                 f.sp = _push(f.stack, f.sp, _packRef(0), opPC);
@@ -894,18 +909,6 @@ contract JVMSubsetInterpreter {
                 else left ^= right;
                 f.stack[f.sp - 2] = _packLong(left);
                 --f.sp;
-            } else if (op == 0x84) { // iinc
-                uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
-                int8 amount = int8(uint8(c.data[selection.codeOffset + f.pc + 1]));
-                if (local >= f.locals.length) revert BytecodeError(8, opPC);
-                if (!f.initialized[local]) revert BytecodeError(11, opPC);
-                _requireKind(f.locals[local], KIND_INT, opPC);
-                unchecked {
-                    f.locals[local] = _packInt(
-                        uint32(_payload(f.locals[local])) + uint32(int32(amount))
-                    );
-                }
-                f.pc += 2;
             } else if (op == 0x85) { // i2l
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
@@ -3634,10 +3637,14 @@ contract JVMSubsetInterpreter {
             }
             pc += width;
         }
-        pc = 0;
-        while (pc < s.codeLength) {
+        // The first pass has already decoded and validated every instruction's
+        // width. Walk its start map directly for edge validation rather than
+        // decoding every instruction a second time. Operand and switch-payload
+        // bytes remain untrusted, but are ignored unless the first pass marked
+        // them as actual instruction starts.
+        for (pc = 0; pc < s.codeLength; ++pc) {
+            if (!starts[pc]) continue;
             uint8 op = uint8(c.data[s.codeOffset + pc]);
-            uint256 width = _instructionWidth(c.data, s.codeOffset, s.codeLength, op, pc);
             if ((op >= 0x99 && op <= 0xa7) || op == 0xc6 || op == 0xc7) {
                 _requireDecodedTarget(
                     _decodedTarget(c.data, s.codeOffset, pc), starts, s.codeLength, pc
@@ -3650,7 +3657,6 @@ contract JVMSubsetInterpreter {
             } else if (op == 0xaa || op == 0xab) {
                 _validateSwitchTargets(c.data, s.codeOffset, s.codeLength, pc, starts, op == 0xab);
             }
-            pc += width;
         }
     }
 
