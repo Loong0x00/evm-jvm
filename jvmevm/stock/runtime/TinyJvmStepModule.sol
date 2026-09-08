@@ -17,6 +17,7 @@ contract TinyJvmStepModule {
         uint8 maxStack;
         uint8 maxLocals;
         bytes starts;
+        uint32[] constantOffsets;
     }
 
     function inspect(address page, bytes32 expectedPageHash, bytes32 expectedPayloadHash)
@@ -63,7 +64,7 @@ contract TinyJvmStepModule {
                     : (uint16(uint8(d[uint256(p.codeOffset) + pc + 1])) << 8)
                         | uint16(uint8(d[uint256(p.codeOffset) + pc + 2]));
                 // The parser proved the tag and bounds. Integer bytes follow the tag.
-                uint256 cp = _constantPoolOffset(d, index);
+                uint256 cp = p.constantOffsets[index];
                 uint32 v = _u4raw(d, cp + 1);
                 _push(afterState, p.maxStack, v, pc);
                 afterState.pc = pc + (op == 0x12 ? 2 : 3);
@@ -278,6 +279,9 @@ contract TinyJvmStepModule {
         }
         if (pos != n) revert StockClassError(1, pos);
         out.starts = _predecode(d, out, tags, offsets);
+        // Reuse the offsets already validated in this resume. Rescanning a
+        // 512-entry CP at each ldc could exceed the coordinator's step stipend.
+        out.constantOffsets = offsets;
     }
 
     function _parseCode(
@@ -400,22 +404,6 @@ contract TinyJvmStepModule {
         if ((mustObject && !isObject) || (!mustObject && isObject)) {
             revert StockClassError(4, errorOffset);
         }
-    }
-
-    function _constantPoolOffset(bytes memory d, uint16 wanted) private pure returns (uint256 pos) {
-        uint16 count = _u2raw(d, 8);
-        pos = 10;
-        for (uint256 i = 1; i < count; ++i) {
-            uint8 tag = uint8(d[pos]);
-            if (i == wanted) return pos;
-            ++pos;
-            if (tag == 1) pos += 2 + _u2raw(d, pos);
-            else if (tag == 3 || tag == 4 || tag == 9 || tag == 10 || tag == 11 || tag == 12 || tag == 18) pos += 4;
-            else if (tag == 5 || tag == 6) { pos += 8; ++i; }
-            else if (tag == 7 || tag == 8 || tag == 16) pos += 2;
-            else if (tag == 15) pos += 3;
-        }
-        revert StockBytecodeError(6, 0);
     }
 
     function _utfIndex(uint8[] memory tags, uint16 index, uint256 off) private pure {

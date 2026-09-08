@@ -1,19 +1,14 @@
 package stock
 
 import (
-	"errors"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/core/vm"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
-// TestStockReviewAcceptedBoundaryResumeReproducer records a frozen-profile input
-// for which the module can complete the final batch with a 2M direct call, but
-// the coordinator's reserve arithmetic leaves too small a stipend at the same
-// transaction cap. The test passes only while reproducing that acceptance
-// blocker; JAVA_EVM_STOCK_S0_REVIEW.md explains the expected post-fix behavior.
-func TestStockReviewAcceptedBoundaryResumeReproducer(t *testing.T) {
+// This exact review input formerly failed its final coordinator batch at 2M.
+// Reusing validated CP offsets now must complete it without raising any budget.
+func TestStockReviewAcceptedBoundaryResume(t *testing.T) {
 	page := stockVerifyLoadArtifact(t, ArtifactPage)
 	module := stockVerifyLoadArtifact(t, TinyJvmStepModule)
 	coord := stockVerifyLoadArtifact(t, VMCoordinator)
@@ -80,11 +75,19 @@ func TestStockReviewAcceptedBoundaryResumeReproducer(t *testing.T) {
 		t.Fatalf("pre-failure checkpoint=(epoch=%d total=%d machine=%+v)", beforeEpoch, beforeTotal, beforeMachine)
 	}
 
-	failed := stockVerifyResume(t, e, coord, coordAddr, beforeEpoch, 16, 32, stockVerifyCallGas)
-	if failed.coreErr != nil || failed.result == nil || !errors.Is(failed.result.Err, vm.ErrExecutionReverted) || len(failed.result.ReturnData) != 0 {
-		t.Fatalf("boundary failure identity: core=%v evm=%v data=%x", failed.coreErr, stockVerifyResultErr(failed.result), stockVerifyResultData(failed.result))
-	}
+	failed := stockVerifyResume(t, e, coord, coordAddr, beforeEpoch, 16, 1, stockVerifyCallGas)
+	stockVerifyAssertRevert(t, failed, "StockControlError(uint256)", 6)
 	stockVerifyAssertFailedRollback(t, e, coord, coordAddr, beforeEpoch, beforeTotal, beforeDigest, beforeMachine, failed)
-	t.Logf("reproduced accepted-profile stipend failure: payload=%d cp_count=512 code=256 directFinalGas=%d coordinatorCreateGas=%d prefixResumeGas=%d failedResumeGas=%d",
-		len(payload), direct.result.UsedGas, create.result.UsedGas, successfulResumeGas, failed.result.UsedGas)
+	final := stockVerifyResume(t, e, coord, coordAddr, beforeEpoch, 16, 32, stockVerifyCallGas)
+	if final.coreErr != nil || final.result == nil || final.result.Failed() {
+		t.Fatalf("boundary must complete at unchanged2M: core=%v evm=%v data=%x", final.coreErr, stockVerifyResultErr(final.result), stockVerifyResultData(final.result))
+	}
+	epoch, total, digest, terminal := stockVerifyCheckpoint(t, e, coord, coordAddr)
+	if epoch != 16 || total != 254 || !stockVerifyMachineEqual(terminal, directMachine) ||
+		digest != stockVerifyDigest(t, module, payloadHash, moduleHash, terminal, epoch, total) {
+		t.Fatalf("wrong boundary checkpoint epoch=%d total=%d machine=%+v", epoch, total, terminal)
+	}
+	stockVerifyCheckEvent(t, coord, final, epoch, total, terminal, 14, stockVerifyDirty(beforeMachine, terminal), digest)
+	t.Logf("accepted-profile boundary passes: payload=%d cp_count=512 code=256 directFinalGas=%d coordinatorCreateGas=%d prefixResumeGas=%d finalResumeGas=%d",
+		len(payload), direct.result.UsedGas, create.result.UsedGas, successfulResumeGas, final.result.UsedGas)
 }

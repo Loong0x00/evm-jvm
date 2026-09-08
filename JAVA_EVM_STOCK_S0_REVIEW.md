@@ -4,7 +4,8 @@ Reviewed integration base: `1f45125dc8c1b71d9d4fe4f3a27e7e6f56a8fb9b`.
 
 ## Result
 
-**S0 acceptance is blocked by one reproduced gas-feasibility defect.** The class
+**At the review base, one gas-feasibility defect blocked acceptance.** Parent
+resolution and the now-success-required regression are recorded below. The class
 parser and step module accept a class inside every frozen structural limit, and a
 direct 2,000,000-gas module call completes its final batch, but the coordinator's
 required 800,000-gas commit reservation leaves the module too little gas. The same
@@ -80,8 +81,9 @@ scope:
   2^32 add/subtract/multiply/negate/iinc, exact signed immediates, initialized-local
   tracking, JVM-relative PC, stack clearing, and canonical inactive cells. Direct
   malformed-state and execution failures retain the specified structured errors.
-- **Controller:** subtraction for the stipend is guarded against underflow, module
-  failures bubble, returned ABI words are manually range/canonicality checked, and
+- **Controller:** the review observed an early stipend guard; parent threshold
+  testing later proved it insufficient after state/calldata preparation (see below).
+  Module failures bubble, returned ABI words are manually range/canonicality checked, and
   no persistent machine/header write precedes response and dirty-budget validation.
   Schema-1 digest encoding, numeric checkpoint equality, conservative dirty counts,
   one success event, terminal rejection, and failed-call rollback matched the
@@ -119,3 +121,41 @@ module is absent (`Cannot find module 'solc'`). I did not install or substitute 
 compiler. Artifact loader/deployment tests passed, metadata source hashes matched,
 and the checked artifact bytes were exercised, but reproducible recompilation
 remains for a worktree with the pinned dependency installed.
+
+## Parent resolution after review
+
+Parent reproduced the original S0-R1 log on the review base, independently of the
+reviewer's report. The module parsed/validated CP offsets but discarded them, then
+rescanned the entire CP for each ldc. Reusing that already-validated in-call array
+removes the duplicate scan without changing class bytes, CP/Code/page limits,
+instruction semantics, transaction cap or 800k commit reserve.
+
+The SAME2915-byte class now completes its last coordinator resume at **799224 gas**
+inside the unchanged2M transaction cap; direct final batch899343gas. After16 successful
+resumes the exact terminal state is epoch16,totalSteps254,pc256,result243. The test
+now REQUIRES success, matching the actual JVM oracle243; a too-small dirty-word
+budget at the same boundary separately proves rollback before the successful retry.
+`TestStockReviewAcceptedBoundaryResume` replaces the success-on-reproduced-failure
+test. Thus no defect reproducer is counted as semantic success.
+
+Separately, parent generated80 Java8/21/signed-ApplyMessage resume probes and42 gas
+threshold probes. The latter exposed20 panic0x11 cases at855000..900000 gas before
+and after a nonzero checkpoint: the early guard preceded lock/state loads/calldata
+encoding, so the later subtraction could underflow. Commit861c8c2 checks actual
+available gas again at the call boundary. These failures now return the defined
+reserve error, not Solidity panic, with unchanged VM state/log rollback behavior.
+
+The harness's initial numeric-zero check also needed correction: ABI big.Int zero
+can have a different nil/empty internal word slice than new(big.Int). Parent1f45125
+checks all scalar fields and numeric canonical cell values plus the independent
+digest rather than using reflect.DeepEqual on math/big internals. Nothing is skipped.
+
+Final module runtime11132bytes, SHA256
+`3f36c84abdb4701faa36fa5ce1490ce179fc5c395a17f7e6fe45de861acdbfd4`;
+coordinator template3724bytes, SHA256
+`720f7ee7a175fa2af9b1000abaf58d4528e81666f9fa300312ae2108125f561e`.
+Coordinator actual deployed hashes include constructor immutables, verified separately.
+Parent recompiled with pinned solc and reran the complete stock tests; the review's
+missing-node-dependency caveat does not apply to those parent gates. Evidence:
+/tmp/stock-s0-parent-boundary-repro.log, /tmp/stock-s0-parent-reserve-red.log,
+/tmp/stock-s0-cp-rebuild.log, /tmp/stock-s0-cp-green.log.
