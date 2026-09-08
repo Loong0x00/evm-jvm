@@ -102,8 +102,8 @@ func TestVerifyM4dRecursiveCovarianceNestedConstructionCastsAndTypeTests(t *test
                 int[] i1=new int[1];int[][] i2=new int[1][];
                 return (c1 instanceof Base[]?1:0)+(c1 instanceof Object[]?2:0)
                     +(c2 instanceof Base[][]?4:0)+(c2 instanceof Object[][]?8:0)
-                    +(i1 instanceof Object?16:0)+(!(i1 instanceof Object[])?32:0)
-                    +(i2 instanceof Object[]?64:0)+(!(i2 instanceof Object[][])?128:0)
+                    +(i1 instanceof Object?16:0)+(!((Object)i1 instanceof Object[])?32:0)
+                    +(i2 instanceof Object[]?64:0)+(!((Object)i2 instanceof Object[][])?128:0)
                     +(((Base[])c1)==c1?256:0)+(((Object[])i2)==i2?512:0);}
             public static int heterogeneous(){Object[] values=new Object[3];Child child=new Child(6);
                 int[] ints=new int[1];Child[] children=new Child[0];ints[0]=7;
@@ -339,16 +339,29 @@ func TestVerifyM4dTypedStackUninitializedAndWrongHeapOpcodes(t *testing.T) {
         public static int padding(){int x=0;x=x+1;x=x+2;x=x+3;x=x+4;x=x+5;return x;}
     }`)
 	for _, tc := range []struct {
-		method   string
-		from, to byte
+		method                   string
+		from, to                 byte
+		producerFrom, producerTo byte
 	}{
-		{"refLoad", verifyM4dAaload, 0x2e},
-		{"refStore", verifyM4dAastore, 0x4f},
-		{"intLoad", 0x2e, verifyM4dAaload},
-		{"intStore", 0x4f, verifyM4dAastore},
+		{"refLoad", verifyM4dAaload, 0x2e, 0, 0},
+		{"refStore", verifyM4dAastore, 0x4f, 0x01, 0x03},
+		{"intLoad", 0x2e, verifyM4dAaload, 0, 0},
+		{"intStore", 0x4f, verifyM4dAastore, 0x05, 0x01},
 	} {
 		t.Run(tc.method, func(t *testing.T) {
 			bad, opPC := verifyM4dReplaceOpcode(t, original, tc.method, tc.from, tc.to)
+			if tc.producerFrom != 0 {
+				bad = verifyM4dMutate(t, bad, func(_ []byte, c staticsClass) {
+					code := c.namedMethod(t, tc.method).code
+					if opPC == 0 {
+						t.Fatalf("%s store at pc 0 has no value producer", tc.method)
+					}
+					if code[opPC-1] != tc.producerFrom {
+						t.Fatalf("%s value producer at pc %d is 0x%02x, want 0x%02x", tc.method, opPC-1, code[opPC-1], tc.producerFrom)
+					}
+					code[opPC-1] = tc.producerTo
+				})
+			}
 			verifyM4dAssertError(t, func() (Result, error) {
 				return Run(bad, tc.method, nil, verifyM4dGasLimit)
 			}, "ReferenceError(uint256,uint256)", 1, uint64(opPC))
@@ -357,13 +370,13 @@ func TestVerifyM4dTypedStackUninitializedAndWrongHeapOpcodes(t *testing.T) {
 
 	classIndex := verifyM4dClassIndex(t, parseStaticsClass(t, original), "RefKinds")
 	cases := []struct {
-		name string
-		code []byte
-		pc   uint64
+		name        string
+		code        []byte
+		faultOpcode byte
 	}{
-		{"int-as-reference", []byte{0x04, verifyM4dAnewarray, byte(classIndex >> 8), byte(classIndex), 0x03, 0x04, verifyM4dAastore, 0x04, 0xac}, 6},
-		{"reference-as-int", []byte{0x04, verifyM4dAnewarray, byte(classIndex >> 8), byte(classIndex), 0x03, 0x01, 0x4f, 0x04, 0xac}, 6},
-		{"uninitialized-element", []byte{0x04, verifyM4dAnewarray, byte(classIndex >> 8), byte(classIndex), 0x03, verifyM4bNew, byte(classIndex >> 8), byte(classIndex), verifyM4dAastore, 0x04, 0xac}, 9},
+		{"int-as-reference", []byte{0x04, verifyM4dAnewarray, byte(classIndex >> 8), byte(classIndex), 0x03, 0x04, verifyM4dAastore, 0x04, 0xac}, verifyM4dAastore},
+		{"reference-as-int", []byte{0x04, verifyM4dAnewarray, byte(classIndex >> 8), byte(classIndex), 0x03, 0x01, 0x4f, 0x04, 0xac}, 0x4f},
+		{"uninitialized-element", []byte{0x04, verifyM4dAnewarray, byte(classIndex >> 8), byte(classIndex), 0x03, verifyM4bNew, byte(classIndex >> 8), byte(classIndex), verifyM4dAastore, 0x04, 0xac}, verifyM4dAastore},
 	}
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
@@ -372,9 +385,13 @@ func TestVerifyM4dTypedStackUninitializedAndWrongHeapOpcodes(t *testing.T) {
 			if !bytes.Equal(gotCode[:len(tc.code)], tc.code) {
 				t.Fatalf("handcrafted stack program changed: got %x want prefix %x", gotCode, tc.code)
 			}
+			faultPC := verifyM4dOpcodePC(t, tc.code, tc.faultOpcode, 0)
+			if gotCode[faultPC] != tc.faultOpcode {
+				t.Fatalf("fault opcode at derived pc %d is 0x%02x, want 0x%02x", faultPC, gotCode[faultPC], tc.faultOpcode)
+			}
 			verifyM4dAssertError(t, func() (Result, error) {
 				return Run(bad, "padding", nil, verifyM4dGasLimit)
-			}, "BytecodeError(uint256,uint256)", 14, tc.pc)
+			}, "BytecodeError(uint256,uint256)", 14, uint64(faultPC))
 		})
 	}
 }
