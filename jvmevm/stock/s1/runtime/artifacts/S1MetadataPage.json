@@ -1,0 +1,56 @@
+{
+  "contractName": "S1MetadataPage",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "code",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        }
+      ],
+      "name": "S1ClassError",
+      "type": "error"
+    }
+  ],
+  "bytecode": "60806040523461014f576101cd8038038061001981610153565b92833981019060208183031261014f578051906001600160401b03821161014f570181601f8201121561014f5780519061005a6100558361018c565b610153565b928284526020838301011161014f57815f9260208093018386015e83010152805180158015610144575b61012c576001810190818111610118576100ac6100a36100558461018c565b9280845261018c565b602083019390601f19013685375f5b8281106100c9575050505190f35b7fff000000000000000000000000000000000000000000000000000000000000006100f482846101a7565b51169060018101808211610118576101116001935f1a91876101a7565b53016100bb565b634e487b7160e01b5f52601160045260245ffd5b63429f0aa960e01b5f5260056004525f60245260445ffd5b50611fff8111610084565b5f80fd5b6040519190601f01601f191682016001600160401b0381118382101761017857604052565b634e487b7160e01b5f52604160045260245ffd5b6001600160401b03811161017857601f01601f191660200190565b9081518110156101b8570160200190565b634e487b7160e01b5f52603260045260245ffdfe",
+  "deployedBytecode": "5f80fd",
+  "immutableReferences": {},
+  "compiler": {
+    "version": "0.8.30+commit.73712a01.Emscripten.clang",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    }
+  },
+  "sourceHashes": {
+    "S1Types.sol": "1e587012f6fa31a401d523687d3e4d87eb36a716837f55213a9e95dfa855823c",
+    "S1MetadataPage.sol": "63bc1c00ef1b93d24d1583229c2ce5965064557609d679e11beee55cc2fa04a4",
+    "S1Codec.sol": "2c9f4aadb08ee8852b254d8b82a915c279a49e19c0be32aaa5bcc6753919fbbc",
+    "S1ClassParser.sol": "ade5d2b0bb4590c3c4772cfea53d2793f8c61d3cc44a2fc303a4042202afb4d5",
+    "S1StepModule.sol": "3dca6a04810453aed95432c8e81cea3cecffaf079a6ab81f3da78938baed2224",
+    "S1Coordinator.sol": "fa5085399214518f5c1a0061c1f6cd1686e7b8ec5b781c049ff65a296144020f"
+  }
+}
