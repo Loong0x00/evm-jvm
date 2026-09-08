@@ -46,6 +46,7 @@ contract JVMSubsetInterpreter {
     uint8 private constant PRIMITIVE_BYTE = 0x42; // B
     uint8 private constant PRIMITIVE_CHAR = 0x43; // C
     uint8 private constant PRIMITIVE_INT = 0x49; // I
+    uint8 private constant PRIMITIVE_LONG = 0x4a; // J
     uint8 private constant PRIMITIVE_SHORT = 0x53; // S
     uint8 private constant PRIMITIVE_BOOLEAN = 0x5a; // Z
     // Primitive array leaves use their descriptor byte. Reference leaves are kept
@@ -559,7 +560,9 @@ contract JVMSubsetInterpreter {
         }
         // Arrays and objects share one one-based, unforgeable handle namespace. The independent
         // logical limits still apply, while the outer tables remain lazy for scalar-only programs.
-        uint32[][] memory arrayHeap;
+        // Full-width discriminated cells: primitive long arrays use all 64 bits;
+        // metadata prevents int/reference cells from being reinterpreted as longs.
+        uint64[][] memory arrayHeap;
         uint256[][] memory objectHeap;
         uint8[] memory heapKinds;
         uint256[] memory heapClasses;
@@ -691,8 +694,8 @@ contract JVMSubsetInterpreter {
                 f.sp = _loadReference(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x2a, opPC
                 );
-            } else if (op == 0x2e || (op >= 0x32 && op <= 0x35)) {
-                // iaload / aaload / baload / caload / saload
+            } else if (op == 0x2e || op == 0x2f || (op >= 0x32 && op <= 0x35)) {
+                // iaload / laload / aaload / baload / caload / saload
                 if (f.sp < 2) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 2], KIND_REF, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
@@ -704,6 +707,7 @@ contract JVMSubsetInterpreter {
                 bool referenceComponents = _arrayHasReferenceComponents(rank, leafType);
                 bool matching = (op == 0x32 && referenceComponents)
                     || (op == 0x2e && rank == 1 && leafType == PRIMITIVE_INT)
+                    || (op == 0x2f && rank == 1 && leafType == PRIMITIVE_LONG)
                     || (op == 0x33 && rank == 1
                         && (leafType == PRIMITIVE_BYTE || leafType == PRIMITIVE_BOOLEAN))
                     || (op == 0x34 && rank == 1 && leafType == PRIMITIVE_CHAR)
@@ -713,9 +717,11 @@ contract JVMSubsetInterpreter {
                 if (index < 0 || uint256(uint32(index)) >= arrayHeap[handle].length) {
                     _throwJava(5, frames, depth);
                 }
-                uint32 cell = arrayHeap[handle][uint256(uint32(index))];
-                f.stack[f.sp - 2] = referenceComponents
-                    ? _packRef(cell) : _packInt(_normalizeInt(cell, uint8(leafType)));
+                uint64 cell = arrayHeap[handle][uint256(uint32(index))];
+                f.stack[f.sp - 2] = op == 0x2f ? _packLong(cell)
+                    : (referenceComponents
+                        ? _packRef(uint32(cell))
+                        : _packInt(_normalizeInt(uint32(cell), uint8(leafType))));
                 --f.sp;
             } else if (op == 0x36 || op == 0x37 || op == 0x3a) { // istore / lstore / astore
                 uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
@@ -737,12 +743,15 @@ contract JVMSubsetInterpreter {
                 f.sp = _storeReference(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x4b, opPC
                 );
-            } else if (op == 0x4f || (op >= 0x53 && op <= 0x56)) {
-                // iastore / aastore / bastore / castore / sastore
+            } else if (op == 0x4f || op == 0x50 || (op >= 0x53 && op <= 0x56)) {
+                // iastore / lastore / aastore / bastore / castore / sastore
                 if (f.sp < 3) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 3], KIND_REF, opPC);
                 _requireKind(f.stack[f.sp - 2], KIND_INT, opPC);
-                _requireKind(f.stack[f.sp - 1], op == 0x53 ? KIND_REF : KIND_INT, opPC);
+                _requireKind(
+                    f.stack[f.sp - 1],
+                    op == 0x53 ? KIND_REF : (op == 0x50 ? KIND_LONG : KIND_INT), opPC
+                );
                 uint256 handle = _payload(f.stack[f.sp - 3]);
                 if (op == 0x53) {
                     // Constructor tokens and forged references are rejected before Java's
@@ -756,6 +765,7 @@ contract JVMSubsetInterpreter {
                 bool referenceComponents = _arrayHasReferenceComponents(rank, leafType);
                 bool matching = (op == 0x53 && referenceComponents)
                     || (op == 0x4f && rank == 1 && leafType == PRIMITIVE_INT)
+                    || (op == 0x50 && rank == 1 && leafType == PRIMITIVE_LONG)
                     || (op == 0x54 && rank == 1
                         && (leafType == PRIMITIVE_BYTE || leafType == PRIMITIVE_BOOLEAN))
                     || (op == 0x55 && rank == 1 && leafType == PRIMITIVE_CHAR)
@@ -769,8 +779,10 @@ contract JVMSubsetInterpreter {
                     classes, f.stack[f.sp - 1], rank, leafType,
                     heapKinds, heapClasses, arrayRanks, arrayLeafTypes, parentLinks
                 )) _throwJava(9, frames, depth);
-                uint32 stored = uint32(_payload(f.stack[f.sp - 1]));
-                if (!referenceComponents) stored = _normalizeInt(stored, uint8(leafType));
+                uint64 stored = uint64(_payload(f.stack[f.sp - 1]));
+                if (op != 0x50 && !referenceComponents) {
+                    stored = uint64(_normalizeInt(uint32(stored), uint8(leafType)));
+                }
                 arrayHeap[handle][uint256(uint32(index))] = stored;
                 f.sp -= 3;
             } else if (op == 0x57) { // pop (category 1 only)
@@ -982,7 +994,7 @@ contract JVMSubsetInterpreter {
                     heapClasses = new uint256[](MAX_HANDLES + 1);
                     arrayRanks = new uint8[](MAX_HANDLES + 1);
                     arrayLeafTypes = new uint256[](MAX_HANDLES + 1);
-                    arrayHeap = new uint32[][](MAX_HANDLES + 1);
+                    arrayHeap = new uint64[][](MAX_HANDLES + 1);
                     objectHeap = new uint256[][](MAX_HANDLES + 1);
                 }
                 ++objectCount;
@@ -1499,7 +1511,7 @@ contract JVMSubsetInterpreter {
                     heapClasses = new uint256[](MAX_HANDLES + 1);
                     arrayRanks = new uint8[](MAX_HANDLES + 1);
                     arrayLeafTypes = new uint256[](MAX_HANDLES + 1);
-                    arrayHeap = new uint32[][](MAX_HANDLES + 1);
+                    arrayHeap = new uint64[][](MAX_HANDLES + 1);
                     objectHeap = new uint256[][](MAX_HANDLES + 1);
                 }
                 ++arrayCount;
@@ -1508,7 +1520,7 @@ contract JVMSubsetInterpreter {
                 heapKinds[nextHandle] = HEAP_ARRAY;
                 arrayRanks[nextHandle] = allocatedType.rank;
                 arrayLeafTypes[nextHandle] = allocatedType.leafType;
-                arrayHeap[nextHandle] = new uint32[](length);
+                arrayHeap[nextHandle] = new uint64[](length);
                 f.stack[f.sp - 1] = _packRef(uint32(nextHandle));
             } else if (op == 0xc5) { // multianewarray
                 uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
@@ -1542,7 +1554,7 @@ contract JVMSubsetInterpreter {
                     heapClasses = new uint256[](MAX_HANDLES + 1);
                     arrayRanks = new uint8[](MAX_HANDLES + 1);
                     arrayLeafTypes = new uint256[](MAX_HANDLES + 1);
-                    arrayHeap = new uint32[][](MAX_HANDLES + 1);
+                    arrayHeap = new uint64[][](MAX_HANDLES + 1);
                     objectHeap = new uint256[][](MAX_HANDLES + 1);
                 }
                 uint256 rootHandle = nextHandle + 1;
@@ -3127,7 +3139,7 @@ contract JVMSubsetInterpreter {
         if (dimensions == 0 || dimensions >= n) return (false, false, 0, 0, 0, 0);
         rank = uint8(dimensions);
         uint8 component = uint8(data[off + dimensions]);
-        if (_isIntLike(component) && dimensions + 1 == n) {
+        if ((_isIntLike(component) || component == PRIMITIVE_LONG) && dimensions + 1 == n) {
             return (true, true, rank, component, 0, 0);
         }
         if (component == 0x4c) {
@@ -3142,8 +3154,8 @@ contract JVMSubsetInterpreter {
             return (true, true, rank, 0, leafOffset, leafLength);
         }
         if (dimensions + 1 != n) return (false, false, 0, 0, 0, 0);
-        // Category-2 and IEEE primitive leaves remain structurally valid but unsupported.
-        bool deferred = component == 0x44 || component == 0x46 || component == 0x4a;
+        // IEEE primitive leaves remain structurally valid but unsupported.
+        bool deferred = component == 0x44 || component == 0x46;
         return deferred ? (true, false, rank, 0, 0, 0)
             : (false, false, 0, 0, 0, 0);
     }
@@ -3217,7 +3229,7 @@ contract JVMSubsetInterpreter {
     }
 
     function _allocateMultiArray(
-        uint32[][] memory arrayHeap, uint8[] memory heapKinds,
+        uint64[][] memory arrayHeap, uint8[] memory heapKinds,
         uint8[] memory arrayRanks, uint256[] memory arrayLeafTypes,
         uint256 nextHandle, ArrayType memory allocatedType, uint256[] memory counts
     ) private pure returns (uint256) {
@@ -3231,7 +3243,7 @@ contract JVMSubsetInterpreter {
                 heapKinds[nextHandle] = HEAP_ARRAY;
                 arrayRanks[nextHandle] = allocatedType.rank - uint8(level);
                 arrayLeafTypes[nextHandle] = allocatedType.leafType;
-                arrayHeap[nextHandle] = new uint32[](length);
+                arrayHeap[nextHandle] = new uint64[](length);
                 if (level != 0) {
                     uint256 parentLength = counts[level - 1];
                     uint256 parent = previousStart + i / parentLength;
@@ -3590,9 +3602,9 @@ contract JVMSubsetInterpreter {
     function _instructionWidth(uint8 op, uint256 pc) private pure returns (uint256) {
         if (
             op <= 0x01 || (op >= 0x02 && op <= 0x0a) || (op >= 0x1a && op <= 0x21)
-                || (op >= 0x2a && op <= 0x2e) || (op >= 0x32 && op <= 0x35)
+                || (op >= 0x2a && op <= 0x2f) || (op >= 0x32 && op <= 0x35)
                 || (op >= 0x3b && op <= 0x42)
-                || (op >= 0x4b && op <= 0x4f) || (op >= 0x53 && op <= 0x56)
+                || (op >= 0x4b && op <= 0x50) || (op >= 0x53 && op <= 0x56)
                 || (op >= 0x57 && op <= 0x61) || (op >= 0x64 && op <= 0x65)
                 || (op >= 0x68 && op <= 0x69) || (op >= 0x6c && op <= 0x6d)
                 || (op >= 0x70 && op <= 0x71) || (op >= 0x74 && op <= 0x75)
@@ -3758,7 +3770,9 @@ contract JVMSubsetInterpreter {
             }
             if (off + dimensions >= end) return (false, 0, 0);
             uint8 leaf = uint8(data[off + dimensions]);
-            if (_isIntLike(leaf)) return (true, dimensions + 1, uint8(KIND_REF));
+            if (_isIntLike(leaf) || leaf == PRIMITIVE_LONG) {
+                return (true, dimensions + 1, uint8(KIND_REF));
+            }
             if (leaf != 0x4c) return (false, 0, 0);
             uint256 i = off + dimensions + 1;
             while (i < end && uint8(data[i]) != 0x3b) ++i;
@@ -3836,6 +3850,7 @@ contract JVMSubsetInterpreter {
         if (atype == 8) return PRIMITIVE_BYTE;
         if (atype == 9) return PRIMITIVE_SHORT;
         if (atype == 10) return PRIMITIVE_INT;
+        if (atype == 11) return PRIMITIVE_LONG;
         return 0;
     }
 
