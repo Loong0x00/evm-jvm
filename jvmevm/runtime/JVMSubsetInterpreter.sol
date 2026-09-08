@@ -576,6 +576,21 @@ contract JVMSubsetInterpreter {
             if (f.isInitContinuation) {
                 uint256 initializingClass = f.classIndex;
                 ClassInfo memory initializing = classes[initializingClass];
+                // JVMS 5.5 initializes default-declaring superinterfaces only as
+                // prerequisites of an ordinary class. The traversal is repeated after
+                // each prerequisite returns; initializationState both deduplicates
+                // diamonds and makes reentrant requests harmless.
+                if (!_isInterface(initializing)) {
+                    (bool hasDefaultPrerequisite, uint256 defaultPrerequisite) =
+                        _nextDefaultInterface(classes, initializingClass, initializationState);
+                    if (hasDefaultPrerequisite) {
+                        depth = _initializeClass(
+                            classes, staticValues, initializationState, frames, depth,
+                            defaultPrerequisite, parentLinks, hierarchyState
+                        );
+                        continue;
+                    }
+                }
                 if (initializing.initializerPlusOne != 0 && !initializerStarted[initializingClass]) {
                     initializerStarted[initializingClass] = true;
                     if (selected[initializingClass].length == 0) {
@@ -1019,6 +1034,72 @@ contract JVMSubsetInterpreter {
             } else if (op == 0xb7) { // invokespecial
                 uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
                 f.pc += 2;
+                bool interfaceSpecial = refIndex != 0 && refIndex < c.cp.length
+                    && uint8(c.cp[refIndex]) == 11;
+                if (interfaceSpecial) {
+                    VirtualResolution memory interfaceResolved = _resolveInterfaceSpecial(
+                        classes, f.classIndex, f.methodIndex, refIndex, opPC,
+                        parentLinks, hierarchyState
+                    );
+                    Selected memory interfaceSignature = _loadVirtualSignature(
+                        classes[interfaceResolved.owner], interfaceResolved.method, opPC
+                    );
+                    if (f.sp < interfaceSignature.argumentCount + 1) {
+                        revert BytecodeError(3, opPC);
+                    }
+                    uint256 interfaceBase = f.sp - interfaceSignature.argumentCount - 1;
+                    uint256 interfaceReceiver = f.stack[interfaceBase];
+                    _requireKind(interfaceReceiver, KIND_REF, opPC);
+                    if (f.locals.length == 0 || !f.initialized[0]) revert CallError(4, opPC);
+                    _requireKind(f.locals[0], KIND_REF, opPC);
+                    for (uint256 i = 0; i < interfaceSignature.argumentCount; ++i) {
+                        uint256 argument = f.stack[interfaceBase + 1 + i];
+                        _requireKind(argument, interfaceSignature.argumentKinds[i], opPC);
+                        if (interfaceSignature.argumentKinds[i] == KIND_REF) {
+                            _requireAssignable(
+                                classes, argument, classes[interfaceResolved.owner].data,
+                                interfaceSignature.argumentTypeOffsets[i],
+                                interfaceSignature.argumentTypeLengths[i], heapKinds, heapClasses,
+                                arrayRanks, arrayLeafClasses, nextHandle, parentLinks, opPC
+                            );
+                        }
+                    }
+                    uint256 interfaceHandle = _payload(interfaceReceiver);
+                    if (interfaceHandle == 0) _throwJava(6, frames, depth);
+                    if (interfaceReceiver != f.locals[0]) revert CallError(4, opPC);
+                    _requireHeapKind(
+                        interfaceHandle, heapKinds, nextHandle, HEAP_OBJECT, opPC
+                    );
+                    uint256 interfaceClass = interfaceResolved.owner;
+                    uint256 interfaceMethod = interfaceResolved.method;
+                    if (selected[interfaceClass].length == 0) {
+                        selected[interfaceClass] =
+                            new Selected[](classes[interfaceClass].methods.length);
+                        referenceCaches[interfaceClass] = new uint256[](classes[interfaceClass].cp.length);
+                        fieldCaches[interfaceClass] = new uint256[](classes[interfaceClass].cp.length);
+                    }
+                    if (!selected[interfaceClass][interfaceMethod].loaded) {
+                        selected[interfaceClass][interfaceMethod] = _loadVirtualCallee(
+                            classes[interfaceClass], interfaceMethod, opPC
+                        );
+                        _predecode(classes[interfaceClass], selected[interfaceClass][interfaceMethod]);
+                    }
+                    Selected memory interfaceTarget = selected[interfaceClass][interfaceMethod];
+                    if (depth == MAX_FRAMES) revert JavaException(2);
+                    Frame memory interfaceChild = _newFrame(
+                        interfaceClass, interfaceMethod, interfaceTarget, opPC
+                    );
+                    interfaceChild.locals[0] = interfaceReceiver;
+                    interfaceChild.initialized[0] = true;
+                    for (uint256 i = 0; i < interfaceTarget.argumentCount; ++i) {
+                        interfaceChild.locals[i + 1] = f.stack[interfaceBase + 1 + i];
+                        interfaceChild.initialized[i + 1] = true;
+                    }
+                    f.sp = interfaceBase;
+                    frames[depth] = interfaceChild;
+                    ++depth;
+                    continue;
+                }
                 (uint256 calleeClass, uint256 callee, uint256 symbolicClass, bool isConstructor) =
                     _resolveSpecial(
                         classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
@@ -1470,7 +1551,9 @@ contract JVMSubsetInterpreter {
         _validateHierarchy(classes, classIndex, parentLinks, hierarchyState);
         uint256 current = classIndex;
         while (initializationState[current] == 0) {
-            initializationState[current] = 1; // step 6: mark and prepare before its parent
+            // Mark C active before requesting its superclass. This is observable by
+            // reentrant initialization reached through a superclass or interface.
+            initializationState[current] = 1;
             ClassInfo memory c = classes[current];
             for (uint256 i = 0; i < c.fields.length; ++i) {
                 if ((c.fields[i].accessFlags & 0x0008) != 0 && c.fields[i].hasConstant) {
@@ -1478,9 +1561,12 @@ contract JVMSubsetInterpreter {
                 }
             }
             uint256 link = parentLinks[current];
-            bool parentReady = link == type(uint256).max
-                || (link != 0 && initializationState[link - 1] == 2);
-            if (c.initializerPlusOne == 0 && parentReady) {
+            bool parentReady = _isInterface(c) || link == type(uint256).max
+                || (link != 0 && initializationState[link - 1] != 0);
+            (bool hasDefaultPrerequisite,) = _isInterface(c)
+                ? (false, uint256(0))
+                : _nextDefaultInterface(classes, current, initializationState);
+            if (c.initializerPlusOne == 0 && parentReady && !hasDefaultPrerequisite) {
                 initializationState[current] = 2;
                 return depth;
             }
@@ -1490,11 +1576,57 @@ contract JVMSubsetInterpreter {
             continuation.isInitContinuation = true;
             frames[depth] = continuation;
             ++depth;
-            if (link == type(uint256).max || link == 0) return depth;
+            // Interfaces initialize themselves only; their parent traversal belongs to
+            // the enclosing ordinary-class prerequisite calculation.
+            if (_isInterface(c) || link == type(uint256).max || link == 0) return depth;
             current = link - 1;
             if (initializationState[current] != 0) return depth;
         }
         return depth;
+    }
+
+    function _declaresDefault(ClassInfo memory c) private pure returns (bool) {
+        for (uint256 i = 0; i < c.methods.length; ++i) {
+            uint256 meta = c.methods[i];
+            uint16 access = uint16(meta);
+            if ((access & (0x0008 | 0x0400)) == 0 && _methodCodeCount(meta) == 1) return true;
+        }
+        return false;
+    }
+
+    function _nextDefaultInterface(
+        ClassInfo[] memory classes, uint256 classIndex, uint8[] memory initializationState
+    ) private pure returns (bool found, uint256 target) {
+        bool[] memory seen = new bool[](classes.length);
+        uint256[] memory nodes = new uint256[](classes.length);
+        uint256[] memory edges = new uint256[](classes.length);
+        ClassInfo memory c = classes[classIndex];
+        for (uint256 root = 0; root < c.interfaces.length; ++root) {
+            uint256 direct = _resolveInterfaceEdge(classes, classIndex, root);
+            if (seen[direct]) continue;
+            uint256 size = 1;
+            nodes[0] = direct;
+            seen[direct] = true;
+            while (size != 0) {
+                uint256 at = size - 1;
+                uint256 node = nodes[at];
+                if (edges[at] < classes[node].interfaces.length) {
+                    uint256 edge = edges[at]++;
+                    uint256 parent = _resolveInterfaceEdge(classes, node, edge);
+                    if (!seen[parent]) {
+                        seen[parent] = true;
+                        nodes[size] = parent;
+                        edges[size] = 0;
+                        ++size;
+                    }
+                    continue;
+                }
+                --size; // postorder: parents before the declaring descendant
+                if (initializationState[node] == 0 && _declaresDefault(classes[node])) {
+                    return (true, node);
+                }
+            }
+        }
     }
 
     function _hasActiveInitializer(Frame[] memory frames, uint256 depth)
@@ -1647,9 +1779,26 @@ contract JVMSubsetInterpreter {
             uint256 meta = c.methods[i];
             uint16 access = uint16(meta);
             if ((access & 0x0008) != 0) continue; // static metadata is deferred to M4f-c
-            if ((access & 0x0001) == 0 || (access & 0x0400) == 0
-                || (access & (0x0002 | 0x0020 | 0x0040 | 0x0100 | 0x1000)) != 0
-                || _methodCodeCount(meta) != 0) revert InterfaceError(4, classIndex);
+            uint256 codeCount = _methodCodeCount(meta);
+            bool isAbstract = (access & 0x0400) != 0;
+            // Java 8 public defaults, including ACC_BRIDGE|ACC_SYNTHETIC
+            // compiler bridges, are admitted. Private/native/synchronized forms
+            // and abstract/Code inconsistencies remain unsupported shapes.
+            if ((access & 0x0001) == 0
+                || (access & ~(uint16(0x0001 | 0x0040 | 0x0080 | 0x0400 | 0x0800 | 0x1000))) != 0
+                || (isAbstract ? codeCount != 0 : codeCount != 1)) {
+                revert InterfaceError(4, classIndex);
+            }
+            if (!isAbstract) {
+                uint256 descriptorIndex = (meta >> 32) & 0xffff;
+                if (descriptorIndex == 0 || descriptorIndex >= c.cp.length
+                    || uint8(c.cp[descriptorIndex]) != 1) revert InterfaceError(4, classIndex);
+                (uint256 descriptorOffset, uint256 descriptorLength) = _utf(c.cp[descriptorIndex]);
+                Selected memory signature;
+                if (!_descriptor(c.data, descriptorOffset, descriptorLength, signature)) {
+                    revert InterfaceError(4, classIndex);
+                }
+            }
         }
     }
 
@@ -1798,22 +1947,43 @@ contract JVMSubsetInterpreter {
                 classes, i, nameData, nameOffset, nameLength,
                 descriptorOffset, descriptorLength, pc
             );
-            if (has && (uint16(classes[i].methods[candidate]) & 0x0008) == 0) {
+            if (has && (uint16(classes[i].methods[candidate]) & (0x0002 | 0x0008)) == 0) {
                 declares[i] = true;
                 methods[i] = candidate;
             }
         }
+        uint256 concreteCount;
+        uint256 concreteOwner;
+        uint256 concreteMethod;
+        uint256 abstractOwner;
+        uint256 abstractMethod;
+        bool hasAbstract;
         for (uint256 i = 0; i < classes.length; ++i) {
             if (!declares[i]) continue;
             bool shadowed;
             for (uint256 j = 0; j < classes.length; ++j) {
+                // Any matching declaration in a strict subinterface suppresses
+                // this one, including an abstract re-declaration.
                 if (i != j && declares[j] && _interfaceExtends(classes, j, i)) {
                     shadowed = true;
                     break;
                 }
             }
-            if (!shadowed) return (true, i, methods[i]);
+            if (shadowed) continue;
+            uint256 meta = classes[i].methods[methods[i]];
+            if ((uint16(meta) & 0x0400) == 0 && _methodCodeCount(meta) == 1) {
+                ++concreteCount;
+                concreteOwner = i;
+                concreteMethod = methods[i];
+            } else if (!hasAbstract) {
+                hasAbstract = true;
+                abstractOwner = i;
+                abstractMethod = methods[i];
+            }
         }
+        if (concreteCount > 1) revert JavaException(10);
+        if (concreteCount == 1) return (true, concreteOwner, concreteMethod);
+        if (hasAbstract) return (true, abstractOwner, abstractMethod);
     }
 
     function _selectInterfaceImplementation(
@@ -1828,33 +1998,53 @@ contract JVMSubsetInterpreter {
                 descriptorOffset, descriptorLength, pc
             );
             if (found) {
-                uint16 access = uint16(classes[current].methods[candidate]);
-                if ((access & 0x0001) == 0
-                    || (access & (0x0002 | 0x0008 | 0x0020 | 0x0100 | 0x0400)) != 0
-                    || _methodCodeCount(classes[current].methods[candidate]) != 1) {
-                    revert CallError(4, pc);
-                }
-                uint256 ancestor = current;
-                while (parentLinks[ancestor] != 0
-                    && parentLinks[ancestor] != type(uint256).max) {
-                    ancestor = parentLinks[ancestor] - 1;
-                    (bool inherited, uint256 inheritedMethod) = _lookupExactMethod(
-                        classes, ancestor, nameData, nameOffset, nameLength,
-                        descriptorOffset, descriptorLength, pc
-                    );
-                    if (!inherited) continue;
-                    uint16 inheritedAccess = uint16(classes[ancestor].methods[inheritedMethod]);
-                    bool overrides = (inheritedAccess & (0x0001 | 0x0004)) != 0
-                        || ((inheritedAccess & 0x0002) == 0
-                            && _samePackage(classes[current], classes[ancestor]));
-                    if (overrides && (inheritedAccess & 0x0010) != 0) revert CallError(4, pc);
-                }
+                uint256 meta = classes[current].methods[candidate];
+                uint16 access = uint16(meta);
+                // A private declaration is never a public implementation; retain
+                // the unsupported-access guard rather than executing it as one.
+                if ((access & 0x0002) != 0) revert CallError(4, pc);
+                if ((access & 0x0001) == 0 || (access & (0x0008 | 0x0020 | 0x0100)) != 0) {
+                        revert CallError(4, pc);
+                    }
+                    if ((access & 0x0400) != 0) {
+                        if (_methodCodeCount(meta) != 0) revert CallError(4, pc);
+                        revert JavaException(11);
+                    }
+                    if (_methodCodeCount(meta) != 1) revert CallError(4, pc);
+                    uint256 ancestor = current;
+                    while (parentLinks[ancestor] != 0
+                        && parentLinks[ancestor] != type(uint256).max) {
+                        ancestor = parentLinks[ancestor] - 1;
+                        (bool inherited, uint256 inheritedMethod) = _lookupExactMethod(
+                            classes, ancestor, nameData, nameOffset, nameLength,
+                            descriptorOffset, descriptorLength, pc
+                        );
+                        if (!inherited) continue;
+                        uint16 inheritedAccess = uint16(classes[ancestor].methods[inheritedMethod]);
+                        bool overrides = (inheritedAccess & (0x0001 | 0x0004)) != 0
+                            || ((inheritedAccess & 0x0002) == 0
+                                && _samePackage(classes[current], classes[ancestor]));
+                        if (overrides && (inheritedAccess & 0x0010) != 0) {
+                            revert CallError(4, pc);
+                        }
+                    }
                 return (current, candidate);
             }
             uint256 link = parentLinks[current];
-            if (link == 0 || link == type(uint256).max) revert CallError(4, pc);
+            if (link == 0 || link == type(uint256).max) break;
             current = link - 1;
         }
+        (bool inheritedDefault, uint256 interfaceOwner, uint256 interfaceMethod) =
+            _findInterfaceMethod(
+                classes, dynamicClass, false, nameData, nameOffset, nameLength,
+                descriptorOffset, descriptorLength, parentLinks, pc
+            );
+        if (!inheritedDefault) revert JavaException(11);
+        uint256 selectedMeta = classes[interfaceOwner].methods[interfaceMethod];
+        if ((uint16(selectedMeta) & 0x0400) != 0 || _methodCodeCount(selectedMeta) == 0) {
+            revert JavaException(11);
+        }
+        return (interfaceOwner, interfaceMethod);
     }
 
     function _loadVirtualSignature(ClassInfo memory c, uint256 method, uint256 callPC)
@@ -2103,6 +2293,11 @@ contract JVMSubsetInterpreter {
             owner = candidateClass;
             method = candidate;
         }
+        uint256 selectedMeta = classes[owner].methods[method];
+        if ((uint16(selectedMeta) & 0x0400) != 0) {
+            if (_methodCodeCount(selectedMeta) != 0) revert CallError(4, pc);
+            revert JavaException(11);
+        }
     }
 
     function _sameMethodDescriptor(
@@ -2128,6 +2323,94 @@ contract JVMSubsetInterpreter {
                 || uint8(ch) == 0) return false;
         }
         return true;
+    }
+
+    function _resolveInterfaceSpecial(
+        ClassInfo[] memory classes, uint256 callerClass, uint256 callerMethod,
+        uint256 refIndex, uint256 pc, uint256[] memory parentLinks,
+        uint8[] memory hierarchyState
+    ) private pure returns (VirtualResolution memory out) {
+        ClassInfo memory caller = classes[callerClass];
+        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 11) {
+            revert CallError(1, pc);
+        }
+        uint256 ref = caller.cp[refIndex];
+        uint256 ownerClassIndex = (ref >> 8) & 0xffff;
+        uint256 natIndex = (ref >> 24) & 0xffff;
+        if (ownerClassIndex == 0 || ownerClassIndex >= caller.cp.length
+            || uint8(caller.cp[ownerClassIndex]) != 7 || natIndex == 0
+            || natIndex >= caller.cp.length || uint8(caller.cp[natIndex]) != 12) {
+            revert CallError(1, pc);
+        }
+        uint256 ownerNameIndex = (caller.cp[ownerClassIndex] >> 8) & 0xffff;
+        if (ownerNameIndex == 0 || ownerNameIndex >= caller.cp.length
+            || uint8(caller.cp[ownerNameIndex]) != 1) revert CallError(1, pc);
+        (uint256 ownerOff, uint256 ownerLen) = _utf(caller.cp[ownerNameIndex]);
+        if (!_validInternalName(caller.data, ownerOff, ownerLen)) revert CallError(1, pc);
+        (bool foundOwner, uint256 symbolic) = _findClass(
+            classes, caller.data, ownerOff, ownerLen
+        );
+        if (!foundOwner) revert LinkError(4, pc);
+        if (!_isInterface(classes[symbolic])) revert InterfaceError(1, pc);
+        _validateHierarchy(classes, callerClass, parentLinks, hierarchyState);
+        _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
+        if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
+            revert CallError(4, pc);
+        }
+        bool direct;
+        for (uint256 i = 0; i < caller.interfaces.length; ++i) {
+            if (_resolveInterfaceEdge(classes, callerClass, i) == symbolic) direct = true;
+        }
+        if (!direct || (uint16(caller.methods[callerMethod]) & 0x0008) != 0) {
+            revert CallError(4, pc);
+        }
+
+        uint256 nat = caller.cp[natIndex];
+        uint256 nameIndex = (nat >> 8) & 0xffff;
+        uint256 descriptorIndex = (nat >> 24) & 0xffff;
+        if (nameIndex == 0 || nameIndex >= caller.cp.length || uint8(caller.cp[nameIndex]) != 1
+            || descriptorIndex == 0 || descriptorIndex >= caller.cp.length
+            || uint8(caller.cp[descriptorIndex]) != 1) revert CallError(1, pc);
+        (out.nameOffset, out.nameLength) = _utf(caller.cp[nameIndex]);
+        (out.descriptorOffset, out.descriptorLength) = _utf(caller.cp[descriptorIndex]);
+        if (_equalsLiteral(caller.data, out.nameOffset, out.nameLength, bytes("<init>"))
+            || _equalsLiteral(caller.data, out.nameOffset, out.nameLength, bytes("<clinit>"))) {
+            revert CallError(4, pc);
+        }
+        if (!_validOrdinaryMethodName(caller.data, out.nameOffset, out.nameLength)) {
+            revert CallError(1, pc);
+        }
+        out.symbolic = symbolic;
+        out.referenceClass = callerClass;
+        (bool own, uint256 ownMethod) = _lookupExactMethod(
+            classes, symbolic, caller.data, out.nameOffset, out.nameLength,
+            out.descriptorOffset, out.descriptorLength, pc
+        );
+        if (own) {
+            out.owner = symbolic;
+            out.method = ownMethod;
+        } else {
+            (bool inherited, uint256 inheritedOwner, uint256 inheritedMethod) =
+                _findInterfaceMethod(
+                    classes, symbolic, true, caller.data, out.nameOffset, out.nameLength,
+                    out.descriptorOffset, out.descriptorLength, parentLinks, pc
+                );
+            if (!inherited) revert CallError(3, pc);
+            out.owner = inheritedOwner;
+            out.method = inheritedMethod;
+        }
+        uint256 meta = classes[out.owner].methods[out.method];
+        uint16 access = uint16(meta);
+        if ((access & 0x0001) == 0 || (access & (0x0002 | 0x0008 | 0x0020 | 0x0100)) != 0) {
+            revert CallError(4, pc);
+        }
+        if ((access & 0x0400) != 0 || _methodCodeCount(meta) == 0) {
+            if ((access & 0x0400) != 0 && _methodCodeCount(meta) != 0) {
+                revert CallError(4, pc);
+            }
+            revert JavaException(11);
+        }
+        if (_methodCodeCount(meta) != 1) revert CallError(4, pc);
     }
 
     function _resolveSpecial(
@@ -2363,7 +2646,11 @@ contract JVMSubsetInterpreter {
         if (!ownerFound) revert LinkError(4, pc);
         symbolic = symbolicOwner;
         _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
-        if (_isInterface(classes[symbolic])) revert FieldError(3, pc);
+        bool selfInterfaceInitializer = _isInterface(classes[symbolic]) && staticAccess
+            && privilegedWrite && callerClass == symbolic;
+        if (_isInterface(classes[symbolic]) && !selfInterfaceInitializer) {
+            revert FieldError(3, pc);
+        }
         if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
             revert FieldError(4, pc);
         }
@@ -2405,6 +2692,10 @@ contract JVMSubsetInterpreter {
                     foundPlusOne = i + 1;
                 }
                 if (foundPlusOne != 0) break;
+                // The M4f-b interface-field exception is deliberately self-owned:
+                // an interface initializer cannot resolve a parent's field through
+                // this path.
+                if (_isInterface(classes[declaring])) revert FieldError(2, pc);
                 uint256 link = parentLinks[declaring];
                 if (link == 0 || link == type(uint256).max) revert FieldError(2, pc);
                 declaring = link - 1;
@@ -3320,7 +3611,10 @@ contract JVMSubsetInterpreter {
     }
 
     function _throwJava(uint256 kind, Frame[] memory frames, uint256 depth) private pure {
-        if (kind != 2 && kind != 7 && _hasActiveInitializer(frames, depth)) {
+        // JVM Error subclasses escape initialization unchanged. Ordinary runtime
+        // exceptions are wrapped as ExceptionInInitializerError.
+        if (kind != 2 && kind != 7 && kind != 10 && kind != 11
+            && _hasActiveInitializer(frames, depth)) {
             revert JavaException(3);
         }
         revert JavaException(kind);

@@ -73,6 +73,10 @@ func decodeJavaException(data []byte) (string, bool) {
 		return "java.lang.ClassCastException", true
 	case 9:
 		return "java.lang.ArrayStoreException", true
+	case 10:
+		return "java.lang.IncompatibleClassChangeError", true
+	case 11:
+		return "java.lang.AbstractMethodError", true
 	default:
 		return "", false
 	}

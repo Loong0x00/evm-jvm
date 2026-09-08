@@ -101,15 +101,17 @@ public class DivideByZero {
 
 func TestJavaExceptionDecoderIsExact(t *testing.T) {
 	for kind, want := range map[byte]string{
-		1: "java.lang.ArithmeticException",
-		2: "java.lang.StackOverflowError",
-		3: "java.lang.ExceptionInInitializerError",
-		4: "java.lang.NegativeArraySizeException",
-		5: "java.lang.ArrayIndexOutOfBoundsException",
-		6: "java.lang.NullPointerException",
-		7: "java.lang.OutOfMemoryError",
-		8: "java.lang.ClassCastException",
-		9: "java.lang.ArrayStoreException",
+		1:  "java.lang.ArithmeticException",
+		2:  "java.lang.StackOverflowError",
+		3:  "java.lang.ExceptionInInitializerError",
+		4:  "java.lang.NegativeArraySizeException",
+		5:  "java.lang.ArrayIndexOutOfBoundsException",
+		6:  "java.lang.NullPointerException",
+		7:  "java.lang.OutOfMemoryError",
+		8:  "java.lang.ClassCastException",
+		9:  "java.lang.ArrayStoreException",
+		10: "java.lang.IncompatibleClassChangeError",
+		11: "java.lang.AbstractMethodError",
 	} {
 		valid := make([]byte, 36)
 		copy(valid, javaExceptionSelector)
