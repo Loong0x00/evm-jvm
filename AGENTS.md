@@ -6,14 +6,16 @@ Java/server-logic fallback. Current oversized local runtime.Execute is not stand
 deployment proof. Pin server version and explicit I/O boundary before workload claims.
 First MC milestone: genuine guest startup-complete marker (exact version/marker to
 pin), NOT client connectivity. No fake/hardcoded banner or skipped initialization;
-connectable server is an optional later goal. Existing frozen M5d-a scope unchanged.
+connectable server is an optional later goal. 1.12.2 is the proposed first target;
+see JAVA_EVM_MC_STARTUP_PROPOSAL.md. No MC execution/EULA acceptance performed.
 
-Current accepted stage: **M5c-d IEEE arrays**, recorded in
-`JAVA_EVM_M5CD_PLAN.md`:2091 cases plus192 independent raw-cell probes. Next is
-M5d-a implementation under frozen `JAVA_EVM_M5DA_PLAN.md` (NOT accepted yet).
-All implicit Java faults, ordered handlers/unwind, canonical raw Throwable graph,
-256+1 exception arena and failed-init NCDFE are atomic scope; new Throwable/APIs
-remain deferred. Four EVM raw-bit bindings only.
+Current accepted stage: **M5d-a implicit exceptions/handlers/unwind**, recorded in
+`JAVA_EVM_M5DA_PLAN.md`:2231 cases,179 parent cross-JVM/EVM probes plus8 initialization
+regressions and a field-arena boundary case; prior192 IEEE-array probes retained.
+Parent fixed already-failed default-interface prerequisites and bounded arena cost.
+Runtime154839bytes;24 bootstraps. New Throwable/APIs remain deferred, four raw-bit
+bindings only. Next parallel proposals: stock-EVM deployment/continuation architecture
+and Java Throwable/bootstrap dependencies. No next implementation contract frozen.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
@@ -75,9 +77,9 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # EVM arithmetic, bundle call and int-array examples
-make java-smoke      # 945 fixed oracle comparisons
-make java-fast       # 965 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 2091 cases through M5c-d
+make java-smoke      # 1040 fixed oracle comparisons
+make java-fast       # 1060 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 2231 cases through M5d-a
 make java-test       # artifact + focused Go + 36 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```

@@ -1,6 +1,7 @@
 # M5d-a: implicit exceptions, ordered handlers and initialization-aware unwind
 
-AUTHORITATIVE FROZEN CONTRACT. Supersedes alternative choices in
+ACCEPTED after parent integration, fixes and final gates below.
+AUTHORITATIVE CONTRACT. Supersedes alternative choices in
 JAVA_EVM_M5DA_ARCHITECTURE_PROPOSAL.md and JAVA_EVM_M5DA_ORACLE_PROPOSAL.md.
 Authority JAVA_EVM_PROGRAM.md; last-green M5c-d c6b6584:2091 oracle cases plus192
 parent probes,36 Python,945 smoke/965 fast. Runtime135652 bytes SHA
@@ -251,3 +252,62 @@ red expected, exact failures documented. Parent owns plans/AGENTS/quickstart/Mak
 explicit old-profile updates and integration/independent review.
 One Solidity writer, no spawning/peer writes/push/global config/untrusted Java.
 All agents Sol/high WITHOUT Fast; scoped commits/honest hashes/caveats/limits/checks.
+
+## Parent integration and acceptance evidence
+
+Final acceptance: `/tmp/m5da-accept-{main,other}.exit` both0. Pinned artifact/24
+bootstraps, Go/CLI,36 Python,2231 full,1040 smoke,1060 fast-tier, demos, AOT and
+focused vet all passed on final artifact. No higher production test gas budgets.
+Integrated runtime545e1f9/32abda0/b47ad19, fixtures455cd87, verifier8ff8eec.
+Parent transitions c011c5f, correctness fix4ceb539, arena optimizationfc9061c.
+
+- All2091 historical manifest entries/outcomes/budgets remain exact;140 new cases
+  bring total2231. Full initial integrated artifact passed2231 plus179 independent
+  probes, but source review nevertheless found a real failed-prerequisite bug.
+- `_nextDefaultInterface` previously selected only uninitialized interfaces. If an
+  interface was ALREADY erroneous before a new implementing class's active use,
+  it was skipped and the class initialized incorrectly. Parent first demonstrated
+  four Java8/EVM mismatches, then added8 regressions covering new/getstatic/putstatic/
+  invokestatic, prior direct interface failure or a sibling implementor's failure,
+  repeated use and no dependent initializer side effects. Fix selects state0 OR3;
+  initialized/reentrant interfaces still skip. Java8 agrees with corrected EVM.
+- Reviewed exactly four obsolete-profile test groups: add knownNCDFE12, move unknown
+  guard12 to13, retain malformed/unknown/OOG/other native guards. The old valid
+  handled() Method8 rejection now asserts real Java8/EVM value7 with unchanged
+  source/gas. No broad negative-test weakening.
+- Original new verifier arena scan compared all256 references in one quadratic
+  invocation, exceeding250M (worker measured1,216,040,611 gas; exception-free loop
+  comparison1,119,232,623). Parent keeps ALL32640 comparisons in16 row batches;
+  each run first creates all256 refs and checks defaults,257th emergency identity,
+  rethrow and fresh-invocation reset. Same250M per-run limit, no removed pairs.
+- Parent additionally tests the separate262144-field exception budget: supplied
+  Object has1025 fields, emergency+254 fresh records consume261375; next record
+  cannot fit although the256-record quota is not full. Check first/last field
+  defaults and mutation isolation at first/last fresh records, emergency reuse
+  and mutable field identity. This is Go/EVM-only, no host OOM.
+- That identical quota-focused program measured909579654gas on4ceb539 (diagnostic
+  higher-gas run only). Caching per-class immutable default layouts and completed
+  hierarchy validation, with standard Cancun MCOPY into fresh allocations, reduces
+  it to207395739gas under unchanged250M. Generic field lookup stress is separate:
+  reading/writing every inherited last field every iteration is not required to
+  isolate the arena boundary. No layout, count, supported field type or quota changed.
+- Final runtime154839bytes, SHA256
+  dfc81dbbea8253c644be2532a809a417bb40cd07eaca8ab5be72a84721eae929.
+ 24 source->class->hex->embedded bootstraps checked with pinned compiler; original5
+  bootstrap bytes unchanged. Raw19 Throwable images parse lazily on resolution,
+  inside EVM, avoiding eager unused-bootstrap cost in historical scalar budgets.
+- Parent179 Java8/21/EVM probes all pass final artifact, plus8 committed Java8
+  regression probes and the arena field-boundary case. Prior192 IEEE-array parent
+  probes all pass unchanged. Evidence: build/java-diff-parent-m5da/results-final/,
+  prior-m5cd-results/, exceptions_parent_test.go; baseline manifest/file hashes
+  archived under same parent directory. Logs /tmp/m5da-accept-{main,other}.log.
+- Extra review worker was interrupted by a provider cybersecurity flag, delivered
+  no accepted review commit; parent performed source review and independent fixes.
+  Do not count its partial ignored probes as passed validation.
+- MC static-only proposal2b2708d recommends1.12.2 candidate and documents genuine
+  startup-complete logger provenance and stock-EVM/no-client scope. No server ran,
+  no EULA acceptance or listening socket. Existing original-EVM source paths have
+  no changes vs95665d5; oversized runtime.Execute still NOT standard deployment.
+- Next: parallel stock-EVM deployment/continuation architecture and next Java
+  Throwable/bootstrap proposals (Sol/high NO Fast), then parent freezes bounded
+  implementation. These proposals do not waive current semantics or MC authenticity.

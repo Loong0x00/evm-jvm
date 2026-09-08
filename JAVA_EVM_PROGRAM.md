@@ -115,9 +115,10 @@ routine permission to start the next verified increment.
 | M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | accepted;1811 cases plus216 independent probes |
 | M5c-c | software scalar IEEE arithmetic | accepted;1971 cases plus960 parent probes |
 | M5c-d | IEEE arrays | accepted;2091 cases plus192 parent probes |
-| M5d-a | implicit exceptions/handler/unwind foundation | architecture+oracle preflight next; freeze before implementation |
+| M5d-a | implicit exceptions/handler/unwind foundation | accepted;2231 cases plus179 parent probes/8 init regressions/field boundary, prior192 retained |
 | M5d-b+ | fresh user Throwable construction/APIs and remaining JVM/library features | queued; freeze separately |
-| M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
+| Stock-EVM architecture | ordinary deployment/modules/persistent continuation | proposal/prototype preflight active; not frozen |
+| M6 | minimal class-library/bootstrap/native service inventory and implementation | queued; MC1.12.2 candidate inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
 This is a capability queue, not a promise all stages fit one session or a claim
@@ -127,15 +128,24 @@ compatibility inventory is now authorized and should guide priorities after the
 current atomic exception slice, without weakening general execution semantics.
 
 ## Current handoff
-M5c-d accepted:2091 JVM/EVM cases plus192 parent probes,36 Python,945 smoke/965fast,
-Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Obsolete FP-array guards updated,
-double-overlap/store-order probes added; no demonstrated runtime defect. Runtime
-135652 bytes, local-runtime only/not full JVM. Prior1971 fixture inputs/budgets same.
-M5d-a preflights integrated as7b86342/327f4d4; parent contract now FROZEN in
-JAVA_EVM_M5DA_PLAN.md, implementation NOT accepted. Atomic all implicit faults,
-ordered handlers/unwind/athrow,19 raw canonical Throwable classfiles,256 fresh+1
-emergency arena/256 handlers, failed initialization and NCDFE12. Lazy applicable
-catch resolution; explicit constructor safety/profile limits. No new Throwable/APIs.
-Runtime/fixtures/verifier proceed in disjoint worktrees; parent integrates then
-independently probes and runs full historical gates before acceptance.
-NEW agents Sol/high WITHOUT Fast; no routine confirmation.
+M5d-a accepted per JAVA_EVM_M5DA_PLAN.md:2231 JVM/EVM cases,179 independent parent
+Java8/21/EVM probes,8 committed Java8 init regressions and field-arena boundary;
+prior192 IEEE probes all retained.36 Python/1040smoke/1060fast/GoCLI/24bootstraps/
+artifact/demos/AOT/vet green on final runtime154839bytes SHA256
+`dfc81dbbea8253c644be2532a809a417bb40cd07eaca8ab5be72a84721eae929`.
+Parent fixes4ceb539/fc9061c: already-erroneous default prerequisites no longer skip,
+immutable exception layout/validation cache reaches field quota within250M. Old2091
+manifest entries/outcomes/budgets unchanged. Still no new Throwable/APIs/String main,
+standard deployment, or Minecraft startup claim.
+
+MC static-only proposal2b2708d: recommend explicitly scoped1.12.2 candidate, optional
+modern1.21.5 comparison. Genuine Done logger follows level preparation. Artifacts
+only inspected, never executed; no EULA acceptance/listener. No differences in
+core/vm,core/state,core/types,consensus,params vs pinned upstream95665d5.
+Next two Sol/high NO Fast proposal-only workers basedfc9061c:
+- stock-evm-architecture: JAVA_EVM_STOCK_EXECUTION_PROPOSAL.md + ignored bounded
+  standard-deployment/resume prototypes; no privileged SetCode deployment claim.
+- java-bootstrap-next: JAVA_EVM_M5DB_BOOTSTRAP_PROPOSAL.md + trusted Java oracle
+  probes for construction/Throwable ABI/String/main dependencies.
+Parent reviews/freezes next bounded implementation, no routine confirmation. These
+proposals are NOT current implementation claims. Keep one production Solidity writer.

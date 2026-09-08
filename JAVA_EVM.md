@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M5c-d)
+# Java inside EVM: staged interpreter (M5d-a)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,14 +9,17 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 135,652-byte runtime
+**Local execution, not mainnet deployment:** the current 154,839-byte runtime
 exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
 
-**Next stage (not yet supported):** M5d-a handler/unwind implementation is frozen in
-`JAVA_EVM_M5DA_PLAN.md`; preflight evidence is recorded in the two M5DA proposals.
-The accepted runtime below still reports uncaught Java outcomes and rejects handlers.
+**Accepted:** M5d-a implicit exceptions, ordered handlers, unwind and captured-ref
+rethrow; evidence in `JAVA_EVM_M5DA_PLAN.md`. New Throwable construction/APIs remain
+deferred. Target is genuine Minecraft startup-complete output in unmodified EVM,
+not necessarily client connectivity. `JAVA_EVM_MC_STARTUP_PROPOSAL.md` recommends
+1.12.2 as first candidate; no server has run. Standard deployment/continuation and
+next Java bootstrap dependencies are being planned, not claimed implemented.
 
 ## Quickstart / stage gates
 
@@ -25,10 +28,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 945 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (965 total)
-make java-full       # all 2091 differential cases
-make java-test       # artifact check + Go tests + 36 runner tests + all 2091 cases
+make java-smoke      # 1040 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (1060 total)
+make java-full       # all 2231 differential cases
+make java-test       # artifact check + Go tests + 36 runner tests + all 2231 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -66,21 +69,21 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **135,652-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **154,839-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 329,634 |
-| Loops.class / sum(100) | 5050 | 2,828,840 |
-| Loops.class / fibonacci(20) | 6765 | 1,099,047 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 673,147 |
-| M4aArrays.class / fillSum(10,3) | 165 | 2,685,502 |
+| Add.class / add(20,22) | 42 | 401,174 |
+| Loops.class / sum(100) | 5050 | 2,923,901 |
+| Loops.class / fibonacci(20) | 6765 | 1,179,716 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 768,110 |
+| M4aArrays.class / fillSum(10,3) | 165 | 3,084,453 |
 
 Typed checks raised sum(100) beyond its old2M demo budget, independently confirmed;
 the demo now uses3M. No historical oracle input/budget or semantic assertion changed.
 
 Runtime SHA-256:
-`cf68495083ebcd2df93f6d676e16afad87192a3401bd743a0301d805d5a8cd15`
+`dfc81dbbea8253c644be2532a809a417bb40cd07eaca8ab5be72a84721eae929`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -208,17 +211,19 @@ locals 1024 each; 128 active frames including root and initialization
 continuations. Gas bounds execution
 and allocation. Stack capacity does not claim to match OpenJDK's configuration.
 Method descriptors, entered Code structure and relevant UTF-8 references are
-checked. Overloaded root names, entered synchronized/native/abstract/non-static/
-no-Code methods and exception tables are rejected; overloaded internal helpers
-are supported. `<clinit>` is VM-scheduled, not directly invocable by guest code.
+checked. Root names must be unambiguous and roots static. Entered synchronized/
+abstract/no-Code methods are rejected, native calls limited to four raw-bit bindings;
+overloaded internal helpers and ordinary instance calls are supported. Valid entered
+exception tables are checked and handled. `<clinit>` is VM-scheduled, not directly
+invocable by guest code.
 
 M2b division truncates toward zero; remainder follows Java's sign rules.
 INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
-**Deferred:** exception handlers/athrow and broader JVM/library features,
-array-receiver virtual calls, non-int/non-reference fields, handlers, monitors,
-class libraries and deployment workflows.
+**Deferred:** fresh Throwable construction/APIs, Strings/general main launcher,
+array-receiver virtual calls, monitors, broad class libraries and standard deployment/
+continuation workflows. All primitive scalar/field/array types are implemented.
 
 This is not a full JVM verifier: no modified-UTF8 validation, general class
 hierarchy/linking/type verification, full control-flow dataflow verification,
@@ -240,13 +245,13 @@ The oracle suite explicitly declares expected exception cases and compares
 exception classes from actual JVM and EVM. Unknown payloads, Solidity panics,
 bytecode/class errors and out-of-gas cannot silently become Java exceptions.
 Kind 2 now represents `java.lang.StackOverflowError` when pushing beyond the
-128-frame cap. Kind 1 propagates from callees. These are **uncaught outcomes
-only**, not catch/handler support; a lower gas limit can fail OOG first.
-Kind 3 is `ExceptionInInitializerError`: genuine arithmetic escaping an active
-initializer (including from its helper) is wrapped. StackOverflowError is already
-an Error and is not wrapped. OracleMain also records actual root-initialization
-errors during Class.forName. Retry after failed initialization, Java exception
-objects/causes and thread synchronization are not implemented.
+128-frame cap. In M5d-a these and all modeled Java faults first search guest handlers;
+only unhandled faults use the external ABI. A lower gas limit can fail EVM OOG first.
+Kind3 is EIIE for non-Error escaping the actual initializer after local handlers;
+Error subtypes are unwrapped. Kind12 is NCDFE on later active use of an erroneous
+class/interface. Captured VM exception objects preserve identity on rethrow; root
+initialization occurs before its method handlers are eligible. Public Throwable
+construction/causes/messages and thread synchronization remain deferred.
 
 M4a adds kinds4 NegativeArraySizeException,5 ArrayIndexOutOfBoundsException,
 6 NullPointerException,7 OutOfMemoryError. Null checks precede array bounds;
@@ -319,8 +324,9 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M5c-d acceptance is
-recorded in `JAVA_EVM_M5CD_PLAN.md`; next is an implicit-exception/handler foundation.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. Latest M5d-a acceptance
+is recorded in `JAVA_EVM_M5DA_PLAN.md`; next is stock-EVM architecture and Java
+bootstrap planning toward the genuine MC startup marker.
 No full-Java claim or routine re-confirmation.
 
 ## M4b ordinary objects and direct instance calls
@@ -505,5 +511,31 @@ load/store without arithmetic NaN canonicalization. Positive-zero defaults, sign
 zeros, quiet NaN payloads, nesting/covariance/markers and category2 double elements
 are preserved. One double remains one Java array element for shared quotas.
 Signaling-NaN transport guarantee remains EVM-specific, not cross-JVM parity.
-Handlers/athrow/Throwable APIs and broader libraries remain pending; implicit Java
-outcomes are currently uncaught results. Root still exact(I...)I, no host math.
+At that checkpoint handlers/athrow/Throwable APIs were pending; M5d-a below adds
+handlers/rethrow. Root still exact(I...)I, no host math.
+
+## M5d-a implicit exceptions, handlers and unwind
+
+2231 cumulative JVM/EVM cases,179 parent Java8/21/EVM probes,8 additional Java8
+initialization regressions and an EVM-only field-arena boundary passed; prior192
+IEEE-array probes retained. All modeled implicit faults are catchable in guest
+code, with classfile-order/half-open handler ranges, cleared operand stack, retained
+locals, invocation-PC unwind and captured-reference identity on athrow. Null athrow
+raises NPE. Invalid bytecode/profile errors and EVM OOG remain uncatchable.
+
+19 new canonical raw Throwable bootstrap images (24 total) parse in EVM on demand.
+64 user classes maximum remains. A separate256-record exception arena plus emergency
+OOM shares heap identity while ordinary object/array quotas remain unchanged. Its
+262144-field budget includes inherited Object fields and emergency storage; no GC.
+Templates/validated hierarchy are cached, mutable guest objects never share templates.
+Handler tables cap256; unsupported matching pre-chain constructor handlers reject
+HandlerError8. This is not a full verifier or general user Throwable implementation.
+
+Initialization handlers run before wrapping. Escaping non-Error becomes EIIE once;
+Error retains identity, failed prerequisites mark dependents erroneous, subsequent
+active use raises NCDFE12. Parent found and fixed the already-failed default-interface
+case even after2231 fixed cases passed. Unentered root handlers cannot catch root
+initialization failure. Exact known uncaught ABI kinds1..12 remain host-decoded only.
+
+No fresh Throwable/API/String/main/JRE/deployment/MC claim. Standard-EVM modular
+execution and Java bootstrap preflights guide the next bounded stages; see program.
