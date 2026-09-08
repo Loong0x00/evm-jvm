@@ -1,5 +1,11 @@
 # Java-inside-EVM agent guide
 
+LATEST endpoint: unchanged Minecraft Java server in ORIGINAL, UNMODIFIED EVM.
+See JAVA_EVM_PROGRAM.md: no opcode/gas/precompile/consensus/limit changes or host
+Java/server-logic fallback. Current oversized local runtime.Execute is not standard
+deployment proof. Pin server version and explicit I/O boundary before workload claims.
+Existing frozen M5d-a atomic implementation scope remains unchanged.
+
 Current accepted stage: **M5c-d IEEE arrays**, recorded in
 `JAVA_EVM_M5CD_PLAN.md`:2091 cases plus192 independent raw-cell probes. Next is
 M5d-a implementation under frozen `JAVA_EVM_M5DA_PLAN.md` (NOT accepted yet).

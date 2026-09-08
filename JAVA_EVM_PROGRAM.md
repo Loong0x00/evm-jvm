@@ -1,9 +1,12 @@
 # Continuous JVM-in-EVM program
 
 ## Latest authorization
-The user now explicitly asks the parent to control the workflow and delegate
-implementation continuously toward a general Java virtual machine, **not
-Minecraft**, without stopping for confirmation after every small accepted stage.
+LATEST user target: run **Minecraft Java server (mcserver) inside original,
+unmodified EVM**. This supersedes the earlier general-JVM-not-Minecraft endpoint;
+a general interpreter remains the implementation strategy, not a requirement to
+finish all Java SE before targeting the server. Minecraft version/artifact and
+observable server acceptance criteria remain to be pinned. The parent controls
+and delegates implementation continuously without routine stage confirmations.
 This supersedes earlier per-batch 'stop and wait' instructions. Stages and tests
 remain bounded; acceptance of one stage triggers planning/dispatch of the next.
 Default worker model remains `openai-codex/gpt-5.6-sol`, reasoning `high`.
@@ -21,9 +24,20 @@ bytecode. Host code may compile input/build runtime, package raw inputs, drive
 EVM, and serialize/display outputs; it must not evaluate/translate Java or
 resolve guest classes/methods on the actual execution path. Host JVMs are test
 oracles only. No native-Java precompile or fallback on unsupported code.
+Do NOT modify EVM opcodes, gas accounting, consensus, precompiles, or standard
+execution/deployment limits to make Minecraft work. Audit the existing fork against
+its pinned upstream before claiming original-EVM compatibility. Current local
+runtime.Execute directly installs oversized runtime code: useful execution evidence,
+NOT proof of standard CREATE/deployment compatibility. Solve deployment/code size
+with ordinary EVM architecture rather than relaxing EIP-170 or other limits.
+EVM has no direct OS sockets/files/clock: any proposed input/output transport,
+virtual filesystem, scheduling/time source must be explicit. Host transport must
+not execute Java/server/world logic. Do not imply a standalone listening server
+without a defined, verified external-I/O boundary.
 
 ## What completion means / what it does NOT mean
-The aspiration is general Java execution. Passing a subset test suite, counting
+The concrete endpoint is an unchanged, version-pinned Minecraft Java server running
+its Java/server/world logic in original EVM. Passing a subset test suite, counting
 implemented opcodes, or launching a toy Java main is not completion. The first
 explicit compatibility target is Java 8 classfile/Java semantics; newer classfile
 versions and platform libraries must then be identified/versioned. The project
@@ -96,8 +110,9 @@ routine permission to start the next verified increment.
 
 This is a capability queue, not a promise all stages fit one session or a claim
 that native/OS semantics have already been solved. Keep a concrete missing-feature
-matrix in current docs, update the queue on measured evidence, and avoid
-Minecraft-specific work unless separately requested.
+matrix in current docs and update the queue on measured evidence. Minecraft-specific
+compatibility inventory is now authorized and should guide priorities after the
+current atomic exception slice, without weakening general execution semantics.
 
 ## Current handoff
 M5c-d accepted:2091 JVM/EVM cases plus192 parent probes,36 Python,945 smoke/965fast,
