@@ -521,7 +521,7 @@ func TestVerifyM4fbExactDecoderRejectsUnknownAndOOG(t *testing.T) {
 		"java.lang.ArrayIndexOutOfBoundsException", "java.lang.NullPointerException",
 		"java.lang.OutOfMemoryError", "java.lang.ClassCastException",
 		"java.lang.ArrayStoreException", "java.lang.IncompatibleClassChangeError",
-		"java.lang.AbstractMethodError",
+		"java.lang.AbstractMethodError", "java.lang.NoClassDefFoundError",
 	}
 	for index, want := range known {
 		payload := append(append([]byte(nil), javaExceptionSelector...), make([]byte, 32)...)
@@ -531,7 +531,7 @@ func TestVerifyM4fbExactDecoderRejectsUnknownAndOOG(t *testing.T) {
 		}
 	}
 	for name, payload := range map[string][]byte{
-		"unknown-12": append(append([]byte(nil), javaExceptionSelector...), append(make([]byte, 31), 12)...),
+		"unknown-13": append(append([]byte(nil), javaExceptionSelector...), append(make([]byte, 31), 13)...),
 		"short":      append(append([]byte(nil), javaExceptionSelector...), make([]byte, 31)...),
 		"noncanonical": func() []byte {
 			p := append(append([]byte(nil), javaExceptionSelector...), make([]byte, 32)...)

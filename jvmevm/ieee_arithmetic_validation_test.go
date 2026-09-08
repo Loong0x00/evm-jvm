@@ -384,6 +384,7 @@ func TestVerifyM5ccRegistryAndDeferredBoundariesRemainExact(t *testing.T) {
 		"java.lang.NegativeArraySizeException", "java.lang.ArrayIndexOutOfBoundsException", "java.lang.NullPointerException",
 		"java.lang.OutOfMemoryError", "java.lang.ClassCastException", "java.lang.ArrayStoreException",
 		"java.lang.IncompatibleClassChangeError", "java.lang.AbstractMethodError",
+		"java.lang.NoClassDefFoundError",
 	}
 	selector := crypto.Keccak256([]byte("JavaException(uint256)"))[:4]
 	for i, want := range names {
@@ -396,7 +397,7 @@ func TestVerifyM5ccRegistryAndDeferredBoundariesRemainExact(t *testing.T) {
 	}
 	unknown := make([]byte, 36)
 	copy(unknown, selector)
-	unknown[35] = 12
+	unknown[35] = 13
 	if got, ok := decodeJavaException(unknown); ok || got != "" {
 		t.Fatalf("new exception kind silently accepted: %q/%v", got, ok)
 	}

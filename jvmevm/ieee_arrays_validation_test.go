@@ -449,10 +449,11 @@ func TestVerifyM5cdNullBoundsEvaluationInitializationRegistryAndDeferredFeatures
 	verifyM5cdJava8Outcome(t, [][]byte{init}, "VerifyM5cdInitArithmetic", "run", nil, "exception=java.lang.ExceptionInInitializerError")
 	verifyM5cdAssertException(t, func() (Result, error) { return Run(init, "run", nil, verifyM5cdGasLimit) }, "java.lang.ExceptionInInitializerError", 3)
 
-	// Exception handlers remain outside M5c-d and must not turn a caught guest
-	// fault into a false success. Unknown native array helpers remain rejected;
-	// only the four scalar raw-bit bindings exist.
-	verifyM5cdAssertMethodError(t, func() (Result, error) { return Run(faults, "handled", nil, verifyM5cdGasLimit) }, 8)
+	// M5d-a supersedes the old handler rejection: verify real catch behavior
+	// against Java8, retaining the original guest source and gas ceiling.
+	// Unknown native array helpers still fail; only four raw-bit bindings exist.
+	verifyM5cdJava8Outcome(t, [][]byte{faults}, "VerifyM5cdFaults", "handled", nil, "value=7")
+	verifyM5cdRunValue(t, faults, "handled", nil, 7, verifyM5cdGasLimit)
 	unknownBundle := verifyM5cdBundle(map[string][]byte{"UnknownM5cdNative": classes["UnknownM5cdNative"], "UnknownM5cdRoot": classes["UnknownM5cdRoot"]})
 	root := parseStaticsClass(t, classes["UnknownM5cdRoot"])
 	pc := verifyM5cdMemberPC(t, root, root.method(t, "run", "()I"), 0xb8, 10, "arrayBits", "([F)I")
@@ -465,6 +466,7 @@ func TestVerifyM5cdNullBoundsEvaluationInitializationRegistryAndDeferredFeatures
 		"java.lang.NegativeArraySizeException", "java.lang.ArrayIndexOutOfBoundsException", "java.lang.NullPointerException",
 		"java.lang.OutOfMemoryError", "java.lang.ClassCastException", "java.lang.ArrayStoreException",
 		"java.lang.IncompatibleClassChangeError", "java.lang.AbstractMethodError",
+		"java.lang.NoClassDefFoundError",
 	}
 	selector := crypto.Keccak256([]byte("JavaException(uint256)"))[:4]
 	for i, want := range names {
@@ -477,7 +479,7 @@ func TestVerifyM5cdNullBoundsEvaluationInitializationRegistryAndDeferredFeatures
 	}
 	unknown := make([]byte, 36)
 	copy(unknown, selector)
-	unknown[35] = 12
+	unknown[35] = 13
 	if got, ok := decodeJavaException(unknown); ok || got != "" {
 		t.Fatalf("new exception kind accepted: %q/%v", got, ok)
 	}

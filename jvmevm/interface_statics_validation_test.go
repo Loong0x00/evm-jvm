@@ -534,7 +534,7 @@ func TestVerifyM4fcInterfaceInitializerOutcomesFramesDecoderAndOOG(t *testing.T)
 		"java.lang.ArrayIndexOutOfBoundsException", "java.lang.NullPointerException",
 		"java.lang.OutOfMemoryError", "java.lang.ClassCastException",
 		"java.lang.ArrayStoreException", "java.lang.IncompatibleClassChangeError",
-		"java.lang.AbstractMethodError",
+		"java.lang.AbstractMethodError", "java.lang.NoClassDefFoundError",
 	}
 	for index, want := range known {
 		payload := append(append([]byte(nil), javaExceptionSelector...), make([]byte, 32)...)
@@ -543,7 +543,7 @@ func TestVerifyM4fcInterfaceInitializerOutcomesFramesDecoderAndOOG(t *testing.T)
 			t.Fatalf("kind %d decoded as %q/%v want %q/true", index+1, got, ok, want)
 		}
 	}
-	for _, kind := range []byte{0, 12, 255} {
+	for _, kind := range []byte{0, 13, 255} {
 		payload := append(append([]byte(nil), javaExceptionSelector...), make([]byte, 32)...)
 		payload[len(payload)-1] = kind
 		if got, ok := decodeJavaException(payload); ok || got != "" {

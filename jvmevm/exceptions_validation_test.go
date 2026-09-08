@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
+	"fmt"
 	"math"
 	"strings"
 	"testing"
@@ -433,16 +434,25 @@ func TestVerifyM5daExceptionArenaEmergencyRethrowResetAndObjectLayout(t *testing
 	classes := verifyM5daCompile(t, map[string]string{
 		"java/lang/Object.java": `package java.lang; public class Object { public int inherited; public Object link; public Object(){} }`,
 		"arena/Root.java": `package arena; public final class Root {
-			public static int run(){Throwable[] seen=new Throwable[256];
-				for(int i=0;i<256;i++){try{int[] x=null;int y=x.length;}catch(Throwable e){if(e.inherited!=0||e.link!=null)return -1;for(int j=0;j<i;j++)if(seen[j]==e)return -2;seen[i]=e;}}
+			public static int run(int batch){Throwable[] seen=new Throwable[256];
+				for(int i=0;i<256;i++){try{int[] x=null;int y=x.length;}catch(Throwable e){if(e.inherited!=0||e.link!=null)return -1;seen[i]=e;}}
+				for(int i=batch*16;i<(batch+1)*16;i++)for(int j=0;j<i;j++)if(seen[j]==seen[i])return -2;
 				try{int[] x=null;int y=x.length;}catch(OutOfMemoryError emergency){try{throw emergency;}catch(Throwable same){return emergency==same?257:-3;}}
 				return 0;}
 		}`,
 	}, "java/lang/Object", "arena/Root")
 	bundle := [][]byte{classes["java/lang/Object"], classes["arena/Root"]}
-	for invocation := 0; invocation < 2; invocation++ {
-		result := verifyM5daAssertValue(t, func() (Result, error) { return RunClasses(bundle, "arena/Root", "run", nil, verifyM5daQuotaGas) }, 257)
-		t.Logf("M5d-a arena invocation=%d gas=%d limit=%d", invocation, result.GasUsed, verifyM5daQuotaGas)
+	// The original all-pairs scan alone costs over 1B gas, not an arena failure.
+	// Retain all 32,640 comparisons in 16 bounded runs, each freshly allocating
+	// the same 256 exceptions before checking its rows. Every run also checks
+	// inherited defaults, the 257th emergency OOM, rethrow identity and reset.
+	for batch := int32(0); batch < 16; batch++ {
+		t.Run(fmt.Sprintf("rows-%03d-%03d", batch*16, batch*16+15), func(t *testing.T) {
+			result := verifyM5daAssertValue(t, func() (Result, error) {
+				return RunClasses(bundle, "arena/Root", "run", []int32{batch}, verifyM5daQuotaGas)
+			}, 257)
+			t.Logf("M5d-a arena batch=%d gas=%d limit=%d", batch, result.GasUsed, verifyM5daQuotaGas)
+		})
 	}
 }
 
