@@ -184,6 +184,8 @@ contract JVMSubsetInterpreter {
         uint256 throwableClass;
         uint256 errorClass;
         uint256[] classesByKind;
+        uint256[][] fieldDefaults;
+        bool[] layoutsLoaded;
     }
 
     // A finite IEEE value is significand * 2^scale. The significand is at most
@@ -5347,6 +5349,8 @@ contract JVMSubsetInterpreter {
         arena.heap.objectHeap = new uint256[][](MAX_HANDLES + 1);
         arena.heap.metadata = new uint256[](MAX_HANDLES + 1);
         arena.heap.classes = new uint256[](MAX_HANDLES + 1);
+        arena.fieldDefaults = new uint256[][](classes.length);
+        arena.layoutsLoaded = new bool[](classes.length);
         _validateHierarchy(classes, arena.classesByKind[7], parentLinks, hierarchyState);
         uint256 fields = _instanceFieldCount(
             classes, arena.classesByKind[7], parentLinks, ROOT_FAULT_SENTINEL
@@ -5357,9 +5361,22 @@ contract JVMSubsetInterpreter {
         arena.fieldSlots = fields;
         arena.heap.metadata[1] = HEAP_OBJECT_MARKER | 7;
         arena.heap.classes[1] = arena.classesByKind[7];
-        arena.heap.objectHeap[1] = _objectFieldDefaults(
-            classes, arena.classesByKind[7], fields, parentLinks
+        arena.fieldDefaults[oomClass] = _objectFieldDefaults(
+            classes, oomClass, fields, parentLinks
         );
+        arena.layoutsLoaded[oomClass] = true;
+        arena.heap.objectHeap[1] = _copyExceptionDefaults(arena.fieldDefaults[oomClass]);
+    }
+
+    function _copyExceptionDefaults(uint256[] memory defaults)
+        private pure returns (uint256[] memory values)
+    {
+        values = new uint256[](defaults.length);
+        // Plain bounded value cells; Cancun MCOPY preserves every tag/bit and
+        // copies into a distinct allocation (no shared mutable default object).
+        assembly ("memory-safe") {
+            mcopy(add(values, 32), add(defaults, 32), mul(mload(defaults), 32))
+        }
     }
 
     function _raiseJava(
@@ -5379,8 +5396,14 @@ contract JVMSubsetInterpreter {
         if (classes[dynamicClass].cp.length == 0) {
             classes[dynamicClass] = _parseBundleClass(classes[dynamicClass].data);
         }
-        _validateHierarchy(classes, dynamicClass, parentLinks, hierarchyState);
-        uint256 fields = _instanceFieldCount(classes, dynamicClass, parentLinks, faultPC);
+        // A loaded arena layout also certifies its immutable class/interface
+        // closure. Avoid allocating traversal scratch again for every raise.
+        if (!arena.layoutsLoaded[dynamicClass]) {
+            _validateHierarchy(classes, dynamicClass, parentLinks, hierarchyState);
+        }
+        uint256 fields = arena.layoutsLoaded[dynamicClass]
+            ? arena.fieldDefaults[dynamicClass].length
+            : _instanceFieldCount(classes, dynamicClass, parentLinks, faultPC);
         if (arena.objectCount == MAX_EXCEPTION_OBJECTS
             || fields > MAX_EXCEPTION_FIELD_SLOTS - arena.fieldSlots) {
             arena.pending = PendingException(true, 7, arena.emergencyRef, faultPC);
@@ -5396,9 +5419,14 @@ contract JVMSubsetInterpreter {
         arena.fieldSlots += fields;
         heapClasses[nextHandle] = dynamicClass;
         exceptionKinds[nextHandle] = HEAP_OBJECT_MARKER | kind;
-        objectHeap[nextHandle] = _objectFieldDefaults(
-            classes, dynamicClass, fields, parentLinks
-        );
+        if (!arena.layoutsLoaded[dynamicClass]) {
+            arena.fieldDefaults[dynamicClass] = _objectFieldDefaults(
+                classes, dynamicClass, fields, parentLinks
+            );
+            arena.layoutsLoaded[dynamicClass] = true;
+        }
+        // Private immutable templates, never aliases of mutable guest objects.
+        objectHeap[nextHandle] = _copyExceptionDefaults(arena.fieldDefaults[dynamicClass]);
         arena.pending = PendingException(true, kind, nextHandle, faultPC);
         return nextHandle;
     }

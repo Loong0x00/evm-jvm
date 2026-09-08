@@ -5,6 +5,7 @@ package jvmevm
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -47,4 +48,42 @@ func TestParentM5daPreviouslyFailedDefaultPrerequisite(t *testing.T) {
 			}
 		})
 	}
+}
+
+// 1025 inherited slots * (one emergency + 254 fresh) consume 261375 arena
+// slots; the next record exceeds 262144 BEFORE the 256-record cap. EVM-only.
+func TestParentM5daExceptionFieldArenaBoundary(t *testing.T) {
+	var object strings.Builder
+	object.WriteString("package java.lang; public class Object { public Object(){}")
+	for i := 0; i < 1025; i++ {
+		fmt.Fprintf(&object, "public int f%d;", i)
+	}
+	object.WriteString("}")
+	classes := verifyM5daCompile(t, map[string]string{
+		"java/lang/Object.java": object.String(),
+		"ParentArenaFields.java": `public class ParentArenaFields {
+			public static int run(){
+				for(int i=0;i<255;i++)try{throw (RuntimeException)null;}
+				catch(NullPointerException fresh){
+					if(i>=254||fresh==null)return -1;
+					if(i==0||i==253){
+						if(fresh.f0!=0||fresh.f1024!=0)return -1;
+						fresh.f0=i+1;fresh.f1024=-i-1;
+					}
+				}
+				catch(OutOfMemoryError emergency){
+					if(i!=254||emergency.f0!=0||emergency.f1024!=0)return -2;
+					emergency.f0=17;
+					try{throw (RuntimeException)null;}
+					catch(OutOfMemoryError again){return emergency==again&&again.f0==17?i:-3;}
+				}
+				return -4;
+			}
+		}`,
+	}, "java/lang/Object", "ParentArenaFields")
+	result, err := RunClasses([][]byte{classes["ParentArenaFields"], classes["java/lang/Object"]}, "ParentArenaFields", "run", nil, 250_000_000)
+	if err != nil || result.ExceptionClass != "" || result.Value != 254 {
+		t.Fatalf("result/error=%+v/%v want value254", result, err)
+	}
+	t.Logf("exception field arena boundary gas=%d", result.GasUsed)
 }
