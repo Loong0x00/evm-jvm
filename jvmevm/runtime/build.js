@@ -12,36 +12,60 @@ const dir = __dirname;
 const sourceName = 'JVMSubsetInterpreter.sol';
 const artifactPath = path.join(dir, 'JVMSubsetInterpreter.runtime.hex');
 const bootstrapDir = path.join(dir, 'bootstrap');
-const bootstrapSourcePath = path.join(bootstrapDir, 'Object.java');
-const bootstrapHexPath = path.join(bootstrapDir, 'Object.class.hex');
-const expectedBootstrapSource = 'package java.lang; public class Object { public Object() {} }\n';
-const expectedBootstrapHash = 'af9136af3be2c44ce120ac403beccb8b1cc963fc83dc1457e63f8b69dd497fe0';
+const bootstraps = [
+  {
+    name: 'Object', packagePath: ['java', 'lang'],
+    expectedSource: 'package java.lang; public class Object { public Object() {} }\n',
+    bytes: 95, hash: 'af9136af3be2c44ce120ac403beccb8b1cc963fc83dc1457e63f8b69dd497fe0'
+  },
+  {
+    name: 'Cloneable', packagePath: ['java', 'lang'],
+    expectedSource: 'package java.lang; public interface Cloneable {}\n',
+    bytes: 71, hash: '07930c21cec8dfc8a031c04590af290511e2be6dbae7ad1282a2cfa00a06c457'
+  },
+  {
+    name: 'Serializable', packagePath: ['java', 'io'],
+    expectedSource: 'package java.io; public interface Serializable {}\n',
+    bytes: 72, hash: '90bd3c397ef8d1f81a72b59b80c6a96ac158ac9fc97c95851d246eff8e66a70a'
+  }
+];
 const source = fs.readFileSync(path.join(dir, sourceName), 'utf8');
 
 function verifyBootstrap() {
-  const bootstrapSource = fs.readFileSync(bootstrapSourcePath, 'utf8');
-  if (bootstrapSource !== expectedBootstrapSource) throw new Error('bootstrap Object.java differs from trusted source');
-  const checkedHex = fs.readFileSync(bootstrapHexPath, 'utf8').trim().toLowerCase();
-  const embedded = source.match(/function _bootstrapObject\(\)[\s\S]*?return hex"([0-9a-f]+)";/);
-  if (!embedded || embedded[1] !== checkedHex) throw new Error('embedded bootstrap Object differs from Object.class.hex');
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'jvmevm-bootstrap-'));
   try {
-    const src = path.join(tmp, 'java', 'lang', 'Object.java');
     const out = path.join(tmp, 'out');
-    fs.mkdirSync(path.dirname(src), { recursive: true });
-    fs.writeFileSync(src, bootstrapSource);
-    childProcess.execFileSync('javac', ['--release', '8', '-g:none', '-Xlint:-options', '-d', out, src], {
+    const sourcePaths = [];
+    for (const spec of bootstraps) {
+      const bootstrapSource = fs.readFileSync(path.join(bootstrapDir, `${spec.name}.java`), 'utf8');
+      if (bootstrapSource !== spec.expectedSource) {
+        throw new Error(`bootstrap ${spec.name}.java differs from trusted source`);
+      }
+      const checkedHex = fs.readFileSync(path.join(bootstrapDir, `${spec.name}.class.hex`), 'utf8').trim().toLowerCase();
+      const embedded = source.match(new RegExp(`function _bootstrap${spec.name}\\(\\)[\\s\\S]*?return hex"([0-9a-f]+)";`));
+      if (!embedded || embedded[1] !== checkedHex) {
+        throw new Error(`embedded bootstrap ${spec.name} differs from ${spec.name}.class.hex`);
+      }
+      const src = path.join(tmp, ...spec.packagePath, `${spec.name}.java`);
+      fs.mkdirSync(path.dirname(src), { recursive: true });
+      fs.writeFileSync(src, bootstrapSource);
+      sourcePaths.push(src);
+    }
+    childProcess.execFileSync('javac', ['--release', '8', '-g:none', '-Xlint:-options', '-d', out, ...sourcePaths], {
       timeout: 30000, stdio: ['ignore', 'pipe', 'pipe']
     });
-    const bytes = fs.readFileSync(path.join(out, 'java', 'lang', 'Object.class'));
-    const hash = crypto.createHash('sha256').update(bytes).digest('hex');
-    if (bytes.length !== 95 || hash !== expectedBootstrapHash || bytes.toString('hex') !== checkedHex) {
-      throw new Error(`bootstrap Object mismatch: bytes=${bytes.length} sha256=${hash}`);
+    for (const spec of bootstraps) {
+      const bytes = fs.readFileSync(path.join(out, ...spec.packagePath, `${spec.name}.class`));
+      const checkedHex = fs.readFileSync(path.join(bootstrapDir, `${spec.name}.class.hex`), 'utf8').trim().toLowerCase();
+      const hash = crypto.createHash('sha256').update(bytes).digest('hex');
+      if (bytes.length !== spec.bytes || hash !== spec.hash || bytes.toString('hex') !== checkedHex) {
+        throw new Error(`bootstrap ${spec.name} mismatch: bytes=${bytes.length} sha256=${hash}`);
+      }
+      console.log(`bootstrap ${spec.name} verified: ${spec.bytes} bytes, sha256=${spec.hash}`);
     }
   } finally {
     fs.rmSync(tmp, { recursive: true, force: true });
   }
-  console.log(`bootstrap Object verified: 95 bytes, sha256=${expectedBootstrapHash}`);
 }
 
 try { verifyBootstrap(); } catch (e) {

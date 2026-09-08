@@ -18,6 +18,7 @@ contract JVMSubsetInterpreter {
     error ReferenceError(uint256 code, uint256 pc);
     error ObjectError(uint256 code, uint256 pc);
     error TypeError(uint256 code, uint256 pc);
+    error InterfaceError(uint256 code, uint256 location);
 
     uint256 private constant MAX_CONSTANT_POOL = 4096;
     uint256 private constant MAX_CODE = 65535;
@@ -89,6 +90,8 @@ contract JVMSubsetInterpreter {
         FieldInfo[] fields;
         // One packed word per method: flags/name/descriptor and lazy Code attribute location.
         uint256[] methods;
+        // Constant-pool Class indices for direct interfaces, in classfile order.
+        uint16[] interfaces;
         uint256 thisNameOffset;
         uint256 thisNameLength;
         uint256 superNameOffset;
@@ -142,6 +145,9 @@ contract JVMSubsetInterpreter {
 
         uint16 classAccess = _u2(r);
         c.accessFlags = classAccess;
+        if ((classAccess & 0x0200) == 0 && (classAccess & 0xe000) != 0) {
+            c.unsupportedSemantics = true;
+        }
         uint256 thisClass = _u2(r);
         uint256 superClass = _u2(r);
         (c.thisNameOffset, c.thisNameLength) = _className(c, thisClass, r.pos);
@@ -153,8 +159,8 @@ contract JVMSubsetInterpreter {
         }
 
         uint256 interfacesCount = _u2(r);
-        if (interfacesCount != 0) revert LinkError(5, 0);
-        _skip(r, _checkedMul2(interfacesCount, r.pos));
+        c.interfaces = new uint16[](interfacesCount);
+        for (uint256 i = 0; i < interfacesCount; ++i) c.interfaces[i] = _u2(r);
         c.fields = _readFields(r, c);
 
         uint256 methodsCount = _u2(r);
@@ -226,10 +232,16 @@ contract JVMSubsetInterpreter {
         uint256[] memory referenceCache = new uint256[](c.cp.length);
         _predecode(c, selected[root]);
         bool suppliedObject = _isObjectClass(c);
-        uint256 classCount = suppliedObject ? 1 : 2;
+        bool suppliedCloneable = _isNamedClass(c, bytes("java/lang/Cloneable"));
+        bool suppliedSerializable = _isNamedClass(c, bytes("java/io/Serializable"));
+        uint256 classCount = 1 + (suppliedObject ? 0 : 1)
+            + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1);
         ClassInfo[] memory classes = new ClassInfo[](classCount);
         classes[0] = c;
-        if (!suppliedObject) classes[1] = _parseBundleClass(_bootstrapObject());
+        uint256 bootstrapAt = 1;
+        if (!suppliedObject) classes[bootstrapAt++] = _parseBundleClass(_bootstrapObject());
+        if (!suppliedCloneable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapCloneable());
+        if (!suppliedSerializable) classes[bootstrapAt] = _parseBundleClass(_bootstrapSerializable());
         Selected[][] memory selections = new Selected[][](classCount);
         selections[0] = selected;
         uint256[][] memory caches = new uint256[][](classCount);
@@ -253,6 +265,8 @@ contract JVMSubsetInterpreter {
         ClassInfo[] memory users = new ClassInfo[](inputCount);
         uint256 entryPlusOne;
         bool suppliedObject;
+        bool suppliedCloneable;
+        bool suppliedSerializable;
         bytes memory wantedClass = bytes(entryClass);
         for (uint256 i = 0; i < inputCount; ++i) {
             users[i] = _parseBundleClass(rawClasses[i]);
@@ -260,6 +274,8 @@ contract JVMSubsetInterpreter {
                 if (_sameClassName(users[i], users[j])) revert LinkError(2, i);
             }
             if (_isObjectClass(users[i])) suppliedObject = true;
+            if (_isNamedClass(users[i], bytes("java/lang/Cloneable"))) suppliedCloneable = true;
+            if (_isNamedClass(users[i], bytes("java/io/Serializable"))) suppliedSerializable = true;
             if (
                 _equals(
                     users[i].data,
@@ -270,12 +286,17 @@ contract JVMSubsetInterpreter {
             ) entryPlusOne = i + 1;
         }
         if (entryPlusOne == 0) revert LinkError(3, 0);
-        uint256 count = suppliedObject ? inputCount : inputCount + 1;
+        uint256 count = inputCount + (suppliedObject ? 0 : 1)
+            + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1);
         ClassInfo[] memory classes = new ClassInfo[](count);
         for (uint256 i = 0; i < inputCount; ++i) classes[i] = users[i];
-        if (!suppliedObject) classes[inputCount] = _parseBundleClass(_bootstrapObject());
+        uint256 bootstrapAt = inputCount;
+        if (!suppliedObject) classes[bootstrapAt++] = _parseBundleClass(_bootstrapObject());
+        if (!suppliedCloneable) classes[bootstrapAt++] = _parseBundleClass(_bootstrapCloneable());
+        if (!suppliedSerializable) classes[bootstrapAt] = _parseBundleClass(_bootstrapSerializable());
         uint256 rootClass = entryPlusOne - 1;
         _requireSupportedClass(classes[rootClass], rootClass);
+        if (_isInterface(classes[rootClass])) revert LinkError(5, rootClass);
 
         bytes memory wantedMethod = bytes(entry);
         uint256 rootPlusOne;
@@ -330,11 +351,13 @@ contract JVMSubsetInterpreter {
             (c.superNameOffset, c.superNameLength) = _className(c, superClass, r.pos);
             c.hasSuperclass = true;
         }
-        if ((c.accessFlags & 0x0200) != 0) c.unsupportedSemantics = true;
+        if ((c.accessFlags & 0x0200) == 0 && (c.accessFlags & 0xe000) != 0) {
+            c.unsupportedSemantics = true;
+        }
 
         uint256 interfacesCount = _u2(r);
-        if (interfacesCount != 0) c.unsupportedSemantics = true;
-        _skip(r, _checkedMul2(interfacesCount, r.pos));
+        c.interfaces = new uint16[](interfacesCount);
+        for (uint256 i = 0; i < interfacesCount; ++i) c.interfaces[i] = _u2(r);
         c.fields = _readFields(r, c);
 
         uint256 methodsCount = _u2(r);
@@ -390,6 +413,14 @@ contract JVMSubsetInterpreter {
 
     function _isObjectClass(ClassInfo memory c) private pure returns (bool) {
         return _equalsLiteral(c.data, c.thisNameOffset, c.thisNameLength, bytes("java/lang/Object"));
+    }
+
+    function _isNamedClass(ClassInfo memory c, bytes memory name) private pure returns (bool) {
+        return _equalsLiteral(c.data, c.thisNameOffset, c.thisNameLength, name);
+    }
+
+    function _isInterface(ClassInfo memory c) private pure returns (bool) {
+        return (c.accessFlags & 0x0200) != 0;
     }
 
     function _findClass(
@@ -1119,6 +1150,79 @@ contract JVMSubsetInterpreter {
                 f.sp = base;
                 frames[depth] = child;
                 ++depth;
+            } else if (op == 0xb9) { // invokeinterface
+                uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
+                uint8 count = uint8(c.data[selection.codeOffset + f.pc + 2]);
+                uint8 trailing = uint8(c.data[selection.codeOffset + f.pc + 3]);
+                f.pc += 4;
+                VirtualResolution memory resolved = _resolveInterfaceCall(
+                    classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
+                );
+                Selected memory signature = _loadVirtualSignature(
+                    classes[resolved.owner], resolved.method, opPC
+                );
+                if (count == 0 || trailing != 0 || signature.argumentCount + 1 != count) {
+                    revert CallError(1, opPC);
+                }
+                if (f.sp < signature.argumentCount + 1) revert BytecodeError(3, opPC);
+                uint256 base = f.sp - signature.argumentCount - 1;
+                uint256 receiver = f.stack[base];
+                _requireKind(receiver, KIND_REF, opPC);
+                for (uint256 i = 0; i < signature.argumentCount; ++i) {
+                    uint256 argument = f.stack[base + 1 + i];
+                    _requireKind(argument, signature.argumentKinds[i], opPC);
+                    if (signature.argumentKinds[i] == KIND_REF) {
+                        _requireAssignable(
+                            classes, argument, classes[resolved.owner].data,
+                            signature.argumentTypeOffsets[i], signature.argumentTypeLengths[i],
+                            heapKinds, heapClasses, arrayRanks, arrayLeafClasses,
+                            nextHandle, parentLinks, opPC
+                        );
+                    }
+                }
+                uint256 handle = _payload(receiver);
+                if (handle == 0) _throwJava(6, frames, depth);
+                _validatePackedRef(receiver, heapKinds, nextHandle, opPC);
+                if (heapKinds[handle] == HEAP_ARRAY) {
+                    if (!_arrayImplementsClass(classes, resolved.symbolic)) {
+                        revert ReferenceError(2, opPC);
+                    }
+                    revert CallError(4, opPC);
+                }
+                if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, opPC);
+                uint256 dynamicClass = heapClasses[handle];
+                if (!_classImplements(classes, dynamicClass, resolved.symbolic, parentLinks)) {
+                    revert ReferenceError(2, opPC);
+                }
+                (uint256 calleeClass, uint256 callee) = _selectInterfaceImplementation(
+                    classes, dynamicClass, c.data, resolved.nameOffset, resolved.nameLength,
+                    resolved.descriptorOffset, resolved.descriptorLength, parentLinks, opPC
+                );
+                if (selected[calleeClass].length == 0) {
+                    selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
+                    referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                    fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                }
+                if (!selected[calleeClass][callee].loaded) {
+                    selected[calleeClass][callee] = _loadVirtualCallee(
+                        classes[calleeClass], callee, opPC
+                    );
+                    _predecode(classes[calleeClass], selected[calleeClass][callee]);
+                }
+                Selected memory target = selected[calleeClass][callee];
+                if (!_sameMethodDescriptor(classes[resolved.owner], resolved.method,
+                    classes[calleeClass], callee)) revert CallError(4, opPC);
+                if (depth == MAX_FRAMES) revert JavaException(2);
+                Frame memory child = _newFrame(calleeClass, callee, target, opPC);
+                child.locals[0] = receiver;
+                child.initialized[0] = true;
+                for (uint256 i = 0; i < target.argumentCount; ++i) {
+                    child.locals[i + 1] = f.stack[base + 1 + i];
+                    child.initialized[i + 1] = true;
+                }
+                f.sp = base;
+                frames[depth] = child;
+                ++depth;
             } else if (op == 0xac || op == 0xb0 || op == 0xb1) { // ireturn / areturn / return
                 uint8 actualKind = op == 0xac ? uint8(KIND_INT)
                     : (op == 0xb0 ? uint8(KIND_REF) : uint8(0));
@@ -1281,15 +1385,16 @@ contract JVMSubsetInterpreter {
                     );
                     if (!foundTarget) revert LinkError(4, opPC);
                     ClassInfo memory castClass = classes[targetClass];
-                    if ((castClass.accessFlags & 0x0200) != 0
-                        || (targetClass != f.classIndex && !_classAccessible(c, castClass))) {
+                    if (targetClass != f.classIndex && !_classAccessible(c, castClass)) {
                         revert TypeError(2, opPC);
                     }
                     _validateHierarchy(classes, targetClass, parentLinks, hierarchyState);
                     if (heapKinds[handle] == HEAP_ARRAY) {
-                        assignable = _isObjectClass(castClass);
+                        assignable = _arrayImplementsClass(classes, targetClass);
                     } else if (heapKinds[handle] == HEAP_OBJECT) {
-                        assignable = _objectIsClass(heapClasses[handle], targetClass, parentLinks);
+                        assignable = _typeAssignable(
+                            classes, heapClasses[handle], targetClass, parentLinks
+                        );
                     }
                 }
                 if (op == 0xc1) {
@@ -1407,58 +1512,168 @@ contract JVMSubsetInterpreter {
         uint256[] memory parentLinks,
         uint8[] memory hierarchyState
     ) private pure {
-        if (hierarchyState[classIndex] == 2) return;
-        bool[] memory seen = new bool[](classes.length);
-        uint256 current = classIndex;
-        while (hierarchyState[current] != 2) {
-            if (seen[current]) revert HierarchyError(2, current);
-            seen[current] = true;
-            ClassInfo memory child = classes[current];
-            _requireSupportedClass(child, current);
-            bool isObject = _equalsLiteral(
-                child.data, child.thisNameOffset, child.thisNameLength, bytes("java/lang/Object")
-            );
-            if (isObject) {
-                if (child.hasSuperclass) revert HierarchyError(4, current);
-                parentLinks[current] = type(uint256).max;
-                break;
-            }
-            if (!child.hasSuperclass) revert HierarchyError(4, current);
-
-            bool found;
-            uint256 parent;
-            for (uint256 i = 0; i < classes.length; ++i) {
-                if (_equalsCross(
-                    child.data, child.superNameOffset, child.superNameLength,
-                    classes[i].data, classes[i].thisNameOffset, classes[i].thisNameLength
-                )) {
-                    found = true;
-                    parent = i;
-                    break;
-                }
-            }
-            if (!found) {
-                if (_equalsLiteral(
-                    child.data, child.superNameOffset, child.superNameLength,
-                    bytes("java/lang/Object")
-                )) {
+        if (_isInterface(classes[classIndex])) {
+            _validateInterfaceClosure(classes, classIndex, parentLinks);
+            return;
+        }
+        if (hierarchyState[classIndex] != 2) {
+            bool[] memory seen = new bool[](classes.length);
+            uint256 current = classIndex;
+            while (hierarchyState[current] != 2) {
+                if (seen[current]) revert HierarchyError(2, current);
+                seen[current] = true;
+                ClassInfo memory child = classes[current];
+                _requireSupportedClass(child, current);
+                bool isObject = _isObjectClass(child);
+                if (isObject) {
+                    if (child.hasSuperclass) revert HierarchyError(4, current);
                     parentLinks[current] = type(uint256).max;
                     break;
                 }
-                revert HierarchyError(1, current);
+                if (!child.hasSuperclass) revert HierarchyError(4, current);
+
+                (bool found, uint256 parent) = _findClass(
+                    classes, child.data, child.superNameOffset, child.superNameLength
+                );
+                if (!found) revert HierarchyError(1, current);
+                ClassInfo memory parentClass = classes[parent];
+                if (_isInterface(parentClass)) revert HierarchyError(4, current);
+                if ((parentClass.accessFlags & 0x0010) != 0) revert HierarchyError(3, current);
+                if ((parentClass.accessFlags & 0x0001) == 0 && !_samePackage(child, parentClass)) {
+                    revert HierarchyError(5, current);
+                }
+                parentLinks[current] = parent + 1;
+                current = parent;
             }
-            ClassInfo memory parentClass = classes[parent];
-            if ((parentClass.accessFlags & 0x0200) != 0) revert HierarchyError(4, current);
-            if ((parentClass.accessFlags & 0x0010) != 0) revert HierarchyError(3, current);
-            if ((parentClass.accessFlags & 0x0001) == 0 && !_samePackage(child, parentClass)) {
-                revert HierarchyError(5, current);
+            for (uint256 i = 0; i < classes.length; ++i) {
+                if (seen[i]) hierarchyState[i] = 2;
             }
-            parentLinks[current] = parent + 1;
-            current = parent;
         }
+        _validateInterfaceClosure(classes, classIndex, parentLinks);
+    }
+
+    function _validateInterfaceClosure(
+        ClassInfo[] memory classes, uint256 start, uint256[] memory parentLinks
+    ) private pure {
+        bool[] memory reachable = new bool[](classes.length);
+        uint256[] memory queue = new uint256[](classes.length);
+        uint256 head;
+        uint256 tail;
+        if (_isInterface(classes[start])) {
+            queue[tail++] = start;
+            reachable[start] = true;
+        } else {
+            uint256 current = start;
+            while (true) {
+                ClassInfo memory owner = classes[current];
+                for (uint256 i = 0; i < owner.interfaces.length; ++i) {
+                    uint256 target = _resolveInterfaceEdge(classes, current, i);
+                    for (uint256 j = 0; j < i; ++j) {
+                        if (_resolveInterfaceEdge(classes, current, j) == target) {
+                            revert InterfaceError(1, current);
+                        }
+                    }
+                    if (!reachable[target]) {
+                        reachable[target] = true;
+                        queue[tail++] = target;
+                    }
+                }
+                uint256 link = parentLinks[current];
+                if (link == 0 || link == type(uint256).max) break;
+                current = link - 1;
+            }
+        }
+        while (head < tail) {
+            uint256 ownerIndex = queue[head++];
+            _validateInterfaceHeaderAndMethods(classes[ownerIndex], ownerIndex);
+            ClassInfo memory owner = classes[ownerIndex];
+            for (uint256 i = 0; i < owner.interfaces.length; ++i) {
+                uint256 target = _resolveInterfaceEdge(classes, ownerIndex, i);
+                for (uint256 j = 0; j < i; ++j) {
+                    if (_resolveInterfaceEdge(classes, ownerIndex, j) == target) {
+                        revert InterfaceError(1, ownerIndex);
+                    }
+                }
+                if (!reachable[target]) {
+                    reachable[target] = true;
+                    queue[tail++] = target;
+                }
+            }
+        }
+        if (tail == 0) return;
+        uint256[] memory indegree = new uint256[](classes.length);
         for (uint256 i = 0; i < classes.length; ++i) {
-            if (seen[i]) hierarchyState[i] = 2;
+            if (!reachable[i]) continue;
+            for (uint256 j = 0; j < classes[i].interfaces.length; ++j) {
+                uint256 target = _resolveInterfaceEdge(classes, i, j);
+                ++indegree[target];
+            }
         }
+        head = 0;
+        uint256 processed;
+        for (uint256 i = 0; i < classes.length; ++i) {
+            if (reachable[i] && indegree[i] == 0) queue[head++] = i;
+        }
+        uint256 at;
+        while (at < head) {
+            uint256 owner = queue[at++];
+            ++processed;
+            for (uint256 j = 0; j < classes[owner].interfaces.length; ++j) {
+                uint256 target = _resolveInterfaceEdge(classes, owner, j);
+                if (--indegree[target] == 0) queue[head++] = target;
+            }
+        }
+        if (processed != tail) {
+            for (uint256 i = 0; i < classes.length; ++i) {
+                if (reachable[i] && indegree[i] != 0) revert InterfaceError(2, i);
+            }
+        }
+    }
+
+    function _validateInterfaceHeaderAndMethods(ClassInfo memory c, uint256 classIndex)
+        private pure
+    {
+        if (!_isInterface(c) || (c.accessFlags & 0x0400) == 0
+            || (c.accessFlags & 0xe010) != 0 || !c.hasSuperclass
+            || !_equalsLiteral(c.data, c.superNameOffset, c.superNameLength, bytes("java/lang/Object"))) {
+            revert InterfaceError(1, classIndex);
+        }
+        for (uint256 i = 0; i < c.fields.length; ++i) {
+            if ((c.fields[i].accessFlags & 0x0019) != 0x0019) {
+                revert InterfaceError(1, classIndex);
+            }
+        }
+        for (uint256 i = 0; i < c.methods.length; ++i) {
+            uint256 meta = c.methods[i];
+            uint16 access = uint16(meta);
+            if ((access & 0x0008) != 0) continue; // static metadata is deferred to M4f-c
+            if ((access & 0x0001) == 0 || (access & 0x0400) == 0
+                || (access & (0x0002 | 0x0020 | 0x0040 | 0x0100 | 0x1000)) != 0
+                || _methodCodeCount(meta) != 0) revert InterfaceError(4, classIndex);
+        }
+    }
+
+    function _resolveInterfaceEdge(
+        ClassInfo[] memory classes, uint256 ownerIndex, uint256 edge
+    ) private pure returns (uint256 target) {
+        ClassInfo memory owner = classes[ownerIndex];
+        uint256 cpIndex = owner.interfaces[edge];
+        if (cpIndex == 0 || cpIndex >= owner.cp.length || uint8(owner.cp[cpIndex]) != 7) {
+            revert InterfaceError(1, ownerIndex);
+        }
+        uint256 nameIndex = (owner.cp[cpIndex] >> 8) & 0xffff;
+        if (nameIndex == 0 || nameIndex >= owner.cp.length || uint8(owner.cp[nameIndex]) != 1) {
+            revert InterfaceError(1, ownerIndex);
+        }
+        (uint256 off, uint256 n) = _utf(owner.cp[nameIndex]);
+        if (!_validInternalName(owner.data, off, n)) revert InterfaceError(1, ownerIndex);
+        (bool found, uint256 resolved) = _findClass(classes, owner.data, off, n);
+        if (!found) revert LinkError(4, ownerIndex);
+        if (!_isInterface(classes[resolved])) revert InterfaceError(1, ownerIndex);
+        if (resolved != ownerIndex && !_classAccessible(owner, classes[resolved])) {
+            revert InterfaceError(3, ownerIndex);
+        }
+        return resolved;
     }
 
     function _validateStaticCalleeMetadata(
@@ -1541,6 +1756,107 @@ contract JVMSubsetInterpreter {
         return result;
     }
 
+    function _findInterfaceMethod(
+        ClassInfo[] memory classes, uint256 start, bool startIsInterface,
+        bytes memory nameData, uint256 nameOffset, uint256 nameLength,
+        uint256 descriptorOffset, uint256 descriptorLength,
+        uint256[] memory parentLinks, uint256 pc
+    ) private pure returns (bool found, uint256 owner, uint256 method) {
+        bool[] memory reachable = new bool[](classes.length);
+        uint256[] memory queue = new uint256[](classes.length);
+        uint256 head;
+        uint256 tail;
+        if (startIsInterface) {
+            for (uint256 i = 0; i < classes[start].interfaces.length; ++i) {
+                uint256 direct = _resolveInterfaceEdge(classes, start, i);
+                if (!reachable[direct]) { reachable[direct] = true; queue[tail++] = direct; }
+            }
+        } else {
+            uint256 current = start;
+            while (true) {
+                for (uint256 i = 0; i < classes[current].interfaces.length; ++i) {
+                    uint256 direct = _resolveInterfaceEdge(classes, current, i);
+                    if (!reachable[direct]) { reachable[direct] = true; queue[tail++] = direct; }
+                }
+                uint256 link = parentLinks[current];
+                if (link == 0 || link == type(uint256).max) break;
+                current = link - 1;
+            }
+        }
+        while (head < tail) {
+            uint256 iface = queue[head++];
+            for (uint256 i = 0; i < classes[iface].interfaces.length; ++i) {
+                uint256 parent = _resolveInterfaceEdge(classes, iface, i);
+                if (!reachable[parent]) { reachable[parent] = true; queue[tail++] = parent; }
+            }
+        }
+        bool[] memory declares = new bool[](classes.length);
+        uint256[] memory methods = new uint256[](classes.length);
+        for (uint256 i = 0; i < classes.length; ++i) {
+            if (!reachable[i]) continue;
+            (bool has, uint256 candidate) = _lookupExactMethod(
+                classes, i, nameData, nameOffset, nameLength,
+                descriptorOffset, descriptorLength, pc
+            );
+            if (has && (uint16(classes[i].methods[candidate]) & 0x0008) == 0) {
+                declares[i] = true;
+                methods[i] = candidate;
+            }
+        }
+        for (uint256 i = 0; i < classes.length; ++i) {
+            if (!declares[i]) continue;
+            bool shadowed;
+            for (uint256 j = 0; j < classes.length; ++j) {
+                if (i != j && declares[j] && _interfaceExtends(classes, j, i)) {
+                    shadowed = true;
+                    break;
+                }
+            }
+            if (!shadowed) return (true, i, methods[i]);
+        }
+    }
+
+    function _selectInterfaceImplementation(
+        ClassInfo[] memory classes, uint256 dynamicClass, bytes memory nameData,
+        uint256 nameOffset, uint256 nameLength, uint256 descriptorOffset,
+        uint256 descriptorLength, uint256[] memory parentLinks, uint256 pc
+    ) private pure returns (uint256 owner, uint256 method) {
+        uint256 current = dynamicClass;
+        while (true) {
+            (bool found, uint256 candidate) = _lookupExactMethod(
+                classes, current, nameData, nameOffset, nameLength,
+                descriptorOffset, descriptorLength, pc
+            );
+            if (found) {
+                uint16 access = uint16(classes[current].methods[candidate]);
+                if ((access & 0x0001) == 0
+                    || (access & (0x0002 | 0x0008 | 0x0020 | 0x0100 | 0x0400)) != 0
+                    || _methodCodeCount(classes[current].methods[candidate]) != 1) {
+                    revert CallError(4, pc);
+                }
+                uint256 ancestor = current;
+                while (parentLinks[ancestor] != 0
+                    && parentLinks[ancestor] != type(uint256).max) {
+                    ancestor = parentLinks[ancestor] - 1;
+                    (bool inherited, uint256 inheritedMethod) = _lookupExactMethod(
+                        classes, ancestor, nameData, nameOffset, nameLength,
+                        descriptorOffset, descriptorLength, pc
+                    );
+                    if (!inherited) continue;
+                    uint16 inheritedAccess = uint16(classes[ancestor].methods[inheritedMethod]);
+                    bool overrides = (inheritedAccess & (0x0001 | 0x0004)) != 0
+                        || ((inheritedAccess & 0x0002) == 0
+                            && _samePackage(classes[current], classes[ancestor]));
+                    if (overrides && (inheritedAccess & 0x0010) != 0) revert CallError(4, pc);
+                }
+                return (current, candidate);
+            }
+            uint256 link = parentLinks[current];
+            if (link == 0 || link == type(uint256).max) revert CallError(4, pc);
+            current = link - 1;
+        }
+    }
+
     function _loadVirtualSignature(ClassInfo memory c, uint256 method, uint256 callPC)
         private
         pure
@@ -1601,6 +1917,7 @@ contract JVMSubsetInterpreter {
         );
         if (!foundOwner) revert LinkError(4, pc);
         _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
+        if (_isInterface(classes[symbolic])) revert CallError(4, pc);
         if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
             revert CallError(4, pc);
         }
@@ -1627,15 +1944,26 @@ contract JVMSubsetInterpreter {
         out.symbolic = symbolic;
         out.referenceClass = callerClass;
         out.owner = symbolic;
+        bool resolvedDeclaration;
         while (true) {
             (bool found, uint256 method) = _lookupExactMethod(
                 classes, out.owner, caller.data, out.nameOffset, out.nameLength,
                 out.descriptorOffset, out.descriptorLength, pc
             );
-            if (found) { out.method = method; break; }
+            if (found) { out.method = method; resolvedDeclaration = true; break; }
             uint256 link = parentLinks[out.owner];
-            if (link == 0 || link == type(uint256).max) revert CallError(3, pc);
+            if (link == 0 || link == type(uint256).max) break;
             out.owner = link - 1;
+        }
+        if (!resolvedDeclaration) {
+            (bool foundInterface, uint256 interfaceOwner, uint256 interfaceMethod) =
+                _findInterfaceMethod(
+                    classes, symbolic, false, caller.data, out.nameOffset, out.nameLength,
+                    out.descriptorOffset, out.descriptorLength, parentLinks, pc
+                );
+            if (!foundInterface) revert CallError(3, pc);
+            out.owner = interfaceOwner;
+            out.method = interfaceMethod;
         }
         uint16 access = uint16(classes[out.owner].methods[out.method]);
         if ((access & (0x0002 | 0x0008)) != 0) revert CallError(4, pc);
@@ -1644,10 +1972,104 @@ contract JVMSubsetInterpreter {
         )) revert CallError(4, pc);
     }
 
+    function _resolveInterfaceCall(
+        ClassInfo[] memory classes, uint256 callerClass, uint256 refIndex, uint256 pc,
+        uint256[] memory parentLinks, uint8[] memory hierarchyState
+    ) private pure returns (VirtualResolution memory out) {
+        ClassInfo memory caller = classes[callerClass];
+        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 11) {
+            revert CallError(1, pc);
+        }
+        uint256 ref = caller.cp[refIndex];
+        uint256 ownerClassIndex = (ref >> 8) & 0xffff;
+        uint256 natIndex = (ref >> 24) & 0xffff;
+        if (ownerClassIndex == 0 || ownerClassIndex >= caller.cp.length
+            || uint8(caller.cp[ownerClassIndex]) != 7 || natIndex == 0
+            || natIndex >= caller.cp.length || uint8(caller.cp[natIndex]) != 12) {
+            revert CallError(1, pc);
+        }
+        uint256 ownerNameIndex = (caller.cp[ownerClassIndex] >> 8) & 0xffff;
+        if (ownerNameIndex == 0 || ownerNameIndex >= caller.cp.length
+            || uint8(caller.cp[ownerNameIndex]) != 1) revert CallError(1, pc);
+        (uint256 ownerOff, uint256 ownerLen) = _utf(caller.cp[ownerNameIndex]);
+        if (!_validInternalName(caller.data, ownerOff, ownerLen)) revert CallError(1, pc);
+        (bool foundOwner, uint256 symbolic) = _findClass(classes, caller.data, ownerOff, ownerLen);
+        if (!foundOwner) revert LinkError(4, pc);
+        if (!_isInterface(classes[symbolic])) revert InterfaceError(1, pc);
+        _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
+        if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
+            revert CallError(4, pc);
+        }
+        uint256 nat = caller.cp[natIndex];
+        uint256 nameIndex = (nat >> 8) & 0xffff;
+        uint256 descriptorIndex = (nat >> 24) & 0xffff;
+        if (nameIndex == 0 || nameIndex >= caller.cp.length || uint8(caller.cp[nameIndex]) != 1
+            || descriptorIndex == 0 || descriptorIndex >= caller.cp.length
+            || uint8(caller.cp[descriptorIndex]) != 1) revert CallError(1, pc);
+        (out.nameOffset, out.nameLength) = _utf(caller.cp[nameIndex]);
+        (out.descriptorOffset, out.descriptorLength) = _utf(caller.cp[descriptorIndex]);
+        if (_equalsLiteral(caller.data, out.nameOffset, out.nameLength, bytes("<init>"))
+            || _equalsLiteral(caller.data, out.nameOffset, out.nameLength, bytes("<clinit>"))) {
+            revert CallError(4, pc);
+        }
+        if (!_validOrdinaryMethodName(caller.data, out.nameOffset, out.nameLength)) {
+            revert CallError(1, pc);
+        }
+        out.symbolic = symbolic;
+        out.referenceClass = callerClass;
+        (bool own, uint256 ownMethod) = _lookupExactMethod(
+            classes, symbolic, caller.data, out.nameOffset, out.nameLength,
+            out.descriptorOffset, out.descriptorLength, pc
+        );
+        if (own) {
+            out.owner = symbolic;
+            out.method = ownMethod;
+        } else {
+            bool objectFallback;
+            for (uint256 i = 0; i < classes.length; ++i) {
+                if (!_isObjectClass(classes[i])) continue;
+                (bool hasObject, uint256 objectMethod) = _lookupExactMethod(
+                    classes, i, caller.data, out.nameOffset, out.nameLength,
+                    out.descriptorOffset, out.descriptorLength, pc
+                );
+                if (hasObject) {
+                    uint16 access = uint16(classes[i].methods[objectMethod]);
+                    if ((access & 0x0001) != 0 && (access & 0x0008) == 0) {
+                        out.owner = i;
+                        out.method = objectMethod;
+                        objectFallback = true;
+                    }
+                }
+                break;
+            }
+            if (!objectFallback) {
+                (bool inherited, uint256 interfaceOwner, uint256 interfaceMethod) =
+                    _findInterfaceMethod(
+                        classes, symbolic, true, caller.data, out.nameOffset, out.nameLength,
+                        out.descriptorOffset, out.descriptorLength, parentLinks, pc
+                    );
+                if (!inherited) revert CallError(3, pc);
+                out.owner = interfaceOwner;
+                out.method = interfaceMethod;
+            }
+        }
+        uint16 resolvedAccess = uint16(classes[out.owner].methods[out.method]);
+        if ((resolvedAccess & 0x0001) == 0
+            || (resolvedAccess & (0x0002 | 0x0008 | 0x0100)) != 0) revert CallError(4, pc);
+    }
+
     function _selectVirtual(
         ClassInfo[] memory classes, uint256 dynamicClass, VirtualResolution memory resolved,
         uint256[] memory parentLinks, uint256 pc
     ) private pure returns (uint256 owner, uint256 method) {
+        if (_isInterface(classes[resolved.owner])) {
+            ClassInfo memory referenceClass = classes[resolved.referenceClass];
+            return _selectInterfaceImplementation(
+                classes, dynamicClass, referenceClass.data, resolved.nameOffset,
+                resolved.nameLength, resolved.descriptorOffset, resolved.descriptorLength,
+                parentLinks, pc
+            );
+        }
         uint256[] memory path = new uint256[](classes.length);
         uint256 count;
         uint256 current = dynamicClass;
@@ -1732,6 +2154,7 @@ contract JVMSubsetInterpreter {
         if (!foundOwner) revert LinkError(4, pc);
         symbolic = resolvedOwner;
         _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
+        if (_isInterface(classes[symbolic])) revert CallError(4, pc);
         if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
             revert CallError(4, pc);
         }
@@ -1850,6 +2273,7 @@ contract JVMSubsetInterpreter {
             if (!foundOwner) revert LinkError(4, pc);
         }
         _validateHierarchy(classes, owner, parentLinks, hierarchyState);
+        if (_isInterface(classes[owner])) revert CallError(4, pc);
         if (owner != callerClass && !_classAccessible(caller, classes[owner])) {
             revert CallError(4, pc);
         }
@@ -1939,6 +2363,7 @@ contract JVMSubsetInterpreter {
         if (!ownerFound) revert LinkError(4, pc);
         symbolic = symbolicOwner;
         _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
+        if (_isInterface(classes[symbolic])) revert FieldError(3, pc);
         if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
             revert FieldError(4, pc);
         }
@@ -2214,8 +2639,7 @@ contract JVMSubsetInterpreter {
         (bool found, uint256 leafClass) = _findClass(classes, data, leafOffset, leafLength);
         if (!found) revert LinkError(4, pc);
         ClassInfo memory leaf = classes[leafClass];
-        if ((leaf.accessFlags & 0x0200) != 0
-            || (leafClass != callerClass && !_classAccessible(classes[callerClass], leaf))) {
+        if (leafClass != callerClass && !_classAccessible(classes[callerClass], leaf)) {
             revert TypeError(2, pc);
         }
         _validateHierarchy(classes, leafClass, parentLinks, hierarchyState);
@@ -2319,8 +2743,7 @@ contract JVMSubsetInterpreter {
         (bool found, uint256 componentClass) = _findClass(classes, caller.data, off, n);
         if (!found) revert LinkError(4, pc);
         ClassInfo memory componentClassInfo = classes[componentClass];
-        if ((componentClassInfo.accessFlags & 0x0200) != 0
-            || (componentClass != callerClass && !_classAccessible(caller, componentClassInfo))) {
+        if (componentClass != callerClass && !_classAccessible(caller, componentClassInfo)) {
             revert TypeError(2, pc);
         }
         _validateHierarchy(classes, componentClass, parentLinks, hierarchyState);
@@ -2419,6 +2842,69 @@ contract JVMSubsetInterpreter {
         }
     }
 
+    function _interfaceExtends(
+        ClassInfo[] memory classes, uint256 child, uint256 wanted
+    ) private pure returns (bool) {
+        bool[] memory seen = new bool[](classes.length);
+        uint256[] memory queue = new uint256[](classes.length);
+        uint256 head;
+        uint256 tail;
+        seen[child] = true;
+        queue[tail++] = child;
+        while (head < tail) {
+            uint256 current = queue[head++];
+            if (current == wanted) return true;
+            for (uint256 i = 0; i < classes[current].interfaces.length; ++i) {
+                uint256 parent = _resolveInterfaceEdge(classes, current, i);
+                if (!seen[parent]) {
+                    seen[parent] = true;
+                    queue[tail++] = parent;
+                }
+            }
+        }
+        return false;
+    }
+
+    function _classImplements(
+        ClassInfo[] memory classes, uint256 dynamicClass, uint256 wanted,
+        uint256[] memory parentLinks
+    ) private pure returns (bool) {
+        uint256 current = dynamicClass;
+        while (true) {
+            for (uint256 i = 0; i < classes[current].interfaces.length; ++i) {
+                uint256 direct = _resolveInterfaceEdge(classes, current, i);
+                if (_interfaceExtends(classes, direct, wanted)) return true;
+            }
+            uint256 link = parentLinks[current];
+            if (link == 0 || link == type(uint256).max) return false;
+            current = link - 1;
+        }
+    }
+
+    function _typeAssignable(
+        ClassInfo[] memory classes, uint256 actual, uint256 wanted,
+        uint256[] memory parentLinks
+    ) private pure returns (bool) {
+        if (_isInterface(classes[wanted])) {
+            return _isInterface(classes[actual])
+                ? _interfaceExtends(classes, actual, wanted)
+                : _classImplements(classes, actual, wanted, parentLinks);
+        }
+        if (_isInterface(classes[actual])) return _isObjectClass(classes[wanted]);
+        return _objectIsClass(actual, wanted, parentLinks);
+    }
+
+    function _arrayImplementsClass(ClassInfo[] memory classes, uint256 wanted)
+        private pure returns (bool)
+    {
+        if (_isObjectClass(classes[wanted])) return true;
+        bool marker = _isNamedClass(classes[wanted], bytes("java/lang/Cloneable"))
+            || _isNamedClass(classes[wanted], bytes("java/io/Serializable"));
+        if (!marker) return false;
+        if (!_isInterface(classes[wanted])) revert InterfaceError(1, wanted);
+        return true;
+    }
+
     function _arrayHasReferenceComponents(uint8 rank, uint256 leafClassPlusOne)
         private pure returns (bool)
     {
@@ -2434,9 +2920,9 @@ contract JVMSubsetInterpreter {
         }
         if (actualRank < wantedRank) return false;
         uint256 wantedClass = wantedLeafClassPlusOne - 1;
-        if (actualRank > wantedRank) return _isObjectClass(classes[wantedClass]);
+        if (actualRank > wantedRank) return _arrayImplementsClass(classes, wantedClass);
         return actualLeafClassPlusOne != 0
-            && _objectIsClass(actualLeafClassPlusOne - 1, wantedClass, parentLinks);
+            && _typeAssignable(classes, actualLeafClassPlusOne - 1, wantedClass, parentLinks);
     }
 
     function _valueFitsArrayComponent(
@@ -2453,11 +2939,11 @@ contract JVMSubsetInterpreter {
                 arrayRank - 1, arrayLeafClassPlusOne, parentLinks
             );
         }
-        // A rank-one reference array has an ordinary class component.
+        // A rank-one reference array has a class or interface component.
         uint256 wantedClass = arrayLeafClassPlusOne - 1;
-        if (heapKinds[handle] == HEAP_ARRAY) return _isObjectClass(classes[wantedClass]);
+        if (heapKinds[handle] == HEAP_ARRAY) return _arrayImplementsClass(classes, wantedClass);
         return heapKinds[handle] == HEAP_OBJECT
-            && _objectIsClass(heapClasses[handle], wantedClass, parentLinks);
+            && _typeAssignable(classes, heapClasses[handle], wantedClass, parentLinks);
     }
 
     function _requireAssignable(
@@ -2484,6 +2970,9 @@ contract JVMSubsetInterpreter {
                     classes, descriptorData, leafOffset, leafLength
                 );
                 if (!found) revert LinkError(4, pc);
+                _validateHierarchy(
+                    classes, wantedLeafClass, parentLinks, new uint8[](classes.length)
+                );
                 wantedLeafClassPlusOne = wantedLeafClass + 1;
             }
             if (!_arrayTypeAssignable(
@@ -2498,13 +2987,17 @@ contract JVMSubsetInterpreter {
         }
         uint256 nameOffset = descriptorOffset + 1;
         uint256 nameLength = descriptorLength - 2;
-        if (_equalsLiteral(descriptorData, nameOffset, nameLength, bytes("java/lang/Object"))) {
-            return; // both supported arrays and ordinary object values are Objects
-        }
-        if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, pc);
         (bool found, uint256 wantedClass) = _findClass(classes, descriptorData, nameOffset, nameLength);
         if (!found) revert LinkError(4, pc);
-        if (!_objectIsClass(heapClasses[handle], wantedClass, parentLinks)) {
+        _validateHierarchy(classes, wantedClass, parentLinks, new uint8[](classes.length));
+        if (heapKinds[handle] == HEAP_ARRAY) {
+            if (_isObjectClass(classes[wantedClass])) return;
+            if (!_isInterface(classes[wantedClass])) revert ReferenceError(1, pc);
+            if (!_arrayImplementsClass(classes, wantedClass)) revert ReferenceError(2, pc);
+            return;
+        }
+        if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, pc);
+        if (!_typeAssignable(classes, heapClasses[handle], wantedClass, parentLinks)) {
             revert ReferenceError(2, pc);
         }
     }
@@ -2571,6 +3064,7 @@ contract JVMSubsetInterpreter {
                 || op == 0xc0 || op == 0xc1 || op == 0xc6 || op == 0xc7
         ) return 3;
         if (op == 0xc5) return 4;
+        if (op == 0xb9) return 5;
         revert BytecodeError(6, pc);
     }
 
@@ -3122,5 +3616,13 @@ contract JVMSubsetInterpreter {
 
     function _bootstrapObject() private pure returns (bytes memory) {
         return hex"cafebabe0000003400060700020100106a6176612f6c616e672f4f626a6563740100063c696e69743e010003282956010004436f6465002100010000000000000001000100030004000100050000000d0000000100000001b1000000000000";
+    }
+
+    function _bootstrapCloneable() private pure returns (bytes memory) {
+        return hex"cafebabe0000003400050700020100136a6176612f6c616e672f436c6f6e6561626c650700040100106a6176612f6c616e672f4f626a6563740601000100030000000000000000";
+    }
+
+    function _bootstrapSerializable() private pure returns (bytes memory) {
+        return hex"cafebabe0000003400050700020100146a6176612f696f2f53657269616c697a61626c650700040100106a6176612f6c616e672f4f626a6563740601000100030000000000000000";
     }
 }
