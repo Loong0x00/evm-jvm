@@ -209,7 +209,7 @@ func TestVerifyM4cConstructorVirtualCallbackUsesAllocationClassAndDefaults(t *te
 
 func TestVerifyM4cVirtualResolutionAccessAndSelectedBodyErrorsExact(t *testing.T) {
 	original := compileJava(t, "VirtualErrors", `public class VirtualErrors {
-        public VirtualErrors(){} public int f(int x){return x+1;} public int absent(int x){return x;}
+        public VirtualErrors(){} public int f(int x){return x+1;} public int absent(){return 0;}
         public static int run(int x){return new VirtualErrors().f(x);}
     }`)
 	parsed := parseStaticsClass(t, original)
@@ -230,6 +230,8 @@ func TestVerifyM4cVirtualResolutionAccessAndSelectedBodyErrorsExact(t *testing.T
 		{"zero-owner", func(out []byte, c staticsClass) { binary.BigEndian.PutUint16(out[c.entry(t, ref).offset+1:], 0) }, 1},
 		{"zero-name-type", func(out []byte, c staticsClass) { binary.BigEndian.PutUint16(out[c.entry(t, ref).offset+3:], 0) }, 1},
 		{"missing", func(out []byte, c staticsClass) {
+			// Rewrite only f's NameAndType name. The class declares absent()I,
+			// so the resulting exact lookup absent(I)I is genuinely missing.
 			nat := c.entry(t, c.u2(t, c.entry(t, ref).offset+3))
 			binary.BigEndian.PutUint16(out[nat.offset+1:], c.utfIndex(t, "absent"))
 		}, 3},
@@ -414,6 +416,9 @@ func TestVerifyM4cProtectedReceiverAndArrayReceiverOrderingExact(t *testing.T) {
 	ac := parseStaticsClass(t, arrayCall)
 	callRef, _ := verifyM4bMemberInstruction(t, ac, ac.method(t, "run", "()I"), verifyM4cInvokevirtual, "f", "()I")
 	arrayCall = verifyM4bRewriteCode(t, arrayCall, "run", "()I", []byte{0x04, 0xbc, 10, verifyM4cInvokevirtual, byte(callRef >> 8), byte(callRef), 0xac})
+	// The symbolic ArrayVirtual.f()I resolves successfully, and the array is a
+	// valid reference. Frozen M4c array deferral then wins over ordinary-object
+	// receiver assignability, which is tested separately as ReferenceError(2).
 	verifyM4cAssertError(t, func() (Result, error) { return Run(arrayCall, "run", nil, verifyM4cGasLimit) },
 		"CallError(uint256,uint256)", 4, 3)
 
@@ -602,6 +607,14 @@ func TestVerifyM4cCastOperandsMalformedNamesKindsTruncationAndBranchesExact(t *t
 				"TypeError(uint256,uint256)", 1, uint64(pc))
 		})
 	}
+
+	// JVMS 4.9.1/4.11 limit an array type to 255 dimensions. Even with a null
+	// operand, a 256-dimensional CONSTANT_Class name is structurally malformed.
+	tooManyDimensions := verifyM4cRetargetTypeToAppendedName(t, original, "cast", strings.Repeat("[", 256)+"I")
+	tooManyPC := verifyM4cFirstTypeOpcode(t, parseStaticsClass(t, tooManyDimensions).method(t, "cast", "()I").code)
+	verifyM4cAssertError(t, func() (Result, error) {
+		return Run(tooManyDimensions, "cast", nil, verifyM4cGasLimit)
+	}, "TypeError(uint256,uint256)", 1, uint64(tooManyPC))
 
 	parsed := parseStaticsClass(t, original)
 	classIndex := verifyM4bClassIndex(t, parsed, "TypeShapes$Bad")

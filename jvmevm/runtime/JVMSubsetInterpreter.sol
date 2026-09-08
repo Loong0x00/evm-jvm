@@ -908,10 +908,8 @@ contract JVMSubsetInterpreter {
                 if (handle == 0) _throwJava(6, frames, depth);
                 _validatePackedRef(receiver, heapKinds, nextHandle, opPC);
                 if (heapKinds[handle] == HEAP_ARRAY) {
-                    if (!_isObjectClass(classes[resolved.symbolic])) {
-                        revert ReferenceError(2, opPC);
-                    }
-                    // Array receiver dispatch is deliberately deferred for this stage.
+                    // A valid array receiver is deliberately deferred after symbolic
+                    // method resolution, before ordinary-object assignability/selection.
                     revert CallError(4, opPC);
                 }
                 if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, opPC);
@@ -2068,7 +2066,10 @@ contract JVMSubsetInterpreter {
         returns (bool)
     {
         uint256 i;
-        while (i < n && uint8(data[off + i]) == 0x5b) ++i;
+        while (i < n && uint8(data[off + i]) == 0x5b) {
+            ++i;
+            if (i > 255) return false;
+        }
         if (i == 0 || i >= n) return false;
         uint8 component = uint8(data[off + i]);
         if (component == 0x4c) {
