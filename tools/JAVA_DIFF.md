@@ -15,16 +15,17 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4c --tier full
+python3 tools/java_diff.py --stage m4d --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4c --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4d --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
-M3d, `m4a` adds M4a, `m4b` adds M4b, and `m4c` or `all` adds M4c. A manifest without entries in
-the newest stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
+M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, and `m4d` or `all`
+adds M4d. A manifest without entries in the newest stage continues to run its
+older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
@@ -143,6 +144,22 @@ initialization behavior are interpreter work; the runner does not inspect class
 hierarchies or discover omitted targets. EVM out of gas remains an engine
 failure and can never match either exception.
 
+## M4d reference-array cases
+
+M4d keeps schema 1, cumulative selection, static `(I...)I` roots, and the
+ordered unchanged-classfile bundle protocol. Reference arrays, their elements,
+and identities stay entirely inside guest execution. Trusted finite fixtures
+cover `anewarray`, `aaload`, `aastore`, recursive array covariance, and array
+casts/type tests; `multianewarray`, interfaces, and other primitive array types
+remain deferred.
+
+An incompatible non-null `aastore` may produce the newly recognized exact
+`java.lang.ArrayStoreException` outcome. If it escapes class initialization the
+observable outcome remains `java.lang.ExceptionInInitializerError`. Logical EVM
+heap-cap probes remain focused Go/mock tests only; the host JVM is never driven
+toward OOM. Out of gas and arbitrary reverts are still engine failures, not Java
+exceptions.
+
 ## Outcome protocol
 
 Existing value cases retain `expected_kind: "value"`. An explicitly expected
@@ -183,10 +200,11 @@ remains unchanged. M4a and M4b additionally recognize exact
 `java.lang.NegativeArraySizeException`,
 `java.lang.ArrayIndexOutOfBoundsException`, `java.lang.NullPointerException`,
 and `java.lang.OutOfMemoryError` outcomes. M4c additionally recognizes exact
-`java.lang.ClassCastException`. Unknown exception names, even syntactically
+`java.lang.ClassCastException`; M4d adds exact
+`java.lang.ArrayStoreException`. Unknown exception names, even syntactically
 valid Java names, are rejected rather than extending the frozen outcome
-protocol. The first three and class-cast failures, like arithmetic,
-become `java.lang.ExceptionInInitializerError` when they escape active class
+protocol. The first three, class-cast, and array-store failures, like
+arithmetic, become `java.lang.ExceptionInInitializerError` when they escape active class
 initialization; `OutOfMemoryError` and `StackOverflowError` remain unwrapped.
 The fixture oracle may report the two initializer-time Error outcomes from
 `Class.forName`, before reflective invocation. Oracle process,
