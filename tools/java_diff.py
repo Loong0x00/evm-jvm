@@ -41,6 +41,16 @@ JAVA_FQCN_RE = re.compile(
     r"^[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+$"
 )
 KV_RE = re.compile(r"^([a-z0-9_]+)=(.*)$")
+KNOWN_JAVA_EXCEPTIONS = frozenset({
+    "java.lang.ArithmeticException",
+    "java.lang.StackOverflowError",
+    "java.lang.ExceptionInInitializerError",
+    "java.lang.NegativeArraySizeException",
+    "java.lang.ArrayIndexOutOfBoundsException",
+    "java.lang.NullPointerException",
+    "java.lang.OutOfMemoryError",
+    "java.lang.ClassCastException",
+})
 
 
 class HarnessError(Exception):
@@ -146,9 +156,9 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
         if case_id in seen_ids:
             raise HarnessError(f"duplicate case id: {case_id}")
         seen_ids.add(case_id)
-        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b"):
+        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c"):
             raise HarnessError(
-                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, m3c, m3d, m4a, or m4b"
+                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, m3c, m3d, m4a, m4b, or m4c"
             )
         expected_kind = case["expected_kind"]
         if expected_kind not in ("value", "java_exception"):
@@ -162,6 +172,10 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
                 raise HarnessError(
                     f"{case_id}: expected_exception must be a syntactically valid "
                     "fully-qualified Java class name"
+                )
+            if expected_exception not in KNOWN_JAVA_EXCEPTIONS:
+                raise HarnessError(
+                    f"{case_id}: expected_exception is not a known supported Java outcome"
                 )
         elif "expected_exception" in case:
             raise HarnessError(
@@ -245,8 +259,10 @@ def select_cases(cases: Sequence[Dict[str, Any]], stage: str, tier: str,
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d"}
     elif stage == "m4a":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a"}
-    elif stage in ("m4b", "all"):
+    elif stage == "m4b":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b"}
+    elif stage in ("m4c", "all"):
+        allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c"}
     else:
         raise HarnessError(f"unknown stage: {stage}")
     stage_cases = [case for case in cases if case["stage"] in allowed_stages]
@@ -418,6 +434,8 @@ def parse_evm(record: Dict[str, Any]) -> Tuple[str, Dict[str, Any], Optional[str
     exception_class = values["exception"]
     if not JAVA_FQCN_RE.fullmatch(exception_class):
         return "evm_malformed", {}, "EVM exception is not a valid fully-qualified class name"
+    if exception_class not in KNOWN_JAVA_EXCEPTIONS:
+        return "evm_malformed", {}, "EVM exception is not a known supported Java outcome"
     parsed["exception"] = exception_class
     return "java_exception", parsed, None
 
@@ -734,7 +752,7 @@ def finish_report(report: Dict[str, Any]) -> Dict[str, Any]:
 def parser_for(repo: Path) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "all"), default="m4b"
+        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "all"), default="m4c"
     )
     parser.add_argument("--tier", choices=("smoke", "fast", "full"), default="smoke")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)

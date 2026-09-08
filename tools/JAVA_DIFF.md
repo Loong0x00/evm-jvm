@@ -15,15 +15,15 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4b --tier full
+python3 tools/java_diff.py --stage m4c --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4b --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4c --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
-M3d, `m4a` adds M4a, and `m4b` or `all` adds M4b. A manifest without entries in
+M3d, `m4a` adds M4a, `m4b` adds M4b, and `m4c` or `all` adds M4c. A manifest without entries in
 the newest stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -126,6 +126,23 @@ or arbitrary revert never passes as `OutOfMemoryError` or another Java outcome.
 Virtual/interface dispatch, casts/type tests, handlers, and general class-library
 APIs remain outside this runner stage.
 
+## M4c virtual dispatch and type-test cases
+
+M4c remains schema 1 and cumulative over M4b. It adds trusted, finite fixtures
+for `invokevirtual`, `checkcast`, and `instanceof`; ordered raw class bundles,
+static `(I...)I` roots, hashes, budgets, and the value-or-exception output
+protocol do not change. References are still guest-only values and are never
+serialized by the host runner. Interface calls, reference-array allocation and
+storage, exception handlers, and broader class-library APIs remain deferred.
+
+A failed `checkcast` may produce the one newly recognized outcome
+`java.lang.ClassCastException`. As with arithmetic, null, and bounds failures,
+a cast failure escaping an active class initializer is compared as
+`java.lang.ExceptionInInitializerError`. Target type resolution and class
+initialization behavior are interpreter work; the runner does not inspect class
+hierarchies or discover omitted targets. EVM out of gas remains an engine
+failure and can never match either exception.
+
 ## Outcome protocol
 
 Existing value cases retain `expected_kind: "value"`. An explicitly expected
@@ -165,7 +182,10 @@ remains unwrapped. M2b's `java.lang.ArithmeticException` outside initialization
 remains unchanged. M4a and M4b additionally recognize exact
 `java.lang.NegativeArraySizeException`,
 `java.lang.ArrayIndexOutOfBoundsException`, `java.lang.NullPointerException`,
-and `java.lang.OutOfMemoryError` outcomes. The first three, like arithmetic,
+and `java.lang.OutOfMemoryError` outcomes. M4c additionally recognizes exact
+`java.lang.ClassCastException`. Unknown exception names, even syntactically
+valid Java names, are rejected rather than extending the frozen outcome
+protocol. The first three and class-cast failures, like arithmetic,
 become `java.lang.ExceptionInInitializerError` when they escape active class
 initialization; `OutOfMemoryError` and `StackOverflowError` remain unwrapped.
 The fixture oracle may report the two initializer-time Error outcomes from
