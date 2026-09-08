@@ -112,6 +112,7 @@ func TestJavaExceptionDecoderIsExact(t *testing.T) {
 		9:  "java.lang.ArrayStoreException",
 		10: "java.lang.IncompatibleClassChangeError",
 		11: "java.lang.AbstractMethodError",
+		12: "java.lang.NoClassDefFoundError",
 	} {
 		valid := make([]byte, 36)
 		copy(valid, javaExceptionSelector)
