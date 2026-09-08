@@ -26913,6 +26913,3005 @@
       "timeout_seconds": 10,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-own-zero",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "own",
+      "args": [
+        0
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-own-negative",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "own",
+      "args": [
+        -214
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-zero-argument",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "zero",
+      "args": [],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-combine",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "combine",
+      "args": [
+        3,
+        7
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-calls-own",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "callsOwn",
+      "args": [
+        -2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-calls-class",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "callsClass",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "M4fcLegacyBox.class",
+        "M4fcLegacyImpl.class",
+        "M4fcLegacyClass.class",
+        "M4fcLegacy.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-class-calls-interface",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "classCallsInterface",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "M4fcLegacyImpl.class",
+        "M4fcLegacyClass.class",
+        "M4fcLegacy.class",
+        "M4fcLegacyBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-calls-default",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "callsDefault",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "M4fcLegacyClass.class",
+        "M4fcLegacy.class",
+        "M4fcLegacyBox.class",
+        "M4fcLegacyImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-factory-value",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "factoryValue",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "M4fcLegacy.class",
+        "M4fcLegacyBox.class",
+        "M4fcLegacyImpl.class",
+        "M4fcLegacyClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-identity-value",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "identityValue",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "M4fcLegacyBox.class",
+        "M4fcLegacyImpl.class",
+        "M4fcLegacyClass.class",
+        "M4fcLegacy.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-array-value",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "arrayValue",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "M4fcLegacyImpl.class",
+        "M4fcLegacyClass.class",
+        "M4fcLegacy.class",
+        "M4fcLegacyBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-null-return",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "nullReturnValue",
+      "args": [
+        23
+      ],
+      "class_files": [
+        "M4fcLegacyClass.class",
+        "M4fcLegacy.class",
+        "M4fcLegacyBox.class",
+        "M4fcLegacyImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-legacy-null-argument",
+      "stage": "m4fc",
+      "sources": [
+        "M4fcLegacy.java"
+      ],
+      "class": "M4fcLegacy",
+      "method": "nullArgumentValue",
+      "args": [
+        -31
+      ],
+      "class_files": [
+        "M4fcLegacy.class",
+        "M4fcLegacyBox.class",
+        "M4fcLegacyImpl.class",
+        "M4fcLegacyClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-interface-call",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "interfaceCall",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-interface-nested",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "interfaceNested",
+      "args": [
+        -8
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-interface-zero",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "interfaceZero",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-interface-void",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "interfaceVoid",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-class-to-interface",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "classToInterface",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-interface-to-class",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "interfaceToClass",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-interface-to-interface",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "interfaceToInterface",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-two-interfaces",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "twoInterfaces",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-default-calls-static",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "defaultCallsStatic",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-default-calls-other",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "defaultCallsOtherStatic",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-repeated-site",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "repeatedSite",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-recursive-static",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "recursiveStatic",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-basic-caller-prefix",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.BasicRoot",
+      "method": "callerPrefix",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-interface-root-direct",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.PublicStatics",
+      "method": "root",
+      "args": [
+        21
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-interface-root-two-arguments",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.PublicStatics",
+      "method": "pair",
+      "args": [
+        4,
+        9
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-interface-root-nested",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.PublicStatics",
+      "method": "nested",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicImpl.class",
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-interface-root-class-roundtrip",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/basic/BasicRoot.java",
+        "bundle/m4fc/basic/PublicStatics.java"
+      ],
+      "class": "bundle.m4fc.basic.PublicStatics",
+      "method": "classRoundTrip",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m4fc/basic/BasicBox.class",
+        "bundle/m4fc/basic/BasicClass.class",
+        "bundle/m4fc/basic/PublicStatics.class",
+        "bundle/m4fc/basic/BasicRoot.class",
+        "bundle/m4fc/basic/BasicStatics.class",
+        "bundle/m4fc/basic/OtherStatics.class",
+        "bundle/m4fc/basic/BasicDefault.class",
+        "bundle/m4fc/basic/BasicImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-factory",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "factory",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-identity",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "identity",
+      "args": [
+        -17
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-null-return",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "nullReturn",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-null-argument",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "nullArgument",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-int-array-return",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "intArrayReturn",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-int-array-argument",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "intArrayArgument",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-ref-array-return",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "refArrayReturn",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-ref-array-argument",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "refArrayArgument",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-cross-interface-factory",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "crossInterfaceFactory",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-interface-class-interface",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "interfaceClassInterface",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-final-array-mutation",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "finalArrayElementMutation",
+      "args": [
+        44
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-final-object-mutation",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "finalObjectElementMutation",
+      "args": [
+        45
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-default-factory",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "defaultFactory",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportRoot.class",
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-transport-default-array",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4fc.transport.TransportRoot",
+      "method": "defaultArray",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m4fc/transport/TransportStatics.class",
+        "bundle/m4fc/transport/OtherTransport.class",
+        "bundle/m4fc/transport/TransportDefault.class",
+        "bundle/m4fc/transport/TransportImpl.class",
+        "bundle/m4fc/transport/TransportBox.class",
+        "bundle/m4fc/transport/TransportClass.class",
+        "bundle/m4fc/transport/TransportRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-declared-parent",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "declaredParent",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-parent-through-child",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "parentThroughChild",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-parent-through-class",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "parentThroughClass",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-own-child",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "ownChild",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-grand-through-child",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "grandThroughChild",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-diamond-shared",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "diamondShared",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-repeated-qualifiers",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "repeatedQualifiers",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-hidden-both",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "hiddenBoth",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-class-superclass",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "classSuperclassField",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-class-interface",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "classInterfaceField",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-reference-shared-mutation",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "referenceSharedMutation",
+      "args": [
+        51
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-reference-class-qualifier",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "referenceClassQualifierMutation",
+      "args": [
+        52
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-array-shared-mutation",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "arraySharedMutation",
+      "args": [
+        53
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-array-class-qualifier",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "arrayClassQualifierMutation",
+      "args": [
+        54
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-prepared-array-values",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "preparedArrayValues",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-parent-through-child-repeat",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "parentThroughChild",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/ResolutionClass.class",
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-field-own-child-negative",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m4fc.fields.FieldRoot",
+      "method": "ownChild",
+      "args": [
+        -6
+      ],
+      "class_files": [
+        "bundle/m4fc/fields/FieldRoot.class",
+        "bundle/m4fc/fields/FieldState.class",
+        "bundle/m4fc/fields/FieldBox.class",
+        "bundle/m4fc/fields/FieldGrand.class",
+        "bundle/m4fc/fields/FieldParent.class",
+        "bundle/m4fc/fields/FieldChild.class",
+        "bundle/m4fc/fields/FieldLeft.class",
+        "bundle/m4fc/fields/FieldRight.class",
+        "bundle/m4fc/fields/FieldDiamond.class",
+        "bundle/m4fc/fields/FieldImpl.class",
+        "bundle/m4fc/fields/HiddenParent.class",
+        "bundle/m4fc/fields/HiddenChild.class",
+        "bundle/m4fc/fields/ResolutionFace.class",
+        "bundle/m4fc/fields/ResolutionBase.class",
+        "bundle/m4fc/fields/ResolutionClass.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-child-static-skips-parent",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "childStaticSkipsParent",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-child-field-skips-parent",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "childFieldSkipsParent",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-default-child-static-skips-parent",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "defaultChildStaticSkipsParent",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-default-child-field-skips-parent",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "defaultChildFieldSkipsParent",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-grandchild-skips-ancestors",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "grandchildStaticSkipsAncestors",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-parent-field-through-child",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "parentFieldThroughChild",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-grand-field-through-child",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "grandFieldThroughChild",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-own-field-only",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "ownFieldOnly",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-child-then-parent",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "childThenParent",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-repeated-static-once",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "repeatedStaticOnce",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-class-default-prerequisite",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "classDefaultPrerequisite",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-interface-calls-class",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "interfaceCallsClass",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-class-calls-interface",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "classCallsInterface",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-reentrant-prepared-read",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "reentrantPreparedRead",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-cross-interface-cycle",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "crossInterfaceCycle",
+      "args": [
+        15
+      ],
+      "class_files": [
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-interface-order",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "interfaceOrder",
+      "args": [
+        16
+      ],
+      "class_files": [
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-failing-parent-not-initialized",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "failingParentNotInitialized",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-failing-default-parent-not-initialized",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "failingDefaultParentNotInitialized",
+      "args": [
+        18
+      ],
+      "class_files": [
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-type-use-does-not-initialize",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "typeUseDoesNotInitialize",
+      "args": [
+        19
+      ],
+      "class_files": [
+        "bundle/m4fc/init/InitProbe.class",
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-init-array-use-does-not-initialize",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fc.init.InitRoot",
+      "method": "arrayUseDoesNotInitialize",
+      "args": [
+        20
+      ],
+      "class_files": [
+        "bundle/m4fc/init/NoParent.class",
+        "bundle/m4fc/init/NoChild.class",
+        "bundle/m4fc/init/DefaultParent.class",
+        "bundle/m4fc/init/DefaultChild.class",
+        "bundle/m4fc/init/GrandParent.class",
+        "bundle/m4fc/init/GrandMiddle.class",
+        "bundle/m4fc/init/GrandChild.class",
+        "bundle/m4fc/init/FieldGrand.class",
+        "bundle/m4fc/init/FieldParent.class",
+        "bundle/m4fc/init/FieldChild.class",
+        "bundle/m4fc/init/ClassDefault.class",
+        "bundle/m4fc/init/BridgeFace.class",
+        "bundle/m4fc/init/InitCaller.class",
+        "bundle/m4fc/init/ReentrantFace.class",
+        "bundle/m4fc/init/CycleA.class",
+        "bundle/m4fc/init/CycleB.class",
+        "bundle/m4fc/init/OrderA.class",
+        "bundle/m4fc/init/OrderB.class",
+        "bundle/m4fc/init/FailingParent.class",
+        "bundle/m4fc/init/SafeChild.class",
+        "bundle/m4fc/init/FailingDefaultParent.class",
+        "bundle/m4fc/init/SafeDefaultChild.class",
+        "bundle/m4fc/init/TypeOnly.class",
+        "bundle/m4fc/init/PlainObject.class",
+        "bundle/m4fc/init/InitRoot.class",
+        "bundle/m4fc/init/InitProbe.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-error-direct-arithmetic",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "directArithmetic",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m4fc-error-direct-null-call",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "directNullCall",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4fc-error-direct-null-field",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "directNullField",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4fc-error-direct-stack-overflow",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "directStackOverflow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.StackOverflowError"
+    },
+    {
+      "id": "m4fc-error-init-arithmetic-wrapped",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "initArithmeticWrapped",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4fc-error-init-null-wrapped",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "initNullWrapped",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4fc-error-init-stack-unwrapped",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "initStackOverflowUnwrapped",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.StackOverflowError"
+    },
+    {
+      "id": "m4fc-error-cross-init-failure",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "crossInitFailureWrapped",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4fc-error-arithmetic-normal",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "arithmeticNormal",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/ErrorTarget.class",
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-error-null-branch-normal",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4fc.errors.ErrorRoot",
+      "method": "nullBranchNormal",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m4fc/errors/ErrorStatics.class",
+        "bundle/m4fc/errors/ErrorHelper.class",
+        "bundle/m4fc/errors/ArithmeticFace.class",
+        "bundle/m4fc/errors/NullFace.class",
+        "bundle/m4fc/errors/StackFace.class",
+        "bundle/m4fc/errors/CallerFace.class",
+        "bundle/m4fc/errors/ErrorRoot.class",
+        "bundle/m4fc/errors/ErrorTarget.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-public-static",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.root.AccessRoot",
+      "method": "publicStatic",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m4fc/access/api/HiddenApi.class",
+        "bundle/m4fc/access/api/ApiState.class",
+        "bundle/m4fc/access/api/ApiBox.class",
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-public-factory",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.root.AccessRoot",
+      "method": "publicFactory",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m4fc/access/api/ApiState.class",
+        "bundle/m4fc/access/api/ApiBox.class",
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class",
+        "bundle/m4fc/access/api/HiddenApi.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-hidden-owner-field",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.root.AccessRoot",
+      "method": "inheritedHiddenOwnerField",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m4fc/access/api/ApiBox.class",
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class",
+        "bundle/m4fc/access/api/HiddenApi.class",
+        "bundle/m4fc/access/api/ApiState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-inherited-field-method",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.root.AccessRoot",
+      "method": "inheritedFieldViaMethod",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class",
+        "bundle/m4fc/access/api/HiddenApi.class",
+        "bundle/m4fc/access/api/ApiState.class",
+        "bundle/m4fc/access/api/ApiBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-own-public-field",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.root.AccessRoot",
+      "method": "ownPublicField",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fc/access/api/PublicApi.class",
+        "bundle/m4fc/access/api/HiddenApi.class",
+        "bundle/m4fc/access/api/ApiState.class",
+        "bundle/m4fc/access/api/ApiBox.class",
+        "bundle/m4fc/access/root/AccessRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-own-field-method",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.root.AccessRoot",
+      "method": "ownFieldViaMethod",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fc/access/api/HiddenApi.class",
+        "bundle/m4fc/access/api/ApiState.class",
+        "bundle/m4fc/access/api/ApiBox.class",
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-interface-root-call",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.api.PublicApi",
+      "method": "call",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m4fc/access/api/ApiState.class",
+        "bundle/m4fc/access/api/ApiBox.class",
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class",
+        "bundle/m4fc/access/api/HiddenApi.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-interface-root-inherited-field",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.api.PublicApi",
+      "method": "inheritedField",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fc/access/api/ApiBox.class",
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class",
+        "bundle/m4fc/access/api/HiddenApi.class",
+        "bundle/m4fc/access/api/ApiState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fc-access-interface-root-own-field",
+      "stage": "m4fc",
+      "sources": [
+        "bundle/m4fc/access/api/PublicApi.java",
+        "bundle/m4fc/access/api/ApiBox.java",
+        "bundle/m4fc/access/root/AccessRoot.java"
+      ],
+      "class": "bundle.m4fc.access.api.PublicApi",
+      "method": "ownField",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m4fc/access/root/AccessRoot.class",
+        "bundle/m4fc/access/api/PublicApi.class",
+        "bundle/m4fc/access/api/HiddenApi.class",
+        "bundle/m4fc/access/api/ApiState.class",
+        "bundle/m4fc/access/api/ApiBox.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }
