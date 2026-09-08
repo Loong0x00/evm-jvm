@@ -202,16 +202,21 @@ public class RuntimeM5baConstants {
 	if longIndex == 0 || doubleIndex == 0 || longIndex+1 >= len(parsed.tags) || parsed.tags[longIndex+1] != 0 {
 		t.Fatalf("unexpected CP tags: long=%d double=%d tags=%v", longIndex, doubleIndex, parsed.tags)
 	}
-	cases := map[string][]byte{
-		"ldc2-double": {0x14, byte(doubleIndex >> 8), byte(doubleIndex), 0x88, 0xac},
-		"ldc2-hole":   {0x14, byte((longIndex + 1) >> 8), byte(longIndex + 1), 0x88, 0xac},
-		"ldc-long":    {0x12, byte(longIndex), 0xac},
+	cases := map[string]struct {
+		code     []byte
+		kind, pc uint64
+	}{
+		// CONSTANT_Double is now a valid ldc2_w operand, but l2i must reject
+		// consuming its distinct double value kind.
+		"ldc2-double-then-l2i": {[]byte{0x14, byte(doubleIndex >> 8), byte(doubleIndex), 0x88, 0xac}, 14, 3},
+		"ldc2-hole":            {[]byte{0x14, byte((longIndex + 1) >> 8), byte(longIndex + 1), 0x88, 0xac}, 13, 0},
+		"ldc-long":             {[]byte{0x12, byte(longIndex), 0xac}, 13, 0},
 	}
-	for name, code := range cases {
+	for name, tc := range cases {
 		t.Run(name, func(t *testing.T) {
-			classfile := runtimeM5baReplaceMethodCode(t, template, "run", code, 4, 1)
+			classfile := runtimeM5baReplaceMethodCode(t, template, "run", tc.code, 4, 1)
 			result, err := Run(classfile, "run", nil, 15_000_000)
-			assertSolidityError(t, result, err, "BytecodeError(uint256,uint256)", 13, 0)
+			assertSolidityError(t, result, err, "BytecodeError(uint256,uint256)", tc.kind, tc.pc)
 		})
 	}
 

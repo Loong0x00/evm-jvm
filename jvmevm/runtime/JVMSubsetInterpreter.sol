@@ -4356,7 +4356,11 @@ contract JVMSubsetInterpreter {
             return sign | (uint64(uint256(exponent + 1023)) << 52)
                 | (normalized & 0x000fffffffffffff);
         }
-        return sign | (uint64(encodedExponent - 127 + 1023) << 52) | (fraction << 29);
+        // Add the binary64 bias before subtracting the binary32 bias. For
+        // ordinary finite floats below 1.0, subtracting 127 first would
+        // underflow Solidity's unsigned arithmetic even though the rebased
+        // exponent is positive.
+        return sign | (uint64(encodedExponent + 1023 - 127) << 52) | (fraction << 29);
     }
 
     function _doubleToFloatBits(uint64 raw) private pure returns (uint32) {

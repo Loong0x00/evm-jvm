@@ -563,13 +563,28 @@ func TestVerifyM5caWideUninitializedReferenceAliasesAndOverlapInvalidation(t *te
 
 func TestVerifyM5caWideUnsupportedInvalidFormsAndTruncationUsePrefixPC(t *testing.T) {
 	base := verifyM5caRawFixture(t, 500)
-	for _, embedded := range []byte{0x17, 0x18, 0x38, 0x39, 0xa9} { // float/double loads/stores and ret
-		t.Run(fmt.Sprintf("unsupported-%02x", embedded), func(t *testing.T) {
-			code := append(verifyM5caWide(embedded, 0), 0x03, 0xac)
+	// M5c-b supports wide F/D load/store. With the existing int argument in
+	// local 0, and max_locals=1, these isolate kind, index, and stack faults.
+	for _, tc := range []struct {
+		embedded byte
+		kind     uint64
+	}{
+		{0x17, 14}, // fload sees initialized int
+		{0x18, 8},  // dload needs local 0 plus tail slot
+		{0x38, 3},  // fstore has no operand
+		{0x39, 8},  // dstore range validation precedes operand validation
+	} {
+		t.Run(fmt.Sprintf("wide-fp-fault-%02x", tc.embedded), func(t *testing.T) {
+			code := append(verifyM5caWide(tc.embedded, 0), 0x03, 0xac)
 			bad := verifyM5caRewrite(t, base, "padding", "(I)I", code, 2, 1)
-			verifyM5caAssertBytecodeError(t, bad, "padding", []int32{0}, 6, 0)
+			verifyM5caAssertBytecodeError(t, bad, "padding", []int32{0}, tc.kind, 0)
 		})
 	}
+	t.Run("unsupported-wide-ret", func(t *testing.T) {
+		code := append(verifyM5caWide(0xa9, 0), 0x03, 0xac)
+		bad := verifyM5caRewrite(t, base, "padding", "(I)I", code, 2, 1)
+		verifyM5caAssertBytecodeError(t, bad, "padding", []int32{0}, 6, 0)
+	})
 	for _, embedded := range []byte{0x00, 0x1a, 0x60, 0xc4, 0xc8, 0xaa, 0xab} {
 		t.Run(fmt.Sprintf("invalid-%02x", embedded), func(t *testing.T) {
 			code := append(verifyM5caWide(embedded, 0), 0x03, 0xac)

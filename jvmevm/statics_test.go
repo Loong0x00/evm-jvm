@@ -193,14 +193,14 @@ public class FieldFailures {
 		result, err := Run(bad, "run", nil, 15_000_000)
 		assertSolidityError(t, result, err, "FieldError(uint256,uint256)", 3, uint64(pc))
 	})
-	t.Run("unsupported-double-descriptor", func(t *testing.T) {
+	t.Run("double-field-exceeds-max-stack", func(t *testing.T) {
 		bad := append([]byte(nil), base...)
 		i := baseParsed.utfIndex("I")
-		// J is supported in M5b-a. Retain this field-profile guard with deferred D;
-		// mutating to J would instead hit the root method's max_stack=1 word cap.
+		// D is now a valid scalar field descriptor. getstatic would push two JVM
+		// words into this method's unchanged max_stack=1, so capacity fails first.
 		bad[baseParsed.cpOffsets[i]+3] = 'D'
 		result, err := Run(bad, "run", nil, 15_000_000)
-		assertSolidityError(t, result, err, "FieldError(uint256,uint256)", 3, uint64(pc))
+		assertSolidityError(t, result, err, "BytecodeError(uint256,uint256)", 9, uint64(pc))
 	})
 
 	cross := compileJavaSources(t, map[string]string{

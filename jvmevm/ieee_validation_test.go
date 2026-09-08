@@ -260,14 +260,19 @@ func TestVerifyM5cbInstanceConstantValuesAreIgnored(t *testing.T) {
 func TestVerifyM5cbLdcTagMatrixHolesAndTypedConstantCalls(t *testing.T) {
 	base := verifyM5cbCompile(t, map[string]string{
 		"VerifyM5cbCP.java": `public final class VerifyM5cbCP {
-			static final float F=1.5f; static final double D=-0.0d; static final int I=7; static final long J=9L;
 			static int fr(float x){return Float.floatToRawIntBits(x);} static int dr(double x){return (int)(Double.doubleToRawLongBits(x)>>>32);}
-			public static int refs(){return fr(F)^dr(D);} public static int padding(){int x=0;` + strings.Repeat("x=x+1;", 80) + `return x;}
+			public static int refs(){return fr(1.5f)^dr(-0.0d);} public static int padding(){int x=0;` + strings.Repeat("x=x+1;", 80) + `return x;}
 		}`,
 	}, "VerifyM5cbCP")["VerifyM5cbCP"]
 	c := parseStaticsClass(t, base)
-	fi := verifyM5cbFieldConstantIndex(t, c, "F", "F")
-	di := verifyM5cbFieldConstantIndex(t, c, "D", "D")
+	floats, doubles := verifyM5cbCPIndices(c, 4), verifyM5cbCPIndices(c, 6)
+	if len(floats) == 0 || len(doubles) == 0 {
+		t.Fatalf("CP4=%v CP6=%v want method-only constants", floats, doubles)
+	}
+	// These entries are deliberately not referenced by ConstantValue fields.
+	// Retagging them therefore reaches the intended typed call guard rather
+	// than failing earlier during field parsing (covered separately above).
+	fi, di := floats[0], doubles[0]
 	fr := verifyM5cbFindMethodref(t, c, "VerifyM5cbCP", "fr", "(F)I")
 	dr := verifyM5cbFindMethodref(t, c, "VerifyM5cbCP", "dr", "(D)I")
 	valid := []struct {
@@ -312,13 +317,12 @@ func TestVerifyM5cbLdcTagMatrixHolesAndTypedConstantCalls(t *testing.T) {
 		code  []byte
 		pc    uint64
 	}{
-		{"float-retagged-int", fi, 3, []byte{0x12, byte(fi), 0xb8, byte(fr >> 8), byte(fr), 0xac}, 2},
+		// ldc_w is valid at every CP index and avoids silently skipping the
+		// float/int kind check if this generated pool grows beyond index 255.
+		{"float-retagged-int", fi, 3, []byte{0x13, byte(fi >> 8), byte(fi), 0xb8, byte(fr >> 8), byte(fr), 0xac}, 3},
 		{"double-retagged-long", di, 5, []byte{0x14, byte(di >> 8), byte(di), 0xb8, byte(dr >> 8), byte(dr), 0xac}, 3},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if tc.name == "float-retagged-int" && fi > 255 {
-				t.Skip("fixture CP4 index does not fit ldc")
-			}
 			bad := verifyM5cbMutate(t, base, func(raw []byte, parsed staticsClass) { raw[parsed.entry(t, tc.index).offset] = tc.tag })
 			bad = verifyM5cbRewriteCode(t, bad, "padding", "()I", tc.code, 2, 1)
 			verifyM5cbAssertError(t, func() (Result, error) { return Run(bad, "padding", nil, verifyM5cbGasLimit) },
@@ -375,6 +379,10 @@ func TestVerifyM5cbConversionsKnownRNETiesSaturationAndGradualUnderflow(t *testi
 		{"d2l-pos-saturate-lo", "d2lLo", []int32{verifyM5cbI32(0x43e00000), 0}, -1, true},
 		{"f2d-minsub-hi", "f2dHi", []int32{1}, verifyM5cbI32(0x36a00000), true},
 		{"f2d-minsub-lo", "f2dLo", []int32{1}, 0, true},
+		// A normal float below 1.0 catches unsigned exponent rebiasing done in
+		// the wrong order (59-127+1023 previously caused Solidity panic 0x11).
+		{"f2d-half-hi", "f2dHi", []int32{verifyM5cbI32(0x3f000000)}, verifyM5cbI32(0x3fe00000), true},
+		{"f2d-half-lo", "f2dLo", []int32{verifyM5cbI32(0x3f000000)}, 0, true},
 		{"f2d-max-hi", "f2dHi", []int32{verifyM5cbI32(0x7f7fffff)}, verifyM5cbI32(0x47efffff), true},
 		{"f2d-max-lo", "f2dLo", []int32{verifyM5cbI32(0x7f7fffff)}, verifyM5cbI32(0xe0000000), true},
 		{"f2d-negative-zero-hi", "f2dHi", []int32{verifyM5cbI32(0x80000000)}, verifyM5cbI32(0x80000000), true},

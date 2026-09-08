@@ -87,19 +87,22 @@ func TestVerifyM5baConstantPoolLongHolesLdc2AndRootABI(t *testing.T) {
 	doubleIndex := verifyM5baCPIndices(c, 6)[0]
 	integerIndex := verifyM5baCPIndices(c, 3)[0]
 	wrong := []struct {
-		name  string
-		index uint16
+		name       string
+		index      uint16
+		kind, atPC uint64
 	}{
-		{"zero", 0}, {"range", uint16(c.cpCount)}, {"hole", longIndex + 1},
-		{"integer", integerIndex}, {"deferred-double", doubleIndex},
+		{"zero", 0, 13, 0}, {"range", uint16(c.cpCount), 13, 0},
+		{"hole", longIndex + 1, 13, 0}, {"integer", integerIndex, 13, 0},
+		// Double is a valid ldc2_w kind in M5c-b; the following l2i at pc 3
+		// precisely guards D/J kind separation instead of obsolete rejection.
+		{"double-then-l2i", doubleIndex, 14, 3},
 	}
 	for _, tc := range wrong {
 		t.Run("ldc2-"+tc.name, func(t *testing.T) {
 			code := []byte{0x14, byte(tc.index >> 8), byte(tc.index), 0x88, 0xac}
 			bad := verifyM5baRewriteCode(t, classfile, "padding", "()I", code, 2, 0)
-			pc := verifyM5baInstructionPC(t, code, 0x14, 0)
 			verifyM5baAssertError(t, func() (Result, error) { return Run(bad, "padding", nil, verifyM5baGasLimit) },
-				"BytecodeError(uint256,uint256)", 13, uint64(pc))
+				"BytecodeError(uint256,uint256)", tc.kind, tc.atPC)
 		})
 	}
 	for _, op := range []byte{0x12, 0x13} {

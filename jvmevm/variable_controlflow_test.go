@@ -159,10 +159,12 @@ func TestRuntimeM5caWideValidationAndOverlap(t *testing.T) {
 		{"overwrite-long-head", []byte{0x0a, 0xc4, 0x37, 0x01, 0x00, 0x04, 0xc4, 0x36, 0x01, 0x00, 0xc4, 0x16, 0x01, 0x00, 0x88, 0xac}, 2, 258, 14, 10},
 		{"invalid-nested", []byte{0xc4, 0xc4}, 1, 1, 15, 0},
 		{"invalid-opcode", []byte{0xc4, 0x60}, 1, 1, 15, 0},
-		{"unsupported-fload", []byte{0xc4, 0x17, 0x00, 0x00}, 1, 1, 6, 0},
-		{"unsupported-dload", []byte{0xc4, 0x18, 0x00, 0x00}, 2, 2, 6, 0},
-		{"unsupported-fstore", []byte{0xc4, 0x38, 0x00, 0x00}, 1, 1, 6, 0},
-		{"unsupported-dstore", []byte{0xc4, 0x39, 0x00, 0x00}, 2, 2, 6, 0},
+		// Wide F/D forms are supported in M5c-b. These malformed snippets now
+		// retain precise local-initialization and operand-stack guards.
+		{"fload-uninitialized", []byte{0xc4, 0x17, 0x00, 0x00}, 1, 1, 11, 0},
+		{"dload-uninitialized", []byte{0xc4, 0x18, 0x00, 0x00}, 2, 2, 11, 0},
+		{"fstore-underflow", []byte{0xc4, 0x38, 0x00, 0x00}, 1, 1, 3, 0},
+		{"dstore-underflow", []byte{0xc4, 0x39, 0x00, 0x00}, 2, 2, 3, 0},
 		{"unsupported-ret", []byte{0xc4, 0xa9, 0x00, 0x00}, 1, 1, 6, 0},
 	}
 	for _, tc := range cases {

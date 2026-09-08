@@ -207,24 +207,6 @@ func TestM3aCallResolutionErrorCodes(t *testing.T) {
 			},
 		},
 		{
-			name: "callee-unsupported-float-descriptor", code: 4,
-			make: func() []byte {
-				return mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
-					nameType := c.callNameType(t, "run")
-					binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, "(F)F"))
-				})
-			},
-		},
-		{
-			name: "callee-unsupported-double-descriptor", code: 4,
-			make: func() []byte {
-				return mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
-					nameType := c.callNameType(t, "run")
-					binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, "(D)D"))
-				})
-			},
-		},
-		{
 			name: "callee-without-code", code: 4,
 			make: func() []byte {
 				return mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
@@ -241,15 +223,18 @@ func TestM3aCallResolutionErrorCodes(t *testing.T) {
 			assertCallValidationError(t, classfile, "run", []int32{4, 2}, "CallError(uint256,uint256)", tc.code, &pc)
 		})
 	}
-	t.Run("callee-long-descriptor-reaches-category-check", func(t *testing.T) {
-		classfile := mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
-			nameType := c.callNameType(t, "run")
-			binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, "(J)J"))
+	for _, descriptor := range []string{"(J)J", "(F)F", "(D)D"} {
+		t.Run("callee-typed-descriptor-"+descriptor, func(t *testing.T) {
+			classfile := mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
+				nameType := c.callNameType(t, "run")
+				binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, descriptor))
+			})
+			_, pc := parseCallValidationClass(t, classfile).callRef(t, "run")
+			// J/F/D descriptors resolve now; the caller's category-1 int top value
+			// must not be implicitly reinterpreted as the selected parameter kind.
+			assertCallValidationError(t, classfile, "run", []int32{4, 2}, "BytecodeError(uint256,uint256)", 14, &pc)
 		})
-		_, pc := parseCallValidationClass(t, classfile).callRef(t, "run")
-		// (J)J resolves now; the caller's category-1 top value is not a long.
-		assertCallValidationError(t, classfile, "run", []int32{4, 2}, "BytecodeError(uint256,uint256)", 14, &pc)
-	})
+	}
 }
 
 func TestM3aReturnDescriptorMismatchUsesCallError5(t *testing.T) {
