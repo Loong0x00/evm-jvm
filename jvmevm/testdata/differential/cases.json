@@ -39438,6 +39438,2728 @@
       "timeout_seconds": 30,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-negative-one",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-below-2p24",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        16777215
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-at-2p24",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        16777216
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-half-above-2p24",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        16777217
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-odd-above-half",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        16777219
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-int-max",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2f-int-min",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2fBits",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2d-int-max-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2dHigh",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2d-int-max-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2dLow",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2d-int-min-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2dHigh",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-i2d-int-min-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "i2dLow",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-negative-one",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        -1,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-half-above-2p24",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        0,
+        16777217
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-odd-above-half",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        0,
+        16777219
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-half-above-2p53",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        2097152,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-below-2p53",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        2097151,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-long-max",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2f-long-min",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2fBits",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-half-above-2p53-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dHigh",
+      "args": [
+        2097152,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-half-above-2p53-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dLow",
+      "args": [
+        2097152,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-odd-above-half-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dHigh",
+      "args": [
+        2097152,
+        3
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-odd-above-half-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dLow",
+      "args": [
+        2097152,
+        3
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-long-max-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dHigh",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-long-max-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dLow",
+      "args": [
+        2147483647,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-long-min-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dHigh",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-l2d-long-min-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "l2dLow",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-positive-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-positive-fraction",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        1072902963
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-negative-fraction",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        -1074580685
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-positive-infinity",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-negative-infinity",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2i-above-int-max",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2i",
+      "args": [
+        1325400064
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2l-positive-infinity-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2lHigh",
+      "args": [
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2l-positive-infinity-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2lLow",
+      "args": [
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2l-negative-infinity-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2lHigh",
+      "args": [
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2l-negative-infinity-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2lLow",
+      "args": [
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2l-quiet-nan-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2lLow",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2l-negative-fraction-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2lLow",
+      "args": [
+        -1067450368
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2d-min-subnormal-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2dHigh",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2d-min-subnormal-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2dLow",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2d-negative-zero-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2dHigh",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2d-quiet-nan-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2dHigh",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2d-quiet-nan-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2dLow",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-f2d-max-finite-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "f2dHigh",
+      "args": [
+        2139095039
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-positive-fraction",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        1073636966,
+        1717986918
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-negative-fraction",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        -1073846682,
+        1717986918
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-above-int-max",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        1105199104,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-below-int-min",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        -1042284544,
+        536870912
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-positive-infinity",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-negative-infinity",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2i-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2i",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2l-positive-infinity-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2lHigh",
+      "args": [
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2l-positive-infinity-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2lLow",
+      "args": [
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2l-negative-infinity-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2lHigh",
+      "args": [
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2l-negative-infinity-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2lLow",
+      "args": [
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2l-quiet-nan-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2lLow",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2l-positive-fraction-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2lLow",
+      "args": [
+        1074659328,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-negative-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-half-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        915406848,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-above-half-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        915931136,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-half-min-normal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        940572671,
+        -536870912
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-below-half-min-normal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        940572671,
+        -805306368
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-overflow-half",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        1206910975,
+        -268435456
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-below-overflow-half",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        1206910975,
+        -402653184
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-d2f-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/conversions/ConversionRoot.java"
+      ],
+      "class": "bundle.m5cb.conversions.ConversionRoot",
+      "method": "d2fBits",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/conversions/ConversionRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fcmp-cmpl-less",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatCmpl",
+      "args": [
+        -1082130432,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fcmp-cmpl-equal-signed-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatCmpl",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fcmp-cmpl-greater",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatCmpl",
+      "args": [
+        2139095040,
+        2139095039
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fcmp-cmpl-quiet-nan-left",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatCmpl",
+      "args": [
+        2143363909,
+        1065353216
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fcmp-cmpg-quiet-nan-right",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatCmpg",
+      "args": [
+        1065353216,
+        2143634209
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fcmp-cmpg-infinity-order",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatCmpg",
+      "args": [
+        -8388608,
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-dcmp-cmpl-signed-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "doubleCmpl",
+      "args": [
+        -2147483648,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-dcmp-cmpl-infinity-order",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "doubleCmpl",
+      "args": [
+        -1048576,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-dcmp-cmpl-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "doubleCmpl",
+      "args": [
+        2146964020,
+        1450744508,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-dcmp-cmpg-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "doubleCmpg",
+      "args": [
+        1072693248,
+        0,
+        -519628,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fneg-signed-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatNegBits",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fneg-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatNegBits",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-fneg-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "floatNegBits",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-dneg-quiet-nan-high",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "doubleNegHigh",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-dneg-quiet-nan-low",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/compare/CompareRoot.java"
+      ],
+      "class": "bundle.m5cb.compare.CompareRoot",
+      "method": "doubleNegLow",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/compare/CompareRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-float-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "floatZero",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-float-one",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "floatOne",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-float-two",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "floatTwo",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-float-negative-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "floatNegativeZero",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-float-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "floatMinSubnormal",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-float-min-normal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "floatMinNormal",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-float-max-finite",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "floatMaxFinite",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-double-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "doubleZeroHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-double-one",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "doubleOneHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-double-negative-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "doubleNegativeZeroHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-double-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "doubleMinSubnormalLow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-double-min-normal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "doubleMinNormalHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-constant-double-max-finite",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/constants/ConstantRoot.java"
+      ],
+      "class": "bundle.m5cb.constants.ConstantRoot",
+      "method": "doubleMaxFiniteHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/constants/ConstantRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-all-float-calls-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "allFloatCallModes",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-all-float-calls-signed-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "allFloatCallModes",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-all-float-calls-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "allFloatCallModes",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-all-double-calls-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "allDoubleCallModesLow",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-all-double-calls-signed-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "allDoubleCallModesLow",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-all-double-calls-min-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "allDoubleCallModesLow",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-constructor-final-float",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "constructorFinalFloat",
+      "args": [
+        2143634209
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-constructor-final-double",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "constructorFinalDoubleLow",
+      "args": [
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-default-instance-float",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "defaultInstanceFloat",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-default-instance-double",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "defaultInstanceDoubleHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-prepared-static-float",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "preparedStaticFloat",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-prepared-static-double",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "preparedStaticDoubleHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-constant-value-float",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "constantFloat",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-constant-value-double",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "constantDoubleLow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-interface-constant-float",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "interfaceConstantFloat",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-interface-constant-double",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "interfaceConstantDoubleHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-hidden-parent-float",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "hiddenParentFloat",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-hidden-child-double",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "hiddenChildDoubleLow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-initialization-order",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "initializationTrace",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-initialized-signed-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "initializedSignedZero",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-initialized-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "initializedSubnormalLow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-mixed-category-call",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "mixedCategoryCallHigh",
+      "args": [
+        1065353216,
+        19088743,
+        -1985229329,
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-recursive-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "recursiveQuietNaN",
+      "args": [
+        2143363909,
+        5
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-reference-separated",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "referenceSeparated",
+      "args": [
+        -2147483647
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-default-interface-initialization",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "defaultInterfaceInitialization",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-transport-default-interface-initialized-bits",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m5cb.transport.TransportRoot",
+      "method": "defaultInterfaceInitializedBits",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/transport/TransportRoot.class",
+        "bundle/m5cb/transport/ScalarInit.class",
+        "bundle/m5cb/transport/ScalarDefault.class",
+        "bundle/m5cb/transport/DirectScalar.class",
+        "bundle/m5cb/transport/ScalarParent.class",
+        "bundle/m5cb/transport/ScalarCarrier.class",
+        "bundle/m5cb/transport/DirectCarrier.class",
+        "bundle/m5cb/transport/ScalarState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-wide-float-signed-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/wide/WideIeeeRoot.java"
+      ],
+      "class": "bundle.m5cb.wide.WideIeeeRoot",
+      "method": "floatBits",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cb/wide/WideIeeeRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-wide-float-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/wide/WideIeeeRoot.java"
+      ],
+      "class": "bundle.m5cb.wide.WideIeeeRoot",
+      "method": "floatBits",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cb/wide/WideIeeeRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-wide-float-subnormal",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/wide/WideIeeeRoot.java"
+      ],
+      "class": "bundle.m5cb.wide.WideIeeeRoot",
+      "method": "floatBits",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cb/wide/WideIeeeRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-wide-double-high-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/wide/WideIeeeRoot.java"
+      ],
+      "class": "bundle.m5cb.wide.WideIeeeRoot",
+      "method": "doubleHigh",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/wide/WideIeeeRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-wide-double-low-quiet-nan",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/wide/WideIeeeRoot.java"
+      ],
+      "class": "bundle.m5cb.wide.WideIeeeRoot",
+      "method": "doubleLow",
+      "args": [
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cb/wide/WideIeeeRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cb-wide-double-negative-zero",
+      "stage": "m5cb",
+      "sources": [
+        "bundle/m5cb/wide/WideIeeeRoot.java"
+      ],
+      "class": "bundle.m5cb.wide.WideIeeeRoot",
+      "method": "doubleHigh",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cb/wide/WideIeeeRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }

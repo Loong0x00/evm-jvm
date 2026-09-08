@@ -4,13 +4,14 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 1,681 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+The manifest has 1,811 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
 73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, 100 `m4d`,
 68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, 120 `m5a`, 110 `m5ba`, 100
-`m5bb`, and 88 `m5ca` cases. M5c-a adds 41 smoke-marked cases. Every root
-entry remains a declared public static `(int...)int` method, including public
-interface roots, and guest sources have no `main`. All 1,593 entries through
-M5b-b, including sources, arguments, budgets, tiers, and outcomes, are unchanged.
+`m5bb`, 88 `m5ca`, and 130 `m5cb` cases. M5c-b adds 66 smoke-marked cases.
+Every root entry remains a declared public static `(int...)int` method,
+including public interface roots, and guest sources have no `main`. All 1,681
+pre-M5c-b entries, including sources, arguments, budgets, tiers, and outcomes,
+are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -415,15 +416,16 @@ after a zero outer count, and simple long-array stores prove RHS long division
 by zero occurs before null or bounds checking. The initializer wrapper likewise
 comes from RHS arithmetic before a null array store check.
 
-Across all stages there are 1,444 value outcomes, 20 ArithmeticException
-outcomes, six StackOverflowError outcomes, 30 ExceptionInInitializerError
+Across all stages there are 1,660 value outcomes, 20 ArithmeticException
+outcomes, six StackOverflowError outcomes, 32 ExceptionInInitializerError
 outcomes, 16 NegativeArraySizeException outcomes, 18
 ArrayIndexOutOfBoundsException outcomes, 32 NullPointerException outcomes, 13
-ClassCastException outcomes, and 14 ArrayStoreException outcomes. Every gas
-limit is finite and at most 70,000,000; every subprocess timeout is at most 10
-seconds. New arrays have at most eight elements, and all finite fixture loops and
-successful recursions are bounded and modest; explicitly expected stack-overflow
-cases recurse until the reference JVM throws.
+ClassCastException outcomes, and 14 ArrayStoreException outcomes. Every budget
+is finite: the current manifest maximums are 100,000,000 gas and 30 seconds,
+while M5c-b uses at most 90,000,000 gas and 20 seconds. New arrays have at most
+eight elements, and all finite fixture loops and successful recursions are
+bounded and modest; explicitly expected stack-overflow cases recurse until the
+reference JVM throws.
 
 All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
 direct superclass is `java/lang/Object`. They have zero fields, zero interfaces,
@@ -832,3 +834,48 @@ and wide local boundary/type errors remain verifier/runtime-owned checks. The
 runtime remains over mainnet deployment size and runs through local
 runtime.Execute, not CREATE. This remains subset verification, not full JVM
 conformance.
+
+## M5c-b scalar IEEE fixtures
+
+M5c-b appends 130 trusted value cases from five Java 8 sources (12 emitted guest
+classfiles). Integer roots carry binary32 bits directly and binary64 bits as
+explicit high/low words; outputs are likewise exact 32-bit words rather than
+hashes. The cases cover CP4/CP6 constants, `fconst_*`/`dconst_*`, scalar locals
+(including wide F/D indices), static/instance/hidden/final/ConstantValue fields,
+required default-interface initialization, constructors, recursion, reference
+separation, and static/private-special/virtual/interface/default/direct-interface-
+super/interface-static calls. They also cover all ten scoped conversions,
+`fcmpl`/`fcmpg`/`dcmpl`/`dcmpg`, and exact-sign-bit `fneg`/`dneg`, with signed
+zeros, infinities, normal/subnormal boundaries, quiet NaNs, and RNE cases around
+2^24, 2^53, 2^63, gradual underflow, and float overflow.
+
+The only JRE calls in emitted guest constant pools are the four approved raw-bit
+APIs: `Float.intBitsToFloat`, `Float.floatToRawIntBits`,
+`Double.longBitsToDouble`, and `Double.doubleToRawLongBits` (plus ordinary
+`Object.<init>` constructor chains). No fixture emits F/D add, subtract,
+multiply, divide, remainder, array operation, boxing, handler, monitor,
+`invokedynamic`, or other JRE method call. Explicit `class_files` bundles omit
+`java/lang/Float` and `java/lang/Double`; those minimal native holders are a
+separately owned runtime responsibility.
+
+OpenJDK 8 1.8.0_504 and Java 21.0.9 each used a fresh Java-8-target compilation
+and 130 separate `OracleMain` processes with `-Xmx64m` and the manifest's finite
+outer timeout. Both JVMs produced identical ordered outputs; SHA256 over
+`id`, tab, output, newline records is
+`c9aaed43a3834cdb7da457bc786147cec2fa676d76df9739db20c328bc5e46a3`.
+All 130 outcomes are values. The sorted compact canonical JSON SHA256 of the
+unchanged 1,681-entry prefix is
+`dec76d35636b40f747f35c1d89c90eb3fc95d6c3e993745f3b38df994aee6d86`,
+identical to base revision `83fd908`. The corresponding M5c-b case-list SHA256
+is `675f28faa6c270909a6012f40051ddf8c400a38325ecb4570cedf3e41d50843d`.
+
+Java raw-bit APIs may quiet signaling NaNs on some JVM/hardware paths, so these
+cross-JVM exact transport cases use only quiet NaNs and make no signaling-NaN
+payload claim. The two conversion wrappers normalize only a NaN result to
+`0x7fc00000` or `0x7ff8000000000000`; finite values and signed zeros always use
+unaltered raw bits. Exact signaling-payload transport and the runtime's stated
+canonical conversion policy remain EVM-only verifier responsibilities. The
+baseline differential runner at this fixture-only revision intentionally rejects
+stage `m5cb`; the checks above are bounded trusted reference-JVM evidence, not a
+claim that the unintegrated EVM runtime is green or that general Java is
+supported.
