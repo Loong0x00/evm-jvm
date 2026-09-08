@@ -15,18 +15,18 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m5cc --tier full
+python3 tools/java_diff.py --stage m5cd --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m5cc --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m5cd --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
 `m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, `m4fc` adds M4f-c,
 `m5a` adds M5a, `m5ba` adds M5b-a, `m5bb` adds M5b-b, `m5ca` adds M5c-a,
-`m5cb` adds M5c-b, and `m5cc` or `all` adds M5c-c. A manifest without entries in the newest stage continues to run its
+`m5cb` adds M5c-b, `m5cc` adds M5c-c, and `m5cd` or `all` adds M5c-d. A manifest without entries in the newest stage continues to run its
 older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -393,6 +393,33 @@ are focused Go validation tests, including a 20,000,000-gas single-operation
 ceiling and a 100,000,000-gas ceiling for 16 uncoalesced remainders on the same
 original operands. They are not permission to increase old fixture budgets or
 to use host memory exhaustion.
+
+## M5c-d IEEE float/double arrays
+
+M5c-d remains additive schema 1 and cumulative over M5c-c. Trusted, bounded
+Java 8 fixtures may allocate `float[]`/`double[]`, use `faload`/`daload` and
+`fastore`/`dastore`, and transport nested `[F`/`[D` references through the
+already-supported field, call, covariance, cast, marker-interface,
+`anewarray`, and `multianewarray` paths. Roots remain exact static `(I...)I`
+wrappers: raw binary32 values use one signed-int word and binary64 values use
+explicit high/low int words. The runner never parses array descriptors,
+allocates guest arrays, converts IEEE cells, or observes guest references.
+
+Array cells preserve exact raw encodings, including signed zero, infinities,
+subnormals, and quiet-NaN sign/payload; default cells are positive-zero bits.
+Transport comparisons must not apply M5c-c's arithmetic-generated-NaN
+canonicalization. Signaling NaN transport is an explicit focused EVM guarantee,
+not a cross-JVM portability claim because some JVM paths may quiet signaling
+NaNs. The only native registrations remain the four raw-bit Float/Double
+bindings documented above; no array helper, host math, or JRE fallback is added.
+
+All array kinds share the existing fixed 1,024-array, 65,536-per-array, and
+262,144-total-element limits. One double cell counts as one logical element,
+not two category words. Logical-cap OOM, no-GC/reset, malformed bytecode, and
+signaling-NaN probes remain focused Go/mock checks and never drive the host JVM
+toward exhaustion. Fixture gas budgets are not increased. M5c-d adds no output
+or exception form: schema 1 and exact exception kinds 1 through 11 remain
+unchanged, while arbitrary reverts and EVM out-of-gas remain engine failures.
 
 ## Outcome protocol
 
