@@ -171,6 +171,7 @@ class MockTools:
                 "missingDefault": "java.lang.AbstractMethodError",
                 "initDefaultConflict": "java.lang.IncompatibleClassChangeError",
                 "initMissingDefault": "java.lang.AbstractMethodError",
+                "failedInitUse": "java.lang.NoClassDefFoundError",
             }
             if mode in ("exception", "root-init-eiie") or (
                     mode == "by-method" and method in known):
@@ -233,6 +234,7 @@ class MockTools:
                 "missingDefault": "java.lang.AbstractMethodError",
                 "initDefaultConflict": "java.lang.IncompatibleClassChangeError",
                 "initMissingDefault": "java.lang.AbstractMethodError",
+                "failedInitUse": "java.lang.NoClassDefFoundError",
             }
             exception_outcome = mode in ("exception", "exception-gasbad", "root-init-eiie")
             exception_outcome = exception_outcome or (
@@ -346,6 +348,9 @@ class JavaDiffTests(unittest.TestCase):
                 case("initializer-error", stage="m3c", method="initFail", args=[],
                      expected_kind="java_exception",
                      expected_exception="java.lang.ExceptionInInitializerError"),
+                case("failed-init-use", stage="m5da", method="failedInitUse", args=[],
+                     expected_kind="java_exception",
+                     expected_exception="java.lang.NoClassDefFoundError"),
             ])
             tools = MockTools(tmp)
             completed, report = self.run_runner(
@@ -353,10 +358,10 @@ class JavaDiffTests(unittest.TestCase):
                 env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
             )
             self.assertEqual(completed.returncode, 0, completed.stderr)
-            self.assertEqual(report["status_counts"], {"pass": 4})
+            self.assertEqual(report["status_counts"], {"pass": 5})
             self.assertEqual(report["runtime_sha256"], "a" * 64)
             self.assertEqual(
-                [result["runtime_sha256"] for result in report["cases"]], ["a" * 64] * 4
+                [result["runtime_sha256"] for result in report["cases"]], ["a" * 64] * 5
             )
             self.assertEqual(report["cases"][0]["evm_value"], 7)
             self.assertEqual(
@@ -368,6 +373,10 @@ class JavaDiffTests(unittest.TestCase):
             self.assertEqual(
                 report["cases"][3]["evm_exception"],
                 "java.lang.ExceptionInInitializerError",
+            )
+            self.assertEqual(
+                report["cases"][4]["evm_exception"],
+                "java.lang.NoClassDefFoundError",
             )
 
     def test_m4a_known_array_outcomes_match_by_exact_class(self):
@@ -1096,6 +1105,7 @@ public final class Arithmetic {
         cases += [case("m5cb-smoke", stage="m5cb")]
         cases += [case("m5cc-smoke", stage="m5cc")]
         cases += [case("m5cd-smoke", stage="m5cd")]
+        cases += [case("m5da-smoke", stage="m5da")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -1125,14 +1135,15 @@ public final class Arithmetic {
             "m5cb": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke", "m5ba-smoke", "m5bb-smoke", "m5ca-smoke", "m5cb-smoke"],
             "m5cc": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke", "m5ba-smoke", "m5bb-smoke", "m5ca-smoke", "m5cb-smoke", "m5cc-smoke"],
             "m5cd": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke", "m5ba-smoke", "m5bb-smoke", "m5ca-smoke", "m5cb-smoke", "m5cc-smoke", "m5cd-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke", "m5ba-smoke", "m5bb-smoke", "m5ca-smoke", "m5cb-smoke", "m5cc-smoke", "m5cd-smoke"],
+            "m5da": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke", "m5ba-smoke", "m5bb-smoke", "m5ca-smoke", "m5cb-smoke", "m5cc-smoke", "m5cd-smoke", "m5da-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke", "m5ba-smoke", "m5bb-smoke", "m5ca-smoke", "m5cb-smoke", "m5cc-smoke", "m5cd-smoke", "m5da-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m5cd")
+        self.assertEqual(parsed.stage, "m5da")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
         with self.assertRaises(java_diff.HarnessError):
@@ -1163,12 +1174,14 @@ public final class Arithmetic {
             java_diff.select_cases(cases, "m5cb", "full", 56, "m5cc-smoke")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m5cc", "full", 56, "m5cd-smoke")
+        with self.assertRaises(java_diff.HarnessError):
+            java_diff.select_cases(cases, "m5cd", "full", 56, "m5da-smoke")
         with self.assertRaisesRegex(java_diff.HarnessError, "unknown stage"):
             java_diff.select_cases(cases, "m4f", "full", 56, None)
 
-    def test_manifest_accepts_exact_m4b_through_m5cd_stage_spellings(self):
+    def test_manifest_accepts_exact_m4b_through_m5da_stage_spellings(self):
         self.assertEqual(java_diff.SCHEMA_VERSION, 1)
-        self.assertEqual(len(java_diff.KNOWN_JAVA_EXCEPTIONS), 11)
+        self.assertEqual(len(java_diff.KNOWN_JAVA_EXCEPTIONS), 12)
         with tempfile.TemporaryDirectory() as tmp:
             fixtures = FixtureTree(tmp, [
                 case("objects", stage="m4b"), case("dispatch", stage="m4c"),
@@ -1180,10 +1193,12 @@ public final class Arithmetic {
                 case("scalar-ieee", stage="m5cb"),
                 case("ieee-arithmetic", stage="m5cc"),
                 case("ieee-arrays", stage="m5cd"),
+                case("exceptions", stage="m5da", expected_kind="java_exception",
+                     expected_exception="java.lang.NoClassDefFoundError"),
             ])
             _, loaded, _ = java_diff.load_manifest(fixtures.path)
-            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a", "m5ba", "m5bb", "m5ca", "m5cb", "m5cc", "m5cd"])
-        for malformed in ("M4fc", "m4-fc", "m4f", "M5a", "m5-a", "M5ba", "m5b-a", "M5bb", "m5b-b", "M5ca", "m5c-a", "M5cb", "m5c-b", "M5cc", "m5c-c", "M5cd", "m5c-d", "interface-statics"):
+            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a", "m5ba", "m5bb", "m5ca", "m5cb", "m5cc", "m5cd", "m5da"])
+        for malformed in ("M4fc", "m4-fc", "m4f", "M5a", "m5-a", "M5ba", "m5b-a", "M5bb", "m5b-b", "M5ca", "m5c-a", "M5cb", "m5c-b", "M5cc", "m5c-c", "M5cd", "m5c-d", "M5da", "m5d-a", "interface-statics"):
             with self.subTest(stage=malformed), tempfile.TemporaryDirectory() as tmp:
                 fixtures = FixtureTree(tmp, [case("bad-stage", stage=malformed)])
                 with self.assertRaisesRegex(java_diff.HarnessError, "stage must be"):

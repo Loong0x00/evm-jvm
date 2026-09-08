@@ -15,18 +15,19 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m5cd --tier full
+python3 tools/java_diff.py --stage m5da --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m5cd --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m5da --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
 `m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, `m4fc` adds M4f-c,
 `m5a` adds M5a, `m5ba` adds M5b-a, `m5bb` adds M5b-b, `m5ca` adds M5c-a,
-`m5cb` adds M5c-b, `m5cc` adds M5c-c, and `m5cd` or `all` adds M5c-d. A manifest without entries in the newest stage continues to run its
+`m5cb` adds M5c-b, `m5cc` adds M5c-c, `m5cd` adds M5c-d, and `m5da` or
+`all` adds M5d-a. A manifest without entries in the newest stage continues to run its
 older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -421,6 +422,29 @@ toward exhaustion. Fixture gas budgets are not increased. M5c-d adds no output
 or exception form: schema 1 and exact exception kinds 1 through 11 remain
 unchanged, while arbitrary reverts and EVM out-of-gas remain engine failures.
 
+## M5d-a implicit exceptions and handlers
+
+M5d-a keeps additive schema 1, the cumulative tiers, exact static `(I...)I`
+roots, unchanged ordered class bundles, and all 2,091 earlier fixture semantics
+and budgets. Trusted, finite Java 8 fixtures may catch the existing implicit
+Java faults, use ordered `Code` exception handlers and `athrow`, carry captured
+exception references through already-supported guest storage/calls, and observe
+initialization-aware unwind. Handler parsing, lazy applicable-catch resolution,
+matching order, stack clearing, call-site PCs, object identity, the bounded
+256-record exception arena plus emergency OOM record, and failed-initialization
+state all execute inside EVM bytecode; the runner neither parses handlers nor
+models a Throwable graph.
+
+The only new uncaught outcome is exact
+`java.lang.NoClassDefFoundError` (kind 12), produced by a later active use of an
+actually erroneous class. Initial failure wrapping and Error identity remain
+interpreter semantics. Fixed arena, ordinary-heap, and frame-cap probes are
+Go/EVM-only and never exhaust host JVM memory or stacks. EVM validation failures
+(including `HandlerError`) and out of gas remain hard harness failures and cannot
+be caught or compared as Java outcomes. M5d-a adds no host ABI, native binding,
+Throwable API, arbitrary Throwable construction, or generic exception-name
+acceptance.
+
 ## Outcome protocol
 
 Existing value cases retain `expected_kind: "value"`. An explicitly expected
@@ -464,11 +488,12 @@ and `java.lang.OutOfMemoryError` outcomes. M4c additionally recognizes exact
 `java.lang.ClassCastException`; M4d adds exact
 `java.lang.ArrayStoreException`. M4f-b adds exact
 `java.lang.IncompatibleClassChangeError` and `java.lang.AbstractMethodError`.
-Unknown exception names, even syntactically valid Java names, are rejected
+M5d-a adds exact `java.lang.NoClassDefFoundError`. Unknown exception names, even
+syntactically valid Java names, are rejected
 rather than extending the frozen outcome protocol. Non-`Error` failures become
 `java.lang.ExceptionInInitializerError` when they escape active initialization;
-`OutOfMemoryError`, `StackOverflowError`, `IncompatibleClassChangeError`, and
-`AbstractMethodError` remain unwrapped.
+`OutOfMemoryError`, `StackOverflowError`, `IncompatibleClassChangeError`,
+`AbstractMethodError`, and `NoClassDefFoundError` remain unwrapped.
 The fixture oracle may report initializer-time `Error` outcomes from
 `Class.forName`, before reflective invocation. Oracle process,
 configuration, or malformed-output errors still fail and are never converted
