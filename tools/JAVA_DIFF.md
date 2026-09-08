@@ -15,17 +15,17 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4e --tier full
+python3 tools/java_diff.py --stage m4fa --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4e --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4fa --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
-M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d, and
-`m4e` or `all` adds M4e. A manifest without entries in the newest stage continues to run its
-older cases under the new default. `smoke` runs smoke-marked cases,
+M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
+`m4e` adds M4e, and `m4fa` or `all` adds M4f-a. A manifest without entries
+in the newest stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
@@ -175,6 +175,26 @@ as `java.lang.ExceptionInInitializerError`. Logical aggregate/per-array quota
 `java.lang.OutOfMemoryError` cases remain focused Go/mock tests: they must not
 induce host JVM OOM. The recognized exception set and schema remain unchanged,
 and EVM out of gas is still an engine failure rather than Java OOM.
+
+## M4f-a interface graph and abstract-call cases
+
+M4f-a remains additive schema 1 and cumulative over M4e. Trusted finite fixtures
+may supply ordinary classes and public abstract interfaces in an explicit ordered
+bundle, and may exercise `invokeinterface`, abstract-interface fallback for
+`invokevirtual`, interface reference types, interface-leaf arrays, and the
+`Cloneable`/`Serializable` array marker relations. The runner still performs no
+classfile parsing, graph discovery, method resolution, type checking, dispatch,
+or initialization; all listed javac outputs are passed unchanged and those rules
+are enforced by EVM bytecode.
+
+M4f-a adds no Java exception kind. Interface cast and array-store failures use the
+existing exact `ClassCastException` and `ArrayStoreException` outcomes. Interface
+graph/link/profile errors and deferred interface features remain focused Go-test
+reverts and are never accepted as oracle outcomes. Fixtures must not rely on
+interface defaults, private interface bodies, interface static invocation/fields,
+array-receiver method dispatch, or unbounded host resource exhaustion. Abstract
+interface metadata (including unentered static initialization metadata) does not
+by itself initialize an interface.
 
 ## Outcome protocol
 

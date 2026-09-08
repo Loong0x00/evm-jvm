@@ -1010,6 +1010,7 @@ public final class Arithmetic {
         cases += [case("m4c-smoke", stage="m4c")]
         cases += [case("m4d-smoke", stage="m4d")]
         cases += [case("m4e-smoke", stage="m4e")]
+        cases += [case("m4fa-smoke", stage="m4fa")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -1029,14 +1030,15 @@ public final class Arithmetic {
             "m4c": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke"],
             "m4d": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke"],
             "m4e": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke"],
+            "m4fa": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m4e")
+        self.assertEqual(parsed.stage, "m4fa")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
         with self.assertRaises(java_diff.HarnessError):
@@ -1047,18 +1049,21 @@ public final class Arithmetic {
             java_diff.select_cases(cases, "m4c", "full", 56, "m4d-smoke")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m4d", "full", 56, "m4e-smoke")
+        with self.assertRaises(java_diff.HarnessError):
+            java_diff.select_cases(cases, "m4e", "full", 56, "m4fa-smoke")
         with self.assertRaisesRegex(java_diff.HarnessError, "unknown stage"):
             java_diff.select_cases(cases, "m4f", "full", 56, None)
 
-    def test_manifest_accepts_exact_m4b_through_m4e_stage_spellings(self):
+    def test_manifest_accepts_exact_m4b_through_m4fa_stage_spellings(self):
         with tempfile.TemporaryDirectory() as tmp:
             fixtures = FixtureTree(tmp, [
                 case("objects", stage="m4b"), case("dispatch", stage="m4c"),
                 case("reference-arrays", stage="m4d"), case("multidimensional", stage="m4e"),
+                case("interfaces", stage="m4fa"),
             ])
             _, loaded, _ = java_diff.load_manifest(fixtures.path)
-            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e"])
-        for malformed in ("M4e", "m4-e", "m4f", "multidimensional-arrays"):
+            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e", "m4fa"])
+        for malformed in ("M4fa", "m4-fa", "m4f", "interfaces"):
             with self.subTest(stage=malformed), tempfile.TemporaryDirectory() as tmp:
                 fixtures = FixtureTree(tmp, [case("bad-stage", stage=malformed)])
                 with self.assertRaisesRegex(java_diff.HarnessError, "stage must be"):
