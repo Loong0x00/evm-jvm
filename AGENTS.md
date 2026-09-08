@@ -1,8 +1,9 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M5c-a variable-width control flow**, recorded in
-`JAVA_EVM_M5CA_PLAN.md`:1681 cases plus48 independent probes. Next bounded IEEE
-representation/transport/conversions/comparisons, then arithmetic/arrays/handlers.
+`JAVA_EVM_M5CA_PLAN.md`:1681 cases plus48 independent probes. Active M5c-b scalar
+IEEE + four EVM raw-bit bindings, frozen in `JAVA_EVM_M5CB_PLAN.md`; arithmetic/
+arrays/handlers follow. No host math or generic native/JRE fallback.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
