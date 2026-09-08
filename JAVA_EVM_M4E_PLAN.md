@@ -143,3 +143,18 @@ Parent owns plans/AGENTS/quickstart/Makefile and integration/independent review.
 One Solidity writer, no subagent spawning/peer writes/push/global config/untrusted
 oracle runs. Keep Sol/high WITHOUT Fast, commit only owned paths and report real
 checks/SHA/size/limits/failures honestly.
+
+## Accepted integration evidence
+Runtime4fe8135→b65bf5b, fixtures894a636→dc3e432, verifierfdf6c20→f70ce1e.
+Review89770d2→fa2fa1f confirmed on actual JVM that writing a[0][2] leaves a[1][2]
+zero: expected231, not238. Corrected the arithmetic oracle and added explicit
+written/default-row guards. Runtime/source/hash unchanged; independent allocation
+and ordering audit found no demonstrated in-scope defect.
+
+Parent final artifact/bootstrap, Go/CLI,34 Python,960/960 full,415 smoke,435 fast,
+demos,AOT,focused vet and48 additional probes passed. Archive:
+`build/java-diff-parent-m4e/probe-x0vxy9pw/results-final/`.
+Prior892 manifest entries/budgets unchanged. Accepted runtime80614 bytes SHA256
+`435082ccaf879e822d2e02b8f698f804284e3e7e48f65918c1b0184d39f38590`.
+Next interfaces split into abstract graph/calls, defaults+required initialization,
+and static members. All new agents Sol/high WITHOUT Fast, no routine confirmation.

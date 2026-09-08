@@ -78,8 +78,10 @@ routine permission to start the next verified increment.
 | M4b | ordinary object allocation, constructors, instance fields and direct invokespecial calls | accepted;713 cases plus46 independent probes |
 | M4c | invokevirtual dispatch, casts/type tests | accepted;792 cases plus48 independent probes |
 | M4d | reference arrays/covariance/ArrayStoreException | accepted;892 cases plus48 independent probes |
-| M4e | multianewarray | frozen in `JAVA_EVM_M4E_PLAN.md`; dispatch3 workers |
-| M4f | interfaces | queued |
+| M4e | multianewarray | accepted;960 cases plus48 independent probes |
+| M4f-a | interface graph/abstract calls/type compatibility | next bounded stage |
+| M4f-b | defaults and required default-interface initialization | queued |
+| M4f-c | interface static members/initialization | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -90,11 +92,11 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M4d accepted:892 JVM/EVM cases plus48 independent probes,34 Python tests,
-381 smoke/401 fast, exact Go validation, artifact/bootstrap/demos/AOT/vet green.
-Four proven test-setup issues corrected; runtime unchanged after independent audit.
-Prior792 inputs/outcomes/budgets unchanged. Runtime76800 bytes is local-runtime
-only, not deployed/full Java. M4e frozen in JAVA_EVM_M4E_PLAN.md; dispatch3 workers with explicit
-resolution/rank/count/zero/negative/partial-shape/aggregate-limit ordering.
+M4e accepted:960 JVM/EVM cases plus48 independent probes,34 Python tests,
+415 smoke/435 fast, exact Go validation, artifact/bootstrap/demos/AOT/vet green.
+Actual JVM corrected arithmetic oracle231 (not238); explicit row guards added.
+Runtime80614 bytes is local-runtime only, not deployed/full Java. Prior892 case
+inputs/outcomes/budgets unchanged. Next freeze M4f-a interface graph/abstract calls,
+then defaults+mandatory initialization, then static interface members separately.
 ALL NEW workers Sol/high WITHOUT Fast; recheck disabled state before dispatch.
 Continue automatically after verified stages, no routine confirmation.

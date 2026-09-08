@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M4d)
+# Java inside EVM: staged interpreter (M4e)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,7 +9,7 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 76,800-byte runtime
+**Local execution, not mainnet deployment:** the current 80,614-byte runtime
 exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
@@ -21,10 +21,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 381 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (401 total)
-make java-full       # all 892 differential cases
-make java-test       # artifact check + Go tests + 34 runner tests + all 892 cases
+make java-smoke      # 415 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (435 total)
+make java-full       # all 960 differential cases
+make java-test       # artifact check + Go tests + 34 runner tests + all 960 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -62,21 +62,21 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **76,800-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **80,614-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 197,216 |
-| Loops.class / sum(100) | 5050 | 2,314,148 |
-| Loops.class / fibonacci(20) | 6765 | 848,935 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 513,798 |
-| M4aArrays.class / fillSum(10,3) | 165 | 2,343,478 |
+| Add.class / add(20,22) | 42 | 197,380 |
+| Loops.class / sum(100) | 5050 | 2,312,988 |
+| Loops.class / fibonacci(20) | 6765 | 849,556 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 513,944 |
+| M4aArrays.class / fillSum(10,3) | 165 | 2,344,669 |
 
 Typed checks raised sum(100) beyond its old2M demo budget, independently confirmed;
 the demo now uses3M. No historical oracle input/budget or semantic assertion changed.
 
 Runtime SHA-256:
-`79ab08d94ba5af8ece1560a7a95e0859844844474601215afae6f3bc8b51997f`
+`435082ccaf879e822d2e02b8f698f804284e3e7e48f65918c1b0184d39f38590`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -213,7 +213,7 @@ INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
 **Deferred:** non-integer constants, wide/goto_w, category-2 values, switch,
-other primitive/array leaf types, multianewarray, interface calls,
+other primitive/array leaf types, interface calls,
 array-receiver virtual calls, non-int/non-reference fields, handlers, monitors,
 class libraries and deployment workflows.
 
@@ -316,8 +316,8 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4d acceptance is
-recorded in `JAVA_EVM_M4D_PLAN.md`; next is multianewarray.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M4e acceptance is
+recorded in `JAVA_EVM_M4E_PLAN.md`; next are separately bounded interface stages.
 No full-Java claim or routine re-confirmation.
 
 ## M4b ordinary objects and direct instance calls
@@ -370,3 +370,13 @@ Int/reference arrays share1024 total array allocations and262144 total elements,
 with65536 per array; object limits are independent. No GC. Structural rank255
 is supported; anewarray producing rank256 rejects explicitly. Interfaces and
 other primitive leaves remain deferred; no broader Object/JRE APIs added.
+
+## M4e multidimensional allocation
+
+960 cumulative JVM/EVM cases plus48 independent multidimensional probes passed.
+multianewarray allocates complete or partial int/reference array ranks, iteratively
+inside EVM. All counts are checked for negatives before capacity planning, even
+beyond a zero dimension. Only materialized levels consume quotas; empty children
+have distinct identities, partial-rank leaves stay null, and rank255 is bounded.
+Component resolution/access precedes counts and does not initialize components.
+No heap limits, host APIs, exception kinds or deployment claims changed.
