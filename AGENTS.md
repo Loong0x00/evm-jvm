@@ -4,7 +4,9 @@ LATEST endpoint: unchanged Minecraft Java server in ORIGINAL, UNMODIFIED EVM.
 See JAVA_EVM_PROGRAM.md: no opcode/gas/precompile/consensus/limit changes or host
 Java/server-logic fallback. Current oversized local runtime.Execute is not standard
 deployment proof. Pin server version and explicit I/O boundary before workload claims.
-Existing frozen M5d-a atomic implementation scope remains unchanged.
+First MC milestone: genuine guest startup-complete marker (exact version/marker to
+pin), NOT client connectivity. No fake/hardcoded banner or skipped initialization;
+connectable server is an optional later goal. Existing frozen M5d-a scope unchanged.
 
 Current accepted stage: **M5c-d IEEE arrays**, recorded in
 `JAVA_EVM_M5CD_PLAN.md`:2091 cases plus192 independent raw-cell probes. Next is

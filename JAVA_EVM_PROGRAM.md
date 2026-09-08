@@ -4,8 +4,12 @@
 LATEST user target: run **Minecraft Java server (mcserver) inside original,
 unmodified EVM**. This supersedes the earlier general-JVM-not-Minecraft endpoint;
 a general interpreter remains the implementation strategy, not a requirement to
-finish all Java SE before targeting the server. Minecraft version/artifact and
-observable server acceptance criteria remain to be pinned. The parent controls
+finish all Java SE before targeting the server. Latest acceptance refinement:
+FIRST milestone is seeing the real server's startup-complete indication after run;
+client connectivity is NOT required, and is an optional later stretch goal. Treat
+this as the selected version's actual ready/completion marker (typically a Done
+line), not merely an early banner. Pin version/artifact and exact marker from
+trusted reference evidence before freezing that workload. The parent controls
 and delegates implementation continuously without routine stage confirmations.
 This supersedes earlier per-batch 'stop and wait' instructions. Stages and tests
 remain bounded; acceptance of one stage triggers planning/dispatch of the next.
@@ -36,8 +40,16 @@ not execute Java/server/world logic. Do not imply a standalone listening server
 without a defined, verified external-I/O boundary.
 
 ## What completion means / what it does NOT mean
-The concrete endpoint is an unchanged, version-pinned Minecraft Java server running
-its Java/server/world logic in original EVM. Passing a subset test suite, counting
+The first concrete endpoint is an unchanged, version-pinned Minecraft Java server
+executing its real startup path in original EVM through its genuine startup-complete
+marker. A connectable/playable server is optional later work, NOT first acceptance.
+Output must originate from guest execution reaching the actual logging path; host
+may display decoded guest output, never synthesize the banner, patch out startup,
+or substitute a toy program. Record executed artifact hashes, EVM output and enough
+startup/state evidence to distinguish completion from an early startup banner.
+Any virtual filesystem/network-bind/time/scheduling model needed for headless startup
+must be explicit and reviewed; no-client scope is not permission to fake success or
+run initialization on the host. Passing a subset test suite, counting
 implemented opcodes, or launching a toy Java main is not completion. The first
 explicit compatibility target is Java 8 classfile/Java semantics; newer classfile
 versions and platform libraries must then be identified/versioned. The project
