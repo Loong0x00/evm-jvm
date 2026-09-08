@@ -159,9 +159,9 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
         if case_id in seen_ids:
             raise HarnessError(f"duplicate case id: {case_id}")
         seen_ids.add(case_id)
-        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a"):
+        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a", "m5ba"):
             raise HarnessError(
-                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, m3c, m3d, m4a, m4b, m4c, m4d, m4e, m4fa, m4fb, m4fc, or m5a"
+                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, m3c, m3d, m4a, m4b, m4c, m4d, m4e, m4fa, m4fb, m4fc, m5a, or m5ba"
             )
         expected_kind = case["expected_kind"]
         if expected_kind not in ("value", "java_exception"):
@@ -276,8 +276,10 @@ def select_cases(cases: Sequence[Dict[str, Any]], stage: str, tier: str,
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb"}
     elif stage == "m4fc":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc"}
-    elif stage in ("m5a", "all"):
+    elif stage == "m5a":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a"}
+    elif stage in ("m5ba", "all"):
+        allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a", "m5ba"}
     else:
         raise HarnessError(f"unknown stage: {stage}")
     stage_cases = [case for case in cases if case["stage"] in allowed_stages]
@@ -767,7 +769,7 @@ def finish_report(report: Dict[str, Any]) -> Dict[str, Any]:
 def parser_for(repo: Path) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a", "all"), default="m5a"
+        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a", "m5ba", "all"), default="m5ba"
     )
     parser.add_argument("--tier", choices=("smoke", "fast", "full"), default="smoke")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)
