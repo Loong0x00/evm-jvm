@@ -38,6 +38,13 @@ contract JVMSubsetInterpreter {
     uint8 private constant HEAP_ARRAY = 1;
     uint8 private constant HEAP_OBJECT = 2;
 
+    // Array types are represented without synthetic host classes: rank 1..255 and an
+    // ultimate leaf. A zero leaf class denotes int; ordinary classes are index + 1.
+    struct ArrayType {
+        uint8 rank;
+        uint256 leafClassPlusOne;
+    }
+
     struct Reader {
         bytes data;
         uint256 pos;
@@ -509,6 +516,8 @@ contract JVMSubsetInterpreter {
         uint256[][] memory objectHeap;
         uint8[] memory heapKinds;
         uint256[] memory heapClasses;
+        uint8[] memory arrayRanks;
+        uint256[] memory arrayLeafClasses;
         uint256 nextHandle;
         uint256 arrayCount;
         uint256 totalElements;
@@ -605,18 +614,23 @@ contract JVMSubsetInterpreter {
                 f.sp = _loadReference(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x2a, opPC
                 );
-            } else if (op == 0x2e) { // iaload
+            } else if (op == 0x2e || op == 0x32) { // iaload / aaload
                 if (f.sp < 2) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 2], KIND_REF, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
                 uint256 handle = _payload(f.stack[f.sp - 2]);
                 if (handle == 0) _throwJava(6, frames, depth);
                 _requireHeapKind(handle, heapKinds, nextHandle, HEAP_ARRAY, opPC);
+                bool referenceComponents = _arrayHasReferenceComponents(
+                    arrayRanks[handle], arrayLeafClasses[handle]
+                );
+                if ((op == 0x32) != referenceComponents) revert ReferenceError(1, opPC);
                 int32 index = int32(uint32(_payload(f.stack[f.sp - 1])));
                 if (index < 0 || uint256(uint32(index)) >= arrayHeap[handle].length) {
                     _throwJava(5, frames, depth);
                 }
-                f.stack[f.sp - 2] = _packInt(arrayHeap[handle][uint256(uint32(index))]);
+                uint32 cell = arrayHeap[handle][uint256(uint32(index))];
+                f.stack[f.sp - 2] = op == 0x32 ? _packRef(cell) : _packInt(cell);
                 --f.sp;
             } else if (op == 0x36 || op == 0x3a) { // istore / astore
                 uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
@@ -632,18 +646,31 @@ contract JVMSubsetInterpreter {
                 f.sp = _storeReference(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x4b, opPC
                 );
-            } else if (op == 0x4f) { // iastore
+            } else if (op == 0x4f || op == 0x53) { // iastore / aastore
                 if (f.sp < 3) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 3], KIND_REF, opPC);
                 _requireKind(f.stack[f.sp - 2], KIND_INT, opPC);
-                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                _requireKind(f.stack[f.sp - 1], op == 0x53 ? KIND_REF : KIND_INT, opPC);
                 uint256 handle = _payload(f.stack[f.sp - 3]);
+                if (op == 0x53) {
+                    // Constructor tokens and forged references are rejected before Java's
+                    // receiver/bounds/store checks; initialized null remains a valid value.
+                    _validatePackedRef(f.stack[f.sp - 1], heapKinds, nextHandle, opPC);
+                }
                 if (handle == 0) _throwJava(6, frames, depth);
                 _requireHeapKind(handle, heapKinds, nextHandle, HEAP_ARRAY, opPC);
+                bool referenceComponents = _arrayHasReferenceComponents(
+                    arrayRanks[handle], arrayLeafClasses[handle]
+                );
+                if ((op == 0x53) != referenceComponents) revert ReferenceError(1, opPC);
                 int32 index = int32(uint32(_payload(f.stack[f.sp - 2])));
                 if (index < 0 || uint256(uint32(index)) >= arrayHeap[handle].length) {
                     _throwJava(5, frames, depth);
                 }
+                if (op == 0x53 && !_valueFitsArrayComponent(
+                    classes, f.stack[f.sp - 1], arrayRanks[handle], arrayLeafClasses[handle],
+                    heapKinds, heapClasses, arrayRanks, arrayLeafClasses, parentLinks
+                )) _throwJava(9, frames, depth);
                 arrayHeap[handle][uint256(uint32(index))] = uint32(_payload(f.stack[f.sp - 1]));
                 f.sp -= 3;
             } else if (op == 0x57) { // pop
@@ -782,6 +809,8 @@ contract JVMSubsetInterpreter {
                 if (heapKinds.length == 0) {
                     heapKinds = new uint8[](MAX_HANDLES + 1);
                     heapClasses = new uint256[](MAX_HANDLES + 1);
+                    arrayRanks = new uint8[](MAX_HANDLES + 1);
+                    arrayLeafClasses = new uint256[](MAX_HANDLES + 1);
                     arrayHeap = new uint32[][](MAX_HANDLES + 1);
                     objectHeap = new uint256[][](MAX_HANDLES + 1);
                 }
@@ -827,7 +856,7 @@ contract JVMSubsetInterpreter {
                             _utf(classes[fieldClass].cp[staticField.descriptorIndex]);
                         _requireAssignable(
                             classes, f.stack[f.sp - 1], classes[fieldClass].data, fieldOff, fieldLen,
-                            heapKinds, heapClasses, nextHandle, parentLinks, opPC
+                            heapKinds, heapClasses, arrayRanks, arrayLeafClasses, nextHandle, parentLinks, opPC
                         );
                     }
                     staticValues[fieldClass][field] = f.stack[f.sp - 1];
@@ -874,7 +903,7 @@ contract JVMSubsetInterpreter {
                             _utf(classes[fieldClass].cp[instanceField.descriptorIndex]);
                         _requireAssignable(
                             classes, fieldValue, classes[fieldClass].data, fieldOff, fieldLen,
-                            heapKinds, heapClasses, nextHandle, parentLinks, opPC
+                            heapKinds, heapClasses, arrayRanks, arrayLeafClasses, nextHandle, parentLinks, opPC
                         );
                     }
                     objectHeap[handle][objectOffset] = fieldValue;
@@ -900,7 +929,7 @@ contract JVMSubsetInterpreter {
                         _requireAssignable(
                             classes, argument, classes[resolved.owner].data,
                             signature.argumentTypeOffsets[i], signature.argumentTypeLengths[i],
-                            heapKinds, heapClasses, nextHandle, parentLinks, opPC
+                            heapKinds, heapClasses, arrayRanks, arrayLeafClasses, nextHandle, parentLinks, opPC
                         );
                     }
                 }
@@ -1015,8 +1044,8 @@ contract JVMSubsetInterpreter {
                     if (target.argumentKinds[i] == KIND_REF) {
                         _requireAssignable(
                             classes, argument, classes[calleeClass].data,
-                            target.argumentTypeOffsets[i], target.argumentTypeLengths[i], heapKinds,
-                            heapClasses, nextHandle, parentLinks, opPC
+                            target.argumentTypeOffsets[i], target.argumentTypeLengths[i], heapKinds, heapClasses, arrayRanks, arrayLeafClasses,
+                            nextHandle, parentLinks, opPC
                         );
                     }
                 }
@@ -1071,7 +1100,7 @@ contract JVMSubsetInterpreter {
                         _requireAssignable(
                             classes, f.stack[base + i], classes[calleeClass].data,
                             target.argumentTypeOffsets[i], target.argumentTypeLengths[i],
-                            heapKinds, heapClasses, nextHandle, parentLinks, opPC
+                            heapKinds, heapClasses, arrayRanks, arrayLeafClasses, nextHandle, parentLinks, opPC
                         );
                     }
                 }
@@ -1101,7 +1130,7 @@ contract JVMSubsetInterpreter {
                     if (actualKind == KIND_REF) {
                         _requireAssignable(
                             classes, f.stack[0], c.data, selection.returnTypeOffset,
-                            selection.returnTypeLength, heapKinds, heapClasses, nextHandle,
+                            selection.returnTypeLength, heapKinds, heapClasses, arrayRanks, arrayLeafClasses, nextHandle,
                             parentLinks, opPC
                         );
                     }
@@ -1125,12 +1154,22 @@ contract JVMSubsetInterpreter {
                 if (actualKind != 0) {
                     caller.sp = _push(caller.stack, caller.sp, value, callPC);
                 }
-            } else if (op == 0xbc) { // newarray
-                uint8 atype = uint8(c.data[selection.codeOffset + f.pc]);
-                ++f.pc;
-                if (atype != 10) revert ArrayError(1, opPC);
+            } else if (op == 0xbc || op == 0xbd) { // newarray / anewarray
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                ArrayType memory allocatedType;
+                if (op == 0xbc) {
+                    uint8 atype = uint8(c.data[selection.codeOffset + f.pc]);
+                    ++f.pc;
+                    if (atype != 10) revert ArrayError(1, opPC);
+                    allocatedType.rank = 1; // int[]
+                } else {
+                    uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
+                    f.pc += 2;
+                    allocatedType = _resolveANewArrayType(
+                        classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
+                    );
+                }
                 int32 signedLength = int32(uint32(_payload(f.stack[f.sp - 1])));
                 if (signedLength < 0) _throwJava(4, frames, depth);
                 uint256 length = uint256(uint32(signedLength));
@@ -1141,6 +1180,8 @@ contract JVMSubsetInterpreter {
                 if (heapKinds.length == 0) {
                     heapKinds = new uint8[](MAX_HANDLES + 1);
                     heapClasses = new uint256[](MAX_HANDLES + 1);
+                    arrayRanks = new uint8[](MAX_HANDLES + 1);
+                    arrayLeafClasses = new uint256[](MAX_HANDLES + 1);
                     arrayHeap = new uint32[][](MAX_HANDLES + 1);
                     objectHeap = new uint256[][](MAX_HANDLES + 1);
                 }
@@ -1148,6 +1189,8 @@ contract JVMSubsetInterpreter {
                 ++nextHandle;
                 totalElements += length;
                 heapKinds[nextHandle] = HEAP_ARRAY;
+                arrayRanks[nextHandle] = allocatedType.rank;
+                arrayLeafClasses[nextHandle] = allocatedType.leafClassPlusOne;
                 arrayHeap[nextHandle] = new uint32[](length);
                 f.stack[f.sp - 1] = _packRef(uint32(nextHandle));
             } else if (op == 0xbe) { // arraylength
@@ -1173,7 +1216,14 @@ contract JVMSubsetInterpreter {
                 _validatePackedRef(value, heapKinds, nextHandle, opPC);
                 bool assignable;
                 if (targetKind == 2) {
-                    assignable = heapKinds[handle] == HEAP_ARRAY;
+                    ArrayType memory wantedArray = _resolveArrayClassType(
+                        classes, f.classIndex, c.data, targetOffset, targetLength, opPC,
+                        parentLinks, hierarchyState
+                    );
+                    assignable = heapKinds[handle] == HEAP_ARRAY && _arrayTypeAssignable(
+                        classes, arrayRanks[handle], arrayLeafClasses[handle],
+                        wantedArray.rank, wantedArray.leafClassPlusOne, parentLinks
+                    );
                 } else {
                     if (targetKind != 1) revert TypeError(2, opPC);
                     (bool foundTarget, uint256 targetClass) = _findClass(
@@ -2051,35 +2101,109 @@ contract JVMSubsetInterpreter {
         if (nameIndex == 0 || nameIndex >= caller.cp.length
             || uint8(caller.cp[nameIndex]) != 1) revert TypeError(1, pc);
         (off, n) = _utf(caller.cp[nameIndex]);
-        if (_equalsLiteral(caller.data, off, n, bytes("[I"))) return (2, off, n);
         if (n != 0 && uint8(caller.data[off]) == 0x5b) {
-            if (!_validArrayClassName(caller.data, off, n)) revert TypeError(1, pc);
-            return (3, off, n);
+            (bool structural, bool supported,,,,) = _arrayClassShape(caller.data, off, n);
+            if (!structural) revert TypeError(1, pc);
+            // Deferred primitive arrays retain the null shortcut and fail only for non-null.
+            return (supported ? 2 : 3, off, n);
         }
         if (!_validInternalName(caller.data, off, n)) revert TypeError(1, pc);
         return (1, off, n);
     }
 
-    function _validArrayClassName(bytes memory data, uint256 off, uint256 n)
+    function _arrayClassShape(bytes memory data, uint256 off, uint256 n)
         private
         pure
-        returns (bool)
+        returns (
+            bool structural, bool supported, uint8 rank,
+            bool intLeaf, uint256 leafOffset, uint256 leafLength
+        )
     {
-        uint256 i;
-        while (i < n && uint8(data[off + i]) == 0x5b) {
-            ++i;
-            if (i > 255) return false;
+        uint256 dimensions;
+        while (dimensions < n && uint8(data[off + dimensions]) == 0x5b) {
+            ++dimensions;
+            if (dimensions > 255) return (false, false, 0, false, 0, 0);
         }
-        if (i == 0 || i >= n) return false;
-        uint8 component = uint8(data[off + i]);
+        if (dimensions == 0 || dimensions >= n) return (false, false, 0, false, 0, 0);
+        rank = uint8(dimensions);
+        uint8 component = uint8(data[off + dimensions]);
+        if (component == 0x49 && dimensions + 1 == n) {
+            return (true, true, rank, true, 0, 0);
+        }
         if (component == 0x4c) {
-            if (i + 2 >= n || uint8(data[off + n - 1]) != 0x3b) return false;
-            return _validInternalName(data, off + i + 1, n - i - 2);
+            if (dimensions + 2 >= n || uint8(data[off + n - 1]) != 0x3b) {
+                return (false, false, 0, false, 0, 0);
+            }
+            leafOffset = off + dimensions + 1;
+            leafLength = n - dimensions - 2;
+            if (!_validInternalName(data, leafOffset, leafLength)) {
+                return (false, false, 0, false, 0, 0);
+            }
+            return (true, true, rank, false, leafOffset, leafLength);
         }
-        if (i + 1 != n) return false;
-        return component == 0x42 || component == 0x43 || component == 0x44
-            || component == 0x46 || component == 0x49 || component == 0x4a
-            || component == 0x53 || component == 0x5a;
+        if (dimensions + 1 != n) return (false, false, 0, false, 0, 0);
+        // Structurally valid primitive arrays other than int are a deferred stage.
+        bool deferred = component == 0x42 || component == 0x43 || component == 0x44
+            || component == 0x46 || component == 0x4a || component == 0x53
+            || component == 0x5a;
+        return deferred ? (true, false, rank, false, 0, 0)
+            : (false, false, 0, false, 0, 0);
+    }
+
+    function _resolveArrayClassType(
+        ClassInfo[] memory classes, uint256 callerClass, bytes memory data,
+        uint256 off, uint256 n, uint256 pc, uint256[] memory parentLinks,
+        uint8[] memory hierarchyState
+    ) private pure returns (ArrayType memory out) {
+        (bool structural, bool supported, uint8 rank, bool intLeaf,
+            uint256 leafOffset, uint256 leafLength) = _arrayClassShape(data, off, n);
+        if (!structural) revert TypeError(1, pc);
+        if (!supported) revert TypeError(2, pc);
+        out.rank = rank;
+        if (intLeaf) return out;
+        (bool found, uint256 leafClass) = _findClass(classes, data, leafOffset, leafLength);
+        if (!found) revert LinkError(4, pc);
+        ClassInfo memory leaf = classes[leafClass];
+        if ((leaf.accessFlags & 0x0200) != 0
+            || (leafClass != callerClass && !_classAccessible(classes[callerClass], leaf))) {
+            revert TypeError(2, pc);
+        }
+        _validateHierarchy(classes, leafClass, parentLinks, hierarchyState);
+        out.leafClassPlusOne = leafClass + 1;
+    }
+
+    function _resolveANewArrayType(
+        ClassInfo[] memory classes, uint256 callerClass, uint256 refIndex, uint256 pc,
+        uint256[] memory parentLinks, uint8[] memory hierarchyState
+    ) private pure returns (ArrayType memory out) {
+        ClassInfo memory caller = classes[callerClass];
+        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 7) {
+            revert TypeError(1, pc);
+        }
+        uint256 nameIndex = (caller.cp[refIndex] >> 8) & 0xffff;
+        if (nameIndex == 0 || nameIndex >= caller.cp.length
+            || uint8(caller.cp[nameIndex]) != 1) revert TypeError(1, pc);
+        (uint256 off, uint256 n) = _utf(caller.cp[nameIndex]);
+        if (n != 0 && uint8(caller.data[off]) == 0x5b) {
+            ArrayType memory component = _resolveArrayClassType(
+                classes, callerClass, caller.data, off, n, pc, parentLinks, hierarchyState
+            );
+            if (component.rank == 255) revert ArrayError(2, pc);
+            out.rank = component.rank + 1;
+            out.leafClassPlusOne = component.leafClassPlusOne;
+            return out;
+        }
+        if (!_validInternalName(caller.data, off, n)) revert TypeError(1, pc);
+        (bool found, uint256 componentClass) = _findClass(classes, caller.data, off, n);
+        if (!found) revert LinkError(4, pc);
+        ClassInfo memory componentClassInfo = classes[componentClass];
+        if ((componentClassInfo.accessFlags & 0x0200) != 0
+            || (componentClass != callerClass && !_classAccessible(caller, componentClassInfo))) {
+            revert TypeError(2, pc);
+        }
+        _validateHierarchy(classes, componentClass, parentLinks, hierarchyState);
+        out.rank = 1;
+        out.leafClassPlusOne = componentClass + 1;
     }
 
     function _instanceFieldCount(
@@ -2173,18 +2297,77 @@ contract JVMSubsetInterpreter {
         }
     }
 
+    function _arrayHasReferenceComponents(uint8 rank, uint256 leafClassPlusOne)
+        private pure returns (bool)
+    {
+        return rank > 1 || leafClassPlusOne != 0;
+    }
+
+    function _arrayTypeAssignable(
+        ClassInfo[] memory classes, uint8 actualRank, uint256 actualLeafClassPlusOne,
+        uint8 wantedRank, uint256 wantedLeafClassPlusOne, uint256[] memory parentLinks
+    ) private pure returns (bool) {
+        if (wantedLeafClassPlusOne == 0) {
+            return actualLeafClassPlusOne == 0 && actualRank == wantedRank;
+        }
+        if (actualRank < wantedRank) return false;
+        uint256 wantedClass = wantedLeafClassPlusOne - 1;
+        if (actualRank > wantedRank) return _isObjectClass(classes[wantedClass]);
+        return actualLeafClassPlusOne != 0
+            && _objectIsClass(actualLeafClassPlusOne - 1, wantedClass, parentLinks);
+    }
+
+    function _valueFitsArrayComponent(
+        ClassInfo[] memory classes, uint256 value, uint8 arrayRank,
+        uint256 arrayLeafClassPlusOne, uint8[] memory heapKinds,
+        uint256[] memory heapClasses, uint8[] memory arrayRanks,
+        uint256[] memory arrayLeafClasses, uint256[] memory parentLinks
+    ) private pure returns (bool) {
+        uint256 handle = _payload(value);
+        if (handle == 0) return true;
+        if (arrayRank > 1) {
+            return heapKinds[handle] == HEAP_ARRAY && _arrayTypeAssignable(
+                classes, arrayRanks[handle], arrayLeafClasses[handle],
+                arrayRank - 1, arrayLeafClassPlusOne, parentLinks
+            );
+        }
+        // A rank-one reference array has an ordinary class component.
+        uint256 wantedClass = arrayLeafClassPlusOne - 1;
+        if (heapKinds[handle] == HEAP_ARRAY) return _isObjectClass(classes[wantedClass]);
+        return heapKinds[handle] == HEAP_OBJECT
+            && _objectIsClass(heapClasses[handle], wantedClass, parentLinks);
+    }
+
     function _requireAssignable(
         ClassInfo[] memory classes, uint256 value, bytes memory descriptorData,
         uint256 descriptorOffset, uint256 descriptorLength, uint8[] memory heapKinds,
-        uint256[] memory heapClasses, uint256 nextHandle, uint256[] memory parentLinks,
-        uint256 pc
+        uint256[] memory heapClasses, uint8[] memory arrayRanks,
+        uint256[] memory arrayLeafClasses, uint256 nextHandle,
+        uint256[] memory parentLinks, uint256 pc
     ) private pure {
         _requireKind(value, KIND_REF, pc);
         uint256 handle = _payload(value);
         if (handle == 0) return;
         if (handle > nextHandle || heapKinds[handle] == 0) revert ReferenceError(1, pc);
-        if (_equalsLiteral(descriptorData, descriptorOffset, descriptorLength, bytes("[I"))) {
+        if (descriptorLength != 0 && uint8(descriptorData[descriptorOffset]) == 0x5b) {
+            (bool structural, bool supported, uint8 wantedRank, bool intLeaf,
+                uint256 leafOffset, uint256 leafLength) = _arrayClassShape(
+                    descriptorData, descriptorOffset, descriptorLength
+                );
+            if (!structural || !supported) revert ReferenceError(2, pc);
             if (heapKinds[handle] != HEAP_ARRAY) revert ReferenceError(1, pc);
+            uint256 wantedLeafClassPlusOne;
+            if (!intLeaf) {
+                (bool found, uint256 wantedLeafClass) = _findClass(
+                    classes, descriptorData, leafOffset, leafLength
+                );
+                if (!found) revert LinkError(4, pc);
+                wantedLeafClassPlusOne = wantedLeafClass + 1;
+            }
+            if (!_arrayTypeAssignable(
+                classes, arrayRanks[handle], arrayLeafClasses[handle],
+                wantedRank, wantedLeafClassPlusOne, parentLinks
+            )) revert ReferenceError(2, pc);
             return;
         }
         if (descriptorLength < 3 || uint8(descriptorData[descriptorOffset]) != 0x4c
@@ -2194,7 +2377,7 @@ contract JVMSubsetInterpreter {
         uint256 nameOffset = descriptorOffset + 1;
         uint256 nameLength = descriptorLength - 2;
         if (_equalsLiteral(descriptorData, nameOffset, nameLength, bytes("java/lang/Object"))) {
-            return; // both supported array and ordinary object values are Objects
+            return; // both supported arrays and ordinary object values are Objects
         }
         if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, pc);
         (bool found, uint256 wantedClass) = _findClass(classes, descriptorData, nameOffset, nameLength);
@@ -2248,8 +2431,10 @@ contract JVMSubsetInterpreter {
     function _instructionWidth(uint8 op, uint256 pc) private pure returns (uint256) {
         if (
             op <= 0x01 || (op >= 0x02 && op <= 0x08) || (op >= 0x1a && op <= 0x1d)
-                || (op >= 0x2a && op <= 0x2e) || (op >= 0x3b && op <= 0x3e)
-                || (op >= 0x4b && op <= 0x4f) || (op >= 0x57 && op <= 0x60)
+                || (op >= 0x2a && op <= 0x2e) || op == 0x32
+                || (op >= 0x3b && op <= 0x3e)
+                || (op >= 0x4b && op <= 0x4f) || op == 0x53
+                || (op >= 0x57 && op <= 0x60)
                 || op == 0x64 || op == 0x68 || op == 0x6c || op == 0x70 || op == 0x74
                 || op == 0x78 || op == 0x7a || op == 0x7c || op == 0x7e || op == 0x80
                 || op == 0x82 || (op >= 0x91 && op <= 0x93) || op == 0xac
@@ -2260,7 +2445,7 @@ contract JVMSubsetInterpreter {
         if (
             op == 0x11 || op == 0x13 || op == 0x84 || (op >= 0x99 && op <= 0xa7)
                 || op == 0xb2 || op == 0xb3 || op == 0xb4 || op == 0xb5
-                || op == 0xb6 || op == 0xb7 || op == 0xb8 || op == 0xbb
+                || op == 0xb6 || op == 0xb7 || op == 0xb8 || op == 0xbb || op == 0xbd
                 || op == 0xc0 || op == 0xc1 || op == 0xc6 || op == 0xc7
         ) return 3;
         revert BytecodeError(6, pc);
@@ -2380,8 +2565,23 @@ contract JVMSubsetInterpreter {
         uint8 b = uint8(data[off]);
         if (b == 0x49) return (true, 1, uint8(KIND_INT));
         if (allowVoid && b == 0x56) return (true, 1, 0);
-        if (b == 0x5b && off + 2 <= end && uint8(data[off + 1]) == 0x49) {
-            return (true, 2, uint8(KIND_REF));
+        if (b == 0x5b) {
+            uint256 dimensions;
+            while (off + dimensions < end && uint8(data[off + dimensions]) == 0x5b) {
+                ++dimensions;
+                if (dimensions > 255) return (false, 0, 0);
+            }
+            if (off + dimensions >= end) return (false, 0, 0);
+            uint8 leaf = uint8(data[off + dimensions]);
+            if (leaf == 0x49) return (true, dimensions + 1, uint8(KIND_REF));
+            if (leaf != 0x4c) return (false, 0, 0);
+            uint256 i = off + dimensions + 1;
+            while (i < end && uint8(data[i]) != 0x3b) ++i;
+            if (i == off + dimensions + 1 || i >= end
+                || !_validInternalName(data, off + dimensions + 1, i - off - dimensions - 1)) {
+                return (false, 0, 0);
+            }
+            return (true, i - off + 1, uint8(KIND_REF));
         }
         if (b == 0x4c) {
             uint256 i = off + 1;

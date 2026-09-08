@@ -71,6 +71,8 @@ func decodeJavaException(data []byte) (string, bool) {
 		return "java.lang.OutOfMemoryError", true
 	case 8:
 		return "java.lang.ClassCastException", true
+	case 9:
+		return "java.lang.ArrayStoreException", true
 	default:
 		return "", false
 	}

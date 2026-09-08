@@ -109,6 +109,7 @@ func TestJavaExceptionDecoderIsExact(t *testing.T) {
 		6: "java.lang.NullPointerException",
 		7: "java.lang.OutOfMemoryError",
 		8: "java.lang.ClassCastException",
+		9: "java.lang.ArrayStoreException",
 	} {
 		valid := make([]byte, 36)
 		copy(valid, javaExceptionSelector)
