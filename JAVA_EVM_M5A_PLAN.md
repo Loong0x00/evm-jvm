@@ -142,3 +142,15 @@ narrow_primitives_validation_test.go verifyM5a* helpers. Baseline red expected.
 Parent owns plans/AGENTS/quickstart/Makefile and integration/independent review.
 One Solidity writer; no spawning/peer writes/push/global settings/untrusted Java.
 All agents Sol/high WITHOUT Fast; scoped commits and honest hashes/size/tests.
+
+## Accepted integration evidence
+Runtime5274f5d→afc3b53,fixtures9bafb3a→347147c,verifier9554dd8→14a6875.
+Reviewf5a06d4→835e44b used Java8 to justify supported atype4 value1, [[B NASE4,
+byte-field default0; unsupported6/7/11/[[J/wide/missing/nonstatic guards retained.
+Scoped runtime audit found no demonstrated bug; artifact unchanged.
+Parent final artifact/3bootstraps, Go/CLI,36 Python,1383 full,627 smoke,647 fast,
+demos,AOT,focused vet and48 independent probes passed:
+`build/java-diff-parent-m5a/probe-xyrzfw_1/results-final/`.
+Prior1263 fixture entries/budgets unchanged. Accepted runtime103667 bytes SHA256
+`c46e6cce33cca976bae9bdaf9c89f99a93113d319395d74ff7acdee73d9b46fb`.
+Next long split into scalar/category2 foundation and arrays. All agents NO Fast.
