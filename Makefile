@@ -128,3 +128,14 @@ java-stock-test: java-stock-check
 
 java-stock-demo: java-stock-check
 	go test -count=1 -v -run '^TestStockHarnessSignedCanonicalAndDeterministicReplay$$' ./jvmevm/stock
+
+# Versioned S1 actual legacy workloads; S0 and monolith targets remain separate.
+.PHONY: java-stock-s1-build java-stock-s1-check java-stock-s1-test java-stock-s1-demo
+java-stock-s1-build:
+	cd jvmevm/stock/s1/runtime && npm ci --ignore-scripts && npm run build
+java-stock-s1-check:
+	cd jvmevm/stock/s1/runtime && npm ci --ignore-scripts && npm run check
+java-stock-s1-test: java-stock-s1-check
+	go test -count=1 -timeout=15m ./jvmevm/stock/s1
+java-stock-s1-demo: java-stock-s1-check
+	go test -count=1 -v -run '^TestStockS1HarnessSignedAll82ReuseBudgetsPrefixesAndDirectReplay$$' ./jvmevm/stock/s1
