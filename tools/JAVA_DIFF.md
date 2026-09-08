@@ -15,17 +15,17 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m5ba --tier full
+python3 tools/java_diff.py --stage m5bb --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m5ba --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m5bb --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
 `m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, `m4fc` adds M4f-c,
-`m5a` adds M5a, and `m5ba` or `all` adds M5b-a. A manifest without entries in the newest stage continues to run its older cases
+`m5a` adds M5a, `m5ba` adds M5b-a, and `m5bb` or `all` adds M5b-b. A manifest without entries in the newest stage continues to run its older cases
 under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -282,6 +282,27 @@ forms, and malformed bytecode are focused EVM validation tests, not differential
 oracle cases or full-JVM verifier claims. M5b-a adds no exception name or output
 form: schema 1 and exact Java exception kinds 1 through 11 are unchanged; EVM
 out-of-gas and arbitrary reverts are still engine failures.
+
+## M5b-b long arrays
+
+M5b-b remains additive schema 1 and cumulative over M5b-a. The external root
+ABI is still exactly a static `(I...)I` method: `J` and `[J` root parameters or
+results are rejected. Trusted finite fixtures expose long-array behavior through
+int wrapper roots and may use `[J` and nested long-array descriptors in fields,
+returns, and internal static, special, virtual, interface, and default calls.
+A long-array reference remains one category-1 argument; each long element is one
+logical array element while its loaded value occupies two JVM words.
+
+The runner does not parse descriptors, allocate arrays, inspect or serialize
+heap values, or otherwise implement `newarray` atype 11, `laload`, `lastore`,
+multidimensional allocation, covariance, or Java exception ordering. Those
+semantics remain wholly inside the EVM interpreter. The runner still supplies
+only ordered unchanged classfiles and signed-int32 root arguments and compares
+actual Java 8 oracle outcomes. Long-array logical-cap OOM checks remain focused
+Go/mock probes and must not exhaust host JVM memory. Float/double arrays and IEEE
+values remain deferred. No outcome name or wire form is added: schema 1 and
+exact exception kinds 1 through 11 are unchanged, while OOG and arbitrary
+reverts remain engine failures.
 
 ## Outcome protocol
 
