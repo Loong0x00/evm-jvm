@@ -69,6 +69,8 @@ func decodeJavaException(data []byte) (string, bool) {
 		return "java.lang.NullPointerException", true
 	case 7:
 		return "java.lang.OutOfMemoryError", true
+	case 8:
+		return "java.lang.ClassCastException", true
 	default:
 		return "", false
 	}

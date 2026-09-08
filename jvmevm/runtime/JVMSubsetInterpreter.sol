@@ -17,6 +17,7 @@ contract JVMSubsetInterpreter {
     error ArrayError(uint256 code, uint256 pc);
     error ReferenceError(uint256 code, uint256 pc);
     error ObjectError(uint256 code, uint256 pc);
+    error TypeError(uint256 code, uint256 pc);
 
     uint256 private constant MAX_CONSTANT_POOL = 4096;
     uint256 private constant MAX_CODE = 65535;
@@ -100,6 +101,17 @@ contract JVMSubsetInterpreter {
         bool isConstructor;
         bool isConstructorLinked;
         uint256 thisHandle;
+    }
+
+    struct VirtualResolution {
+        uint256 owner;
+        uint256 method;
+        uint256 symbolic;
+        uint256 referenceClass;
+        uint256 nameOffset;
+        uint256 nameLength;
+        uint256 descriptorOffset;
+        uint256 descriptorLength;
     }
 
     function interpret(bytes calldata rawClass, string calldata entry, int32[] calldata args)
@@ -868,6 +880,78 @@ contract JVMSubsetInterpreter {
                     objectHeap[handle][objectOffset] = fieldValue;
                     f.sp -= 2;
                 }
+            } else if (op == 0xb6) { // invokevirtual
+                uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
+                f.pc += 2;
+                VirtualResolution memory resolved = _resolveVirtual(
+                    classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
+                );
+                Selected memory signature = _loadVirtualSignature(
+                    classes[resolved.owner], resolved.method, opPC
+                );
+                if (f.sp < signature.argumentCount + 1) revert BytecodeError(3, opPC);
+                uint256 base = f.sp - signature.argumentCount - 1;
+                uint256 receiver = f.stack[base];
+                _requireKind(receiver, KIND_REF, opPC);
+                for (uint256 i = 0; i < signature.argumentCount; ++i) {
+                    uint256 argument = f.stack[base + 1 + i];
+                    _requireKind(argument, signature.argumentKinds[i], opPC);
+                    if (signature.argumentKinds[i] == KIND_REF) {
+                        _requireAssignable(
+                            classes, argument, classes[resolved.owner].data,
+                            signature.argumentTypeOffsets[i], signature.argumentTypeLengths[i],
+                            heapKinds, heapClasses, nextHandle, parentLinks, opPC
+                        );
+                    }
+                }
+                uint256 handle = _payload(receiver);
+                if (handle == 0) _throwJava(6, frames, depth);
+                _validatePackedRef(receiver, heapKinds, nextHandle, opPC);
+                if (heapKinds[handle] == HEAP_ARRAY) {
+                    if (!_isObjectClass(classes[resolved.symbolic])) {
+                        revert ReferenceError(2, opPC);
+                    }
+                    // Array receiver dispatch is deliberately deferred for this stage.
+                    revert CallError(4, opPC);
+                }
+                if (heapKinds[handle] != HEAP_OBJECT) revert ReferenceError(1, opPC);
+                uint256 dynamicClass = heapClasses[handle];
+                if (!_objectIsClass(dynamicClass, resolved.symbolic, parentLinks)) {
+                    revert ReferenceError(2, opPC);
+                }
+                _requireProtectedMethodReceiver(
+                    classes, f.classIndex, resolved.owner,
+                    uint16(classes[resolved.owner].methods[resolved.method]), dynamicClass,
+                    parentLinks, opPC
+                );
+                (uint256 calleeClass, uint256 callee) = _selectVirtual(
+                    classes, dynamicClass, resolved, parentLinks, opPC
+                );
+                if (selected[calleeClass].length == 0) {
+                    selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
+                    referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                    fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                }
+                if (!selected[calleeClass][callee].loaded) {
+                    selected[calleeClass][callee] = _loadVirtualCallee(
+                        classes[calleeClass], callee, opPC
+                    );
+                    _predecode(classes[calleeClass], selected[calleeClass][callee]);
+                }
+                Selected memory target = selected[calleeClass][callee];
+                if (!_sameMethodDescriptor(classes[resolved.owner], resolved.method,
+                    classes[calleeClass], callee)) revert CallError(4, opPC);
+                if (depth == MAX_FRAMES) revert JavaException(2);
+                Frame memory child = _newFrame(calleeClass, callee, target, opPC);
+                child.locals[0] = receiver;
+                child.initialized[0] = true;
+                for (uint256 i = 0; i < target.argumentCount; ++i) {
+                    child.locals[i + 1] = f.stack[base + 1 + i];
+                    child.initialized[i + 1] = true;
+                }
+                f.sp = base;
+                frames[depth] = child;
+                ++depth;
             } else if (op == 0xb7) { // invokespecial
                 uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
                 f.pc += 2;
@@ -875,6 +959,9 @@ contract JVMSubsetInterpreter {
                     _resolveSpecial(
                         classes, f.classIndex, refIndex, opPC, parentLinks, hierarchyState
                     );
+                _validateSpecialCalleeMetadata(
+                    classes[calleeClass], callee, opPC, isConstructor
+                );
                 if (selected[calleeClass].length == 0) {
                     selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
@@ -887,6 +974,7 @@ contract JVMSubsetInterpreter {
                     _predecode(classes[calleeClass], selected[calleeClass][callee]);
                 }
                 Selected memory target = selected[calleeClass][callee];
+                if (isConstructor && target.returnKind != 2) revert CallError(4, opPC);
                 if (f.sp < target.argumentCount + 1) revert BytecodeError(3, opPC);
                 uint256 base = f.sp - target.argumentCount - 1;
                 uint256 receiver = f.stack[base];
@@ -955,6 +1043,7 @@ contract JVMSubsetInterpreter {
                     classes, f.classIndex, refIndex, opPC, referenceCaches[f.classIndex], bundleMode,
                     parentLinks, hierarchyState
                 );
+                _validateStaticCalleeMetadata(classes[calleeClass], callee, opPC);
                 if (selected[calleeClass].length == 0) {
                     selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
@@ -1070,6 +1159,46 @@ contract JVMSubsetInterpreter {
                 if (handle == 0) _throwJava(6, frames, depth);
                 _requireHeapKind(handle, heapKinds, nextHandle, HEAP_ARRAY, opPC);
                 f.stack[f.sp - 1] = _packInt(uint32(arrayHeap[handle].length));
+            } else if (op == 0xc0 || op == 0xc1) { // checkcast / instanceof
+                uint256 refIndex = _unsigned16(c.data, selection.codeOffset + f.pc);
+                f.pc += 2;
+                (uint8 targetKind, uint256 targetOffset, uint256 targetLength) =
+                    _validateCastTarget(c, refIndex, opPC);
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                uint256 value = f.stack[f.sp - 1];
+                _requireKind(value, KIND_REF, opPC);
+                uint256 handle = _payload(value);
+                if (handle == 0) {
+                    if (op == 0xc1) f.stack[f.sp - 1] = _packInt(0);
+                    continue;
+                }
+                _validatePackedRef(value, heapKinds, nextHandle, opPC);
+                bool assignable;
+                if (targetKind == 2) {
+                    assignable = heapKinds[handle] == HEAP_ARRAY;
+                } else {
+                    if (targetKind != 1) revert TypeError(2, opPC);
+                    (bool foundTarget, uint256 targetClass) = _findClass(
+                        classes, c.data, targetOffset, targetLength
+                    );
+                    if (!foundTarget) revert LinkError(4, opPC);
+                    ClassInfo memory castClass = classes[targetClass];
+                    if ((castClass.accessFlags & 0x0200) != 0
+                        || (targetClass != f.classIndex && !_classAccessible(c, castClass))) {
+                        revert TypeError(2, opPC);
+                    }
+                    _validateHierarchy(classes, targetClass, parentLinks, hierarchyState);
+                    if (heapKinds[handle] == HEAP_ARRAY) {
+                        assignable = _isObjectClass(castClass);
+                    } else if (heapKinds[handle] == HEAP_OBJECT) {
+                        assignable = _objectIsClass(heapClasses[handle], targetClass, parentLinks);
+                    }
+                }
+                if (op == 0xc1) {
+                    f.stack[f.sp - 1] = _packInt(assignable ? 1 : 0);
+                } else if (!assignable) {
+                    _throwJava(8, frames, depth);
+                }
             } else if (op == 0xc6 || op == 0xc7) { // ifnull / ifnonnull
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_REF, opPC);
@@ -1234,13 +1363,36 @@ contract JVMSubsetInterpreter {
         }
     }
 
-    function _loadSpecialCallee(
+    function _validateStaticCalleeMetadata(
+        ClassInfo memory c, uint256 method, uint256 callPC
+    ) private pure {
+        uint256 meta = c.methods[method];
+        uint16 access = uint16(meta);
+        if ((access & 0x0008) == 0 || (access & (0x0020 | 0x0100 | 0x0400)) != 0
+            || _methodCodeCount(meta) != 1) revert CallError(4, callPC);
+    }
+
+    function _validateSpecialCalleeMetadata(
         ClassInfo memory c, uint256 method, uint256 callPC, bool isConstructor
-    ) private pure returns (Selected memory s) {
+    ) private pure {
         uint256 meta = c.methods[method];
         uint16 access = uint16(meta);
         if ((access & 0x0008) != 0 || (access & (0x0020 | 0x0100 | 0x0400)) != 0
             || _methodCodeCount(meta) != 1) revert CallError(4, callPC);
+        if (isConstructor) {
+            (uint256 off, uint256 n) = _utf(c.cp[(meta >> 32) & 0xffff]);
+            Selected memory signature;
+            if (!_descriptor(c.data, off, n, signature) || signature.returnKind != 2) {
+                revert CallError(4, callPC);
+            }
+        }
+    }
+
+    function _loadSpecialCallee(
+        ClassInfo memory c, uint256 method, uint256 callPC, bool isConstructor
+    ) private pure returns (Selected memory s) {
+        _validateSpecialCalleeMetadata(c, method, callPC, isConstructor);
+        uint256 meta = c.methods[method];
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[(meta >> 32) & 0xffff]);
         if (!_descriptor(c.data, s.descriptorOffset, s.descriptorLength, s)) {
             revert CallError(4, callPC);
@@ -1289,6 +1441,173 @@ contract JVMSubsetInterpreter {
         );
         if (!found) revert CallError(3, pc);
         return result;
+    }
+
+    function _loadVirtualSignature(ClassInfo memory c, uint256 method, uint256 callPC)
+        private
+        pure
+        returns (Selected memory s)
+    {
+        uint256 meta = c.methods[method];
+        uint256 descriptorIndex = (meta >> 32) & 0xffff;
+        if (descriptorIndex == 0 || descriptorIndex >= c.cp.length
+            || uint8(c.cp[descriptorIndex]) != 1) revert CallError(1, callPC);
+        (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[descriptorIndex]);
+        if (!_descriptor(c.data, s.descriptorOffset, s.descriptorLength, s)) {
+            revert CallError(4, callPC);
+        }
+        s.argumentCount = s.argumentKinds.length;
+    }
+
+    function _loadVirtualCallee(ClassInfo memory c, uint256 method, uint256 callPC)
+        private
+        pure
+        returns (Selected memory s)
+    {
+        uint256 meta = c.methods[method];
+        uint16 access = uint16(meta);
+        if ((access & (0x0002 | 0x0008 | 0x0020 | 0x0100 | 0x0400)) != 0
+            || _methodCodeCount(meta) != 1) revert CallError(4, callPC);
+        s = _loadVirtualSignature(c, method, callPC);
+        uint256 start = (meta >> 48) & 0xffffffffffffffff;
+        uint256 length = (meta >> 112) & 0xffffffff;
+        if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
+        if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS
+            || s.maxLocals < s.argumentCount + 1) revert CallError(4, callPC);
+        s.loaded = true;
+    }
+
+    function _resolveVirtual(
+        ClassInfo[] memory classes, uint256 callerClass, uint256 refIndex, uint256 pc,
+        uint256[] memory parentLinks, uint8[] memory hierarchyState
+    ) private pure returns (VirtualResolution memory out) {
+        ClassInfo memory caller = classes[callerClass];
+        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 10) {
+            revert CallError(1, pc);
+        }
+        uint256 ref = caller.cp[refIndex];
+        uint256 ownerClassIndex = (ref >> 8) & 0xffff;
+        uint256 natIndex = (ref >> 24) & 0xffff;
+        if (ownerClassIndex == 0 || ownerClassIndex >= caller.cp.length
+            || uint8(caller.cp[ownerClassIndex]) != 7 || natIndex == 0
+            || natIndex >= caller.cp.length || uint8(caller.cp[natIndex]) != 12) {
+            revert CallError(1, pc);
+        }
+        uint256 ownerNameIndex = (caller.cp[ownerClassIndex] >> 8) & 0xffff;
+        if (ownerNameIndex == 0 || ownerNameIndex >= caller.cp.length
+            || uint8(caller.cp[ownerNameIndex]) != 1) revert CallError(1, pc);
+        (uint256 ownerOff, uint256 ownerLen) = _utf(caller.cp[ownerNameIndex]);
+        if (!_validInternalName(caller.data, ownerOff, ownerLen)) revert CallError(1, pc);
+        (bool foundOwner, uint256 symbolic) = _findClass(
+            classes, caller.data, ownerOff, ownerLen
+        );
+        if (!foundOwner) revert LinkError(4, pc);
+        _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
+        if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
+            revert CallError(4, pc);
+        }
+
+        uint256 nat = caller.cp[natIndex];
+        uint256 nameIndex = (nat >> 8) & 0xffff;
+        uint256 descriptorIndex = (nat >> 24) & 0xffff;
+        if (nameIndex == 0 || nameIndex >= caller.cp.length || uint8(caller.cp[nameIndex]) != 1
+            || descriptorIndex == 0 || descriptorIndex >= caller.cp.length
+            || uint8(caller.cp[descriptorIndex]) != 1) revert CallError(1, pc);
+        (out.nameOffset, out.nameLength) = _utf(caller.cp[nameIndex]);
+        (out.descriptorOffset, out.descriptorLength) = _utf(caller.cp[descriptorIndex]);
+        bool isCtor = _equalsLiteral(
+            caller.data, out.nameOffset, out.nameLength, bytes("<init>")
+        );
+        bool isInitializer = _equalsLiteral(
+            caller.data, out.nameOffset, out.nameLength, bytes("<clinit>")
+        );
+        if (isCtor || isInitializer) revert CallError(4, pc);
+        if (!_validOrdinaryMethodName(caller.data, out.nameOffset, out.nameLength)) {
+            revert CallError(1, pc);
+        }
+
+        out.symbolic = symbolic;
+        out.referenceClass = callerClass;
+        out.owner = symbolic;
+        while (true) {
+            (bool found, uint256 method) = _lookupExactMethod(
+                classes, out.owner, caller.data, out.nameOffset, out.nameLength,
+                out.descriptorOffset, out.descriptorLength, pc
+            );
+            if (found) { out.method = method; break; }
+            uint256 link = parentLinks[out.owner];
+            if (link == 0 || link == type(uint256).max) revert CallError(3, pc);
+            out.owner = link - 1;
+        }
+        uint16 access = uint16(classes[out.owner].methods[out.method]);
+        if ((access & (0x0002 | 0x0008)) != 0) revert CallError(4, pc);
+        if (!_canAccessMember(
+            classes, callerClass, out.owner, access, parentLinks, hierarchyState
+        )) revert CallError(4, pc);
+    }
+
+    function _selectVirtual(
+        ClassInfo[] memory classes, uint256 dynamicClass, VirtualResolution memory resolved,
+        uint256[] memory parentLinks, uint256 pc
+    ) private pure returns (uint256 owner, uint256 method) {
+        uint256[] memory path = new uint256[](classes.length);
+        uint256 count;
+        uint256 current = dynamicClass;
+        while (current != resolved.owner) {
+            if (count == classes.length) revert ReferenceError(2, pc);
+            path[count++] = current;
+            uint256 link = parentLinks[current];
+            if (link == 0 || link == type(uint256).max) revert ReferenceError(2, pc);
+            current = link - 1;
+        }
+        owner = resolved.owner;
+        method = resolved.method;
+        ClassInfo memory referenceClass = classes[resolved.referenceClass];
+        while (count != 0) {
+            uint256 candidateClass = path[--count];
+            (bool found, uint256 candidate) = _lookupExactMethod(
+                classes, candidateClass, referenceClass.data, resolved.nameOffset,
+                resolved.nameLength, resolved.descriptorOffset, resolved.descriptorLength, pc
+            );
+            if (!found) continue;
+            uint16 candidateAccess = uint16(classes[candidateClass].methods[candidate]);
+            if ((candidateAccess & 0x0002) != 0) continue; // private never overrides
+            uint16 selectedAccess = uint16(classes[owner].methods[method]);
+            bool overrides = (selectedAccess & (0x0001 | 0x0004)) != 0
+                || ((selectedAccess & 0x0002) == 0
+                    && _samePackage(classes[candidateClass], classes[owner]));
+            if (!overrides) continue;
+            if ((selectedAccess & 0x0010) != 0 || (candidateAccess & 0x0008) != 0) {
+                revert CallError(4, pc);
+            }
+            owner = candidateClass;
+            method = candidate;
+        }
+    }
+
+    function _sameMethodDescriptor(
+        ClassInfo memory first, uint256 firstMethod, ClassInfo memory second, uint256 secondMethod
+    ) private pure returns (bool) {
+        (uint256 firstOff, uint256 firstLen) =
+            _utf(first.cp[(first.methods[firstMethod] >> 32) & 0xffff]);
+        (uint256 secondOff, uint256 secondLen) =
+            _utf(second.cp[(second.methods[secondMethod] >> 32) & 0xffff]);
+        return _equalsCross(first.data, firstOff, firstLen, second.data, secondOff, secondLen);
+    }
+
+    function _validOrdinaryMethodName(bytes memory data, uint256 off, uint256 n)
+        private
+        pure
+        returns (bool)
+    {
+        if (n == 0) return false;
+        for (uint256 i = 0; i < n; ++i) {
+            bytes1 ch = data[off + i];
+            if (ch == bytes1(".") || ch == bytes1(";") || ch == bytes1("[")
+                || ch == bytes1("/") || ch == bytes1("<") || ch == bytes1(">")
+                || uint8(ch) == 0) return false;
+        }
+        return true;
     }
 
     function _resolveSpecial(
@@ -1639,6 +1958,17 @@ contract JVMSubsetInterpreter {
         }
     }
 
+    function _requireProtectedMethodReceiver(
+        ClassInfo[] memory classes, uint256 callerClass, uint256 declaringClass, uint16 access,
+        uint256 dynamicReceiverClass, uint256[] memory parentLinks, uint256 pc
+    ) private pure {
+        if ((access & 0x0004) == 0 || callerClass == declaringClass
+            || _samePackage(classes[callerClass], classes[declaringClass])) return;
+        if (!_objectIsClass(dynamicReceiverClass, callerClass, parentLinks)) {
+            revert CallError(4, pc);
+        }
+    }
+
     function _samePackage(ClassInfo memory a, ClassInfo memory b) private pure returns (bool) {
         uint256 aSlash;
         uint256 bSlash;
@@ -1701,13 +2031,54 @@ contract JVMSubsetInterpreter {
         bool slash;
         for (uint256 i = 0; i < n; ++i) {
             bytes1 ch = data[off + i];
-            if (ch == bytes1(".") || ch == bytes1(";") || ch == bytes1("[")) return false;
+            if (ch == bytes1(".") || ch == bytes1(";") || ch == bytes1("[")
+                || uint8(ch) == 0) return false;
             if (ch == bytes1("/")) {
                 if (slash) return false;
                 slash = true;
             } else slash = false;
         }
         return true;
+    }
+
+    function _validateCastTarget(ClassInfo memory caller, uint256 refIndex, uint256 pc)
+        private
+        pure
+        returns (uint8 kind, uint256 off, uint256 n)
+    {
+        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 7) {
+            revert TypeError(1, pc);
+        }
+        uint256 nameIndex = (caller.cp[refIndex] >> 8) & 0xffff;
+        if (nameIndex == 0 || nameIndex >= caller.cp.length
+            || uint8(caller.cp[nameIndex]) != 1) revert TypeError(1, pc);
+        (off, n) = _utf(caller.cp[nameIndex]);
+        if (_equalsLiteral(caller.data, off, n, bytes("[I"))) return (2, off, n);
+        if (n != 0 && uint8(caller.data[off]) == 0x5b) {
+            if (!_validArrayClassName(caller.data, off, n)) revert TypeError(1, pc);
+            return (3, off, n);
+        }
+        if (!_validInternalName(caller.data, off, n)) revert TypeError(1, pc);
+        return (1, off, n);
+    }
+
+    function _validArrayClassName(bytes memory data, uint256 off, uint256 n)
+        private
+        pure
+        returns (bool)
+    {
+        uint256 i;
+        while (i < n && uint8(data[off + i]) == 0x5b) ++i;
+        if (i == 0 || i >= n) return false;
+        uint8 component = uint8(data[off + i]);
+        if (component == 0x4c) {
+            if (i + 2 >= n || uint8(data[off + n - 1]) != 0x3b) return false;
+            return _validInternalName(data, off + i + 1, n - i - 2);
+        }
+        if (i + 1 != n) return false;
+        return component == 0x42 || component == 0x43 || component == 0x44
+            || component == 0x46 || component == 0x49 || component == 0x4a
+            || component == 0x53 || component == 0x5a;
     }
 
     function _instanceFieldCount(
@@ -1888,7 +2259,8 @@ contract JVMSubsetInterpreter {
         if (
             op == 0x11 || op == 0x13 || op == 0x84 || (op >= 0x99 && op <= 0xa7)
                 || op == 0xb2 || op == 0xb3 || op == 0xb4 || op == 0xb5
-                || op == 0xb7 || op == 0xb8 || op == 0xbb || op == 0xc6 || op == 0xc7
+                || op == 0xb6 || op == 0xb7 || op == 0xb8 || op == 0xbb
+                || op == 0xc0 || op == 0xc1 || op == 0xc6 || op == 0xc7
         ) return 3;
         revert BytecodeError(6, pc);
     }
