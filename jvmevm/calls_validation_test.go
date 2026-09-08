@@ -207,11 +207,20 @@ func TestM3aCallResolutionErrorCodes(t *testing.T) {
 			},
 		},
 		{
-			name: "callee-forbidden-descriptor", code: 4,
+			name: "callee-unsupported-float-descriptor", code: 4,
 			make: func() []byte {
 				return mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
 					nameType := c.callNameType(t, "run")
-					binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, "(J)J"))
+					binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, "(F)F"))
+				})
+			},
+		},
+		{
+			name: "callee-unsupported-double-descriptor", code: 4,
+			make: func() []byte {
+				return mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
+					nameType := c.callNameType(t, "run")
+					binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, "(D)D"))
 				})
 			},
 		},
@@ -232,6 +241,15 @@ func TestM3aCallResolutionErrorCodes(t *testing.T) {
 			assertCallValidationError(t, classfile, "run", []int32{4, 2}, "CallError(uint256,uint256)", tc.code, &pc)
 		})
 	}
+	t.Run("callee-long-descriptor-reaches-category-check", func(t *testing.T) {
+		classfile := mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
+			nameType := c.callNameType(t, "run")
+			binary.BigEndian.PutUint16(out[c.entry(t, nameType).offset+3:], c.utfIndex(t, "(J)J"))
+		})
+		_, pc := parseCallValidationClass(t, classfile).callRef(t, "run")
+		// (J)J resolves now; the caller's category-1 top value is not a long.
+		assertCallValidationError(t, classfile, "run", []int32{4, 2}, "BytecodeError(uint256,uint256)", 14, &pc)
+	})
 }
 
 func TestM3aReturnDescriptorMismatchUsesCallError5(t *testing.T) {
@@ -305,6 +323,8 @@ func compileCallValidationClass(t *testing.T) []byte {
 public final class CallValidationTarget {
     private static int helper(int a, int b) { return a * 10 + b; }
     private static long helper(long x) { return x; }
+    private static float helper(float x) { return x; }
+    private static double helper(double x) { return x; }
     public static int run(int a, int b) { return helper(a, b); }
 }`)
 }

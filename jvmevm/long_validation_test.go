@@ -449,6 +449,9 @@ func TestVerifyM5baIllegalCategoryFormsUnderflowAndWordCapacity(t *testing.T) {
 		{"dup2-cat1-atop-long", []byte{0x0a, 0x04, 0x5c, 0x03, 0xac}, 2},
 		{"dup-x2-long-on-top", []byte{0x04, 0x0a, 0x5b, 0x03, 0xac}, 2},
 		{"dup2-x1-long-below-cat1", []byte{0x0a, 0x04, 0x5d, 0x03, 0xac}, 2},
+		// bottom->top [long,int] has an invalid one-value category-1 top group;
+		// it is a category-form error, not an operand-word underflow.
+		{"dup2-x2-long-cat1", []byte{0x0a, 0x04, 0x5e, 0x03, 0xac}, 2},
 		{"dup2-x2-no-form", []byte{0x0a, 0x04, 0x0a, 0x5e, 0x03, 0xac}, 3},
 	}
 	for _, tc := range illegal {
@@ -468,7 +471,8 @@ func TestVerifyM5baIllegalCategoryFormsUnderflowAndWordCapacity(t *testing.T) {
 		{"dup-x2-two-cat1", []byte{0x04, 0x05, 0x5b, 0x03, 0xac}, 2},
 		{"dup2-empty", []byte{0x5c, 0x03, 0xac}, 0},
 		{"dup2-x1-one-long", []byte{0x0a, 0x5d, 0x03, 0xac}, 1},
-		{"dup2-x2-long-cat1", []byte{0x0a, 0x04, 0x5e, 0x03, 0xac}, 2},
+		{"dup2-x2-one-long", []byte{0x0a, 0x5e, 0x03, 0xac}, 1},
+		{"dup2-x2-two-cat1", []byte{0x04, 0x05, 0x5e, 0x03, 0xac}, 2},
 	}
 	for _, tc := range underflow {
 		t.Run(tc.name, func(t *testing.T) {
@@ -520,7 +524,7 @@ func TestVerifyM5baIllegalCategoryFormsUnderflowAndWordCapacity(t *testing.T) {
 func TestVerifyM5baLongCallFailuresReturnsAndPrefixCapacity(t *testing.T) {
 	classfile := verifyM5baCompile(t, map[string]string{
 		"CallShapeJ.java": `public final class CallShapeJ {
-			static long j(long x){return x;} static long noarg(){return 1L;} static int i(){return 3;}
+			static long j(long x){long copy=x;return copy;} static long noarg(){return 1L;} static int i(){return 3;}
 			public static int call(){return (int)j(1L);}
 			public static int padding(){int x=0;` + strings.Repeat("x=x+1;", 80) + `return x;}
 		}`,
@@ -675,23 +679,39 @@ func TestVerifyM5baLongFieldsConstantValueCachesFinalAccessAndInitialization(t *
 
 	instance := verifyM5baCompile(t, map[string]string{
 		"InstanceLongCV.java": `public final class InstanceLongCV {
-			final long ignored=0x123456789abcdef0L; public static int run(){InstanceLongCV x=new InstanceLongCV();return (int)x.ignored;}
+			final long ignored=0x123456789abcdef0L; long mutable;
+			public static int run(){InstanceLongCV x=new InstanceLongCV();return (int)x.mutable;}
 		}`,
 	}, "InstanceLongCV")["InstanceLongCV"]
+	instanceParsed := parseStaticsClass(t, instance)
+	ignoredIndex := verifyM5baFieldConstantIndex(t, instanceParsed, "ignored", "J")
+	if instanceParsed.entry(t, ignoredIndex).tag != 5 {
+		t.Fatalf("instance long ConstantValue tag=%d want 5", instanceParsed.entry(t, ignoredIndex).tag)
+	}
+	// Remove javac's constructor assignment, then retarget the ordinary mutable-J
+	// getfield to ignored. Reading ignored in Java source would inline the literal
+	// and would not prove that an instance ConstantValue is ignored by the heap.
 	instance = verifyM5baMutate(t, instance, func(_ []byte, c staticsClass) {
 		ctor := c.method(t, "<init>", "()V")
-		pc := verifyM5baFieldPC(t, c, ctor, 0xb5, "ignored", "J")
-		ldc := verifyM5baPreviousInstruction(t, ctor.code, pc)
+		putPC := verifyM5baFieldPC(t, c, ctor, 0xb5, "ignored", "J")
+		ignoredRef := binary.BigEndian.Uint16(ctor.code[putPC+1:])
+		ldc := verifyM5baPreviousInstruction(t, ctor.code, putPC)
 		aload := verifyM5baPreviousInstruction(t, ctor.code, ldc)
 		if ctor.code[ldc] != 0x14 || ctor.code[aload] != 0x2a {
 			t.Fatalf("unexpected instance ConstantValue assignment %x", ctor.code)
 		}
-		for i := aload; i < pc+3; i++ {
+		for i := aload; i < putPC+3; i++ {
 			ctor.code[i] = 0
 		}
+		run := c.method(t, "run", "()I")
+		getPC := verifyM5baFieldPC(t, c, run, 0xb4, "mutable", "J")
+		binary.BigEndian.PutUint16(run.code[getPC+1:], ignoredRef)
 	})
-	verifyM5baJava8Outcome(t, [][]byte{verifyM5baMajor49(instance)}, "InstanceLongCV", "run", nil, "value=0")
-	verifyM5baAssertValue(t, func() (Result, error) { return Run(instance, "run", nil, verifyM5baGasLimit) }, 0)
+	mutatedInstance := verifyM5baMajor49(instance)
+	verifyM5baFieldPC(t, parseStaticsClass(t, mutatedInstance),
+		parseStaticsClass(t, mutatedInstance).method(t, "run", "()I"), 0xb4, "ignored", "J")
+	verifyM5baJava8Outcome(t, [][]byte{mutatedInstance}, "InstanceLongCV", "run", nil, "value=0")
+	verifyM5baAssertValue(t, func() (Result, error) { return Run(mutatedInstance, "run", nil, verifyM5baGasLimit) }, 0)
 
 	privateOwner := verifyM5baCompile(t, map[string]string{
 		"accessj/Owner.java": `package accessj; public final class Owner { public static long value=9L; }`,

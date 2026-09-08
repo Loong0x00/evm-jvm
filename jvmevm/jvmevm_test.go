@@ -55,16 +55,25 @@ func TestGenericRuntimeHandlesDifferentRawClassesAndArguments(t *testing.T) {
 }
 
 func TestUnsupportedBytecodeAndMalformedClassRevertInsideEVM(t *testing.T) {
-	// Keep this as a true unsupported category-2 conversion probe now that int arrays are implemented.
-	conversion := compileJava(t, "Conversion", `public class Conversion { public static int conversion(int n) { return (int)((long)n + 1L); } }`)
+	// Scalar long conversion is supported in M5b-a; prove its value with Java 8
+	// rather than weakening the former unsupported assertion to "no error".
+	longConversion := compileJava(t, "LongConversion", `public class LongConversion { public static int conversion(int n) { return (int)((long)n + 1L); } }`)
+	verifyM5baJava8Outcome(t, [][]byte{longConversion}, "LongConversion", "conversion", []int32{3}, "value=4")
+	converted, err := Run(longConversion, "conversion", []int32{3}, 2_000_000)
+	if err != nil || converted.Value != 4 || converted.ExceptionClass != "" || converted.GasUsed == 0 || len(converted.RevertData) != 0 {
+		t.Fatalf("long conversion result/error = %+v/%v, want exact value 4", converted, err)
+	}
+
+	// Preserve a distinct unsupported IEEE conversion guard.
+	floatConversion := compileJava(t, "FloatConversion", `public class FloatConversion { public static int conversion(int n) { return (int)((float)n + 1.0f); } }`)
 	for name, tc := range map[string]struct {
 		class  []byte
 		method string
 		args   []int32
 	}{
-		"unsupported-category2-conversion": {conversion, "conversion", []int32{3}},
-		"bad-magic":                        {[]byte{0, 1, 2, 3}, "add", []int32{1, 2}},
-		"truncated":                        {conversion[:len(conversion)-1], "conversion", []int32{3}},
+		"unsupported-float-conversion": {floatConversion, "conversion", []int32{3}},
+		"bad-magic":                    {[]byte{0, 1, 2, 3}, "add", []int32{1, 2}},
+		"truncated":                    {longConversion[:len(longConversion)-1], "conversion", []int32{3}},
 	} {
 		t.Run(name, func(t *testing.T) {
 			result, err := Run(tc.class, tc.method, tc.args, 2_000_000)

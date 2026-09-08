@@ -193,10 +193,12 @@ public class FieldFailures {
 		result, err := Run(bad, "run", nil, 15_000_000)
 		assertSolidityError(t, result, err, "FieldError(uint256,uint256)", 3, uint64(pc))
 	})
-	t.Run("unsupported-descriptor", func(t *testing.T) {
+	t.Run("unsupported-double-descriptor", func(t *testing.T) {
 		bad := append([]byte(nil), base...)
 		i := baseParsed.utfIndex("I")
-		bad[baseParsed.cpOffsets[i]+3] = 'J'
+		// J is supported in M5b-a. Retain this field-profile guard with deferred D;
+		// mutating to J would instead hit the root method's max_stack=1 word cap.
+		bad[baseParsed.cpOffsets[i]+3] = 'D'
 		result, err := Run(bad, "run", nil, 15_000_000)
 		assertSolidityError(t, result, err, "FieldError(uint256,uint256)", 3, uint64(pc))
 	})

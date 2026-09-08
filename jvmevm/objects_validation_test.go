@@ -611,7 +611,7 @@ func TestVerifyM4bNewAndSpecialMalformedOperandsAndBranchTargets(t *testing.T) {
 		"BytecodeError(uint256,uint256)", 12, 1)
 }
 
-func TestVerifyM4bAbstractInaccessibleAndUnsupportedLayoutsUseObjectError2(t *testing.T) {
+func TestVerifyM4bAbstractInaccessibleAndLongFieldLayouts(t *testing.T) {
 	classes := compileBundleValidationJava(t, map[string]string{
 		"shape/Target.java":    `package shape; public class Target { public Target(){} }`,
 		"shape/LongField.java": `package shape; public class LongField { long unsupported; public LongField(){} }`,
@@ -647,11 +647,10 @@ func TestVerifyM4bAbstractInaccessibleAndUnsupportedLayoutsUseObjectError2(t *te
 		return RunClasses([][]byte{root, inaccessible}, "shapeuser/Root", "target", nil, verifyM4bGasLimit)
 	}, "ObjectError(uint256,uint256)", 2, uint64(targetPC))
 
-	widePC := verifyM4bOpcodePC(t, parseStaticsClass(t, root).method(t, "wide", "()I").code, verifyM4bNew, 0)
-	verifyM4bAssertError(t, func() (Result, error) {
+	// A scalar long is one supported instance-field layout slot in M5b-a.
+	verifyM4bAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4bBundle(classes), "shapeuser/Root", "wide", nil, verifyM4bGasLimit)
-	},
-		"ObjectError(uint256,uint256)", 2, uint64(widePC))
+	}, 2)
 }
 
 func TestVerifyM4bNullSpecialAndConstructorReceiverValidation(t *testing.T) {

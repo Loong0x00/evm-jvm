@@ -310,16 +310,18 @@ func TestM3cFieldResolutionErrorCodesAndMissingOwner(t *testing.T) {
 		}, 0)
 	})
 
-	t.Run("unsupported-l2i-is-bytecode-error-before-field-resolution", func(t *testing.T) {
+	t.Run("long-descriptor-default-zero-converts-to-int", func(t *testing.T) {
 		parsed := parseStaticsClass(t, root)
 		_, getstaticPC := parsed.fieldInstruction(t, "wide", opGetstatic, 0)
 		code := parsed.method(t, "wide", "()I").code
 		if len(code) != 5 || getstaticPC != 0 || code[3] != 0x88 || code[4] != 0xac {
 			t.Fatalf("wide bytecode = %x, want getstatic at PC 0; l2i at PC 3; ireturn", code)
 		}
-		assertStaticsError(t, func() (Result, error) {
-			return RunClasses([][]byte{root, classes["fields/Target"]}, "fields/Root", "wide", nil, staticsValidationGasLimit)
-		}, "BytecodeError(uint256,uint256)", 6, 3)
+		bundle := [][]byte{root, classes["fields/Target"]}
+		verifyM5baJava8Outcome(t, bundle, "fields.Root", "wide", nil, "value=0")
+		assertStaticsValue(t, func() (Result, error) {
+			return RunClasses(bundle, "fields/Root", "wide", nil, staticsValidationGasLimit)
+		}, 0)
 	})
 
 	t.Run("missing-owner-is-link-error", func(t *testing.T) {
