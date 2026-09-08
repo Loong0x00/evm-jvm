@@ -24,6 +24,14 @@ public final class OracleMain {
   public static void main(String[] a) throws Exception {
     Class<?> c;
     try { c = Class.forName(a[0]); }
+    catch (AbstractMethodError e) {
+      System.out.println("exception=" + e.getClass().getName());
+      return;
+    }
+    catch (IncompatibleClassChangeError e) {
+      System.out.println("exception=" + e.getClass().getName());
+      return;
+    }
     catch (ExceptionInInitializerError | StackOverflowError e) {
       System.out.println("exception=" + e.getClass().getName());
       return;
@@ -159,6 +167,10 @@ class MockTools:
                 "multiNegative": "java.lang.NegativeArraySizeException",
                 "multiOOM": "java.lang.OutOfMemoryError",
                 "initMultiNegative": "java.lang.ExceptionInInitializerError",
+                "defaultConflict": "java.lang.IncompatibleClassChangeError",
+                "missingDefault": "java.lang.AbstractMethodError",
+                "initDefaultConflict": "java.lang.IncompatibleClassChangeError",
+                "initMissingDefault": "java.lang.AbstractMethodError",
             }
             if mode in ("exception", "root-init-eiie") or (
                     mode == "by-method" and method in known):
@@ -217,6 +229,10 @@ class MockTools:
                 "multiNegative": "java.lang.NegativeArraySizeException",
                 "multiOOM": "java.lang.OutOfMemoryError",
                 "initMultiNegative": "java.lang.ExceptionInInitializerError",
+                "defaultConflict": "java.lang.IncompatibleClassChangeError",
+                "missingDefault": "java.lang.AbstractMethodError",
+                "initDefaultConflict": "java.lang.IncompatibleClassChangeError",
+                "initMissingDefault": "java.lang.AbstractMethodError",
             }
             exception_outcome = mode in ("exception", "exception-gasbad", "root-init-eiie")
             exception_outcome = exception_outcome or (
@@ -543,6 +559,66 @@ class JavaDiffTests(unittest.TestCase):
             )])
             with self.assertRaisesRegex(java_diff.HarnessError, "known supported"):
                 java_diff.load_manifest(fixtures.path)
+
+    def test_m4fb_linkage_errors_are_exact_known_outcomes_and_oog_stays_distinct(self):
+        expected = {
+            "defaultConflict": "java.lang.IncompatibleClassChangeError",
+            "missingDefault": "java.lang.AbstractMethodError",
+            "initDefaultConflict": "java.lang.IncompatibleClassChangeError",
+            "initMissingDefault": "java.lang.AbstractMethodError",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("m4fb-" + method, stage="m4fb", method=method, args=[],
+                     expected_kind="java_exception", expected_exception=exception)
+                for method, exception in expected.items()
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--stage", "m4fb", "--tier", "full",
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(report["status_counts"], {"pass": 4})
+            self.assertEqual(
+                [result["evm_exception"] for result in report["cases"]],
+                list(expected.values()),
+            )
+
+        for method, exception in (
+            ("defaultConflict", "java.lang.IncompatibleClassChangeError"),
+            ("missingDefault", "java.lang.AbstractMethodError"),
+        ):
+            with self.subTest(method=method), tempfile.TemporaryDirectory() as tmp:
+                fixtures = FixtureTree(tmp, [case(
+                    "m4fb-oog-" + method, stage="m4fb", method=method, args=[],
+                    expected_kind="java_exception", expected_exception=exception,
+                )])
+                tools = MockTools(tmp)
+                completed, report = self.run_runner(
+                    tmp, fixtures.path, tools,
+                    env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "oog"},
+                )
+                self.assertNotEqual(completed.returncode, 0)
+                self.assertEqual(report["cases"][0]["status"], "evm_oog")
+                self.assertNotIn("evm_exception", report["cases"][0])
+
+    def test_m4fb_exception_decoder_rejects_unknown_and_noncanonical_protocol(self):
+        for exception in (
+            "java.lang.LinkageError", "IncompatibleClassChangeError", "java.lang.AME",
+        ):
+            with self.subTest(exception=exception):
+                record = {
+                    "status": "exited", "returncode": 0, "stderr": "",
+                    "stdout": (
+                        "engine=evm-jvm-subset-interpreter\nruntime_bytes=123\n"
+                        + "runtime_sha256=" + "a" * 64
+                        + "\nexception=" + exception + "\ngas_used=1\n"
+                    ),
+                }
+                status, values, _ = java_diff.parse_evm(record)
+                self.assertEqual(status, "evm_malformed")
+                self.assertEqual(values, {})
 
     def test_real_jvm_class_cast_matches_mock_evm(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -1011,6 +1087,7 @@ public final class Arithmetic {
         cases += [case("m4d-smoke", stage="m4d")]
         cases += [case("m4e-smoke", stage="m4e")]
         cases += [case("m4fa-smoke", stage="m4fa")]
+        cases += [case("m4fb-smoke", stage="m4fb")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -1031,14 +1108,15 @@ public final class Arithmetic {
             "m4d": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke"],
             "m4e": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke"],
             "m4fa": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke"],
+            "m4fb": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m4fa")
+        self.assertEqual(parsed.stage, "m4fb")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
         with self.assertRaises(java_diff.HarnessError):
@@ -1051,19 +1129,21 @@ public final class Arithmetic {
             java_diff.select_cases(cases, "m4d", "full", 56, "m4e-smoke")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m4e", "full", 56, "m4fa-smoke")
+        with self.assertRaises(java_diff.HarnessError):
+            java_diff.select_cases(cases, "m4fa", "full", 56, "m4fb-smoke")
         with self.assertRaisesRegex(java_diff.HarnessError, "unknown stage"):
             java_diff.select_cases(cases, "m4f", "full", 56, None)
 
-    def test_manifest_accepts_exact_m4b_through_m4fa_stage_spellings(self):
+    def test_manifest_accepts_exact_m4b_through_m4fb_stage_spellings(self):
         with tempfile.TemporaryDirectory() as tmp:
             fixtures = FixtureTree(tmp, [
                 case("objects", stage="m4b"), case("dispatch", stage="m4c"),
                 case("reference-arrays", stage="m4d"), case("multidimensional", stage="m4e"),
-                case("interfaces", stage="m4fa"),
+                case("interfaces", stage="m4fa"), case("defaults", stage="m4fb"),
             ])
             _, loaded, _ = java_diff.load_manifest(fixtures.path)
-            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e", "m4fa"])
-        for malformed in ("M4fa", "m4-fa", "m4f", "interfaces"):
+            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb"])
+        for malformed in ("M4fb", "m4-fb", "m4f", "defaults"):
             with self.subTest(stage=malformed), tempfile.TemporaryDirectory() as tmp:
                 fixtures = FixtureTree(tmp, [case("bad-stage", stage=malformed)])
                 with self.assertRaisesRegex(java_diff.HarnessError, "stage must be"):

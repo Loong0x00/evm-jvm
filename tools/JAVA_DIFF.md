@@ -15,16 +15,16 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4fa --tier full
+python3 tools/java_diff.py --stage m4fb --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4fa --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4fb --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
-`m4e` adds M4e, and `m4fa` or `all` adds M4f-a. A manifest without entries
+`m4e` adds M4e, `m4fa` adds M4f-a, and `m4fb` or `all` adds M4f-b. A manifest without entries
 in the newest stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -196,6 +196,28 @@ array-receiver method dispatch, or unbounded host resource exhaustion. Abstract
 interface metadata (including unentered static initialization metadata) does not
 by itself initialize an interface.
 
+## M4f-b default methods
+
+M4f-b remains additive schema 1 and cumulative over M4f-a. Trusted finite source
+fixtures may exercise Java 8 public interface defaults, maximally-specific
+selection, `I.super` calls, and the default-declaring-interface prerequisites of
+class initialization. The runner still passes only the manifest's ordered,
+unchanged classfiles; it does not inspect interface graphs, resolve or select
+methods, initialize classes/interfaces, or translate bytecode.
+
+M4f-b recognizes exact `java.lang.IncompatibleClassChangeError` and
+`java.lang.AbstractMethodError` outcomes in addition to kinds 1 through 9.
+They are Java `Error`s and remain unwrapped when they escape initialization;
+ordinary non-`Error` initializer failures remain
+`java.lang.ExceptionInInitializerError`. Binary-evolution linkage probes are
+focused Go tests because they must compile old and new Java 8 source versions
+separately and preserve selected old classfiles. Those probes require a real
+Java 8 oracle selected by `JAVA_EVM_JAVA8` or
+`/usr/lib/jvm/java-8-openjdk/bin/java`; they fail clearly if major version 8 is
+unavailable and never substitute a newer JVM. Ordinary fresh source fixtures
+continue to use the runner's configured `java` command. Host-memory exhaustion
+is never an oracle strategy.
+
 ## Outcome protocol
 
 Existing value cases retain `expected_kind: "value"`. An explicitly expected
@@ -237,12 +259,14 @@ remains unchanged. M4a and M4b additionally recognize exact
 `java.lang.ArrayIndexOutOfBoundsException`, `java.lang.NullPointerException`,
 and `java.lang.OutOfMemoryError` outcomes. M4c additionally recognizes exact
 `java.lang.ClassCastException`; M4d adds exact
-`java.lang.ArrayStoreException`. Unknown exception names, even syntactically
-valid Java names, are rejected rather than extending the frozen outcome
-protocol. The first three, class-cast, and array-store failures, like
-arithmetic, become `java.lang.ExceptionInInitializerError` when they escape active class
-initialization; `OutOfMemoryError` and `StackOverflowError` remain unwrapped.
-The fixture oracle may report the two initializer-time Error outcomes from
+`java.lang.ArrayStoreException`. M4f-b adds exact
+`java.lang.IncompatibleClassChangeError` and `java.lang.AbstractMethodError`.
+Unknown exception names, even syntactically valid Java names, are rejected
+rather than extending the frozen outcome protocol. Non-`Error` failures become
+`java.lang.ExceptionInInitializerError` when they escape active initialization;
+`OutOfMemoryError`, `StackOverflowError`, `IncompatibleClassChangeError`, and
+`AbstractMethodError` remain unwrapped.
+The fixture oracle may report initializer-time `Error` outcomes from
 `Class.forName`, before reflective invocation. Oracle process,
 configuration, or malformed-output errors still fail and are never converted
 into expected outcomes. Value/exception disagreements, wrong wrapping, and
