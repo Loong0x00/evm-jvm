@@ -4,13 +4,13 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 1,263 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+The manifest has 1,383 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
 73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, 100 `m4d`,
-68 `m4e`, 99 `m4fa`, 104 `m4fb`, and 100 `m4fc` cases. M4f-c adds 50
-smoke-marked cases. Every root entry remains a declared public static
-`(int...)int` method, with M4f-c adding public interface roots, and guest sources
-have no `main`. All 1,163 entries through M4f-b, including their source lists,
-arguments, budgets, tiers, and outcomes, are unchanged.
+68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, and 120 `m5a` cases. M5a adds
+60 smoke-marked cases. Every root entry remains a declared public static
+`(int...)int` method, including public interface roots, and guest sources have no
+`main`. All 1,263 entries through M4f-c, including sources, arguments, budgets,
+tiers, and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -342,11 +342,34 @@ eight outcomes are one direct `ArithmeticException`, two direct
 `ExceptionInInitializerError` outcomes from failures escaping active interface
 initializers.
 
-Across all stages there are 1,158 value outcomes, 16 ArithmeticException
-outcomes, five StackOverflowError outcomes, 24 ExceptionInInitializerError
-outcomes, nine NegativeArraySizeException outcomes, ten
-ArrayIndexOutOfBoundsException outcomes, 23 NullPointerException outcomes, nine
-ClassCastException outcomes, and nine ArrayStoreException outcomes. Every gas
+M5a adds 99 value outcomes and 21 actual JVM exception outcomes over eight new
+trusted Java 8 sources, which emit 43 classfiles. Source-valid wrappers retain an
+I-only root ABI while internal descriptors use Z/B/C/S across static, private-
+special, virtual, interface, default, direct-interface-super, bridge, and
+constructor calls. The cases cover signed byte/short and unsigned char
+boundaries, source-canonical booleans, conversions, overflow and bounded loops;
+static, instance, hidden, inherited, final, interface, and ConstantValue fields;
+and atypes 4/5/8/9 with the shared byte/boolean load/store opcodes.
+
+Primitive-array cases cover fields and call transport, full and partial
+multidimensional allocation, distinct rows, rank and primitive-leaf identity,
+Object/Cloneable/Serializable marker compatibility, nested covariance, and
+compatible or rejected stores. The 21 outcomes are four each of
+`NegativeArraySizeException`, `NullPointerException`,
+`ArrayIndexOutOfBoundsException`, and `ExceptionInInitializerError`, three
+`ArrayStoreException`, and two `ClassCastException`. The null cases deliberately
+use invalid indices to check null-before-bounds ordering. Constant declarations
+have genuine `CONSTANT_Integer` ConstantValue attributes for all four narrow
+field descriptors; source reads are javac-inlined and are not misrepresented as
+raw `getstatic` or mutated-ConstantValue evidence. Likewise, valid Java source
+produces only canonical booleans and explicit source-required argument
+conversions; noncanonical raw values remain verifier-owned mutation probes.
+
+Across all stages there are 1,257 value outcomes, 16 ArithmeticException
+outcomes, five StackOverflowError outcomes, 28 ExceptionInInitializerError
+outcomes, 13 NegativeArraySizeException outcomes, 14
+ArrayIndexOutOfBoundsException outcomes, 27 NullPointerException outcomes, 11
+ClassCastException outcomes, and 12 ArrayStoreException outcomes. Every gas
 limit is finite and at most 70,000,000; every subprocess timeout is at most 10
 seconds. New arrays have at most eight elements, and all fixture loops and
 recursions are bounded and modest.
@@ -642,6 +665,28 @@ extend `java/lang/Object` and declare no interfaces.
 `CONSTANT_Integer` index greater than 255. Its unselected pool-populating helper
 has no `<clinit>`.
 
+For M5a, one fresh OpenJDK 8 `javac -source 8 -target 8 -g:none` compilation was
+followed by 120 separate bounded `OracleMain` processes on OpenJDK 8 1.8.0_504
+and Java 21.0.9. Every process used `-Xmx64m` and a ten-second outer timeout.
+Both runs matched all manifest outcome kinds and produced identical ordered
+outputs: 99 values and 21 declared exceptions, with SHA256
+`5e5faecc1a7fa8f55d64b83c403720b7b32a28d75740c7adf21177251b3cc43e`.
+The sorted compact canonical JSON SHA256 of the unchanged old 1,263-entry prefix
+is `a580859c132a96222752113b0bce76e9aeeff2666d9d31bb377b87ac40014fb2`,
+identical to base revision `297cb56`.
+
+Isolated Java 8 compilation of each of the eight source lists exactly matched
+its manifest classfile set. `javap -c -v -p` over all 43 emitted classes found
+only major version 52. It found all four newarray operands (boolean, char, byte,
+short), `baload`/`bastore` on both boolean and byte arrays, `caload`/`castore`,
+`saload`/`sastore`, and full/partial nested primitive arrays. Call sites retain
+Z/B/C/S descriptors under ordinary and interface constant-pool owners, including
+synthetic covariant bridges and direct `I.super`. ConstantValue attributes use
+integer payloads with declared Z/B/C/S fields. No native/synchronized method,
+handler, monitor, explicit throw, invokedynamic, category-2 operation, boxing,
+String use, or non-Object JRE method reference was found; the only JRE method
+reference is the required `java/lang/Object.<init>()V` constructor chain.
+
 The M3b runtime and verifier are integrated. Its accepted suite remains:
 
 ```sh
@@ -649,14 +694,12 @@ python3 tools/java_diff.py --stage m3b --tier smoke
 python3 tools/java_diff.py --stage m3b --tier full
 ```
 
-All 1,163 cases through M4f-b are the accepted baseline. The 100 M4f-c fixtures
+All 1,263 cases through M4f-c are the accepted baseline. The 120 M5a fixtures
 have passed both Java 8 and Java 21 reference oracles plus classfile/constant-pool
-profile checks, but the baseline runner intentionally rejects stage `m4fc` until
-separately owned verifier and runtime integration; this fixture revision does
-**not** claim an M4f-c EVM pass. Binary-evolution ICCE/AME cases remain in the
-Go-owned Java 8 probes rather than being falsified as fresh source outcomes.
-Selected native or synchronized concrete interface implementations remain
-verifier-only rejection probes because successful differential cases would
-contradict the frozen CallError4 profile. The runtime remains over mainnet
-deployment size and runs through local runtime.Execute, not CREATE. This remains
-subset verification, not full JVM conformance.
+profile checks, but the baseline runner intentionally rejects stage `m5a` until
+the separately owned verifier and runtime integrate it; this fixture revision
+does **not** claim an M5a EVM pass. Raw noncanonical arguments/booleans,
+ConstantValue mutations, and binary-evolution errors remain Go-owned probes
+rather than being falsified as fresh javac outcomes. The runtime remains over
+mainnet deployment size and runs through local runtime.Execute, not CREATE. This
+remains subset verification, not full JVM conformance.

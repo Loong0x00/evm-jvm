@@ -29912,6 +29912,2893 @@
       "timeout_seconds": 10,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-byte-boundary-128",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "byteBoundary",
+      "args": [
+        128
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-byte-boundary-255",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "byteBoundary",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-short-boundary-32768",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "shortBoundary",
+      "args": [
+        32768
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-char-boundary-minus-one",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "charBoundary",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-char-boundary-65536",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "charBoundary",
+      "args": [
+        65536
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-boolean-even",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "booleanBoundary",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-byte-parameter",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "byteParameter",
+      "args": [
+        383
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-short-parameter",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "shortParameter",
+      "args": [
+        65535
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-char-parameter",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "charParameter",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-boolean-parameter",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "booleanParameter",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-byte-increment-overflow",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "byteIncrementOverflow",
+      "args": [
+        127
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-short-compound-overflow",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "shortCompoundOverflow",
+      "args": [
+        32767
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-char-decrement-wrap",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "charDecrementWrap",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-byte-loop",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "byteLoop",
+      "args": [
+        120
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-short-loop",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "shortLoop",
+      "args": [
+        30000
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-char-unsigned-compare",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "charUnsignedCompare",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-char-loop-wrap",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "charLoopWrap",
+      "args": [
+        60000
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-boolean-toggle-loop",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "booleanToggleLoop",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-mixed-conversions",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "mixedConversions",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-basic-int-overflow-then-narrow",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/basic/BasicRoot.java"
+      ],
+      "class": "bundle.m5a.basic.BasicRoot",
+      "method": "intOverflowThenNarrow",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5a/basic/BasicRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-static-defaults",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "staticDefaults",
+      "args": [
+        41
+      ],
+      "class_files": [
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-static-writes",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "staticWrites",
+      "args": [
+        65535
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-static-compound",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "staticCompound",
+      "args": [
+        32767
+      ],
+      "class_files": [
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-instance-defaults",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "instanceDefaults",
+      "args": [
+        42
+      ],
+      "class_files": [
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-instance-writes",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "instanceWrites",
+      "args": [
+        65535
+      ],
+      "class_files": [
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-hidden-static",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "hiddenStatic",
+      "args": [
+        130
+      ],
+      "class_files": [
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-hidden-instance",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "hiddenInstance",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-final-constructor-fields",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "finalConstructorFields",
+      "args": [
+        65535
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-class-constant-values",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "classConstants",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-interface-constant-values",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "interfaceConstants",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-interface-dynamic-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "interfaceDynamicByte",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-interface-dynamic-short",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "interfaceDynamicShort",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-interface-dynamic-char",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "interfaceDynamicChar",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-interface-dynamic-boolean",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "interfaceDynamicBoolean",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-inherited-interface-field",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "inheritedInterfaceField",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-hidden-interface-fields",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "hiddenInterfaceFields",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5a/fields/FieldState.class",
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-fields-actual-owner-through-child",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5a.fields.FieldRoot",
+      "method": "actualOwnerThroughChild",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5a/fields/DynamicFace.class",
+        "bundle/m5a/fields/DynamicChild.class",
+        "bundle/m5a/fields/HiddenParent.class",
+        "bundle/m5a/fields/HiddenChild.class",
+        "bundle/m5a/fields/FieldStaticParent.class",
+        "bundle/m5a/fields/FieldStaticChild.class",
+        "bundle/m5a/fields/FieldRoot.class",
+        "bundle/m5a/fields/FieldOwner.class",
+        "bundle/m5a/fields/FieldBase.class",
+        "bundle/m5a/fields/FieldChild.class",
+        "bundle/m5a/fields/FinalFields.class",
+        "bundle/m5a/fields/ConstantFields.class",
+        "bundle/m5a/fields/ConstantFace.class",
+        "bundle/m5a/fields/FieldState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-static-byte-call",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "staticByteCall",
+      "args": [
+        127
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-static-short-call",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "staticShortCall",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-static-boolean-call",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "staticBooleanCall",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-private-special-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "privateSpecialByte",
+      "args": [
+        -127
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-constructor-arguments",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "constructorArguments",
+      "args": [
+        65535
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-constructor-chain",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "constructorChain",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-virtual-base-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "virtualBaseByte",
+      "args": [
+        127
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-virtual-override-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "virtualOverrideByte",
+      "args": [
+        126
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-virtual-override-short",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "virtualOverrideShort",
+      "args": [
+        32766
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-interface-override-char",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "interfaceOverrideChar",
+      "args": [
+        65534
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-interface-boolean",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "interfaceBoolean",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-default-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "defaultByte",
+      "args": [
+        126
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-default-boolean",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "defaultBoolean",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-interface-default-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "interfaceDefaultByte",
+      "args": [
+        125
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-direct-interface-super",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "directInterfaceSuper",
+      "args": [
+        126
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-interface-static-short",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "interfaceStaticShort",
+      "args": [
+        32767
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-bridge-interface",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "bridgeInterface",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-bridge-virtual",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "bridgeVirtual",
+      "args": [
+        126
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchConstructed.class",
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-mixed-call-modes",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/DispatchRoot.java"
+      ],
+      "class": "bundle.m5a.dispatch.DispatchRoot",
+      "method": "mixedCallModes",
+      "args": [
+        127
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/DispatchConstructedChild.class",
+        "bundle/m5a/dispatch/DispatchValue.class",
+        "bundle/m5a/dispatch/DispatchChildValue.class",
+        "bundle/m5a/dispatch/DispatchFactoryFace.class",
+        "bundle/m5a/dispatch/DispatchFactory.class",
+        "bundle/m5a/dispatch/DispatchBridgeBase.class",
+        "bundle/m5a/dispatch/DispatchBridgeChild.class",
+        "bundle/m5a/dispatch/DispatchRoot.class",
+        "bundle/m5a/dispatch/DispatchFace.class",
+        "bundle/m5a/dispatch/DispatchBase.class",
+        "bundle/m5a/dispatch/DispatchOverride.class",
+        "bundle/m5a/dispatch/DispatchConstructed.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-public-public-interface-root-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/PublicDispatch.java"
+      ],
+      "class": "bundle.m5a.dispatch.PublicDispatch",
+      "method": "interfaceRootByte",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/PublicDispatch.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-public-public-interface-root-char",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/PublicDispatch.java"
+      ],
+      "class": "bundle.m5a.dispatch.PublicDispatch",
+      "method": "interfaceRootChar",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/PublicDispatch.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-dispatch-public-public-interface-root-boolean",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/dispatch/PublicDispatch.java"
+      ],
+      "class": "bundle.m5a.dispatch.PublicDispatch",
+      "method": "interfaceRootBoolean",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5a/dispatch/PublicDispatch.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-byte-defaults",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "byteDefaults",
+      "args": [
+        51
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-byte-store-load",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "byteStoreLoad",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-byte-loop",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "byteLoop",
+      "args": [
+        126
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-byte-compound",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "byteCompound",
+      "args": [
+        127
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-boolean-defaults",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "booleanDefaults",
+      "args": [
+        52
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-boolean-store-load",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "booleanStoreLoad",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-boolean-toggle-loop",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "booleanToggleLoop",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-char-defaults",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "charDefaults",
+      "args": [
+        53
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-char-store-load",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "charStoreLoad",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-char-loop",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "charLoop",
+      "args": [
+        60000
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-short-defaults",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "shortDefaults",
+      "args": [
+        54
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-short-store-load",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "shortStoreLoad",
+      "args": [
+        65535
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-short-loop",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "shortLoop",
+      "args": [
+        30000
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-static-byte-field",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "staticByteField",
+      "args": [
+        130
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-instance-boolean-field",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "instanceBooleanField",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-final-char-field",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "finalCharField",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-static-byte-round-trip",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "staticByteRoundTrip",
+      "args": [
+        383
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-private-short-round-trip",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "privateShortRoundTrip",
+      "args": [
+        32768
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-virtual-boolean-round-trip",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "virtualBooleanRoundTrip",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-default-char-round-trip",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "defaultCharRoundTrip",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-byte-matrix",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "byteMatrix",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-boolean-partial-matrix",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "booleanPartialMatrix",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-char-cube",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "charCube",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayFields.class",
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-arrays-short-matrix",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/arrays/ArrayRoot.java"
+      ],
+      "class": "bundle.m5a.arrays.ArrayRoot",
+      "method": "shortMatrix",
+      "args": [
+        32767
+      ],
+      "class_files": [
+        "bundle/m5a/arrays/ArrayVirtual.class",
+        "bundle/m5a/arrays/ArrayVirtualChild.class",
+        "bundle/m5a/arrays/ArrayDefault.class",
+        "bundle/m5a/arrays/ArrayDefaultImpl.class",
+        "bundle/m5a/arrays/ArrayRoot.class",
+        "bundle/m5a/arrays/ArrayFields.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-byte-as-object",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "byteAsObject",
+      "args": [
+        61
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-boolean-as-object",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "booleanAsObject",
+      "args": [
+        62
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-all-primitive-markers",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "allPrimitiveMarkers",
+      "args": [
+        63
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-byte-matrix-as-object-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "byteMatrixAsObjectArray",
+      "args": [
+        64
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-byte-leaf-not-object-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "byteLeafNotObjectArray",
+      "args": [
+        65
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-byte-boolean-distinct",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "byteBooleanDistinct",
+      "args": [
+        66
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-byte-int-matrix-distinct",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "byteIntMatrixDistinct",
+      "args": [
+        67
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-char-short-distinct",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "charShortDistinct",
+      "args": [
+        68
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-rank-distinct",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "rankDistinct",
+      "args": [
+        69
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-byte-matrix-as-cloneable-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "byteMatrixAsCloneableArray",
+      "args": [
+        70
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-byte-matrix-as-serializable-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "byteMatrixAsSerializableArray",
+      "args": [
+        71
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-compatible-nested-store",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "compatibleNestedStore",
+      "args": [
+        255
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-cast-byte-identity",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "castByteIdentity",
+      "args": [
+        130
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-types-cast-matrix-to-object-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/types/TypeRoot.java"
+      ],
+      "class": "bundle.m5a.types.TypeRoot",
+      "method": "castMatrixToObjectArray",
+      "args": [
+        383
+      ],
+      "class_files": [
+        "bundle/m5a/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-errors-negative-byte-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "negativeByteArray",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5a-errors-negative-boolean-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "negativeBooleanArray",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5a-errors-negative-char-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "negativeCharArray",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5a-errors-negative-short-array",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "negativeShortArray",
+      "args": [
+        -4
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5a-errors-null-byte-read-before-bounds",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "nullByteReadBeforeBounds",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5a-errors-null-boolean-write-before-bounds",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "nullBooleanWriteBeforeBounds",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5a-errors-null-char-read-before-bounds",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "nullCharReadBeforeBounds",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5a-errors-null-short-write-before-bounds",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "nullShortWriteBeforeBounds",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5a-errors-byte-negative-index",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "byteNegativeIndex",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5a-errors-boolean-equal-length-index",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "booleanEqualLengthIndex",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5a-errors-char-large-index",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "charLargeIndex",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5a-errors-short-store-equal-length",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "shortStoreEqualLength",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5a-errors-cast-boolean-to-byte",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "castBooleanToByte",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m5a-errors-cast-byte-matrix-to-int-matrix",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "castByteMatrixToIntMatrix",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m5a-errors-store-boolean-leaf-in-byte-matrix",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "storeBooleanLeafInByteMatrix",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5a-errors-store-int-leaf-in-byte-matrix",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "storeIntLeafInByteMatrix",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5a-errors-store-byte-leaf-in-boolean-matrix",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5a.errors.ErrorRoot",
+      "method": "storeByteLeafInBooleanMatrix",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5a/errors/ErrorRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5a-init-initialized-values",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/init/InitRoot.java"
+      ],
+      "class": "bundle.m5a.init.InitRoot",
+      "method": "initializedValues",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5a/init/InitRoot.class",
+        "bundle/m5a/init/Initialized.class",
+        "bundle/m5a/init/Once.class",
+        "bundle/m5a/init/ByteNegative.class",
+        "bundle/m5a/init/StoreFailure.class",
+        "bundle/m5a/init/CastFailure.class",
+        "bundle/m5a/init/ArithmeticFailure.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-init-initialized-once",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/init/InitRoot.java"
+      ],
+      "class": "bundle.m5a.init.InitRoot",
+      "method": "initializedOnce",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5a/init/Initialized.class",
+        "bundle/m5a/init/Once.class",
+        "bundle/m5a/init/ByteNegative.class",
+        "bundle/m5a/init/StoreFailure.class",
+        "bundle/m5a/init/CastFailure.class",
+        "bundle/m5a/init/ArithmeticFailure.class",
+        "bundle/m5a/init/InitRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5a-init-init-byte-negative-wrapped",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/init/InitRoot.java"
+      ],
+      "class": "bundle.m5a.init.InitRoot",
+      "method": "byteNegativeWrapped",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5a/init/Once.class",
+        "bundle/m5a/init/ByteNegative.class",
+        "bundle/m5a/init/StoreFailure.class",
+        "bundle/m5a/init/CastFailure.class",
+        "bundle/m5a/init/ArithmeticFailure.class",
+        "bundle/m5a/init/InitRoot.class",
+        "bundle/m5a/init/Initialized.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5a-init-init-array-store-wrapped",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/init/InitRoot.java"
+      ],
+      "class": "bundle.m5a.init.InitRoot",
+      "method": "arrayStoreWrapped",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5a/init/ByteNegative.class",
+        "bundle/m5a/init/StoreFailure.class",
+        "bundle/m5a/init/CastFailure.class",
+        "bundle/m5a/init/ArithmeticFailure.class",
+        "bundle/m5a/init/InitRoot.class",
+        "bundle/m5a/init/Initialized.class",
+        "bundle/m5a/init/Once.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5a-init-init-cast-wrapped",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/init/InitRoot.java"
+      ],
+      "class": "bundle.m5a.init.InitRoot",
+      "method": "castWrapped",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5a/init/StoreFailure.class",
+        "bundle/m5a/init/CastFailure.class",
+        "bundle/m5a/init/ArithmeticFailure.class",
+        "bundle/m5a/init/InitRoot.class",
+        "bundle/m5a/init/Initialized.class",
+        "bundle/m5a/init/Once.class",
+        "bundle/m5a/init/ByteNegative.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5a-init-init-arithmetic-wrapped",
+      "stage": "m5a",
+      "sources": [
+        "bundle/m5a/init/InitRoot.java"
+      ],
+      "class": "bundle.m5a.init.InitRoot",
+      "method": "arithmeticWrapped",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5a/init/CastFailure.class",
+        "bundle/m5a/init/ArithmeticFailure.class",
+        "bundle/m5a/init/InitRoot.class",
+        "bundle/m5a/init/Initialized.class",
+        "bundle/m5a/init/Once.class",
+        "bundle/m5a/init/ByteNegative.class",
+        "bundle/m5a/init/StoreFailure.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
     }
   ]
 }
