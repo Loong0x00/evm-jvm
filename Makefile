@@ -113,3 +113,18 @@ java-aot-demo:
 java-aot-test:
 	go test -count=1 ./javaevm ./cmd/javaevm
 	go build -o build/bin/javaevm ./cmd/javaevm
+
+# Separate stock-EVM architecture slice, not the full interpreter's case corpus.
+.PHONY: java-stock-build java-stock-check java-stock-test java-stock-demo
+
+java-stock-build:
+	cd jvmevm/stock/runtime && npm ci --ignore-scripts && npm run build
+
+java-stock-check:
+	cd jvmevm/stock/runtime && npm ci --ignore-scripts && npm run check
+
+java-stock-test: java-stock-check
+	go test -count=1 -timeout=10m ./jvmevm/stock
+
+java-stock-demo: java-stock-check
+	go test -count=1 -v -run '^TestStockHarnessSignedCanonicalAndDeterministicReplay$$' ./jvmevm/stock
