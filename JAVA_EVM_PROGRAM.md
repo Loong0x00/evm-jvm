@@ -84,8 +84,9 @@ routine permission to start the next verified increment.
 | M4f-c | interface static members/initialization | accepted;1263 cases plus48 independent probes |
 | M5a | Z/B/C/S int-like types/fields/arrays | accepted;1383 cases plus48 independent probes |
 | M5b-a | scalar long/category-2 stack/locals/calls/fields | accepted;1493 cases plus48 independent probes |
-| M5b-b | long arrays | frozen in `JAVA_EVM_M5BB_PLAN.md`; dispatch3 workers |
-| M5c+ | IEEE values, catch/throw/unwind and remaining instructions | queued; freeze dependency-ordered batches |
+| M5b-b | long arrays | accepted;1593 cases plus48 independent probes |
+| M5c-a | switch/goto_w/wide variable-width control flow | next bounded prerequisite |
+| M5c-b+ | IEEE representation/conversions/arithmetic, handlers and remaining instructions | queued; freeze dependency-ordered batches |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -95,11 +96,11 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M5b-a accepted:1493 JVM/EVM cases plus48 probes,36 Python,682 smoke/702 fast,
-Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Category/CP/constant-getter probe
-repairs and obsolete J expectations explicitly justified; no demonstrated runtime
-bug. Runtime113189 bytes, local-runtime only, not full JVM/deployment. Prior1383
-fixture entries/budgets unchanged. M5b-b frozen in JAVA_EVM_M5BB_PLAN.md; dispatch3 workers for
-shared element quotas, then IEEE/handlers. Sol/high WITHOUT agent Fast; named
-make java-fast is only the fixture test tier and remains allowed. Continuous
-verified progression, no routine confirmation.
+M5b-b accepted:1593 JVM/EVM cases plus48 probes,36 Python,732 smoke/752 fast,
+Go/CLI/artifact/3bootstraps/demos/AOT/vet green. b9 probe corrected; cap test retains
+1024arrays+1024objects/250M budget, isolated zero-field Object overhead. No audit
+runtime defect. Runtime111218 bytes, local-runtime only, not full JVM/deployment.
+Prior1493 fixtures/budgets unchanged. Next M5c-a tableswitch/lookupswitch/goto_w/wide
+before bounded IEEE work. All NEW workers Sol/high WITHOUT Fast. Named java-fast
+is allowed fixture tier, not priority. Automatic verified progression, no routine
+confirmation. Demo sum1002986502gas close to3M; report measured regressions.

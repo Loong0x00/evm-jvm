@@ -122,3 +122,17 @@ verifyM5bb* helpers. Baseline red expected, exact failure map required.
 Parent owns plans/AGENTS/quickstart/Makefile/integration/approved profile updates.
 One Solidity writer; no spawning/peer writes/push/global settings/untrusted Java.
 All agents Sol/high WITHOUT Fast; honest scoped commits/SHA/size/checks/failures.
+
+## Accepted integration evidence
+Runtime353aa0f→9b66047,fixtures1e7ee35→35f9b17,verifier7b948d3→8eadfc7.
+Reviewda72788→4781859 made scalar call genuinely b9 via interface local; retained
+[J count2/J count3. Shared cap probe measured266,290,554 gas with guest constructors,
+160,386,777 with zero-field Object; kept1024 arrays+1024 objects and250M budget,
+isolating quota from unrelated work. Exact new [J expectations/retained F/D guards
+verified. No runtime defect demonstrated or runtime/hash changed.
+Parent final artifact/3bootstraps, Go/CLI,36 Python,1593 full,732 smoke,752 fast,
+demos,AOT,focused vet and48 independent probes passed:
+`build/java-diff-parent-m5bb/probe-xd_c2tax/results-final/`.
+Prior1493 cases/budgets unchanged. Runtime111218 bytes SHA256
+`ad3aeff4e658741374e76cf2bb76d33e392929f640feca563255fa7f89631dac`.
+Next variable-width control flow before bounded IEEE work. No agent Fast.
