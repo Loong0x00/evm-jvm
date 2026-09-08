@@ -323,12 +323,21 @@ func TestRuntimeM4eStructuralDimensionsStackAndBoundaries(t *testing.T) {
 		result, err := Run(out, "run", []int32{1, 1}, runtimeM4eGasLimit)
 		runtimeM4eWantSolidityError(t, result, err, "TypeError(uint256,uint256)", 1, uint64(pc))
 	})
-	t.Run("deferred-primitive", func(t *testing.T) {
+	t.Run("byte-primitive-negative-size", func(t *testing.T) {
 		out := append([]byte(nil), base...)
 		class := parseCallTestClass(t, out)
 		nameIndex := binary.BigEndian.Uint16(out[class.cpOffsets[arrayIndex]+1:])
 		copy(out[class.cpOffsets[nameIndex]+3:], []byte("[[B"))
-		result, err := Run(out, "run", []int32{-1, -1}, runtimeM4eGasLimit)
+		verifyM4eAssertException(t, func() (Result, error) {
+			return Run(out, "run", []int32{-1, -1}, runtimeM4eGasLimit)
+		}, "java.lang.NegativeArraySizeException", 4)
+	})
+	t.Run("deferred-long-primitive", func(t *testing.T) {
+		out := append([]byte(nil), base...)
+		class := parseCallTestClass(t, out)
+		nameIndex := binary.BigEndian.Uint16(out[class.cpOffsets[arrayIndex]+1:])
+		copy(out[class.cpOffsets[nameIndex]+3:], []byte("[[J"))
+		result, err := Run(out, "run", []int32{1, 1}, runtimeM4eGasLimit)
 		runtimeM4eWantSolidityError(t, result, err, "TypeError(uint256,uint256)", 2, uint64(pc))
 	})
 

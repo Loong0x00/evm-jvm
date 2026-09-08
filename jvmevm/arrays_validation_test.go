@@ -514,13 +514,22 @@ func TestVerifyM4aArrayAtypeTruncationAndNewBranchTargets(t *testing.T) {
 	original := verifyM4aCompileStackFixture(t, []string{
 		"atype", "truncatedArray", "truncatedIfNull", "ifNullTarget", "ifCmpTarget",
 	})
-	t.Run("unsupported-atype", func(t *testing.T) {
+	t.Run("boolean-atype", func(t *testing.T) {
 		code := []byte{0x04, 0xbc, 4, 0xbe, 0xac}
 		classfile := verifyM4aRewriteCode(t, original, "atype", "()I", code)
-		verifyM4aAssertError(t, func() (Result, error) {
+		verifyM4aAssertValue(t, func() (Result, error) {
 			return Run(classfile, "atype", nil, verifyM4aGasLimit)
-		}, "ArrayError(uint256,uint256)", 1, 1)
+		}, 1)
 	})
+	for _, atype := range []byte{6, 7, 11} {
+		t.Run(fmt.Sprintf("unsupported-atype-%d", atype), func(t *testing.T) {
+			code := []byte{0x04, 0xbc, atype, 0xbe, 0xac}
+			classfile := verifyM4aRewriteCode(t, original, "atype", "()I", code)
+			verifyM4aAssertError(t, func() (Result, error) {
+				return Run(classfile, "atype", nil, verifyM4aGasLimit)
+			}, "ArrayError(uint256,uint256)", 1, 1)
+		})
+	}
 	t.Run("truncated-newarray", func(t *testing.T) {
 		classfile := verifyM4aRewriteAtEnd(t, original, "truncatedArray", 0xbc)
 		pc := uint64(len(parseStaticsClass(t, classfile).method(t, "truncatedArray", "()I").code) - 1)

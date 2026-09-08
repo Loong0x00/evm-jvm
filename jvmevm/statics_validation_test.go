@@ -297,18 +297,17 @@ func TestM3cFieldResolutionErrorCodesAndMissingOwner(t *testing.T) {
 		}, "FieldError(uint256,uint256)", 3, uint64(readPC))
 	})
 
-	t.Run("non-I-descriptor", func(t *testing.T) {
+	t.Run("byte-descriptor-default-zero", func(t *testing.T) {
 		parsed := parseStaticsClass(t, root)
-		_, pc := parsed.fieldInstruction(t, "narrow", opGetstatic, 0)
 		code := parsed.method(t, "narrow", "()I").code
 		if len(code) != 4 || code[0] != opGetstatic || code[3] != 0xac {
 			t.Fatalf("narrow bytecode = %x, want getstatic <B field>; ireturn", code)
 		}
 		// The unselected wide method below contains unsupported l2i, but must not
 		// interfere with verification of this narrow method's field resolution.
-		assertStaticsError(t, func() (Result, error) {
+		assertStaticsValue(t, func() (Result, error) {
 			return RunClasses([][]byte{root, classes["fields/Target"]}, "fields/Root", "narrow", nil, staticsValidationGasLimit)
-		}, "FieldError(uint256,uint256)", 3, uint64(pc))
+		}, 0)
 	})
 
 	t.Run("unsupported-l2i-is-bytecode-error-before-field-resolution", func(t *testing.T) {
