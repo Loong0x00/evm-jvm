@@ -14,8 +14,11 @@ Current accepted stage: **M5d-a implicit exceptions/handlers/unwind**, recorded 
 regressions and a field-arena boundary case; prior192 IEEE-array probes retained.
 Parent fixed already-failed default-interface prerequisites and bounded arena cost.
 Runtime154839bytes;24 bootstraps. New Throwable/APIs remain deferred, four raw-bit
-bindings only. Next parallel proposals: stock-EVM deployment/continuation architecture
-and Java Throwable/bootstrap dependencies. No next implementation contract frozen.
+bindings only. Next implementation is separate **S0 stock deployment/continuation**
+under frozen JAVA_EVM_STOCK_S0_PLAN.md. Its tiny integer subset is NOT modularized
+M5d-a and its case counts stay separate. M5d-b0 Throwable proposal is retained but
+not frozen; do not edit the accepted monolith during S0. Runtime/harness/verifier
+use new jvmevm/stock paths only, with stockHarness*/stockVerify* helper prefixes.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.

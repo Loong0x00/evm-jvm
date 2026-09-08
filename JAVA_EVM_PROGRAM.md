@@ -117,7 +117,7 @@ routine permission to start the next verified increment.
 | M5c-d | IEEE arrays | accepted;2091 cases plus192 parent probes |
 | M5d-a | implicit exceptions/handler/unwind foundation | accepted;2231 cases plus179 parent probes/8 init regressions/field boundary, prior192 retained |
 | M5d-b+ | fresh user Throwable construction/APIs and remaining JVM/library features | queued; freeze separately |
-| Stock-EVM architecture | ordinary deployment/modules/persistent continuation | proposal/prototype preflight active; not frozen |
+| Stock-EVM S0 | ordinary deployment/signed replay/bounded persistent integer stepping | frozen JAVA_EVM_STOCK_S0_PLAN.md; separate architectural subset, NOT M5da migration |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued; MC1.12.2 candidate inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -142,10 +142,12 @@ MC static-only proposal2b2708d: recommend explicitly scoped1.12.2 candidate, opt
 modern1.21.5 comparison. Genuine Done logger follows level preparation. Artifacts
 only inspected, never executed; no EULA acceptance/listener. No differences in
 core/vm,core/state,core/types,consensus,params vs pinned upstream95665d5.
-Next two Sol/high NO Fast proposal-only workers basedfc9061c:
-- stock-evm-architecture: JAVA_EVM_STOCK_EXECUTION_PROPOSAL.md + ignored bounded
-  standard-deployment/resume prototypes; no privileged SetCode deployment claim.
-- java-bootstrap-next: JAVA_EVM_M5DB_BOOTSTRAP_PROPOSAL.md + trusted Java oracle
-  probes for construction/Throwable ABI/String/main dependencies.
-Parent reviews/freezes next bounded implementation, no routine confirmation. These
-proposals are NOT current implementation claims. Keep one production Solidity writer.
+Stock preflight800cdf3 independently reproduced by parent (same prototype log);
+bootstrap proposald5baf88 retained. Next implementation FROZEN in
+JAVA_EVM_STOCK_S0_PLAN.md: separate size-compliant pages/module/controller, signed
+simulated-chain plus ApplyMessage replay, bounded integer state and rollback. Fixes
+prototype int256/initialization/parser gaps; NOT modularizedM5da/full JVM/MC.
+Runtime/harness/verifier new jvmevm/stock-only write sets; parent owns integration,
+Make targets and independent checks. Existing2231 cases/runtime unchanged. M5d-b0
+identity proposal remains queued rather than expanding the monolith in parallel.
+One production Solidity writer; Sol/high NO Fast, no routine confirmation.
