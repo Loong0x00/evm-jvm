@@ -2,8 +2,10 @@
 
 Current accepted stage: **M5c-d IEEE arrays**, recorded in
 `JAVA_EVM_M5CD_PLAN.md`:2091 cases plus192 independent raw-cell probes. Next is
-M5d-a exception/unwind preflight; implementation contract not frozen yet. Implicit
-Java faults must become catchable, not just athrow. Four EVM raw-bit bindings only.
+M5d-a implementation under frozen `JAVA_EVM_M5DA_PLAN.md` (NOT accepted yet).
+All implicit Java faults, ordered handlers/unwind, canonical raw Throwable graph,
+256+1 exception arena and failed-init NCDFE are atomic scope; new Throwable/APIs
+remain deferred. Four EVM raw-bit bindings only.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.

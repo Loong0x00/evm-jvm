@@ -104,9 +104,11 @@ M5c-d accepted:2091 JVM/EVM cases plus192 parent probes,36 Python,945 smoke/965f
 Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Obsolete FP-array guards updated,
 double-overlap/store-order probes added; no demonstrated runtime defect. Runtime
 135652 bytes, local-runtime only/not full JVM. Prior1971 fixture inputs/budgets same.
-Next parallel M5d-a architecture+JVM-oracle preflight before implementation freeze:
-route ALL existing implicit Java faults to pending exceptions/ordered handlers/
-interframe unwind, not just athrow. Need canonical Throwable identity/heap budget,
-failed initialization/NCDFE and root ABI rules; defer user new Throwable/APIs.
-Parent resolves proposal details then automatically freezes/dispatches runtime,
-fixtures and verifier. NEW agents Sol/high WITHOUT Fast; no routine confirmation.
+M5d-a preflights integrated as7b86342/327f4d4; parent contract now FROZEN in
+JAVA_EVM_M5DA_PLAN.md, implementation NOT accepted. Atomic all implicit faults,
+ordered handlers/unwind/athrow,19 raw canonical Throwable classfiles,256 fresh+1
+emergency arena/256 handlers, failed initialization and NCDFE12. Lazy applicable
+catch resolution; explicit constructor safety/profile limits. No new Throwable/APIs.
+Runtime/fixtures/verifier proceed in disjoint worktrees; parent integrates then
+independently probes and runs full historical gates before acceptance.
+NEW agents Sol/high WITHOUT Fast; no routine confirmation.

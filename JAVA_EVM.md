@@ -14,6 +14,10 @@ exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` instal
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
 
+**Next stage (not yet supported):** M5d-a handler/unwind implementation is frozen in
+`JAVA_EVM_M5DA_PLAN.md`; preflight evidence is recorded in the two M5DA proposals.
+The accepted runtime below still reports uncaught Java outcomes and rejects handlers.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:
