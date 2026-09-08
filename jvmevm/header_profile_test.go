@@ -89,7 +89,9 @@ func TestLegacyRunHeaderProfileValidationAndCompatibility(t *testing.T) {
 	static int run() { return 1; }
 }`)
 	interfaceResult, interfaceErr := Run(marker, "run", nil, headerProfileGasLimit)
-	assertHeaderProfileMethodError(t, interfaceResult, interfaceErr, 7)
+	if interfaceErr != nil || interfaceResult.ExceptionClass != "" || interfaceResult.Value != 1 || interfaceResult.GasUsed == 0 || len(interfaceResult.RevertData) != 0 {
+		t.Fatalf("legacy interface static root result/error = %+v/%v, want value 1", interfaceResult, interfaceErr)
+	}
 
 	t.Logf(
 		"legacy header profile gas: ordinary=%d malformed-super=%d zero-super=%d direct-interface=%d",

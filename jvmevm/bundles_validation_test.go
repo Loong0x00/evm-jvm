@@ -66,7 +66,7 @@ func TestRunClassesMissingOwnerReportsCallerPC(t *testing.T) {
 	)
 }
 
-func TestRunClassesRejectsEnteredInterfaceAtInputIndex(t *testing.T) {
+func TestRunClassesAcceptsEnteredInterfaceStaticAtInputIndex(t *testing.T) {
 	classes := compileBundleValidationJava(t, map[string]string{
 		"entered/Plain.java": `package entered; public final class Plain { public static int run() { return 1; } }`,
 		"entered/Face.java":  `package entered; public interface Face { static int run() { return 2; } }`,
@@ -75,7 +75,9 @@ func TestRunClassesRejectsEnteredInterfaceAtInputIndex(t *testing.T) {
 		[][]byte{classes["entered/Plain"], classes["entered/Face"]},
 		"entered/Face", "run", nil, bundleValidationGasLimit,
 	)
-	assertBundleValidationError(t, result, err, "LinkError(uint256,uint256)", 5, 1)
+	if err != nil || result.ExceptionClass != "" || result.Value != 2 || result.GasUsed == 0 || len(result.RevertData) != 0 {
+		t.Fatalf("interface static root result = %+v/%v, want 2", result, err)
+	}
 }
 
 func TestRunClassesAcceptsProvidedSuperclassAndInheritedInitialization(t *testing.T) {
@@ -133,16 +135,25 @@ func TestRunClassesCallStructureAndMissingSignatureKeepExactCallErrors(t *testin
 
 	badTag := mutateCallValidationClass(t, classes["calls/Root"], func(out []byte, parsed callValidationClass) {
 		ref, _ := parsed.callRef(t, "run")
-		out[parsed.entry(t, ref).offset] = 11
+		out[parsed.entry(t, ref).offset] = 9 // Fieldref is not a valid invokestatic reference.
 	})
 	result, err := RunClasses(
 		[][]byte{classes["calls/Target"], badTag}, "calls/Root", "run", []int32{4}, bundleValidationGasLimit,
 	)
 	assertBundleValidationError(t, result, err, "CallError(uint256,uint256)", 1, uint64(callPC))
 
+	wrongKind := mutateCallValidationClass(t, classes["calls/Root"], func(out []byte, parsed callValidationClass) {
+		ref, _ := parsed.callRef(t, "run")
+		out[parsed.entry(t, ref).offset] = 11 // Valid InterfaceMethodref, but Target is a class.
+	})
+	result, err = RunClasses(
+		[][]byte{classes["calls/Target"], wrongKind}, "calls/Root", "run", []int32{4}, bundleValidationGasLimit,
+	)
+	assertBundleValidationError(t, result, err, "InterfaceError(uint256,uint256)", 1, uint64(callPC))
+
 	missing := mutateCallValidationClass(t, classes["calls/Root"], func(out []byte, parsed callValidationClass) {
 		nameType := parsed.callNameType(t, "run")
-		binary.BigEndian.PutUint16(out[parsed.entry(t, nameType).offset+1:], parsed.utfIndex(t, "calls/Root"))
+		binary.BigEndian.PutUint16(out[parsed.entry(t, nameType).offset+1:], parsed.utfIndex(t, "run"))
 	})
 	result, err = RunClasses(
 		[][]byte{missing, classes["calls/Target"]}, "calls/Root", "run", []int32{4}, bundleValidationGasLimit,

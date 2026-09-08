@@ -78,7 +78,7 @@ func TestM3aInvalidCallConstantPoolStructuresUseCallError1(t *testing.T) {
 		"methodref-wrong-tag": func() []byte {
 			return mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
 				ref, _ := c.callRef(t, "run")
-				out[c.entry(t, ref).offset] = 11 // InterfaceMethodref is outside M3a.
+				out[c.entry(t, ref).offset] = 9 // Fieldref is not a valid invokestatic reference.
 			})
 		},
 		"class-zero-index": func() []byte {
@@ -143,6 +143,15 @@ func TestM3aInvalidCallConstantPoolStructuresUseCallError1(t *testing.T) {
 			assertCallValidationError(t, classfile, "run", []int32{4, 2}, "CallError(uint256,uint256)", 1, &pc)
 		})
 	}
+
+	t.Run("interface-methodref-class-owner", func(t *testing.T) {
+		classfile := mutateCallValidationClass(t, original, func(out []byte, c callValidationClass) {
+			ref, _ := c.callRef(t, "run")
+			out[c.entry(t, ref).offset] = 11
+		})
+		_, pc := parseCallValidationClass(t, classfile).callRef(t, "run")
+		assertCallValidationError(t, classfile, "run", []int32{4, 2}, "InterfaceError(uint256,uint256)", 1, &pc)
+	})
 }
 
 func TestM3aCallResolutionErrorCodes(t *testing.T) {

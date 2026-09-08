@@ -122,7 +122,7 @@ public class CallErrors {
 		edit func([]byte)
 	}{
 		"bad-methodref-tag": {1, func(class []byte) {
-			class[parsed.cpOffsets[refIndex]] = 11 // InterfaceMethodref is explicitly rejected in M3a
+			class[parsed.cpOffsets[refIndex]] = 9 // Fieldref is not a valid invokestatic reference.
 		}},
 		"bad-name-and-type-tag": {1, func(class []byte) {
 			class[parsed.cpOffsets[natIndex]] = 10 // same-width tag, but not NameAndType
@@ -152,6 +152,13 @@ public class CallErrors {
 			assertSolidityError(t, result, err, "CallError(uint256,uint256)", tc.code, wantPC)
 		})
 	}
+
+	t.Run("interface-methodref-class-owner", func(t *testing.T) {
+		classfile := append([]byte(nil), original...)
+		classfile[parsed.cpOffsets[refIndex]] = 11
+		result, err := Run(classfile, "root", []int32{20, 22}, 5_000_000)
+		assertSolidityError(t, result, err, "InterfaceError(uint256,uint256)", 1, uint64(callPC))
+	})
 
 	external := compileJava(t, "ExternalCall", `
 public class ExternalCall { public static int root(int a) { return Math.abs(a); } }

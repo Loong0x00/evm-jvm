@@ -166,9 +166,9 @@ func TestVerifyM4faGraphKindDuplicateCycleMissingAccessAndHeaderErrors(t *testin
 		return RunClasses([][]byte{classes["bad/A"], classes["bad/B"], badSuper}, "user/Root", "run", nil, verifyM4faGasLimit)
 	}, "HierarchyError(uint256,uint256)", 4, 2)
 
-	verifyM4faAssertError(t, func() (Result, error) {
+	verifyM4fbAssertCodeError(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["bad/A"]}, "bad/A", "f", nil, verifyM4faGasLimit)
-	}, "LinkError(uint256,uint256)", 5, 0)
+	}, "MethodError(uint256)", 6)
 
 	cycleSources := compileBundleValidationJava(t, map[string]string{
 		"cycle/Anchor.java": `package cycle; public interface Anchor { }`,
@@ -291,7 +291,7 @@ func TestVerifyM4faInvokeinterfaceFiveByteStructureCountCPAndBranchBoundaries(t 
 	}
 }
 
-func TestVerifyM4faStaticInterfaceCallsAndFieldsRemainPreciselyDeferred(t *testing.T) {
+func TestVerifyM4fcStaticInterfaceCallsAndFieldsAreSupportedPrecisely(t *testing.T) {
 	classes := compileBundleValidationJava(t, map[string]string{
 		"defer/I.java":    `package defer; public interface I { int X=init(); static int init(){return 7;} static int s(){return X;} int f(); }`,
 		"defer/Root.java": `package defer; public final class Root { public static int call(){return I.s();} public static int field(){return I.X;} }`,
@@ -299,17 +299,17 @@ func TestVerifyM4faStaticInterfaceCallsAndFieldsRemainPreciselyDeferred(t *testi
 	root := classes["defer/Root"]
 	c := parseStaticsClass(t, root)
 	staticRef, staticPC := verifyM4faMemberInstruction(t, c, c.namedMethod(t, "call"), verifyM4faInvokestatic, 11, "s", "()I")
-	verifyM4faAssertError(t, func() (Result, error) {
+	verifyM4faAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4faBundle(classes), "defer/Root", "call", nil, verifyM4faGasLimit)
-	}, "CallError(uint256,uint256)", 1, uint64(staticPC))
+	}, 7)
 	forged := verifyM4faMutate(t, root, func(raw []byte, p staticsClass) { raw[p.entry(t, staticRef).offset] = 10 })
 	verifyM4faAssertError(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["defer/I"], forged}, "defer/Root", "call", nil, verifyM4faGasLimit)
 	}, "CallError(uint256,uint256)", 4, uint64(staticPC))
-	_, fieldPC := verifyM4faFieldInstruction(t, c, c.namedMethod(t, "field"), 0xb2, "X", "I")
-	verifyM4faAssertError(t, func() (Result, error) {
+	verifyM4faFieldInstruction(t, c, c.namedMethod(t, "field"), 0xb2, "X", "I")
+	verifyM4faAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4faBundle(classes), "defer/Root", "field", nil, verifyM4faGasLimit)
-	}, "FieldError(uint256,uint256)", 3, uint64(fieldPC))
+	}, 7)
 }
 
 func TestVerifyM4faReceiverChecksSelectedImplementationsAndNullOrdering(t *testing.T) {

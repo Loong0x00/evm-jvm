@@ -375,7 +375,7 @@ func TestVerifyM4fbInterfaceSuperCPDirectnessCallerReceiverAndBranchShape(t *tes
 	}
 }
 
-func TestVerifyM4fbRetainedInterfaceStaticAndExternalFieldGuards(t *testing.T) {
+func TestVerifyM4fcInterfaceStaticsAndFieldsReplaceOnlyObsoleteGuards(t *testing.T) {
 	classes := compileBundleValidationJava(t, map[string]string{
 		"retained/I.java":    `package retained; public interface I { int X=init(); static int init(){return 7;} static int call(){return X;} default int f(){return 1;} }`,
 		"retained/C.java":    `package retained; public final class C implements I { }`,
@@ -384,23 +384,23 @@ func TestVerifyM4fbRetainedInterfaceStaticAndExternalFieldGuards(t *testing.T) {
 	root := classes["retained/Root"]
 	parsed := parseStaticsClass(t, root)
 	staticRef, staticPC := verifyM4fbMemberInstruction(t, parsed, parsed.namedMethod(t, "call"), verifyM4fbInvokestatic, 11, "call", "()I")
-	verifyM4fbAssertError(t, func() (Result, error) {
+	verifyM4fbAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4faBundle(classes), "retained/Root", "call", nil, verifyM4fbGasLimit)
-	}, "CallError(uint256,uint256)", 1, uint64(staticPC))
+	}, 7)
 	forged := verifyM4faMutate(t, root, func(raw []byte, c staticsClass) { raw[c.entry(t, staticRef).offset] = 10 })
 	verifyM4fbAssertError(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["retained/I"], forged}, "retained/Root", "call", nil, verifyM4fbGasLimit)
 	}, "CallError(uint256,uint256)", 4, uint64(staticPC))
-	_, fieldPC := verifyM4faFieldInstruction(t, parsed, parsed.namedMethod(t, "field"), verifyM4fbGetstatic, "X", "I")
-	verifyM4fbAssertError(t, func() (Result, error) {
+	verifyM4faFieldInstruction(t, parsed, parsed.namedMethod(t, "field"), verifyM4fbGetstatic, "X", "I")
+	verifyM4fbAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4faBundle(classes), "retained/Root", "field", nil, verifyM4fbGasLimit)
-	}, "FieldError(uint256,uint256)", 3, uint64(fieldPC))
-	verifyM4fbAssertError(t, func() (Result, error) {
+	}, 7)
+	verifyM4fbAssertCodeError(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["retained/I"]}, "retained/I", "f", nil, verifyM4fbGasLimit)
-	}, "LinkError(uint256,uint256)", 5, 0)
+	}, "MethodError(uint256)", 6)
 	verifyM4fbAssertCodeError(t, func() (Result, error) {
 		return Run(classes["retained/I"], "f", nil, verifyM4fbGasLimit)
-	}, "MethodError(uint256)", 7)
+	}, "MethodError(uint256)", 6)
 }
 
 func TestVerifyM4fbJava8BinaryEvolutionConflictAndAllocationTiming(t *testing.T) {
@@ -498,7 +498,7 @@ func TestVerifyM4fbJava8InitializerLinkageErrorsStayUnwrapped(t *testing.T) {
 	}
 }
 
-func TestVerifyM4fbAncestorInitializerDoesNotAuthorizeExternalInterfaceField(t *testing.T) {
+func TestVerifyM4fcAncestorInitializerCanReadExternalInterfaceField(t *testing.T) {
 	classes := compileBundleValidationJava(t, map[string]string{
 		"fieldguard/Tracker.java": `package fieldguard; public final class Tracker { public static int mark(){return 7;} }`,
 		"fieldguard/Helper.java":  `package fieldguard; public final class Helper { public static int read(){return Child.Y;} }`,
@@ -508,10 +508,10 @@ func TestVerifyM4fbAncestorInitializerDoesNotAuthorizeExternalInterfaceField(t *
 		"fieldguard/Root.java":    `package fieldguard; public final class Root { public static int run(){new C();return 1;} }`,
 	}, "fieldguard/Tracker", "fieldguard/Helper", "fieldguard/Parent", "fieldguard/Child", "fieldguard/C", "fieldguard/Root")
 	helper := parseStaticsClass(t, classes["fieldguard/Helper"])
-	_, pc := verifyM4faFieldInstruction(t, helper, helper.namedMethod(t, "read"), verifyM4fbGetstatic, "Y", "I")
-	verifyM4fbAssertError(t, func() (Result, error) {
+	verifyM4faFieldInstruction(t, helper, helper.namedMethod(t, "read"), verifyM4fbGetstatic, "Y", "I")
+	verifyM4fbAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4faBundle(classes), "fieldguard/Root", "run", nil, verifyM4fbGasLimit)
-	}, "FieldError(uint256,uint256)", 3, uint64(pc))
+	}, 1)
 }
 
 func TestVerifyM4fbExactDecoderRejectsUnknownAndOOG(t *testing.T) {

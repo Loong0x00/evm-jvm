@@ -143,7 +143,12 @@ func TestRunClassesFrozenLinkErrorsAndLazyUnsupportedClasses(t *testing.T) {
 	if err != nil || inherited.Value != 7 {
 		t.Fatalf("supplied ordinary superclass result = %+v/%v, want 7", inherited, err)
 	}
-	assertBundleError(t, [][]byte{base["Face"]}, "Face", "run", []int32{7}, "LinkError(uint256,uint256)", 5, 0)
+	interfaceRoot, err := RunClasses(
+		[][]byte{base["Face"]}, "Face", "run", []int32{7}, 30_000_000,
+	)
+	if err != nil || interfaceRoot.ExceptionClass != "" || interfaceRoot.Value != 7 || interfaceRoot.GasUsed == 0 || len(interfaceRoot.RevertData) != 0 {
+		t.Fatalf("interface static root result = %+v/%v, want 7", interfaceRoot, err)
+	}
 
 	bad := append([]byte(nil), peer...)
 	bad[0] = 0
