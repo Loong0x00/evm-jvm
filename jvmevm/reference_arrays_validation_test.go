@@ -572,7 +572,7 @@ func TestVerifyM4dJavaExceptionDecoderKindsOneThroughNineCanonical(t *testing.T)
 		append([]byte(nil), payload[:35]...),
 		append(append([]byte(nil), payload...), 0),
 		func() []byte { out := append([]byte(nil), payload...); out[4] = 1; return out }(),
-		func() []byte { out := append([]byte(nil), payload...); out[35] = 10; return out }(),
+		func() []byte { out := append([]byte(nil), payload...); out[35] = 255; return out }(),
 		func() []byte { out := append([]byte(nil), payload...); out[0] ^= 1; return out }(),
 	} {
 		if got, ok := decodeJavaException(bad); ok || got != "" {

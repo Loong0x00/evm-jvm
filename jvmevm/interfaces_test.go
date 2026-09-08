@@ -79,13 +79,15 @@ func TestRuntimeM4faAbstractInterfacesDoNotInitialize(t *testing.T) {
 	}
 }
 
-func TestRuntimeM4faRejectsReachableDefaultBeforeClassInitialization(t *testing.T) {
+func TestRuntimeM4fbReachableDefaultAllowsClassInitialization(t *testing.T) {
 	classes := compileJavaSources(t, map[string]string{
 		"m4default/I.java":    `package m4default; public interface I { default int f(){return 1;} }`,
 		"m4default/Root.java": `package m4default; public final class Root implements I { static int x=7; public static int run(){return x;} }`,
 	})
 	result, err := RunClasses(runtimeM4faBundle(classes, "m4default/Root", "m4default/I"), "m4default/Root", "run", nil, runtimeM4faGasLimit)
-	assertSolidityError(t, result, err, "InterfaceError(uint256,uint256)", 4, 1)
+	if err != nil || result.ExceptionClass != "" || result.Value != 7 {
+		t.Fatalf("default-bearing class initialization result = %+v/%v, want 7", result, err)
+	}
 }
 
 func TestRuntimeM4faGraphDuplicateMissingKindAndCycle(t *testing.T) {

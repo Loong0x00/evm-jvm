@@ -577,7 +577,7 @@ func TestVerifyM4bNewAndSpecialMalformedOperandsAndBranchTargets(t *testing.T) {
 		{"range", func(out []byte, c staticsClass) {
 			binary.BigEndian.PutUint16(c.method(t, "run", "()I").code[callPC+1:], uint16(c.cpCount))
 		}},
-		{"wrong-tag", func(out []byte, c staticsClass) { out[c.entry(t, callRef).offset] = 11 }},
+		{"wrong-tag", func(out []byte, c staticsClass) { out[c.entry(t, callRef).offset] = 9 }},
 		{"zero-owner", func(out []byte, c staticsClass) { binary.BigEndian.PutUint16(out[c.entry(t, callRef).offset+1:], 0) }},
 		{"zero-name-type", func(out []byte, c staticsClass) { binary.BigEndian.PutUint16(out[c.entry(t, callRef).offset+3:], 0) }},
 	}
@@ -588,6 +588,13 @@ func TestVerifyM4bNewAndSpecialMalformedOperandsAndBranchTargets(t *testing.T) {
 				"CallError(uint256,uint256)", 1, uint64(callPC))
 		})
 	}
+	// InterfaceMethodref is now a supported CP tag for invokespecial, but its
+	// ordinary-class owner is rejected with the exact interface-kind fault.
+	classOwnerInterfaceRef := verifyM4bMutate(t, original, func(out []byte, c staticsClass) {
+		out[c.entry(t, callRef).offset] = 11
+	})
+	verifyM4bAssertError(t, func() (Result, error) { return Run(classOwnerInterfaceRef, "run", nil, verifyM4bGasLimit) },
+		"InterfaceError(uint256,uint256)", 1, uint64(callPC))
 
 	truncatedNew := verifyM4bRewriteAtEnd(t, original, "run", "()I", verifyM4bNew)
 	pc := len(parseStaticsClass(t, truncatedNew).method(t, "run", "()I").code) - 1

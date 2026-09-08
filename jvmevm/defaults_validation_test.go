@@ -180,10 +180,11 @@ func TestVerifyM4fbSuperclassFirstReentrantInitializationAndOwnInterfaceFields(t
 
 func TestVerifyM4fbNonErrorInitializerFailureWrapsButErrorsAndOOGDoNot(t *testing.T) {
 	classes := compileBundleValidationJava(t, map[string]string{
-		"initfail/I.java":    `package initfail; public interface I { int X=1/zero(); static int zero(){return 0;} default int f(){return 1;} }`,
-		"initfail/C.java":    `package initfail; public final class C implements I { }`,
-		"initfail/Root.java": `package initfail; public final class Root { public static int run(){new C();return 1;} }`,
-	}, "initfail/I", "initfail/C", "initfail/Root")
+		"initfail/Helper.java": `package initfail; public final class Helper { public static int zero(){return 0;} }`,
+		"initfail/I.java":      `package initfail; public interface I { int X=1/Helper.zero(); default int f(){return 1;} }`,
+		"initfail/C.java":      `package initfail; public final class C implements I { }`,
+		"initfail/Root.java":   `package initfail; public final class Root { public static int run(){new C();return 1;} }`,
+	}, "initfail/Helper", "initfail/I", "initfail/C", "initfail/Root")
 	verifyM4fbAssertException(t, func() (Result, error) {
 		return RunClasses(verifyM4faBundle(classes), "initfail/Root", "run", nil, verifyM4fbGasLimit)
 	}, "java.lang.ExceptionInInitializerError", 3)
@@ -291,7 +292,9 @@ func TestVerifyM4fbInterfaceSuperCPDirectnessCallerReceiverAndBranchShape(t *tes
 		{"cp-range", func(_ []byte, c staticsClass) {
 			binary.BigEndian.PutUint16(c.method(t, "direct", "(I)I").code[pc+1:], uint16(c.cpCount))
 		}, "CallError(uint256,uint256)", 1},
-		{"cp-tag10", func(raw []byte, c staticsClass) { raw[c.entry(t, ref).offset] = 10 }, "CallError(uint256,uint256)", 1},
+		// CP tag 10 is a structurally valid Methodref. Its interface owner makes
+		// this a supported-tag but unsupported invokespecial form, not malformed CP.
+		{"cp-tag10", func(raw []byte, c staticsClass) { raw[c.entry(t, ref).offset] = 10 }, "CallError(uint256,uint256)", 4},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			bad := verifyM4faMutate(t, original, tc.make)
@@ -301,9 +304,13 @@ func TestVerifyM4fbInterfaceSuperCPDirectnessCallerReceiverAndBranchShape(t *tes
 		})
 	}
 
-	indirect := verifyM4faMutate(t, original, func(raw []byte, c staticsClass) {
+	// javac does not otherwise need a Class entry for indirect parent I in C.
+	// Append an exact Class/Utf8 pair so this mutation isolates directness rather
+	// than failing in the test helper before the runtime is invoked.
+	indirectBase, indirectOwner := verifyM4faAppendNameAndClass(t, original, "special/I")
+	indirect := verifyM4faMutate(t, indirectBase, func(raw []byte, c staticsClass) {
 		e := c.entry(t, ref)
-		binary.BigEndian.PutUint16(raw[e.offset+1:], verifyM4faClassIndex(t, c, "special/I"))
+		binary.BigEndian.PutUint16(raw[e.offset+1:], indirectOwner)
 	})
 	verifyM4fbAssertError(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["special/I"], classes["special/J"], indirect}, "special/C", "run", nil, verifyM4fbGasLimit)
@@ -615,7 +622,7 @@ func verifyM4fbCompileVersion(t *testing.T, sources map[string]string, internalN
 		rels = append(rels, rel)
 	}
 	sort.Strings(rels)
-	args := []string{"--release", "8", "-d", dir}
+	args := []string{"-J-Xmx64m", "--release", "8", "-d", dir}
 	for _, rel := range rels {
 		path := filepath.Join(dir, filepath.FromSlash(rel))
 		if err := os.MkdirAll(filepath.Dir(path), 0700); err != nil {
@@ -680,7 +687,7 @@ func verifyM4fbJava8Outcome(t *testing.T, bundle [][]byte, mainClass, method, wa
 	}
 	ctxCompile, cancelCompile := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancelCompile()
-	if output, err := exec.CommandContext(ctxCompile, "javac", "--release", "8", "-d", dir, oraclePath).CombinedOutput(); err != nil {
+	if output, err := exec.CommandContext(ctxCompile, "javac", "-J-Xmx64m", "--release", "8", "-d", dir, oraclePath).CombinedOutput(); err != nil {
 		t.Fatalf("compile trusted Java8 oracle: %v\n%s", err, output)
 	}
 	for _, classfile := range bundle {
@@ -695,7 +702,7 @@ func verifyM4fbJava8Outcome(t *testing.T, bundle [][]byte, mainClass, method, wa
 	}
 	ctxRun, cancelRun := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancelRun()
-	output, err := exec.CommandContext(ctxRun, java8, "-cp", dir, "M4fbOracle", mainClass, method).CombinedOutput()
+	output, err := exec.CommandContext(ctxRun, java8, "-Xmx64m", "-cp", dir, "M4fbOracle", mainClass, method).CombinedOutput()
 	if err != nil {
 		t.Fatalf("bounded Java8 binary-evolution oracle failed: %v\n%s", err, output)
 	}

@@ -183,14 +183,14 @@ func TestVerifyM4faGraphKindDuplicateCycleMissingAccessAndHeaderErrors(t *testin
 	}, "InterfaceError(uint256,uint256)", 2, 0)
 }
 
-func TestVerifyM4faDefaultGuardPrecedesClassInitializationAndStaticMetadataStaysUnentered(t *testing.T) {
+func TestVerifyM4fbDefaultSupportRunsClassInitializationAndStaticMetadataStaysUnentered(t *testing.T) {
 	guard := compileBundleValidationJava(t, map[string]string{
 		"guard/I.java":    `package guard; public interface I { default int f(){return 1;} }`,
 		"guard/Root.java": `package guard; public final class Root implements I { static int bad=1/zero(); static int zero(){return 0;} public static int run(){return bad;} }`,
 	}, "guard/I", "guard/Root")
-	verifyM4faAssertError(t, func() (Result, error) {
+	verifyM4faAssertException(t, func() (Result, error) {
 		return RunClasses([][]byte{guard["guard/I"], guard["guard/Root"]}, "guard/Root", "run", nil, verifyM4faGasLimit)
-	}, "InterfaceError(uint256,uint256)", 4, 0)
+	}, "java.lang.ExceptionInInitializerError", 3)
 
 	lazy := compileBundleValidationJava(t, map[string]string{
 		"lazy/Tracker.java": `package lazy; public final class Tracker { static int count; static int start(){count++;return 7;} }`,
@@ -368,9 +368,9 @@ func TestVerifyM4faReceiverChecksSelectedImplementationsAndNullOrdering(t *testi
 		})
 	}
 	missingImpl := verifyM4faRenameMethod(t, classes["recv/Good"], "f", "(I)I", 'g')
-	verifyM4faAssertError(t, func() (Result, error) {
+	verifyM4faAssertException(t, func() (Result, error) {
 		return RunClasses([][]byte{classes["recv/I"], missingImpl, root}, "recv/Root", "run", nil, verifyM4faGasLimit)
-	}, "CallError(uint256,uint256)", 4, uint64(callPC))
+	}, "java.lang.AbstractMethodError", 11)
 
 	// Well-formed symbolic resolution still precedes receiver checks.
 	nullRoot := root
