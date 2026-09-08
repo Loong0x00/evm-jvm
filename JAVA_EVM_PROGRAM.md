@@ -87,8 +87,9 @@ routine permission to start the next verified increment.
 | M5b-b | long arrays | accepted;1593 cases plus48 independent probes |
 | M5c-a | switch/goto_w/wide variable-width control flow | accepted;1681 cases plus48 independent probes |
 | M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | accepted;1811 cases plus216 independent probes |
-| M5c-c | software scalar IEEE arithmetic | frozen in `JAVA_EVM_M5CC_PLAN.md`; dispatch3 workers |
-| M5c-d+ | IEEE arrays, handlers and remaining instructions | queued; freeze separately |
+| M5c-c | software scalar IEEE arithmetic | accepted;1971 cases plus960 parent probes |
+| M5c-d | IEEE arrays | next bounded stage |
+| M5d+ | exception/unwind and remaining JVM/library features | queued; freeze separately |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -98,11 +99,11 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M5c-b accepted:1811 JVM/EVM cases plus216 parent probes,36 Python,839 smoke/859fast,
-Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Parent+reviewer found/fixed real
-f2d unsigned-bias panic, retag-CV probes isolated, obsolete F/D guards updated.
-Runtime132118 bytes, local-runtime only/not full JVM. Prior1681 fixtures/budgets
-unchanged. M5c-c frozen in JAVA_EVM_M5CC_PLAN.md; dispatch3 workers for RNE/gradual
-underflow/signedzero/canonicalgeneratedNaN; arrays remain separate. Four raw-bit
-bindings ONLY, no host math or broad native/JRE fallback. NEW agents Sol/high
-WITHOUT Fast. Automatic verified progression, no routine confirmation.
+M5c-c accepted:1971 JVM/EVM cases plus960 parent probes,36 Python,864 smoke/884fast,
+Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Obsolete arithmetic guards updated,
+extra IEEE corner/seeded regressions and bounded gas proved; no runtime audit defect.
+Runtime136564 bytes, local-runtime only/not full JVM. Prior1811 inputs/budgets same.
+Next M5c-d F/D arrays/raw storage/category/quotas, then bounded exception/unwind
+foundation. Four raw-bit native services ONLY, no host math/JRE fallback. NEW
+agents Sol/high WITHOUT Fast; named java-fast is fixture tier. Automatic verified
+progression, no routine confirmation.

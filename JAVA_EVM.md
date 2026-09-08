@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M5c-b)
+# Java inside EVM: staged interpreter (M5c-c)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,7 +9,7 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 132,118-byte runtime
+**Local execution, not mainnet deployment:** the current 136,564-byte runtime
 exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
@@ -21,10 +21,10 @@ Run from the fork, not the unrelated home-directory Git repository:
 ```sh
 cd /home/user/evm-jvm/geth
 make java-demo       # add(20,22), sum(100), fibonacci(20)
-make java-smoke      # 839 fixed JVM/EVM differential cases
-make java-fast       # smoke + 20 seeded cases (859 total)
-make java-full       # all 1811 differential cases
-make java-test       # artifact check + Go tests + 36 runner tests + all 1811 cases
+make java-smoke      # 864 fixed JVM/EVM differential cases
+make java-fast       # smoke + 20 seeded cases (884 total)
+make java-full       # all 1971 differential cases
+make java-test       # artifact check + Go tests + 36 runner tests + all 1971 cases
 ```
 
 Go 1.24+, a JDK supporting `javac --release 8`, and make are needed for the demo.
@@ -62,21 +62,21 @@ merge gate also retains the separate M0 checks: `make java-aot-test`.
 
 ## Measured demo results
 
-One unchanged **132,118-byte** interpreter runtime handles legacy and bundled inputs:
+One unchanged **136,564-byte** interpreter runtime handles legacy and bundled inputs:
 
 | Raw input / entry | Result | Execution gas |
 |---|---:|---:|
-| Add.class / add(20,22) | 42 | 330,609 |
-| Loops.class / sum(100) | 5050 | 2,809,239 |
-| Loops.class / fibonacci(20) | 6765 | 1,102,436 |
-| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 677,609 |
-| M4aArrays.class / fillSum(10,3) | 165 | 2,684,117 |
+| Add.class / add(20,22) | 42 | 330,360 |
+| Loops.class / sum(100) | 5050 | 2,896,951 |
+| Loops.class / fibonacci(20) | 6765 | 1,118,188 |
+| BasicHelper + BasicRoot / threeArguments(1,2,3) | 10203 | 675,986 |
+| M4aArrays.class / fillSum(10,3) | 165 | 2,706,787 |
 
 Typed checks raised sum(100) beyond its old2M demo budget, independently confirmed;
 the demo now uses3M. No historical oracle input/budget or semantic assertion changed.
 
 Runtime SHA-256:
-`bab196c80d76db16257f2e2664c9a776c270782e87c3a3c169ecf364e73809f8`
+`b59cf3ff60ed775d21c6344eb832770e980d397721398a70fa1cf3037ba91069`
 
 Gas includes ABI decoding, scanning the **whole input class**, instruction
 validation and interpretation. It excludes contract deployment, transaction
@@ -212,7 +212,7 @@ M2b division truncates toward zero; remainder follows Java's sign rules.
 INT_MIN/-1 wraps to INT_MIN (remainder zero), shift counts are masked with 31,
 and byte/short/char conversions preserve their signed/unsigned Java semantics.
 
-**Deferred:** floating-point arithmetic and array leaves,
+**Deferred:** floating-point array leaves,
 array-receiver virtual calls, non-int/non-reference fields, handlers, monitors,
 class libraries and deployment workflows.
 
@@ -315,8 +315,8 @@ Three independent worker worktrees supplied fixtures, runtime and runner;
 changes were integrated and verified on the combined revision. Task ownership,
 protocol and acceptance evidence: [JAVA_EVM_M2_PLAN.md](JAVA_EVM_M2_PLAN.md).
 Broader proposals: [JAVA_EVM_ROADMAP.md](JAVA_EVM_ROADMAP.md). Continuous
-parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M5c-b acceptance is
-recorded in `JAVA_EVM_M5CB_PLAN.md`; next is software IEEE arithmetic.
+parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`. M5c-c acceptance is
+recorded in `JAVA_EVM_M5CC_PLAN.md`; next are float/double arrays.
 No full-Java claim or routine re-confirmation.
 
 ## M4b ordinary objects and direct instance calls
@@ -482,3 +482,13 @@ three bootstraps (64 user classes + at most5 internal). No boxed Float/Double,
 Number hierarchy or broader JRE APIs. Pure transport preserves payload; conversion
 NaNs canonicalize; cross-JVM signaling-NaN raw parity is not claimed. FP arithmetic/
 arrays remain deferred, root protocol remains exact(I...)I.
+
+## M5c-c software IEEE arithmetic
+
+1971 cumulative JVM/EVM cases plus960 parent bit-level probes passed. Scalar F/D
+add/sub/mul/div/Java remainder use EVM integer algorithms, RNE and gradual underflow,
+with exact finite/signed-zero results and canonical generated NaNs. Java remainder
+uses exact truncating-quotient binary modulus, not rounded division/IEEE nearest
+remainder; exponent reduction is bounded/logarithmic. No host math/new native APIs.
+Independent worst single op ~1.45M/20M gas,16 repeated drem ~4.77M/100M. Raw transport
+NaN policy remains separate. FP arrays/handlers/JRE are still staged.

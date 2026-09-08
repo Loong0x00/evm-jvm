@@ -1,9 +1,9 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M5c-b scalar IEEE/conversions**, recorded in
-`JAVA_EVM_M5CB_PLAN.md`:1811 cases plus216 independent probes. Active M5c-c software
-IEEE arithmetic, frozen in `JAVA_EVM_M5CC_PLAN.md`; FP arrays/handlers follow. Four exact raw-bit services run in
-EVM only; no host math or generic native/JRE fallback. Five raw bootstraps verified.
+Current accepted stage: **M5c-c software IEEE arithmetic**, recorded in
+`JAVA_EVM_M5CC_PLAN.md`:1971 cases plus960 independent parent probes. Next F/D arrays,
+then exception/unwind/library stages. Four exact EVM raw-bit bindings only; no host
+math/JRE fallback. Five raw bootstrap images verified.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
@@ -28,7 +28,7 @@ worktree based on the latest integration revision, not an old worker tree.
 Worktrees separate edits, not security permissions. Respect frozen task write
 sets; only one worker edits the monolithic Solidity dispatcher at a time.
 Disjoint Go files still share a package namespace: give new test helpers a
-stage/role prefix (e.g. runtimeM5cc* vs verifyM5cc*) to avoid integration collisions.
+stage/role prefix (e.g. runtimeM5cd* vs verifyM5cd*) to avoid integration collisions.
 The differential oracle executes Java on the host: use only trusted generated
 fixtures here; untrusted external programs/corpora require isolation first.
 
@@ -65,9 +65,9 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # EVM arithmetic, bundle call and int-array examples
-make java-smoke      # 839 fixed oracle comparisons
-make java-fast       # 859 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 1811 cases through M5c-b
+make java-smoke      # 864 fixed oracle comparisons
+make java-fast       # 884 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 1971 cases through M5c-c
 make java-test       # artifact + focused Go + 36 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```

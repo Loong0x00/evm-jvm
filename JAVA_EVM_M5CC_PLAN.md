@@ -152,3 +152,17 @@ jvmevm/ieee_arithmetic_validation_test.go verifyM5cc* helpers; baseline red expe
 Parent owns plans/AGENTS/quickstart/Makefile/integration/approved profile updates.
 One Solidity writer, no spawning/peer writes/push/global settings/untrusted Java.
 All agents Sol/high WITHOUT Fast; honest scoped commits/SHA/size/measurements/errors.
+
+## Accepted integration evidence
+Runtime2cc1024→5239888,fixtures7f3159c→36b4ee3,verifier25d7af0→044678c.
+Review4aaf041→46a5d97 updated3 obsolete arithmetic guards with Java8/21 positive
+proof and preserved arrays/native/malformed guards; added sticky/cancellation/
+subnormal/division/sNaN-generated-canonical regressions. No runtime defect found.
+Parent final artifact/5bootstraps, Go/CLI,36 Python,1971 full,864 smoke,884 fast,
+demos,AOT,focused vet and960 raw-bit probes passed:
+`build/java-diff-parent-m5cc/probe-asp323cq/results-final/`.
+Combined300s gate timed out during full after Go/Python passed; full and all later
+gates explicitly rerun to completion. Prior1811 manifest entries/budgets unchanged.
+Independent gasmax1452903/20Msingle,4769406/100M16drem. Runtime136564 bytes SHA256
+`b59cf3ff60ed775d21c6344eb832770e980d397721398a70fa1cf3037ba91069`.
+Next FP arrays separately. All agents NO Fast; no full-JVM/deployment claim.
