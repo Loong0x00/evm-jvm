@@ -286,10 +286,11 @@ func TestVerifyM4eResolutionAndAccessPrecedeAllCountChecks(t *testing.T) {
 			return RunClasses([][]byte{inaccessible, root}, "multiuser/Root", "component", args, verifyM4eGasLimit)
 		}, "TypeError(uint256,uint256)", 2, uint64(componentPC))
 	}
-	ifacePC, _, _ := verifyM4eSite(t, root, "iface")
-	verifyM4eAssertError(t, func() (Result, error) {
+	// M4f-a now resolves interface array components, so the negative inner count
+	// must be checked even with a zero outer count (rather than a deferred type).
+	verifyM4eAssertException(t, func() (Result, error) {
 		return RunClasses(verifyM4eBundle(classes), "multiuser/Root", "iface", []int32{0, -1}, verifyM4eGasLimit)
-	}, "TypeError(uint256,uint256)", 2, uint64(ifacePC))
+	}, "java.lang.NegativeArraySizeException", 4)
 }
 
 func TestVerifyM4eStackUnderflowAndCountKindsBeforeHeapChecks(t *testing.T) {

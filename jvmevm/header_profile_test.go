@@ -47,7 +47,9 @@ interface Marker {
 	}, "Leaf", `System.out.print(Leaf.run());`, "9")
 
 	result, err := Run(classfile, "run", nil, headerProfileGasLimit)
-	assertSolidityError(t, result, err, "LinkError(uint256,uint256)", 5, 0)
+	// M4f-a resolves direct interface edges instead of rejecting every interface.
+	// Marker is still deliberately omitted: never silently skip its initialization.
+	assertSolidityError(t, result, err, "LinkError(uint256,uint256)", 4, 0)
 	t.Logf("legacy interface guard gas=%d", result.GasUsed)
 }
 

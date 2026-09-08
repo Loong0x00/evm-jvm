@@ -313,7 +313,11 @@ func TestVerifyM4dDeferredInterfacePrimitiveAndInaccessibleComponents(t *testing
         }`,
 	}, "deferref/I", "deferref/Target", "deferuser/Root")
 	root := classes["deferuser/Root"]
-	for _, method := range []string{"iface", "primitive"} {
+	// Interface components are supported from M4f-a; primitive long[] is not.
+	verifyM4dAssertValue(t, func() (Result, error) {
+		return RunClasses(verifyM4dBundle(classes), "deferuser/Root", "iface", nil, verifyM4dGasLimit)
+	}, 0)
+	for _, method := range []string{"primitive"} {
 		pc, _ := verifyM4dAnewarraySite(t, root, method)
 		verifyM4dAssertError(t, func() (Result, error) {
 			return RunClasses(verifyM4dBundle(classes), "deferuser/Root", method, nil, verifyM4dGasLimit)

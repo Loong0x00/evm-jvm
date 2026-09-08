@@ -559,7 +559,11 @@ func TestVerifyM4cDeferredInterfaceAndArrayTargetsRejectOnlyNonNull(t *testing.T
 	verifyM4cAssertValue(t, func() (Result, error) {
 		return RunClasses(verifyM4bBundle(classes), "deferred/Root", "nullLongs", nil, verifyM4cGasLimit)
 	}, 1)
-	for _, method := range []string{"objectInterface", "objectLongs"} {
+	// M4f-a supports interface targets; Object does not implement this empty I.
+	verifyM4cAssertValue(t, func() (Result, error) {
+		return RunClasses(verifyM4bBundle(classes), "deferred/Root", "objectInterface", nil, verifyM4cGasLimit)
+	}, 0)
+	for _, method := range []string{"objectLongs"} {
 		t.Run(method, func(t *testing.T) {
 			m := parseStaticsClass(t, classes["deferred/Root"]).namedMethod(t, method)
 			pc := verifyM4cFirstTypeOpcode(t, m.code)
