@@ -151,8 +151,6 @@ contract JVMSubsetInterpreter {
         uint256 thisClass = _u2(r);
         uint256 superClass = _u2(r);
         (c.thisNameOffset, c.thisNameLength) = _className(c, thisClass, r.pos);
-        // This stage executes an ordinary class, not an interface.
-        if ((classAccess & 0x0200) != 0) revert MethodError(7);
         if (superClass != 0) {
             (c.superNameOffset, c.superNameLength) = _className(c, superClass, r.pos);
             c.hasSuperclass = true;
@@ -296,7 +294,6 @@ contract JVMSubsetInterpreter {
         if (!suppliedSerializable) classes[bootstrapAt] = _parseBundleClass(_bootstrapSerializable());
         uint256 rootClass = entryPlusOne - 1;
         _requireSupportedClass(classes[rootClass], rootClass);
-        if (_isInterface(classes[rootClass])) revert LinkError(5, rootClass);
 
         bytes memory wantedMethod = bytes(entry);
         uint256 rootPlusOne;
@@ -1194,6 +1191,12 @@ contract JVMSubsetInterpreter {
                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
                     fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
                 }
+                // Finish selected-method descriptor/Code validation before an
+                // active-use initialization can produce unrelated side effects.
+                if (!selected[calleeClass][callee].loaded) {
+                    selected[calleeClass][callee] = _loadCallee(classes[calleeClass], callee, opPC);
+                    _predecode(classes[calleeClass], selected[calleeClass][callee]);
+                }
                 if (initializationState[calleeClass] == 0) {
                     uint256 oldDepth = depth;
                     depth = _initializeClass(
@@ -1204,10 +1207,6 @@ contract JVMSubsetInterpreter {
                         f.pc = opPC;
                         continue;
                     }
-                }
-                if (!selected[calleeClass][callee].loaded) {
-                    selected[calleeClass][callee] = _loadCallee(classes[calleeClass], callee, opPC);
-                    _predecode(classes[calleeClass], selected[calleeClass][callee]);
                 }
                 Selected memory target = selected[calleeClass][callee];
                 if (f.sp < target.argumentCount) revert BytecodeError(3, opPC);
@@ -1832,6 +1831,15 @@ contract JVMSubsetInterpreter {
         uint16 access = uint16(meta);
         if ((access & 0x0008) == 0 || (access & (0x0020 | 0x0100 | 0x0400)) != 0
             || _methodCodeCount(meta) != 1) revert CallError(4, callPC);
+        // Java 8 interface static methods are public. Keep the accepted
+        // compiler metadata flags aligned with the existing descriptor/code
+        // subset, while rejecting private and malformed interface members at
+        // the call site rather than treating them as inherited defaults.
+        if (_isInterface(c)
+            && ((access & 0x0001) == 0
+                || (access & ~(uint16(0x0001 | 0x0008 | 0x0040 | 0x0080 | 0x0800 | 0x1000))) != 0)) {
+            revert CallError(4, callPC);
+        }
     }
 
     function _validateSpecialCalleeMetadata(
@@ -2512,9 +2520,10 @@ contract JVMSubsetInterpreter {
         uint8[] memory hierarchyState
     ) private pure returns (uint256 owner, uint256 method) {
         ClassInfo memory caller = classes[callerClass];
-        if (refIndex == 0 || refIndex >= caller.cp.length || uint8(caller.cp[refIndex]) != 10) {
-            revert CallError(1, pc);
-        }
+        if (refIndex == 0 || refIndex >= caller.cp.length) revert CallError(1, pc);
+        uint8 referenceTag = uint8(caller.cp[refIndex]);
+        if (referenceTag != 10 && referenceTag != 11) revert CallError(1, pc);
+        bool interfaceReference = referenceTag == 11;
         if (cache[refIndex] != 0) {
             owner = (cache[refIndex] >> 128) - 1;
             method = uint128(cache[refIndex]) - 1;
@@ -2535,6 +2544,7 @@ contract JVMSubsetInterpreter {
                 || uint8(caller.cp[ownerNameIndex]) != 1
         ) revert CallError(1, pc);
         (uint256 ownerOffset, uint256 ownerLength) = _utf(caller.cp[ownerNameIndex]);
+        if (!_validInternalName(caller.data, ownerOffset, ownerLength)) revert CallError(1, pc);
         bool sameOwner = _equalsSlice(
             caller.data, ownerOffset, ownerLength, caller.thisNameOffset, caller.thisNameLength
         );
@@ -2556,7 +2566,11 @@ contract JVMSubsetInterpreter {
             if (!foundOwner) revert LinkError(4, pc);
         }
         _validateHierarchy(classes, owner, parentLinks, hierarchyState);
-        if (_isInterface(classes[owner])) revert CallError(4, pc);
+        if (interfaceReference) {
+            if (!_isInterface(classes[owner])) revert InterfaceError(1, pc);
+        } else if (_isInterface(classes[owner])) {
+            revert CallError(4, pc);
+        }
         if (owner != callerClass && !_classAccessible(caller, classes[owner])) {
             revert CallError(4, pc);
         }
@@ -2575,40 +2589,52 @@ contract JVMSubsetInterpreter {
             _equalsLiteral(caller.data, nameOffset, nameLength, bytes("<clinit>"))
                 || _equalsLiteral(caller.data, nameOffset, nameLength, bytes("<init>"))
         ) revert CallError(4, pc);
-
-        uint256 declaring = owner;
-        uint256 foundPlusOne;
-        while (true) {
-            ClassInfo memory target = classes[declaring];
-            for (uint256 i = 0; i < target.methods.length; ++i) {
-                uint256 candidate = target.methods[i];
-                (uint256 candidateNameOffset, uint256 candidateNameLength) =
-                    _utf(target.cp[(candidate >> 16) & 0xffff]);
-                if (!_equalsCross(
-                    target.data, candidateNameOffset, candidateNameLength,
-                    caller.data, nameOffset, nameLength
-                )) continue;
-                (uint256 candidateDescriptorOffset, uint256 candidateDescriptorLength) =
-                    _utf(target.cp[(candidate >> 32) & 0xffff]);
-                if (!_equalsCross(
-                    target.data, candidateDescriptorOffset, candidateDescriptorLength,
-                    caller.data, descriptorOffset, descriptorLength
-                )) continue;
-                if (foundPlusOne != 0) revert CallError(3, pc);
-                foundPlusOne = i + 1;
-            }
-            if (foundPlusOne != 0) break; // first declaring class with an exact match wins
-            uint256 link = parentLinks[declaring];
-            if (link == 0 || link == type(uint256).max) revert CallError(3, pc);
-            declaring = link - 1;
+        if (!_validOrdinaryMethodName(caller.data, nameOffset, nameLength)) {
+            revert CallError(1, pc);
         }
-        owner = declaring;
-        method = foundPlusOne - 1;
+
+        if (interfaceReference) {
+            // Interface static methods are never inherited: resolution is exact
+            // in the symbolic interface named by CONSTANT_InterfaceMethodref.
+            method = _findExactMethod(
+                classes, owner, caller.data, nameOffset, nameLength,
+                descriptorOffset, descriptorLength, pc
+            );
+        } else {
+            uint256 declaring = owner;
+            uint256 foundPlusOne;
+            while (true) {
+                ClassInfo memory target = classes[declaring];
+                for (uint256 i = 0; i < target.methods.length; ++i) {
+                    uint256 candidate = target.methods[i];
+                    (uint256 candidateNameOffset, uint256 candidateNameLength) =
+                        _utf(target.cp[(candidate >> 16) & 0xffff]);
+                    if (!_equalsCross(
+                        target.data, candidateNameOffset, candidateNameLength,
+                        caller.data, nameOffset, nameLength
+                    )) continue;
+                    (uint256 candidateDescriptorOffset, uint256 candidateDescriptorLength) =
+                        _utf(target.cp[(candidate >> 32) & 0xffff]);
+                    if (!_equalsCross(
+                        target.data, candidateDescriptorOffset, candidateDescriptorLength,
+                        caller.data, descriptorOffset, descriptorLength
+                    )) continue;
+                    if (foundPlusOne != 0) revert CallError(3, pc);
+                    foundPlusOne = i + 1;
+                }
+                if (foundPlusOne != 0) break; // first declaring class with an exact match wins
+                uint256 link = parentLinks[declaring];
+                if (link == 0 || link == type(uint256).max) revert CallError(3, pc);
+                declaring = link - 1;
+            }
+            owner = declaring;
+            method = foundPlusOne - 1;
+        }
         if (!_canAccessMember(
             classes, callerClass, owner, uint16(classes[owner].methods[method]),
             parentLinks, hierarchyState
         )) revert CallError(4, pc);
-        cache[refIndex] = ((owner + 1) << 128) | foundPlusOne;
+        cache[refIndex] = ((owner + 1) << 128) | (method + 1);
     }
 
     function _resolveField(
@@ -2640,17 +2666,13 @@ contract JVMSubsetInterpreter {
         if (ownerNameIndex == 0 || ownerNameIndex >= caller.cp.length
             || uint8(caller.cp[ownerNameIndex]) != 1) revert FieldError(1, pc);
         (uint256 ownerOffset, uint256 ownerLength) = _utf(caller.cp[ownerNameIndex]);
+        if (!_validInternalName(caller.data, ownerOffset, ownerLength)) revert FieldError(1, pc);
         (bool ownerFound, uint256 symbolicOwner) = _findClass(
             classes, caller.data, ownerOffset, ownerLength
         );
         if (!ownerFound) revert LinkError(4, pc);
         symbolic = symbolicOwner;
         _validateHierarchy(classes, symbolic, parentLinks, hierarchyState);
-        bool selfInterfaceInitializer = _isInterface(classes[symbolic]) && staticAccess
-            && privilegedWrite && callerClass == symbolic;
-        if (_isInterface(classes[symbolic]) && !selfInterfaceInitializer) {
-            revert FieldError(3, pc);
-        }
         if (symbolic != callerClass && !_classAccessible(caller, classes[symbolic])) {
             revert FieldError(4, pc);
         }
@@ -2669,40 +2691,13 @@ contract JVMSubsetInterpreter {
             ) revert FieldError(1, pc);
             (uint256 nameOffset, uint256 nameLength) = _utf(caller.cp[nameIndex]);
             (uint256 descriptorOffset, uint256 descriptorLength) = _utf(caller.cp[descriptorIndex]);
-            uint256 declaring = symbolic;
-            uint256 foundPlusOne;
-            while (true) {
-                ClassInfo memory target = classes[declaring];
-                for (uint256 i = 0; i < target.fields.length; ++i) {
-                    FieldInfo memory candidate = target.fields[i];
-                    if (candidate.nameIndex == 0 || candidate.nameIndex >= target.cp.length
-                        || uint8(target.cp[candidate.nameIndex]) != 1
-                        || candidate.descriptorIndex == 0
-                        || candidate.descriptorIndex >= target.cp.length
-                        || uint8(target.cp[candidate.descriptorIndex]) != 1) continue;
-                    (uint256 candidateNameOffset, uint256 candidateNameLength) =
-                        _utf(target.cp[candidate.nameIndex]);
-                    if (!_equalsCross(target.data, candidateNameOffset, candidateNameLength,
-                        caller.data, nameOffset, nameLength)) continue;
-                    (uint256 candidateDescriptorOffset, uint256 candidateDescriptorLength) =
-                        _utf(target.cp[candidate.descriptorIndex]);
-                    if (!_equalsCross(target.data, candidateDescriptorOffset, candidateDescriptorLength,
-                        caller.data, descriptorOffset, descriptorLength)) continue;
-                    if (foundPlusOne != 0) revert FieldError(2, pc);
-                    foundPlusOne = i + 1;
-                }
-                if (foundPlusOne != 0) break;
-                // The M4f-b interface-field exception is deliberately self-owned:
-                // an interface initializer cannot resolve a parent's field through
-                // this path.
-                if (_isInterface(classes[declaring])) revert FieldError(2, pc);
-                uint256 link = parentLinks[declaring];
-                if (link == 0 || link == type(uint256).max) revert FieldError(2, pc);
-                declaring = link - 1;
-            }
-            owner = declaring;
-            field = foundPlusOne - 1;
-            cache[refIndex] = ((owner + 1) << 128) | foundPlusOne;
+            bool found;
+            (found, owner, field) = _findResolvedField(
+                classes, symbolic, caller.data, nameOffset, nameLength,
+                descriptorOffset, descriptorLength, parentLinks, pc
+            );
+            if (!found) revert FieldError(2, pc);
+            cache[refIndex] = ((owner + 1) << 128) | (field + 1);
         }
 
         FieldInfo memory resolved = classes[owner].fields[field];
@@ -2714,6 +2709,105 @@ contract JVMSubsetInterpreter {
         if (writeAccess && (resolved.accessFlags & 0x0010) != 0 && !(privilegedWrite && callerClass == owner)) {
             revert FieldError(4, pc);
         }
+    }
+
+    function _findResolvedField(
+        ClassInfo[] memory classes,
+        uint256 symbolic,
+        bytes memory nameData,
+        uint256 nameOffset,
+        uint256 nameLength,
+        uint256 descriptorOffset,
+        uint256 descriptorLength,
+        uint256[] memory parentLinks,
+        uint256 pc
+    ) private pure returns (bool found, uint256 owner, uint256 field) {
+        bool[] memory seenInterfaces = new bool[](classes.length);
+        uint256 current = symbolic;
+        while (true) {
+            (found, field) = _fieldDeclaredHere(
+                classes[current], nameData, nameOffset, nameLength,
+                descriptorOffset, descriptorLength, pc
+            );
+            if (found) return (true, current, field);
+
+            if (_isInterface(classes[current])) {
+                seenInterfaces[current] = true;
+            }
+            for (uint256 i = 0; i < classes[current].interfaces.length; ++i) {
+                uint256 direct = _resolveInterfaceEdge(classes, current, i);
+                (found, owner, field) = _findInterfaceField(
+                    classes, direct, nameData, nameOffset, nameLength,
+                    descriptorOffset, descriptorLength, seenInterfaces, pc
+                );
+                if (found) return (true, owner, field);
+            }
+            // Interfaces have no ordinary superclass field-search path through Object.
+            if (_isInterface(classes[current])) return (false, 0, 0);
+            uint256 link = parentLinks[current];
+            if (link == 0 || link == type(uint256).max) return (false, 0, 0);
+            current = link - 1;
+        }
+    }
+
+    function _findInterfaceField(
+        ClassInfo[] memory classes,
+        uint256 interfaceClass,
+        bytes memory nameData,
+        uint256 nameOffset,
+        uint256 nameLength,
+        uint256 descriptorOffset,
+        uint256 descriptorLength,
+        bool[] memory seen,
+        uint256 pc
+    ) private pure returns (bool found, uint256 owner, uint256 field) {
+        if (seen[interfaceClass]) return (false, 0, 0);
+        seen[interfaceClass] = true;
+        (found, field) = _fieldDeclaredHere(
+            classes[interfaceClass], nameData, nameOffset, nameLength,
+            descriptorOffset, descriptorLength, pc
+        );
+        if (found) return (true, interfaceClass, field);
+        for (uint256 i = 0; i < classes[interfaceClass].interfaces.length; ++i) {
+            uint256 parent = _resolveInterfaceEdge(classes, interfaceClass, i);
+            (found, owner, field) = _findInterfaceField(
+                classes, parent, nameData, nameOffset, nameLength,
+                descriptorOffset, descriptorLength, seen, pc
+            );
+            if (found) return (true, owner, field);
+        }
+        return (false, 0, 0);
+    }
+
+    function _fieldDeclaredHere(
+        ClassInfo memory target,
+        bytes memory nameData,
+        uint256 nameOffset,
+        uint256 nameLength,
+        uint256 descriptorOffset,
+        uint256 descriptorLength,
+        uint256 pc
+    ) private pure returns (bool found, uint256 field) {
+        uint256 foundPlusOne;
+        for (uint256 i = 0; i < target.fields.length; ++i) {
+            FieldInfo memory candidate = target.fields[i];
+            if (candidate.nameIndex == 0 || candidate.nameIndex >= target.cp.length
+                || uint8(target.cp[candidate.nameIndex]) != 1
+                || candidate.descriptorIndex == 0
+                || candidate.descriptorIndex >= target.cp.length
+                || uint8(target.cp[candidate.descriptorIndex]) != 1) continue;
+            (uint256 candidateNameOffset, uint256 candidateNameLength) =
+                _utf(target.cp[candidate.nameIndex]);
+            if (!_equalsCross(target.data, candidateNameOffset, candidateNameLength,
+                nameData, nameOffset, nameLength)) continue;
+            (uint256 candidateDescriptorOffset, uint256 candidateDescriptorLength) =
+                _utf(target.cp[candidate.descriptorIndex]);
+            if (!_equalsCross(target.data, candidateDescriptorOffset, candidateDescriptorLength,
+                nameData, descriptorOffset, descriptorLength)) continue;
+            if (foundPlusOne != 0) revert FieldError(2, pc);
+            foundPlusOne = i + 1;
+        }
+        if (foundPlusOne != 0) return (true, foundPlusOne - 1);
     }
 
     function _fieldKind(ClassInfo memory c, FieldInfo memory field)
