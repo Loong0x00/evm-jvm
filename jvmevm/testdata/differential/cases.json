@@ -19788,6 +19788,2789 @@
       "smoke": false,
       "expected_kind": "java_exception",
       "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4fa-graph-direct-implementation",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "directImplementation",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-child-interface-implementation",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "childInterfaceImplementation",
+      "args": [
+        -4
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-child-view",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "childView",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-diamond-parent-view",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "diamondParentView",
+      "args": [
+        -6
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-diamond-left-view",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "diamondLeftView",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-diamond-right-view",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "diamondRightView",
+      "args": [
+        -8
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-diamond-own-view",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "diamondOwnView",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-inherited-base-method",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "inheritedBaseMethod",
+      "args": [
+        -10
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-inherited-deep-base-method",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "inheritedDeepBaseMethod",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-multiple-interfaces-left",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "multipleInterfacesLeft",
+      "args": [
+        -12
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-multiple-interfaces-right",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "multipleInterfacesRight",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-alternating-direct-child",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "alternatingDirectChild",
+      "args": [
+        -14
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-alternating-child-direct",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "alternatingChildDirect",
+      "args": [
+        15
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-alternating-diamond-inherited",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "alternatingDiamondInherited",
+      "args": [
+        -16
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-repeated-polymorphic-site",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "repeatedPolymorphicSite",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-interface-recursion",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "interfaceRecursion",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphRight.class",
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-graph-interface-mutual-recursion",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/graph/GraphRoot.java"
+      ],
+      "class": "bundle.m4fa.graph.GraphRoot",
+      "method": "interfaceMutualRecursion",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m4fa/graph/GraphRoot.class",
+        "bundle/m4fa/graph/GraphStep.class",
+        "bundle/m4fa/graph/GraphValue.class",
+        "bundle/m4fa/graph/GraphBareBase.class",
+        "bundle/m4fa/graph/GraphBounce.class",
+        "bundle/m4fa/graph/GraphBounceA.class",
+        "bundle/m4fa/graph/GraphBounceB.class",
+        "bundle/m4fa/graph/GraphChild.class",
+        "bundle/m4fa/graph/GraphChildImpl.class",
+        "bundle/m4fa/graph/GraphDiamond.class",
+        "bundle/m4fa/graph/GraphDiamondImpl.class",
+        "bundle/m4fa/graph/GraphDirect.class",
+        "bundle/m4fa/graph/GraphInherited.class",
+        "bundle/m4fa/graph/GraphInheritedDeep.class",
+        "bundle/m4fa/graph/GraphLeft.class",
+        "bundle/m4fa/graph/GraphMultiple.class",
+        "bundle/m4fa/graph/GraphParent.class",
+        "bundle/m4fa/graph/GraphRecursive.class",
+        "bundle/m4fa/graph/GraphRight.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-zero-arguments",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "zeroArguments",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-three-integers",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "threeIntegers",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-void-mutation",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "voidMutation",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-discarded-integer-result",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "discardedIntegerResult",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-reference-argument",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "referenceArgument",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-reference-return",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "referenceReturn",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-reference-identity",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "referenceIdentity",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-interface-reference-return",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "interfaceReferenceReturn",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-interface-reference-argument",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "interfaceReferenceArgument",
+      "args": [
+        -11
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-object-argument",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "objectArgument",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-object-return-identity",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "objectReturnIdentity",
+      "args": [
+        -13
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-array-argument",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "arrayArgument",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-array-return",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "arrayReturn",
+      "args": [
+        -15
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureOps.class",
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-signatures-mixed-reference-arguments",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/signatures/SignatureRoot.java"
+      ],
+      "class": "bundle.m4fa.signatures.SignatureRoot",
+      "method": "mixedReferenceArguments",
+      "args": [
+        16
+      ],
+      "class_files": [
+        "bundle/m4fa/signatures/SignatureReadable.class",
+        "bundle/m4fa/signatures/SignatureRoot.class",
+        "bundle/m4fa/signatures/SignatureCarrier.class",
+        "bundle/m4fa/signatures/SignatureImpl.class",
+        "bundle/m4fa/signatures/SignatureOps.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-direct-fallback",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "directFallback",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-grandchild-fallback",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "grandchildFallback",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-alternating-fallback",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "alternatingFallback",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-repeated-fallback",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "repeatedFallback",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-interface-view-of-abstract",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "interfaceViewOfAbstract",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-inherited-abstract-implementation",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "inheritedAbstractImplementation",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-constructor-virtual-default",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "constructorVirtualDefault",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-constructor-interface-default",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "constructorInterfaceDefault",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-constructor-virtual-after-fields",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "constructorVirtualAfterFields",
+      "args": [
+        -11
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/CallbackBase.class",
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-abstract-constructor-interface-after-fields",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/abstractview/AbstractRoot.java"
+      ],
+      "class": "bundle.m4fa.abstractview.AbstractRoot",
+      "method": "constructorInterfaceAfterFields",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fa/abstractview/CallbackChild.class",
+        "bundle/m4fa/abstractview/InterfaceCallback.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackBase.class",
+        "bundle/m4fa/abstractview/InterfaceCallbackChild.class",
+        "bundle/m4fa/abstractview/AbstractBase.class",
+        "bundle/m4fa/abstractview/AbstractChild.class",
+        "bundle/m4fa/abstractview/AbstractGrandchild.class",
+        "bundle/m4fa/abstractview/AbstractImplementationBase.class",
+        "bundle/m4fa/abstractview/AbstractInherited.class",
+        "bundle/m4fa/abstractview/AbstractOperation.class",
+        "bundle/m4fa/abstractview/AbstractOther.class",
+        "bundle/m4fa/abstractview/AbstractRoot.class",
+        "bundle/m4fa/abstractview/CallbackBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-instance-field",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceInstanceField",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-static-field",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceStaticField",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-array-instance-field",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceArrayInstanceField",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-array-static-field",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceArrayStaticField",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-array-defaults",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceArrayDefaults",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-array-store",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceArrayStore",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-child-array-to-parent-array",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "childArrayToParentArray",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-matrix-defaults",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceMatrixDefaults",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-matrix-store",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceMatrixStore",
+      "args": [
+        -11
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-cube-partial",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceCubePartial",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-object-cast-to-interface",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "objectCastToInterface",
+      "args": [
+        -13
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-parent-cast-to-child-interface",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "parentCastToChildInterface",
+      "args": [
+        14
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-implementing-instanceof",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "implementingInstanceof",
+      "args": [
+        -15
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-non-implementing-instanceof",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "nonImplementingInstanceof",
+      "args": [
+        16
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-child-interface-instanceof",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "childInterfaceInstanceof",
+      "args": [
+        -17
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-null-interface-cast",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "nullInterfaceCast",
+      "args": [
+        18
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-null-interface-instanceof",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "nullInterfaceInstanceof",
+      "args": [
+        -19
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-int-array-cloneable",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "intArrayCloneable",
+      "args": [
+        20
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-int-array-serializable",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "intArraySerializable",
+      "args": [
+        -21
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-object-array-cloneable",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "objectArrayCloneable",
+      "args": [
+        22
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-object-array-serializable",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "objectArraySerializable",
+      "args": [
+        -23
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-object-array-not-cloneable-array",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "objectArrayNotCloneableArray",
+      "args": [
+        24
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-int-matrix-as-cloneable-array",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "intMatrixAsCloneableArray",
+      "args": [
+        -25
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-int-matrix-as-serializable-array",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "intMatrixAsSerializableArray",
+      "args": [
+        26
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-array-markers",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceArrayMarkers",
+      "args": [
+        -27
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-marker-cast-identity",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "markerCastIdentity",
+      "args": [
+        28
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-serializable-cast-identity",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "serializableCastIdentity",
+      "args": [
+        -29
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-nested-marker-store",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "nestedMarkerStore",
+      "args": [
+        30
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-types-interface-array-covariant-store-failure",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceArrayCovariantStoreFailure",
+      "args": [
+        -31
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4fa-types-nested-interface-array-store-failure",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "nestedInterfaceArrayStoreFailure",
+      "args": [
+        32
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4fa-types-object-to-interface-cast-failure",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "objectToInterfaceCastFailure",
+      "args": [
+        -33
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m4fa-types-interface-sibling-cast-failure",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "interfaceSiblingCastFailure",
+      "args": [
+        34
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m4fa-types-null-interface-call",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "nullInterfaceCall",
+      "args": [
+        -35
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeChild.class",
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4fa-types-null-interface-array-length",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/types/TypeRoot.java"
+      ],
+      "class": "bundle.m4fa.types.TypeRoot",
+      "method": "nullInterfaceArrayLength",
+      "args": [
+        36
+      ],
+      "class_files": [
+        "bundle/m4fa/types/TypeFace.class",
+        "bundle/m4fa/types/TypeHolder.class",
+        "bundle/m4fa/types/TypeImpl.class",
+        "bundle/m4fa/types/TypeOther.class",
+        "bundle/m4fa/types/TypePlain.class",
+        "bundle/m4fa/types/TypeRoot.class",
+        "bundle/m4fa/types/TypeSubFace.class",
+        "bundle/m4fa/types/TypeChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4fa-init-allocation-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "allocationDoesNotInitialize",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-interface-call-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "interfaceCallDoesNotInitialize",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-inherited-call-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "inheritedCallDoesNotInitialize",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-interface-array-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "interfaceArrayDoesNotInitialize",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-interface-matrix-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "interfaceMatrixDoesNotInitialize",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-interface-cast-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "interfaceCastDoesNotInitialize",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-interface-test-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "interfaceTestDoesNotInitialize",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-diamond-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "diamondDoesNotInitialize",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-diamond-array-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "diamondArrayDoesNotInitialize",
+      "args": [
+        -11
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitRight.class",
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-init-unused-metadata-does-not-initialize",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/init/InitRoot.java"
+      ],
+      "class": "bundle.m4fa.init.InitRoot",
+      "method": "unusedMetadataDoesNotInitialize",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m4fa/init/InitRoot.class",
+        "bundle/m4fa/init/InitBareBase.class",
+        "bundle/m4fa/init/InitDiamond.class",
+        "bundle/m4fa/init/InitFace.class",
+        "bundle/m4fa/init/InitImpl.class",
+        "bundle/m4fa/init/InitInherited.class",
+        "bundle/m4fa/init/InitLeaf.class",
+        "bundle/m4fa/init/InitLeft.class",
+        "bundle/m4fa/init/InitProbe.class",
+        "bundle/m4fa/init/InitRight.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-generic-bridge-return",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "genericBridgeReturn",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/BridgeFactory.class",
+        "bundle/m4fa/bridges/BridgeImpl.class",
+        "bundle/m4fa/bridges/BridgeOther.class",
+        "bundle/m4fa/bridges/BridgeRoot.class",
+        "bundle/m4fa/bridges/BridgeToken.class",
+        "bundle/m4fa/bridges/CovariantBase.class",
+        "bundle/m4fa/bridges/CovariantChild.class",
+        "bundle/m4fa/bridges/CovariantGrandchild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-generic-bridge-argument",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "genericBridgeArgument",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/BridgeImpl.class",
+        "bundle/m4fa/bridges/BridgeOther.class",
+        "bundle/m4fa/bridges/BridgeRoot.class",
+        "bundle/m4fa/bridges/BridgeToken.class",
+        "bundle/m4fa/bridges/CovariantBase.class",
+        "bundle/m4fa/bridges/CovariantChild.class",
+        "bundle/m4fa/bridges/CovariantGrandchild.class",
+        "bundle/m4fa/bridges/BridgeFactory.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-generic-bridge-alternating",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "genericBridgeAlternating",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/BridgeOther.class",
+        "bundle/m4fa/bridges/BridgeRoot.class",
+        "bundle/m4fa/bridges/BridgeToken.class",
+        "bundle/m4fa/bridges/CovariantBase.class",
+        "bundle/m4fa/bridges/CovariantChild.class",
+        "bundle/m4fa/bridges/CovariantGrandchild.class",
+        "bundle/m4fa/bridges/BridgeFactory.class",
+        "bundle/m4fa/bridges/BridgeImpl.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-generic-argument-alternating",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "genericArgumentAlternating",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/BridgeRoot.class",
+        "bundle/m4fa/bridges/BridgeToken.class",
+        "bundle/m4fa/bridges/CovariantBase.class",
+        "bundle/m4fa/bridges/CovariantChild.class",
+        "bundle/m4fa/bridges/CovariantGrandchild.class",
+        "bundle/m4fa/bridges/BridgeFactory.class",
+        "bundle/m4fa/bridges/BridgeImpl.class",
+        "bundle/m4fa/bridges/BridgeOther.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-class-covariant-bridge",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "classCovariantBridge",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/BridgeToken.class",
+        "bundle/m4fa/bridges/CovariantBase.class",
+        "bundle/m4fa/bridges/CovariantChild.class",
+        "bundle/m4fa/bridges/CovariantGrandchild.class",
+        "bundle/m4fa/bridges/BridgeFactory.class",
+        "bundle/m4fa/bridges/BridgeImpl.class",
+        "bundle/m4fa/bridges/BridgeOther.class",
+        "bundle/m4fa/bridges/BridgeRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-class-covariant-grandchild",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "classCovariantGrandchild",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/CovariantBase.class",
+        "bundle/m4fa/bridges/CovariantChild.class",
+        "bundle/m4fa/bridges/CovariantGrandchild.class",
+        "bundle/m4fa/bridges/BridgeFactory.class",
+        "bundle/m4fa/bridges/BridgeImpl.class",
+        "bundle/m4fa/bridges/BridgeOther.class",
+        "bundle/m4fa/bridges/BridgeRoot.class",
+        "bundle/m4fa/bridges/BridgeToken.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-class-covariant-alternating",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "classCovariantAlternating",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/CovariantChild.class",
+        "bundle/m4fa/bridges/CovariantGrandchild.class",
+        "bundle/m4fa/bridges/BridgeFactory.class",
+        "bundle/m4fa/bridges/BridgeImpl.class",
+        "bundle/m4fa/bridges/BridgeOther.class",
+        "bundle/m4fa/bridges/BridgeRoot.class",
+        "bundle/m4fa/bridges/BridgeToken.class",
+        "bundle/m4fa/bridges/CovariantBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-bridges-bridge-reference-identity",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/bridges/BridgeRoot.java"
+      ],
+      "class": "bundle.m4fa.bridges.BridgeRoot",
+      "method": "bridgeReferenceIdentity",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m4fa/bridges/CovariantGrandchild.class",
+        "bundle/m4fa/bridges/BridgeFactory.class",
+        "bundle/m4fa/bridges/BridgeImpl.class",
+        "bundle/m4fa/bridges/BridgeOther.class",
+        "bundle/m4fa/bridges/BridgeRoot.class",
+        "bundle/m4fa/bridges/BridgeToken.class",
+        "bundle/m4fa/bridges/CovariantBase.class",
+        "bundle/m4fa/bridges/CovariantChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-access-direct-public-interface",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/access/api/PublicFace.java",
+        "bundle/m4fa/access/root/CrossRoot.java"
+      ],
+      "class": "bundle.m4fa.access.root.CrossRoot",
+      "method": "directPublicInterface",
+      "args": [
+        -3
+      ],
+      "class_files": [
+        "bundle/m4fa/access/api/PublicFace.class",
+        "bundle/m4fa/access/root/CrossBase.class",
+        "bundle/m4fa/access/root/CrossDirect.class",
+        "bundle/m4fa/access/root/CrossInherited.class",
+        "bundle/m4fa/access/root/CrossRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-access-inherited-public-method",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/access/api/PublicFace.java",
+        "bundle/m4fa/access/root/CrossRoot.java"
+      ],
+      "class": "bundle.m4fa.access.root.CrossRoot",
+      "method": "inheritedPublicMethod",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m4fa/access/root/CrossBase.class",
+        "bundle/m4fa/access/root/CrossDirect.class",
+        "bundle/m4fa/access/root/CrossInherited.class",
+        "bundle/m4fa/access/root/CrossRoot.class",
+        "bundle/m4fa/access/api/PublicFace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-access-alternating-public-interface",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/access/api/PublicFace.java",
+        "bundle/m4fa/access/root/CrossRoot.java"
+      ],
+      "class": "bundle.m4fa.access.root.CrossRoot",
+      "method": "alternatingPublicInterface",
+      "args": [
+        -5
+      ],
+      "class_files": [
+        "bundle/m4fa/access/root/CrossDirect.class",
+        "bundle/m4fa/access/root/CrossInherited.class",
+        "bundle/m4fa/access/root/CrossRoot.class",
+        "bundle/m4fa/access/api/PublicFace.class",
+        "bundle/m4fa/access/root/CrossBase.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-access-public-interface-array",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/access/api/PublicFace.java",
+        "bundle/m4fa/access/root/CrossRoot.java"
+      ],
+      "class": "bundle.m4fa.access.root.CrossRoot",
+      "method": "publicInterfaceArray",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m4fa/access/root/CrossInherited.class",
+        "bundle/m4fa/access/root/CrossRoot.class",
+        "bundle/m4fa/access/api/PublicFace.class",
+        "bundle/m4fa/access/root/CrossBase.class",
+        "bundle/m4fa/access/root/CrossDirect.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-access-public-interface-matrix",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/access/api/PublicFace.java",
+        "bundle/m4fa/access/root/CrossRoot.java"
+      ],
+      "class": "bundle.m4fa.access.root.CrossRoot",
+      "method": "publicInterfaceMatrix",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m4fa/access/root/CrossRoot.class",
+        "bundle/m4fa/access/api/PublicFace.class",
+        "bundle/m4fa/access/root/CrossBase.class",
+        "bundle/m4fa/access/root/CrossDirect.class",
+        "bundle/m4fa/access/root/CrossInherited.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4fa-access-public-interface-cast",
+      "stage": "m4fa",
+      "sources": [
+        "bundle/m4fa/access/api/PublicFace.java",
+        "bundle/m4fa/access/root/CrossRoot.java"
+      ],
+      "class": "bundle.m4fa.access.root.CrossRoot",
+      "method": "publicInterfaceCast",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m4fa/access/api/PublicFace.class",
+        "bundle/m4fa/access/root/CrossBase.class",
+        "bundle/m4fa/access/root/CrossDirect.class",
+        "bundle/m4fa/access/root/CrossInherited.class",
+        "bundle/m4fa/access/root/CrossRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
     }
   ]
 }
