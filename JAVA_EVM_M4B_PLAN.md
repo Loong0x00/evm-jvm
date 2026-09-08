@@ -210,3 +210,30 @@ and last-green commit. Then freeze M4c invokevirtual/override/casts/type tests
 All workers commit only owned files, no remote pushes/global settings/peer writes/
 subagents/untrusted oracle inputs. Work only assigned worktree, report measured
 verification and SHA/size/hash honestly; don't claim integrated green from baseline.
+
+## Parent integration verification (independent final review in progress)
+Runtime e9147bd→e951bbb, fixtures87b9b90→8779282, verifiera192f56→efb5a6c.
+Initial integration:6 Go groups red and712/713 oracle cases. Followup a5421f1→
+d754944 fixed five proven malformed mutation setups without relaxing assertions,
+wrong-heap-kind errors, per-object field-cap OOM, and quadratic object defaults.
+Cached linear layouts reduced1024-field allocation from137,705,906 to12,527,300
+gas;64 objects now62,127,859;65th OOM62,124,014. No budget increase.
+
+Parent corrected fixture e70a168: final initialized=17 was a Java constant and
+javac emitted out-of-profile Objects.requireNonNull plus an inlined value. Moving
+17 assignment into constructor preserves the intended final-field/value test and
+emits real getfield (confirmed javap). No host/JRE fallback added. All prior613
+manifest entries/budgets remain identical. ConstantValue-ignore behavior remains
+covered separately by precise test-only getfield mutation.
+
+Parent reran artifact/bootstrap consistency, focused Go/CLI,31 real/mock Python,
+713/713 full JVM/EVM cases,289 smoke,309 fast, all demos,AOT and focused vet.
+Further46 independent source probes for this/super/private calls, hidden fields,
+Object/int[] transport, mixed heaps, aliases, static initialization, null and
+int overflow passed: build/java-diff-parent-m4b/probe-idc7mvlv/results/.
+
+Current runtime57900 bytes, SHA256
+6c1b74d7a15c247644e6831358558231d59243a21ab3068dca523e79d125cbc4.
+Review worker is read-only in m4b-independent-review, also proposing the M4c
+virtual-dispatch/cast contract. Last accepted stage remains M4a until final review;
+then record acceptance/update quickstart and freeze/dispatch M4c automatically.
