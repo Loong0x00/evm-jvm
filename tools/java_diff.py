@@ -157,9 +157,9 @@ def load_manifest(fixtures: Path) -> Tuple[Dict[str, Any], List[Dict[str, Any]],
         if case_id in seen_ids:
             raise HarnessError(f"duplicate case id: {case_id}")
         seen_ids.add(case_id)
-        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d"):
+        if case["stage"] not in ("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e"):
             raise HarnessError(
-                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, m3c, m3d, m4a, m4b, m4c, or m4d"
+                f"{case_id}: stage must be m1, m2, m2b, m3a, m3b, m3c, m3d, m4a, m4b, m4c, m4d, or m4e"
             )
         expected_kind = case["expected_kind"]
         if expected_kind not in ("value", "java_exception"):
@@ -264,8 +264,10 @@ def select_cases(cases: Sequence[Dict[str, Any]], stage: str, tier: str,
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b"}
     elif stage == "m4c":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c"}
-    elif stage in ("m4d", "all"):
+    elif stage == "m4d":
         allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d"}
+    elif stage in ("m4e", "all"):
+        allowed_stages = {"m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e"}
     else:
         raise HarnessError(f"unknown stage: {stage}")
     stage_cases = [case for case in cases if case["stage"] in allowed_stages]
@@ -755,7 +757,7 @@ def finish_report(report: Dict[str, Any]) -> Dict[str, Any]:
 def parser_for(repo: Path) -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "all"), default="m4d"
+        "--stage", choices=("m1", "m2", "m2b", "m3a", "m3b", "m3c", "m3d", "m4a", "m4b", "m4c", "m4d", "m4e", "all"), default="m4e"
     )
     parser.add_argument("--tier", choices=("smoke", "fast", "full"), default="smoke")
     parser.add_argument("--seed", type=int, default=DEFAULT_SEED)

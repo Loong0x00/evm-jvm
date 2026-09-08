@@ -156,6 +156,9 @@ class MockTools:
                 "initBadCast": "java.lang.ExceptionInInitializerError",
                 "arrayStore": "java.lang.ArrayStoreException",
                 "initArrayStore": "java.lang.ExceptionInInitializerError",
+                "multiNegative": "java.lang.NegativeArraySizeException",
+                "multiOOM": "java.lang.OutOfMemoryError",
+                "initMultiNegative": "java.lang.ExceptionInInitializerError",
             }
             if mode in ("exception", "root-init-eiie") or (
                     mode == "by-method" and method in known):
@@ -211,6 +214,9 @@ class MockTools:
                 "initBadCast": "java.lang.ExceptionInInitializerError",
                 "arrayStore": "java.lang.ArrayStoreException",
                 "initArrayStore": "java.lang.ExceptionInInitializerError",
+                "multiNegative": "java.lang.NegativeArraySizeException",
+                "multiOOM": "java.lang.OutOfMemoryError",
+                "initMultiNegative": "java.lang.ExceptionInInitializerError",
             }
             exception_outcome = mode in ("exception", "exception-gasbad", "root-init-eiie")
             exception_outcome = exception_outcome or (
@@ -441,8 +447,9 @@ class JavaDiffTests(unittest.TestCase):
             self.assertEqual(report["cases"][0]["status"], "evm_oog")
             self.assertNotIn("evm_exception", report["cases"][0])
 
-    def test_m4d_cast_array_store_and_initializer_outcomes_are_exact(self):
-        # Kinds 8 and 9 are both exact; initializer failures remain kind 3.
+    def test_m4d_and_m4e_array_outcomes_are_exact(self):
+        # M4e adds no kind: multidimensional NASE/OOM remain exact kinds 4/7,
+        # while initializer failures remain kind 3. Kinds 8 and 9 stay exact.
         expected = {
             "badCast": "java.lang.ClassCastException",
             "initBadCast": "java.lang.ExceptionInInitializerError",
@@ -464,6 +471,30 @@ class JavaDiffTests(unittest.TestCase):
             self.assertEqual(report["status_counts"], {"pass": 4})
             self.assertEqual(
                 [item["evm_exception"] for item in report["cases"]], list(expected.values())
+            )
+
+        m4e_expected = {
+            "multiNegative": "java.lang.NegativeArraySizeException",
+            # Logical interpreter quota is mock-only; never exhaust host JVM memory.
+            "multiOOM": "java.lang.OutOfMemoryError",
+            "initMultiNegative": "java.lang.ExceptionInInitializerError",
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            fixtures = FixtureTree(tmp, [
+                case("m4e-" + method, stage="m4e", method=method, args=[],
+                     expected_kind="java_exception", expected_exception=exception)
+                for method, exception in m4e_expected.items()
+            ])
+            tools = MockTools(tmp)
+            completed, report = self.run_runner(
+                tmp, fixtures.path, tools, "--stage", "m4e", "--tier", "full",
+                env_extra={"MOCK_JAVA_MODE": "by-method", "MOCK_EVM_MODE": "by-method"},
+            )
+            self.assertEqual(completed.returncode, 0, completed.stderr)
+            self.assertEqual(report["status_counts"], {"pass": 3})
+            self.assertEqual(
+                [item["evm_exception"] for item in report["cases"]],
+                list(m4e_expected.values()),
             )
 
         scenarios = [
@@ -978,6 +1009,7 @@ public final class Arithmetic {
         cases += [case("m4b-smoke", stage="m4b")]
         cases += [case("m4c-smoke", stage="m4c")]
         cases += [case("m4d-smoke", stage="m4d")]
+        cases += [case("m4e-smoke", stage="m4e")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -996,14 +1028,15 @@ public final class Arithmetic {
             "m4b": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke"],
             "m4c": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke"],
             "m4d": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke"],
+            "m4e": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m4d")
+        self.assertEqual(parsed.stage, "m4e")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
         with self.assertRaises(java_diff.HarnessError):
@@ -1012,18 +1045,20 @@ public final class Arithmetic {
             java_diff.select_cases(cases, "m4b", "full", 56, "m4c-smoke")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m4c", "full", 56, "m4d-smoke")
+        with self.assertRaises(java_diff.HarnessError):
+            java_diff.select_cases(cases, "m4d", "full", 56, "m4e-smoke")
         with self.assertRaisesRegex(java_diff.HarnessError, "unknown stage"):
-            java_diff.select_cases(cases, "m4e", "full", 56, None)
+            java_diff.select_cases(cases, "m4f", "full", 56, None)
 
-    def test_manifest_accepts_exact_m4b_m4c_and_m4d_stage_spellings(self):
+    def test_manifest_accepts_exact_m4b_through_m4e_stage_spellings(self):
         with tempfile.TemporaryDirectory() as tmp:
             fixtures = FixtureTree(tmp, [
                 case("objects", stage="m4b"), case("dispatch", stage="m4c"),
-                case("reference-arrays", stage="m4d"),
+                case("reference-arrays", stage="m4d"), case("multidimensional", stage="m4e"),
             ])
             _, loaded, _ = java_diff.load_manifest(fixtures.path)
-            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d"])
-        for malformed in ("M4d", "m4-d", "m4e", "reference-arrays"):
+            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e"])
+        for malformed in ("M4e", "m4-e", "m4f", "multidimensional-arrays"):
             with self.subTest(stage=malformed), tempfile.TemporaryDirectory() as tmp:
                 fixtures = FixtureTree(tmp, [case("bad-stage", stage=malformed)])
                 with self.assertRaisesRegex(java_diff.HarnessError, "stage must be"):

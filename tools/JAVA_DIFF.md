@@ -15,16 +15,16 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4d --tier full
+python3 tools/java_diff.py --stage m4e --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4d --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4e --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
-M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, and `m4d` or `all`
-adds M4d. A manifest without entries in the newest stage continues to run its
+M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d, and
+`m4e` or `all` adds M4e. A manifest without entries in the newest stage continues to run its
 older cases under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -159,6 +159,22 @@ observable outcome remains `java.lang.ExceptionInInitializerError`. Logical EVM
 heap-cap probes remain focused Go/mock tests only; the host JVM is never driven
 toward OOM. Out of gas and arbitrary reverts are still engine failures, not Java
 exceptions.
+
+## M4e multidimensional-array cases
+
+M4e keeps schema 1, static `(I...)I` roots, cumulative selection, and the raw
+ordered class-bundle protocol unchanged. Trusted finite fixtures may use
+`multianewarray` for supported `int` and ordinary-class/Object array leaves,
+including partial dimensions. Every count and all resulting references remain
+inside guest execution; the runner neither parses array descriptors nor plans or
+allocates guest arrays.
+
+Negative multidimensional counts use the existing exact
+`java.lang.NegativeArraySizeException` outcome, including initializer wrapping
+as `java.lang.ExceptionInInitializerError`. Logical aggregate/per-array quota
+`java.lang.OutOfMemoryError` cases remain focused Go/mock tests: they must not
+induce host JVM OOM. The recognized exception set and schema remain unchanged,
+and EVM out of gas is still an engine failure rather than Java OOM.
 
 ## Outcome protocol
 
