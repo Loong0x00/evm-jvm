@@ -32,10 +32,15 @@ contract JVMSubsetInterpreter {
     uint256 private constant MAX_OBJECT_FIELDS = 1024;
     uint256 private constant MAX_OBJECT_FIELD_SLOTS = 65536;
     uint256 private constant MAX_HANDLES = MAX_ARRAYS + MAX_OBJECTS;
-    uint256 private constant KIND_SHIFT = 32;
+    // A runtime value is a 64-bit payload plus an internal kind. Category-2 longs
+    // remain one indivisible EVM value, while stack/local capacity is charged in
+    // JVM words by the helpers below.
+    uint256 private constant KIND_SHIFT = 64;
     uint256 private constant KIND_INT = 1;
     uint256 private constant KIND_REF = 2;
     uint256 private constant KIND_UNINIT = 3;
+    uint256 private constant KIND_LONG = 4;
+    uint256 private constant KIND_LONG_TAIL = 5;
     uint8 private constant HEAP_ARRAY = 1;
     uint8 private constant HEAP_OBJECT = 2;
     uint8 private constant PRIMITIVE_BYTE = 0x42; // B
@@ -74,10 +79,11 @@ contract JVMSubsetInterpreter {
         uint256 maxStack;
         uint256 maxLocals;
         uint256 argumentCount;
+        uint256 argumentWords;
         uint8[] argumentKinds;
         uint256[] argumentTypeOffsets;
         uint256[] argumentTypeLengths;
-        uint8 returnKind; // 1 = computational int, 2 = void, 3 = supported reference
+        uint8 returnKind; // 1 = computational int, 2 = void, 3 = reference, 4 = long
         uint8 returnSubtype; // exact I/Z/B/C/S descriptor for computational-int returns
         uint256 returnTypeOffset;
         uint256 returnTypeLength;
@@ -88,7 +94,7 @@ contract JVMSubsetInterpreter {
         uint16 nameIndex;
         uint16 descriptorIndex;
         bool hasConstant;
-        uint32 constantValue;
+        uint64 constantValue;
     }
 
     struct ClassInfo {
@@ -118,7 +124,7 @@ contract JVMSubsetInterpreter {
         uint256 pc;
         uint256 sp;
         uint256 callPC;
-        uint256[] stack; // low 32 bits payload, kind above it
+        uint256[] stack; // low 64 bits payload, kind above it; long is one value/two words
         uint256[] locals;
         bool[] initialized;
         bool isInitializer;
@@ -232,7 +238,7 @@ contract JVMSubsetInterpreter {
         selected[root] = _loadRoot(c, rootMeta);
         if (!_isExactIntRoot(c, selected[root])) revert MethodError(11);
         if (args.length != selected[root].argumentCount) revert MethodError(9);
-        if (selected[root].maxLocals < selected[root].argumentCount) revert MethodError(10);
+        if (selected[root].maxLocals < selected[root].argumentWords) revert MethodError(10);
 
         // CP ref -> resolved class/method avoids repeated scans during recursion. A real minimal
         // Object classfile is appended and parsed normally unless this input is Object itself.
@@ -336,7 +342,7 @@ contract JVMSubsetInterpreter {
         Selected memory rootSelection = selected[rootClass][root];
         if (!_isExactIntRoot(classes[rootClass], rootSelection)) revert MethodError(11);
         if (args.length != rootSelection.argumentCount) revert MethodError(9);
-        if (rootSelection.maxLocals < rootSelection.argumentCount) revert MethodError(10);
+        if (rootSelection.maxLocals < rootSelection.argumentWords) revert MethodError(10);
         _predecode(classes[rootClass], rootSelection);
         return _execute(classes, selected, caches, fieldCaches, rootClass, root, args, true);
     }
@@ -455,7 +461,7 @@ contract JVMSubsetInterpreter {
             } else if (tag == 5 || tag == 6) {
                 uint256 high = _u4(r);
                 uint256 low = _u4(r);
-                cp[i] = uint256(tag) | (high << 8) | (low << 40);
+                cp[i] = uint256(tag) | (high << 40) | (low << 8);
                 if (i + 1 >= cpCount) revert ClassError(3, r.pos);
                 ++i;
             } else if (tag == 7 || tag == 8 || tag == 16 || tag == 19 || tag == 20) {
@@ -514,7 +520,7 @@ contract JVMSubsetInterpreter {
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
         if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
-        if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS || s.maxLocals < s.argumentCount) {
+        if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS || s.maxLocals < s.argumentWords) {
             revert CallError(4, callPC);
         }
         s.loaded = true;
@@ -548,6 +554,7 @@ contract JVMSubsetInterpreter {
                 uint8 fieldKind = _fieldKind(classes[i], classes[i].fields[j]);
                 if (fieldKind == KIND_INT) staticValues[i][j] = _packInt(0);
                 else if (fieldKind == KIND_REF) staticValues[i][j] = _packRef(0);
+                else if (fieldKind == KIND_LONG) staticValues[i][j] = _packLong(0);
             }
         }
         // Arrays and objects share one one-based, unforgeable handle namespace. The independent
@@ -632,6 +639,8 @@ contract JVMSubsetInterpreter {
             } else if (op >= 0x02 && op <= 0x08) { // iconst_m1 ... iconst_5
                 uint32 value = op == 0x02 ? type(uint32).max : uint32(op - 0x03);
                 f.sp = _push(f.stack, f.sp, _packInt(value), opPC);
+            } else if (op == 0x09 || op == 0x0a) { // lconst_0, lconst_1
+                f.sp = _push(f.stack, f.sp, _packLong(uint64(op - 0x09)), opPC);
             } else if (op == 0x10) { // bipush
                 f.sp = _push(f.stack, f.sp, _packInt(
                     uint32(int32(int8(uint8(c.data[selection.codeOffset + f.pc]))))
@@ -655,15 +664,28 @@ contract JVMSubsetInterpreter {
                     revert BytecodeError(13, opPC);
                 }
                 f.sp = _push(f.stack, f.sp, _packInt(uint32(c.cp[index] >> 8)), opPC);
-            } else if (op == 0x15 || op == 0x19) { // iload / aload
+            } else if (op == 0x14) { // ldc2_w (CONSTANT_Long only)
+                uint256 index = _unsigned16(c.data, selection.codeOffset + f.pc);
+                f.pc += 2;
+                if (index == 0 || index >= c.cp.length || uint8(c.cp[index]) != 5) {
+                    revert BytecodeError(13, opPC);
+                }
+                f.sp = _push(f.stack, f.sp, _packLong(uint64(c.cp[index] >> 8)), opPC);
+            } else if (op == 0x15 || op == 0x16 || op == 0x19) { // iload / lload / aload
                 uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
                 ++f.pc;
                 f.sp = op == 0x19
                     ? _loadReference(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                    : _loadKind(f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC);
+                    : (op == 0x16
+                        ? _loadLong(f.stack, f.sp, f.locals, f.initialized, local, opPC)
+                        : _loadKind(f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC));
             } else if (op >= 0x1a && op <= 0x1d) { // iload_0..3
                 f.sp = _loadKind(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x1a, KIND_INT, opPC
+                );
+            } else if (op >= 0x1e && op <= 0x21) { // lload_0..3
+                f.sp = _loadLong(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x1e, opPC
                 );
             } else if (op >= 0x2a && op <= 0x2d) { // aload_0..3
                 f.sp = _loadReference(
@@ -695,15 +717,21 @@ contract JVMSubsetInterpreter {
                 f.stack[f.sp - 2] = referenceComponents
                     ? _packRef(cell) : _packInt(_normalizeInt(cell, uint8(leafType)));
                 --f.sp;
-            } else if (op == 0x36 || op == 0x3a) { // istore / astore
+            } else if (op == 0x36 || op == 0x37 || op == 0x3a) { // istore / lstore / astore
                 uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
                 ++f.pc;
                 f.sp = op == 0x3a
                     ? _storeReference(f.stack, f.sp, f.locals, f.initialized, local, opPC)
-                    : _storeKind(f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC);
+                    : (op == 0x37
+                        ? _storeLong(f.stack, f.sp, f.locals, f.initialized, local, opPC)
+                        : _storeKind(f.stack, f.sp, f.locals, f.initialized, local, KIND_INT, opPC));
             } else if (op >= 0x3b && op <= 0x3e) { // istore_0..3
                 f.sp = _storeKind(
                     f.stack, f.sp, f.locals, f.initialized, op - 0x3b, KIND_INT, opPC
+                );
+            } else if (op >= 0x3f && op <= 0x42) { // lstore_0..3
+                f.sp = _storeLong(
+                    f.stack, f.sp, f.locals, f.initialized, op - 0x3f, opPC
                 );
             } else if (op >= 0x4b && op <= 0x4e) { // astore_0..3
                 f.sp = _storeReference(
@@ -745,11 +773,12 @@ contract JVMSubsetInterpreter {
                 if (!referenceComponents) stored = _normalizeInt(stored, uint8(leafType));
                 arrayHeap[handle][uint256(uint32(index))] = stored;
                 f.sp -= 3;
-            } else if (op == 0x57) { // pop
+            } else if (op == 0x57) { // pop (category 1 only)
                 if (f.sp == 0) revert BytecodeError(3, opPC);
+                if (!_isCategory1(f.stack[f.sp - 1])) revert BytecodeError(14, opPC);
                 --f.sp;
             } else if (op >= 0x58 && op <= 0x5f) {
-                f.sp = _permuteCategory1(f.stack, f.sp, op, opPC);
+                f.sp = _permuteStack(f.stack, f.sp, op, opPC);
             } else if (op == 0x60 || op == 0x64 || op == 0x68) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
                 _requireIntPair(f.stack, f.sp, opPC);
@@ -761,6 +790,18 @@ contract JVMSubsetInterpreter {
                     else left *= right;
                 }
                 f.stack[f.sp - 2] = _packInt(left);
+                --f.sp;
+            } else if (op == 0x61 || op == 0x65 || op == 0x69) { // ladd/lsub/lmul
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireLongPair(f.stack, f.sp, opPC);
+                uint64 left = uint64(_payload(f.stack[f.sp - 2]));
+                uint64 right = uint64(_payload(f.stack[f.sp - 1]));
+                unchecked {
+                    if (op == 0x61) left += right;
+                    else if (op == 0x65) left -= right;
+                    else left *= right;
+                }
+                f.stack[f.sp - 2] = _packLong(left);
                 --f.sp;
             } else if (op == 0x6c || op == 0x70) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
@@ -775,11 +816,30 @@ contract JVMSubsetInterpreter {
                 else result = uint32(dividend % divisor);
                 f.stack[f.sp - 2] = _packInt(result);
                 --f.sp;
+            } else if (op == 0x6d || op == 0x71) { // ldiv/lrem
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireLongPair(f.stack, f.sp, opPC);
+                int64 dividend = int64(uint64(_payload(f.stack[f.sp - 2])));
+                int64 divisor = int64(uint64(_payload(f.stack[f.sp - 1])));
+                if (divisor == 0) _throwJava(1, frames, depth);
+                uint64 result;
+                if (dividend == type(int64).min && divisor == -1) {
+                    result = op == 0x6d ? uint64(0x8000000000000000) : 0;
+                } else if (op == 0x6d) result = uint64(dividend / divisor);
+                else result = uint64(dividend % divisor);
+                f.stack[f.sp - 2] = _packLong(result);
+                --f.sp;
             } else if (op == 0x74) {
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
                 unchecked {
                     f.stack[f.sp - 1] = _packInt(uint32(0) - uint32(_payload(f.stack[f.sp - 1])));
+                }
+            } else if (op == 0x75) { // lneg
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_LONG, opPC);
+                unchecked {
+                    f.stack[f.sp - 1] = _packLong(uint64(0) - uint64(_payload(f.stack[f.sp - 1])));
                 }
             } else if (op == 0x78 || op == 0x7a || op == 0x7c) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
@@ -791,6 +851,17 @@ contract JVMSubsetInterpreter {
                 else left >>= shift;
                 f.stack[f.sp - 2] = _packInt(left);
                 --f.sp;
+            } else if (op == 0x79 || op == 0x7b || op == 0x7d) { // lshl/lshr/lushr
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 2], KIND_LONG, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                uint64 left = uint64(_payload(f.stack[f.sp - 2]));
+                uint256 shift = _payload(f.stack[f.sp - 1]) & 63;
+                if (op == 0x79) left <<= shift;
+                else if (op == 0x7b) left = uint64(int64(left) >> shift);
+                else left >>= shift;
+                f.stack[f.sp - 2] = _packLong(left);
+                --f.sp;
             } else if (op == 0x7e || op == 0x80 || op == 0x82) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
                 _requireIntPair(f.stack, f.sp, opPC);
@@ -800,6 +871,16 @@ contract JVMSubsetInterpreter {
                 else if (op == 0x80) left |= right;
                 else left ^= right;
                 f.stack[f.sp - 2] = _packInt(left);
+                --f.sp;
+            } else if (op == 0x7f || op == 0x81 || op == 0x83) { // land/lor/lxor
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireLongPair(f.stack, f.sp, opPC);
+                uint64 left = uint64(_payload(f.stack[f.sp - 2]));
+                uint64 right = uint64(_payload(f.stack[f.sp - 1]));
+                if (op == 0x7f) left &= right;
+                else if (op == 0x81) left |= right;
+                else left ^= right;
+                f.stack[f.sp - 2] = _packLong(left);
                 --f.sp;
             } else if (op == 0x84) { // iinc
                 uint256 local = uint8(c.data[selection.codeOffset + f.pc]);
@@ -813,6 +894,16 @@ contract JVMSubsetInterpreter {
                     );
                 }
                 f.pc += 2;
+            } else if (op == 0x85) { // i2l
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
+                int64 extended = int64(int32(uint32(_payload(f.stack[f.sp - 1]))));
+                f.stack[f.sp - 1] = _packLong(uint64(extended));
+                if (_stackWords(f.stack, f.sp) > f.stack.length) revert BytecodeError(9, opPC);
+            } else if (op == 0x88) { // l2i
+                if (f.sp == 0) revert BytecodeError(3, opPC);
+                _requireKind(f.stack[f.sp - 1], KIND_LONG, opPC);
+                f.stack[f.sp - 1] = _packInt(uint32(_payload(f.stack[f.sp - 1])));
             } else if (op == 0x91 || op == 0x92 || op == 0x93) {
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
@@ -821,6 +912,14 @@ contract JVMSubsetInterpreter {
                 else if (op == 0x92) value = uint32(uint16(value));
                 else value = uint32(int32(int16(uint16(value))));
                 f.stack[f.sp - 1] = _packInt(value);
+            } else if (op == 0x94) { // lcmp
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                _requireLongPair(f.stack, f.sp, opPC);
+                int64 left = int64(uint64(_payload(f.stack[f.sp - 2])));
+                int64 right = int64(uint64(_payload(f.stack[f.sp - 1])));
+                uint32 result = left == right ? 0 : (left < right ? type(uint32).max : 1);
+                f.stack[f.sp - 2] = _packInt(result);
+                --f.sp;
             } else if (op >= 0x99 && op <= 0x9e) {
                 if (f.sp == 0) revert BytecodeError(3, opPC);
                 _requireKind(f.stack[f.sp - 1], KIND_INT, opPC);
@@ -971,6 +1070,7 @@ contract JVMSubsetInterpreter {
                     classes, heapClasses[handle], fieldClass, field, parentLinks, opPC
                 );
                 if (op == 0xb4) {
+                    if (fieldKind == KIND_LONG) _requireExtraWords(f.stack, f.sp, 1, opPC);
                     f.stack[receiverSlot] = objectHeap[handle][objectOffset];
                 } else {
                     uint256 fieldValue = f.stack[f.sp - 1];
@@ -1055,10 +1155,7 @@ contract JVMSubsetInterpreter {
                 Frame memory child = _newFrame(calleeClass, callee, target, opPC);
                 child.locals[0] = receiver;
                 child.initialized[0] = true;
-                for (uint256 i = 0; i < target.argumentCount; ++i) {
-                    child.locals[i + 1] = f.stack[base + 1 + i];
-                    child.initialized[i + 1] = true;
-                }
+                _copyArguments(child, target, f.stack, base + 1, 1);
                 f.sp = base;
                 frames[depth] = child;
                 ++depth;
@@ -1122,10 +1219,9 @@ contract JVMSubsetInterpreter {
                     );
                     interfaceChild.locals[0] = interfaceReceiver;
                     interfaceChild.initialized[0] = true;
-                    for (uint256 i = 0; i < interfaceTarget.argumentCount; ++i) {
-                        interfaceChild.locals[i + 1] = f.stack[interfaceBase + 1 + i];
-                        interfaceChild.initialized[i + 1] = true;
-                    }
+                    _copyArguments(
+                        interfaceChild, interfaceTarget, f.stack, interfaceBase + 1, 1
+                    );
                     f.sp = interfaceBase;
                     frames[depth] = interfaceChild;
                     ++depth;
@@ -1205,10 +1301,7 @@ contract JVMSubsetInterpreter {
                 child.initialized[0] = true;
                 child.isConstructor = isConstructor;
                 child.thisHandle = handle;
-                for (uint256 i = 0; i < target.argumentCount; ++i) {
-                    child.locals[i + 1] = f.stack[base + 1 + i];
-                    child.initialized[i + 1] = true;
-                }
+                _copyArguments(child, target, f.stack, base + 1, 1);
                 f.sp = base;
                 frames[depth] = child;
                 ++depth;
@@ -1257,10 +1350,7 @@ contract JVMSubsetInterpreter {
                 }
                 if (depth == MAX_FRAMES) revert JavaException(2);
                 Frame memory child = _newFrame(calleeClass, callee, target, opPC);
-                for (uint256 i = 0; i < target.argumentCount; ++i) {
-                    child.locals[i] = f.stack[base + i];
-                    child.initialized[i] = true;
-                }
+                _copyArguments(child, target, f.stack, base, 0);
                 f.sp = base;
                 frames[depth] = child;
                 ++depth;
@@ -1275,7 +1365,7 @@ contract JVMSubsetInterpreter {
                 Selected memory signature = _loadVirtualSignature(
                     classes[resolved.owner], resolved.method, opPC
                 );
-                if (count == 0 || trailing != 0 || signature.argumentCount + 1 != count) {
+                if (count == 0 || trailing != 0 || signature.argumentWords + 1 != count) {
                     revert CallError(1, opPC);
                 }
                 if (f.sp < signature.argumentCount + 1) revert BytecodeError(3, opPC);
@@ -1330,17 +1420,17 @@ contract JVMSubsetInterpreter {
                 Frame memory child = _newFrame(calleeClass, callee, target, opPC);
                 child.locals[0] = receiver;
                 child.initialized[0] = true;
-                for (uint256 i = 0; i < target.argumentCount; ++i) {
-                    child.locals[i + 1] = f.stack[base + 1 + i];
-                    child.initialized[i + 1] = true;
-                }
+                _copyArguments(child, target, f.stack, base + 1, 1);
                 f.sp = base;
                 frames[depth] = child;
                 ++depth;
-            } else if (op == 0xac || op == 0xb0 || op == 0xb1) { // ireturn / areturn / return
+            } else if (op == 0xac || op == 0xad || op == 0xb0 || op == 0xb1) {
+                // ireturn / lreturn / areturn / return
                 uint8 actualKind = op == 0xac ? uint8(KIND_INT)
-                    : (op == 0xb0 ? uint8(KIND_REF) : uint8(0));
-                uint8 descriptorKind = actualKind == 0 ? 2 : (actualKind == KIND_REF ? 3 : 1);
+                    : (op == 0xad ? uint8(KIND_LONG)
+                        : (op == 0xb0 ? uint8(KIND_REF) : uint8(0)));
+                uint8 descriptorKind = actualKind == 0 ? 2
+                    : (actualKind == KIND_REF ? 3 : (actualKind == KIND_LONG ? 4 : 1));
                 if (descriptorKind != selection.returnKind) revert CallError(5, opPC);
                 if ((actualKind != 0 && f.sp != 1) || (actualKind == 0 && f.sp != 0)) {
                     revert BytecodeError(4, opPC);
@@ -1593,7 +1683,10 @@ contract JVMSubsetInterpreter {
             ClassInfo memory c = classes[current];
             for (uint256 i = 0; i < c.fields.length; ++i) {
                 if ((c.fields[i].accessFlags & 0x0008) != 0 && c.fields[i].hasConstant) {
-                    staticValues[current][i] = _packInt(c.fields[i].constantValue);
+                    uint8 constantKind = _fieldKind(c, c.fields[i]);
+                    staticValues[current][i] = constantKind == KIND_LONG
+                        ? _packLong(c.fields[i].constantValue)
+                        : _packInt(uint32(c.fields[i].constantValue));
                 }
             }
             uint256 link = parentLinks[current];
@@ -1910,7 +2003,7 @@ contract JVMSubsetInterpreter {
         uint256 length = (meta >> 112) & 0xffffffff;
         if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
         if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS
-            || s.maxLocals < s.argumentCount + 1) revert CallError(4, callPC);
+            || s.maxLocals < s.argumentWords + 1) revert CallError(4, callPC);
         s.loaded = true;
     }
 
@@ -2122,7 +2215,7 @@ contract JVMSubsetInterpreter {
         uint256 length = (meta >> 112) & 0xffffffff;
         if (!_readCallCode(c.data, start, length, s)) revert CallError(4, callPC);
         if (s.maxStack > MAX_STACK || s.maxLocals > MAX_LOCALS
-            || s.maxLocals < s.argumentCount + 1) revert CallError(4, callPC);
+            || s.maxLocals < s.argumentWords + 1) revert CallError(4, callPC);
         s.loaded = true;
     }
 
@@ -3254,7 +3347,8 @@ contract JVMSubsetInterpreter {
                     --cursor;
                     uint8 kind = _fieldKind(c, field);
                     // _instanceFieldCount already rejected unsupported instance descriptors.
-                    values[cursor] = kind == KIND_INT ? _packInt(0) : _packRef(0);
+                    values[cursor] = kind == KIND_INT ? _packInt(0)
+                        : (kind == KIND_LONG ? _packLong(0) : _packRef(0));
                 }
             }
             uint256 link = parentLinks[current];
@@ -3464,17 +3558,18 @@ contract JVMSubsetInterpreter {
             uint256 width = _instructionWidth(op, pc);
             if (width > s.codeLength - pc) revert BytecodeError(2, pc);
             if (
-                (op == 0xac && s.returnKind != 1) || (op == 0xb1 && s.returnKind != 2)
-                    || (op == 0xb0 && s.returnKind != 3)
+                (op == 0xac && s.returnKind != 1) || (op == 0xad && s.returnKind != 4)
+                    || (op == 0xb1 && s.returnKind != 2) || (op == 0xb0 && s.returnKind != 3)
             ) revert CallError(5, pc);
             if (op == 0xbc && _newArrayPrimitive(uint8(c.data[s.codeOffset + pc + 1])) == 0) {
                 revert ArrayError(1, pc);
             }
-            if (op == 0x12 || op == 0x13) {
+            if (op == 0x12 || op == 0x13 || op == 0x14) {
                 uint256 index = op == 0x12
                     ? uint8(c.data[s.codeOffset + pc + 1])
                     : _unsigned16(c.data, s.codeOffset + pc + 1);
-                if (index == 0 || index >= c.cp.length || uint8(c.cp[index]) != 3) {
+                uint8 wantedTag = op == 0x14 ? 5 : 3;
+                if (index == 0 || index >= c.cp.length || uint8(c.cp[index]) != wantedTag) {
                     revert BytecodeError(13, pc);
                 }
             }
@@ -3494,20 +3589,21 @@ contract JVMSubsetInterpreter {
 
     function _instructionWidth(uint8 op, uint256 pc) private pure returns (uint256) {
         if (
-            op <= 0x01 || (op >= 0x02 && op <= 0x08) || (op >= 0x1a && op <= 0x1d)
+            op <= 0x01 || (op >= 0x02 && op <= 0x0a) || (op >= 0x1a && op <= 0x21)
                 || (op >= 0x2a && op <= 0x2e) || (op >= 0x32 && op <= 0x35)
-                || (op >= 0x3b && op <= 0x3e)
+                || (op >= 0x3b && op <= 0x42)
                 || (op >= 0x4b && op <= 0x4f) || (op >= 0x53 && op <= 0x56)
-                || (op >= 0x57 && op <= 0x60)
-                || op == 0x64 || op == 0x68 || op == 0x6c || op == 0x70 || op == 0x74
-                || op == 0x78 || op == 0x7a || op == 0x7c || op == 0x7e || op == 0x80
-                || op == 0x82 || (op >= 0x91 && op <= 0x93) || op == 0xac
+                || (op >= 0x57 && op <= 0x61) || (op >= 0x64 && op <= 0x65)
+                || (op >= 0x68 && op <= 0x69) || (op >= 0x6c && op <= 0x6d)
+                || (op >= 0x70 && op <= 0x71) || (op >= 0x74 && op <= 0x75)
+                || (op >= 0x78 && op <= 0x83) || op == 0x85 || op == 0x88
+                || (op >= 0x91 && op <= 0x94) || op == 0xac || op == 0xad
                 || op == 0xb0 || op == 0xb1 || op == 0xbe
         ) return 1;
-        if (op == 0x10 || op == 0x12 || op == 0x15 || op == 0x19 || op == 0x36
-            || op == 0x3a || op == 0xbc) return 2;
+        if (op == 0x10 || op == 0x12 || op == 0x15 || op == 0x16 || op == 0x19
+            || op == 0x36 || op == 0x37 || op == 0x3a || op == 0xbc) return 2;
         if (
-            op == 0x11 || op == 0x13 || op == 0x84 || (op >= 0x99 && op <= 0xa7)
+            op == 0x11 || op == 0x13 || op == 0x14 || op == 0x84 || (op >= 0x99 && op <= 0xa7)
                 || op == 0xb2 || op == 0xb3 || op == 0xb4 || op == 0xb5
                 || op == 0xb6 || op == 0xb7 || op == 0xb8 || op == 0xbb || op == 0xbd
                 || op == 0xc0 || op == 0xc1 || op == 0xc6 || op == 0xc7
@@ -3605,6 +3701,7 @@ contract JVMSubsetInterpreter {
             s.argumentKinds[at] = kind;
             s.argumentTypeOffsets[at] = off + i;
             s.argumentTypeLengths[at] = width;
+            s.argumentWords += kind == KIND_LONG ? 2 : 1;
             i += width;
             ++at;
         }
@@ -3614,7 +3711,8 @@ contract JVMSubsetInterpreter {
         if (resultOff + 1 == off + n && _isIntLike(result)) {
             s.returnKind = 1;
             s.returnSubtype = result;
-        } else if (resultOff + 1 == off + n && result == 0x56) s.returnKind = 2;
+        } else if (resultOff + 1 == off + n && result == 0x4a) s.returnKind = 4;
+        else if (resultOff + 1 == off + n && result == 0x56) s.returnKind = 2;
         else {
             (bool ok, uint256 width, uint8 kind) = _descriptorType(data, resultOff, off + n, false);
             if (!ok || kind != KIND_REF || resultOff + width != off + n) return false;
@@ -3650,6 +3748,7 @@ contract JVMSubsetInterpreter {
         if (off >= end) return (false, 0, 0);
         uint8 b = uint8(data[off]);
         if (_isIntLike(b)) return (true, 1, uint8(KIND_INT));
+        if (b == 0x4a) return (true, 1, uint8(KIND_LONG));
         if (allowVoid && b == 0x56) return (true, 1, 0);
         if (b == 0x5b) {
             uint256 dimensions;
@@ -3760,8 +3859,12 @@ contract JVMSubsetInterpreter {
         return (KIND_REF << KIND_SHIFT) | uint256(handle);
     }
 
+    function _packLong(uint64 value) private pure returns (uint256) {
+        return (KIND_LONG << KIND_SHIFT) | uint256(value);
+    }
+
     function _payload(uint256 value) private pure returns (uint256) {
-        return uint32(value);
+        return uint64(value);
     }
 
     function _valueKind(uint256 value) private pure returns (uint256) {
@@ -3775,6 +3878,11 @@ contract JVMSubsetInterpreter {
     function _requireIntPair(uint256[] memory stack, uint256 sp, uint256 pc) private pure {
         _requireKind(stack[sp - 2], KIND_INT, pc);
         _requireKind(stack[sp - 1], KIND_INT, pc);
+    }
+
+    function _requireLongPair(uint256[] memory stack, uint256 sp, uint256 pc) private pure {
+        _requireKind(stack[sp - 2], KIND_LONG, pc);
+        _requireKind(stack[sp - 1], KIND_LONG, pc);
     }
 
     function _requireHeapKind(
@@ -3810,9 +3918,68 @@ contract JVMSubsetInterpreter {
         pure
         returns (uint256)
     {
-        if (sp >= stack.length) revert BytecodeError(9, pc);
+        uint256 words = _stackWords(stack, sp);
+        uint256 added = _valueKind(value) == KIND_LONG ? 2 : 1;
+        if (words > stack.length || added > stack.length - words) revert BytecodeError(9, pc);
         stack[sp] = value;
         return sp + 1;
+    }
+
+    function _stackWords(uint256[] memory stack, uint256 sp) private pure returns (uint256 words) {
+        for (uint256 i = 0; i < sp; ++i) {
+            words += _valueKind(stack[i]) == KIND_LONG ? 2 : 1;
+        }
+    }
+
+    function _isCategory1(uint256 value) private pure returns (bool) {
+        uint256 kind = _valueKind(value);
+        return kind == KIND_INT || kind == KIND_REF || kind == KIND_UNINIT;
+    }
+
+    function _loadLong(
+        uint256[] memory stack, uint256 sp, uint256[] memory locals,
+        bool[] memory initialized, uint256 local, uint256 pc
+    ) private pure returns (uint256) {
+        if (local >= locals.length || local + 1 >= locals.length) revert BytecodeError(8, pc);
+        if (!initialized[local]) revert BytecodeError(11, pc);
+        _requireKind(locals[local], KIND_LONG, pc);
+        if (!initialized[local + 1]) revert BytecodeError(11, pc);
+        _requireKind(locals[local + 1], KIND_LONG_TAIL, pc);
+        return _push(stack, sp, locals[local], pc);
+    }
+
+    function _storeLong(
+        uint256[] memory stack, uint256 sp, uint256[] memory locals,
+        bool[] memory initialized, uint256 local, uint256 pc
+    ) private pure returns (uint256) {
+        if (local >= locals.length || local + 1 >= locals.length) revert BytecodeError(8, pc);
+        if (sp == 0) revert BytecodeError(3, pc);
+        _requireKind(stack[sp - 1], KIND_LONG, pc);
+        _invalidateLocal(locals, initialized, local);
+        _invalidateLocal(locals, initialized, local + 1);
+        locals[local] = stack[sp - 1];
+        locals[local + 1] = KIND_LONG_TAIL << KIND_SHIFT;
+        initialized[local] = true;
+        initialized[local + 1] = true;
+        return sp - 1;
+    }
+
+    function _copyArguments(
+        Frame memory child, Selected memory target, uint256[] memory stack,
+        uint256 stackAt, uint256 localAt
+    ) private pure {
+        for (uint256 i = 0; i < target.argumentCount; ++i) {
+            uint256 value = stack[stackAt + i];
+            child.locals[localAt] = value;
+            child.initialized[localAt] = true;
+            if (target.argumentKinds[i] == KIND_LONG) {
+                child.locals[localAt + 1] = KIND_LONG_TAIL << KIND_SHIFT;
+                child.initialized[localAt + 1] = true;
+                localAt += 2;
+            } else {
+                ++localAt;
+            }
+        }
     }
 
     function _loadKind(
@@ -3842,6 +4009,7 @@ contract JVMSubsetInterpreter {
         if (local >= locals.length) revert BytecodeError(8, pc);
         if (sp == 0) revert BytecodeError(3, pc);
         _requireKind(stack[sp - 1], wantedKind, pc);
+        _invalidateLocal(locals, initialized, local);
         locals[local] = stack[sp - 1];
         initialized[local] = true;
         return sp - 1;
@@ -3866,6 +4034,7 @@ contract JVMSubsetInterpreter {
         if (sp == 0) revert BytecodeError(3, pc);
         uint256 kind = _valueKind(stack[sp - 1]);
         if (kind != KIND_REF && kind != KIND_UNINIT) revert BytecodeError(14, pc);
+        _invalidateLocal(locals, initialized, local);
         locals[local] = stack[sp - 1];
         initialized[local] = true;
         return sp - 1;
@@ -3882,61 +4051,153 @@ contract JVMSubsetInterpreter {
         }
     }
 
-    function _permuteCategory1(uint256[] memory stack, uint256 sp, uint8 op, uint256 pc)
-        private
-        pure
-        returns (uint256)
+    function _permuteStack(uint256[] memory stack, uint256 sp, uint8 op, uint256 pc)
+        private pure returns (uint256)
     {
-        if (op == 0x58) { // pop2
+        if (sp == 0) revert BytecodeError(3, pc);
+        uint256 v1 = stack[sp - 1];
+        bool c1 = _isCategory1(v1);
+        bool c2 = _valueKind(v1) == KIND_LONG;
+        if (!c1 && !c2) revert BytecodeError(14, pc);
+
+        if (op == 0x58) { // pop2: one category-2 or two category-1 values
+            if (c2) return sp - 1;
             if (sp < 2) revert BytecodeError(3, pc);
+            if (!_isCategory1(stack[sp - 2])) revert BytecodeError(14, pc);
             return sp - 2;
         }
         if (op == 0x59) { // dup
-            if (sp == 0) revert BytecodeError(3, pc);
-            return _push(stack, sp, stack[sp - 1], pc);
+            if (!c1) revert BytecodeError(14, pc);
+            return _push(stack, sp, v1, pc);
         }
-        uint256 need = (op == 0x5a || op == 0x5c || op == 0x5f) ? 2
-            : (op == 0x5b || op == 0x5d ? 3 : 4);
-        if (sp < need) revert BytecodeError(3, pc);
-        if (op == 0x5f) { // swap
-            (stack[sp - 2], stack[sp - 1]) = (stack[sp - 1], stack[sp - 2]);
-            return sp;
-        }
-        uint256 extra = op == 0x5a || op == 0x5b ? 1 : 2;
-        if (extra > stack.length - sp) revert BytecodeError(9, pc);
-        if (op == 0x5a) { // dup_x1: ..., v2, v1 -> ..., v1, v2, v1
-            uint256 v1 = stack[sp - 1];
-            stack[sp] = v1;
-            stack[sp - 1] = stack[sp - 2];
-            stack[sp - 2] = v1;
-        } else if (op == 0x5b) { // dup_x2: ..., v3, v2, v1 -> ..., v1, v3, v2, v1
-            uint256 v1 = stack[sp - 1];
-            stack[sp] = v1;
-            stack[sp - 1] = stack[sp - 2];
-            stack[sp - 2] = stack[sp - 3];
-            stack[sp - 3] = v1;
-        } else if (op == 0x5c) { // dup2
-            stack[sp] = stack[sp - 2];
-            stack[sp + 1] = stack[sp - 1];
-        } else if (op == 0x5d) { // dup2_x1
+        if (op == 0x5a || op == 0x5f) { // dup_x1 / swap: two category-1 values
+            if (!c1) revert BytecodeError(14, pc);
+            if (sp < 2) revert BytecodeError(3, pc);
             uint256 v2 = stack[sp - 2];
-            uint256 v1 = stack[sp - 1];
-            stack[sp + 1] = v1;
-            stack[sp] = v2;
-            stack[sp - 1] = stack[sp - 3];
+            if (!_isCategory1(v2)) revert BytecodeError(14, pc);
+            if (op == 0x5f) {
+                stack[sp - 2] = v1;
+                stack[sp - 1] = v2;
+                return sp;
+            }
+            _requireExtraWords(stack, sp, 1, pc);
             stack[sp - 2] = v1;
-            stack[sp - 3] = v2;
-        } else { // dup2_x2
-            uint256 v2 = stack[sp - 2];
-            uint256 v1 = stack[sp - 1];
-            stack[sp + 1] = v1;
-            stack[sp] = v2;
-            stack[sp - 1] = stack[sp - 3];
-            stack[sp - 2] = stack[sp - 4];
-            stack[sp - 3] = v1;
-            stack[sp - 4] = v2;
+            stack[sp - 1] = v2;
+            stack[sp] = v1;
+            return sp + 1;
         }
-        return sp + extra;
+        if (op == 0x5b) { // dup_x2: c,b,a or A,a (bottom to top)
+            if (!c1) revert BytecodeError(14, pc);
+            if (sp < 2) revert BytecodeError(3, pc);
+            uint256 v2 = stack[sp - 2];
+            if (_valueKind(v2) == KIND_LONG) {
+                _requireExtraWords(stack, sp, 1, pc);
+                stack[sp - 2] = v1; stack[sp - 1] = v2; stack[sp] = v1;
+                return sp + 1;
+            }
+            if (!_isCategory1(v2)) revert BytecodeError(14, pc);
+            if (sp < 3) revert BytecodeError(3, pc);
+            uint256 v3 = stack[sp - 3];
+            if (!_isCategory1(v3)) revert BytecodeError(14, pc);
+            _requireExtraWords(stack, sp, 1, pc);
+            stack[sp - 3] = v1; stack[sp - 2] = v3;
+            stack[sp - 1] = v2; stack[sp] = v1;
+            return sp + 1;
+        }
+        if (op == 0x5c) { // dup2: A or b,a
+            if (c2) {
+                _requireExtraWords(stack, sp, 2, pc);
+                stack[sp] = v1;
+                return sp + 1;
+            }
+            if (sp < 2) revert BytecodeError(3, pc);
+            uint256 v2 = stack[sp - 2];
+            if (!_isCategory1(v2)) revert BytecodeError(14, pc);
+            _requireExtraWords(stack, sp, 2, pc);
+            stack[sp] = v2; stack[sp + 1] = v1;
+            return sp + 2;
+        }
+        if (op == 0x5d) { // dup2_x1: a,A or c,b,a
+            if (c2) {
+                if (sp < 2) revert BytecodeError(3, pc);
+                uint256 v2 = stack[sp - 2];
+                if (!_isCategory1(v2)) revert BytecodeError(14, pc);
+                _requireExtraWords(stack, sp, 2, pc);
+                stack[sp - 2] = v1; stack[sp - 1] = v2; stack[sp] = v1;
+                return sp + 1;
+            }
+            if (sp < 2) revert BytecodeError(3, pc);
+            uint256 v2 = stack[sp - 2];
+            if (!_isCategory1(v2)) revert BytecodeError(14, pc);
+            if (sp < 3) revert BytecodeError(3, pc);
+            uint256 v3 = stack[sp - 3];
+            if (!_isCategory1(v3)) revert BytecodeError(14, pc);
+            _requireExtraWords(stack, sp, 2, pc);
+            stack[sp - 3] = v2; stack[sp - 2] = v1; stack[sp - 1] = v3;
+            stack[sp] = v2; stack[sp + 1] = v1;
+            return sp + 2;
+        }
+        // dup2_x2, all four JVMS forms.
+        if (c2) {
+            if (sp < 2) revert BytecodeError(3, pc);
+            uint256 v2 = stack[sp - 2];
+            if (_valueKind(v2) == KIND_LONG) {
+                _requireExtraWords(stack, sp, 2, pc);
+                stack[sp - 2] = v1; stack[sp - 1] = v2; stack[sp] = v1;
+                return sp + 1;
+            }
+            if (!_isCategory1(v2)) revert BytecodeError(14, pc);
+            if (sp < 3) revert BytecodeError(3, pc);
+            uint256 v3 = stack[sp - 3];
+            if (!_isCategory1(v3)) revert BytecodeError(14, pc);
+            _requireExtraWords(stack, sp, 2, pc);
+            stack[sp - 3] = v1; stack[sp - 2] = v3;
+            stack[sp - 1] = v2; stack[sp] = v1;
+            return sp + 1;
+        }
+        if (sp < 2) revert BytecodeError(3, pc);
+        uint256 v2 = stack[sp - 2];
+        if (!_isCategory1(v2)) revert BytecodeError(14, pc);
+        if (sp < 3) revert BytecodeError(3, pc);
+        uint256 v3 = stack[sp - 3];
+        if (_valueKind(v3) == KIND_LONG) {
+            _requireExtraWords(stack, sp, 2, pc);
+            stack[sp - 3] = v2; stack[sp - 2] = v1; stack[sp - 1] = v3;
+            stack[sp] = v2; stack[sp + 1] = v1;
+            return sp + 2;
+        }
+        if (!_isCategory1(v3)) revert BytecodeError(14, pc);
+        if (sp < 4) revert BytecodeError(3, pc);
+        uint256 v4 = stack[sp - 4];
+        if (!_isCategory1(v4)) revert BytecodeError(14, pc);
+        _requireExtraWords(stack, sp, 2, pc);
+        stack[sp - 4] = v2; stack[sp - 3] = v1; stack[sp - 2] = v4;
+        stack[sp - 1] = v3; stack[sp] = v2; stack[sp + 1] = v1;
+        return sp + 2;
+    }
+
+    function _requireExtraWords(
+        uint256[] memory stack, uint256 sp, uint256 extra, uint256 pc
+    ) private pure {
+        uint256 words = _stackWords(stack, sp);
+        if (words > stack.length || extra > stack.length - words) revert BytecodeError(9, pc);
+    }
+
+    function _invalidateLocal(
+        uint256[] memory locals, bool[] memory initialized, uint256 local
+    ) private pure {
+        if (initialized[local]) {
+            uint256 kind = _valueKind(locals[local]);
+            if (kind == KIND_LONG && local + 1 < locals.length) {
+                locals[local + 1] = 0;
+                initialized[local + 1] = false;
+            } else if (kind == KIND_LONG_TAIL && local != 0) {
+                locals[local - 1] = 0;
+                initialized[local - 1] = false;
+            }
+        }
+        locals[local] = 0;
+        initialized[local] = false;
     }
 
     function _unaryCondition(uint8 op, int32 value) private pure returns (bool) {
@@ -4033,18 +4294,22 @@ contract JVMSubsetInterpreter {
                     );
                 }
                 if (supportedKind != 0 && isConstantValue) {
-                    if (supportedKind != KIND_INT || field.hasConstant || attributeLength != 2) {
+                    if ((supportedKind != KIND_INT && supportedKind != KIND_LONG)
+                        || field.hasConstant || attributeLength != 2) {
                         revert FieldError(5, i);
                     }
                     uint256 constantIndex = _u2(r);
+                    uint8 wantedTag = supportedKind == KIND_LONG ? 5 : 3;
                     if (
                         constantIndex == 0 || constantIndex >= c.cp.length
-                            || uint8(c.cp[constantIndex]) != 3
+                            || uint8(c.cp[constantIndex]) != wantedTag
                     ) revert FieldError(5, i);
                     field.hasConstant = true;
-                    field.constantValue = _normalizeInt(
-                        uint32(c.cp[constantIndex] >> 8), uint8(c.data[descriptorOffset])
-                    );
+                    field.constantValue = supportedKind == KIND_LONG
+                        ? uint64(c.cp[constantIndex] >> 8)
+                        : uint64(_normalizeInt(
+                            uint32(c.cp[constantIndex] >> 8), uint8(c.data[descriptorOffset])
+                        ));
                 } else {
                     _skip(r, attributeLength);
                 }
