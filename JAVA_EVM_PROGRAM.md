@@ -75,8 +75,10 @@ routine permission to start the next verified increment.
 | M3d | class hierarchy/member resolution and superclass-init prerequisites | accepted; JAVA_EVM_M3D_PLAN.md |
 | M4a | integer-array heap, typed references, array helpers/statics | active; JAVA_EVM_M4A_PLAN.md |
 | M4b | ordinary object allocation, constructors, instance fields and direct invokespecial calls | accepted;713 cases plus46 independent probes |
-| M4c | invokevirtual dispatch, casts/type tests | frozen in `JAVA_EVM_M4C_PLAN.md`; dispatch3 workers |
-| M4d | interfaces/reference arrays | queued; freeze separately |
+| M4c | invokevirtual dispatch, casts/type tests | accepted;792 cases plus48 independent probes |
+| M4d | reference arrays/covariance/ArrayStoreException | next bounded stage |
+| M4e | multianewarray | queued; separate allocation-order review |
+| M4f | interfaces | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -87,12 +89,11 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M4b accepted:713 JVM/EVM cases plus46 independent object probes,31 Python tests,
-289 smoke/309 fast, exact Go validation, bootstrap/artifact/demos/AOT/vet green.
-Parent corrected malformed negative setups, linearized object layouts (no budget
-increase), replaced out-of-profile javac constant-final fixture access with real
-getfield, and rejected synchronized special callees after independent review.
-Runtime57900 bytes remains local-runtime only, not deployed/full Java.
-M4c frozen in JAVA_EVM_M4C_PLAN.md; dispatch3 workers for invokevirtual/checkcast/instanceof with exact override
-relations and class-cast outcomes. Keep Sol/high, inherited Fast, disjoint worktrees,
-exact tests and automatic continuation. No routine stage confirmation.
+M4c accepted:792 JVM/EVM cases plus48 independent probes,34 Python tests,
+331 smoke/351 fast, exact Go validation, artifact/bootstrap/demos/AOT/vet green.
+Fixed negative-test exact-signature isolation, array-receiver deferral order and
+255-dimensional structural bound. No prior713 case/budget changes.
+Runtime74469 bytes remains local-runtime only, not deployed/full Java.
+Next freeze/dispatch M4d reference arrays/covariance/ArrayStoreException; keep
+multianewarray and interfaces separately bounded. Sol/high inherited Fast,
+isolated worktrees and automatic verified continuation, no routine confirmation.

@@ -150,3 +150,20 @@ Parent owns AGENTS/plans/quickstart/Makefile and integration/independent review.
 One monolithic Solidity writer. No worker spawning/peer writes/remote pushes/
 global settings/untrusted oracle runs. Commit scoped owned files and return
 hash/size/SHA/real verification/known failures honestly. Keep Sol/high and Fast.
+
+## Accepted integration evidence
+Runtime d22fcd4→b09c8f0, fixtures59e5aab→3d061bd, verifier440d285→44ddfaa.
+Independent integration found2 negative issues: a supposedly missing method really
+existed, and array-receiver deferral wrongly ran ordinary-class assignability.
+Followup b7857ff→5bd82f3 corrected missing exact signature without weakening
+CallError3 and enforced frozen array CallError4 ordering. Audit also proved/fixed
+structural array rank>255 rejection with exact TypeError1 (JVM/JVMS corroborated).
+
+Parent reran final artifact/bootstrap consistency, Go/CLI,34 Python,792/792 full,
+331 smoke,351 fast, demos,AOT,focused vet and48 independent probes. Prior713
+manifest entries/budgets unchanged. Probe archive:
+`build/java-diff-parent-m4c/probe-00zyb_84/results-final/`.
+Accepted runtime74469 bytes SHA256
+`1e5736e346cea2c55a2aed3963822a1bf9be66eb57c0031b4c64603d64f5c941`.
+Still local-runtime only and not full JVM. Next M4d reference arrays/covariance;
+multianewarray is a separate following batch for allocation/rank/error-order review.
