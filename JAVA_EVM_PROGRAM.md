@@ -76,7 +76,7 @@ routine permission to start the next verified increment.
 | M4a | integer-array heap, typed references, array helpers/statics | active; JAVA_EVM_M4A_PLAN.md |
 | M4b | ordinary object allocation, constructors, instance fields and direct invokespecial calls | accepted;713 cases plus46 independent probes |
 | M4c | invokevirtual dispatch, casts/type tests | accepted;792 cases plus48 independent probes |
-| M4d | reference arrays/covariance/ArrayStoreException | next bounded stage |
+| M4d | reference arrays/covariance/ArrayStoreException | frozen in `JAVA_EVM_M4D_PLAN.md`; dispatch3 workers |
 | M4e | multianewarray | queued; separate allocation-order review |
 | M4f | interfaces | queued |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
@@ -94,6 +94,6 @@ M4c accepted:792 JVM/EVM cases plus48 independent probes,34 Python tests,
 Fixed negative-test exact-signature isolation, array-receiver deferral order and
 255-dimensional structural bound. No prior713 case/budget changes.
 Runtime74469 bytes remains local-runtime only, not deployed/full Java.
-Next freeze/dispatch M4d reference arrays/covariance/ArrayStoreException; keep
+M4d frozen in JAVA_EVM_M4D_PLAN.md; dispatch3 workers. Keep
 multianewarray and interfaces separately bounded. Sol/high inherited Fast,
 isolated worktrees and automatic verified continuation, no routine confirmation.

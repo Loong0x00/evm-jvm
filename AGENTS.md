@@ -1,7 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M4c virtual dispatch/casts/type tests**, recorded in
-`JAVA_EVM_M4C_PLAN.md`:792 cases plus48 independent probes. Next: reference arrays,
+`JAVA_EVM_M4C_PLAN.md`:792 cases plus48 independent probes. Active M4d reference
+arrays, frozen in `JAVA_EVM_M4D_PLAN.md`,
 then separate multianewarray/interface/value-type/handler/class-library stages.
 Sol/high workers currently inherit enabled Codex Fast
 (priority request, backend acceptance not guaranteed); do not lower reasoning.
