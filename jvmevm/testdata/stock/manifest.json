@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "compilerCommand": [
+    "javac",
+    "--release",
+    "8",
+    "-g:none"
+  ],
+  "compilerUsedToPin": "javac 21.0.9",
+  "fixtures": [
+    {
+      "name": "CanonicalTwelve",
+      "source": "src/CanonicalTwelve.java",
+      "classHex": "classes/CanonicalTwelve.class.hex",
+      "sourceSha256": "2574df8233a0db0e15b23445309b7ae871519428eb828d88e143575d1ef46445",
+      "classSha256": "568ea6e216ba837dbd6eec0789c146e0902296111ac7038e7dc7d869c2f689ab",
+      "classBytes": 177,
+      "expected": 12,
+      "note": "canonical demo; iinc and multiply; seven JVM instructions"
+    },
+    {
+      "name": "OverflowAdd",
+      "source": "src/OverflowAdd.java",
+      "classHex": "classes/OverflowAdd.class.hex",
+      "sourceSha256": "1888eef253d4bd8141fb62f8e4538153fe7362ab20b84204bc55833331db9522",
+      "classSha256": "0a58081159a58bb5675b64e877f59ff9cde55b46f22cac3f328c0a9aac1aa6a3",
+      "classBytes": 176,
+      "expected": -2147483648,
+      "note": "ldc plus Java int32 addition overflow"
+    },
+    {
+      "name": "OverflowMultiply",
+      "source": "src/OverflowMultiply.java",
+      "classHex": "classes/OverflowMultiply.class.hex",
+      "sourceSha256": "005f0590778f6bda47f43648e19afb7d4f5c5c90136f17105e1ff1f52b19f288",
+      "classSha256": "b84f2a271a474587bb286f7681f7e212aa8a58407e0ed53832109a74c3c429de",
+      "classBytes": 181,
+      "expected": -1073741824,
+      "note": "ldc plus Java int32 multiplication overflow"
+    },
+    {
+      "name": "MinimumNegation",
+      "source": "src/MinimumNegation.java",
+      "classHex": "classes/MinimumNegation.class.hex",
+      "sourceSha256": "cd5ee6a87705ecab1f0a0ba2343fddb20674b60b2b6040e3c175b644c56beaaa",
+      "classSha256": "649b3c89efaa295041a63f8eb656d22669176f597a713ea7042305872cf661d9",
+      "classBytes": 179,
+      "expected": -2147483648,
+      "note": "MIN_VALUE negation wraps to MIN_VALUE"
+    },
+    {
+      "name": "IincWrap",
+      "source": "src/IincWrap.java",
+      "classHex": "classes/IincWrap.class.hex",
+      "sourceSha256": "d48e6c6c40f57e44f1cc756e29612d2cc53f0ec007c8ea7a3b4fc5d5d5d80612",
+      "classSha256": "7799ab8e1cf9f82b2c423b8bb995b6b3dc99b5fa5b56f7d87635eb90abcfd37e",
+      "classBytes": 174,
+      "expected": -2147483648,
+      "note": "iinc wraps from MAX_VALUE to MIN_VALUE"
+    },
+    {
+      "name": "NegativeImmediates",
+      "source": "src/NegativeImmediates.java",
+      "classHex": "classes/NegativeImmediates.class.hex",
+      "sourceSha256": "a0b558f498471cedf95b2f036033e7e19e0882c1a3cf1c42133e598a22d8b302",
+      "classSha256": "fe966944799b7f6db100eb6bd4b277e0d39aa05500fd091e882fa2e6bc5136ee",
+      "classBytes": 182,
+      "expected": -30100,
+      "note": "signed bipush and sipush"
+    },
+    {
+      "name": "LiveStackLocals",
+      "source": "src/LiveStackLocals.java",
+      "classHex": "classes/LiveStackLocals.class.hex",
+      "sourceSha256": "0e28441c51632c40467c7b0e6392ed3ed455809583619782767e7090b08f9606",
+      "classSha256": "91cfff2a62cecd9ba9619d6e66a1c3a0bfc3160ff393916f54ac2f4d0427196f",
+      "classBytes": 179,
+      "expected": 35,
+      "note": "two initialized locals and a live two-word operand stack"
+    },
+    {
+      "name": "WideLdc",
+      "source": "src/WideLdc.java",
+      "classHex": "classes/WideLdc.class.hex",
+      "sourceSha256": "cb4774d8173be598650568a7e9c38075d1b017bb7fca6db299ee2f61aeaed74b",
+      "classSha256": "62303e0776fa25b0dc15379a0be97bc417dc306d88a7bdaf146462585ef0b0b0",
+      "classBytes": 4047,
+      "expected": 123456789,
+      "note": "natural ldc_w (#259) caused only by an unused switch helper"
+    }
+  ]
+}
