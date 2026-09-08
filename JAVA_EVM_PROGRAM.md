@@ -86,8 +86,9 @@ routine permission to start the next verified increment.
 | M5b-a | scalar long/category-2 stack/locals/calls/fields | accepted;1493 cases plus48 independent probes |
 | M5b-b | long arrays | accepted;1593 cases plus48 independent probes |
 | M5c-a | switch/goto_w/wide variable-width control flow | accepted;1681 cases plus48 independent probes |
-| M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | frozen in `JAVA_EVM_M5CB_PLAN.md`; dispatch3 workers |
-| M5c-c+ | software IEEE arithmetic, IEEE arrays, handlers and remaining instructions | queued; freeze separately |
+| M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | accepted;1811 cases plus216 independent probes |
+| M5c-c | software scalar IEEE arithmetic | next bounded stage |
+| M5c-d+ | IEEE arrays, handlers and remaining instructions | queued; freeze separately |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -97,12 +98,11 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M5c-a accepted:1681 JVM/EVM cases plus48 probes,36 Python,773 smoke/793 fast,
-Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Large-Code OOG fixed generically
-(predecode reuse/iinc dispatch), same cases/budgets; major52 nonzero-padding
-Java8/21 parity confirmed. Runtime116023 bytes, local-runtime only/not full JVM.
-Prior1593 fixtures/budgets unchanged. M5c-b frozen in JAVA_EVM_M5CB_PLAN.md; dispatch3 workers for
-conversions/comparison and explicitly bounded EVM-only raw-bit APIs; arithmetic
-and arrays follow separately. No host math/AOT/native precompile/JRE fallback.
-All NEW workers Sol/high WITHOUT Fast; named java-fast is only fixture tier.
-Automatic verified progression, no routine confirmation.
+M5c-b accepted:1811 JVM/EVM cases plus216 parent probes,36 Python,839 smoke/859fast,
+Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Parent+reviewer found/fixed real
+f2d unsigned-bias panic, retag-CV probes isolated, obsolete F/D guards updated.
+Runtime132118 bytes, local-runtime only/not full JVM. Prior1681 fixtures/budgets
+unchanged. Next M5c-c pure-EVM IEEE add/sub/mul/div/Java remainder with RNE/gradual
+underflow/signedzero/canonicalgeneratedNaN; arrays remain separate. Four raw-bit
+bindings ONLY, no host math or broad native/JRE fallback. NEW agents Sol/high
+WITHOUT Fast. Automatic verified progression, no routine confirmation.

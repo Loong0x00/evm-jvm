@@ -157,3 +157,19 @@ new jvmevm/ieee_validation_test.go verifyM5cb* helpers; baseline red expected.
 Parent owns plans/AGENTS/quickstart/Makefile and integration/explicit profile updates.
 One Solidity writer; no spawning/peer writes/push/global settings/untrusted Java.
 All agents Sol/high WITHOUT Fast; scoped commits/honest SHA/size/checks/caveats.
+
+## Accepted integration evidence
+Runtime90f13a1→ea0be6a,fixtures2b243ab→fcefdc2,verifier4edeec4→3b5ec06.
+Parent216 independent probes found8 f2d panics despite1811 fixed cases green:
+unsigned exponent-127+1023 underflowed normal exponents1..126. Review cfee5da→
+98d5c62 independently found/fixed rebias ordering and added regressions; isolated
+retagged CP probes from shared ConstantValue fields and updated obsolete F/D guards.
+Parent final artifact/5bootstraps, Go/CLI,36 Python,1811 full,839 smoke,859 fast,
+demos,AOT,focused vet and216 probes all passed:
+`build/java-diff-parent-m5cb/probe-f81bfad2/results-final/`.
+One combined shell timed out after successful full+216 checks during smoke; smoke/
+fast/demos/AOT/vet were explicitly rerun successfully, not inferred completed.
+Prior1681 manifest entries/budgets unchanged. Runtime132118 bytes SHA256
+`bab196c80d76db16257f2e2664c9a776c270782e87c3a3c169ecf364e73809f8`.
+Finite bits exact, conversion NaNs canonical; signaling-NaN transport portability
+caveat retained. Next pure-EVM IEEE arithmetic, no host math. All agents NO Fast.
