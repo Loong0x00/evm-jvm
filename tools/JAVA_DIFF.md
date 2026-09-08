@@ -15,17 +15,17 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4fc --tier full
+python3 tools/java_diff.py --stage m5a --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4fc --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m5a --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
-`m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, and `m4fc` or `all`
-adds M4f-c. A manifest without entries in the newest stage continues to run its older cases
+`m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, `m4fc` adds M4f-c,
+and `m5a` or `all` adds M5a. A manifest without entries in the newest stage continues to run its older cases
 under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
@@ -241,6 +241,27 @@ Static invocation has no receiver/null check, but ordinary instance operations
 inside a static body retain normal null behavior. EVM out of gas remains an
 unlabeled engine failure and host JVM memory exhaustion is never an oracle
 strategy.
+
+## M5a narrow int-like primitives
+
+M5a remains additive schema 1 and cumulative over M4f-c. The root ABI is still
+exactly a static `(I...)I` method: roots declaring `Z`, `B`, `C`, or `S`
+arguments or results are rejected rather than being treated as generic integer
+roots. Trusted finite fixtures expose narrow operations through integer wrapper
+roots. Inside guest execution, methods and fields may declare boolean, byte,
+char, and short while values remain computational category-1 ints. Invocation
+arguments are not implicitly narrowed; `ireturn`, field stores, and static
+`ConstantValue` preparation normalize according to the exact declared subtype.
+
+Primitive arrays add `boolean[]`, `byte[]`, `char[]`, and `short[]`, including
+nested/reference-array transport and `multianewarray`. The runner never parses
+array descriptors, serializes guest references, plans allocation, or supplies
+anything except the explicitly listed unchanged classfiles and signed-int32 root
+arguments. `boolean[]` and `byte[]` share JVM load/store opcodes but retain
+distinct type identities. Unsupported long/float/double arrays remain outside
+M5a. Fixed-cap OOM probes stay in focused Go/mock tests, never host-JVM heap
+exhaustion. M5a adds no output or exception kind: schema 1 and exact kinds 1
+through 11 are unchanged, and OOG/reverts remain engine failures.
 
 ## Outcome protocol
 

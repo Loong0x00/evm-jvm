@@ -1089,6 +1089,7 @@ public final class Arithmetic {
         cases += [case("m4fa-smoke", stage="m4fa")]
         cases += [case("m4fb-smoke", stage="m4fb")]
         cases += [case("m4fc-smoke", stage="m4fc")]
+        cases += [case("m5a-smoke", stage="m5a")]
         selected_a = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_b = java_diff.select_cases(cases, "m1", "fast", 56, None)
         selected_c = java_diff.select_cases(cases, "m1", "fast", 57, None)
@@ -1111,14 +1112,15 @@ public final class Arithmetic {
             "m4fa": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke"],
             "m4fb": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke"],
             "m4fc": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke"],
-            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke"],
+            "m5a": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke"],
+            "all": ["m1-smoke", "m2-smoke", "m2b-smoke", "m3a-smoke", "m3b-smoke", "m3c-smoke", "m3d-smoke", "m4a-smoke", "m4b-smoke", "m4c-smoke", "m4d-smoke", "m4e-smoke", "m4fa-smoke", "m4fb-smoke", "m4fc-smoke", "m5a-smoke"],
         }
         for stage, want in expected.items():
             with self.subTest(stage=stage):
                 selected = java_diff.select_cases(cases, stage, "smoke", 56, None)
                 self.assertEqual([x["id"] for x in selected], want)
         parsed = java_diff.parser_for(Path("/tmp/repo")).parse_args([])
-        self.assertEqual(parsed.stage, "m4fc")
+        self.assertEqual(parsed.stage, "m5a")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m2b", "full", 56, "m3a-smoke")
         with self.assertRaises(java_diff.HarnessError):
@@ -1135,20 +1137,22 @@ public final class Arithmetic {
             java_diff.select_cases(cases, "m4fa", "full", 56, "m4fb-smoke")
         with self.assertRaises(java_diff.HarnessError):
             java_diff.select_cases(cases, "m4fb", "full", 56, "m4fc-smoke")
+        with self.assertRaises(java_diff.HarnessError):
+            java_diff.select_cases(cases, "m4fc", "full", 56, "m5a-smoke")
         with self.assertRaisesRegex(java_diff.HarnessError, "unknown stage"):
             java_diff.select_cases(cases, "m4f", "full", 56, None)
 
-    def test_manifest_accepts_exact_m4b_through_m4fc_stage_spellings(self):
+    def test_manifest_accepts_exact_m4b_through_m5a_stage_spellings(self):
         with tempfile.TemporaryDirectory() as tmp:
             fixtures = FixtureTree(tmp, [
                 case("objects", stage="m4b"), case("dispatch", stage="m4c"),
                 case("reference-arrays", stage="m4d"), case("multidimensional", stage="m4e"),
                 case("interfaces", stage="m4fa"), case("defaults", stage="m4fb"),
-                case("interface-statics", stage="m4fc"),
+                case("interface-statics", stage="m4fc"), case("narrow-primitives", stage="m5a"),
             ])
             _, loaded, _ = java_diff.load_manifest(fixtures.path)
-            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc"])
-        for malformed in ("M4fc", "m4-fc", "m4f", "interface-statics"):
+            self.assertEqual([item["stage"] for item in loaded], ["m4b", "m4c", "m4d", "m4e", "m4fa", "m4fb", "m4fc", "m5a"])
+        for malformed in ("M4fc", "m4-fc", "m4f", "M5a", "m5-a", "interface-statics"):
             with self.subTest(stage=malformed), tempfile.TemporaryDirectory() as tmp:
                 fixtures = FixtureTree(tmp, [case("bad-stage", stage=malformed)])
                 with self.assertRaisesRegex(java_diff.HarnessError, "stage must be"):
