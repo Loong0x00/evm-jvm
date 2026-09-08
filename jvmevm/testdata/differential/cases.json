@@ -42160,6 +42160,3508 @@
       "timeout_seconds": 20,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-nan-left",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        2143363909,
+        1065353216
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-nan-right",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        1065353216,
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-opposite-infinities",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        2139095040,
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-positive-infinity-finite",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        2139095040,
+        -1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-negative-infinities",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        -8388608,
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-opposite-zeros",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        0,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-negative-zeros",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        -2147483648,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-exact-cancellation",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        1065353216,
+        -1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-rne-half-even",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        1065353216,
+        864026624
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-rne-half-odd",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        1065353217,
+        864026624
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-max-subnormal-plus-min-subnormal",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        8388607,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-finite-overflow",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        2139095039,
+        2139095039
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-nan-right",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        1065353216,
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-same-positive-infinities",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        2139095040,
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-opposite-infinities",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        2139095040,
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-negative-infinity-finite",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        -8388608,
+        -1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-negative-zero-minus-positive-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-negative-zero-minus-negative-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        -2147483648,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-positive-zero-minus-negative-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        0,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-exact-cancellation",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        -1082130432,
+        -1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-near-cancellation",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        1065353216,
+        1065353215
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-min-normal-minus-min-subnormal",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        8388608,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-absorption",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        2139095039,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-subtract-below-half-adjacent",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "subtract",
+      "args": [
+        1065353216,
+        -1283457025
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-nan-left",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        2143363909,
+        1065353216
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-nan-right",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        1065353216,
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-positive-zero-times-positive-infinity",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        0,
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-negative-zero-times-negative-infinity",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        -2147483648,
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-positive-zero-times-negative",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        0,
+        -1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-negative-zero-times-negative",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        -2147483648,
+        -1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-positive-infinity-times-negative",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        2139095040,
+        -1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-negative-infinity-times-negative",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        -8388608,
+        -1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-normal-to-subnormal",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        8388608,
+        1056964608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-min-subnormal-half-to-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        1,
+        1056964608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-three-subnormals-half-rne",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        3,
+        1056964608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-multiply-finite-overflow",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "multiply",
+      "args": [
+        2139095039,
+        1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-nan-left",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        2143363909,
+        1065353216
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-positive-zero-by-positive-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-infinity-by-infinity",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        2139095040,
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-positive-by-positive-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        1065353216,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-positive-by-negative-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        1065353216,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-negative-by-negative-zero",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        -1082130432,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-positive-infinity-by-negative",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        2139095040,
+        -1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-negative-by-infinity",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        -1082130432,
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-positive-zero-by-negative",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        0,
+        -1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-normal-to-subnormal",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        8388608,
+        1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-three-subnormals-by-two-rne",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        3,
+        1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-divide-exact-seven-by-four",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "divide",
+      "args": [
+        1088421888,
+        1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-nan-left",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        2143363909,
+        1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-nan-right",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        1065353216,
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-infinite-dividend",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        2139095040,
+        1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-positive-zero-divisor",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        1088421888,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-negative-zero-divisor",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        1088421888,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-java-seven-percent-four",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        1088421888,
+        1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-negative-dividend",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        -1059061760,
+        1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-negative-divisor",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        1088421888,
+        -1065353216
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-finite-by-infinity",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        -1082130432,
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-negative-zero-dividend",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        -2147483648,
+        -1073741824
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-maximum-by-three-huge-gap",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        2139095039,
+        1077936128
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder-min-normal-by-max-subnormal",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder",
+      "args": [
+        8388608,
+        8388607
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-nan-left-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        2146964020,
+        1450744508,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-nan-left-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        2146964020,
+        1450744508,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-opposite-infinities-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        2146435072,
+        0,
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-opposite-infinities-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        2146435072,
+        0,
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-negative-zeros-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        -2147483648,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-negative-zeros-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        -2147483648,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-exact-cancellation-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        1072693248,
+        0,
+        -1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-exact-cancellation-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        1072693248,
+        0,
+        -1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-rne-half-even-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        1072693248,
+        0,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-rne-half-even-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        1072693248,
+        0,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-rne-half-odd-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        1072693248,
+        1,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-rne-half-odd-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        1072693248,
+        1,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-max-subnormal-plus-min-subnormal-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        1048575,
+        -1,
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-max-subnormal-plus-min-subnormal-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        1048575,
+        -1,
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-finite-overflow-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addHigh",
+      "args": [
+        2146435071,
+        -1,
+        2146435071,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-add-finite-overflow-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "addLow",
+      "args": [
+        2146435071,
+        -1,
+        2146435071,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-nan-right-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractHigh",
+      "args": [
+        1072693248,
+        0,
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-nan-right-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractLow",
+      "args": [
+        1072693248,
+        0,
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-same-infinities-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractHigh",
+      "args": [
+        2146435072,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-same-infinities-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractLow",
+      "args": [
+        2146435072,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-negative-zero-minus-positive-zero-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractHigh",
+      "args": [
+        -2147483648,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-negative-zero-minus-positive-zero-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractLow",
+      "args": [
+        -2147483648,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-negative-zero-minus-negative-zero-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractHigh",
+      "args": [
+        -2147483648,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-negative-zero-minus-negative-zero-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractLow",
+      "args": [
+        -2147483648,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-exact-cancellation-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractHigh",
+      "args": [
+        -1074790400,
+        0,
+        -1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-exact-cancellation-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractLow",
+      "args": [
+        -1074790400,
+        0,
+        -1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-min-normal-minus-min-subnormal-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractHigh",
+      "args": [
+        1048576,
+        0,
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-subtract-min-normal-minus-min-subnormal-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "subtractLow",
+      "args": [
+        1048576,
+        0,
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-nan-left-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        2146964020,
+        1450744508,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-nan-left-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        2146964020,
+        1450744508,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-zero-times-infinity-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        0,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-zero-times-infinity-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        0,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-negative-zero-times-negative-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        -2147483648,
+        0,
+        -1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-negative-zero-times-negative-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        -2147483648,
+        0,
+        -1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-infinity-times-negative-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        2146435072,
+        0,
+        -1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-infinity-times-negative-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        2146435072,
+        0,
+        -1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-normal-to-subnormal-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        1048576,
+        0,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-normal-to-subnormal-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        1048576,
+        0,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-min-subnormal-half-to-zero-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        0,
+        1,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-min-subnormal-half-to-zero-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        0,
+        1,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-three-subnormals-half-rne-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        0,
+        3,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-three-subnormals-half-rne-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        0,
+        3,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-finite-overflow-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyHigh",
+      "args": [
+        2146435071,
+        -1,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-multiply-finite-overflow-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "multiplyLow",
+      "args": [
+        2146435071,
+        -1,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-nan-left-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        2146964020,
+        1450744508,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-nan-left-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        2146964020,
+        1450744508,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-zero-by-zero-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-zero-by-zero-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-infinity-by-infinity-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        2146435072,
+        0,
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-infinity-by-infinity-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        2146435072,
+        0,
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-positive-by-negative-zero-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        1072693248,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-positive-by-negative-zero-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        1072693248,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-negative-infinity-by-negative-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        -1048576,
+        0,
+        -1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-negative-infinity-by-negative-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        -1048576,
+        0,
+        -1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-negative-by-infinity-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        -1074790400,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-negative-by-infinity-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        -1074790400,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-normal-to-subnormal-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        1048576,
+        0,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-normal-to-subnormal-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        1048576,
+        0,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-three-subnormals-by-two-rne-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        0,
+        3,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-three-subnormals-by-two-rne-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        0,
+        3,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-finite-overflow-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideHigh",
+      "args": [
+        2146435071,
+        -1,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-divide-finite-overflow-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "divideLow",
+      "args": [
+        2146435071,
+        -1,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-nan-left-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        2146964020,
+        1450744508,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-nan-left-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        2146964020,
+        1450744508,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-infinite-dividend-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        2146435072,
+        0,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-infinite-dividend-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        2146435072,
+        0,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-zero-divisor-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        1075576832,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-zero-divisor-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        1075576832,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-java-seven-percent-four-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        1075576832,
+        0,
+        1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-java-seven-percent-four-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        1075576832,
+        0,
+        1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-negative-dividend-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        -1071906816,
+        0,
+        1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-negative-dividend-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        -1071906816,
+        0,
+        1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-finite-by-infinity-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        -1074790400,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-finite-by-infinity-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        -1074790400,
+        0,
+        2146435072,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-negative-zero-dividend-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        -2147483648,
+        0,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-negative-zero-dividend-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        -2147483648,
+        0,
+        1073741824,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-maximum-by-three-huge-gap-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        2146435071,
+        -1,
+        1074266112,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-maximum-by-three-huge-gap-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        2146435071,
+        -1,
+        1074266112,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-min-normal-by-max-subnormal-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderHigh",
+      "args": [
+        1048576,
+        0,
+        1048575,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder-min-normal-by-max-subnormal-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainderLow",
+      "args": [
+        1048576,
+        0,
+        1048575,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-strict-float-add",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "strictFloatAdd",
+      "args": [
+        1065353217,
+        864026624
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-default-float-multiply",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "defaultFloatMultiply",
+      "args": [
+        8388608,
+        1056964608
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-virtual-float-divide",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "virtualFloatDivide",
+      "args": [
+        1065353216,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-direct-float-remainder",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "directFloatRemainder",
+      "args": [
+        1088421888,
+        1082130432
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-constructor-float-subtract",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "constructorFloatSubtract",
+      "args": [
+        1065353216,
+        1065353215
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-instance-float-postincrement",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "instanceFloatPostIncrement",
+      "args": [
+        1258291200
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-static-float-compound",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "staticFloatCompound",
+      "args": [
+        1065353216,
+        864026624
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-classinit-zero-division",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "classInitFloatDivision",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-constructor-double-add-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "constructorDoubleHigh",
+      "args": [
+        1072693248,
+        1,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-constructor-double-add-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "constructorDoubleLow",
+      "args": [
+        1072693248,
+        1,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-default-double-remainder-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "defaultDoubleHigh",
+      "args": [
+        1075576832,
+        0,
+        1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-default-double-remainder-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "defaultDoubleLow",
+      "args": [
+        1075576832,
+        0,
+        1074790400,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-instance-double-postincrement-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "instanceDoublePostIncrementHigh",
+      "args": [
+        1128267776,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-instance-double-postincrement-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "instanceDoublePostIncrementLow",
+      "args": [
+        1128267776,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-strict-double-multiply-high",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "strictDoubleMultiplyHigh",
+      "args": [
+        1048576,
+        0,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-feature-strict-double-multiply-low",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.features.FeatureArithmeticRoot",
+      "method": "strictDoubleMultiplyLow",
+      "args": [
+        1048576,
+        0,
+        1071644672,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/features/FeatureArithmeticRoot.class",
+        "bundle/m5cc/features/M5ccFloatDefault.class",
+        "bundle/m5cc/features/M5ccDoubleDefault.class",
+        "bundle/m5cc/features/M5ccDirectFloat.class",
+        "bundle/m5cc/features/M5ccFeatureParent.class",
+        "bundle/m5cc/features/M5ccFeatureCarrier.class",
+        "bundle/m5cc/features/M5ccDirectCarrier.class",
+        "bundle/m5cc/features/M5ccStrictWorker.class",
+        "bundle/m5cc/features/M5ccInit.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-remainder16-maximum-by-three",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "remainder16",
+      "args": [
+        2139095039,
+        1077936128
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "stage": "m5cc",
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder16-maximum-by-three-high",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainder16High",
+      "args": [
+        2146435071,
+        -1,
+        1074266112,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "stage": "m5cc",
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-double-remainder16-maximum-by-three-low",
+      "sources": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.DoubleArithmeticRoot",
+      "method": "remainder16Low",
+      "args": [
+        2146435071,
+        -1,
+        1074266112,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/DoubleArithmeticRoot.class"
+      ],
+      "stage": "m5cc",
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cc-float-add-above-half-adjacent",
+      "stage": "m5cc",
+      "sources": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.java"
+      ],
+      "class": "bundle.m5cc.scalar.FloatArithmeticRoot",
+      "method": "add",
+      "args": [
+        1065353216,
+        864026625
+      ],
+      "class_files": [
+        "bundle/m5cc/scalar/FloatArithmeticRoot.class"
+      ],
+      "gas_limit": 20000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }

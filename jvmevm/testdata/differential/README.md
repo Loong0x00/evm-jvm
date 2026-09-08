@@ -879,3 +879,78 @@ baseline differential runner at this fixture-only revision intentionally rejects
 stage `m5cb`; the checks above are bounded trusted reference-JVM evidence, not a
 claim that the unintegrated EVM runtime is green or that general Java is
 supported.
+
+## M5c-c scalar IEEE arithmetic fixtures
+
+M5c-c appends 160 trusted value cases from three Java 8 sources (11 emitted
+classfiles), leaving every parsed object in the accepted 1,811-case prefix
+exactly equal to base revision `70a2eba`. There are 61 one-operation binary32
+cases, 40 binary64 vectors
+with separate high- and low-word entry cases (80 entries), 16 mixed feature
+entries, and three fixed 16-remainder performance entries. Every root accepts
+only signed `int` words: binary32 operands are raw 32-bit words and binary64
+operands are explicit high/low pairs. Thus every operand crosses the root call
+and each tested operation remains in emitted Code rather than being folded by
+`javac`; binary64 results are never reduced to a hash.
+
+The scalar tables exercise all ten scoped opcodes (`fadd`/`dadd`, `fsub`/`dsub`,
+`fmul`/`dmul`, `fdiv`/`ddiv`, and Java `frem`/`drem`). Coverage includes quiet
+NaNs in both operand positions across the suite, invalid infinity/zero forms,
+both infinity signs, all signed-zero result rules, exact cancellation, absorption,
+normal/subnormal transitions, gradual underflow, finite overflow, and RNE
+halfway cases with even and odd lower significands. Remainder cases distinguish
+Java `7 % 4 == 3` from nearest-quotient IEEE remainder, retain the dividend sign
+for negative and exact-zero results, ignore the divisor sign, and include
+max-finite/three exponent gaps and min-normal/max-subnormal. The repeated gates
+execute the same max-finite/three operands 16 times in a bounded bytecode loop.
+Single scalar entries have a 20,000,000 gas bound; mixed call/object entries use
+30,000,000; repeated-remainder entries use the frozen 100,000,000 bound. No old
+gas, timeout, smoke, source, entry, or outcome metadata changed.
+
+The feature source covers ordinary and `strictfp` arithmetic, static and virtual
+calls, interface defaults and direct-interface-super invocation, constructor
+field initialization, float and double field post-increment, a static compound
+update, and class initialization. `M5ccInit.<clinit>` contains actual `fdiv` and
+`ddiv` instructions for `1.0f / +0.0f` and `0.0d / 0.0d`; reading both initialized
+fields verifies infinity and NaN values rather than `ArithmeticException`.
+
+Each arithmetic result wrapper tests NaN with bytecode comparison and maps only
+a generated NaN result to the stage policy (`0x7fc00000` or
+`0x7ff8000000000000`). Finite values, infinities, and signed zeros go unchanged
+through the raw-bit APIs and must compare exactly. Inputs use quiet NaNs only.
+These cases make no signaling-NaN payload/quieting or raw-transport portability
+claim; exact raw transport remains the separate M5c-b concern. Emitted constant
+pools reference only the four approved raw-bit APIs
+`Float.intBitsToFloat`, `Float.floatToRawIntBits`,
+`Double.longBitsToDouble`, and `Double.doubleToRawLongBits`, plus fixture methods
+and ordinary `Object.<init>`. There are no FP arrays, array allocation, handlers,
+boxing, `Math`, FMA, monitor, `invokedynamic`, or other JRE calls.
+
+Fresh OpenJDK 8 1.8.0_504 (`javac -source 8 -target 8`) and Java 21.0.9
+(`javac --release 8`) compilations were each followed by 160 separate
+`OracleMain` processes using `-Xmx64m` and the manifest's 10-, 15-, or 30-second
+outer timeout. All 320 bounded invocations completed as values and both JVMs
+produced identical ordered output. SHA256 over `id`, tab, full `value=...`
+output, newline records is
+`bddf7a9936ca57b0fb221de8227a7bf2117767b749e92d7f45256085c6a4a076`.
+
+Java 8 `javap -c -v -p` inspection found major version 52 for all 11 classes and
+actual arithmetic instruction counts of four `fadd`, two `fsub`, two `fmul`,
+three `fdiv`, three `frem`, three `dadd`, one `dsub`, two `dmul`, two `ddiv`, and
+three `drem`. The two repeated methods contain a loop bound of 16 and execute
+`frem`/`drem` on unchanged local operands. The largest constant pool has 147
+entries. No exception table or deferred/forbidden instruction listed above was
+emitted, and each source's compiled class set exactly matches every manifest
+`class_files` bundle.
+
+The sorted compact canonical JSON SHA256 of the unchanged 1,811-entry prefix is
+`dff49e76cf167ac985c8ac3eca6470ff767860d6546a3057d77c3dc78db9c920`.
+The corresponding 160-case M5c-c suffix SHA256 is
+`10cbb30d84b86e4b0c2a50d7c2a061bce62bd42c4bf2c306cfef1c90b294ba2e`,
+and its ordered ID SHA256 is
+`0db3ba6528885f6600664c2be7b980d10b870ed258ea4f3689768f06c0658652`.
+The baseline differential runner intentionally rejects
+manifest stage `m5cc` until the separately owned verifier lands. Therefore this
+fixture revision records bounded trusted reference-JVM evidence only; it does
+not claim an EVM pass, measured EVM gas, FP arrays, general Java support, or
+mainnet deployment compatibility.
