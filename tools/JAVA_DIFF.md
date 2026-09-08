@@ -15,17 +15,18 @@ make java-fast   # smoke + 20 seeded cases; JAVA_DIFF_SEED=57 changes the seed
 make java-full   # every case in the current cumulative stage
 # Or invoke directly after `make java-build`:
 python3 tools/java_diff.py
-python3 tools/java_diff.py --stage m4fb --tier full
+python3 tools/java_diff.py --stage m4fc --tier full
 python3 tools/java_diff.py --stage m1 --case m1-add-basic
 ```
 
-Defaults are `--stage m4fb --tier smoke --seed 56`, fixtures at
+Defaults are `--stage m4fc --tier smoke --seed 56`, fixtures at
 `jvmevm/testdata/differential`, artifacts at `build/java-diff`, and CLI at
 `build/bin/jvmevm`. Stage selection is cumulative: `m1` selects M1, `m2` adds
 M2, `m2b` adds M2b, `m3a` adds M3a, `m3b` adds M3b, `m3c` adds M3c, `m3d` adds
 M3d, `m4a` adds M4a, `m4b` adds M4b, `m4c` adds M4c, `m4d` adds M4d,
-`m4e` adds M4e, `m4fa` adds M4f-a, and `m4fb` or `all` adds M4f-b. A manifest without entries
-in the newest stage continues to run its older cases under the new default. `smoke` runs smoke-marked cases,
+`m4e` adds M4e, `m4fa` adds M4f-a, `m4fb` adds M4f-b, and `m4fc` or `all`
+adds M4f-c. A manifest without entries in the newest stage continues to run its older cases
+under the new default. `smoke` runs smoke-marked cases,
 `fast` adds a seeded deterministic sample of at most 20 other cases, and `full` runs every
 selected case. `--case`
 selects one exact ID without sampling but still honors `--stage`. An empty
@@ -217,6 +218,29 @@ Java 8 oracle selected by `JAVA_EVM_JAVA8` or
 unavailable and never substitute a newer JVM. Ordinary fresh source fixtures
 continue to use the runner's configured `java` command. Host-memory exhaustion
 is never an oracle strategy.
+
+## M4f-c interface static members
+
+M4f-c keeps additive schema 1, cumulative selection, static `(I...)I` roots, and
+ordered unchanged-classfile bundles. An eligible root may now be declared by an
+interface as well as an ordinary class. Trusted finite fixtures may use Java 8
+interface static methods and fields, including calls between classes and
+interfaces, declaring-owner initialization, inherited field qualifiers, typed
+reference fields, and reentrant initialization. Interface method/field
+resolution, actual declaring-owner storage, initialization scheduling, and
+instruction replay are performed entirely by the EVM interpreter; the runner
+continues to package only the explicitly listed raw classfiles and metadata.
+
+M4f-c adds no exception names or output forms: kinds 1 through 11, schema 1, and
+the exact value-or-exception comparison are unchanged. Interface static methods
+are not inherited, while fields use JVM field-resolution order and initialize
+only the resolved declaration. Binary-evolution resolution probes remain
+focused Go tests using bounded Java 8 runs; malformed member references and
+access/profile errors remain exact EVM reverts rather than oracle outcomes.
+Static invocation has no receiver/null check, but ordinary instance operations
+inside a static body retain normal null behavior. EVM out of gas remains an
+unlabeled engine failure and host JVM memory exhaustion is never an oracle
+strategy.
 
 ## Outcome protocol
 
