@@ -45662,6 +45662,2879 @@
       "timeout_seconds": 10,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-default-positive-zero",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatDefault",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-default-positive-zero-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleDefaultHigh",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-default-positive-zero-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleDefaultLow",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-quiet-nan-payload",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-roundtrip-negative-quiet-nan-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleRoundTripHigh",
+      "args": [
+        -519628,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-roundtrip-negative-quiet-nan-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleRoundTripLow",
+      "args": [
+        -519628,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-copy-negative-zero",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatCopy",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-copy-min-subnormal-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleCopyHigh",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-copy-min-subnormal-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleCopyLow",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-alias-negative-infinity",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatAlias",
+      "args": [
+        2139095040,
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-alias-max-finite-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleAliasHigh",
+      "args": [
+        -2147483648,
+        0,
+        2146435071,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-alias-max-finite-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleAliasLow",
+      "args": [
+        -2147483648,
+        0,
+        2146435071,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-postincrement-category1",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatPostIncrement",
+      "args": [
+        1266679808
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-compound-generated-nan",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatCompound",
+      "args": [
+        0,
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-postincrement-category2-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doublePostIncrementHigh",
+      "args": [
+        1128267776,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-postincrement-category2-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doublePostIncrementLow",
+      "args": [
+        1128267776,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-compound-negative-infinity-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleCompoundHigh",
+      "args": [
+        1072693248,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-compound-negative-infinity-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleCompoundLow",
+      "args": [
+        1072693248,
+        0,
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-positive-zero",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-negative-zero",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-minimum-subnormal",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-maximum-subnormal",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        8388607
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-positive-infinity",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-negative-infinity",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-float-roundtrip-second-quiet-nan-payload",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "floatRoundTrip",
+      "args": [
+        -2800863
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-roundtrip-negative-zero-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleRoundTripHigh",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-basic-double-roundtrip-negative-zero-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/basic/BasicArrayRoot.java"
+      ],
+      "class": "bundle.m5cd.basic.BasicArrayRoot",
+      "method": "doubleRoundTripLow",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/basic/BasicArrayRoot.class"
+      ],
+      "gas_limit": 30000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-static-float-transport",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "staticFloatTransport",
+      "args": [
+        -4049834
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-private-special-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "privateDoubleHigh",
+      "args": [
+        2147003341,
+        305419896
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-private-special-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "privateDoubleLow",
+      "args": [
+        2147003341,
+        305419896
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-virtual-float-override",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "virtualFloatAdd",
+      "args": [
+        1065353216,
+        864026624
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-interface-double-category2-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "interfaceDoubleHigh",
+      "args": [
+        1072693248,
+        1,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-interface-double-category2-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "interfaceDoubleLow",
+      "args": [
+        1072693248,
+        1,
+        1017118720,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-default-float-multiply",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "defaultFloatMultiply",
+      "args": [
+        8388608,
+        1056964608
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-direct-interface-super-float",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "directInterfaceSuperFloat",
+      "args": [
+        1088421888,
+        1082130432
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-interface-static-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "interfaceStaticDoubleHigh",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-interface-static-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "interfaceStaticDoubleLow",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-constructor-float",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "constructorFloat",
+      "args": [
+        2139095040
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-constructor-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "constructorDoubleHigh",
+      "args": [
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-constructor-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "constructorDoubleLow",
+      "args": [
+        -1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-float-return-alias",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "floatReturnIdentity",
+      "args": [
+        2143573624
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-double-return-alias-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "doubleReturnHigh",
+      "args": [
+        -467782,
+        -1737075662
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-double-return-alias-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "doubleReturnLow",
+      "args": [
+        -467782,
+        -1737075662
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-mixed-category-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "mixedCategoryHigh",
+      "args": [
+        7,
+        1072693248,
+        0,
+        1073741824,
+        0,
+        4
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-calls-mixed-category-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/calls/CallRoot.java"
+      ],
+      "class": "bundle.m5cd.calls.CallRoot",
+      "method": "mixedCategoryLow",
+      "args": [
+        7,
+        1072693248,
+        0,
+        1073741824,
+        0,
+        4
+      ],
+      "class_files": [
+        "bundle/m5cd/calls/CallRoot.class",
+        "bundle/m5cd/calls/FpArrayCalls.class",
+        "bundle/m5cd/calls/FpCallBase.class",
+        "bundle/m5cd/calls/FpCallChild.class",
+        "bundle/m5cd/calls/DefaultCalls.class",
+        "bundle/m5cd/calls/DirectCalls.class",
+        "bundle/m5cd/calls/CallHelper.class",
+        "bundle/m5cd/calls/ConstructedArrays.class",
+        "bundle/m5cd/calls/ConstructedChild.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-static-prepared-null",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "staticPreparedNull",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-static-float-write-payload",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "staticFloatWrite",
+      "args": [
+        2143438474
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-static-double-write-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "staticDoubleWriteHigh",
+      "args": [
+        -514968,
+        324508639
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-static-double-write-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "staticDoubleWriteLow",
+      "args": [
+        -514968,
+        324508639
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-instance-float",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "instanceFloatField",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-instance-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "instanceDoubleFieldHigh",
+      "args": [
+        1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-instance-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "instanceDoubleFieldLow",
+      "args": [
+        1048576,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-final-float-element-mutation",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "finalFloatElementMutation",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-final-double-element-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "finalDoubleElementHigh",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-final-double-element-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "finalDoubleElementLow",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-static-final-float-compound",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "staticFinalFloatCompound",
+      "args": [
+        864026624
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-initialized-float-payload",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "initializedFloatPayload",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-initialized-double-payload-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "initializedDoublePayloadHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-initialized-double-payload-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "initializedDoublePayloadLow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-init-reentrant-prepared-null",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "reentrantPreparedNull",
+      "args": [
+        17
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-interface-static-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "interfaceDoubleHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-interface-static-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "interfaceDoubleLow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-inherited-float-owner",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "inheritedFloatField",
+      "args": [
+        -2147483647
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-hidden-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "hiddenDoubleHigh",
+      "args": [
+        1074266112,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-hidden-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "hiddenDoubleLow",
+      "args": [
+        1074266112,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-initialized-arithmetic-float-nan",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "initializedArithmeticFloat",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-initialized-arithmetic-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "initializedArithmeticDoubleHigh",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-fields-initialized-arithmetic-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/fields/FieldRoot.java"
+      ],
+      "class": "bundle.m5cd.fields.FieldRoot",
+      "method": "initializedArithmeticDoubleLow",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/fields/FieldRoot.class",
+        "bundle/m5cd/fields/ArrayFields.class",
+        "bundle/m5cd/fields/FinalArrays.class",
+        "bundle/m5cd/fields/StaticFinalArrays.class",
+        "bundle/m5cd/fields/InitializedArrays.class",
+        "bundle/m5cd/fields/ReentrantArrays.class",
+        "bundle/m5cd/fields/InheritedBase.class",
+        "bundle/m5cd/fields/InheritedChild.class",
+        "bundle/m5cd/fields/HiddenBase.class",
+        "bundle/m5cd/fields/HiddenChild.class",
+        "bundle/m5cd/fields/ArrayFieldFace.class",
+        "bundle/m5cd/fields/ArrayFieldMaker.class",
+        "bundle/m5cd/fields/ArithmeticArrays.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 15,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-partial-float",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "partialFloat",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-full-float-payload",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "fullFloat",
+      "args": [
+        2143368569
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-full-double-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "fullDoubleHigh",
+      "args": [
+        -519337,
+        610839776
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-full-double-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "fullDoubleLow",
+      "args": [
+        -519337,
+        610839776
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-distinct-float-rows",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "distinctFloatRows",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-partial-double-cube",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "partialDoubleCube",
+      "args": [
+        2,
+        3
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-full-double-cube-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "fullDoubleCubeHigh",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-full-double-cube-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "fullDoubleCubeLow",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-jagged-float-alias",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "jaggedFloatAlias",
+      "args": [
+        2143909169
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-float-array-markers",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "floatArrayMarkers",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-double-matrix-marker-closure",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "doubleMatrixMarkers",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-primitive-leaf-invariance",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "primitiveLeafIdentity",
+      "args": [
+        11
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-cast-float-identity",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "castFloatIdentity",
+      "args": [
+        -8388608
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-cast-double-identity-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "castDoubleIdentityHigh",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-cast-double-identity-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "castDoubleIdentityLow",
+      "args": [
+        -2147483648,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-compatible-float-row-store",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "compatibleFloatRowStore",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-compatible-double-row-high",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "compatibleDoubleRowHigh",
+      "args": [
+        2147011326,
+        305419896
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-compatible-double-row-low",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "compatibleDoubleRowLow",
+      "args": [
+        2147011326,
+        305419896
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-null-row-store",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "nullRowStore",
+      "args": [
+        13
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-nested-incompatible-float-row-store",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "incompatibleFloatRowStore",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5cd-nested-incompatible-double-higher-store",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "incompatibleDoubleHigherStore",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m5cd-nested-cast-int-array-to-float",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "castIntArrayToFloat",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m5cd-nested-cast-float-matrix-to-double",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "castFloatMatrixToDouble",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m5cd-nested-negative-float-outer",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "negativeFloatOuter",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5cd-nested-negative-double-inner-after-zero-outer",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "negativeDoubleInner",
+      "args": [
+        0,
+        -2
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5cd-nested-dimensions-left-to-right",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/nested/NestedRoot.java"
+      ],
+      "class": "bundle.m5cd.nested.NestedRoot",
+      "method": "dimensionsLeftToRight",
+      "args": [
+        2,
+        3
+      ],
+      "class_files": [
+        "bundle/m5cd/nested/NestedRoot.class",
+        "bundle/m5cd/nested/DimensionTrace.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-float-first",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "floatFirst",
+      "args": [
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-double-first",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "doubleFirst",
+      "args": [
+        -519628,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-long-first",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "longFirst",
+      "args": [
+        5
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-reference-first",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "referenceFirst",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-object-first",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "objectFirst",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-all-primitive-defaults",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "allPrimitiveDefaults",
+      "args": [
+        8
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-all-primitive-writes",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "allPrimitiveWrites",
+      "args": [
+        -9
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-allocation-mixed-aliases",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/allocation/AllocationRoot.java"
+      ],
+      "class": "bundle.m5cd.allocation.AllocationRoot",
+      "method": "mixedAliases",
+      "args": [
+        10
+      ],
+      "class_files": [
+        "bundle/m5cd/allocation/AllocationRoot.class",
+        "bundle/m5cd/allocation/AllocationCell.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-errors-null-float-read-negative",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "nullFloatRead",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5cd-errors-null-float-write-large",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "nullFloatWrite",
+      "args": [
+        2147483647,
+        2143363909
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5cd-errors-null-double-read-negative",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "nullDoubleRead",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5cd-errors-null-double-write-large",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "nullDoubleWrite",
+      "args": [
+        2147483647,
+        2146964020,
+        1450744508
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5cd-errors-bounds-float-read-negative",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "boundsFloatRead",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5cd-errors-bounds-float-write-equal",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "boundsFloatWrite",
+      "args": [
+        2,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5cd-errors-bounds-double-read-equal",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "boundsDoubleRead",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5cd-errors-bounds-double-write-negative",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "boundsDoubleWrite",
+      "args": [
+        -1,
+        1072693248,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m5cd-errors-negative-float-length",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "negativeFloatLength",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5cd-errors-negative-double-length-min",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "negativeDoubleLength",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m5cd-errors-integer-failure-before-null-float",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "integerFailureBeforeNullFloat",
+      "args": [
+        1,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m5cd-errors-integer-failure-before-null-double",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "integerFailureBeforeNullDouble",
+      "args": [
+        1,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArithmeticException"
+    },
+    {
+      "id": "m5cd-errors-fp-value-before-null-float",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "fpValueThenNullFloat",
+      "args": [
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5cd-errors-fp-value-before-null-double",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "fpValueThenNullDouble",
+      "args": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m5cd-errors-store-left-to-right",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "storeLeftToRight",
+      "args": [
+        1065353507
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-errors-compound-array-evaluated-once",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "compoundArrayEvaluatedOnce",
+      "args": [
+        1065353216
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5cd-errors-initializer-arithmetic-wrapped",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "initializerArithmeticFailure",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5cd-errors-initializer-negative-wrapped",
+      "stage": "m5cd",
+      "sources": [
+        "bundle/m5cd/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m5cd.errors.ErrorRoot",
+      "method": "initializerNegativeFailure",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5cd/errors/ErrorRoot.class",
+        "bundle/m5cd/errors/FailingArithmeticInit.class",
+        "bundle/m5cd/errors/FailingNegativeInit.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
     }
   ]
 }

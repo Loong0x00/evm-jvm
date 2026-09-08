@@ -954,3 +954,67 @@ manifest stage `m5cc` until the separately owned verifier lands. Therefore this
 fixture revision records bounded trusted reference-JVM evidence only; it does
 not claim an EVM pass, measured EVM gas, FP arrays, general Java support, or
 mainnet deployment compatibility.
+
+## M5c-d IEEE array fixtures
+
+M5c-d appends 120 trusted cases from six Java 8 sources (30 emitted guest
+classfiles), leaving every parsed object in the accepted 1,971-case prefix
+exactly equal to base revision `60b9ae6`. All 120 entry descriptors remain
+`(I...)I`: binary32 values use one signed raw-bit word and binary64 values use
+explicit high/low words, including separate exact high- and low-result entries.
+The suffix has 98 value outcomes and 22 existing schema-1 Java outcomes: six
+NPE, four bounds, four NASE, two ASE, two CCE, two arithmetic, and two wrapped
+initializer failures. No exception kind, old source, entry, outcome, budget, or
+other old metadata changed.
+
+The fixtures exercise `newarray` float/double, `faload`/`fastore`,
+`daload`/`dastore`, default positive-zero cells, exact full-width copies and
+aliases, signed zeros, normal/subnormal boundaries, infinities, and multiple
+signed quiet-NaN payloads. Raw array load/store/copy/call/field/cast transport
+always returns `floatToRawIntBits` or `doubleToRawLongBits` directly and never
+normalizes a NaN. Only methods that actually perform FP arithmetic normalize a
+generated NaN to the established M5c-c canonical value; finite values,
+infinities, and signed zeros remain exact. Signaling-NaN portability is not
+claimed by these cross-JVM fixtures and remains an EVM-only verifier probe.
+
+Coverage also includes javac's array post-increment and compound category forms;
+static/private-special/virtual/interface/default/direct-interface-super and
+interface-static calls; mixed reference/double argument slots; constructors;
+static, instance, hidden, inherited, final, and interface array fields; final
+reference element mutation; ordinary and reentrant initialization; partial,
+jagged and full multidimensional allocation; covariance and marker closure;
+compatible/null/ASE stores and CCE casts; F-vs-I and D-vs-J primitive
+invariance; null/bounds/NASE precedence; left-to-right dimension/store
+expressions; integer failure before a null store; FP zero division before a null
+store; and EIIE wrapping. First-allocation permutations cover float, double,
+long, reference, and object storage, and a mixed gate allocates and checks all
+eight Java primitive array kinds without requesting host-OOM-sized arrays.
+
+Fresh OpenJDK 8 1.8.0_504 (`javac -source 8 -target 8 -g:none`) and Java
+21.0.9 (`javac --release 8 -g:none`) compilations were each followed by 120
+separate `OracleMain` processes with `-Xmx64m` and each manifest's finite outer
+timeout. Both JVMs produced identical ordered outputs. SHA256 over `id`, tab,
+full output, newline records is
+`be2ab84f43b6a3cd3966cd92f921262d96116c92d0bc3e88af5a8eb0733cf8e0`.
+The sorted compact canonical JSON SHA256 of the unchanged 1,971-entry prefix is
+`bc8f5c0504eac5d2fe54d6cf772f302a08085e7ca4e66ef85b6d860df1965010`;
+the 120-case suffix SHA256 is
+`c05b99cdef27be5422e72f103909431c55b0c01843e63fcc0edb362c898402fc`,
+and its ordered ID SHA256 is
+`9399140feda0c8931ce350fb75ec9b7075bd53b7be6e5dff969fd74de5217117`.
+
+Java 8 `javap -c -v -p -s` inspection found major version 52 in all 30
+classfiles, exact source-to-manifest class sets, and a largest constant pool of
+166 entries. Emitted Code contains 44 float and 40 double `newarray` sites, 47
+`faload`, 48 `fastore`, 43 `daload`, 40 `dastore`, ten `multianewarray`, and
+both `[F` and `[D` descriptors throughout fields and calls. The two
+`invokeinterface` sites encode count 3 for receiver/[F/F and count 4 for
+receiver/[D/D, demonstrating that array references count one word while scalar
+D counts two. Constant-pool Java method references are limited to the four
+approved raw-bit APIs and ordinary `Object.<init>`; no handler table, monitor,
+`invokedynamic`, `jsr`, `ret`, boxing, `Math`, or FMA was emitted.
+
+At this fixture-only revision the baseline runner intentionally rejects stage
+`m5cd`; the checks above are bounded trusted reference-JVM evidence. They do not
+claim an EVM pass, signaling-NaN cross-JVM behavior, logical-quota/OOM coverage,
+mainnet deployment compatibility, or general Java support.
