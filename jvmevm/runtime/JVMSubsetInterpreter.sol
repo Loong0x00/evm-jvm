@@ -2472,7 +2472,11 @@ contract JVMSubsetInterpreter {
                     continue;
                 }
                 --size; // postorder: parents before the declaring descendant
-                if (initializationState[node] == 0 && _declaresDefault(classes[node])) {
+                // An already-erroneous default prerequisite is still required:
+                // scheduling it raises NCDFE and fails the new dependent class.
+                // Only initialized or same-execution reentrant interfaces skip.
+                if ((initializationState[node] == 0 || initializationState[node] == 3)
+                    && _declaresDefault(classes[node])) {
                     return (true, node);
                 }
             }
