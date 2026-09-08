@@ -18,9 +18,11 @@ bindings only. Separate **S0 stock deployment/continuation is accepted** under
 JAVA_EVM_STOCK_S0_PLAN.md:8 trusted fixtures x3 signed/replay budgets,80 parent
 JVM probes,42 gas thresholds and reviewed CP512/Code256 boundary. Module11132bytes,
 coordinator3724-byte template, ordinary CREATE and bounded resumes. Tiny S0 is NOT
-modularized M5d-a and counts stay separate. Next S1 proposals cover actual legacy
-M1/M2 workload migration, reusable parsing/state and full-profile partition risks;
-no S1 implementation frozen. M5d-b0 proposal retained, no monolith expansion yet.
+modularized M5d-a and counts stay separate. **S1 implementation now frozen** in
+JAVA_EVM_STOCK_S1_PLAN.md: all82 unchanged M1/M2 rows, EVM-derived reusable metadata,
+named entries/int args, branch/loop-safe schema2 and finite step-limit outcome.
+S1 uses new jvmevm/stock/s1 paths; preserve S0/monolith/legacy fixtures. No S1 or
+full-profile deployment acceptance yet. M5d-b0 proposal retained, no monolith expansion.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
