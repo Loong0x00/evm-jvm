@@ -88,8 +88,9 @@ routine permission to start the next verified increment.
 | M5c-a | switch/goto_w/wide variable-width control flow | accepted;1681 cases plus48 independent probes |
 | M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | accepted;1811 cases plus216 independent probes |
 | M5c-c | software scalar IEEE arithmetic | accepted;1971 cases plus960 parent probes |
-| M5c-d | IEEE arrays | frozen in `JAVA_EVM_M5CD_PLAN.md`; dispatch3 workers |
-| M5d+ | exception/unwind and remaining JVM/library features | queued; freeze separately |
+| M5c-d | IEEE arrays | accepted;2091 cases plus192 parent probes |
+| M5d-a | implicit exceptions/handler/unwind foundation | architecture+oracle preflight next; freeze before implementation |
+| M5d-b+ | fresh user Throwable construction/APIs and remaining JVM/library features | queued; freeze separately |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -99,11 +100,13 @@ matrix in current docs, update the queue on measured evidence, and avoid
 Minecraft-specific work unless separately requested.
 
 ## Current handoff
-M5c-c accepted:1971 JVM/EVM cases plus960 parent probes,36 Python,864 smoke/884fast,
-Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Obsolete arithmetic guards updated,
-extra IEEE corner/seeded regressions and bounded gas proved; no runtime audit defect.
-Runtime136564 bytes, local-runtime only/not full JVM. Prior1811 inputs/budgets same.
-M5c-d frozen in JAVA_EVM_M5CD_PLAN.md; dispatch3 workers, then bounded exception/unwind
-foundation. Four raw-bit native services ONLY, no host math/JRE fallback. NEW
-agents Sol/high WITHOUT Fast; named java-fast is fixture tier. Automatic verified
-progression, no routine confirmation.
+M5c-d accepted:2091 JVM/EVM cases plus192 parent probes,36 Python,945 smoke/965fast,
+Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Obsolete FP-array guards updated,
+double-overlap/store-order probes added; no demonstrated runtime defect. Runtime
+135652 bytes, local-runtime only/not full JVM. Prior1971 fixture inputs/budgets same.
+Next parallel M5d-a architecture+JVM-oracle preflight before implementation freeze:
+route ALL existing implicit Java faults to pending exceptions/ordered handlers/
+interframe unwind, not just athrow. Need canonical Throwable identity/heap budget,
+failed initialization/NCDFE and root ABI rules; defer user new Throwable/APIs.
+Parent resolves proposal details then automatically freezes/dispatches runtime,
+fixtures and verifier. NEW agents Sol/high WITHOUT Fast; no routine confirmation.

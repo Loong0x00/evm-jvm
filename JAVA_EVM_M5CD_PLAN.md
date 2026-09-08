@@ -132,3 +132,17 @@ jvmevm/ieee_arrays_validation_test.go verifyM5cd* helpers; baseline red expected
 Parent owns plans/AGENTS/quickstart/Makefile/integration/approved profile updates.
 One Solidity writer; no spawning/peer writes/push/global settings/untrusted Java.
 All agents Sol/high WITHOUT Fast; honest scoped commits/SHA/size/checks/caveats.
+
+## Accepted integration evidence
+Runtime1a53d30→be1b23b,fixtures04698c5→cafe22f,verifierf14af6c→7f6eaec.
+Reviewc6950f8→49cd899 updated7 obsolete FP-array guard groups, retained invalid
+atypes0/3/12/255/unknownnative/wrongkind/rank/CP/final/root checks, and added double
+local-overlap/store-operand-order regressions. No runtime defect demonstrated.
+Parent final artifact/5bootstraps, Go/CLI,36 Python,2091 full,945 smoke,965 fast,
+demos,AOT,focused vet and192 raw-array probes passed:
+`build/java-diff-parent-m5cd/probe-h0q_rbce/results-final/`.
+Prior1971 fixture entries/budgets unchanged. Runtime135652 bytes SHA256
+`cf68495083ebcd2df93f6d676e16afad87192a3401bd743a0301d805d5a8cd15`.
+Quiet payloads/signedzero exact; signaling NaNs remain EVM-only portability case.
+Next implicit-exceptions-first handler/unwind foundation; preflight architecture/
+JVM oracles before freezing scope. All agents NO Fast, no full-JVM claim.
