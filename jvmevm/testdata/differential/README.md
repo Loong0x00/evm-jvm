@@ -4,13 +4,13 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 1,593 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+The manifest has 1,681 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
 73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, 100 `m4d`,
-68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, 120 `m5a`, 110 `m5ba`, and
-100 `m5bb` cases. M5b-b adds 50 smoke-marked cases. Every root entry remains a
-declared public static `(int...)int` method, including public interface roots,
-and guest sources have no `main`. All 1,493 entries through M5b-a, including
-sources, arguments, budgets, tiers, and outcomes, are unchanged.
+68 `m4e`, 99 `m4fa`, 104 `m4fb`, 100 `m4fc`, 120 `m5a`, 110 `m5ba`, 100
+`m5bb`, and 88 `m5ca` cases. M5c-a adds 41 smoke-marked cases. Every root
+entry remains a declared public static `(int...)int` method, including public
+interface roots, and guest sources have no `main`. All 1,593 entries through
+M5b-b, including sources, arguments, budgets, tiers, and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -794,12 +794,41 @@ explicit throw, float/double array or descriptor, boxing, switch, actual `wide`,
 monitor, native/synchronized method, invokedynamic, or non-Object JRE method
 reference.
 
-All 1,493 cases through M5b-a are the accepted baseline. The baseline runner
-intentionally rejects manifest stage `m5bb` until the separately owned verifier
-lands; the evidence above is reference-JVM-only and this fixture revision does
-**not** claim an M5b-b EVM pass. Raw malformed long-array operands, wrong opcode
-and array-kind combinations, root-`J`/root-`[J` rejection, rank-255 boundaries,
-and shared quota/OOM behavior remain verifier/runtime-owned probes rather than
-being falsified as fresh javac outcomes. The runtime remains over mainnet
-deployment size and runs through local runtime.Execute, not CREATE. This remains
-subset verification, not full JVM conformance.
+For M5c-a, six trusted Java 8 source lists emit exactly 14 declared guest
+classfiles. The 88 bounded cases cover dense, negative, and sparse integer
+switches (including `Integer.MIN_VALUE` and `Integer.MAX_VALUE` keys), defaults,
+fall-through, nested switches and loops, calls, default interface methods,
+virtual dispatch, statics, initialization, arrays, references, and longs. There
+are 86 value outcomes and two genuine `ExceptionInInitializerError` outcomes
+from switch-selected initialization failures.
+
+Fresh OpenJDK 8 1.8.0_504 and Java 21.0.9 compilations and 176 separate
+`OracleMain` invocations used `-Xmx64m`; each invocation had a ten-second outer
+limit. Both JVMs matched all declared outcome kinds and produced identical
+ordered outputs. SHA256 over `id`, tab, output, newline records is
+`50db2684a6fbf5737ba1ef7fd1793329b10913898571eefa20bdf55cd13c3b7e`.
+The sorted compact canonical JSON SHA256 of the unchanged old 1,593-entry prefix
+is `27846d154113a13c97234fd8a5350829db00dfa6594caf7cedbe8c1e8776a63f`.
+
+Java 8 `javap -c -v -p` and raw classfile inspection found only major version
+52, seven `tableswitch`, 16 `lookupswitch`, and four `goto_w` instructions.
+`GotoWideRoot.forward` has Code length 33,018 and a forward displacement of
++33,010; `backward` has Code length 33,021 and a backward displacement of
+-33,012. `WideRoot` has Code/max-locals pairs 5,433/263 and 4,663/267, with
+actual wide int, long, and reference loads/stores and signed `iinc_w` constants
+-32,768, -30,000, 30,000, and 32,767. The largest M5c-a constant pool has 74
+entries, far below 4,096, and the largest Code attribute remains below 65,535.
+There are no handlers, float/double operations, `jsr`/`ret`, monitors,
+invokedynamic instructions, or non-constructor JRE method calls. Source uses of
+`Integer.MIN_VALUE`, `Integer.MAX_VALUE`, and `Long.MIN_VALUE` compile to
+constant bytecodes, not JRE field accesses.
+
+All 1,593 cases through M5b-b are the accepted baseline. The baseline runner
+intentionally rejects manifest stage `m5ca` until the separately owned verifier
+lands; this fixture evidence is reference-JVM-only and does **not** claim an
+M5c-a EVM pass. Raw nonzero switch padding, malformed variable structures,
+zero-pair lookup payloads, typed stack-prefix probes, invalid switch targets,
+and wide local boundary/type errors remain verifier/runtime-owned checks. The
+runtime remains over mainnet deployment size and runs through local
+runtime.Execute, not CREATE. This remains subset verification, not full JVM
+conformance.

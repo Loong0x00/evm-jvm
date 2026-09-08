@@ -37612,6 +37612,1832 @@
       "timeout_seconds": 10,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-dense-below",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "dense",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-dense-low",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "dense",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-dense-middle",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "dense",
+      "args": [
+        4
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-dense-high",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "dense",
+      "args": [
+        6
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-dense-above",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "dense",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-dense-min",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "dense",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-negative-dense-below",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "negativeDense",
+      "args": [
+        -7
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-negative-dense-low",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "negativeDense",
+      "args": [
+        -6
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-negative-dense-middle",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "negativeDense",
+      "args": [
+        -4
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-negative-dense-high",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "negativeDense",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-negative-dense-above",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "negativeDense",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-negative-dense-max",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "negativeDense",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-min",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-near-min",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        -2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-negative-billion",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        -1000000000
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-negative-short-edge",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        -32769
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-negative-one",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-positive-short-edge",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        32768
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-positive-billion",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        1000000000
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-near-max",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        2147483646
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-sparse-max",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "sparse",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-fallthrough-default-before",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "fallThrough",
+      "args": [
+        -2
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-fallthrough-chain-all",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "fallThrough",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-fallthrough-chain-tail",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "fallThrough",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-fallthrough-single",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "fallThrough",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-fallthrough-shared-two",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "fallThrough",
+      "args": [
+        2
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-fallthrough-shared-three",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "fallThrough",
+      "args": [
+        3
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-nested-dense-hit",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "nested",
+      "args": [
+        -1,
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-nested-dense-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "nested",
+      "args": [
+        -1,
+        8
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-nested-sparse-low",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "nested",
+      "args": [
+        3,
+        -1000
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-nested-sparse-high",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "nested",
+      "args": [
+        3,
+        900000
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-nested-sparse-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "nested",
+      "args": [
+        3,
+        17
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-nested-outer-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "nested",
+      "args": [
+        2,
+        -31
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-loop-zero-rounds",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "loop",
+      "args": [
+        123,
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-loop-one-round",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "loop",
+      "args": [
+        0,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-loop-mixed-positive",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "loop",
+      "args": [
+        17,
+        7
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-loop-mixed-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "loop",
+      "args": [
+        -91,
+        9
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-loop-bounded-long",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "loop",
+      "args": [
+        2147483000,
+        16
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-call-long-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "callAndLong",
+      "args": [
+        -9,
+        123
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-call-long-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "callAndLong",
+      "args": [
+        0,
+        -17
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-call-long-hit",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "callAndLong",
+      "args": [
+        19,
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-call-long-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "callAndLong",
+      "args": [
+        12345,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-call-reference-hit",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "callAndReference",
+      "args": [
+        -1,
+        7
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-call-reference-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "callAndReference",
+      "args": [
+        0,
+        -99
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-call-reference-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "callAndReference",
+      "args": [
+        123456,
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-two-switches-minimum",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "twoSwitches",
+      "args": [
+        -9,
+        -2000000000
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-two-switches-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "twoSwitches",
+      "args": [
+        -1,
+        -17
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-two-switches-positive",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "twoSwitches",
+      "args": [
+        4,
+        6
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-two-switches-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/switches/SwitchRoot.java"
+      ],
+      "class": "bundle.m5ca.switches.SwitchRoot",
+      "method": "twoSwitches",
+      "args": [
+        19,
+        1234567
+      ],
+      "class_files": [
+        "bundle/m5ca/switches/SwitchRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-default-call-low",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "defaultCall",
+      "args": [
+        -8,
+        3
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-default-call-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "defaultCall",
+      "args": [
+        0,
+        -7
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-default-call-high",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "defaultCall",
+      "args": [
+        8,
+        19
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-default-call-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "defaultCall",
+      "args": [
+        12345,
+        -31
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-default-loop-zero-rounds",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "defaultLoop",
+      "args": [
+        5,
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-default-loop-nested-rounds",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "defaultLoop",
+      "args": [
+        -3,
+        7
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-virtual-base",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "virtualCall",
+      "args": [
+        -3,
+        11
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-virtual-derived-hit",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "virtualCall",
+      "args": [
+        2,
+        -9
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-virtual-derived-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "virtualCall",
+      "args": [
+        9,
+        17
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-static-init-hit",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "staticInitialized",
+      "args": [
+        12
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-static-init-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "staticInitialized",
+      "args": [
+        -123456
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-static-update-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "staticUpdates",
+      "args": [
+        -2,
+        100
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-static-update-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "staticUpdates",
+      "args": [
+        0,
+        -2147483648
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-static-update-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "staticUpdates",
+      "args": [
+        17,
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-array-body-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "arrayBody",
+      "args": [
+        -2,
+        7
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-array-body-hit",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "arrayBody",
+      "args": [
+        5,
+        -31
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-array-body-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "arrayBody",
+      "args": [
+        99,
+        1234
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-long-body-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "longBody",
+      "args": [
+        -7,
+        11
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-long-body-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "longBody",
+      "args": [
+        0,
+        -17
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-long-body-default",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/integration/IntegrationRoot.java"
+      ],
+      "class": "bundle.m5ca.integration.IntegrationRoot",
+      "method": "longBody",
+      "args": [
+        12345,
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/integration/IntegrationRoot.class",
+        "bundle/m5ca/integration/M5caChoice.class",
+        "bundle/m5ca/integration/M5caChoiceImpl.class",
+        "bundle/m5ca/integration/M5caBase.class",
+        "bundle/m5ca/integration/M5caDerived.class",
+        "bundle/m5ca/integration/M5caState.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-init-switch-arithmetic",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/init/ArithmeticInitRoot.java"
+      ],
+      "class": "bundle.m5ca.init.ArithmeticInitRoot",
+      "method": "entry",
+      "args": [
+        7
+      ],
+      "class_files": [
+        "bundle/m5ca/init/ArithmeticInitRoot.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5ca-default-interface-init-arithmetic",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/init/DefaultInitRoot.java"
+      ],
+      "class": "bundle.m5ca.init.DefaultInitRoot",
+      "method": "entry",
+      "args": [
+        9
+      ],
+      "class_files": [
+        "bundle/m5ca/init/DefaultInitRoot.class",
+        "bundle/m5ca/init/M5caFailingDefault.class",
+        "bundle/m5ca/init/M5caFailingDefaultImpl.class",
+        "bundle/m5ca/init/M5caInitFailure.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m5ca-wide-ints-negative-iinc",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideInts",
+      "args": [
+        0,
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-ints-negative-large",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideInts",
+      "args": [
+        17,
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-ints-unit-iinc",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideInts",
+      "args": [
+        -31,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-ints-default-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideInts",
+      "args": [
+        123,
+        -32768
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-ints-default-positive",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideInts",
+      "args": [
+        -456,
+        32767
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-ints-overflow",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideInts",
+      "args": [
+        2147483600,
+        99
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-long-reference-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideLongReference",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-long-reference-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideLongReference",
+      "args": [
+        -123456789
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-long-reference-positive",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideLongReference",
+      "args": [
+        987654321
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-wide-long-reference-max",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/wide/WideRoot.java"
+      ],
+      "class": "bundle.m5ca.wide.WideRoot",
+      "method": "wideLongReference",
+      "args": [
+        2147483647
+      ],
+      "class_files": [
+        "bundle/m5ca/wide/WideRoot.class"
+      ],
+      "gas_limit": 90000000,
+      "timeout_seconds": 20,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-goto-w-forward-skipped-zero",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/gotow/GotoWideRoot.java"
+      ],
+      "class": "bundle.m5ca.gotow.GotoWideRoot",
+      "method": "forward",
+      "args": [
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/gotow/GotoWideRoot.class"
+      ],
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-goto-w-forward-taken-one",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/gotow/GotoWideRoot.java"
+      ],
+      "class": "bundle.m5ca.gotow.GotoWideRoot",
+      "method": "forward",
+      "args": [
+        1
+      ],
+      "class_files": [
+        "bundle/m5ca/gotow/GotoWideRoot.class"
+      ],
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-goto-w-forward-taken-negative",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/gotow/GotoWideRoot.java"
+      ],
+      "class": "bundle.m5ca.gotow.GotoWideRoot",
+      "method": "forward",
+      "args": [
+        -1
+      ],
+      "class_files": [
+        "bundle/m5ca/gotow/GotoWideRoot.class"
+      ],
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-goto-w-backward-skipped",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/gotow/GotoWideRoot.java"
+      ],
+      "class": "bundle.m5ca.gotow.GotoWideRoot",
+      "method": "backward",
+      "args": [
+        77,
+        0
+      ],
+      "class_files": [
+        "bundle/m5ca/gotow/GotoWideRoot.class"
+      ],
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-goto-w-backward-once",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/gotow/GotoWideRoot.java"
+      ],
+      "class": "bundle.m5ca.gotow.GotoWideRoot",
+      "method": "backward",
+      "args": [
+        -7,
+        1
+      ],
+      "class_files": [
+        "bundle/m5ca/gotow/GotoWideRoot.class"
+      ],
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m5ca-goto-w-backward-twice",
+      "stage": "m5ca",
+      "sources": [
+        "bundle/m5ca/gotow/GotoWideRoot.java"
+      ],
+      "class": "bundle.m5ca.gotow.GotoWideRoot",
+      "method": "backward",
+      "args": [
+        3,
+        2
+      ],
+      "class_files": [
+        "bundle/m5ca/gotow/GotoWideRoot.class"
+      ],
+      "gas_limit": 100000000,
+      "timeout_seconds": 30,
+      "smoke": false,
+      "expected_kind": "value"
     }
   ]
 }
