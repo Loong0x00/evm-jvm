@@ -140,6 +140,16 @@ contract JVMSubsetInterpreter {
         uint256 thisHandle;
     }
 
+    // A finite IEEE value is significand * 2^scale. The significand is at most
+    // 24/53 bits; classKind is zero/finite/infinity/NaN. Arithmetic never uses
+    // an EVM- or host-floating operation.
+    struct IEEEValue {
+        bool sign;
+        uint8 classKind;
+        uint256 significand;
+        int256 scale;
+    }
+
     struct VirtualResolution {
         uint256 owner;
         uint256 method;
@@ -920,6 +930,20 @@ contract JVMSubsetInterpreter {
                     else left *= right;
                 }
                 f.stack[f.sp - 2] = _packLong(left);
+                --f.sp;
+            } else if (op == 0x62 || op == 0x63 || op == 0x66 || op == 0x67
+                || op == 0x6a || op == 0x6b || op == 0x6e || op == 0x6f
+                || op == 0x72 || op == 0x73) { // scalar F/D add/sub/mul/div/rem
+                if (f.sp < 2) revert BytecodeError(3, opPC);
+                bool doubles = (op & 1) != 0;
+                uint256 wanted = doubles ? KIND_DOUBLE : KIND_FLOAT;
+                _requireKind(f.stack[f.sp - 2], wanted, opPC);
+                _requireKind(f.stack[f.sp - 1], wanted, opPC);
+                uint64 result = _ieeeArithmetic(
+                    uint64(_payload(f.stack[f.sp - 2])),
+                    uint64(_payload(f.stack[f.sp - 1])), op, doubles
+                );
+                f.stack[f.sp - 2] = doubles ? _packDouble(result) : _packFloat(uint32(result));
                 --f.sp;
             } else if (op == 0x6c || op == 0x70) {
                 if (f.sp < 2) revert BytecodeError(3, opPC);
@@ -3895,9 +3919,7 @@ contract JVMSubsetInterpreter {
             op <= 0x01 || (op >= 0x02 && op <= 0x0f) || (op >= 0x1a && op <= 0x2f)
                 || (op >= 0x32 && op <= 0x35) || (op >= 0x3b && op <= 0x50)
                 || (op >= 0x53 && op <= 0x56)
-                || (op >= 0x57 && op <= 0x61) || (op >= 0x64 && op <= 0x65)
-                || (op >= 0x68 && op <= 0x69) || (op >= 0x6c && op <= 0x6d)
-                || (op >= 0x70 && op <= 0x71) || (op >= 0x74 && op <= 0x77)
+                || (op >= 0x57 && op <= 0x77)
                 || (op >= 0x78 && op <= 0x83) || (op >= 0x85 && op <= 0x98)
                 || (op >= 0xac && op <= 0xb1) || op == 0xbe
         ) return 1;
@@ -4260,6 +4282,276 @@ contract JVMSubsetInterpreter {
     function _unsigned32(bytes memory data, uint256 off) private pure returns (uint32) {
         return (uint32(uint8(data[off])) << 24) | (uint32(uint8(data[off + 1])) << 16)
             | (uint32(uint8(data[off + 2])) << 8) | uint32(uint8(data[off + 3]));
+    }
+
+    function _ieeeArithmetic(uint64 leftRaw, uint64 rightRaw, uint8 op, bool doubles)
+        private pure returns (uint64)
+    {
+        IEEEValue memory left = _decodeIEEE(leftRaw, doubles);
+        IEEEValue memory right = _decodeIEEE(rightRaw, doubles);
+        if (op == 0x66 || op == 0x67) { // subtraction is addition after an exact sign flip
+            right.sign = !right.sign;
+            rightRaw ^= doubles ? uint64(0x8000000000000000) : uint64(0x80000000);
+        }
+        if (op == 0x62 || op == 0x63 || op == 0x66 || op == 0x67) {
+            return _ieeeAdd(left, right, leftRaw, rightRaw, doubles);
+        }
+        if (op == 0x6a || op == 0x6b) return _ieeeMultiply(left, right, doubles);
+        if (op == 0x6e || op == 0x6f) return _ieeeDivide(left, right, doubles);
+        return _ieeeRemainder(left, right, leftRaw, rightRaw, doubles);
+    }
+
+    function _decodeIEEE(uint64 raw, bool doubles) private pure returns (IEEEValue memory out) {
+        uint256 fractionBits = doubles ? 52 : 23;
+        uint256 exponentBits = doubles ? 11 : 8;
+        uint256 bias = doubles ? 1023 : 127;
+        uint256 exponentMask = (uint256(1) << exponentBits) - 1;
+        uint256 fractionMask = (uint256(1) << fractionBits) - 1;
+        out.sign = ((uint256(raw) >> (fractionBits + exponentBits)) & 1) != 0;
+        uint256 encodedExponent = (uint256(raw) >> fractionBits) & exponentMask;
+        uint256 fraction = uint256(raw) & fractionMask;
+        if (encodedExponent == exponentMask) {
+            out.classKind = fraction == 0 ? 2 : 3; // infinity / NaN
+            return out;
+        }
+        if (encodedExponent == 0) {
+            if (fraction == 0) return out; // signed zero
+            out.classKind = 1;
+            out.significand = fraction;
+            out.scale = int256(1) - int256(bias) - int256(fractionBits);
+            return out;
+        }
+        out.classKind = 1;
+        out.significand = (uint256(1) << fractionBits) | fraction;
+        out.scale = int256(encodedExponent) - int256(bias) - int256(fractionBits);
+    }
+
+    function _ieeeAdd(
+        IEEEValue memory left, IEEEValue memory right, uint64 leftRaw, uint64 rightRaw,
+        bool doubles
+    ) private pure returns (uint64) {
+        if (left.classKind == 3 || right.classKind == 3) return _canonicalNaN(doubles);
+        if (left.classKind == 2 || right.classKind == 2) {
+            if (left.classKind == 2 && right.classKind == 2 && left.sign != right.sign) {
+                return _canonicalNaN(doubles);
+            }
+            return _signedInfinity(left.classKind == 2 ? left.sign : right.sign, doubles);
+        }
+        if (left.classKind == 0 && right.classKind == 0) {
+            return _signedZero(left.sign && right.sign, doubles);
+        }
+        if (left.classKind == 0) return rightRaw;
+        if (right.classKind == 0) return leftRaw;
+        uint64 magnitudeMask = doubles
+            ? uint64(0x7fffffffffffffff) : uint64(0x7fffffff);
+        uint64 leftMagnitude = leftRaw & magnitudeMask;
+        uint64 rightMagnitude = rightRaw & magnitudeMask;
+        if (left.sign != right.sign && leftMagnitude == rightMagnitude) return 0;
+        return _ieeeAddFinite(
+            left, right, leftMagnitude > rightMagnitude, doubles
+        );
+    }
+
+    function _ieeeAddFinite(
+        IEEEValue memory left, IEEEValue memory right, bool leftLarger, bool doubles
+    ) private pure returns (uint64) {
+        uint256 fractionBits = doubles ? 52 : 23;
+        uint256 extra = fractionBits + 4; // precision plus guard, round, and sticky room
+        int256 commonScale = left.scale >= right.scale ? left.scale : right.scale;
+        (uint256 leftAligned, bool leftLost) = _alignedSignificand(
+            left.significand, extra, commonScale - left.scale
+        );
+        (uint256 rightAligned, bool rightLost) = _alignedSignificand(
+            right.significand, extra, commonScale - right.scale
+        );
+        uint256 magnitude;
+        bool sticky;
+        bool sign;
+        if (left.sign == right.sign) {
+            magnitude = leftAligned + rightAligned;
+            sticky = leftLost || rightLost;
+            sign = left.sign;
+        } else if (leftLarger) {
+            magnitude = leftAligned - rightAligned;
+            sign = left.sign;
+            if (rightLost) --magnitude; // floor(D-tail)=(D-1)+(1-tail)
+            sticky = leftLost || rightLost;
+        } else {
+            magnitude = rightAligned - leftAligned;
+            sign = right.sign;
+            if (leftLost) --magnitude;
+            sticky = leftLost || rightLost;
+        }
+        return _packFiniteIEEE(
+            sign, magnitude, commonScale - int256(extra), sticky, doubles
+        );
+    }
+
+    function _alignedSignificand(uint256 significand, uint256 extra, int256 gap)
+        private pure returns (uint256 aligned, bool lost)
+    {
+        uint256 extended = significand << extra; // at most 109 bits
+        if (gap == 0) return (extended, false);
+        uint256 shift = uint256(gap);
+        if (shift >= 256) return (0, extended != 0);
+        aligned = extended >> shift;
+        lost = (extended & ((uint256(1) << shift) - 1)) != 0;
+    }
+
+    function _ieeeMultiply(IEEEValue memory left, IEEEValue memory right, bool doubles)
+        private pure returns (uint64)
+    {
+        if (left.classKind == 3 || right.classKind == 3) return _canonicalNaN(doubles);
+        bool sign = left.sign != right.sign;
+        if ((left.classKind == 2 && right.classKind == 0)
+            || (left.classKind == 0 && right.classKind == 2)) return _canonicalNaN(doubles);
+        if (left.classKind == 2 || right.classKind == 2) return _signedInfinity(sign, doubles);
+        if (left.classKind == 0 || right.classKind == 0) return _signedZero(sign, doubles);
+        // The exact product is at most 48/106 bits and is rounded only by the packer.
+        return _packFiniteIEEE(
+            sign, left.significand * right.significand, left.scale + right.scale,
+            false, doubles
+        );
+    }
+
+    function _ieeeDivide(IEEEValue memory left, IEEEValue memory right, bool doubles)
+        private pure returns (uint64)
+    {
+        if (left.classKind == 3 || right.classKind == 3) return _canonicalNaN(doubles);
+        bool sign = left.sign != right.sign;
+        if ((left.classKind == 2 && right.classKind == 2)
+            || (left.classKind == 0 && right.classKind == 0)) return _canonicalNaN(doubles);
+        if (left.classKind == 2 || right.classKind == 0) return _signedInfinity(sign, doubles);
+        if (right.classKind == 2 || left.classKind == 0) return _signedZero(sign, doubles);
+        uint256 precision = doubles ? 53 : 24;
+        uint256 generated = precision + 4;
+        // 53+57=110 bits. The remainder is the exact sticky information below
+        // this quotient, so the common packer performs the operation's sole rounding.
+        uint256 numerator = left.significand << generated;
+        uint256 quotient = numerator / right.significand;
+        bool sticky = numerator % right.significand != 0;
+        return _packFiniteIEEE(
+            sign, quotient, left.scale - right.scale - int256(generated), sticky, doubles
+        );
+    }
+
+    function _ieeeRemainder(
+        IEEEValue memory left, IEEEValue memory right, uint64 leftRaw, uint64 rightRaw,
+        bool doubles
+    ) private pure returns (uint64) {
+        if (left.classKind == 3 || right.classKind == 3 || left.classKind == 2
+            || right.classKind == 0) return _canonicalNaN(doubles);
+        if (right.classKind == 2 || left.classKind == 0) return leftRaw;
+        uint64 magnitudeMask = doubles
+            ? uint64(0x7fffffffffffffff) : uint64(0x7fffffff);
+        if ((leftRaw & magnitudeMask) < (rightRaw & magnitudeMask)) return leftRaw;
+
+        uint256 remainder;
+        int256 remainderScale;
+        if (left.scale >= right.scale) {
+            uint256 modulus = right.significand;
+            uint256 power = _pow2Mod(uint256(left.scale - right.scale), modulus);
+            remainder = mulmod(left.significand % modulus, power, modulus);
+            remainderScale = right.scale;
+        } else {
+            // Since |left|>=|right|, this scale gap is bounded by the significand
+            // widths; the shifted divisor is no larger than the dividend.
+            uint256 divisor = right.significand << uint256(right.scale - left.scale);
+            remainder = left.significand % divisor;
+            remainderScale = left.scale;
+        }
+        if (remainder == 0) return _signedZero(left.sign, doubles);
+        return _packFiniteIEEE(left.sign, remainder, remainderScale, false, doubles);
+    }
+
+    function _pow2Mod(uint256 exponent, uint256 modulus) private pure returns (uint256 result) {
+        if (modulus == 1) return 0;
+        result = 1 % modulus;
+        uint256 base = 2 % modulus;
+        // Binary exponentiation takes at most 12 iterations for every binary32/64
+        // exponent gap; there is no exponent-magnitude linear loop.
+        while (exponent != 0) {
+            if ((exponent & 1) != 0) result = mulmod(result, base, modulus);
+            exponent >>= 1;
+            if (exponent != 0) base = mulmod(base, base, modulus);
+        }
+    }
+
+    function _packFiniteIEEE(
+        bool sign, uint256 magnitude, int256 scale, bool sticky, bool doubles
+    ) private pure returns (uint64) {
+        if (magnitude == 0) return _signedZero(sign, doubles);
+        uint256 fractionBits = doubles ? 52 : 23;
+        uint256 exponentBits = doubles ? 11 : 8;
+        int256 bias = doubles ? int256(1023) : int256(127);
+        int256 minimumExponent = 1 - bias;
+        int256 maximumExponent = bias;
+        uint256 top = _highestBit256(magnitude);
+        int256 exponent = int256(top) + scale;
+        uint256 rounded;
+        if (exponent >= minimumExponent) {
+            if (top > fractionBits) {
+                rounded = _roundMagnitude(magnitude, top - fractionBits, sticky);
+            } else {
+                rounded = magnitude << (fractionBits - top);
+            }
+            if (rounded == (uint256(1) << (fractionBits + 1))) {
+                rounded >>= 1;
+                ++exponent;
+            }
+            if (exponent > maximumExponent) return _signedInfinity(sign, doubles);
+            uint256 encoded = (uint256(exponent + bias) << fractionBits)
+                | (rounded & ((uint256(1) << fractionBits) - 1));
+            if (sign) encoded |= uint256(1) << (fractionBits + exponentBits);
+            return uint64(encoded);
+        }
+
+        int256 quantumScale = minimumExponent - int256(fractionBits);
+        int256 shift = quantumScale - scale;
+        if (shift > 0) rounded = _roundMagnitude(magnitude, uint256(shift), sticky);
+        else rounded = magnitude << uint256(-shift);
+        if (rounded == 0) return _signedZero(sign, doubles);
+        uint256 normalBoundary = uint256(1) << fractionBits;
+        uint256 encodedSubnormal = rounded >= normalBoundary ? normalBoundary : rounded;
+        if (sign) encodedSubnormal |= uint256(1) << (fractionBits + exponentBits);
+        return uint64(encodedSubnormal);
+    }
+
+    function _roundMagnitude(uint256 magnitude, uint256 shift, bool sticky)
+        private pure returns (uint256)
+    {
+        if (shift == 0) return magnitude;
+        if (shift >= 256) return 0;
+        uint256 quotient = magnitude >> shift;
+        uint256 remainder = magnitude & ((uint256(1) << shift) - 1);
+        uint256 half = uint256(1) << (shift - 1);
+        if (remainder > half || (remainder == half && (sticky || (quotient & 1) != 0))) {
+            ++quotient;
+        }
+        return quotient;
+    }
+
+    function _canonicalNaN(bool doubles) private pure returns (uint64) {
+        return doubles ? uint64(0x7ff8000000000000) : uint64(0x7fc00000);
+    }
+
+    function _signedInfinity(bool sign, bool doubles) private pure returns (uint64) {
+        uint64 bits = doubles ? uint64(0x7ff0000000000000) : uint64(0x7f800000);
+        return sign ? bits | (doubles ? uint64(0x8000000000000000) : uint64(0x80000000)) : bits;
+    }
+
+    function _signedZero(bool sign, bool doubles) private pure returns (uint64) {
+        if (!sign) return 0;
+        return doubles ? uint64(0x8000000000000000) : uint64(0x80000000);
+    }
+
+    function _highestBit256(uint256 value) private pure returns (uint256 bit) {
+        // Arithmetic intermediates are bounded by 110 bits; this remains a small,
+        // representation-bounded normalization loop rather than an exponent loop.
+        while (value > 1) {
+            value >>= 1;
+            ++bit;
+        }
     }
 
     function _highestBit(uint64 value) private pure returns (uint256 bit) {
