@@ -18,8 +18,10 @@ Execution remains real EVM bytecode, with no host Java fallback or consensus edi
 rethrow; evidence in `JAVA_EVM_M5DA_PLAN.md`. New Throwable construction/APIs remain
 deferred. Target is genuine Minecraft startup-complete output in unmodified EVM,
 not necessarily client connectivity. `JAVA_EVM_MC_STARTUP_PROPOSAL.md` recommends
-1.12.2 as first candidate; no server has run. Standard deployment/continuation and
-next Java bootstrap dependencies are being planned, not claimed implemented.
+1.12.2 as first candidate; no server has run. A separate small stock-deployment/
+continuation slice is now frozen in `JAVA_EVM_STOCK_S0_PLAN.md` and under
+implementation, not yet accepted. It is NOT deployment of the full interpreter;
+next Java bootstrap changes remain at proposal stage.
 
 ## Quickstart / stage gates
 
