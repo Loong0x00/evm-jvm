@@ -82,7 +82,7 @@ routine permission to start the next verified increment.
 | M4f-a | interface graph/abstract calls/type compatibility | accepted;1059 cases plus48 independent probes |
 | M4f-b | defaults and required default-interface initialization | accepted;1163 cases plus48 independent probes |
 | M4f-c | interface static members/initialization | accepted;1263 cases plus48 independent probes |
-| M5a | Z/B/C/S int-like types/fields/arrays | next bounded stage |
+| M5a | Z/B/C/S int-like types/fields/arrays | frozen in `JAVA_EVM_M5A_PLAN.md`; dispatch3 workers |
 | M5b+ | category-2/IEEE values, catch/throw/unwind and remaining instructions | queued; freeze dependency-ordered batches |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -97,7 +97,7 @@ M4f-c accepted:1263 JVM/EVM cases plus48 probes,36 Python,567 smoke/587 fast,
 Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Obsolete guards explicitly updated
 with JVM evidence; malformed-tag/wrong-kind/final/staticness coverage retained.
 Runtime100297 bytes remains local-runtime only, not full JVM/deployment. Prior1163
-fixture entries/budgets unchanged. Next M5a int-like Z/B/C/S fields/descriptors/
+fixture entries/budgets unchanged. M5a frozen in JAVA_EVM_M5A_PLAN.md; dispatch3 workers for
 arrays/return narrowing (root ABI stays I-only), then category2/IEEE/handlers.
 ALL NEW workers Sol/high WITHOUT Fast; verify disabled preference. Continuous
 verified progression, no routine confirmation.

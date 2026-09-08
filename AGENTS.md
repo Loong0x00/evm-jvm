@@ -1,8 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M4f-c interface static members**, recorded in
-`JAVA_EVM_M4FC_PLAN.md`:1263 cases plus48 independent probes. Next: Z/B/C/S int-like
-values/fields/arrays, then category-2/IEEE values/handlers/libraries. Java8 remains
+`JAVA_EVM_M4FC_PLAN.md`:1263 cases plus48 independent probes. Active M5a Z/B/C/S,
+frozen in `JAVA_EVM_M5A_PLAN.md`; category-2/IEEE/handlers/libraries follow. Java8 remains
 required for evolved-interface exact error probes.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
