@@ -44,18 +44,17 @@ func stockS1ReviewMethodStatus(runtime []byte, index uint16) (domain, code uint8
 	return packed[18], packed[17], uint32(packed[13])<<24 | uint32(packed[14])<<16 | uint32(packed[15])<<8 | uint32(packed[16])
 }
 
-// TestStockS1ReviewDiagnosticAggregate records the exact checked-artifact
-// behaviour above the frozen registration gas budget. It is an observational
-// review probe, not an acceptance gate or a budget relaxation.
-func TestStockS1ReviewDiagnosticAggregate(t *testing.T) {
+// The original blocker must now succeed at the frozen 8M budget. A separately
+// underfunded registration first proves internal CREATE/registry rollback.
+func TestStockS1ReviewAggregateAtFrozenBudget(t *testing.T) {
 	page := stockS1VerifyLoadPage(t)
 	parser := stockS1VerifyLoadArtifact(t, "S1ClassParser")
 	e := stockS1VerifyNewEnv(t)
 	defer e.close()
 	parserAt, _ := e.mustCreate(parser.init, stockS1VerifyCreateGas)
 
-	// Unlike the integrated fixture, all 31 declared test methods here are
-	// eligible; this isolates the production maximum from the oracle defect.
+	// Unlike the original pre-integration fixture, all31 declared test methods
+	// here are eligible; this isolates the production maximum.
 	aggregate := stockS1VerifyBuildClass("S1Aggregate", stockS1ReviewAggregateMethods(true), 0)
 	rawAt, pageHash, payloadHash, _ := stockS1VerifyDeployPage(t, e, page, aggregate.bytes)
 	input := stockS1VerifyCallData(t, parser, "registerClass", rawAt, pageHash, payloadHash)
@@ -63,7 +62,7 @@ func TestStockS1ReviewDiagnosticAggregate(t *testing.T) {
 	expectedID := stockS1VerifyClassID(t, crypto.Keccak256Hash(parser.runtime), rawAt, pageHash, payloadHash, crypto.Keccak256Hash(expectedMetadata))
 	parserNonce := e.state.StateDB.GetNonce(parserAt)
 	internalPage := crypto.CreateAddress(parserAt, parserNonce)
-	frozen := e.apply(&parserAt, input, stockS1VerifyCreateGas)
+	frozen := e.apply(&parserAt, input, 6_000_000)
 	stockS1VerifyAssertRevert(t, frozen, "S1ClassError(uint256,uint256)", 6, 0)
 	if e.state.StateDB.GetNonce(parserAt) != parserNonce || len(e.state.StateDB.GetCode(internalPage)) != 0 {
 		t.Fatal("failed frozen registration retained parser nonce or metadata code")
@@ -71,7 +70,7 @@ func TestStockS1ReviewDiagnosticAggregate(t *testing.T) {
 	if at, hash := stockS1VerifyClassRecord(t, e, parser, parserAt, expectedID); at != (common.Address{}) || hash != (common.Hash{}) {
 		t.Fatal("failed frozen registration retained registry record")
 	}
-	diagnostic := e.apply(&parserAt, input, 12_000_000)
+	diagnostic := e.apply(&parserAt, input, stockS1VerifyCreateGas)
 	if diagnostic.coreErr != nil || diagnostic.result == nil || diagnostic.result.Err != nil {
 		t.Fatalf("diagnostic registration: core=%v evm=%v data=%x", diagnostic.coreErr, stockS1VerifyResultErr(diagnostic.result), stockS1VerifyResultData(diagnostic.result))
 	}
@@ -91,16 +90,15 @@ func TestStockS1ReviewDiagnosticAggregate(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if out[3].(uint16) != 32 || len(metadata) != 6337 || diagnostic.result.UsedGas <= stockS1VerifyCreateGas || diagnostic.result.UsedGas <= intrinsic {
+	if out[3].(uint16) != 32 || len(metadata) != 6337 || diagnostic.result.UsedGas > stockS1VerifyCreateGas || diagnostic.result.UsedGas <= intrinsic {
 		t.Fatalf("aggregate count=%d metadata=%d gas=%d intrinsic=%d", out[3].(uint16), len(metadata), diagnostic.result.UsedGas, intrinsic)
 	}
 	t.Logf("review aggregate: frozenErr=%v frozenUsed=%d diagnosticUsed=%d executionUsed=%d intrinsic=%d raw=%d metadata=%d metadataHash=%s", frozen.result.Err, frozen.result.UsedGas, diagnostic.result.UsedGas, diagnostic.result.UsedGas-intrinsic, intrinsic, len(aggregate.bytes), len(metadata), crypto.Keccak256Hash(metadata))
 }
 
-// TestStockS1ReviewIntegratedAggregateOracleClassification demonstrates why the
-// post-gas-gate metadata mismatch in validation_test.go is not a second runtime
-// metadata defect: methods m04..m30 load an uninitialized local. The parser's
-// schema-2 record is precise, while that test's bounded decoder labels it eligible.
+// Retain the original invalid shape as an explicit classification negative.
+// The bounded metadata helper is only an oracle for valid methods; it must not
+// be used to assert eligibility of these deliberately uninitialized methods.
 func TestStockS1ReviewIntegratedAggregateOracleClassification(t *testing.T) {
 	page := stockS1VerifyLoadPage(t)
 	parser := stockS1VerifyLoadArtifact(t, "S1ClassParser")
@@ -111,7 +109,7 @@ func TestStockS1ReviewIntegratedAggregateOracleClassification(t *testing.T) {
 	aggregate := stockS1VerifyBuildClass("S1Aggregate", stockS1ReviewAggregateMethods(false), 0)
 	rawAt, pageHash, payloadHash, _ := stockS1VerifyDeployPage(t, e, page, aggregate.bytes)
 	input := stockS1VerifyCallData(t, parser, "registerClass", rawAt, pageHash, payloadHash)
-	diagnostic := e.apply(&parserAt, input, 12_000_000)
+	diagnostic := e.apply(&parserAt, input, stockS1VerifyCreateGas)
 	if diagnostic.coreErr != nil || diagnostic.result == nil || diagnostic.result.Err != nil {
 		t.Fatalf("diagnostic registration: core=%v evm=%v data=%x", diagnostic.coreErr, stockS1VerifyResultErr(diagnostic.result), stockS1VerifyResultData(diagnostic.result))
 	}
@@ -120,9 +118,17 @@ func TestStockS1ReviewIntegratedAggregateOracleClassification(t *testing.T) {
 	oracle := append([]byte{0}, stockS1VerifyMetadataExpected(aggregate.bytes, rawAt, pageHash, payloadHash)...)
 	actualDomain, actualCode, actualPC := stockS1ReviewMethodStatus(actual, 5)
 	oracleDomain, oracleCode, oraclePC := stockS1ReviewMethodStatus(oracle, 5)
-	if actualDomain != 2 || actualCode != 11 || actualPC != 0 {
-		t.Fatalf("parser method[5] status=(%d,%d,%d), want BytecodeError(11,0)", actualDomain, actualCode, actualPC)
+	for index := uint16(5); index < 32; index++ {
+		domain, code, pc := stockS1ReviewMethodStatus(actual, index)
+		if domain != 2 || code != 11 || pc != 0 {
+			t.Fatalf("parser method[%d] status=(%d,%d,%d), want BytecodeError(11,0)", index, domain, code, pc)
+		}
 	}
+	module := stockS1VerifyLoadArtifact(t, "S1StepModule")
+	coord := stockS1VerifyLoadArtifact(t, "S1Coordinator")
+	moduleAt, _ := e.mustCreate(module.init, stockS1VerifyCreateGas)
+	selection := e.apply(nil, stockS1VerifyConstructor(t, coord, parserAt, crypto.Keccak256Hash(parser.runtime), common.Hash(out[0].([32]byte)), moduleAt, crypto.Keccak256Hash(module.runtime), []byte("m04"), []int32{}, uint64(64)), stockS1VerifyCreateGas)
+	stockS1VerifyAssertRevert(t, selection, "S1BytecodeError(uint256,uint256)", 11, 0)
 	if oracleDomain != 0 || oracleCode != 0 || oraclePC != 0 || bytes.Equal(actual, oracle) {
 		t.Fatalf("integrated oracle status=(%d,%d,%d) equal=%v", oracleDomain, oracleCode, oraclePC, bytes.Equal(actual, oracle))
 	}
