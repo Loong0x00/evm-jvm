@@ -89,7 +89,11 @@ contract VMCoordinator {
             ITinyJvmStepModule.step,
             (page, expectedPageHash, expectedPayloadHash, beforeState, maxJvmSteps)
         );
-        uint256 stipend = gasleft() - COMMIT_RESERVE - CALL_MARGIN;
+        // Loading state, acquiring the lock and encoding calldata consumed gas
+        // after the early guard. Recheck the actual call boundary before subtraction.
+        uint256 available = gasleft();
+        if (available <= COMMIT_RESERVE + CALL_MARGIN) revert StockControlError(5);
+        uint256 stipend = available - COMMIT_RESERVE - CALL_MARGIN;
         (bool ok, bytes memory output) = module.staticcall{gas: stipend}(input);
         if (!ok) _bubble(output);
         if (gasleft() < COMMIT_RESERVE) revert StockControlError(5);
