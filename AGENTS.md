@@ -2,7 +2,7 @@
 
 Current accepted stage: **M4b ordinary objects/constructors/fields/special calls**,
 recorded in `JAVA_EVM_M4B_PLAN.md`:713 cases plus46 independent object probes.
-Next: **M4c virtual dispatch/casts/type tests**; interface/remaining types/handlers
+Active: **M4c virtual dispatch/casts/type tests**, frozen in `JAVA_EVM_M4C_PLAN.md`; interface/remaining types/handlers
 and class libraries follow. Sol/high workers currently inherit enabled Codex Fast
 (priority request, backend acceptance not guaranteed); do not lower reasoning.
 Runtime is over EIP170 deployment size: local runtime.Execute only, not mainnet

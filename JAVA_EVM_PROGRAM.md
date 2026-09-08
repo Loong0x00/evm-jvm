@@ -75,7 +75,8 @@ routine permission to start the next verified increment.
 | M3d | class hierarchy/member resolution and superclass-init prerequisites | accepted; JAVA_EVM_M3D_PLAN.md |
 | M4a | integer-array heap, typed references, array helpers/statics | active; JAVA_EVM_M4A_PLAN.md |
 | M4b | ordinary object allocation, constructors, instance fields and direct invokespecial calls | accepted;713 cases plus46 independent probes |
-| M4c | invokevirtual dispatch, casts/type tests, then interface/reference-array extensions | queued; freeze separately |
+| M4c | invokevirtual dispatch, casts/type tests | frozen in `JAVA_EVM_M4C_PLAN.md`; dispatch3 workers |
+| M4d | interfaces/reference arrays | queued; freeze separately |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -92,6 +93,6 @@ Parent corrected malformed negative setups, linearized object layouts (no budget
 increase), replaced out-of-profile javac constant-final fixture access with real
 getfield, and rejected synchronized special callees after independent review.
 Runtime57900 bytes remains local-runtime only, not deployed/full Java.
-Next freeze/dispatch M4c invokevirtual/checkcast/instanceof with exact override
+M4c frozen in JAVA_EVM_M4C_PLAN.md; dispatch3 workers for invokevirtual/checkcast/instanceof with exact override
 relations and class-cast outcomes. Keep Sol/high, inherited Fast, disjoint worktrees,
 exact tests and automatic continuation. No routine stage confirmation.
