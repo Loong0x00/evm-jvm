@@ -15936,6 +15936,2321 @@
       "timeout_seconds": 10,
       "smoke": false,
       "expected_kind": "value"
+    },
+    {
+      "id": "m4d-zero-length",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "zeroLength",
+      "args": [
+        101
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-requested-length",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "requestedLength",
+      "args": [
+        4
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-default-null",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "defaultNull",
+      "args": [
+        102
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-store-load",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "storeLoad",
+      "args": [
+        -103
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-store-null",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "storeNull",
+      "args": [
+        104
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-alias-write",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "aliasWrite",
+      "args": [
+        105
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-distinct-allocations",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "distinctAllocations",
+      "args": [
+        106
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-distinct-zero-allocations",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "distinctZeroAllocations",
+      "args": [
+        107
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-identity-through-object",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "identityThroughObject",
+      "args": [
+        108
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-object-array-class-value",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "objectArrayClassValue",
+      "args": [
+        109
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-object-array-int-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "objectArrayIntArray",
+      "args": [
+        -110
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-heterogeneous-object-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "heterogeneousObjectArray",
+      "args": [
+        11
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-object-array-alias",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "objectArrayAlias",
+      "args": [
+        112
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-matrix-outer-defaults",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "intMatrixOuterDefaults",
+      "args": [
+        113
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-matrix-rows",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "intMatrixRows",
+      "args": [
+        12
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-matrix-aliased-rows",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "intMatrixAliasedRows",
+      "args": [
+        -115
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-matrix-distinct-rows",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "intMatrixDistinctRows",
+      "args": [
+        116
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-reference-matrix-rows",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "referenceMatrixRows",
+      "args": [
+        117
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-reference-matrix-alias",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "referenceMatrixAlias",
+      "args": [
+        118
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-nested-array-in-object-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "nestedArrayInObjectArray",
+      "args": [
+        119
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-three-ranks-manual",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "threeRanksManual",
+      "args": [
+        120
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-array-length-through-object",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "arrayLengthThroughObject",
+      "args": [
+        121
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-same-element-identity",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "sameElementIdentity",
+      "args": [
+        122
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-replace-element",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class"
+      ],
+      "method": "replaceElement",
+      "args": [
+        123
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-abstract-component-zero",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreRoot.class",
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class"
+      ],
+      "method": "abstractComponentZero",
+      "args": [
+        124
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-abstract-component-defaults",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/core/CoreRoot.java"
+      ],
+      "class": "bundle.m4d.core.CoreRoot",
+      "class_files": [
+        "bundle/m4d/core/CoreCell.class",
+        "bundle/m4d/core/CoreAbstract.class",
+        "bundle/m4d/core/CoreRoot.class"
+      ],
+      "method": "abstractComponentDefaults",
+      "args": [
+        125
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-array-to-base",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class"
+      ],
+      "method": "childArrayToBase",
+      "args": [
+        201
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-array-to-object-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class"
+      ],
+      "method": "childArrayToObjectArray",
+      "args": [
+        202
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-base-array-accepts-child",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class"
+      ],
+      "method": "baseArrayAcceptsChild",
+      "args": [
+        20
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-actual-child-store-child",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class"
+      ],
+      "method": "actualChildStoreChild",
+      "args": [
+        204
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-actual-child-store-grand",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class"
+      ],
+      "method": "actualChildStoreGrand",
+      "args": [
+        205
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-array-instance-child",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class"
+      ],
+      "method": "childArrayInstanceChild",
+      "args": [
+        206
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-array-instance-base",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class"
+      ],
+      "method": "childArrayInstanceBase",
+      "args": [
+        207
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-array-instance-object-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class"
+      ],
+      "method": "childArrayInstanceObjectArray",
+      "args": [
+        208
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-array-instance-object",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class"
+      ],
+      "method": "childArrayInstanceObject",
+      "args": [
+        209
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-base-array-not-child",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class"
+      ],
+      "method": "baseArrayNotChild",
+      "args": [
+        210
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-sibling-array-not-child",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class"
+      ],
+      "method": "siblingArrayNotChild",
+      "args": [
+        211
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-array-not-object-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class"
+      ],
+      "method": "intArrayNotObjectArray",
+      "args": [
+        212
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-array-is-object",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class"
+      ],
+      "method": "intArrayIsObject",
+      "args": [
+        213
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-matrix-is-object-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class"
+      ],
+      "method": "intMatrixIsObjectArray",
+      "args": [
+        214
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-matrix-not-object-matrix",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class"
+      ],
+      "method": "intMatrixNotObjectMatrix",
+      "args": [
+        215
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-matrix-to-base-matrix",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class"
+      ],
+      "method": "childMatrixToBaseMatrix",
+      "args": [
+        216
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-matrix-to-object-matrix",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class"
+      ],
+      "method": "childMatrixToObjectMatrix",
+      "args": [
+        217
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-matrix-to-object-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class"
+      ],
+      "method": "childMatrixToObjectArray",
+      "args": [
+        218
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-matrix-instance-base-matrix",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class"
+      ],
+      "method": "childMatrixInstanceBaseMatrix",
+      "args": [
+        219
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-matrix-instance-object-matrix",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class"
+      ],
+      "method": "childMatrixInstanceObjectMatrix",
+      "args": [
+        220
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-array-not-base-matrix",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class"
+      ],
+      "method": "childArrayNotBaseMatrix",
+      "args": [
+        221
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-int-matrix-cast-object-array-identity",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class"
+      ],
+      "method": "intMatrixCastObjectArrayIdentity",
+      "args": [
+        -222
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-child-matrix-cast-base-identity",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class"
+      ],
+      "method": "childMatrixCastBaseIdentity",
+      "args": [
+        223
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-null-recursive-cast",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class"
+      ],
+      "method": "nullRecursiveCast",
+      "args": [
+        224
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-rank-three-covariance",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class"
+      ],
+      "method": "rankThreeCovariance",
+      "args": [
+        225
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-rank-three-type-test",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class"
+      ],
+      "method": "rankThreeTypeTest",
+      "args": [
+        226
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-primitive-rank-difference",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovGrand.class",
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class"
+      ],
+      "method": "primitiveRankDifference",
+      "args": [
+        227
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-reference-rank-difference",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/covariance/CovarianceRoot.java"
+      ],
+      "class": "bundle.m4d.covariance.CovarianceRoot",
+      "class_files": [
+        "bundle/m4d/covariance/CovSibling.class",
+        "bundle/m4d/covariance/CovarianceRoot.class",
+        "bundle/m4d/covariance/CovBase.class",
+        "bundle/m4d/covariance/CovChild.class",
+        "bundle/m4d/covariance/CovGrand.class"
+      ],
+      "method": "referenceRankDifference",
+      "args": [
+        228
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-instance-field-default",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class"
+      ],
+      "method": "instanceFieldDefault",
+      "args": [
+        301
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-instance-field-store",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class"
+      ],
+      "method": "instanceFieldStore",
+      "args": [
+        302
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-instance-field-alias",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class"
+      ],
+      "method": "instanceFieldAlias",
+      "args": [
+        303
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-instance-field-replace",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class"
+      ],
+      "method": "instanceFieldReplace",
+      "args": [
+        304
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-object-field-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class"
+      ],
+      "method": "objectFieldArray",
+      "args": [
+        305
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-nested-field",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class"
+      ],
+      "method": "nestedField",
+      "args": [
+        306
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-final-field-mutation",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class"
+      ],
+      "method": "finalFieldMutation",
+      "args": [
+        307
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-static-field-default",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class"
+      ],
+      "method": "staticFieldDefault",
+      "args": [
+        308
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-static-field-store",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class"
+      ],
+      "method": "staticFieldStore",
+      "args": [
+        309
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-static-field-replace",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class"
+      ],
+      "method": "staticFieldReplace",
+      "args": [
+        310
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-static-final-mutation",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class"
+      ],
+      "method": "staticFinalMutation",
+      "args": [
+        311
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-static-argument-return",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class"
+      ],
+      "method": "staticArgumentReturn",
+      "args": [
+        312
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-private-special-return",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class"
+      ],
+      "method": "privateSpecialReturn",
+      "args": [
+        313
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-private-special-mutation",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class"
+      ],
+      "method": "privateSpecialMutation",
+      "args": [
+        314
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-virtual-argument",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class"
+      ],
+      "method": "virtualArgument",
+      "args": [
+        315
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-virtual-override-argument",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class"
+      ],
+      "method": "virtualOverrideArgument",
+      "args": [
+        316
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-virtual-array-return",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class"
+      ],
+      "method": "virtualArrayReturn",
+      "args": [
+        317
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-virtual-object-array-return",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class"
+      ],
+      "method": "virtualObjectArrayReturn",
+      "args": [
+        318
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-cross-class-nested-return",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportRoot.class",
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class"
+      ],
+      "method": "crossClassNestedReturn",
+      "args": [
+        319
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-recursive-array-identity",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/transport/TransportRoot.java"
+      ],
+      "class": "bundle.m4d.transport.TransportRoot",
+      "class_files": [
+        "bundle/m4d/transport/TransportCell.class",
+        "bundle/m4d/transport/TransportHolder.class",
+        "bundle/m4d/transport/TransportLibrary.class",
+        "bundle/m4d/transport/TransportLibraryChild.class",
+        "bundle/m4d/transport/TransportUtility.class",
+        "bundle/m4d/transport/TransportRoot.class"
+      ],
+      "method": "recursiveArrayIdentity",
+      "args": [
+        5
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-failing-component-zero",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class"
+      ],
+      "method": "failingComponentZero",
+      "args": [
+        401
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-failing-component-positive",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class"
+      ],
+      "method": "failingComponentPositive",
+      "args": [
+        402
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-failing-component-nested",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class"
+      ],
+      "method": "failingComponentNested",
+      "args": [
+        403
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-abstract-component-no-init",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class"
+      ],
+      "method": "abstractComponentNoInit",
+      "args": [
+        404
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-initialized-array-holder",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class"
+      ],
+      "method": "initializedArrayHolder",
+      "args": [
+        405
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-initialized-array-element",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class"
+      ],
+      "method": "initializedArrayElement",
+      "args": [
+        406
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-initialized-final-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class"
+      ],
+      "method": "initializedFinalArray",
+      "args": [
+        407
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-reentrant-prepared-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class"
+      ],
+      "method": "reentrantPreparedArray",
+      "args": [
+        408
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "value"
+    },
+    {
+      "id": "m4d-component-trigger-fails",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/FailingComponent.class",
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class"
+      ],
+      "method": "componentTriggerFails",
+      "args": [
+        409
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4d-array-store-initializer-fails",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/init/InitRoot.java"
+      ],
+      "class": "bundle.m4d.init.InitRoot",
+      "class_files": [
+        "bundle/m4d/init/FailingAbstract.class",
+        "bundle/m4d/init/AllocatingHolder.class",
+        "bundle/m4d/init/ReentrantArray.class",
+        "bundle/m4d/init/ReentrantHelper.class",
+        "bundle/m4d/init/StoreBase.class",
+        "bundle/m4d/init/StoreChild.class",
+        "bundle/m4d/init/ArrayStoreInitializer.class",
+        "bundle/m4d/init/InitRoot.class",
+        "bundle/m4d/init/InitCell.class",
+        "bundle/m4d/init/FailingComponent.class"
+      ],
+      "method": "arrayStoreInitializerFails",
+      "args": [
+        410
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ExceptionInInitializerError"
+    },
+    {
+      "id": "m4d-negative-ordinary",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class"
+      ],
+      "method": "negativeOrdinary",
+      "args": [
+        -1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4d-negative-nested",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class"
+      ],
+      "method": "negativeNested",
+      "args": [
+        -2
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NegativeArraySizeException"
+    },
+    {
+      "id": "m4d-null-read",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class"
+      ],
+      "method": "nullRead",
+      "args": [
+        -1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4d-null-store-incompatible",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class"
+      ],
+      "method": "nullStoreIncompatible",
+      "args": [
+        0
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4d-null-store-negative",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class"
+      ],
+      "method": "nullStoreNegative",
+      "args": [
+        -1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.NullPointerException"
+    },
+    {
+      "id": "m4d-bounds-read-negative",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class"
+      ],
+      "method": "boundsReadNegative",
+      "args": [
+        -1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4d-bounds-store-equal",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class"
+      ],
+      "method": "boundsStoreEqual",
+      "args": [
+        1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4d-bounds-before-incompatible",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class"
+      ],
+      "method": "boundsBeforeIncompatible",
+      "args": [
+        1
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayIndexOutOfBoundsException"
+    },
+    {
+      "id": "m4d-store-base-into-actual-child",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class"
+      ],
+      "method": "storeBaseIntoActualChild",
+      "args": [
+        501
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4d-store-sibling-into-actual-child",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class"
+      ],
+      "method": "storeSiblingIntoActualChild",
+      "args": [
+        502
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4d-store-wrong-nested-row",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class"
+      ],
+      "method": "storeWrongNestedRow",
+      "args": [
+        503
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ArrayStoreException"
+    },
+    {
+      "id": "m4d-cast-int-matrix-to-object-matrix",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorSibling.class",
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class"
+      ],
+      "method": "castIntMatrixToObjectMatrix",
+      "args": [
+        504
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": false,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    },
+    {
+      "id": "m4d-cast-base-array-to-child-array",
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/errors/ErrorRoot.java"
+      ],
+      "class": "bundle.m4d.errors.ErrorRoot",
+      "class_files": [
+        "bundle/m4d/errors/ErrorBase.class",
+        "bundle/m4d/errors/ErrorChild.class",
+        "bundle/m4d/errors/ErrorRoot.class",
+        "bundle/m4d/errors/ErrorSibling.class"
+      ],
+      "method": "castBaseArrayToChildArray",
+      "args": [
+        505
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "smoke": true,
+      "expected_kind": "java_exception",
+      "expected_exception": "java.lang.ClassCastException"
+    }
+,
+    {
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/crosscomponent/api/PublicComponent.java",
+        "bundle/m4d/crosscomponent/root/CrossComponentRoot.java"
+      ],
+      "class": "bundle.m4d.crosscomponent.root.CrossComponentRoot",
+      "class_files": [
+        "bundle/m4d/crosscomponent/root/CrossComponentRoot.class",
+        "bundle/m4d/crosscomponent/api/PublicComponent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "expected_kind": "value",
+      "id": "m4d-cross-package-zero",
+      "method": "crossPackageZero",
+      "args": [
+        601
+      ],
+      "smoke": false
+    },
+    {
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/crosscomponent/api/PublicComponent.java",
+        "bundle/m4d/crosscomponent/root/CrossComponentRoot.java"
+      ],
+      "class": "bundle.m4d.crosscomponent.root.CrossComponentRoot",
+      "class_files": [
+        "bundle/m4d/crosscomponent/root/CrossComponentRoot.class",
+        "bundle/m4d/crosscomponent/api/PublicComponent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "expected_kind": "value",
+      "id": "m4d-cross-package-defaults",
+      "method": "crossPackageDefaults",
+      "args": [
+        602
+      ],
+      "smoke": true
+    },
+    {
+      "stage": "m4d",
+      "sources": [
+        "bundle/m4d/crosscomponent/api/PublicComponent.java",
+        "bundle/m4d/crosscomponent/root/CrossComponentRoot.java"
+      ],
+      "class": "bundle.m4d.crosscomponent.root.CrossComponentRoot",
+      "class_files": [
+        "bundle/m4d/crosscomponent/root/CrossComponentRoot.class",
+        "bundle/m4d/crosscomponent/api/PublicComponent.class"
+      ],
+      "gas_limit": 70000000,
+      "timeout_seconds": 10,
+      "expected_kind": "value",
+      "id": "m4d-cross-package-store-load",
+      "method": "crossPackageStoreLoad",
+      "args": [
+        603
+      ],
+      "smoke": false
     }
   ]
 }

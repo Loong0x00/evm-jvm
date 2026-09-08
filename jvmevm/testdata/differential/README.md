@@ -4,12 +4,12 @@ These fixtures are inputs to the staged Java-inside-EVM differential runner.
 `OracleMain.java` is a host-test-only reflection wrapper; it is not a guest
 entry point and is never sent to the EVM interpreter.
 
-The manifest has 792 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
-73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, and 79 `m4c` cases. The
-331 smoke cases include 42 from `m4c`. Every root entry remains a declared public
-static `(int...)int` method, and guest sources have no `main`. All 713 entries
-through M4b, including their source lists, arguments, budgets, tiers, and
-outcomes, are unchanged.
+The manifest has 892 fixed cases: 12 `m1`, 70 `m2`, 119 `m2b`, 67 `m3a`,
+73 `m3b`, 85 `m3c`, 72 `m3d`, 115 `m4a`, 100 `m4b`, 79 `m4c`, and 100 `m4d`
+cases. The 381 smoke-marked cases include 50 from `m4d`. Every root entry remains
+a declared public static `(int...)int` method, and guest sources have no `main`.
+All 792 entries through M4c, including their source lists, arguments, budgets,
+tiers, and outcomes, are unchanged.
 
 M2b covers integer `ldc`/`ldc_w`, multiply, divide, remainder, negate, signed
 and unsigned masked shifts, bitwise operations, and byte/char/short conversions.
@@ -231,13 +231,37 @@ The eight outcomes are four `java.lang.NullPointerException`, three direct
 initialization. No case selects a native or synchronized implementation for a
 value outcome, and no actual receiver is an array.
 
-Across all stages there are 733 value outcomes, 14 ArithmeticException outcomes,
-three StackOverflowError outcomes, 14 ExceptionInInitializerError outcomes, two
-NegativeArraySizeException outcomes, seven ArrayIndexOutOfBoundsException
-outcomes, 16 NullPointerException outcomes, and three ClassCastException
-outcomes. Every gas limit is finite and at most 70,000,000; every subprocess
-timeout is at most 10 seconds. New arrays have at most eight elements, and all
-fixture loops and recursions are bounded and modest.
+M4d adds 85 value outcomes and 15 actual JVM exception outcomes over seven new
+trusted Java 8 sources, which emit 30 ordinary classfiles. Its 100 cases cover
+reference-array allocation/defaults/identity/aliases; `Object[]` values holding
+ordinary objects, `int[]`, and nested reference arrays; class-array covariance
+through widened `Base[]`, `Object[]`, and `Object` references; and recursive
+rank/primitive-versus-reference casts and type tests. Both integer and ordinary-
+class matrices are assembled one rank at a time (`new int[n][]`, followed by
+explicit row allocations); no fixture uses `multianewarray`.
+
+Reference arrays pass through instance, static, and final fields and through
+static, private-special, virtual, recursive, and cross-class helper arguments and
+returns. Component allocation includes a public cross-package class and abstract
+classes. Failing component initializers prove that zero, positive, nested, and
+abstract-component `anewarray` operations do not initialize their component.
+Separate cases exercise initializer-time allocation and reentrant prepared-null
+observation.
+
+The 15 M4d outcomes are two `NegativeArraySizeException`, three
+`NullPointerException`, three `ArrayIndexOutOfBoundsException`, three direct
+`ArrayStoreException`, two direct `ClassCastException`, and two
+`ExceptionInInitializerError` outcomes. The store cases include an actual
+`Child[]` widened through `Object[]`, nested-array incompatibility, and explicit
+null-before-bounds and bounds-before-incompatible-store ordering.
+
+Across all stages there are 818 value outcomes, 14 ArithmeticException outcomes,
+three StackOverflowError outcomes, 16 ExceptionInInitializerError outcomes, four
+NegativeArraySizeException outcomes, ten ArrayIndexOutOfBoundsException outcomes,
+19 NullPointerException outcomes, five ClassCastException outcomes, and three
+ArrayStoreException outcomes. Every gas limit is finite and at most 70,000,000;
+every subprocess timeout is at most 10 seconds. New arrays have at most eight
+elements, and all fixture loops and recursions are bounded and modest.
 
 All entered M3b classes are Java 8 classfile version 52 ordinary classes whose
 direct superclass is `java/lang/Object`. They have zero fields, zero interfaces,
@@ -336,6 +360,28 @@ have SHA256 `6b2eeb6053c5e37959f64621412ecd661e741f414039a6bdeeeb7dda9b75b751`.
 The canonical JSON SHA256 of the old 713-entry prefix is
 `4a62dba268fcbfdd613203ee191f1cc31643d6b0cf34c6ae358dd92858caab7e`,
 identical to the same prefix at the M4b base revision.
+
+For M4d, one fresh compilation of all 147 trusted fixture sources with
+`javac --release 8` was followed by 100 separate `OracleMain` JVM processes, each
+with a 64 MiB maximum heap and a ten-second outer timeout. All 100 matched the
+manifest's outcome kind: 85 values and exactly the 15 declared exceptions. The
+ordered tab-separated `(case id, value-or-exception)` results have SHA256
+`fa2aa0b03648b68fc938c83acbd08a827321dd025be87b0eaebf277fadcc1ad5`.
+The canonical JSON SHA256 of the unchanged old 792-entry prefix is
+`daa105cbed3db2d1156bc07b5f6a632c689b53697d64114dcf120b4ee2af8ff9`,
+identical to the M4c base revision. The baseline M4c runner intentionally rejects
+stage `m4d` and `ArrayStoreException` until the separately owned verifier lands;
+these are reference-JVM checks, not an EVM-green claim.
+
+`javap -c -v -p` over all 30 emitted M4d classes found only Java 8 major version
+52 classfiles and zero declared interfaces. Aggregate relevant instruction shapes
+include 114 `anewarray`, 116 `aaload`, 86 `aastore`, 17 `arraylength`, 22
+`checkcast`, 19 `instanceof`, 15 `invokevirtual`, 99 `invokespecial`, nine
+`invokestatic`, and 11 `areturn` instructions. It found no `multianewarray`,
+interface/invokedynamic call, monitor, or `athrow` instruction. Full constant-pool
+inspection found no JRE method reference except constructor chains ending at
+`java/lang/Object.<init>()V`; array helper references retain their exact ordinary,
+array, and nested-array descriptors.
 
 `javap -c -v -p` over all 44 emitted M4c classes found only Java 8 major version
 52 classfiles and zero declared interfaces or exception tables. It found 38
