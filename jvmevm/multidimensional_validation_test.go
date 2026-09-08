@@ -36,6 +36,7 @@ func TestVerifyM4eRectangularPartialDefaultsIdentityAndTransport(t *testing.T) {
 		}`,
 		"multibasic/Root.java": `package multibasic; public final class Root {
 			public static int ints(){int[][] a=new int[2][3];a[0][2]=7;
+				if(a[0][2]!=7||a[1][2]!=0)return -1;
 				return a.length*100+a[0].length*10+a[1][2]+(a[0]!=a[1]?1:0);}
 			public static int refs(){Child[][] a=new Child[2][3];
 				return a.length*100+a[0].length*10+(a[0][0]==null?4:0)+(a[0]!=a[1]?1:0);}
@@ -62,10 +63,12 @@ func TestVerifyM4eRectangularPartialDefaultsIdentityAndTransport(t *testing.T) {
 		}
 	}
 	bundle := verifyM4eBundle(classes)
+	// ints explicitly guards the written and untouched rows; its value is
+	// 2*100 + 3*10 + 0 + 1 = 231 on a Java 8 JVM.
 	for _, tc := range []struct {
 		method string
 		want   int32
-	}{{"ints", 238}, {"refs", 235}, {"partial", 235}, {"zeroInner", 201}, {"transport", 211}, {"covariance", 31}, {"compatibleStore", 7}} {
+	}{{"ints", 231}, {"refs", 235}, {"partial", 235}, {"zeroInner", 201}, {"transport", 211}, {"covariance", 31}, {"compatibleStore", 7}} {
 		t.Run(tc.method, func(t *testing.T) {
 			verifyM4eAssertValue(t, func() (Result, error) {
 				return RunClasses(bundle, "multibasic/Root", tc.method, nil, verifyM4eGasLimit)
