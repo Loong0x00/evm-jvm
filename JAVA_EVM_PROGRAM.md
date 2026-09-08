@@ -81,7 +81,7 @@ routine permission to start the next verified increment.
 | M4e | multianewarray | accepted;960 cases plus48 independent probes |
 | M4f-a | interface graph/abstract calls/type compatibility | accepted;1059 cases plus48 independent probes |
 | M4f-b | defaults and required default-interface initialization | accepted;1163 cases plus48 independent probes |
-| M4f-c | interface static members/initialization | queued |
+| M4f-c | interface static members/initialization | frozen in `JAVA_EVM_M4FC_PLAN.md`; dispatch3 workers |
 | M5 | catch/throw/unwind and remaining value types/instruction forms | queued; revise ordering as dependencies require |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -96,7 +96,7 @@ M4f-b accepted:1163 JVM/EVM cases plus48 probes,36 Python,517 smoke/537 fast,
 Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Test-scope/CP/obsolete expectations
 corrected with exact assertions/Java8 evidence, runtime unchanged after audit.
 Runtime100472 bytes remains local-runtime only, not full JVM/deployment. Prior1059
-inputs/outcomes/budgets unchanged. Next M4f-c interface static methods/fields and
+inputs/outcomes/budgets unchanged. M4f-c frozen in JAVA_EVM_M4FC_PLAN.md; dispatch3 workers for
 actual declaring-owner initialization; then remaining primitive values/handlers.
 ALL NEW workers Sol/high WITHOUT Fast; verify disabled preference. Continuous
 verified progression, no routine confirmation.

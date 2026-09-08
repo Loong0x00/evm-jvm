@@ -1,8 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M4f-b defaults/mandatory initialization**, recorded in
-`JAVA_EVM_M4FB_PLAN.md`:1163 cases plus48 independent probes. Next: interface static
-members and declaring-owner initialization. Java8 required for evolved-default
+`JAVA_EVM_M4FB_PLAN.md`:1163 cases plus48 independent probes. Active M4f-c interface
+statics/declaring-owner initialization, frozen in `JAVA_EVM_M4FC_PLAN.md`. Java8 required for evolved-default
 error probes; remaining primitive values/handlers/libraries follow separately.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
