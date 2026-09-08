@@ -18,10 +18,10 @@ Execution remains real EVM bytecode, with no host Java fallback or consensus edi
 rethrow; evidence in `JAVA_EVM_M5DA_PLAN.md`. New Throwable construction/APIs remain
 deferred. Target is genuine Minecraft startup-complete output in unmodified EVM,
 not necessarily client connectivity. `JAVA_EVM_MC_STARTUP_PROPOSAL.md` recommends
-1.12.2 as first candidate; no server has run. A separate small stock-deployment/
-continuation slice is now frozen in `JAVA_EVM_STOCK_S0_PLAN.md` and under
-implementation, not yet accepted. It is NOT deployment of the full interpreter;
-next Java bootstrap changes remain at proposal stage.
+1.12.2 as first candidate; no server has run. Separate stock-deployment/continuation
+slice S0 is accepted in `JAVA_EVM_STOCK_S0_PLAN.md`: small integer programs execute
+through ordinary CREATE and signed resume transactions. It is NOT deployment of
+the full interpreter; actual workload migration and Java bootstrap changes are next.
 
 ## Quickstart / stage gates
 
@@ -541,3 +541,26 @@ initialization failure. Exact known uncaught ABI kinds1..12 remain host-decoded 
 
 No fresh Throwable/API/String/main/JRE/deployment/MC claim. Standard-EVM modular
 execution and Java bootstrap preflights guide the next bounded stages; see program.
+
+## Separate S0 stock transaction/continuation foundation
+
+```sh
+make java-stock-test   # pinned artifacts, JVM, signed/direct replay and negatives
+make java-stock-demo   # ordinary CREATE + 3 resume transactions -> Java result12
+```
+
+The11132-byte generic step module and3724-byte coordinator template fit ordinary
+CREATE limits; exact unchanged classfiles live in STOP-prefixed code pages. The
+canonical177-byte class returns12 over3 resumes after3 deployments,4234189 positive
+aggregate gas including transactions/code deposit. An extra stale-epoch transaction
+fails without changing the VM checkpoint; normal sender nonce/gas effects remain.
+
+This is a deliberately separate straight-line Java-int subset with initialized
+locals, int32 overflow, canonical stored stack/state and hash/epoch commitments.
+Eight trusted fixtures run under step budgets1/3/16 on signed in-process chains
+and direct signed-transaction replay. Parent80 Java8/21 probes,42 gas thresholds
+and the reviewed full-CP/full-Code boundary passed. Two real gas-boundary defects
+were fixed, not hidden by higher limits. See JAVA_EVM_STOCK_S0_REVIEW.md.
+
+S0 does NOT make all2231 M5d-a cases deployable, supply a persistent general JVM,
+or reach Minecraft startup. Those remain separate migration/library milestones.

@@ -1,6 +1,7 @@
 # S0: stock-EVM deployment and bounded persistent integer stepping
 
-FROZEN implementation contract. Authority JAVA_EVM_PROGRAM.md; supersedes choices
+ACCEPTED after parent integration, independent review, fixes and final gates below.
+Authoritative contract. Authority JAVA_EVM_PROGRAM.md; supersedes choices
 in JAVA_EVM_STOCK_EXECUTION_PROPOSAL.md. Separate architectural subset, NOT a
 replacement/migration of M5d-a, not Minecraft or full-interpreter deployment.
 Last accepted full interpreter95fdcfd:154839bytes,2231 cases, SHA256
@@ -274,3 +275,58 @@ signed/direct replay, malformed/state/budget/stock-limit cases and source audit.
 No S0 acceptance until deployed bytes, canonical checkpoint correctness, measured
 gas and replay evidence all hold. Then plan S1 migration of actual accepted integer/
 parser state on measured module interfaces; do not claim all2231 cases run on S0.
+
+## Parent acceptance evidence
+
+Integrated runtime35ae0d4, fixtures05b76e9, harness3805add, verifier1771a38;
+independent reviewdb1d169. Parent fixes1f45125/861c8c2/c62cec4, gatesc6da716.
+
+- Eight pinned Java8 fixtures regenerated unchanged and matched the real JVM;
+  all8 x budgets1/3/16 signed simulated-chain executions and direct signed-tx
+  replays passed. Canonical demo also replayed twice on both paths; identical
+  explicit direct contexts give equal final state roots. Signed wall-time headers
+  are recorded, not falsely claimed identical.
+- CanonicalTwelve rawclass177bytes SHA256
+  568ea6e216ba837dbd6eec0789c146e0902296111ac7038e7dc7d869c2f689ab.
+  Actual raw page178bytes=STOP||raw. Three deployments and three successful resumes
+  return12 after7 JVM instructions:6 successful transactions,4234189 positive gas;
+  separate stale-epoch failed transaction28895gas. Total includes ordinary CREATE,
+  code deposit and transaction charges, not just runtime.Execute call gas.
+- Parent20 trusted generated Java classes tested against Java8/21 under4 step
+  budgets=80 signed ApplyMessage executions, int32 overflow/local/stack state and
+  failed-dirty-budget retry checked. Parent42 gas-threshold cases before/after
+  progress added; all pass with final artifacts. Independent verifier covers exact
+  parser/bytecode/page/ABI/epoch/dirty/OOG/protocol-limit failures and rollback.
+- First harness failure was numerical zero represented by different big.Int
+  internals. Correct numeric/canonical checks and independent digest replaced only
+  that reflect.DeepEqual assertion; no initial-state assertion was removed.
+- Parent threshold tests exposed20 Solidity Panic0x11 cases: the early gas guard
+  preceded lock/storage loads/calldata encoding. Recheck actual gas before stipend
+  subtraction fixes precise reserve failure and preserves rollback (861c8c2).
+- Independent review found valid CP512/Code256/class2915bytes cannot finish final
+  coordinator batch at2M despite a direct module call succeeding. Parent reproduced,
+  then reused already validated in-call CP offsets instead of rescanning at ldc.
+  Identical input now MUST succeed: final resume799224gas, terminalepoch16/steps254/
+  PC256/value243, matching actual JVM243. Negative dirty cap at same checkpoint
+  still reverts cleanly. No gas/CP/Code/page limit raised, no opcode skipped.
+- Pinned source/artifact check and full stock package (including all parent/review
+  probes), stock signed demo and focused vet passed. Final module11132bytes SHA256
+  3f36c84abdb4701faa36fa5ce1490ce179fc5c395a17f7e6fe45de861acdbfd4;
+  Keccak codehash0x6a4f38bde2d0a67316ee6a4323db17d4ca501877cdd5cd8d74e4b1e345c06d89.
+  Coordinator template3724bytes SHA256
+  720f7ee7a175fa2af9b1000abaf58d4528e81666f9fa300312ae2108125f561e;
+  actual deployed code/immutable references/getters separately checked. Template
+  hash is NOT passed off as the instantiated coordinator's code hash.
+- All original2231 JVM/EVM cases, old Go/CLI/36Python/24bootstraps/pinned artifact,
+  1040smoke/1060fast/demos/AOT and focused vet passed; no old runtime/fixtures/core
+  changes. Logs /tmp/stock-s0-legacy-main.log and /tmp/stock-s0-final-gates.log;
+  both corresponding .exit files0. New stock details /tmp/stock-s0-cp-green.log,
+  review provenance JAVA_EVM_STOCK_S0_REVIEW.md. No EVM/core/params/consensus changes.
+- Reproducible commands: make java-stock-check; make java-stock-test;
+  make java-stock-demo. Existing make java-test remains separate2231 corpus.
+
+S0 proves ordinary deployment and persistent tiny integer execution under stock
+fork rules. It does NOT deploy the154839-byte M5d-a interpreter, run its full profile
+through these modules, or run Minecraft. Next proposals target actual unchanged
+legacy M1/M2 workloads with arguments/branches/loops and measured reusable parsing/
+state modules. Full-profile migration remains unproven; M5d-b0 proposal still queued.

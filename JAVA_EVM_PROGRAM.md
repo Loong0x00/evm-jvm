@@ -117,7 +117,8 @@ routine permission to start the next verified increment.
 | M5c-d | IEEE arrays | accepted;2091 cases plus192 parent probes |
 | M5d-a | implicit exceptions/handler/unwind foundation | accepted;2231 cases plus179 parent probes/8 init regressions/field boundary, prior192 retained |
 | M5d-b+ | fresh user Throwable construction/APIs and remaining JVM/library features | queued; freeze separately |
-| Stock-EVM S0 | ordinary deployment/signed replay/bounded persistent integer stepping | frozen JAVA_EVM_STOCK_S0_PLAN.md; separate architectural subset, NOT M5da migration |
+| Stock-EVM S0 | ordinary deployment/signed replay/bounded persistent integer stepping | accepted JAVA_EVM_STOCK_S0_PLAN.md; separate subset, NOT M5da migration |
+| Stock-EVM S1 | actual legacy integer workloads/arguments/control flow and reusable parsing/state | proposal preflight next; not frozen |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued; MC1.12.2 candidate inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -142,12 +143,19 @@ MC static-only proposal2b2708d: recommend explicitly scoped1.12.2 candidate, opt
 modern1.21.5 comparison. Genuine Done logger follows level preparation. Artifacts
 only inspected, never executed; no EULA acceptance/listener. No differences in
 core/vm,core/state,core/types,consensus,params vs pinned upstream95665d5.
-Stock preflight800cdf3 independently reproduced by parent (same prototype log);
-bootstrap proposald5baf88 retained. Next implementation FROZEN in
-JAVA_EVM_STOCK_S0_PLAN.md: separate size-compliant pages/module/controller, signed
-simulated-chain plus ApplyMessage replay, bounded integer state and rollback. Fixes
-prototype int256/initialization/parser gaps; NOT modularizedM5da/full JVM/MC.
-Runtime/harness/verifier new jvmevm/stock-only write sets; parent owns integration,
-Make targets and independent checks. Existing2231 cases/runtime unchanged. M5d-b0
-identity proposal remains queued rather than expanding the monolith in parallel.
-One production Solidity writer; Sol/high NO Fast, no routine confirmation.
+Stock S0 accepted: JAVA_EVM_STOCK_S0_PLAN.md. Runtime/harness/verifier integrated,
+parent numeric-zero fix1f45125, real gasguard bugfix861c8c2, independentreviewdb1d169
+and CP-reuse fixc62cec4. New stock gates green with8JVMfixtures x3 signed/replay
+budgets,80 parentJava8/21probes,42gasthresholds and successful CP512/Code256 review
+boundary. Module11132bytes SHA3f36c84abdb4701faa36fa5ce1490ce179fc5c395a17f7e6fe45de861acdbfd4,
+coordinator3724-byte template. Canonical6positiveTx/3resumes/4234189gas->12.
+Old2231suite/GoCLI/36Python/bootstrap/artifact/smoke/fast/demos/AOT/vet remain green;
+no original-EVM/core/params/consensus modification. This is NOT full M5da deployment
+or Minecraft execution. Keep S0/legacy case counts separate.
+
+Next: proposal-only S1 migration design and legacy-workload/partition evidence,
+prioritizing actual unchanged M1/M2 corpus (82cases, varied entry args/loops/branches)
+over additional toy variants. Need measured parser/executor split/persistent schema,
+stock transaction/gas budget and reuse path to full accepted semantics. No S1
+implementation contract frozen. M5d-b0 identity proposal d5baf88 remains queued.
+One production Solidity writer, Sol/high NO Fast, no routine confirmation.
