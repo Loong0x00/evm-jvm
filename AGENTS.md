@@ -1,7 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M5b-a scalar long/category2**, recorded in
-`JAVA_EVM_M5BA_PLAN.md`:1493 cases plus48 independent probes. Next long arrays,
+`JAVA_EVM_M5BA_PLAN.md`:1493 cases plus48 independent probes. Active M5b-b long
+arrays, frozen in `JAVA_EVM_M5BB_PLAN.md`,
 then IEEE values/handlers/libraries. Java8 is authoritative for raw/evolved probes.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable

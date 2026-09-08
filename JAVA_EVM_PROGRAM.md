@@ -84,7 +84,7 @@ routine permission to start the next verified increment.
 | M4f-c | interface static members/initialization | accepted;1263 cases plus48 independent probes |
 | M5a | Z/B/C/S int-like types/fields/arrays | accepted;1383 cases plus48 independent probes |
 | M5b-a | scalar long/category-2 stack/locals/calls/fields | accepted;1493 cases plus48 independent probes |
-| M5b-b | long arrays | queued |
+| M5b-b | long arrays | frozen in `JAVA_EVM_M5BB_PLAN.md`; dispatch3 workers |
 | M5c+ | IEEE values, catch/throw/unwind and remaining instructions | queued; freeze dependency-ordered batches |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -99,7 +99,7 @@ M5b-a accepted:1493 JVM/EVM cases plus48 probes,36 Python,682 smoke/702 fast,
 Go/CLI/artifact/3bootstraps/demos/AOT/vet green. Category/CP/constant-getter probe
 repairs and obsolete J expectations explicitly justified; no demonstrated runtime
 bug. Runtime113189 bytes, local-runtime only, not full JVM/deployment. Prior1383
-fixture entries/budgets unchanged. Next M5b-b long arrays/full64-bit cells with
+fixture entries/budgets unchanged. M5b-b frozen in JAVA_EVM_M5BB_PLAN.md; dispatch3 workers for
 shared element quotas, then IEEE/handlers. Sol/high WITHOUT agent Fast; named
 make java-fast is only the fixture test tier and remains allowed. Continuous
 verified progression, no routine confirmation.
