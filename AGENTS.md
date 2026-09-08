@@ -1,9 +1,8 @@
 # Java-inside-EVM agent guide
 
-Current accepted stage: **M5a narrow primitives**, recorded in
-`JAVA_EVM_M5A_PLAN.md`:1383 cases plus48 independent probes. Active M5b-a scalar
-long/category2, frozen in `JAVA_EVM_M5BA_PLAN.md`; long arrays/IEEE/handlers follow. Java8
-remains the exact oracle for evolved-interface and raw-bytecode semantic probes.
+Current accepted stage: **M5b-a scalar long/category2**, recorded in
+`JAVA_EVM_M5BA_PLAN.md`:1493 cases plus48 independent probes. Next long arrays,
+then IEEE values/handlers/libraries. Java8 is authoritative for raw/evolved probes.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
@@ -28,7 +27,7 @@ worktree based on the latest integration revision, not an old worker tree.
 Worktrees separate edits, not security permissions. Respect frozen task write
 sets; only one worker edits the monolithic Solidity dispatcher at a time.
 Disjoint Go files still share a package namespace: give new test helpers a
-stage/role prefix (e.g. runtimeM5ba* vs verifyM5ba*) to avoid integration collisions.
+stage/role prefix (e.g. runtimeM5bb* vs verifyM5bb*) to avoid integration collisions.
 The differential oracle executes Java on the host: use only trusted generated
 fixtures here; untrusted external programs/corpora require isolation first.
 
@@ -65,9 +64,9 @@ Node/npm for pinned artifact build/check. Run from your assigned repo root:
 
 ```sh
 make java-demo       # EVM arithmetic, bundle call and int-array examples
-make java-smoke      # 627 fixed oracle comparisons
-make java-fast       # 647 cases; JAVA_DIFF_SEED=57 changes repeatable sample
-make java-full       # 1383 cases through M5a
+make java-smoke      # 682 fixed oracle comparisons
+make java-fast       # 702 cases; JAVA_DIFF_SEED=57 changes repeatable sample
+make java-full       # 1493 cases through M5b-a
 make java-test       # artifact + focused Go + 36 runner tests + full differential
 make java-aot-test   # separate old-path regression
 ```

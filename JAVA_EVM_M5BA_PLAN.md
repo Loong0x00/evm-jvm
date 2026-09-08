@@ -143,3 +143,17 @@ verifyM5ba* helpers. Baseline red expected, exact failure map needed.
 Parent owns plans/AGENTS/quickstart/Makefile and integration/approved profile updates.
 One Solidity writer, no spawning/peer writes/push/global settings/untrusted Java.
 All agents Sol/high WITHOUT Fast; scoped commits, honest SHA/size/checks/limits.
+
+## Accepted integration evidence
+Runtime1652c43→713cef8,fixturesdffc8a8→cd7bdb1,verifier60c620c→01b76ab.
+Review18a2187→ebfdf92 repaired category-form vs underflow classification, mutation
+padding, and folded final getter with real getfield/JVM8 default-zero proof.
+Obsolete J guards explicitly updated; F/D and genuine malformed/word-capacity
+coverage retained. No runtime defect demonstrated, artifact unchanged.
+Parent final artifact/3bootstraps, Go/CLI,36 Python,1493 full,682 smoke,702 fast,
+demos,AOT,focused vet and48 independent probes passed:
+`build/java-diff-parent-m5ba/probe-4cp40_7n/results-final/`.
+Prior1383 fixture entries/budgets unchanged. Accepted runtime113189 bytes SHA256
+`2d450f86e4245488fe2f73eb19338b8f2ac5423c3981bb6be99b397ab9096999`.
+Next M5b-b long arrays. All NEW agents NO Fast; make java-fast is merely a fixture
+test tier and remains an allowed verification gate, not a priority request.
