@@ -1,8 +1,9 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M4e multianewarray**, recorded in
-`JAVA_EVM_M4E_PLAN.md`:960 cases plus48 independent probes. Next: bounded abstract
-interface graph/calls, then defaults/interface statics/value types/handlers/libraries.
+`JAVA_EVM_M4E_PLAN.md`:960 cases plus48 independent probes. Active M4f-a abstract
+interface graph/calls, frozen in `JAVA_EVM_M4FA_PLAN.md`; defaults/interface statics
+and remaining value types/handlers/libraries follow separately.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
