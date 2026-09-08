@@ -9,7 +9,11 @@ contract S1MetadataPage {
         uint256 n = payload.length;
         if (n == 0 || n > 8191) revert S1ClassError(5, 0);
         bytes memory runtime = new bytes(n + 1);
-        for (uint256 i; i < n; ++i) runtime[i + 1] = payload[i];
-        assembly ("memory-safe") { return(add(runtime, 0x20), mload(runtime)) }
+        // Preserve exact STOP || payload bytes without a byte-at-a-time copy.
+        // Both ranges are bounded allocations; MCOPY is a standard Cancun opcode.
+        assembly ("memory-safe") {
+            mcopy(add(runtime, 0x21), add(payload, 0x20), n)
+            return(add(runtime, 0x20), mload(runtime))
+        }
     }
 }

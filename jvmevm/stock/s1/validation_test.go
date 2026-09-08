@@ -1202,11 +1202,18 @@ func TestStockS1VerifyParserCapsMetadataCanonicalityAndSelection(t *testing.T) {
 		for j := 0; j < count; j++ {
 			code = append(code, 0x12, 10, 0x3b)
 		}
-		code = append(code, 0x1a, 0xac)
+		if count == 0 {
+			// A quota fixture must be valid Java: no preceding store initializes
+			// local0 in these methods. Keep their two-byte bodies, return zero.
+			code = append(code, 0x03, 0xac)
+		} else {
+			code = append(code, 0x1a, 0xac)
+		}
 		methods[i] = stockS1VerifyMethod{fmt.Sprintf("m%02d", i), "()I", 0x0009, code, 1, 1, 1, 0}
 	}
 	t.Run("declared32-literals256-metadata6336", func(t *testing.T) {
 		aggregate := stockS1VerifyBuildClass("S1Aggregate", methods, 0)
+		stockS1ParentAssertAggregateJVM(t, aggregate.bytes)
 		aggregateRawAt, aggregatePageHash, aggregatePayloadHash, _ := stockS1VerifyDeployPage(t, e, page, aggregate.bytes)
 		register := e.apply(&parserAt, stockS1VerifyCallData(t, parser, "registerClass", aggregateRawAt, aggregatePageHash, aggregatePayloadHash), stockS1VerifyCreateGas)
 		if register.coreErr != nil || register.result == nil || register.result.Err != nil {
@@ -1221,6 +1228,33 @@ func TestStockS1VerifyParserCapsMetadataCanonicalityAndSelection(t *testing.T) {
 		wantMeta := stockS1VerifyMetadataExpected(aggregate.bytes, aggregateRawAt, aggregatePageHash, aggregatePayloadHash)
 		if !bytes.Equal(metaCode[1:], wantMeta) {
 			t.Fatal("aggregate metadata is not canonical parser-derived schema2")
+		}
+		t.Logf("aggregate registration gas=%d raw=%d metadata=%d", register.result.UsedGas, len(aggregate.bytes), len(metaCode))
+		// Exercise each nonempty literal slice and the final zero-literal record,
+		// not just successful page construction or host-side metadata comparison.
+		aggregateID := common.Hash(values[0].([32]byte))
+		for _, index := range []int{0, 1, 2, 3, 30} {
+			instance, _ := stockS1VerifyDeployCoordinator(t, e, coord, parserAt, parserHash, aggregateID, moduleAt, moduleHash, fmt.Sprintf("m%02d", index), nil, 512)
+			state := stockS1VerifyCheckpointAt(t, e, coord, instance)
+			for state.Machine.Lifecycle == stockS1VerifyRunnable {
+				if state.Epoch >= 2 {
+					t.Fatal("aggregate entry exceeded two 128-step resumes")
+				}
+				run := stockS1VerifyResume(t, e, coord, instance, state.Epoch, 128, 32, stockS1VerifyCallGas)
+				if run.coreErr != nil || run.result == nil || run.result.Failed() {
+					t.Fatalf("aggregate m%02d resume failed: %v/%v", index, run.coreErr, stockS1VerifyResultErr(run.result))
+				}
+				state = stockS1VerifyCheckpointAt(t, e, coord, instance)
+			}
+			want, steps := int32(0), uint64(2)
+			if index < 3 {
+				want, steps = 0x12345678, 170
+			} else if index == 3 {
+				want, steps = 0x12345678, 10
+			}
+			if state.Machine.Lifecycle != stockS1VerifyReturned || state.Machine.Result != want || state.TotalSteps != steps {
+				t.Fatalf("aggregate m%02d wrong terminal: %+v", index, state)
+			}
 		}
 	})
 	// One additional declared method fails at the raw method_count field.
