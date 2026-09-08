@@ -87,7 +87,7 @@ routine permission to start the next verified increment.
 | M5b-b | long arrays | accepted;1593 cases plus48 independent probes |
 | M5c-a | switch/goto_w/wide variable-width control flow | accepted;1681 cases plus48 independent probes |
 | M5c-b | scalar IEEE representation/conversions/comparisons + four EVM raw-bit APIs | accepted;1811 cases plus216 independent probes |
-| M5c-c | software scalar IEEE arithmetic | next bounded stage |
+| M5c-c | software scalar IEEE arithmetic | frozen in `JAVA_EVM_M5CC_PLAN.md`; dispatch3 workers |
 | M5c-d+ | IEEE arrays, handlers and remaining instructions | queued; freeze separately |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
@@ -102,7 +102,7 @@ M5c-b accepted:1811 JVM/EVM cases plus216 parent probes,36 Python,839 smoke/859f
 Go/CLI/artifact/5bootstraps/demos/AOT/vet green. Parent+reviewer found/fixed real
 f2d unsigned-bias panic, retag-CV probes isolated, obsolete F/D guards updated.
 Runtime132118 bytes, local-runtime only/not full JVM. Prior1681 fixtures/budgets
-unchanged. Next M5c-c pure-EVM IEEE add/sub/mul/div/Java remainder with RNE/gradual
+unchanged. M5c-c frozen in JAVA_EVM_M5CC_PLAN.md; dispatch3 workers for RNE/gradual
 underflow/signedzero/canonicalgeneratedNaN; arrays remain separate. Four raw-bit
 bindings ONLY, no host math or broad native/JRE fallback. NEW agents Sol/high
 WITHOUT Fast. Automatic verified progression, no routine confirmation.

@@ -1,8 +1,8 @@
 # Java-inside-EVM agent guide
 
 Current accepted stage: **M5c-b scalar IEEE/conversions**, recorded in
-`JAVA_EVM_M5CB_PLAN.md`:1811 cases plus216 independent probes. Next software IEEE
-arithmetic, then FP arrays/handlers/libraries. Four exact raw-bit services run in
+`JAVA_EVM_M5CB_PLAN.md`:1811 cases plus216 independent probes. Active M5c-c software
+IEEE arithmetic, frozen in `JAVA_EVM_M5CC_PLAN.md`; FP arrays/handlers follow. Four exact raw-bit services run in
 EVM only; no host math or generic native/JRE fallback. Five raw bootstraps verified.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
