@@ -119,7 +119,7 @@ routine permission to start the next verified increment.
 | M5d-b+ | fresh user Throwable construction/APIs and remaining JVM/library features | queued; freeze separately |
 | Stock-EVM S0 | ordinary deployment/signed replay/bounded persistent integer stepping | accepted JAVA_EVM_STOCK_S0_PLAN.md; separate subset, NOT M5da migration |
 | Stock-EVM S1 | actual legacy integer workloads/arguments/control flow and reusable parsing/state | accepted JAVA_EVM_STOCK_S1_PLAN.md;82rows/39roots, schema2 |
-| Stock-EVM S2a | integer completion and terminal arithmetic faults | frozen JAVA_EVM_STOCK_S2A_PLAN.md;201rows, one frame, not accepted |
+| Stock-EVM S2a | integer completion and terminal arithmetic faults | accepted JAVA_EVM_STOCK_S2A_PLAN.md;201rows/60roots, one frame |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued; MC1.12.2 candidate inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -164,15 +164,20 @@ Parent+review fixedvalidaggregate budget via MCOPY (8449776->6923070,8Munchanged
 andinvalidtestmethods,48eight-local loopprobes+52gasthresholds green. Details/logs/
 hashes in plan/review. No originalEVM/core/gas/limit change or MC execution.
 
-S2 architecture/oracle proposals1d096c3/4d4b9f2 integrated; parent regenerated6new
-class hashes. Freeze S2a ONLY in JAVA_EVM_STOCK_S2A_PLAN.md:201unchanged M1/M2/M2b
-rows (199values+2Arithmetic faults),2642steps,60roots/11classes. One-frame scalar
-completion with explicit JAVA_FAULT lifecycle; new stock/s2a/version3, no calls,
-frame store, private/void/six-arg metadata or128-frame claim. S2b remains un-frozen.
-Parent rejects blindly inheriting proposed192dirtywords/800kreserve:16-frame writes
-already~3.8M beforesemantics; futuredirtyslice/reserve must be measured. S2a uses
-provenS1-shape metadata/state with11newint opcodes andfaultfields,8Msetup/2Mresume/
-800kreserve unchanged. No speculative whole-frame schema in arithmetic acceptance.
-Runtime/harness/verifier disjointnewpaths, oneSoliditywriter; S0/S1/2231 preserved.
-No fullM5da/MCstartup claim, no hostmetadata or EVMchanges. Sol/high NOFast,
-continuous authority/no routineconfirmation. M5d-b0 proposal remainsqueued.
+Stock S2a ACCEPTED per JAVA_EVM_STOCK_S2A_PLAN.md:201orderedrows/60roots/11classes,
+199values+2Arithmetic faults/2642attempts; actualJVM8/21/signedStock/directreplay.
+Catalogue1273f2302d2898a2eb0ff391f9cf7ff2c9b64749fd0821df891b921499aa8d0d.
+Parser15659/step9470/coordinator7694-byte templates, actualordinarydeployment;
+312parent arithmetic/prefix/capprobes andindependentreview085886e pass. Onlyparent
+fix was verifiercatalogueformat (faultresult0 +lifecycle3 notJSONnull), no runtime
+defect/artifactchange. Old2231/S0/S1/allgates green; no core/EVM/limit/host changes.
+
+Next two Sol/high NOFast proposalworkers based3098849:
+- stock-s2b-frame-preflight: compactint frame storage/owner/deltas/root links,
+  bounded2/4 dirty-frame alternatives, actualreserve/gas measurements.
+- stock-s2b-parser-preflight: actualEVM parser/analyzer/callmetadata/private/void/
+  sixarg/overload/CPMethodref prototype, boundednewversion andregistrationgas.
+S2b NOT frozen. Old16-childwrites~3.8M and192coldwords>4.2M cannot be guaranteedby
+800kreserve; measure/refactor, never modify stocklimits. Reuse old268caseoracle
+withoutclaiming S2a alreadyexecutescalls/frames. M5d-b0 remainsqueued. No MCstartup/
+EULA execution. One productionSoliditywriter, continuousauthority/no routineconfirmation.

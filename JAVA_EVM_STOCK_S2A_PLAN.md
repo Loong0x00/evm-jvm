@@ -1,9 +1,11 @@
 # Stock S2a: scalar integer completion and terminal arithmetic faults
 
-FROZEN implementation contract. Authority JAVA_EVM_PROGRAM.md; overrides alternative
+ACCEPTED after parent integration, independent review and final gates below.
+Authoritative contract. Authority JAVA_EVM_PROGRAM.md; overrides alternative
 choices in JAVA_EVM_STOCK_S2_{ARCHITECTURE,ORACLE}_PROPOSAL.md. Accepted Stock S1
 1b5150d and all S0/S1/monolith artifacts, ABIs, inputs, budgets and counts remain
-unchanged. S2a is NOT accepted yet, not full M5d-a deployment or Minecraft startup.
+unchanged. S2a acceptance is limited to this scalar profile, not full M5d-a
+deployment or Minecraft startup.
 Endpoint remains genuine unchanged MC startup-complete output in original EVM,
 connectivity optional; no MC execution/EULA action in this slice.
 
@@ -256,3 +258,52 @@ Parent adds separate java-stock-s2a-* targets; integrate runtime->harness->verif
 independent probes plus S0/S1/legacy2231 allGoCLI/Python/artifact/boot/demos/AOT/vet.
 Accept only after measuredgreen. Then re-evaluate static-call/frame architecture
 with honest dirty/commit reserve before freezing S2b or another versioned stage.
+
+## Parent acceptance evidence
+
+Runtime f3fcaa7, harness/catalogue01277e9, verifierf397fcc integrated; parent format
+reviewba499c5 and independentprobes/gates3098849; independentreview085886e. No
+production runtime defect demonstrated, no runtime artifact change afterdelivery.
+
+- ALL201 ordered rows/11classes/60programs/2642attempted instructions passed
+  JVM8/JVM21/monolith and actual signed Stock64/128, smallbudget/prefix/cap/rollback
+  and deterministic signed direct replays.199values+2actualArithmeticException
+  outcomes. Catalogue0x1273f2302d2898a2eb0ff391f9cf7ff2c9b64749fd0821df891b921499aa8d0d.
+- Shared setup24transactions/18946568gas. Maxisolatedcase12029686gas/18tx/13resumes.
+  Full repeatedbudget/prefix harness2691signedtx/2282704065gas is a many-transaction
+  TEST total, not one block/workload. Failure/cap tests are separate; no gas limits
+  or oldmanifest input/source/expectedkind/timeout/budget changed.
+- Initial integration exposed a catalogue-format disagreement, not a Java-fault
+  runtime defect: the harness records canonical MachineV3.result0 for fault rows,
+  while verifier expected JSONnull. Parent requires explicit numeric0 PLUS
+  lifecycle3/kind1/pc==faultPC/preserved zero-divisor operand/exceptionclass, and
+  validates returned lifecycle separately. It cannot pass off an exception as0.
+- Parent154 trusted Java8/21 oracle vectors across2quantums=308 signedApplyMessage
+  runs coverdiv/rem sign/extreme/prefix and combinedshift/bitwise/narrowing. Four
+  extra cap scenarios make312parent subcases: cap7stops before the prefix fault;
+  cap8faults atpc7 withtotal8 andsp3, savedlocal/prefix intact. Dirtycap5rejects
+  the six-dirty-word fault response, retry sameepoch succeeds; terminalreject exact.
+- Independent review found no reproducible semantic defect withinprofile. Its
+  own integer-opcode, prefaultstate/cap/rollback/retry andartifact tests integrated
+  and passed. No S2b/frame/library/MC capability inferred.
+- Parent javap confirmed WideIntegerConstant's oversized method has260literal
+  sites plus1loadWide site (261class-wide); corrected proposal wording, not bytes
+  or limits. Code793 remainsunused/ineligible without polluting literalcap.
+- Final checked executable runtime templates:
+  parser15659B SHA8ae89c4943c83f7a138440a1227a094415a107f87bcf7a7e814bc4f911453b7d;
+  step9470B SHA0f4e6a75ab95b7e289bd91ad8f587b63f9d5b2503934b10fbca5b498dd99129f;
+  coordinator7694B SHAe464b3a2237b598de447d369f1cdcb9af568ba7eba2a06168ee1e12a44292212.
+  Actual coordinator immutables/deployed hashes and raw/metadata pages checked.
+  Parent ran pinnedsolc/source->artifact check; independentreview's absentcompiler
+  caveat applies only to its worktree, not parentgate.
+- S2a check/test/demo/vet, S1/S0 tests, original2231full/GoCLI/36Python/24bootstraps/
+  artifact/1040smoke/1060fast/demos/AOT/focusedvet allgreen. Oldcore/runtime/fixtures
+  unchanged. /tmp/stock-s2a-legacy-main.exit and /tmp/stock-s2a-final-other.exit both0;
+  final integratedreview test /tmp/stock-s2a-review-integrated.log green. Parent
+  detail /tmp/stock-s2a-parent-probes.log; review JAVA_EVM_STOCK_S2A_REVIEW.md.
+
+Next two proposal-only preflights (based3098849, while final gates ran):
+stock-s2b-frame-preflight evaluates measured compact owner-only persistentframes/
+smallerdirty slices/reserve, and stock-s2b-parser-preflight evaluates actual EVM
+call metadata/parser-analyzer split. No S2b implementationcontract frozen. Do not
+inherit192dirtywords/800kreserve blindly or assume S2a pages encode calls.

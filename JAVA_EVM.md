@@ -595,3 +595,29 @@ This is still single-class, one-frame Java-int execution: no static calls, gener
 heap, long/FP, handlers, libraries or MC startup on this stock path yet. Those
 capabilities in the separate M5d-a monolith are not claimed migrated automatically.
 See JAVA_EVM_STOCK_S1_PLAN.md and JAVA_EVM_STOCK_S1_REVIEW.md for exact evidence.
+
+## Stock S2a: integer completion and terminal Java faults
+
+```sh
+make java-stock-s2a-test
+make java-stock-s2a-demo
+```
+
+All201 original M1/M2/M2b rows now run on the ordinary-deployed stock path:
+199 values and2 ArithmeticException outcomes,60roots/11classes. Added division,
+remainder, signed/unsigned shifts, bitwise operations and narrow conversions retain
+Java int32 rules, including MIN/-1. A zero divisor records JAVA_FAULT with the
+actual opcode PC and preserved pre-fault operands/locals; it is not a returned0,
+EVM revert/OOG or STEP_LIMIT. Fault at exact instruction cap wins; cap before the
+fault does not predict it.
+
+Parser15659bytes, step9470bytes and coordinator7694-byte template remain within
+stock deployment limits. Signed/JVM8/JVM21/direct-replay tests,312parent arithmetic/
+prefix/cap probes and independent review pass. Existing2231 andS0/S1 gates remain
+green and counted separately. No runtime defect or artifact change was required
+in parent integration; a catalogue verifier's null-vs-numeric-zero assumption was
+corrected with stricter lifecycle/operand checks.
+
+S2a is still one frame, without calls, heap, Throwable objects/handlers or libraries.
+Next frame-storage and call-metadata prototypes must establish safe gas/dirty
+budgets. This is not a Minecraft startup or full-interpreter deployment claim.

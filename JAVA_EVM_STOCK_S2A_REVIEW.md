@@ -51,3 +51,11 @@ All passed. The full package completed in 25.268 seconds. The verbose oracle gat
 The signed all-201 gate reported 24 shared setup transactions, maximum isolated cost 12,029,686 gas over 18 external transactions, maximum 13 resumes, and no failed positive transaction. Across all repeated budget/prefix runs it recorded 2,691 signed transactions; that 2,282,704,065-gas test total is an aggregate across many separately mined transactions, not one block or one workload. Parser and module CREATE used 3,438,259 and 2,101,166 gas respectively. The tests retain the per-transaction 8M registration, 2M resume, 30M block, 800k reserve, and dirty-word limits.
 
 Ignored logs are under `build/java-diff-stock-s2a-review/`. No Minecraft software was run, no EULA was accepted, and no listener was opened.
+
+## Parent final verification
+
+Parent integrated this review as085886e and reran the entire S2a package including
+312 additional parent prefix/arithmetic/cap subcases: pass. Pinned compiler check
+also passed in canonical checkout; no runtime source/artifact changes were needed.
+Old2231/S0/S1 gates remain green. See S2a plan for final log paths and precise
+acceptance scope; this does not expand the review into frame/library/MC support.
