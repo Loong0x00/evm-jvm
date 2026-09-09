@@ -145,3 +145,22 @@ func TestMCLB0ParentSeededUTF16CrossJVMVectors(t *testing.T) {
 		t.Logf("192 Java8/21/EVM vectors, 96 UTF16 literals, rawSHA256=%x maxGas=%d", sha256.Sum256(compiled.classes["ParentUTF16"]), maxGas)
 	})
 }
+
+func TestMCLB0ParentInheritedAggregateQuotaAndInternHit(t *testing.T) {
+	mcLB0VerifyBoundaryWatchdog(t, "parent-inherited-aggregate", 120*time.Second, func(t *testing.T) {
+		var object strings.Builder
+		object.WriteString("package java.lang;public class Object{public Object(){}")
+		for i := 0; i < 1022; i++ {
+			fmt.Fprintf(&object, "public int f%d;", i)
+		}
+		object.WriteString("}")
+		c := mcLB0VerifyCompile(t, map[string]string{
+			"java/lang/Object.java":      object.String(),
+			"ParentStringAggregate.java": `public class ParentStringAggregate{public static int run(){String s="x";Object last=null;for(int i=0;i<63;i++)last=new Object();try{return "y".length();}catch(OutOfMemoryError e){return last!=null&&s=="x"&&s.hashCode()==120&&s.charAt(0)==120?s.length()+7:0;}}}`,
+		}, "java/lang/Object", "ParentStringAggregate")
+		r := mcLB0VerifyAssertValue(t, func() (Result, error) {
+			return RunClasses([][]byte{c.classes["java/lang/Object"], c.classes["ParentStringAggregate"]}, "ParentStringAggregate", "run", nil, 1_000_000_000)
+		}, 8)
+		t.Logf("65410 ordinary fields before failed1024-field String miss, liveinternhit gas%d", r.GasUsed)
+	})
+}

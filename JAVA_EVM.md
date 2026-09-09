@@ -9,8 +9,8 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current 154,839-byte runtime
-exceeds EIP-170's 24,576-byte deployed-code limit. Geth `runtime.Execute` installs
+**Local execution, not mainnet deployment:** the current MC-LB0 candidate runtime
+is166,334bytes and exceeds EIP-170's24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
 
@@ -39,6 +39,14 @@ NOT call execution. Analyzer18542B/linker4643B; exact7936B metadata cap register
 under8M on both paths. `make java-stock-s2bl-test java-stock-s2bl-demo` reproduces
 its separate evidence. Next priority is local MC bootstrap/platform/continuation,
 not completing every standard-deployment migration first.
+
+**MC-LB0 candidate:** String literals/MUTF8/intern and a narrow method profile now
+pass64newcases,198parentEVM probes and all oldregressions. Parentfixed inherited
+Stringfield overflow to catchableOOM. RuntimeSHA256
+`ff9c9ff093e9d4885d7546e01db7aacd95cf999d5cf9b6d6b130fd43b791b982`;
+27bootstraps,24oldimages unchanged. Extraindependentreview is pending, not yet final
+acceptance. `make java-mc-lb0-test java-mc-lb0-demo`; see
+`JAVA_EVM_MC_LB0_REVIEW.md`. No main/VFS/threads/continuation/MCrun yet.
 
 ## Quickstart / stage gates
 

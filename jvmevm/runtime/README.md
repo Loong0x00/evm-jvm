@@ -15,7 +15,15 @@ objects backed by ordinary `char[]` heap objects, and interned per invocation in
 same heap/handle stream used by ordinary allocation and the exception arena. The
 profile supports only `length`, `isEmpty`, `charAt`, `equals`, `hashCode`,
 `toString`, `compareTo`, and `intern`; other String APIs remain explicit hard
-profile errors.
+profile errors. `charAt` supports valid indices only; invalid indices are a hard
+`StringProfileError`, not a modeled String bounds exception. String construction,
+Class mirrors, a main launcher, formatting, logging and continuation are deferred.
+
+Current parent-reviewed candidate is166334bytes, SHA256
+`ff9c9ff093e9d4885d7546e01db7aacd95cf999d5cf9b6d6b130fd43b791b982`.
+Parent fixed inheritedStringlayout overflow to use ordinary catchable OOM rather
+than a bootstrap-format error. Integration/legacy gates passed; see
+`JAVA_EVM_MC_LB0_REVIEW.md` for evidence and pending extra review.
 
 Local MC-LB0 tests use separately labelled finite ceilings: **100,000,000 gas / 30s**
 for ordinary cases and **1,000,000,000 gas / 120s** for dedicated boundary probes.

@@ -161,3 +161,10 @@ java-stock-s2bl-test: java-stock-s2bl-check
 	go test -count=1 -timeout=15m ./jvmevm/stock/s2b
 java-stock-s2bl-demo: java-stock-s2bl-check
 	go test -count=1 -v -run '^TestStockS2bLinkHarnessSignedDirectAdapterIdempotencyCapAndReplay$$' ./jvmevm/stock/s2b
+
+# LOCAL String profile, not standard deployment or Minecraft startup.
+.PHONY: java-mc-lb0-test java-mc-lb0-demo
+java-mc-lb0-test: java-runtime-check
+	go test -count=1 -timeout=15m -run '^TestMCLB0' ./jvmevm
+java-mc-lb0-demo: java-runtime-check
+	go test -count=1 -v -timeout=15m -run '^TestMCLB0HarnessEVMMatchesPinnedJavaCatalogue$$' ./jvmevm
