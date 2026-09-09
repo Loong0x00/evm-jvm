@@ -168,3 +168,14 @@ java-mc-lb0-test: java-runtime-check
 	go test -count=1 -timeout=15m -run '^TestMCLB0' ./jvmevm
 java-mc-lb0-demo: java-runtime-check
 	go test -count=1 -v -timeout=15m -run '^TestMCLB0HarnessEVMMatchesPinnedJavaCatalogue$$' ./jvmevm
+
+# LOCAL EVM-owned Java continuation, not CREATE or Minecraft startup proof.
+.PHONY: java-mc-lc0-build java-mc-lc0-check java-mc-lc0-test java-mc-lc0-demo
+java-mc-lc0-build:
+	cd jvmevm/runtime/local/lc0 && npm ci --ignore-scripts && npm run build
+java-mc-lc0-check:
+	cd jvmevm/runtime/local/lc0 && npm ci --ignore-scripts && npm run check
+java-mc-lc0-test: java-mc-lc0-check
+	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/lc0
+java-mc-lc0-demo: java-mc-lc0-check
+	go test -count=1 -v -timeout=20m -run '^TestLC0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/lc0

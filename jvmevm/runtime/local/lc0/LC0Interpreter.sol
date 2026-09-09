@@ -1366,10 +1366,10 @@ contract LC0Interpreter {
                 // The base dispatcher retains thisHandle on ordinary private/
                 // superclass invokespecial frames as well as constructors.
                 // Validate that retained receiver instead of rejecting the state
-                // produced by a legitimate special call.
+                // produced by a legitimate special call. Local slot zero is mutable
+                // bytecode storage, not an immutable receiver identity: istore_0 or
+                // astore_0 may overwrite it after entry while thisHandle is retained.
                 if (f.isInitializer || (uint16(p.classes[f.classIndex].methods[f.methodIndex]) & 0x0008) != 0
-                    || f.locals.length == 0 || !f.initialized[0]
-                    || f.locals[0] != _packRef(uint32(f.thisHandle))
                     || _heapKindAt(s.arena.heap.metadata[f.thisHandle]) != HEAP_OBJECT
                     || !_typeAssignable(p.classes, s.arena.heap.classes[f.thisHandle],
                         f.classIndex, s.parentLinks)) revert LC0StateError(5, 0);

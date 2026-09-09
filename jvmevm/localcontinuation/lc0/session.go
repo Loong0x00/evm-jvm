@@ -17,6 +17,7 @@ import (
 	"math/big"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -64,6 +65,7 @@ const (
 	lc0HarnessFaultAfterTrie
 	lc0HarnessFaultBeforeManifest
 	lc0HarnessFaultAfterManifestRename
+	lc0HarnessFaultBeforeExistingBlobSync
 )
 
 type lc0HarnessDisk interface {
@@ -137,9 +139,23 @@ func Open(directory string, owner common.Address) (*Session, error) {
 	if err != nil {
 		return nil, fmt.Errorf("lc0: resolve store directory: %w", err)
 	}
+	// A caller may reopen the same store through a directory alias. Resolve the
+	// explicitly requested root first; entries inside the store still have the
+	// fixed regular-file/directory shape and are never followed as links.
+	if resolved, resolveErr := filepath.EvalSymlinks(directory); resolveErr == nil {
+		directory = resolved
+	} else if !errors.Is(resolveErr, os.ErrNotExist) {
+		return nil, fmt.Errorf("lc0: resolve store root: %w", resolveErr)
+	}
 	fresh, err := lc0HarnessPrepareDirectory(directory)
 	if err != nil {
 		return nil, err
+	}
+	// Refuse an invalid store before LevelDB can create locks, logs or manifests.
+	if !fresh {
+		if _, err := lc0HarnessDiskMetadata(directory, owner, crypto.Keccak256Hash(code)); err != nil {
+			return nil, err
+		}
 	}
 	kv, err := leveldb.New(filepath.Join(directory, lc0HarnessStateDirectory), 16, 16, "jvmevm/lc0", false)
 	if err != nil {
@@ -212,17 +228,25 @@ func (s *Session) lc0HarnessInitializeDiskStore() error {
 	return nil
 }
 
-func (s *Session) lc0HarnessReopen() error {
-	marker, err := os.ReadFile(filepath.Join(s.directory, lc0HarnessStoreMarkerName))
+func lc0HarnessDiskMetadata(directory string, owner common.Address, codeHash common.Hash) (lc0HarnessManifest, error) {
+	marker, err := lc0HarnessReadRegular(filepath.Join(directory, lc0HarnessStoreMarkerName), int64(len(lc0HarnessStoreMarker)))
 	if err != nil || string(marker) != lc0HarnessStoreMarker {
-		return fmt.Errorf("lc0: invalid store marker")
+		return lc0HarnessManifest{}, errors.New("lc0: invalid store marker")
 	}
-	manifest, err := lc0HarnessReadManifest(filepath.Join(s.directory, lc0HarnessManifestName))
+	manifest, err := lc0HarnessReadManifest(filepath.Join(directory, lc0HarnessManifestName))
+	if err != nil {
+		return manifest, err
+	}
+	if manifest.Format != lc0HarnessStoreFormat || manifest.Owner != owner || manifest.Contract != lc0HarnessContractAddress || manifest.RuntimeCodeHash != codeHash || manifest.Context != lc0HarnessContextID || manifest.StateRoot == (common.Hash{}) {
+		return manifest, errors.New("lc0: manifest format, owner, contract, runtime, context, or root mismatch")
+	}
+	return manifest, nil
+}
+
+func (s *Session) lc0HarnessReopen() error {
+	manifest, err := lc0HarnessDiskMetadata(s.directory, s.owner, s.codeHash)
 	if err != nil {
 		return err
-	}
-	if manifest.Format != lc0HarnessStoreFormat || manifest.Owner != s.owner || manifest.Contract != s.contract || manifest.RuntimeCodeHash != s.codeHash || manifest.Context != lc0HarnessContextID {
-		return errors.New("lc0: manifest format, owner, contract, runtime, or context mismatch")
 	}
 	if err := s.lc0HarnessReload(manifest.StateRoot); err != nil {
 		return fmt.Errorf("lc0: load durable state root %s: %w", manifest.StateRoot, err)
@@ -352,7 +376,7 @@ func (s *Session) ReadCheckpoint(root common.Hash) ([]byte, error) {
 			err = os.ErrNotExist
 		}
 	} else {
-		blob, err = os.ReadFile(s.lc0HarnessBlobPath(root))
+		blob, err = lc0HarnessReadRegular(s.lc0HarnessBlobPath(root), lc0HarnessMaxCheckpointSize)
 	}
 	if err != nil {
 		return nil, fmt.Errorf("lc0: read checkpoint %s: %w", root, err)
@@ -494,7 +518,7 @@ func (s *Session) lc0HarnessManifest(root common.Hash) lc0HarnessManifest {
 }
 
 func lc0HarnessPrepareDirectory(directory string) (bool, error) {
-	info, err := os.Stat(directory)
+	info, err := os.Lstat(directory)
 	if errors.Is(err, os.ErrNotExist) {
 		if err := os.MkdirAll(directory, 0o700); err != nil {
 			return false, fmt.Errorf("lc0: create store directory: %w", err)
@@ -516,8 +540,21 @@ func lc0HarnessPrepareDirectory(directory string) (bool, error) {
 	}
 	allowed := map[string]bool{lc0HarnessStoreMarkerName: true, lc0HarnessManifestName: true, lc0HarnessStateDirectory: true, lc0HarnessBlobDirectory: true}
 	for _, entry := range entries {
+		info, err := entry.Info()
+		if err != nil {
+			return false, fmt.Errorf("lc0: inspect store entry: %w", err)
+		}
+		// A crash may leave our unpublished manifest temporary next to the old
+		// durable manifest. Ignore (do not parse/delete) only regular owned temporaries.
+		if strings.HasPrefix(entry.Name(), ".durable-head-") && info.Mode().IsRegular() {
+			continue
+		}
 		if !allowed[entry.Name()] {
 			return false, fmt.Errorf("lc0: refuse unrelated nonempty directory (unexpected %q)", entry.Name())
+		}
+		wantDir := entry.Name() == lc0HarnessStateDirectory || entry.Name() == lc0HarnessBlobDirectory
+		if (wantDir && !info.IsDir()) || (!wantDir && !info.Mode().IsRegular()) {
+			return false, fmt.Errorf("lc0: store entry %q has unsupported file type", entry.Name())
 		}
 	}
 	if !lc0HarnessAllowedEntriesPresent(entries, lc0HarnessStoreMarkerName, lc0HarnessManifestName, lc0HarnessStateDirectory, lc0HarnessBlobDirectory) {
@@ -539,9 +576,42 @@ func lc0HarnessAllowedEntriesPresent(entries []os.DirEntry, names ...string) boo
 	return true
 }
 
+// Bound disk transport allocations and reject unsupported file types before read.
+// Session serialization is protected by its mutex; this is not a filesystem
+// isolation boundary against an external process concurrently replacing paths.
+func lc0HarnessReadRegular(path string, limit int64) ([]byte, error) {
+	info, err := os.Lstat(path)
+	if err != nil {
+		return nil, err
+	}
+	if !info.Mode().IsRegular() || info.Size() < 0 || info.Size() > limit {
+		return nil, fmt.Errorf("lc0: unsupported file type or oversized file at %s", path)
+	}
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	opened, err := f.Stat()
+	if err != nil {
+		return nil, err
+	}
+	if !opened.Mode().IsRegular() || !os.SameFile(info, opened) || opened.Size() > limit {
+		return nil, fmt.Errorf("lc0: file changed while opening %s", path)
+	}
+	b, err := io.ReadAll(io.LimitReader(f, limit+1))
+	if err != nil {
+		return nil, err
+	}
+	if int64(len(b)) > limit {
+		return nil, fmt.Errorf("lc0: file exceeded byte bound while reading %s", path)
+	}
+	return b, nil
+}
+
 func lc0HarnessReadManifest(path string) (lc0HarnessManifest, error) {
 	var manifest lc0HarnessManifest
-	raw, err := os.ReadFile(path)
+	raw, err := lc0HarnessReadRegular(path, 4096)
 	if err != nil {
 		return manifest, fmt.Errorf("lc0: read durable manifest: %w", err)
 	}
@@ -607,11 +677,28 @@ func (s *Session) lc0HarnessWriteBlob(root common.Hash, blob []byte) error {
 		return errors.New("lc0: refusing checkpoint blob whose bytes do not match root")
 	}
 	path := s.lc0HarnessBlobPath(root)
-	if existing, err := os.ReadFile(path); err == nil {
+	if existing, err := lc0HarnessReadRegular(path, lc0HarnessMaxCheckpointSize); err == nil {
 		if !bytes.Equal(existing, blob) {
 			return fmt.Errorf("lc0: existing checkpoint blob %s differs", root)
 		}
-		return nil
+		// An orphan's rename may have preceded a process stop before directory
+		// fsync. Verify and durably sync it before publishing a head that uses it.
+		if err := s.lc0HarnessInject(lc0HarnessFaultBeforeExistingBlobSync); err != nil {
+			return err
+		}
+		f, err := os.Open(path)
+		if err != nil {
+			return err
+		}
+		syncErr := f.Sync()
+		closeErr := f.Close()
+		if syncErr != nil {
+			return syncErr
+		}
+		if closeErr != nil {
+			return closeErr
+		}
+		return lc0HarnessSyncDirectory(filepath.Dir(path))
 	} else if !errors.Is(err, os.ErrNotExist) {
 		return err
 	}

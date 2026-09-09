@@ -638,7 +638,7 @@ func TestLC0HarnessProcessReopen(t *testing.T) {
 				"JVMEVM_LC0_EPOCH="+strconv.FormatUint(checkpoint.Slice.Epoch, 10), "JVMEVM_LC0_ROOT="+checkpoint.Slice.CheckpointRoot.Hex())
 			output, err := command.Output()
 			if err != nil {
-				t.Fatalf("child process: %v stderr=%s", err, lc0HarnessExitStderr(err))
+				t.Fatalf("child process: %v stdout=%s stderr=%s", err, output, lc0HarnessExitStderr(err))
 			}
 			var child struct {
 				Machine  common.Hash `json:"machine"`
