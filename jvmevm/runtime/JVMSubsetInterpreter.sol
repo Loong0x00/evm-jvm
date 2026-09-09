@@ -715,6 +715,17 @@ contract JVMSubsetInterpreter {
         return 0;
     }
 
+    // A missing profile API is not permission to hide a malformed descriptor.
+    // Scope this check to the profile fallback; ordinary linkage precedence stays
+    // unchanged, and a well-formed deferred API still receives StringProfileError.
+    function _rejectStringProfileCall(bytes memory data, uint256 off, uint256 n, uint256 pc)
+        private pure
+    {
+        Selected memory signature;
+        if (!_descriptor(data, off, n, signature)) revert CallError(4, pc);
+        revert StringProfileError(1, pc);
+    }
+
     function _stringNativeBinding(ClassInfo memory c, uint256 method)
         private pure returns (uint8)
     {
@@ -3219,7 +3230,7 @@ contract JVMSubsetInterpreter {
         }
         if (!resolvedDeclaration) {
             if (_isStringProfileSymbolic(classes[symbolic])) {
-                revert StringProfileError(1, pc);
+                _rejectStringProfileCall(caller.data, out.descriptorOffset, out.descriptorLength, pc);
             }
             (bool foundInterface, uint256 interfaceOwner, uint256 interfaceMethod) =
                 _findInterfaceMethod(
@@ -3313,7 +3324,7 @@ contract JVMSubsetInterpreter {
             }
             if (!objectFallback) {
                 if (_isStringProfileSymbolic(classes[symbolic])) {
-                    revert StringProfileError(1, pc);
+                    _rejectStringProfileCall(caller.data, out.descriptorOffset, out.descriptorLength, pc);
                 }
                 (bool inherited, uint256 interfaceOwner, uint256 interfaceMethod) =
                     _findInterfaceMethod(
@@ -3690,7 +3701,9 @@ contract JVMSubsetInterpreter {
             revert CallError(1, pc);
         }
         // LB0 exposes no static API on any of its three reserved String-profile types.
-        if (_isStringProfileSymbolic(classes[owner])) revert StringProfileError(1, pc);
+        if (_isStringProfileSymbolic(classes[owner])) {
+            _rejectStringProfileCall(caller.data, descriptorOffset, descriptorLength, pc);
+        }
 
         if (interfaceReference) {
             // Interface static methods are never inherited: resolution is exact

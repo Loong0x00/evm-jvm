@@ -12,7 +12,7 @@ import (
 	"testing"
 )
 
-const mcLB0ReviewRuntimeHash = "ff9c9ff093e9d4885d7546e01db7aacd95cf999d5cf9b6d6b130fd43b791b982"
+const mcLB0ReviewRuntimeHash = "ea94075540b8b66aa8e85823ee66e9dba4a2be65f29942855a8f59478bca0cbf"
 
 // These probes deliberately do not replay the 64-row catalogue. They compile
 // separate bounded Java-8-target fixtures and submit their unchanged class bytes
@@ -24,8 +24,8 @@ func TestMCLB0ReviewArtifactAndCurrentRunnerBoundary(t *testing.T) {
 		t.Fatal(err)
 	}
 	digest := sha256.Sum256(runtimeCode)
-	if len(runtimeCode) != 166334 || hex.EncodeToString(digest[:]) != mcLB0ReviewRuntimeHash {
-		t.Fatalf("runtime bytes/hash=%d/%x, want 166334/%s", len(runtimeCode), digest, mcLB0ReviewRuntimeHash)
+	if len(runtimeCode) != 166385 || hex.EncodeToString(digest[:]) != mcLB0ReviewRuntimeHash {
+		t.Fatalf("runtime bytes/hash=%d/%x, want 166385/%s", len(runtimeCode), digest, mcLB0ReviewRuntimeHash)
 	}
 	currentRunner, err := os.ReadFile("jvmevm.go")
 	if err != nil {
