@@ -50,8 +50,12 @@ Runtime166385B SHAea940755...,27bootstraps(24oldbytes unchanged).64newcases,
 198parentEVM probes and17independentreview probes plusALLoldgates pass. Parent fixed
 inheritedStringfield OOM policy and malformedStringdescriptor precedence.100M/
 1BnewLOCAL caps only; oldbudgets unchanged. No main/VFS/threads/continuation.
-LC0 preflight parent-reproduced realstate extraction596480B/12883262gas only;
-nextfreeze must add actual decode/resume/head CAS/restart, not just extraction.
+**MC-LC0 frozen** in JAVA_EVM_MC_LC0_PLAN.md: new LOCAL versioned single-stack
+start/resume, compact EVM-issued checkpoint and owner/epoch/head CAS, disk/restart.
+Old166385B LB0 monolith/stock remain byte-identical referenceprofiles. OneSolidity
+writer under runtime/local/lc0; Go under localcontinuation/lc0.100Mordinary/1Bboundary,
+1MiBcheckpoint,4rawclasses/64KiB; exact15/36/10fixtures, actualq1/q7chains required.
+Preflight onlyproved extraction596480B/12883262gas; no actualresume accepted yet.
 M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable

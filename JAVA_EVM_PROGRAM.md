@@ -171,7 +171,8 @@ routine permission to start the next verified increment.
 | Stock-EVM S2a | integer completion and terminal arithmetic faults | accepted JAVA_EVM_STOCK_S2A_PLAN.md;201rows/60roots, one frame |
 | Stock-EVM S2b-L | schema4 callmetadata and S2a reparse adapter, registration ONLY | accepted JAVA_EVM_STOCK_S2BL_REVIEW.md;14classes/51callrecords, NO268stock execution |
 | Local MC-LB0 | richer-monolith MUTF8/String literals/intern identity | ACCEPTED;64newcases/198parentEVM/17reviewprobes/alllegacygates PASS; JAVA_EVM_MC_LB0_REVIEW.md |
-| Local continuation/platform | EVM-owned canonical checkpoints then VFS/minimal scheduler | preflight JAVA_EVM_MC_LC0_PREFLIGHT.md parent-reproduced extraction; decode/resume/restart not implemented |
+| Local MC-LC0 | EVM-owned single-stack checkpoints/start/resume/CAS/durable restart | FROZEN JAVA_EVM_MC_LC0_PLAN.md; preflight extraction reproduced, actualresume notaccepted yet |
+| Local platform later | VFS/minimal scheduler/main/JAR and further libraries | deferred until actual LC0 state boundary; no MC execution |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | local MC dependency priority; selected1.12.2 static inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
