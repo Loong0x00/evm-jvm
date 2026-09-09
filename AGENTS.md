@@ -26,8 +26,10 @@ reviewed aggregate boundary fixed without raising8M. Preserve S0/S1/monolith/old
 fixtures. **S2a accepted** per JAVA_EVM_STOCK_S2A_PLAN.md:201 M1/M2/M2b rows,
 199values+2Arithmetic faults, one frame;312parent probes andindependentreview pass.
 Parser15659/step9470/coordinator7694-byte templates, no runtime defect demonstrated.
-Next S2b frame-storage and parser/link prototypes are proposal-only, no freeze or
-calls/SOE execution claim yet. Reserve/delta costs must be measured separately.
+Next **S2b-L registration/link slice is frozen** in JAVA_EVM_STOCK_S2BL_PLAN.md:
+new stock/s2b analyzer/linker/schema4 metadata and EVM S2a reparse adapter. NO frame
+store/resume/268-row execution claim in L. Fix prototype worklist and method-order
+risks, preserve8M registration. Frame5-word/4-touched design remains proposal-only.
 M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
