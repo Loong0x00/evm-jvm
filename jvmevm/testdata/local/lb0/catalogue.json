@@ -1,0 +1,1105 @@
+{
+  "schema": 1,
+  "catalogue": "MC-LB0 trusted positive JVM8/JVM21/EVM catalogue",
+  "case_count": 64,
+  "profiles": {
+    "ordinary": {
+      "gas": 100000000,
+      "watchdog_seconds": 30
+    },
+    "boundary": {
+      "gas": 1000000000,
+      "watchdog_seconds": 120
+    }
+  },
+  "cases": [
+    {
+      "id": "empty-length",
+      "profile": "ordinary",
+      "abi": "run",
+      "classes": [
+        "MCLB0Root"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "emptyLength",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "ascii-length",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "asciiLength",
+      "args": [],
+      "expected": 9,
+      "repeat": 1
+    },
+    {
+      "id": "nul-length",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "nulLength",
+      "args": [],
+      "expected": 3,
+      "repeat": 1
+    },
+    {
+      "id": "nul-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "nulChar",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "ascii-boundary-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "asciiBoundaryChar",
+      "args": [],
+      "expected": 127,
+      "repeat": 1
+    },
+    {
+      "id": "two-byte-low-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "twoByteLowChar",
+      "args": [],
+      "expected": 128,
+      "repeat": 1
+    },
+    {
+      "id": "two-byte-high-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "twoByteHighChar",
+      "args": [],
+      "expected": 2047,
+      "repeat": 1
+    },
+    {
+      "id": "three-byte-low-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "threeByteLowChar",
+      "args": [],
+      "expected": 2048,
+      "repeat": 1
+    },
+    {
+      "id": "three-byte-high-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "threeByteHighChar",
+      "args": [],
+      "expected": 65535,
+      "repeat": 1
+    },
+    {
+      "id": "pair-length",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "pairLength",
+      "args": [],
+      "expected": 2,
+      "repeat": 1
+    },
+    {
+      "id": "pair-high-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "pairHighChar",
+      "args": [],
+      "expected": 55357,
+      "repeat": 1
+    },
+    {
+      "id": "pair-low-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "pairLowChar",
+      "args": [],
+      "expected": 56832,
+      "repeat": 1
+    },
+    {
+      "id": "unpaired-high-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "unpairedHighChar",
+      "args": [],
+      "expected": 55296,
+      "repeat": 1
+    },
+    {
+      "id": "unpaired-low-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "unpairedLowChar",
+      "args": [],
+      "expected": 56320,
+      "repeat": 1
+    },
+    {
+      "id": "isempty-true",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "emptyTrue",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "isempty-false",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "emptyFalse",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "indexed-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "indexedChar",
+      "args": [
+        3
+      ],
+      "expected": 2048,
+      "repeat": 1
+    },
+    {
+      "id": "ascii-hash",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "asciiHash",
+      "args": [],
+      "expected": 96354,
+      "repeat": 1
+    },
+    {
+      "id": "nul-hash",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "nulHash",
+      "args": [],
+      "expected": 93315,
+      "repeat": 1
+    },
+    {
+      "id": "wrapped-hash",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "wrappedHash",
+      "args": [],
+      "expected": -2147483648,
+      "repeat": 1
+    },
+    {
+      "id": "repeated-hash",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "repeatedHash",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "zero-hash-repeated",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "zeroHashRepeated",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "equals-cross-content",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "equalsEqualContent",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "equals-different",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "equalsDifferent",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "equals-null",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "equalsNull",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "equals-nonstring",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "equalsNonString",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "equals-utf16",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "equalsUTF16",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "compare-equal",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "compareEqual",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "compare-first-unit",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "compareFirstUnit",
+      "args": [],
+      "expected": -23,
+      "repeat": 1
+    },
+    {
+      "id": "compare-unsigned-unit",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "compareUnsignedUnit",
+      "args": [],
+      "expected": 65535,
+      "repeat": 1
+    },
+    {
+      "id": "compare-prefix-short",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "comparePrefixShort",
+      "args": [],
+      "expected": -1,
+      "repeat": 1
+    },
+    {
+      "id": "compare-prefix-long",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "comparePrefixLong",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "compare-surrogate",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "compareSurrogate",
+      "args": [],
+      "expected": -1,
+      "repeat": 1
+    },
+    {
+      "id": "tostring-identity",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "toStringIdentity",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "intern-identity",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "internIdentity",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "cp-hit-after-calls",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "cpHitAfterCalls",
+      "args": [],
+      "expected": 106,
+      "repeat": 1
+    },
+    {
+      "id": "cross-class-identity",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "crossClassIdentity",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "cross-field-identity",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "crossFieldIdentity",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "static-nonfinal-identity",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "staticNonfinalIdentity",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "clinit-order",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "clinitOrder",
+      "args": [],
+      "expected": 12,
+      "repeat": 1
+    },
+    {
+      "id": "clinit-shared-identity",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "clinitSharedIdentity",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "charsequence-length",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "charSequenceLength",
+      "args": [],
+      "expected": 8,
+      "repeat": 1
+    },
+    {
+      "id": "charsequence-char",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "charSequenceChar",
+      "args": [],
+      "expected": 117,
+      "repeat": 1
+    },
+    {
+      "id": "comparable-less",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "comparableLess",
+      "args": [],
+      "expected": -1,
+      "repeat": 1
+    },
+    {
+      "id": "bridge-caught-cce",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "bridgeCCE",
+      "args": [],
+      "expected": 8,
+      "repeat": 1
+    },
+    {
+      "id": "bridge-caught-npe",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "bridgeNPE",
+      "args": [],
+      "expected": 6,
+      "repeat": 1
+    },
+    {
+      "id": "direct-compare-caught-npe",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "directCompareNPE",
+      "args": [],
+      "expected": 6,
+      "repeat": 1
+    },
+    {
+      "id": "null-receiver-caught-npe",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "nullReceiverNPE",
+      "args": [],
+      "expected": 6,
+      "repeat": 1
+    },
+    {
+      "id": "null-interface-caught-npe",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "nullInterfaceNPE",
+      "args": [],
+      "expected": 6,
+      "repeat": 1
+    },
+    {
+      "id": "string-before-mixed",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "stringBeforeMixed",
+      "args": [
+        7
+      ],
+      "expected": 105,
+      "repeat": 1
+    },
+    {
+      "id": "string-after-mixed",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "stringAfterMixed",
+      "args": [
+        -4
+      ],
+      "expected": 1,
+      "repeat": 1
+    },
+    {
+      "id": "exception-then-string",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "exceptionThenString",
+      "args": [],
+      "expected": 6,
+      "repeat": 1
+    },
+    {
+      "id": "string-then-exception",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "stringThenException",
+      "args": [],
+      "expected": 5,
+      "repeat": 1
+    },
+    {
+      "id": "identity-through-object-array",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "identityThroughObjectArray",
+      "args": [],
+      "expected": 8,
+      "repeat": 1
+    },
+    {
+      "id": "static-with-int-array",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "staticWithIntArray",
+      "args": [],
+      "expected": 18,
+      "repeat": 1
+    },
+    {
+      "id": "select-hash",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "selectHash",
+      "args": [
+        0
+      ],
+      "expected": -2147483648,
+      "repeat": 1
+    },
+    {
+      "id": "evaluation-order",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "evaluationOrder",
+      "args": [],
+      "expected": 120,
+      "repeat": 1
+    },
+    {
+      "id": "cp-hit-loop",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "cpHitLoop",
+      "args": [
+        7
+      ],
+      "expected": 28,
+      "repeat": 1
+    },
+    {
+      "id": "utf16-checksum",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "utf16Checksum",
+      "args": [],
+      "expected": 0,
+      "repeat": 1
+    },
+    {
+      "id": "reset-between-run",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "resetBetweenRun",
+      "args": [],
+      "expected": 1,
+      "repeat": 2
+    },
+    {
+      "id": "boundary-long-length",
+      "profile": "boundary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "boundaryLongLength",
+      "args": [],
+      "expected": 4096,
+      "repeat": 1
+    },
+    {
+      "id": "boundary-long-compare",
+      "profile": "boundary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0Root",
+        "MCLB0Peer",
+        "MCLB0Statics",
+        "MCLB0Box",
+        "MCLB0Long"
+      ],
+      "entry_class": "MCLB0Root",
+      "method": "boundaryLongCompare",
+      "args": [],
+      "expected": -1,
+      "repeat": 1
+    },
+    {
+      "id": "raw-static-nonfinal-constantvalue",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0RawStatic",
+        "MCLB0RawStaticConsumer"
+      ],
+      "entry_class": "MCLB0RawStaticConsumer",
+      "method": "run",
+      "args": [],
+      "expected": 10,
+      "repeat": 1
+    },
+    {
+      "id": "raw-instance-constantvalue-ignored",
+      "profile": "ordinary",
+      "abi": "run_classes",
+      "classes": [
+        "MCLB0RawInstance",
+        "MCLB0RawInstanceConsumer"
+      ],
+      "entry_class": "MCLB0RawInstanceConsumer",
+      "method": "run",
+      "args": [],
+      "expected": 1,
+      "repeat": 1
+    }
+  ]
+}
