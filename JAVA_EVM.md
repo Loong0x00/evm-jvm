@@ -33,6 +33,13 @@ budgets/watchdogs. Existing stock acceptance budgets/results remain unchanged an
 separate. Reuse the richer monolith for MC prerequisites; no MC startup claim yet.
 See `JAVA_EVM_PROGRAM.md` for the resource and continuation boundary.
 
+**S2b-L registration is accepted** (`JAVA_EVM_STOCK_S2BL_REVIEW.md`):14classes,
+51 EVM-issued call records and a schema3-to4 raw reparse adapter. This is metadata,
+NOT call execution. Analyzer18542B/linker4643B; exact7936B metadata cap registers
+under8M on both paths. `make java-stock-s2bl-test java-stock-s2bl-demo` reproduces
+its separate evidence. Next priority is local MC bootstrap/platform/continuation,
+not completing every standard-deployment migration first.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:

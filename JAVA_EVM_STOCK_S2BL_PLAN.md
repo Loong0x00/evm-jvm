@@ -1,5 +1,9 @@
 # Stock S2b-L: production EVM call-metadata registration
 
+ACCEPTED registration-only slice after parent gates; review and exact evidence in
+JAVA_EVM_STOCK_S2BL_REVIEW.md. Frozen contract below retained. Latest LOCAL MC
+priority supersedes making stock migration a prerequisite, not these fixed gates.
+
 FROZEN contract; authority JAVA_EVM_PROGRAM.md. Supersedes alternative/prototype
 choices in JAVA_EVM_STOCK_S2B_{LINK,FRAME}_PROPOSAL.md. Accepted S2a ff28bcd,
 S1/S0 and the2231-case monolith remain unchanged. This stage is REGISTRATION/LINK

@@ -150,3 +150,14 @@ java-stock-s2a-test: java-stock-s2a-check
 	go test -count=1 -timeout=15m ./jvmevm/stock/s2a
 java-stock-s2a-demo: java-stock-s2a-check
 	go test -count=1 -v -run '^TestStockS2aHarnessSignedAll201ReuseBudgetsPrefixesAndDirectReplay$$' ./jvmevm/stock/s2a
+
+# Registration-only call metadata; NOT a Java-call execution profile.
+.PHONY: java-stock-s2bl-build java-stock-s2bl-check java-stock-s2bl-test java-stock-s2bl-demo
+java-stock-s2bl-build:
+	cd jvmevm/stock/s2b/runtime && npm ci --ignore-scripts && npm run build
+java-stock-s2bl-check:
+	cd jvmevm/stock/s2b/runtime && npm ci --ignore-scripts && npm run check
+java-stock-s2bl-test: java-stock-s2bl-check
+	go test -count=1 -timeout=15m ./jvmevm/stock/s2b
+java-stock-s2bl-demo: java-stock-s2bl-check
+	go test -count=1 -v -run '^TestStockS2bLinkHarnessSignedDirectAdapterIdempotencyCapAndReplay$$' ./jvmevm/stock/s2b

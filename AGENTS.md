@@ -13,7 +13,7 @@ budgets with watchdog/resource bounds; do not silently change any accepted stock
 budget or claim infinite resources. Standard deployment is a SEPARATE target, no
 longer a prerequisite for MC work. Leverage the richer monolith for local library/
 startup dependencies rather than first migrating every feature into stock modules.
-Currently dispatched S2b-L workers finish their frozen unchanged gates/write sets.
+S2b-L workers have delivered; parent integration/gates accepted their bounded slice.
 Current oversized local runtime.Execute is NOT standard deployment proof. Pin
 server version and explicit I/O boundary before workload claims.
 First MC milestone: genuine guest startup-complete marker (exact version/marker to
@@ -40,10 +40,13 @@ reviewed aggregate boundary fixed without raising8M. Preserve S0/S1/monolith/old
 fixtures. **S2a accepted** per JAVA_EVM_STOCK_S2A_PLAN.md:201 M1/M2/M2b rows,
 199values+2Arithmetic faults, one frame;312parent probes andindependentreview pass.
 Parser15659/step9470/coordinator7694-byte templates, no runtime defect demonstrated.
-Next **S2b-L registration/link slice is frozen** in JAVA_EVM_STOCK_S2BL_PLAN.md:
-new stock/s2b analyzer/linker/schema4 metadata and EVM S2a reparse adapter. NO frame
-store/resume/268-row execution claim in L. Fix prototype worklist and method-order
-risks, preserve8M registration. Frame5-word/4-touched design remains proposal-only.
+**S2b-L registration/link is accepted** per JAVA_EVM_STOCK_S2BL_PLAN.md and REVIEW:
+14classes/51EVM-issued callrecords, schema4 and S2a reparse adapter; analyzer18542B,
+linker4643B template. Parent fixed linker dimension caps; order/CFG/revert probes
+and ALL oldgates pass. Direct7668234/adapter7680072gas for7936metadata at8M. NO frame
+store/resume/268-row execution claim. Frame5-word/4-touched remains proposal-only.
+NEXT priority local MC1.12.2 via richer monolith: bootstrap and continuation/VFS/
+minimal scheduler proposals in progress; do not require further stock migration.
 M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
