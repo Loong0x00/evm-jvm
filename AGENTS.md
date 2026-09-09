@@ -18,8 +18,10 @@ Current oversized local runtime.Execute is NOT standard deployment proof. Pin
 server version and explicit I/O boundary before workload claims.
 First MC milestone: genuine guest startup-complete marker (exact version/marker to
 pin), NOT client connectivity. No fake/hardcoded banner or skipped initialization;
-connectable server is an optional later goal. 1.12.2 is the proposed first target;
-see JAVA_EVM_MC_STARTUP_PROPOSAL.md. No MC execution/EULA acceptance performed.
+connectable server is an optional later goal. User now SELECTED vanilla1.12.2,
+Java8 target, official artifact/hash and ready message pinned in JAVA_EVM_PROGRAM.md;
+JAVA_EVM_MC_STARTUP_PROPOSAL.md retains static evidence. No MC execution/EULA
+acceptance performed; version choice alone is not platform/workload acceptance.
 
 Current accepted stage: **M5d-a implicit exceptions/handlers/unwind**, recorded in
 `JAVA_EVM_M5DA_PLAN.md`:2231 cases,179 parent cross-JVM/EVM probes plus8 initialization

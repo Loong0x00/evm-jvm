@@ -17,8 +17,9 @@ Execution remains real EVM bytecode, with no host Java fallback or consensus edi
 **Accepted:** M5d-a implicit exceptions, ordered handlers, unwind and captured-ref
 rethrow; evidence in `JAVA_EVM_M5DA_PLAN.md`. New Throwable construction/APIs remain
 deferred. Target is genuine Minecraft startup-complete output in unmodified EVM,
-not necessarily client connectivity. `JAVA_EVM_MC_STARTUP_PROPOSAL.md` recommends
-1.12.2 as first candidate; no server has run. Separate stock-deployment/continuation
+not necessarily client connectivity. User selected **vanilla Minecraft1.12.2 / Java8**;
+official artifact/ready marker pinned in `JAVA_EVM_PROGRAM.md`, static evidence in
+`JAVA_EVM_MC_STARTUP_PROPOSAL.md`. No server has run. Separate stock-deployment/continuation
 slice S0 is accepted in `JAVA_EVM_STOCK_S0_PLAN.md`: small integer programs execute
 through ordinary CREATE and signed resume transactions. It is NOT deployment of
 the full interpreter. S1 now also executes the82 original M1/M2 workloads through

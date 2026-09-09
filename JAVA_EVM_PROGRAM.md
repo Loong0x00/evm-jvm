@@ -1,6 +1,19 @@
 # Continuous JVM-in-EVM program
 
 ## Latest authorization
+SELECTED MC VERSION (explicit user choice): Minecraft Java server **1.12.2**,
+unchanged official vanilla server, Java8 compatibility target. It is no longer
+merely a candidate. Pinned official server size30,222,121bytes,
+SHA1 886945bfb2b978778c3a0288fd7fab09d315b25f,
+SHA256 fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e;
+official URL and static ready-path evidence in JAVA_EVM_MC_STARTUP_PROPOSAL.md.
+Target actual rendered message body:
+`Done (<digits>.<exactly three digits>s)! For help, type "help" or "?"`,
+from guest nz.j() after world preparation, not an early banner. Java8/21 remain
+TEST oracle versions, not a claim of complete Java21/MC compatibility. This pins
+version/artifact intent only: no server execution/EULA acceptance performed and no
+full platform/config/workload acceptance inferred. Keep historical proposals intact.
+
 LATEST platform-scope refinement: user explicitly prioritizes the artistic
 VM-inside-VM-running-a-game result, not complete Java/platform conformance.
 Implement the EVM-backed virtual filesystem and only the Java/runtime/scheduling
