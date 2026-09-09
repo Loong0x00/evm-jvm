@@ -1,6 +1,20 @@
 # Continuous JVM-in-EVM program
 
 ## Latest authorization
+LATEST platform-scope refinement: user explicitly prioritizes the artistic
+VM-inside-VM-running-a-game result, not complete Java/platform conformance.
+Implement the EVM-backed virtual filesystem and only the Java/runtime/scheduling
+subset actually needed by the unchanged selected MC startup path. Full Java SE,
+OS-thread equivalence, parallel execution and a general-purpose scheduler are NOT
+prerequisites. A deterministic single-EVM cooperative guest scheduler is a candidate,
+not an implemented capability: required guest tasks must really execute, and used
+start/join/wait/notify/lock/sleep behavior must be modeled sufficiently to avoid
+fake progress/deadlock or omitted startup work. No blanket Thread.start/locking/I/O
+no-ops or host-executed background/world logic to manufacture readiness. Freeze the
+actual subset from dependency evidence; report unsupported paths explicitly.
+First success remains genuine server startup-complete, not a graphical client or
+full playability. Continue bounded work without routine confirmation.
+
 LATEST resource/priority refinement (after S2b-L freeze): user explicitly permits
 relaxed LOCAL gas budgets (colloquially "unlimited gas") for an artistic experiment,
 and splitting work across blocks/transactions. Prioritize genuine LOCAL MC startup;

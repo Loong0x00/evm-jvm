@@ -3,6 +3,10 @@
 LATEST endpoint: unchanged Minecraft Java server executing in EVM.
 LATEST priority/resource refinement: LOCAL artistic experiment first. User now
 permits relaxed local gas budgets and work split across transactions/blocks.
+Emphasis is VM-inside-VM-running-game art, NOT complete Java SE/OS conformance.
+Implement EVM VFS and workload-needed platform subset; cooperative guest scheduling
+is a candidate, full parallel/thread scheduler not prerequisite. Required guest
+startup tasks still must execute; no blanket no-op threads/locks/I/O or fake Done.
 See JAVA_EVM_PROGRAM.md: preserve opcode semantics/gas accounting/precompiles/
 consensus and no host Java/server-logic fallback. Use explicit large finite local
 budgets with watchdog/resource bounds; do not silently change any accepted stock
