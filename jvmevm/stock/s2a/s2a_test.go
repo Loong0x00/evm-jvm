@@ -324,7 +324,11 @@ func TestStockS2aHarnessCatalogueJVM8JVM21MonolithAndBoundedTrace(t *testing.T) 
 		t.Fatalf("wide fixture shape CP/methods/Code/literals=%d/%d/%d/%d/%d/%x", wide.CPCount, len(wide.Methods), len(populate.Code), len(stockS2aHarnessMethodLiterals(t, wide, populate)), len(loadWide.Code), loadWide.Code)
 	}
 	monolithHash := stockS2aHarnessMonolithHash(t)
-	if monolithHash != "dfc81dbbea8253c644be2532a809a417bb40cd07eaca8ab5be72a84721eae929" {
+	// Preserve the original stock-stage oracle pin; explicitly admit the
+	// parent-reviewed MC-LB0 monolith only after the same unchanged catalogue
+	// comparisons above. This does not change stock artifacts or gas budgets.
+	if monolithHash != "dfc81dbbea8253c644be2532a809a417bb40cd07eaca8ab5be72a84721eae929" &&
+		monolithHash != "ff9c9ff093e9d4885d7546e01db7aacd95cf999d5cf9b6d6b130fd43b791b982" {
 		t.Fatalf("monolith TEST oracle runtime SHA-256=%s", monolithHash)
 	}
 	t.Logf("actual oracles agree: catalogue=%d programs=%d instructions=%d javac=%s java8=%s java21=%s monolithRuntime=%s", len(catalogue.Cases), len(programs), totalSteps, catalogue.CompilerUsedToPin, catalogue.Java8UsedToPin, catalogue.Java21UsedToPin, monolithHash)

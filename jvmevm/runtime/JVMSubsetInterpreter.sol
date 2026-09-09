@@ -5621,8 +5621,8 @@ contract JVMSubsetInterpreter {
     function _ensureStringLayout(
         ExceptionArena memory arena, ClassInfo[] memory classes, uint256 stringClass,
         uint256[] memory parentLinks, uint8[] memory hierarchyState
-    ) private pure {
-        if (arena.stringLayoutLoaded) return;
+    ) private pure returns (bool fits) {
+        if (arena.stringLayoutLoaded) return true;
         if (stringClass < classes.length && classes[stringClass].cp.length == 0
             && classes[stringClass].data.length != 0) {
             classes[stringClass] = _parseBundleClass(classes[stringClass].data);
@@ -5649,7 +5649,10 @@ contract JVMSubsetInterpreter {
         uint256 fieldCount = _instanceFieldCount(
             classes, stringClass, parentLinks, ROOT_FAULT_SENTINEL
         );
-        if (fieldCount > MAX_OBJECT_FIELDS) revert BootstrapProfileError(1, 0);
+        // An otherwise valid inherited layout can exceed the ordinary-object quota.
+        // Report a failed allocation, not malformed bootstrap metadata, and avoid
+        // materializing an over-limit default array before the caller raises OOM.
+        if (fieldCount > MAX_OBJECT_FIELDS) return false;
         arena.stringValueOffset = _instanceFieldOffset(
             classes, stringClass, stringClass, valuePlusOne - 1,
             parentLinks, ROOT_FAULT_SENTINEL
@@ -5660,6 +5663,7 @@ contract JVMSubsetInterpreter {
         );
         arena.stringDefaults = _objectFieldDefaults(classes, stringClass, fieldCount, parentLinks);
         arena.stringLayoutLoaded = true;
+        return true;
     }
 
     function _stringUnits(
@@ -5763,9 +5767,9 @@ contract JVMSubsetInterpreter {
         ref = arena.stringRefs[classIndex][cpIndex];
         if (ref != 0) return (ref, false);
         uint64[] memory units = _decodeStringConstant(classes[classIndex], classIndex, cpIndex);
-        _ensureStringLayout(
+        if (!_ensureStringLayout(
             arena, classes, arena.stringClass, parentLinks, hierarchyState
-        );
+        )) return (0, true);
         uint32 hash = _stringHash(units);
         for (uint256 i = 0; i < arena.internCount; ++i) {
             if (arena.internHashes[i] != hash) continue;
