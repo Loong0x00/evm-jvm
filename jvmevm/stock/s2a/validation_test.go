@@ -1050,6 +1050,11 @@ type stockS2aVerifyCatalogueCase struct {
 	ExpectedException string
 	JavaFaultKind     uint8
 	FaultPC           uint32
+	PC                uint32
+	SP                uint8
+	Lifecycle         uint8
+	CodeLength        uint32
+	Stack             []int32
 	Steps             uint64
 	Leaf              string
 }
@@ -1175,12 +1180,15 @@ func TestStockS2aVerifyFrozen201CatalogueCommitment(t *testing.T) {
 		switch old.ExpectedKind {
 		case "value":
 			values++
-			if tc.Expected == nil || tc.ExpectedKind != "value" || tc.JavaFaultKind != 0 || tc.FaultPC != 0 {
+			if tc.Expected == nil || tc.ExpectedKind != "value" || tc.ExpectedException != "" || tc.JavaFaultKind != 0 || tc.FaultPC != 0 || tc.Lifecycle != 1 || tc.SP != 0 || tc.PC > tc.CodeLength {
 				t.Fatalf("%s malformed value outcome", tc.ID)
 			}
 		case "java_exception":
 			faults++
-			if old.ExpectedException != "java.lang.ArithmeticException" || tc.Expected != nil || tc.ExpectedKind != "java_exception" || tc.ExpectedException != old.ExpectedException || tc.JavaFaultKind != 1 {
+			// The catalogue mirrors MachineV3.result, which is canonically zero
+			// for JAVA_FAULT, not a returned Java value. Require the fault state
+			// and preserved zero-divisor operand rather than expecting JSON null.
+			if old.ExpectedException != "java.lang.ArithmeticException" || tc.Expected == nil || *tc.Expected != 0 || tc.ExpectedKind != "java_exception" || tc.ExpectedException != old.ExpectedException || tc.JavaFaultKind != 1 || tc.Lifecycle != 3 || tc.PC != tc.FaultPC || tc.PC >= tc.CodeLength || tc.SP < 2 || tc.SP > 8 || len(tc.Stack) != 8 || tc.Stack[tc.SP-1] != 0 {
 				t.Fatalf("%s malformed fault outcome", tc.ID)
 			}
 		default:
