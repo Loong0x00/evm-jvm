@@ -45,8 +45,11 @@ Parser15659/step9470/coordinator7694-byte templates, no runtime defect demonstra
 linker4643B template. Parent fixed linker dimension caps; order/CFG/revert probes
 and ALL oldgates pass. Direct7668234/adapter7680072gas for7936metadata at8M. NO frame
 store/resume/268-row execution claim. Frame5-word/4-touched remains proposal-only.
-NEXT priority local MC1.12.2 via richer monolith: bootstrap and continuation/VFS/
-minimal scheduler proposals in progress; do not require further stock migration.
+NEXT local MC1.12.2 slice **MC-LB0 frozen** in JAVA_EVM_MC_LB0_PLAN.md: richer
+monolith String/MUTF8/intern identity,64newcases, existing introot ABI; append3new
+bootstraps after24old without changing oldbytes/indices. New LOCAL100Mordinary/
+1Bboundary caps only, all oldbudgets unchanged. No main/VFS/threads/continuation yet.
+Continuation proposal4dba0a2 retained; do not require further stock migration.
 M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
