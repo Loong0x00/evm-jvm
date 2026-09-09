@@ -1,0 +1,56 @@
+{
+  "contractName": "S2aMetadataPage",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes",
+          "name": "payload",
+          "type": "bytes"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "code",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "offset",
+          "type": "uint256"
+        }
+      ],
+      "name": "S2aClassError",
+      "type": "error"
+    }
+  ],
+  "bytecode": "6080604052346100fa5761015380380380610019816100fe565b9283398101906020818303126100fa578051906001600160401b0382116100fa570181601f820112156100fa57805161005961005482610137565b6100fe565b918183526020830193602083830101116100fa57815f926020809301865e8301015251801580156100ef575b6100d75760018101908181116100c3576100ad6100a461005484610137565b92808452610137565b602083019390601f1901368537602183015e5190f35b634e487b7160e01b5f52601160045260245ffd5b631a7c60ab60e11b5f5260056004525f60245260445ffd5b50611fff8111610085565b5f80fd5b6040519190601f01601f191682016001600160401b0381118382101761012357604052565b634e487b7160e01b5f52604160045260245ffd5b6001600160401b03811161012357601f01601f19166020019056fe",
+  "deployedBytecode": "5f80fd",
+  "immutableReferences": {},
+  "compiler": {
+    "version": "0.8.30+commit.73712a01.Emscripten.clang",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    }
+  },
+  "sourceHashes": {
+    "S2aTypes.sol": "007dd272a74160bffb575f48227728011b2f6fd7823d3b67ee7bd8d4184bcdb7",
+    "S2aMetadataPage.sol": "f0360451a73cd8c3f8d2321b1a4aeaf440c5f5ad0bb18688372395a1593c26cb",
+    "S2aCodec.sol": "558391a685ed7afda934b7a8c4c4373a28c95b519f7ce56cdef2cc4e922baedf",
+    "S2aClassParser.sol": "98eeda7b59d2b3c55c24da1b7200ba952aa9c6ecdba6e10d4690788a20778295",
+    "S2aStepModule.sol": "9a7a2f2ef4ce35620e8841261d4f7aa96709fdefa3637a692ca387ef5a5546df",
+    "S2aCoordinator.sol": "a5bdb4c4dcaa5d3d5ad184b92a577484b7188b92eb89fa8a358de2526a13a200"
+  }
+}
