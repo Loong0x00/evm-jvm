@@ -40,7 +40,7 @@ Pinned artifact measurements:
 |---|---:|---:|---:|---|---|
 | S2bMetadataPage | 339 | 8595 | 3 | `34ab89bdbd1080a108b1629ea26c8beb2605adff7dbc028b129ff91a8455aa9f` | `0668b20e4ee135e7cac4091998933a5123658a8e777994fdb4b4ee2d553e6438` |
 | S2bAnalyzeModule | 18568 | 18568 | 18542 | `07af409d91be94fed59e2f54fbd7b52790d50f4f0b9aa8fc28dbed4322192c2a` | `9ed5907864695906252b2fce0831d8e07ee6bc4fda6dfaef40d20617cd61181f` |
-| S2bClassLinker | 4911 | 5007 | 4588 | `dbf0e6394e85efefbb6fe5fbff99ebc8e416a9876d85a030d34888bca83574ed` | `ff89456d81f1b1c5c9bb18a6b48372f17a8f8b2170fee64b7d4511d25fd7ed7c` |
+| S2bClassLinker | 4966 | 5062 | 4643 | `3b33294ede5de5b8fdebed739b57f03bf859ef4e85bfb65ae75c311b50cae56c` | `991af0ca7b71e4ff4f4a145992f5e286f51f494fb2b7055654c7e9f056c0602d` |
 
 The analyzer runtime Keccak-256 is
 `7dd80390b865891ff1c5f8fe9e067131231252dfd1a45939182c25a844133d45`;
@@ -66,6 +66,15 @@ chain 1337 registered all 14 classes and preserved 51 call records
 First direct registration used 7,668,234 gas at an 8,000,000 transaction limit;
 first S2a-adapter registration used 7,680,072 gas at the same limit. Adapter and
 direct retry returned the same six fields and real counts; retry used 42,310 gas.
+
+Parent integrated verification reproduced and fixed missing per-dimension caps in
+analyzer replies (33 methods / 257 literals / 33 calls). New replies are bounded
+before copying payload; cached headers also check all three caps. Bounded revert
+bubbling now uses free memory rather than extending the scratch area. Analyzer
+bytes and the exact direct/adapter cap gas above remain unchanged; linker template
+measurements in the table include the fixes. Parent original declaration-order and
+134-byte valid-CFG regressions pass, plus 14 revert-length probes and JVM8/21 CFG
+oracles. Full prior-stage acceptance remains a separate gate.
 
 These measurements do not execute any Java call and are not evidence for frames,
 the 268-row execution catalogue, arbitrary Java, or Minecraft startup.

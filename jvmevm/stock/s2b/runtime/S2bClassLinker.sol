@@ -89,7 +89,7 @@ contract S2bClassLinker {
         bytes memory head=new bytes(160);
         assembly("memory-safe"){returndatacopy(add(head,0x20),0,160)}
         uint256 offset=uint256(_word(head,0));uint256 mw=uint256(_word(head,1));uint256 lw=uint256(_word(head,2));uint256 cw=uint256(_word(head,3));uint256 n=uint256(_word(head,4));
-        if(offset!=128||mw>type(uint16).max||lw>type(uint16).max||cw>type(uint16).max||n>7936)revert S2bLinkError(2);
+        if(offset!=128||mw>32||lw>256||cw>32||n>7936)revert S2bLinkError(2);
         uint256 padded=(n+31)&~uint256(31);
         if(size!=160+padded)revert S2bLinkError(2);
         if((n&31)!=0){bytes32 last;assembly("memory-safe"){returndatacopy(0,add(160,mul(div(n,32),32)),32) last:=mload(0)}
@@ -125,7 +125,7 @@ contract S2bClassLinker {
         uint256 h1=uint256(_word(header,1));uint256 h5=uint256(_word(header,5));uint16 cpCount=uint16(h5>>32);
         if(_word(header,0)!=METADATA_MAGIC||address(uint160(h1))!=page||h1>>176!=0||_word(header,2)!=pageHash||
           _word(header,3)!=payloadHash||_word(header,6)!=analyzerCodeHash||_word(header,7)!=bytes32(0)||uint32(h5)!=rawLength||
-          cpCount<1||cpCount>512||uint16(h5>>48)!=methods||uint16(h5>>64)!=literals||uint16(h5>>80)!=calls||h5>>96!=0)
+          cpCount<1||cpCount>512||methods>32||literals>256||calls>32||uint16(h5>>48)!=methods||uint16(h5>>64)!=literals||uint16(h5>>80)!=calls||h5>>96!=0)
           revert S2bClassError(6,0);
     }
 
@@ -164,5 +164,5 @@ contract S2bClassLinker {
 
     function _checkAnalyzer() private view {bytes32 actual;address target=analyzer;assembly("memory-safe"){actual:=extcodehash(target)}if(actual!=analyzerCodeHash)revert S2bLinkError(1);}
     function _word(bytes memory data,uint256 index) private pure returns(bytes32 out){assembly("memory-safe"){out:=mload(add(add(data,0x20),mul(index,0x20)))}}
-    function _bubble(uint256 size) private pure {assembly("memory-safe"){returndatacopy(0,0,size) revert(0,size)}}
+    function _bubble(uint256 size) private pure {assembly("memory-safe"){let ptr:=mload(0x40) returndatacopy(ptr,0,size) revert(ptr,size)}}
 }
