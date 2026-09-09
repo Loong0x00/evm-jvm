@@ -294,20 +294,19 @@ func (s *Session) lc0HarnessSlice(method string, gas uint64, inputs ...interface
 	result.Checkpoint = append([]byte(nil), checkpoint...)
 	if len(result.Checkpoint) == 0 || len(result.Checkpoint) > lc0HarnessMaxCheckpointSize || crypto.Keccak256Hash(result.Checkpoint) != result.Slice.CheckpointRoot {
 		s.stateDB.RevertToSnapshot(snapshot)
-		return result, errors.New("lc0: EVM returned a missing, oversized, or root-mismatched checkpoint")
+		return Result{GasUsed: result.GasUsed}, errors.New("lc0: EVM returned a missing, oversized, or root-mismatched checkpoint")
 	}
 	logs := s.stateDB.Logs()
 	if logCount > len(logs) {
 		s.stateDB.RevertToSnapshot(snapshot)
-		return result, errors.New("lc0: StateDB log accounting moved backwards")
+		return Result{GasUsed: result.GasUsed}, errors.New("lc0: StateDB log accounting moved backwards")
 	}
 	result.Logs = lc0HarnessCopyLogs(logs[logCount:])
 	if err := s.lc0HarnessPersist(oldRoot, result.Slice.CheckpointRoot, result.Checkpoint); err != nil {
-		// A transport failure is not a successfully published slice receipt.
-		// The opaque child bytes remain available for deterministic retry tests,
-		// but do not expose an uncommitted/ambiguously committed child log.
-		result.Logs = nil
-		return result, err
+		// A rolled-back or ambiguously published call is not a committed slice.
+		// Preserve diagnostic gas only; callers must consult the durable EVM head
+		// after reopening, not use uncommitted child bytes or a success-shaped tuple.
+		return Result{GasUsed: result.GasUsed}, err
 	}
 	return result, nil
 }

@@ -15,25 +15,19 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
-	"os"
-	"path/filepath"
-	goruntime "runtime"
 	"strings"
 	"sync"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	lc0assets "github.com/ethereum/go-ethereum/jvmevm/runtime/local/lc0"
 )
 
-// These paired artifacts are owned by the separately built LC0 runtime. There
-// is intentionally no legacy-runtime or generated-code fallback.
-const (
-	lc0HarnessRuntimeRelativePath = "../../runtime/local/lc0/LC0Interpreter.runtime.hex"
-	lc0HarnessABIRelativePath     = "../../runtime/local/lc0/LC0Interpreter.abi.json"
-)
-
+// Runtime assets are embedded at build time. No source-tree path, current working
+// directory, external compiler, or guest-state metadata is used by the loader.
 type SliceResult struct {
 	Schema                uint32
 	Lifecycle             uint8
@@ -76,32 +70,23 @@ var (
 	lc0HarnessLoadErr  error
 )
 
-func lc0HarnessArtifactPaths() (string, string, error) {
-	_, source, _, ok := goruntime.Caller(0)
-	if !ok {
-		return "", "", fmt.Errorf("lc0: cannot locate package source for pinned runtime artifacts")
-	}
-	dir := filepath.Dir(source)
-	return filepath.Clean(filepath.Join(dir, lc0HarnessRuntimeRelativePath)), filepath.Clean(filepath.Join(dir, lc0HarnessABIRelativePath)), nil
-}
-
 func lc0HarnessLoad() ([]byte, abi.ABI, error) {
 	lc0HarnessLoadOnce.Do(func() {
-		runtimePath, abiPath, err := lc0HarnessArtifactPaths()
-		if err != nil {
-			lc0HarnessLoadErr = err
+		var doc struct {
+			ContractName     string          `json:"contractName"`
+			ABI              json.RawMessage `json:"abi"`
+			DeployedBytecode string          `json:"deployedBytecode"`
+		}
+		if err := json.Unmarshal(lc0assets.Artifact(), &doc); err != nil {
+			lc0HarnessLoadErr = fmt.Errorf("lc0: decode embedded runtime artifact: %w", err)
 			return
 		}
-		encodedRuntime, err := os.ReadFile(runtimePath)
-		if err != nil {
-			lc0HarnessLoadErr = fmt.Errorf("lc0: required pinned runtime artifact %s is unavailable: %w", runtimePath, err)
+		if doc.ContractName != "LC0Interpreter" {
+			lc0HarnessLoadErr = fmt.Errorf("lc0: unexpected embedded contract %q", doc.ContractName)
 			return
 		}
-		rawABI, err := os.ReadFile(abiPath)
-		if err != nil {
-			lc0HarnessLoadErr = fmt.Errorf("lc0: required pinned ABI artifact %s is unavailable: %w", abiPath, err)
-			return
-		}
+		encodedRuntime, rawABI := []byte(doc.DeployedBytecode), doc.ABI
+		var err error
 		if len(bytes.TrimSpace(rawABI)) == 0 || bytes.Equal(bytes.TrimSpace(rawABI), []byte("null")) {
 			lc0HarnessLoadErr = fmt.Errorf("lc0: pinned ABI artifact is empty")
 			return

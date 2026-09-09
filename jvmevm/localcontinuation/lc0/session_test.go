@@ -97,7 +97,7 @@ func lc0HarnessRequireRuntime(t *testing.T) {
 	t.Helper()
 	code, err := Runtime()
 	if err != nil {
-		t.Skipf("pinned LC0 runtime dependency unavailable (no EVM success claimed): %v", err)
+		t.Fatalf("required pinned LC0 runtime dependency unavailable: %v", err)
 	}
 	if len(code) == 0 || len(code) > 256*1024 {
 		t.Fatalf("runtime length %d outside frozen LOCAL bound", len(code))
@@ -415,6 +415,26 @@ func lc0HarnessExpectFailurePreservesHead(t *testing.T, session *Session, instan
 	}
 }
 
+// A failed publication must not expose its speculative child. Derive the retry
+// expectation from a separate successful EVM run, not from failed-call output.
+func lc0HarnessControlChild(t *testing.T, owner common.Address, instance common.Hash, fixture lc0HarnessFixture, parent Result) Result {
+	t.Helper()
+	control, err := NewMemory(owner)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer control.Close()
+	cp, err := control.Start(instance, fixture.Raw, fixture.EntryClass, fixture.Entry, fixture.Args, 1, 4096, lc0HarnessOrdinaryGas)
+	if err != nil || cp.Slice.CheckpointRoot != parent.Slice.CheckpointRoot {
+		t.Fatalf("control parent mismatch: %v", err)
+	}
+	child, err := control.Resume(instance, cp.Slice.Epoch, cp.Slice.CheckpointRoot, fixture.Raw, cp.Checkpoint, 1, 4096, lc0HarnessOrdinaryGas)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return child
+}
+
 func TestLC0HarnessDiskFailuresAndReopen(t *testing.T) {
 	lc0HarnessRequireRuntime(t)
 	owner := common.HexToAddress("0x20000000000000000000000000000000000000c0")
@@ -431,6 +451,7 @@ func TestLC0HarnessDiskFailuresAndReopen(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			controlChild := lc0HarnessControlChild(t, owner, instance, fixture, parent)
 			fired := false
 			session.testFault = func(got lc0HarnessFaultPoint) error {
 				if got == point && !fired {
@@ -443,8 +464,8 @@ func TestLC0HarnessDiskFailuresAndReopen(t *testing.T) {
 			if err == nil || !fired {
 				t.Fatalf("fault point %d did not fail", point)
 			}
-			if len(failedChild.Logs) != 0 {
-				t.Fatalf("fault point %d exposed an unpublished child log", point)
+			if len(failedChild.Logs) != 0 || len(failedChild.Checkpoint) != 0 || failedChild.Slice != (SliceResult{}) || failedChild.GasUsed == 0 {
+				t.Fatalf("fault point %d exposed an unpublished child or lost diagnostic gas", point)
 			}
 			session.testFault = nil
 			head, err := session.Head(instance)
@@ -458,8 +479,8 @@ func TestLC0HarnessDiskFailuresAndReopen(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if retry.Slice.CheckpointRoot != failedChild.Slice.CheckpointRoot || !bytes.Equal(retry.Checkpoint, failedChild.Checkpoint) {
-				t.Fatal("retry from old durable root differs from failed child")
+			if retry.Slice.CheckpointRoot != controlChild.Slice.CheckpointRoot || !bytes.Equal(retry.Checkpoint, controlChild.Checkpoint) {
+				t.Fatal("retry from old durable root differs from independent successful control")
 			}
 			if err := session.Close(); err != nil {
 				t.Fatal(err)
@@ -489,6 +510,7 @@ func TestLC0HarnessDiskFailuresAndReopen(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
+		controlChild := lc0HarnessControlChild(t, owner, instance, fixture, parent)
 		session.testFault = func(point lc0HarnessFaultPoint) error {
 			if point == lc0HarnessFaultAfterManifestRename {
 				return errors.New("ambiguous directory fsync")
@@ -499,8 +521,8 @@ func TestLC0HarnessDiskFailuresAndReopen(t *testing.T) {
 		if err == nil {
 			t.Fatal("after-publication failure was hidden")
 		}
-		if len(child.Logs) != 0 {
-			t.Fatal("ambiguous publication exposed a child log before reopen")
+		if len(child.Logs) != 0 || len(child.Checkpoint) != 0 || child.Slice != (SliceResult{}) {
+			t.Fatal("ambiguous publication exposed a speculative child before reopen")
 		}
 		if _, err := session.Head(instance); err == nil {
 			t.Fatal("ambiguous session remained usable")
@@ -512,8 +534,8 @@ func TestLC0HarnessDiskFailuresAndReopen(t *testing.T) {
 		}
 		defer reopened.Close()
 		head, err := reopened.Head(instance)
-		if err != nil || head.CheckpointRoot != child.Slice.CheckpointRoot {
-			t.Fatalf("published child not recovered by reopen: head=%+v child=%+v err=%v", head, child.Slice, err)
+		if err != nil || head.CheckpointRoot != controlChild.Slice.CheckpointRoot {
+			t.Fatalf("published child not recovered by reopen: head=%+v control=%+v err=%v", head, controlChild.Slice, err)
 		}
 	})
 }

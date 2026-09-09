@@ -350,7 +350,7 @@ contract LC0Interpreter {
         bytes memory ec = bytes(entryClass);
         bytes memory en = bytes(entry);
         if (ec.length == 0 || ec.length > 256 || en.length == 0 || en.length > 256
-            || !_ascii(ec) || !_ascii(en) || args.length > 8) revert LC0StateError(4, 0);
+            || !_ascii(ec) || !_ascii(en) || args.length > 8) revert LC0ControlError(6);
         int32[] memory initialArgs = args;
         bytes32 config = _configRoot(runtimeHash, artifact, ec, en, initialArgs);
         Program memory p = _prepare(rawClasses, ec, en, initialArgs);
@@ -616,6 +616,8 @@ contract LC0Interpreter {
         uint64 executedJvm, uint32 executedInternal
     ) private returns (SliceResult memory out, bytes memory checkpoint) {
         if (gasleft() <= COMMIT_RESERVE) revert LC0ControlError(7);
+        _validateRestoredReferences(p, s);
+        _validateInitAndFrames(p, s);
         bytes memory machine = _encodeMachine(p, s, entryClass, entry, args);
         bytes32 machineRoot = keccak256(abi.encode(
             DMACH, LC0_SCHEMA, artifact, config, keccak256(machine)
@@ -658,7 +660,9 @@ contract LC0Interpreter {
         at = _put(out, at, uint256(config), 32);
         at = _put(out, at, uint256(machineRoot), 32);
         at = _put(out, at, machine.length, 4);
-        for (uint256 i; i < machine.length; ++i) out[at + i] = machine[i];
+        assembly ("memory-safe") {
+            mcopy(add(add(out, 32), at), add(machine, 32), mload(machine))
+        }
     }
 
     function _decodeEnvelope(bytes calldata checkpoint)
@@ -683,7 +687,8 @@ contract LC0Interpreter {
         (v, at) = _get(b, at, 4, 0);
         if (v != b.length - CHECKPOINT_HEADER_BYTES) revert LC0StateError(2, at - 4);
         e.machineBytes = new bytes(v);
-        for (uint256 i; i < v; ++i) e.machineBytes[i] = b[at + i];
+        bytes memory machine = e.machineBytes;
+        assembly ("memory-safe") { mcopy(add(machine, 32), add(add(b, 32), at), v) }
         bytes32 computed = keccak256(abi.encode(
             DMACH, LC0_SCHEMA, e.artifactRoot, e.configRoot, keccak256(e.machineBytes)
         ));
@@ -813,15 +818,23 @@ contract LC0Interpreter {
         private pure returns (uint256)
     {
         at = _put(out, at, value.length, 2);
-        for (uint256 i; i < value.length; ++i) out[at++] = value[i];
-        return at;
+        assembly ("memory-safe") {
+            mcopy(add(add(out, 32), at), add(value, 32), mload(value))
+        }
+        return at + value.length;
     }
 
     function _put(bytes memory out, uint256 at, uint256 value, uint256 width)
         private pure returns (uint256)
     {
-        for (uint256 i; i < width; ++i) {
-            out[at + i] = bytes1(uint8(value >> (8 * (width - 1 - i))));
+        if (width == 0 || width > 32 || at > out.length || out.length - at < width) {
+            revert LC0StateError(2, at);
+        }
+        // Copy exactly the field width, including unaligned/end-of-buffer writes.
+        // Scratch is confined to 0..31; no writes past the allocated byte array.
+        assembly ("memory-safe") {
+            mstore(0, shl(mul(sub(32, width), 8), value))
+            mcopy(add(add(out, 32), at), 0, width)
         }
         return at + width;
     }
@@ -829,8 +842,14 @@ contract LC0Interpreter {
     function _get(bytes memory data, uint256 at, uint256 width, uint256 base)
         private pure returns (uint256 value, uint256 next)
     {
-        if (at > data.length || data.length - at < width) revert LC0StateError(2, base + at);
-        for (uint256 i; i < width; ++i) value = (value << 8) | uint8(data[at + i]);
+        if (width == 0 || width > 32 || at > data.length || data.length - at < width) {
+            revert LC0StateError(2, base + at);
+        }
+        assembly ("memory-safe") {
+            mstore(0, 0)
+            mcopy(0, add(add(data, 32), at), width)
+            value := shr(mul(sub(32, width), 8), mload(0))
+        }
         next = at + width;
     }
 
@@ -1027,6 +1046,7 @@ contract LC0Interpreter {
                     || !_validArrayLeaf(uint8(rank), meta, p.classes.length)) {
                     revert LC0StateError(6, base + recordAt);
                 }
+                _requireCellBytes(data, at, count, 8, base);
                 a.heap.arrayHeap[h] = new uint64[](count);
                 for (uint256 j; j < count; ++j) {
                     (uint256 cell, uint256 qn) = _get(data, at, 8, base); at = qn;
@@ -1044,6 +1064,7 @@ contract LC0Interpreter {
                     p.classes, ci, s.parentLinks, ROOT_FAULT_SENTINEL
                 );
                 if (count != expectedFields) revert LC0StateError(6, base + recordAt);
+                _requireCellBytes(data, at, count, 32, base);
                 a.heap.objectHeap[h] = new uint256[](count);
                 for (uint256 j; j < count; ++j) {
                     (uint256 cell, uint256 qn) = _get(data, at, 32, base); at = qn;
@@ -1094,6 +1115,16 @@ contract LC0Interpreter {
                 s.parentLinks, s.hierarchyState)) revert LC0StateError(7, 0);
             for (uint256 i; i < internCount; ++i) {
                 uint256 handle = a.internHandles[i];
+                uint256[] memory fields = a.heap.objectHeap[handle];
+                if (fields.length != a.stringDefaults.length
+                    || _valueKind(fields[a.stringValueOffset]) != KIND_REF) revert LC0StateError(7, 0);
+                uint256 backing = _payload(fields[a.stringValueOffset]);
+                if (backing == 0 || backing > nextHandle
+                    || a.heap.metadata[backing] != PRIMITIVE_CHAR
+                    || a.heap.ranks[backing] != 1) revert LC0StateError(7, 0);
+                for (uint256 j; j < a.heap.arrayHeap[backing].length; ++j) {
+                    if (a.heap.arrayHeap[backing][j] > 0xffff) revert LC0StateError(7, 0);
+                }
                 uint64[] memory units = _stringUnits(a, handle, ROOT_FAULT_SENTINEL);
                 uint32 actualHash = _stringHash(units);
                 uint256 cached = a.heap.objectHeap[handle][a.stringHashOffset];
@@ -1149,6 +1180,14 @@ contract LC0Interpreter {
                 _checkRefCell(f.locals[j], meta, s.nextHandle);
             }
         }
+        for (uint256 ci; ci < p.classes.length; ++ci) {
+            for (uint256 j; j < p.classes[ci].fields.length; ++j) {
+                if ((p.classes[ci].fields[j].accessFlags & 0x0008) != 0) {
+                    _checkCheckpointField(p, s, ci, j, s.staticValues[ci][j], 7);
+                }
+            }
+        }
+        uint256[][] memory layouts = new uint256[][](p.classes.length);
         for (uint256 h = 1; h <= s.nextHandle; ++h) {
             uint8 heapKind = _heapKindAt(meta[h]);
             if (heapKind == HEAP_ARRAY) {
@@ -1161,6 +1200,15 @@ contract LC0Interpreter {
                         if (cell > type(uint32).max) revert LC0StateError(6, 0);
                         uint256 ref = uint32(cell);
                         if (ref != 0 && (ref > s.nextHandle || _heapKindAt(meta[ref]) == 0)) {
+                            revert LC0StateError(6, 0);
+                        }
+                        if (ref != 0 && s.arena.heap.metadata[h] >= ARRAY_CLASS_BASE) {
+                            _validateHierarchy(p.classes, s.arena.heap.metadata[h] - ARRAY_CLASS_BASE,
+                                s.parentLinks, s.hierarchyState);
+                        }
+                        if (!_valueFitsArrayComponent(p.classes, _packRef(uint32(ref)),
+                            s.arena.heap.ranks[h], s.arena.heap.metadata[h], meta,
+                            s.arena.heap.classes, s.arena.heap.ranks, meta, s.parentLinks)) {
                             revert LC0StateError(6, 0);
                         }
                     } else {
@@ -1176,13 +1224,14 @@ contract LC0Interpreter {
                 continue;
             }
             uint256 ci = s.arena.heap.classes[h];
-            uint256[] memory defaults = _objectFieldDefaults(
-                p.classes, ci, s.arena.heap.objectHeap[h].length, s.parentLinks
-            );
+            if (layouts[ci].length == 0 && s.arena.heap.objectHeap[h].length != 0) {
+                layouts[ci] = _checkpointFieldLayout(p, s, ci, s.arena.heap.objectHeap[h].length);
+            }
             for (uint256 j; j < s.arena.heap.objectHeap[h].length; ++j) {
                 uint256 cell = s.arena.heap.objectHeap[h][j];
                 _checkRefCell(cell, meta, s.nextHandle);
-                if (_valueKind(cell) != _valueKind(defaults[j])) revert LC0StateError(6, 0);
+                _checkCheckpointField(p, s, layouts[ci][j] >> 128,
+                    uint128(layouts[ci][j]), cell, 6);
             }
         }
         // Every allocated canonical String is represented exactly once by the
@@ -1207,6 +1256,82 @@ contract LC0Interpreter {
                 if (_sameStringUnits(left, right)) revert LC0StateError(7, 0);
             }
         }
+    }
+
+    function _requireCellBytes(bytes memory data, uint256 at, uint256 count,
+        uint256 width, uint256 base) private pure {
+        uint256 available = (data.length - at) / width;
+        if (count > available) revert LC0StateError(2, base + at + available * width);
+    }
+
+    // EVM-derived declaration identities in physical base-first field order.
+    // Cache once per dynamic class; do not rebuild a default object for every record.
+    function _checkpointFieldLayout(Program memory p, RuntimeState memory s,
+        uint256 ci, uint256 count) private pure returns (uint256[] memory layout) {
+        layout = new uint256[](count);
+        uint256[] memory chain = new uint256[](p.classes.length);
+        uint256 depth;
+        uint256 current = ci;
+        while (true) {
+            chain[depth++] = current;
+            uint256 link = s.parentLinks[current];
+            if (link == 0 || link == type(uint256).max) break;
+            current = link - 1;
+        }
+        uint256 slot;
+        while (depth != 0) {
+            current = chain[--depth];
+            for (uint256 j; j < p.classes[current].fields.length; ++j) {
+                if ((p.classes[current].fields[j].accessFlags & 0x0008) == 0) {
+                    layout[slot++] = (current << 128) | j;
+                }
+            }
+        }
+        if (slot != count) revert LC0StateError(6, 0);
+    }
+
+    function _checkCheckpointField(Program memory p, RuntimeState memory s,
+        uint256 owner, uint256 field, uint256 value, uint256 errorCode) private pure {
+        ClassInfo memory c = p.classes[owner];
+        FieldInfo memory f = c.fields[field];
+        uint8 kind = _fieldKind(c, f);
+        if (_valueKind(value) != kind) revert LC0StateError(errorCode, 0);
+        if (kind == KIND_INT) {
+            uint32 bits = uint32(_payload(value));
+            if (_normalizeInt(bits, _fieldSubtype(c, f)) != bits) revert LC0StateError(errorCode, 0);
+        } else if (kind == KIND_REF) {
+            (uint256 off, uint256 n) = _utf(c.cp[f.descriptorIndex]);
+            if (!_checkpointReferenceFits(p, s, value, c.data, off, n)) revert LC0StateError(errorCode, 0);
+        }
+    }
+
+    function _checkpointReferenceFits(Program memory p, RuntimeState memory s,
+        uint256 value, bytes memory data, uint256 off, uint256 n) private pure returns (bool) {
+        uint256 h = _payload(value);
+        // As in the base interpreter, a null/default field does not resolve a
+        // dormant target class merely for checkpoint validation.
+        if (h == 0) return true;
+        if (h > s.nextHandle || _heapKindAt(s.arena.heap.metadata[h]) == 0) return false;
+        if (n != 0 && uint8(data[off]) == 0x5b) {
+            (bool structural, bool supported, uint8 rank, uint8 primitive,
+                uint256 nameOff, uint256 nameLen) = _arrayClassShape(data, off, n);
+            if (!structural || !supported || _heapKindAt(s.arena.heap.metadata[h]) != HEAP_ARRAY) return false;
+            uint256 leaf = primitive;
+            if (primitive == 0) {
+                (bool found, uint256 target) = _findClass(p.classes, data, nameOff, nameLen);
+                if (!found) return false;
+                _validateHierarchy(p.classes, target, s.parentLinks, s.hierarchyState);
+                leaf = ARRAY_CLASS_BASE + target;
+            }
+            return _arrayTypeAssignable(p.classes, s.arena.heap.ranks[h], s.arena.heap.metadata[h],
+                rank, leaf, s.parentLinks);
+        }
+        if (n < 3 || uint8(data[off]) != 0x4c || uint8(data[off + n - 1]) != 0x3b) return false;
+        (bool found, uint256 target) = _findClass(p.classes, data, off + 1, n - 2);
+        if (!found) return false;
+        _validateHierarchy(p.classes, target, s.parentLinks, s.hierarchyState);
+        if (_heapKindAt(s.arena.heap.metadata[h]) == HEAP_ARRAY) return _arrayImplementsClass(p.classes, target);
+        return _typeAssignable(p.classes, s.arena.heap.classes[h], target, s.parentLinks);
     }
 
     function _validateInitAndFrames(Program memory p, RuntimeState memory s) private pure {
@@ -1237,7 +1362,18 @@ contract LC0Interpreter {
                     || (s.arena.heap.metadata[f.thisHandle] & 0xff) != 0) {
                     revert LC0StateError(5, 0);
                 }
-            } else if (f.thisHandle != 0) revert LC0StateError(5, 0);
+            } else if (f.thisHandle != 0) {
+                // The base dispatcher retains thisHandle on ordinary private/
+                // superclass invokespecial frames as well as constructors.
+                // Validate that retained receiver instead of rejecting the state
+                // produced by a legitimate special call.
+                if (f.isInitializer || (uint16(p.classes[f.classIndex].methods[f.methodIndex]) & 0x0008) != 0
+                    || f.locals.length == 0 || !f.initialized[0]
+                    || f.locals[0] != _packRef(uint32(f.thisHandle))
+                    || _heapKindAt(s.arena.heap.metadata[f.thisHandle]) != HEAP_OBJECT
+                    || !_typeAssignable(p.classes, s.arena.heap.classes[f.thisHandle],
+                        f.classIndex, s.parentLinks)) revert LC0StateError(5, 0);
+            }
         }
         for (uint256 i; i < p.classes.length; ++i) {
             uint8 init = s.initializationState[i];
