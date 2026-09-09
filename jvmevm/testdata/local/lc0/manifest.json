@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "compiler": "javac --release 8 -g:none",
+  "fixtures": [
+    {
+      "id": "call-loop",
+      "entryClass": "LC0CallLoop",
+      "entry": "run",
+      "args": [5],
+      "result": 15,
+      "classes": ["LC0CallLoop.class"],
+      "sha256": ["4970ae2e395e96b91231b5d19439ba4fdfd6b91ef61429904c9fa758058c8302"]
+    },
+    {
+      "id": "alias-string",
+      "entryClass": "LC0AliasString",
+      "entry": "run",
+      "args": [],
+      "result": 36,
+      "classes": ["LC0AliasString.class", "LC0AliasBox.class"],
+      "sha256": [
+        "e7ec98bfb70650c23dfe2d1d63b86964d0aa35969b84c85db66945def6c0ec2f",
+        "43cb95765ad4f1568a12cc04ce2493aea08ad29916b60b7827231e40bae863c6"
+      ]
+    },
+    {
+      "id": "init-exception",
+      "entryClass": "LC0InitException",
+      "entry": "run",
+      "args": [],
+      "result": 10,
+      "classes": ["LC0InitException.class", "LC0InitDep.class"],
+      "sha256": [
+        "0c8005f33deac53eba1afda833ee71df28de99e1451c8f074c6e720e75b5fa9d",
+        "ac7aaf7e9d7d6ae457d55d52f1300060718e177fb8cc294f1fa80261b89e52c0"
+      ]
+    }
+  ]
+}
