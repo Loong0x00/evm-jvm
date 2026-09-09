@@ -139,3 +139,14 @@ java-stock-s1-test: java-stock-s1-check
 	go test -count=1 -timeout=15m ./jvmevm/stock/s1
 java-stock-s1-demo: java-stock-s1-check
 	go test -count=1 -v -run '^TestStockS1HarnessSignedAll82ReuseBudgetsPrefixesAndDirectReplay$$' ./jvmevm/stock/s1
+
+# Versioned scalar/fault stock migration; all prior profiles stay separate.
+.PHONY: java-stock-s2a-build java-stock-s2a-check java-stock-s2a-test java-stock-s2a-demo
+java-stock-s2a-build:
+	cd jvmevm/stock/s2a/runtime && npm ci --ignore-scripts && npm run build
+java-stock-s2a-check:
+	cd jvmevm/stock/s2a/runtime && npm ci --ignore-scripts && npm run check
+java-stock-s2a-test: java-stock-s2a-check
+	go test -count=1 -timeout=15m ./jvmevm/stock/s2a
+java-stock-s2a-demo: java-stock-s2a-check
+	go test -count=1 -v -run '^TestStockS2aHarnessSignedAll201ReuseBudgetsPrefixesAndDirectReplay$$' ./jvmevm/stock/s2a

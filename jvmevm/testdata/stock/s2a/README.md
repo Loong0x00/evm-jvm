@@ -42,3 +42,13 @@ The S2a Go package embeds only pinned artifacts under
 `jvmevm/stock/s2a/runtime/artifacts`. A harness-only checkout before the separate
 runtime commit is integrated fails on that missing embed dependency instead of
 substituting generated or fabricated bytecode.
+
+The `expected` number mirrors canonical `MachineV3.result`: it is zero on
+`java_exception` rows because a fault does not return an int. It is NOT a value-0
+outcome. The independent verifier also requires lifecycle3, kind1, exact fault PC,
+preserved zero-divisor operand and the explicit exception class. A JSON-null-only
+expectation was a harness/verifier schema disagreement, not an execution failure.
+
+Parent `javap` recheck confirms the wide class has260 literal instructions in the
+oversized unused method plus1 in `loadWide` (261 class-wide). The raw class/hash
+and eligible-literal quota have not changed.

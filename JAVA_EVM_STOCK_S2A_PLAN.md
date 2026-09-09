@@ -82,8 +82,8 @@ starts and bounded int-only height/definite-local flow analysis. This is not a f
 StackMapTable/classfile verifier. No private/void/internal-callable profile added.
 
 IMPORTANT WideIntegerConstant.class is a genuine3469-byte/CP277 input. Its unentered
-populateIntegerPool()I has Code793 and261 static literal sites, whereas loadWide()
-has Code4 and a real ldc_w. Reject selecting the oversized method (method error5),
+populateIntegerPool()I has Code793 and260 static literal sites, whereas loadWide()
+has Code4 and one real ldc_w (261 class-wide, independently checked with javap). Reject selecting the oversized method (method error5),
 but retain/register the class and execute loadWide. Do not leak partial ineligible
 literals into the256 aggregate cap or replace the wide load with host resolution.
 
@@ -247,7 +247,7 @@ narrowing; faultoperand prefix/local preservation, exactPC andsingle-count fault
 fault atcap vsbeforecap/return atcap; capbeforefault mustnotpredictfault; terminal
 resume reject; dirty/reserve/OOGrollback before and after nonzeroprogress andwhile
 attemptingfault, malformed replykind/pc/stack/lifecycle/tags. Wide unusedCode793 /
-261literals discarded while loadWide works; valid maximum32methods/256literals/
+260literals discarded while loadWide's additional literal works; valid maximum32methods/256literals/
 6336payload registration<=8M andliteral-heavy execution<=2M. Correctfixturebody
 validity verifiedonJVM, not mislabeled uninitialized methods. Retain all S1 same-PC
 loops, args0..4 (not6), eight-local and exact profile checks. No host SOE.
