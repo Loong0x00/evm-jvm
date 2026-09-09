@@ -133,6 +133,21 @@ const bootstraps = [
     name: 'ArrayIndexOutOfBoundsException', packagePath: ['java', 'lang'],
     expectedSource: 'package java.lang; public class ArrayIndexOutOfBoundsException extends IndexOutOfBoundsException {}\n',
     bytes: 174, hash: '2309a8d0ad31f094867d449013000340f2b22e412d7cb770f93fbc05a8439c99'
+  },
+  {
+    name: 'Comparable', packagePath: ['java', 'lang'],
+    expectedSource: 'package java.lang; public interface Comparable<T> { public int compareTo(T other); }\n',
+    bytes: 196, hash: '9d291a315ca765cdcb404feb72aa3d6f1216e542476ec071238fe105f2b85775'
+  },
+  {
+    name: 'CharSequence', packagePath: ['java', 'lang'],
+    expectedSource: 'package java.lang; public interface CharSequence { public int length(); public char charAt(int index); public CharSequence subSequence(int start, int end); public String toString(); }\n',
+    bytes: 216, hash: 'c996ea063c00b6a8e320c73d81660bf2a733e492c312a032205c8d4f1e051576'
+  },
+  {
+    name: 'String', packagePath: ['java', 'lang'],
+    expectedSource: 'package java.lang; public final class String implements java.io.Serializable, Comparable<String>, CharSequence { private final char[] value; private int hash; private String() { value = null; } public native int length(); public native boolean isEmpty(); public native char charAt(int index); public native boolean equals(Object other); public native int hashCode(); public native String toString(); public native int compareTo(String other); public native String intern(); public native CharSequence subSequence(int start, int end); }\n',
+    bytes: 787, hash: '5582fd23db2e4bfeb3e6cc3b82de587c74cadb4773883e9bd71e08aafd95f4fe'
   }
 ];
 const source = fs.readFileSync(path.join(dir, sourceName), 'utf8');
