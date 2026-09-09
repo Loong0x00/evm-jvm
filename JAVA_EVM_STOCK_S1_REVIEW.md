@@ -4,7 +4,8 @@ Review target: integrated commit `b01b9e6626e1372b9a19c4dd6960863c09e5f100` and 
 
 ## Result
 
-**Stock S1 is not acceptable against the frozen registration budget.** I reproduced the known 8M aggregate failure with a corrected boundary class in which all 31 test methods (32 declared methods including the constructor) are individually eligible. This removes the integrated verifier's uninitialized-local confounder and measures an even higher valid-boundary cost.
+**At the reviewed base, Stock S1 failed the frozen registration budget.** Parent
+resolution and success-required final regressions are recorded below. I reproduced the known 8M aggregate failure with a corrected boundary class in which all 31 test methods (32 declared methods including the constructor) are individually eligible. This removes the integrated verifier's uninitialized-local confounder and measures an even higher valid-boundary cost.
 
 I found no additional reproducible production semantic defect in the reviewed parser/selection, branch dataflow, metadata provenance/root/literal cache, argument initialization, loop progress/lifecycle/cap, reserve/atomicity, resume, or signed-replay paths. That statement is limited to the frozen S1 integer profile and the checked artifacts; it is not S1 acceptance or a general JVM claim.
 
@@ -101,3 +102,44 @@ go test ./jvmevm/stock/s1 -count=1 -timeout=20m
 ```
 
 The first two commands pass. The full package remains red at `TestStockS1VerifyParserCapsMetadataCanonicalityAndSelection/declared32-literals256-metadata6336`, with exact `S1ClassError(6,0)` under 8M. Ignored logs are under `build/java-diff-stock-s1-review/`.
+
+## Parent resolution
+
+Parent independently confirmed both findings before accepting any result. The
+original aggregate contained27 uninitialized-local methods and could not support
+the verifier's all-eligible expectation. Their two-byte bodies now use iconst0 /
+ireturn, preserving raw length1959,32 methods,256 literals and6336-byte metadata
+payload. Parent executed ALL31 public methods on Java8/21 to prove the corrected
+class is valid, then executed the four nonempty literal slices and the final
+zero-literal method in S1 at unchanged2M resume budgets.
+
+Using this identical corrected class in the parent verifier sequence, the old
+parser needed8449776gas (diagnostic12M only). S1MetadataPage performed a bytewise
+copy; standard Cancun MCOPY into a distinct zero-prefixed bounded allocation
+reduces registration to6923070gas at unchanged8M. Parser runtime15393->15271bytes;
+step8408 and coordinator6328-byte templates unchanged. Class/metadata bytes,
+32-method/256-literal caps, eligibility and EVM rules were not weakened.
+
+The review's own signed sequence now requires success at8M, measures6942970gas,
+and preserves exact metadata hash0x87a5a64d2930ac494f01e5e3bf8606e5b7f6515b73728b7b14228052f8d102fb.
+Its separately underfunded6M attempt proves unchanged parser nonce, empty would-be
+metadata page and absent registry entry/logs before the successful retry. No
+12M budget remains in an acceptance test. Different parent/reviewer transaction
+sequences are reported separately, not presented as identical gas contexts.
+
+The original invalid class remains an explicit classification negative: all27
+bad method records must be domain2/code11/pc0 and selecting m04 must fail with
+S1BytecodeError(11,0). The bounded metadata helper is not used to claim those
+methods are eligible in the valid maximum gate.
+
+Additional parent probes:48 Java8/21 eight-local integer-loop runs at64/128 budgets,
+including a quantum1 prefix, min/max overflow and failed-dirty-budget retry;
+52 gas-threshold cases with four initialized args/eight locals before and after
+progress. All pass. No additional production semantic defect was demonstrated.
+
+Parent ran pinned compiler build/check and integrated S1 tests; the review's
+missing-solc caveat applies only to its original worktree. Evidence includes
+/tmp/stock-s1-parent-valid-aggregate-before.log,
+/tmp/stock-s1-parent-aggregate-exec.log,
+/tmp/stock-s1-parent-probes.log,
+/tmp/stock-s1-parent-review-green.log and final-gate logs referenced in S1 plan.

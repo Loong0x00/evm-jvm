@@ -1,10 +1,12 @@
 # Stock S1: reusable EVM parsing and unchanged M1/M2 workloads
 
-FROZEN implementation contract; authority JAVA_EVM_PROGRAM.md. Supersedes
+ACCEPTED after parent integration, independent review, fixes and final gates below.
+Authoritative contract; authority JAVA_EVM_PROGRAM.md. Supersedes
 alternative choices in JAVA_EVM_STOCK_S1_{ARCHITECTURE,ORACLE}_PROPOSAL.md.
 Accepted base a6adae7: S0 separate stock foundation, M5d-a2231-case monolith
 unchanged154839bytes SHA dfc81dbbea8253c644be2532a809a417bb40cd07eaca8ab5be72a84721eae929.
-S1 NOT accepted yet; no full-interpreter deployment or Minecraft claim. Target
+S1 acceptance covers only this integer profile, not full-interpreter deployment
+or Minecraft. Target
 remains genuine unchanged MC startup-complete marker in original EVM; connectivity
 optional,1.12.2 candidate. No server execution/EULA decision in this slice.
 
@@ -299,3 +301,68 @@ bootstrap/demos/AOT/vet gates. Parent adds separate java-stock-s1-* targets/coun
 integrates runtime->harness->verifier and independentlyprobes beforeacceptance.
 Then choose next real semantic migration by measureddependencies, not an assumed
 mechanical split or a claim that one integer stage supplies Java/Minecraft.
+
+## Parent acceptance record
+
+Integrated runtime da94a82, harness/catalogue38cfa43, verifierb01b9e6 and independent
+review2160e65. Parent optimization/valid-boundary/probes c4391cc, gates2259e4a,
+review success-required transition921d822. Final logs:
+/tmp/stock-s1-legacy-main.log and /tmp/stock-s1-final-other.log; both .exit files0.
+
+All82 unchanged rows,5rawclass hashes,39programs and2213 exact dynamic instructions
+passed JVM8/JVM21/monolith comparisons and signed Stock S1 at64/128, plus small
+budgets/prefixes, same-PC progress and deterministic direct signed replays. Catalogue
+root0xf98038bd7cb12d165c0b22dd7feca869803efce86a8194f4a3ddb1973f84764b
+binds all82 rows; no deduplication of argumentvectors or oldgas-limit changes.
+
+Real EVM parser/factory issued five immutable metadata pages, reused for all roots/
+arguments. Shared setup12transactions/11790544gas on final artifacts. The full signed
+harness matrix (including repeated small-budget/prefix instances and idempotence
+checks) reports1173 transactions/831940953gas, NOT one transaction/case. Per-case
+stock costs are separate from legacy invocation budgets. Representative full costs:
+- sum(100),64steps:13resumes/18isolatedtx,11211708isolatedgas, value5050/806steps;
+- sum(100),128steps:7resumes/12isolatedtx,10324488isolatedgas;
+- fibonacci(30),64steps:6resumes/11isolatedtx,9562809gas,value832040/368steps;
+- fibonacci(30),128steps:3resumes/8isolatedtx,9055443gas.
+Signed wall-time headers are recorded, not falsely claimed identical. Direct replay
+under identical explicit contexts compares exact roots, gas and canonical checkpoints.
+
+Parent independently addressed both review findings, not by raising budgets:
+1. The aggregate fixture's27 no-literal methods read uninitialized local0. Replace
+   with same-length iconst0/ireturn; method/literal/metadata sizes unchanged. Real
+   JVM8/21 executes all31 public methods; EVM executes all four nonempty literal
+   slices and the final zero-literal method. Original invalidshape retained as
+   negative: all27records domain2/code11/pc0, selecting m04 throws exactBytecode11.
+2. Bytewise metadata-page constructor copying caused the valid maximum to exceed
+   8M. Standard Cancun MCOPY into fresh STOP-prefixed allocation reduces the SAME
+   valid parent sequence8449776->6923070gas, keeping32methods/256literals/6336payload.
+   Review sequence now6942970gas at8M, after a separate6M failure proving parsernonce,
+   registry, internalCREATE code and logs roll back. No12M acceptance-test budgets.
+
+Parent additionally ran48 JVM8/21 eight-local/min-max/overflow/loop cases at64/128,
+including a quantum1prefix and dirty-budget rollback/retry;52 gas-threshold probes
+with four args/eight locals before andafter progress. All pass. S1 parser includes
+bounded int-only stack-height/definite-local flow checks with deferred method error
+records; this is NOT a full classfile/StackMapTable/Java verifier.
+
+Final pinned runtime templates:
+- S1ClassParser15271bytes SHA256
+  72003f0a79f1d724f667afb38d869c9c48e94585a0f60d82ac7871a7b230ec80;
+- S1StepModule8408bytes SHA256
+  9c70f525c57139efdae676555ada7fc28dfc307be1694376f7e525a675dcee35;
+- S1Coordinator6328bytes SHA256
+  957472808404f19124cb5b5f8440e5186d8d3f7eec60da9451fb150a2a37e9f8.
+Metadata dynamic actualmaximum tested6337bytes (STOP included), cap8192. Coordinator
+actualdeployedhashes/immutable references/getters verified, not confused with template.
+All contracts registered/deployed through ordinary CREATE, not host code injection.
+
+Pinned S1 build/check/test/demo, S0 check/test/demo, all2231 legacy JVM/EVM cases,
+GoCLI/36Python/24bootstraps/artifact/1040smoke/1060fast/demos/AOT/focusedvet green.
+No modifications to S0 runtime, monolith, legacy inputs/budgets, core/EVM/params/
+consensus. Evidence and historical measurements: JAVA_EVM_STOCK_S1_REVIEW.md.
+
+Next proposal preflight: measured completion of integer families and ordinary
+static-call/frame migration (compare exact M2b/M3a workloads), with persistent
+frame/state design rather than copying the whole interpreter memory graph. No
+next implementation frozen. S1 still has no calls/heap/FP/handlers/libraries/MC;
+M5d-a's full2231 profile remains a separate local-runtime interpreter.

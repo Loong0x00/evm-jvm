@@ -118,7 +118,7 @@ routine permission to start the next verified increment.
 | M5d-a | implicit exceptions/handler/unwind foundation | accepted;2231 cases plus179 parent probes/8 init regressions/field boundary, prior192 retained |
 | M5d-b+ | fresh user Throwable construction/APIs and remaining JVM/library features | queued; freeze separately |
 | Stock-EVM S0 | ordinary deployment/signed replay/bounded persistent integer stepping | accepted JAVA_EVM_STOCK_S0_PLAN.md; separate subset, NOT M5da migration |
-| Stock-EVM S1 | actual legacy integer workloads/arguments/control flow and reusable parsing/state | frozen JAVA_EVM_STOCK_S1_PLAN.md; implementation next, not accepted |
+| Stock-EVM S1 | actual legacy integer workloads/arguments/control flow and reusable parsing/state | accepted JAVA_EVM_STOCK_S1_PLAN.md;82rows/39roots, schema2 |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | queued; MC1.12.2 candidate inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 
@@ -153,14 +153,19 @@ Old2231suite/GoCLI/36Python/bootstrap/artifact/smoke/fast/demos/AOT/vet remain g
 no original-EVM/core/params/consensus modification. This is NOT full M5da deployment
 or Minecraft execution. Keep S0/legacy case counts separate.
 
-S1 proposals61afae9/e45efa2 integrated; parent independently regenerated all5
-legacy class hashes. Architecture prototype passed loops but used host offsets:
-LOWER-BOUND evidence only, explicitly not a production path or S1 acceptance.
-S1 now FROZEN in JAVA_EVM_STOCK_S1_PLAN.md: actual82 unchanged M1/M2 rows,39roots,
-EVM parser-issued immutable reusable metadata, named0..4int entries,8locals,
-branches/loops and finite schema2 STEP_LIMIT. New versionedstock/s1 paths only.
-Class cap32methods/256cachedliterals keeps metadata<8KiB; pertx8Msetup/2Mresume,
-800kreserve,64/128whole-corpus budgets; oldgas_limits untouched/separate reporting.
-Runtime/harness/verifier proceed separately, one Solidity writer. No S1/fullM5da/
-Minecraft deployment acceptance yet; M5d-b0 proposal d5baf88 remains queued.
-Sol/high NO Fast, no routine confirmation; preserve accepted S0 and monolith.
+Stock S1 ACCEPTED per JAVA_EVM_STOCK_S1_PLAN.md: exact82rows/39roots/5classes/2213
+instructions via signed64/128runs, JVM8/21 andmonolith; EVM-derived immutablemetadata
+reused, no hostoffsets. Cataloguef98038bd7cb12d165c0b22dd7feca869803efce86a8194f4a3ddb1973f84764b.
+Parser15271/step8408/coordinator6328-byte templates fitstandarddeployment. All old2231
+and S0 gates retainedgreen. Sharedsetup12tx/11790544gas; sum100128step7resumes,
+value5050,isolated10324488gas; fib30value832040. FiniteSTEP_LIMIT notJavaoutcome.
+Parent+review fixedvalidaggregate budget via MCOPY (8449776->6923070,8Munchanged)
+andinvalidtestmethods,48eight-local loopprobes+52gasthresholds green. Details/logs/
+hashes in plan/review. No originalEVM/core/gas/limit change or MC execution.
+
+Next proposal-only preflight compares exact M2b/M3a workload migration: complete
+integer families, terminal Java faults and static calls/persistent frames, measured
+module/state/metadata interfaces without whole-heap ABI copies. Parent chooses
+bounded nextslice afterarchitecture+oracle evidence; no implementationfrozen yet.
+M5d-b0 identity proposal remains queued; no fullM5da deployment/MC startupclaim.
+One Solidity writer, Sol/high NOFast, no routineconfirmation.

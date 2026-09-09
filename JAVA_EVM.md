@@ -21,7 +21,9 @@ not necessarily client connectivity. `JAVA_EVM_MC_STARTUP_PROPOSAL.md` recommend
 1.12.2 as first candidate; no server has run. Separate stock-deployment/continuation
 slice S0 is accepted in `JAVA_EVM_STOCK_S0_PLAN.md`: small integer programs execute
 through ordinary CREATE and signed resume transactions. It is NOT deployment of
-the full interpreter; actual workload migration and Java bootstrap changes are next.
+the full interpreter. S1 now also executes the82 original M1/M2 workloads through
+EVM-derived reusable metadata, named arguments and bounded branch/loop resumes;
+static calls, broader types/libraries and MC startup remain later work.
 
 ## Quickstart / stage gates
 
@@ -564,3 +566,32 @@ were fixed, not hidden by higher limits. See JAVA_EVM_STOCK_S0_REVIEW.md.
 
 S0 does NOT make all2231 M5d-a cases deployable, supply a persistent general JVM,
 or reach Minecraft startup. Those remain separate migration/library milestones.
+
+## Stock S1: real legacy workloads and reusable metadata
+
+```sh
+make java-stock-s1-test
+make java-stock-s1-demo
+```
+
+S1 runs ALL82 unchanged M1/M2 rows (5rawclasses/39named roots), not wrappers or
+host-derived offsets. EVM parses each class once, creates an immutable metadata
+page, selects `(I...)I` entries and initializes arguments. Signed resumes preserve
+up to8locals, int32 arithmetic and branch/loop state; even unchanged PC can be real
+progress. A committed instruction cap produces STEP_LIMIT, never a fake Java value.
+
+The parser15271bytes, stepmodule8408bytes and coordinator6328-byte template obey
+ordinary deployment limits. At128-step quantum, sum(100) returns5050 after7resumes
+(806instructions), fibonacci(30) returns832040 after3resumes (368instructions).
+Isolated full setup+execution costs respectively10324488 and9055443gas; these are
+NOT the old monolith's per-invocation budgets. Five parsed pages are reusable.
+
+JVM8/21, signed/direct replay, catalogue/root/trace checks,48parent loop probes,
+52gas thresholds and maximum metadata registration all pass. Parent fixed a real
+registration cost issue and corrected an invalid quota fixture without increasing
+caps. Original2231 cases and S0 remain green and counted separately.
+
+This is still single-class, one-frame Java-int execution: no static calls, general
+heap, long/FP, handlers, libraries or MC startup on this stock path yet. Those
+capabilities in the separate M5d-a monolith are not claimed migrated automatically.
+See JAVA_EVM_STOCK_S1_PLAN.md and JAVA_EVM_STOCK_S1_REVIEW.md for exact evidence.
