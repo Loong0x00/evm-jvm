@@ -23,8 +23,11 @@ JAVA_EVM_STOCK_S1_PLAN.md: all82 unchanged M1/M2 rows, EVM-derived reusable meta
 named entries/int args, branch/loop-safe schema2 and finite step-limit outcome.
 Parser15271/step8408/coordinator6328-byte templates;48parent loop+52threshold probes,
 reviewed aggregate boundary fixed without raising8M. Preserve S0/S1/monolith/old
-fixtures. Next integer/static-call/persistent-frame proposals, no next freeze yet.
-M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
+fixtures. **S2a now frozen** in JAVA_EVM_STOCK_S2A_PLAN.md: all201 M1/M2/M2b rows,
+scalar integer completion and terminal arithmetic faults, one frame only. New
+stock/s2a paths; no speculative frame store/call metadata or S2b execution yet.
+Future frame writes need separately measured reserve/delta design. M5d-b0 retained;
+still no full-profile deployment, libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
