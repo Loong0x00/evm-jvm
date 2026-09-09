@@ -19,11 +19,11 @@ profile errors. `charAt` supports valid indices only; invalid indices are a hard
 `StringProfileError`, not a modeled String bounds exception. String construction,
 Class mirrors, a main launcher, formatting, logging and continuation are deferred.
 
-Current parent-reviewed candidate is166334bytes, SHA256
-`ff9c9ff093e9d4885d7546e01db7aacd95cf999d5cf9b6d6b130fd43b791b982`.
+Current accepted MC-LB0 runtime is166385bytes, SHA256
+`ea94075540b8b66aa8e85823ee66e9dba4a2be65f29942855a8f59478bca0cbf`.
 Parent fixed inheritedStringlayout overflow to use ordinary catchable OOM rather
-than a bootstrap-format error. Integration/legacy gates passed; see
-`JAVA_EVM_MC_LB0_REVIEW.md` for evidence and pending extra review.
+than a bootstrap-format error. Parent also fixed malformed String-call descriptor precedence. Independentreview
+and allintegration/legacy gates passed; see `JAVA_EVM_MC_LB0_REVIEW.md`.
 
 Local MC-LB0 tests use separately labelled finite ceilings: **100,000,000 gas / 30s**
 for ordinary cases and **1,000,000,000 gas / 120s** for dedicated boundary probes.

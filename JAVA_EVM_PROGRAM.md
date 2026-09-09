@@ -170,8 +170,8 @@ routine permission to start the next verified increment.
 | Stock-EVM S1 | actual legacy integer workloads/arguments/control flow and reusable parsing/state | accepted JAVA_EVM_STOCK_S1_PLAN.md;82rows/39roots, schema2 |
 | Stock-EVM S2a | integer completion and terminal arithmetic faults | accepted JAVA_EVM_STOCK_S2A_PLAN.md;201rows/60roots, one frame |
 | Stock-EVM S2b-L | schema4 callmetadata and S2a reparse adapter, registration ONLY | accepted JAVA_EVM_STOCK_S2BL_REVIEW.md;14classes/51callrecords, NO268stock execution |
-| Local MC-LB0 | richer-monolith MUTF8/String literals/intern identity | candidatef50fe14;64newcases/198parentEVM probes/alllegacygates PASS, extraindependentreview pending; JAVA_EVM_MC_LB0_REVIEW.md |
-| Local continuation/platform | EVM-owned canonical checkpoints then VFS/minimal scheduler | proposal JAVA_EVM_MC_LOCAL_CONTINUATION_PROPOSAL.md; not frozen/implemented |
+| Local MC-LB0 | richer-monolith MUTF8/String literals/intern identity | ACCEPTED;64newcases/198parentEVM/17reviewprobes/alllegacygates PASS; JAVA_EVM_MC_LB0_REVIEW.md |
+| Local continuation/platform | EVM-owned canonical checkpoints then VFS/minimal scheduler | preflight JAVA_EVM_MC_LC0_PREFLIGHT.md parent-reproduced extraction; decode/resume/restart not implemented |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | local MC dependency priority; selected1.12.2 static inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 

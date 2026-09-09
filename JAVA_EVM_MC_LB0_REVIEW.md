@@ -1,7 +1,6 @@
 # MC-LB0 parent integration review
 
-Status: **parent integration/regression gates PASS; extra independent review still
-pending**. Not yet the final LB0 acceptance checkpoint. Frozen920798f and latest
+Status: **ACCEPTED after parent integration, independent review and final regressions**. Frozen920798f and latest
 JAVA_EVM_PROGRAM.md apply. This is LOCAL String-core evidence, not MC startup,
 standard deployment, full String/JRE support or continuation.
 
@@ -19,8 +18,8 @@ retained, including a subsequent ordinaryObject allocation and anotherStringmiss
 A separate failedString ConstantValue preparation correctly marks its owner
 erroneous and produces subsequentNCDFE12, result19, gas17990430.
 
-Final candidate runtime: **166334bytes**,
-SHA256 **ff9c9ff093e9d4885d7546e01db7aacd95cf999d5cf9b6d6b130fd43b791b982**.
+Final accepted runtime: **166385bytes**,
+SHA256 **ea94075540b8b66aa8e85823ee66e9dba4a2be65f29942855a8f59478bca0cbf**.
 Pinned solc0.8.30/optimizer200/viaIR/Cancun/metadataoff reproduces it. All24old
 bootstrap source/hex images are byte-identical; three new profiles total27:
 Comparable196B,CharSequence216B,String787B, hashes frozen in LB0plan/build.js.
@@ -47,7 +46,7 @@ standarddeployment setup; no standardCREATE/transactiongas claim.
   are explicit EVMprofile tests, NOT a hostJVM with replacement java.lang.Object.
   TotalparentEVM probes198; only the192semanticvectors have JVMparity claims.
 
-Final candidate dedicated verifier measurements (all<=frozen1B/120s):
+Final accepted dedicated verifier measurements (all<=frozen1B/120s):
 
 | Boundary | gas |
 |---|---:|
@@ -68,7 +67,7 @@ Per-invocation Stringobjects/chararrays/pool use the same authoritative handle h
 and counters as ordinaryallocations/exceptions. No host-created Java state.
 
 ## Regression and oracle-pin review
-Parent `/tmp/mc-lb0-parent-final-gates.exit` is0:
+Parent FINAL `/tmp/mc-lb0-review-final-gates.exit` is0 (after both runtime fixes):
 - make java-test:27bootstrap/artifact/GoCLI/36Python/2231full PASS.
 - make java-smoke java-fast:1040/1060PASS (tiernames not CodexFast).
 - make java-demo java-aot-test:PASS.
@@ -79,10 +78,10 @@ Parent `/tmp/mc-lb0-parent-final-gates.exit` is0:
 
 The first pre-fix fullrun passed2231/smoke/fast/GoCLI/Python but stopped at S1's
 hardcoded historical monolith TEST-oracle hash. Parent explicitly preserved that
-old dfc81dbb... pin and added ONLY reviewedcurrentff9c9ff0... to S1/S2a oracle
+old dfc81dbb... pin and added ONLY reviewedcurrentea940755... to S1/S2a oracle
 allowlists. Independently reran unchanged82/201catalogue comparisons successfully
 before fullregression. Stock executable artifacts, inputbytes, outcomes and budgets
-were not changed. Go monolith expectedRuntimeHash now pins currentff9c9ff0... .
+were not changed. Go monolith expectedRuntimeHash now pins currentea940755... .
 No obsolete tag8negative was found or deleted; Classliteral remainsBytecode13.
 Old24bootstrap comparison and upstreamcore/protocol diff are clean.
 
@@ -92,9 +91,22 @@ initialstockpin run is /tmp/mc-lb0-parent-legacy-gates.log/.exit=2, not a passin
 acceptance log. `mc_lb0_parent_test.go` keeps generatedseed/rawlayout reproducers.
 
 ## Remaining boundary
-Extra independentStringreview at /home/user/evm-jvm/mc-lb0-independent-review is
-pending. LC0 actual-engine checkpoint feasibility preflight is separately active
-at /home/user/evm-jvm/mc-lc0-preflight; no productioncontinuation freeze yet.
+Independentreview f7fc20e9 ->a789bda found malformed String-profile descriptors
+misclassified as StringProfileError1 on virtual/interface/static paths. Parent
+reproduced allthree and fixed d07c72c: shared descriptor validation now yields
+CallError4 before profile fallback, without changing ordinary linkage precedence.
+All17 independent probes now pass, including preserved14positive probes. Current
+artifact pins were explicitly updated to ea940755... (166385B); the oldff9c9ff0...
+reviewtarget remains historical evidence in the independentreview document.
+
+LC0 preflight f3d2e81 ->a54abad is complete and parent-reproduced: real-engine
+state extraction only, maximum596480B/12883262gas. No decode/resume/CAS/restart
+execution yet; freeze that next bounded slice separately.
 charAt outsidevalidindex and deferredString/new/format/etc APIs remain hardprofile
 errors. Root still(I...)I, no main/Stringconstruction/Class/VFS/thread/scheduler/
 logger or MC execution. No EULA acceptance or realDone output.
+
+Final descriptor logs: /tmp/mc-lb0-parent-descriptor-{initial,fixed,build}.log;
+/tmp/mc-lb0-parent-review-{integrated,buildcheck}.log;
+/tmp/mc-lb0-review-final-gates.log/.exit=0. Earlier ff9c9ff0 parentgreen logs
+are retained but do not substitute for these final-artifact regressions.

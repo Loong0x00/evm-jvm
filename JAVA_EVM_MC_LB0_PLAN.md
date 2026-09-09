@@ -1,6 +1,7 @@
 # MC-LB0: LOCAL String literal and identity core
 
-FROZEN next implementation contract. Authority JAVA_EVM_PROGRAM.md: artistic
+ACCEPTED; parent/independent review and final gates in JAVA_EVM_MC_LB0_REVIEW.md.
+Frozen implementation contract retained below. Authority JAVA_EVM_PROGRAM.md: artistic
 EVM->JVM->unchanged vanilla MC1.12.2/Java8, local finite high gas permitted. NO
 complete JavaSE/standard deployment prerequisite. S2b-L accepted bbaa023 separately.
 Proposals fec1faf/4dba0a2 reviewed; recommendations refined below. No server run,

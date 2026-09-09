@@ -1,4 +1,4 @@
-# Java inside EVM: staged interpreter (M5d-a)
+# Java inside EVM: LOCAL String core (MC-LB0)
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -9,8 +9,8 @@ The host does not parse, translate, specialize or evaluate Java on this path.
 This is a **limited JVM subset, not full Java or Minecraft**. `javac` and the
 Solidity compiler operate at build time. A host JVM is used only as a test oracle.
 
-**Local execution, not mainnet deployment:** the current MC-LB0 candidate runtime
-is166,334bytes and exceeds EIP-170's24,576-byte deployed-code limit. Geth `runtime.Execute` installs
+**Local execution, not mainnet deployment:** the current accepted MC-LB0 runtime
+is166,385bytes and exceeds EIP-170's24,576-byte deployed-code limit. Geth `runtime.Execute` installs
 runtime code directly into its temporary state; no CREATE/deployment is tested.
 Execution remains real EVM bytecode, with no host Java fallback or consensus edits.
 
@@ -40,12 +40,11 @@ under8M on both paths. `make java-stock-s2bl-test java-stock-s2bl-demo` reproduc
 its separate evidence. Next priority is local MC bootstrap/platform/continuation,
 not completing every standard-deployment migration first.
 
-**MC-LB0 candidate:** String literals/MUTF8/intern and a narrow method profile now
+**MC-LB0 accepted:** String literals/MUTF8/intern and a narrow method profile now
 pass64newcases,198parentEVM probes and all oldregressions. Parentfixed inherited
 Stringfield overflow to catchableOOM. RuntimeSHA256
-`ff9c9ff093e9d4885d7546e01db7aacd95cf999d5cf9b6d6b130fd43b791b982`;
-27bootstraps,24oldimages unchanged. Extraindependentreview is pending, not yet final
-acceptance. `make java-mc-lb0-test java-mc-lb0-demo`; see
+`ea94075540b8b66aa8e85823ee66e9dba4a2be65f29942855a8f59478bca0cbf`;
+27bootstraps,24oldimages unchanged. Independentreview17probes and descriptor-error fix also pass. `make java-mc-lb0-test java-mc-lb0-demo`; see
 `JAVA_EVM_MC_LB0_REVIEW.md`. No main/VFS/threads/continuation/MCrun yet.
 
 ## Quickstart / stage gates

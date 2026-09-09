@@ -109,3 +109,10 @@ Java String/Object APIs. It adds no `main`, VFS, scheduler, thread, output,
 listener, server execution, EULA acceptance, Minecraft startup, or ready-marker
 evidence. The 64-row catalogue, parent UTF-16 vectors, and broad old gates remain
 parent-owned evidence and were not recounted as independent probes here.
+
+## Parent integration resolution
+
+The finding above records historical f50fe14 behavior. Parent reproduced it and
+fixed d07c72c, validated every17reviewprobe, rebuilt166385B runtime SHA256
+`ea94075540b8b66aa8e85823ee66e9dba4a2be65f29942855a8f59478bca0cbf`, and reran allLB0/2231/stock/Python/artifact/demo/AOT/vet gates successfully.
+No malformed-descriptor test was removed or weakened. See JAVA_EVM_MC_LB0_REVIEW.md.

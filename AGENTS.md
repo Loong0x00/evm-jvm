@@ -45,13 +45,13 @@ Parser15659/step9470/coordinator7694-byte templates, no runtime defect demonstra
 linker4643B template. Parent fixed linker dimension caps; order/CFG/revert probes
 and ALL oldgates pass. Direct7668234/adapter7680072gas for7936metadata at8M. NO frame
 store/resume/268-row execution claim. Frame5-word/4-touched remains proposal-only.
-LOCAL MC1.12.2 **MC-LB0 candidate integrated**, frozen JAVA_EVM_MC_LB0_PLAN.md;
-parentgates in JAVA_EVM_MC_LB0_REVIEW.md. Runtime166334B SHAff9c9ff0...,27bootstraps
-(24oldbytes unchanged).64newcases+198parentEVM probes and ALL oldgates pass; parent
-fixed inheritedStringfields quota toOOM7. Extra independentreview remainspending,
-so no finalLB0acceptance yet.100Mordinary/1Bnewboundary caps, oldbudgets unchanged.
-No main/VFS/threads/continuation. LC0 actual-engine checkpoint preflight active,
-proposal4dba0a2 retained; do not require further stock migration.
+LOCAL MC1.12.2 **MC-LB0 accepted**; plan/review JAVA_EVM_MC_LB0_{PLAN,REVIEW}.md.
+Runtime166385B SHAea940755...,27bootstraps(24oldbytes unchanged).64newcases,
+198parentEVM probes and17independentreview probes plusALLoldgates pass. Parent fixed
+inheritedStringfield OOM policy and malformedStringdescriptor precedence.100M/
+1BnewLOCAL caps only; oldbudgets unchanged. No main/VFS/threads/continuation.
+LC0 preflight parent-reproduced realstate extraction596480B/12883262gas only;
+nextfreeze must add actual decode/resume/head CAS/restart, not just extraction.
 M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
