@@ -1,9 +1,17 @@
 # Java-inside-EVM agent guide
 
-LATEST endpoint: unchanged Minecraft Java server in ORIGINAL, UNMODIFIED EVM.
-See JAVA_EVM_PROGRAM.md: no opcode/gas/precompile/consensus/limit changes or host
-Java/server-logic fallback. Current oversized local runtime.Execute is not standard
-deployment proof. Pin server version and explicit I/O boundary before workload claims.
+LATEST endpoint: unchanged Minecraft Java server executing in EVM.
+LATEST priority/resource refinement: LOCAL artistic experiment first. User now
+permits relaxed local gas budgets and work split across transactions/blocks.
+See JAVA_EVM_PROGRAM.md: preserve opcode semantics/gas accounting/precompiles/
+consensus and no host Java/server-logic fallback. Use explicit large finite local
+budgets with watchdog/resource bounds; do not silently change any accepted stock
+budget or claim infinite resources. Standard deployment is a SEPARATE target, no
+longer a prerequisite for MC work. Leverage the richer monolith for local library/
+startup dependencies rather than first migrating every feature into stock modules.
+Currently dispatched S2b-L workers finish their frozen unchanged gates/write sets.
+Current oversized local runtime.Execute is NOT standard deployment proof. Pin
+server version and explicit I/O boundary before workload claims.
 First MC milestone: genuine guest startup-complete marker (exact version/marker to
 pin), NOT client connectivity. No fake/hardcoded banner or skipped initialization;
 connectable server is an optional later goal. 1.12.2 is the proposed first target;

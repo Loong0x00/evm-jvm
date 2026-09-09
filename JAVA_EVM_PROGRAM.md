@@ -1,6 +1,25 @@
 # Continuous JVM-in-EVM program
 
 ## Latest authorization
+LATEST resource/priority refinement (after S2b-L freeze): user explicitly permits
+relaxed LOCAL gas budgets (colloquially "unlimited gas") for an artistic experiment,
+and splitting work across blocks/transactions. Prioritize genuine LOCAL MC startup;
+standard-chain deployment/small stock budgets are NO LONGER its prerequisite.
+Use a separately labeled experimental profile with explicit large FINITE gas,
+wall-time/memory bounds and recorded configuration. Preserve EVM instruction
+semantics/gas accounting; do not disable charging or patch consensus/core merely
+to avoid choosing an adequate local budget. No actual infinite-resource guarantee.
+The existing oversized runtime.Execute harness is usable local execution evidence,
+not standard CREATE proof. Standard S0/S1/S2a and frozen S2b-L gates remain unchanged
+and separate; never silently raise historical budgets or relabel local evidence.
+Let currently dispatched bounded S2b-L work finish, but do not require migrating
+all monolith semantics to stock deployment before working on MC library/platform
+prerequisites. Prefer leveraging the richer monolith for the local startup path.
+Cross-transaction continuation still requires an explicit EVM-owned checkpoint of
+Java state; host may transport opaque data, not compute Java or recover a reverted
+OOG transaction as if its intermediate state had committed. Capability/EULA/I/O
+and genuine-ready-marker requirements below are unchanged.
+
 LATEST user target: run **Minecraft Java server (mcserver) inside original,
 unmodified EVM**. This supersedes the earlier general-JVM-not-Minecraft endpoint;
 a general interpreter remains the implementation strategy, not a requirement to
@@ -28,12 +47,15 @@ bytecode. Host code may compile input/build runtime, package raw inputs, drive
 EVM, and serialize/display outputs; it must not evaluate/translate Java or
 resolve guest classes/methods on the actual execution path. Host JVMs are test
 oracles only. No native-Java precompile or fallback on unsupported code.
-Do NOT modify EVM opcodes, gas accounting, consensus, precompiles, or standard
-execution/deployment limits to make Minecraft work. Audit the existing fork against
-its pinned upstream before claiming original-EVM compatibility. Current local
-runtime.Execute directly installs oversized runtime code: useful execution evidence,
-NOT proof of standard CREATE/deployment compatibility. Solve deployment/code size
-with ordinary EVM architecture rather than relaxing EIP-170 or other limits.
+Do NOT modify EVM opcodes, gas accounting, consensus or precompiles to make
+Minecraft work. Local experimental gas limits may now be explicitly increased,
+per latest authorization above; use distinct configuration/results, not silent
+changes to accepted stock profiles. Audit the existing fork against its pinned
+upstream before compatibility claims. Current local runtime.Execute directly
+installs oversized runtime code: useful LOCAL execution evidence, NOT proof of
+standard CREATE/deployment compatibility. The standard-deployment track continues
+to respect EIP-170 and all other original limits; it is not a prerequisite for the
+newly prioritized local MC experiment.
 EVM has no direct OS sockets/files/clock: any proposed input/output transport,
 virtual filesystem, scheduling/time source must be explicit. Host transport must
 not execute Java/server/world logic. Do not imply a standalone listening server

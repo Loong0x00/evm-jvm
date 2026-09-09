@@ -25,6 +25,13 @@ the full interpreter. S1 now also executes the82 original M1/M2 workloads throug
 EVM-derived reusable metadata, named arguments and bounded branch/loop resumes;
 static calls, broader types/libraries and MC startup remain later work.
 
+**Latest priority:** the user permits relaxed local gas budgets for the MC artistic
+experiment. Local startup is now first; full standard-chain deployment is not a
+prerequisite. Preserve EVM semantics/charging and record explicit finite experiment
+budgets/watchdogs. Existing stock acceptance budgets/results remain unchanged and
+separate. Reuse the richer monolith for MC prerequisites; no MC startup claim yet.
+See `JAVA_EVM_PROGRAM.md` for the resource and continuation boundary.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:
