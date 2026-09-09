@@ -30,9 +30,13 @@ npm run check
 Compiler settings are optimizer 200 runs, via-IR, Cancun, and disabled appended
 metadata/bytecode hash. The checked-in outputs are:
 
-- `LC0Interpreter.runtime.hex`: 207,216 bytes; runtime-byte SHA-256
-  `a77feb66b62bd193a81e7bf47e0bc08dde8bbf7f495c9707ef1855b1fe9211d1`
+- `LC0Interpreter.runtime.hex`: 206,163 bytes; runtime-byte SHA-256
+  `a1820864d8e846be4de8211158778150fdfde0e41e443aa66c44ec17f487e6cd`
 - `LC0Interpreter.abi.json`: ABI for the frozen surface and exact `SliceResult`
+- `artifacts/LC0Interpreter.json`: checked ABI/runtime/provenance, embedded by Go.
+
+Accepted continuation/restart and parent corrections are recorded in
+`JAVA_EVM_MC_LC0_REVIEW.md`; the pure LB0 and stock artifacts remain unchanged.
 
 The runtime is below the separate 256 KiB LOCAL ceiling but far above EIP-170 and
 EIP-3860 limits. It is intended for explicit local code installation and
@@ -46,8 +50,11 @@ checked uint64 totals/epochs, and a 25,000,000-gas commit reserve. Historical
 budgets are unchanged. Intended harness limits are finite 100,000,000 gas / 30s
 ordinary and 1,000,000,000 gas / 120s boundary calls.
 
-Local `runtime.Call` diagnostics against the five pinned preflight classfiles
-observed one-call terminal results 15, 36, and 10. Gas/checkpoint/unit results were:
+### Initial delivery diagnostics (historical, before parent fixes)
+
+The following measurements refer to initial runtime `a77feb66...`, not the
+accepted artifact above. Local `runtime.Call` diagnostics against the five pinned
+preflight classfiles observed results 15, 36, and 10. Gas/checkpoint/unit results were:
 
 | fixture | gas | checkpoint bytes | JVM units | internal units |
 |---|---:|---:|---:|---:|

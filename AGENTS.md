@@ -49,13 +49,16 @@ LOCAL MC1.12.2 **MC-LB0 accepted**; plan/review JAVA_EVM_MC_LB0_{PLAN,REVIEW}.md
 Runtime166385B SHAea940755...,27bootstraps(24oldbytes unchanged).64newcases,
 198parentEVM probes and17independentreview probes plusALLoldgates pass. Parent fixed
 inheritedStringfield OOM policy and malformedStringdescriptor precedence.100M/
-1BnewLOCAL caps only; oldbudgets unchanged. No main/VFS/threads/continuation.
-**MC-LC0 frozen** in JAVA_EVM_MC_LC0_PLAN.md: new LOCAL versioned single-stack
-start/resume, compact EVM-issued checkpoint and owner/epoch/head CAS, disk/restart.
-Old166385B LB0 monolith/stock remain byte-identical referenceprofiles. OneSolidity
-writer under runtime/local/lc0; Go under localcontinuation/lc0.100Mordinary/1Bboundary,
-1MiBcheckpoint,4rawclasses/64KiB; exact15/36/10fixtures, actualq1/q7chains required.
-Preflight onlyproved extraction596480B/12883262gas; no actualresume accepted yet.
+1BnewLOCAL caps only; oldbudgets unchanged. No main/VFS/threads/MC startup.
+**MC-LC0 accepted**; JAVA_EVM_MC_LC0_{PLAN,REVIEW}.md. LOCAL single-stack start/resume,
+compact EVM-issued checkpoints, owner/epoch/head CAS and real disk/new-process reopen.
+Runtime206163B SHAa1820864..., actual15/36/10 q1/q7/internal1 chains agree. Exact1MiB
+checkpoint257213254gas; overflowrollback/larger-quantum retry384036558gas. Parent fixed
+publication output leakage, typed restore, mutable local0, bounded codec and disk
+recovery. Two additional review workers were provider-blocked, NOT counted as passes;
+original independent verifier + parent checks passed. Old LB0/stock remain unchanged.
+100Mordinary/1Bboundary,1MiBcheckpoint,4rawclasses/64KiB. VFS proposal remains unfrozen;
+next library/platform work must preserve these accepted profiles and use one Solidity writer.
 M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable

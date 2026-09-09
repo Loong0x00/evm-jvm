@@ -1,4 +1,4 @@
-# Java inside EVM: LOCAL String core (MC-LB0)
+# Java inside EVM: LOCAL String core and genuine continuation
 
 A generic JVM-subset interpreter compiled to ordinary EVM bytecode. The host
 reads an unchanged `.class` file and ABI-packs raw bytes, an entry name and int
@@ -45,7 +45,16 @@ pass64newcases,198parentEVM probes and all oldregressions. Parentfixed inherited
 Stringfield overflow to catchableOOM. RuntimeSHA256
 `ea94075540b8b66aa8e85823ee66e9dba4a2be65f29942855a8f59478bca0cbf`;
 27bootstraps,24oldimages unchanged. Independentreview17probes and descriptor-error fix also pass. `make java-mc-lb0-test java-mc-lb0-demo`; see
-`JAVA_EVM_MC_LB0_REVIEW.md`. No main/VFS/threads/continuation/MCrun yet.
+`JAVA_EVM_MC_LB0_REVIEW.md`. No main/VFS/threads/MCrun yet.
+
+**MC-LC0 accepted:** a separate 206,163-byte LOCAL runtime now resumes actual Java
+frames/heap/initializers/String aliases across calls and real process restarts.
+The three small fixtures return 15/36/10 with matching q1/q7/internal1 outcomes;
+exact 1MiB checkpoints and failed-child rollback/retry are covered. EVM state
+owns execution and the anchored head; Go only persists opaque bytes and trie data.
+This is not a guest filesystem or standard-deployment claim. Run
+`make java-mc-lc0-test java-mc-lc0-demo`; see `JAVA_EVM_MC_LC0_REVIEW.md`.
+The next VFS/platform proposal is `JAVA_EVM_MC_VFS_PROPOSAL.md`, not an implementation.
 
 ## Quickstart / stage gates
 
