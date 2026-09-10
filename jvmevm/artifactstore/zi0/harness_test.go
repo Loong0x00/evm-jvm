@@ -265,7 +265,7 @@ func zi0HarnessIndex(t testing.TB, session *Session, units uint16, gas *zi0Harne
 		if head.Index.NextEntry == head.Index.Count {
 			break
 		}
-		op, err = session.Scan(head.Index.NextEntry, head.Index.CDCursor, head.Index.Rolling, units, BoundaryGas)
+		op, err = session.Scan(head.Index.NextEntry, head.Index.CDCursor, head.Index.Rolling, units, OrdinaryGas)
 		if err != nil || op.StateRoot == (common.Hash{}) || len(op.Logs) != 0 {
 			t.Fatalf("scan %d/%d: op=%+v err=%v", head.Index.NextEntry, head.Index.Count, op, err)
 		}

@@ -1,0 +1,30 @@
+=== RUN   TestZI0ParentFreshOrdinaryCreate
+=== RUN   TestZI0ParentFreshOrdinaryCreate/memory
+=== RUN   TestZI0ParentFreshOrdinaryCreate/disk
+--- PASS: TestZI0ParentFreshOrdinaryCreate (0.00s)
+    --- PASS: TestZI0ParentFreshOrdinaryCreate/memory (0.00s)
+    --- PASS: TestZI0ParentFreshOrdinaryCreate/disk (0.00s)
+=== RUN   TestZI0ParentRealArtifactPipeline
+=== RUN   TestZI0ParentRealArtifactPipeline/memory
+=== RUN   TestZI0ParentRealArtifactPipeline/disk
+--- PASS: TestZI0ParentRealArtifactPipeline (0.01s)
+    --- PASS: TestZI0ParentRealArtifactPipeline/memory (0.00s)
+    --- PASS: TestZI0ParentRealArtifactPipeline/disk (0.00s)
+=== RUN   TestZI0ParentExactABINoEvent
+--- PASS: TestZI0ParentExactABINoEvent (0.00s)
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState/page-count-truncation
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState/partial-before-end
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState/wrong-owner
+--- PASS: TestZI0ParentAS0HeadMalformedCopiedState (0.00s)
+    --- PASS: TestZI0ParentAS0HeadMalformedCopiedState/page-count-truncation (0.00s)
+    --- PASS: TestZI0ParentAS0HeadMalformedCopiedState/partial-before-end (0.00s)
+    --- PASS: TestZI0ParentAS0HeadMalformedCopiedState/wrong-owner (0.00s)
+=== RUN   TestZI0ParentRealSyncFailureAndEveryPublication
+    parent_test.go:333: six successful API mutations each synchronized/published; failed real DB sync restored old head and retry address
+--- PASS: TestZI0ParentRealSyncFailureAndEveryPublication (0.00s)
+=== RUN   TestZI0ParentFullDiskNewProcessResume
+    parent_test.go:486: full20554 true new-process resume at10240, child163 actual synced mutations, root=0x994bed6e1d9e6f822dc5b094e680cf2650535518ac9e36f0f773fb1ca5ae4e1a index=0x967e5bbcb046fac285bd3f54962b42d5e04d12d61e0c83ec4e00fc38b9195113
+--- PASS: TestZI0ParentFullDiskNewProcessResume (4.34s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0	4.355s

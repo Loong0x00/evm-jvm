@@ -59,15 +59,18 @@ type Session struct {
 	as0Init, as0Runtime, zi0Init, zi0Runtime []byte
 	as0Hash, zi0Hash                         common.Hash
 	as0Address, indexAddress                 common.Address
-	creation                                 as0.Creation
-	directory                                string
-	disk                                     durableDB
-	trie                                     *triedb.Database
-	state                                    *state.StateDB
-	root                                     common.Hash
-	closed                                   bool
-	poison                                   error
-	testFault                                func(faultPoint) error
+	// Immutable routing metadata established only by a successful, code-pinned
+	// EVM constructor assertion, or by a getter-validated durable reopen.
+	indexContent common.Hash
+	creation     as0.Creation
+	directory    string
+	disk         durableDB
+	trie         *triedb.Database
+	state        *state.StateDB
+	root         common.Hash
+	closed       bool
+	poison       error
+	testFault    func(faultPoint) error
 }
 
 func NewMemory(owner common.Address, length uint32) (*Session, error) {
@@ -245,7 +248,7 @@ func (s *Session) reopen(m manifest) error {
 	if e := s.reload(m.StateRoot); e != nil {
 		return e
 	}
-	s.as0Address, s.indexAddress = m.AS0, m.Index
+	s.as0Address, s.indexAddress, s.indexContent = m.AS0, m.Index, m.Content
 	if s.as0Address != crypto.CreateAddress(s.owner, 0) || (s.indexAddress != (common.Address{}) && s.indexAddress != crypto.CreateAddress(s.owner, 1)) {
 		return errors.New("zi0: manifest addresses are not the ordinary CREATE addresses")
 	}
@@ -321,14 +324,17 @@ func (s *Session) CreateIndex(content common.Hash, gas uint64) (Operation, error
 		}
 		return op, errors.New("zi0: index constructor installed unexpected code")
 	}
-	s.indexAddress = addr
+	// The completed pinned constructor proved this assertion equals the sealed
+	// AS0 content. Cache only that immutable binding, never ZIP metadata. Avoid
+	// a hidden extra EVM getter during each manifest publication.
+	s.indexAddress, s.indexContent = addr, content
 	if _, e = s.persist(old); e != nil {
 		// Before publication, persist restored the prior root and the tentative
 		// route must disappear. After rename, the session is poisoned and its
 		// in-memory route is immaterial until an exact manifest reopen; retain it
 		// so diagnostics cannot describe the committed state as address zero.
 		if s.poison == nil {
-			s.indexAddress = common.Address{}
+			s.indexAddress, s.indexContent = common.Address{}, common.Hash{}
 		}
 		return Operation{GasUsed: op.GasUsed}, e
 	}
@@ -882,22 +888,10 @@ func (s *Session) manifest(r, content common.Hash) manifest {
 	return manifest{Format: storeFormat, Context: contextID, Owner: s.owner, Length: s.length, AS0: s.as0Address, Index: s.indexAddress, Content: content, AS0CodeHash: s.as0Hash, ZI0CodeHash: s.zi0Hash, StateRoot: r}
 }
 func (s *Session) contentForManifest() (common.Hash, error) {
-	if s.indexAddress == (common.Address{}) {
-		return common.Hash{}, nil
+	if (s.indexAddress == (common.Address{})) != (s.indexContent == (common.Hash{})) {
+		return common.Hash{}, errors.New("zi0: inconsistent verified index binding")
 	}
-	o, _, e := s.view(s.state.Copy(), s.indexAddress, s.zi0ABI, "content", OrdinaryGas)
-	if e != nil {
-		return common.Hash{}, e
-	}
-	v, e := s.zi0ABI.Unpack("content", o)
-	if e != nil || len(v) != 1 {
-		return common.Hash{}, errors.New("zi0: decode content getter for manifest")
-	}
-	h, ok := v[0].([32]byte)
-	if !ok || common.Hash(h) == (common.Hash{}) {
-		return common.Hash{}, errors.New("zi0: noncanonical content getter for manifest")
-	}
-	return common.Hash(h), nil
+	return s.indexContent, nil
 }
 func (s *Session) config(st *state.StateDB, gas uint64) *evmruntime.Config {
 	z := common.Hash{}

@@ -176,7 +176,7 @@ func TestZI0HarnessFull20554ExactCDDurableEveryCall(t *testing.T) {
 		if head.Index.NextEntry >= uint32(count/2) {
 			break
 		}
-		op, err := session.Scan(head.Index.NextEntry, head.Index.CDCursor, head.Index.Rolling, 64, BoundaryGas)
+		op, err := session.Scan(head.Index.NextEntry, head.Index.CDCursor, head.Index.Rolling, 64, OrdinaryGas)
 		if err != nil {
 			t.Fatalf("first-half scan %d: %v", head.Index.NextEntry, err)
 		}
@@ -205,7 +205,7 @@ func TestZI0HarnessFull20554ExactCDDurableEveryCall(t *testing.T) {
 	}
 	gas.views += staged.GasUsed
 	for staged.Index.NextEntry < staged.Index.Count {
-		op, err := session.Scan(staged.Index.NextEntry, staged.Index.CDCursor, staged.Index.Rolling, 64, BoundaryGas)
+		op, err := session.Scan(staged.Index.NextEntry, staged.Index.CDCursor, staged.Index.Rolling, 64, OrdinaryGas)
 		if err != nil {
 			t.Fatalf("second-half scan %d: %v", staged.Index.NextEntry, err)
 		}
@@ -444,7 +444,7 @@ func zi0HarnessPhaseChild(t *testing.T, stage string) {
 			t.Fatalf("STAGING=%+v err=%v", head, err)
 		}
 		for head.Index.NextEntry < head.Index.Count {
-			if _, err := session.Scan(head.Index.NextEntry, head.Index.CDCursor, head.Index.Rolling, 64, BoundaryGas); err != nil {
+			if _, err := session.Scan(head.Index.NextEntry, head.Index.CDCursor, head.Index.Rolling, 64, OrdinaryGas); err != nil {
 				t.Fatal(err)
 			}
 			head, err = session.Head(OrdinaryGas)

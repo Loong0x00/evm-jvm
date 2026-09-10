@@ -31,7 +31,7 @@ func zi0HarnessWantDiscoverError(t testing.TB, z zi0HarnessZIP, want uint64) uin
 	session, _ := zi0HarnessPrepared(t, common.BytesToAddress([]byte{0x51, byte(want), byte(len(z.raw))}), z)
 	defer session.Close()
 	before, _ := session.Head(OrdinaryGas)
-	op, err := session.Discover(BoundaryGas)
+	op, err := session.Discover(OrdinaryGas)
 	if err == nil || zi0HarnessErrorCode(t, op) != want || op.GasUsed == 0 || op.StateRoot != (common.Hash{}) || len(op.Logs) != 0 {
 		t.Fatalf("discover want ZI0Error(%d): op=%+v err=%v", want, op, err)
 	}
@@ -45,11 +45,11 @@ func zi0HarnessWantScanError(t testing.TB, z zi0HarnessZIP, units uint16, want u
 	t.Helper()
 	session, _ := zi0HarnessPrepared(t, common.BytesToAddress([]byte{0x52, byte(want), byte(len(z.raw))}), z)
 	defer session.Close()
-	if _, err := session.Discover(BoundaryGas); err != nil {
+	if _, err := session.Discover(OrdinaryGas); err != nil {
 		t.Fatalf("positive discover failed before scan oracle: %v", err)
 	}
 	before, _ := session.Head(OrdinaryGas)
-	op, err := session.Scan(before.Index.NextEntry, before.Index.CDCursor, before.Index.Rolling, units, BoundaryGas)
+	op, err := session.Scan(before.Index.NextEntry, before.Index.CDCursor, before.Index.Rolling, units, OrdinaryGas)
 	if err == nil || zi0HarnessErrorCode(t, op) != want || op.GasUsed == 0 || op.StateRoot != (common.Hash{}) || len(op.Logs) != 0 {
 		t.Fatalf("scan want ZI0Error(%d): op=%+v err=%v", want, op, err)
 	}

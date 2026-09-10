@@ -98,7 +98,7 @@ func TestZI0HarnessDirectOOGRollbackAndValidRetry(t *testing.T) {
 	if after.Index.NextEntry != staging.Index.NextEntry || after.Index.CDCursor != staging.Index.CDCursor || after.Index.Rolling != staging.Index.Rolling {
 		t.Fatal("ZI0 OOG exposed partial batch")
 	}
-	if _, err := session.Scan(after.Index.NextEntry, after.Index.CDCursor, after.Index.Rolling, 1, BoundaryGas); err != nil {
+	if _, err := session.Scan(after.Index.NextEntry, after.Index.CDCursor, after.Index.Rolling, 1, OrdinaryGas); err != nil {
 		t.Fatalf("ZI0 retry: %v", err)
 	}
 }
