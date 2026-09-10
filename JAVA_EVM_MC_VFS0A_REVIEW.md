@@ -1,0 +1,49 @@
+# MC-VFS0a parent review — NOT ACCEPTED
+
+Frozen input/implementation contract: `cca4841`, JAVA_EVM_MC_VFS0A_PLAN.md.
+Last accepted profile remains IOE0 `8f29f8c`. No production VFS runtime/continuation,
+Minecraft execution, EULA, listener or Done has been demonstrated by this note.
+
+## Independently confirmed preparation
+
+- Integrated wrapper preflight `c18262a` as `0d3ffa1`, kernel `36bdf62` as `c9c317a`.
+- Parent replayed standalone kernel actual EVM driver from its own copied directory.
+  `/tmp/mc-vfs0a-parent-kernel-replay.json` matches SHA256
+  `1eafceafc8aa303a4f0ffb1b5c713abb7be941f334fdb8eec276a7936d11b104`.
+- Parent rebuilt that standalone Solidity source with pinned solc0.8.30/settings.
+  Runtime16241B SHA256 `90a4f5e0d106cd9fb77c65a03aeaeb61e8109f1f27dbb4d3dd0224ae71985c43`;
+  source22343B SHA256 `f810f199d2d3e8c5e5df387e42963c37b112d7e7d5e387224c33fd8ff2b26ab3`.
+  Log `/tmp/mc-vfs0a-parent-kernel-rebuild.json`. This has NO Java-native bindings,
+  combined continuation validator, production anchor or durable session proof.
+- Parent corrected the candidate File graph and three stream-base concrete/default
+  method shapes, rather than allowing false instanceof or AbstractMethodError results.
+  Added genuine small Java Code for Comparable and generic base methods; exact empty
+  Java8 base close/flush defaults are not File* close or physical sync substitutes.
+  Both stock JVMs agreed on six parent base/Comparable observations; see plan/logs.
+- Eight frozen source/class pairs (5976B) were recompiled from TRACKED inputs using
+  Java8u504 -source8 -target8 -g:none and compared byte-for-byte with class.hex.
+  All eight are classfile52. Five unchanged candidate images plus three parent fixes;
+  the30 accepted IOE0 images must still be copied unchanged by the runtime worker.
+- Initial attempt to edit an ignored copied source failed due to preserved read-only
+  permissions; no resulting old-image compile was counted as the corrected evidence.
+  Only parent-owned copies were made writable; peer evidence was not altered.
+- Fresh accepted IOE0 control: `go test ./jvmevm/localcontinuation/ioe0 -count=1`
+  passed38.328s under120s timeout (`/tmp/mc-vfs0a-parent-ioe0-control.log`). This is not
+  a new VFS gate or a measured4GiB whole-gate RSS claim.
+- At freeze, diff from IOE0 acceptance consists solely of guides and new-profile
+  bootstrap inputs. No existing interpreter/accepted artifact/upstream EVM changes.
+
+## Pending acceptance, do not promote preparation to completion
+
+Two disjoint runtime/harness workers started from `cca4841`, model Sol/high with
+Fast disabled. Parent retains validation_test.go/parent_test.go and32 groups in the
+plan. Pending: actual integrated runtime<=256KiB; genuine24 roots/20 continuation
+chains; real Java messages and private identity gates; pending-bind field corridor;
+full VFS+heap codec/commitments; exact1MiB/+1; all quotas/rollback/inspection;
+new-process disk continuation and failures; final-artifact independent32 groups;
+whole20min/4GiB gate and all historical regressions.
+
+The new4096-slice test allowance is explicit and VFS0a-only, for q1 wrapper loops.
+No code/gas/checkpoint cap was raised, and no aggregate-gas estimate or standalone
+size addition proves a production artifact fits. Report any real size blocker before
+parent scope/module review; never edit upstream limits or silently raise the ceiling.
