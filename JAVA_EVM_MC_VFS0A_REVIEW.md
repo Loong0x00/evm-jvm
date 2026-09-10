@@ -166,3 +166,41 @@ fast/LB0/AOT/stockS0 stages passed in its preserved log. A separate bounded rema
 S1/S2a/S2b-L+vet run is in progress, without raising a timeout or altering old artifacts.
 Logs `/tmp/mc-vfs0a-parent-legacy-watchdog.json` and
 `/tmp/mc-vfs0a-parent-legacy-remainder.{log,json}` distinguish the two phases.
+
+## Parent state correction and completed takeover checks
+
+Parent corrected `_validateVFS`: every non-root parent must be a directory; components
+must be printable ASCII without slash and cannot be dot/dotdot; WRITE descriptors
+(including closed) cannot target effective-readonly inodes. Error offsets now identify
+actual VFS record starts rather than section-base-plus-ordinal. The original successful
+issued states still validate; all six reproduced invalid-view cases now reject.
+No live-head bypass was demonstrated or claimed. Source/ABI/heap/native quotas and
+accepted profiles stay scoped as before; ABI and all38 bootstrap images unchanged.
+
+New parent artifact292968B, SHA717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86;
+sourceb95f0788f3a45b580216697866e32814e590670a55144186fc130391986497f3.
+Build completed175.377s/842190848B peakRSS, no limit hit. Boundary test artifact pin
+was deliberately updated for rerunning the same checks, not retroactively changing
+the reviewer's293010B evidence. New full-suite/repro reruns are pending below.
+
+Parent takeover additionally covers both FIS and FOS six-PC pending corridors with
+wrong depth/owner/method/local0/ID/handle/stack and inserted extra operand views;
+Object NEW-family restrictions with plain Object/Throwable successful controls and
+three inherited fields; escaped-after-failing stream subclass; null constructors'
+retained default fields; eight reserved-image refusals/lookalike native and three
+foreign private invocation modes; repeated genuine message identity/cause; live
+owner/epoch/root/artifact/budget controls and proof that a well-formed rehashed VIEW
+cannot authorize resume; empty/ASCII/control/component/depth/path exact boundaries.
+
+A dedicated1024-object test reached the real FIS.errorMessage Java frame with no
+filesystem effects, then genuinely OOMed allocating its message:247 calls,10327JVM/
+7internal,45344B checkpoint. Stock JVMs return FNFE instead under their unbounded
+heap, explicitly expected. Initial1020-object fixture OOMed earlier at FNFE receiver
+allocation (Java evaluates new before constructor arguments); corrected1019 leaves
+that receiver slot and observes the intended message frame. Earlier coarse-slice and
+wrong-phase observations were not counted as proof. All caps remain unchanged.
+
+Historical regression disposition: the initial combined Make command timed out at
+20min after passing its earlier stages. The separately bounded remaining S1/S2a/
+S2b-L and vet run passed124.462s/628736000B. This is two recorded phases, NOT a claim
+that the original timed-out command passed or that a wall limit was increased.

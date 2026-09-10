@@ -191,7 +191,7 @@ func TestVFS0aBoundaryFinalArtifactAndSemantics(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(code) != 293010 || hash != "78d57a051311538c13ed6b60a59ceab5800722bf49ec9e9f3683bb23521739c9" {
+	if len(code) != 292968 || hash != "717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86" {
 		t.Fatalf("reviewed artifact=%d/%s", len(code), hash)
 	}
 	raw := vfsBoundaryCompile(t)

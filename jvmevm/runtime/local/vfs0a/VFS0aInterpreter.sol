@@ -1396,6 +1396,7 @@ contract VFS0aInterpreter {
         }
         uint256 total;
         uint256 pending;
+        uint256 recordOffset = base + 24;
         for (uint256 i; i < fs.inodes.length; ++i) {
             VFSInode memory n = fs.inodes[i];
             bool framing = n.id != i + 1 || (n.kind != 1 && n.kind != 2)
@@ -1403,21 +1404,34 @@ contract VFS0aInterpreter {
                 || (i == 0 ? (n.parent != 0 || n.name.length != 0)
                     : (n.parent == 0 || n.parent >= n.id || n.name.length == 0
                         || n.name.length > 64));
-            if (framing) revert VFS0aStateError(2, base + i);
+            if (framing) revert VFS0aStateError(2, recordOffset);
+            if (i != 0) {
+                if (fs.inodes[n.parent - 1].kind != 1
+                    || _bytesEqual(n.name, bytes(".")) || _bytesEqual(n.name, bytes(".."))) {
+                    revert VFS0aStateError(2, recordOffset);
+                }
+                for (uint256 k; k < n.name.length; ++k) {
+                    uint8 ch = uint8(n.name[k]);
+                    if (ch < 0x20 || ch > 0x7e || ch == 0x2f) {
+                        revert VFS0aStateError(2, recordOffset);
+                    }
+                }
+            }
             if (n.kind == 1) {
-                if (n.data.length != 0) revert VFS0aStateError(3, base + i);
+                if (n.data.length != 0) revert VFS0aStateError(3, recordOffset);
             } else {
-                if (n.data.length > 65536) revert VFS0aStateError(3, base + i);
+                if (n.data.length > 65536) revert VFS0aStateError(3, recordOffset);
                 total += n.data.length;
             }
             for (uint256 j; j < i; ++j) {
                 if (n.parent == fs.inodes[j].parent
                     && _bytesEqual(n.name, fs.inodes[j].name)) {
-                    revert VFS0aStateError(2, base + i);
+                    revert VFS0aStateError(2, recordOffset);
                 }
             }
             bytes memory canonical = _inodePath(fs, uint32(i + 1));
-            if (canonical.length > 256) revert VFS0aStateError(2, base + i);
+            if (canonical.length > 256) revert VFS0aStateError(2, recordOffset);
+            recordOffset += 15 + n.name.length + n.data.length;
         }
         if (fs.inodes[0].kind != 1 || fs.inodes[0].readOnly
             || fs.inodes[1].kind != 1 || fs.inodes[1].parent != 1
@@ -1433,17 +1447,24 @@ contract VFS0aInterpreter {
                 || fs.inodes[d.inode - 1].kind != 2 || d.ownerRef == 0
                 || (d.flags != 1 && d.flags != 2 && d.flags != 6)
                 || d.cursor > 65536 || d.phase < 1 || d.phase > 3) {
-                revert VFS0aStateError(4, base + i);
+                revert VFS0aStateError(4, recordOffset);
+            }
+            // Read-only bits cannot change after seeding in this profile. An
+            // output descriptor (even closed) therefore cannot own a read-only
+            // target or a target beneath a read-only ancestor.
+            if ((d.flags & 2) != 0 && _effectiveReadOnly(fs, d.inode)) {
+                revert VFS0aStateError(4, recordOffset);
             }
             for (uint256 j; j < i; ++j) {
-                if (fs.descriptors[j].ownerRef == d.ownerRef) revert VFS0aStateError(4, base + i);
+                if (fs.descriptors[j].ownerRef == d.ownerRef) revert VFS0aStateError(4, recordOffset);
             }
             if (d.phase == 1) {
-                if (d.bindDepth == 0) revert VFS0aStateError(5, base + i);
+                if (d.bindDepth == 0) revert VFS0aStateError(5, recordOffset);
                 ++pending;
             } else if (d.bindDepth != 0 || d.bindPC != 0) {
-                revert VFS0aStateError(5, base + i);
+                revert VFS0aStateError(5, recordOffset);
             }
+            recordOffset += 28;
         }
         if (pending > 1) revert VFS0aStateError(5, base);
     }
