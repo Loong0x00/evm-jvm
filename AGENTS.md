@@ -85,6 +85,11 @@ AE-messageStrings/newmessageheap/quotas; unmodeledVMgettershard-profile, notfake
 24Java8/EVMroots/20chains/32parentgroups+2supplementarygroups pass. Java21threehelpful-
 NPEmessage differences pinned assecondary, notretargeted. Fulllegacygates pass; all
 olderprofiles/core unchanged. VFS0a proposal next, no guestfilesystem/MCrun yet.
+VFS0a pre-freeze preparation is governed by JAVA_EVM_MC_VFS0A_IMPLEMENTATION_PREFLIGHT.md:
+two disjoint Java-wrapper/EVM-kernel evidence workers, no production freeze. Parent
+proved slash-normalized File error prefixes, C-locale suffix dependence, and zero-
+filled gaps/cursors beyond EOF from two writers plus truncation (no seek needed).
+Do not freeze the earlier proposal's unnormalized-prefix/no-gap assumptions.
 LATEST user: keep work/progress in repository files; prefer one or two agents.
 Use at most TWO parallel workers now (runtime/harness); parent owns independent
 validation and final acceptance. No third verifier worker for IOE0.
