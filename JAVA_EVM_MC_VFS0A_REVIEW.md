@@ -33,6 +33,28 @@ Minecraft execution, EULA, listener or Done has been demonstrated by this note.
 - At freeze, diff from IOE0 acceptance consists solely of guides and new-profile
   bootstrap inputs. No existing interpreter/accepted artifact/upstream EVM changes.
 
+## Parent Code-only EVM probes while implementation proceeds
+
+Committed parent_test.go adds frozen-image hash checks and two independent trusted
+Java8/21/EVM probes. Exact File/InputStream/Closeable/AutoCloseable candidate images
+are supplied as raw guest classes to the unchanged accepted IOE0 interpreter. No
+VFS native is invoked; this is not testing VFS0a's reserved image/native/NEW gates.
+
+- File slash normalization, Comparable graph, compare bridge/cast: result15;
+  one-call control21915481gas;581 JVM/3 internal units;2504B checkpoint;
+  q7/internal1 finishes86 slices with the same terminal machine root/counters.
+- InputStream generic bulk partial-success catch, first-read exception, close
+  default, null/bounds/zero ordering: result31; one-call18687095gas;
+  269 JVM/10 internal units;1337B checkpoint; q7/internal1 finishes46 slices,
+  same terminal machine root/counters.
+- These probes retain IOE0's ordinary100M/4096-unit/256-slice limits, not VFS0a's
+  new slice allowance. No accepted implementation or budget was changed.
+- Reproduce: `go test -v jvmevm/localcontinuation/vfs0a/parent_test.go -count=1`.
+  All pass1.921s; `/tmp/mc-vfs0a-parent-code-final.log`. Named-file execution tests
+  this independent Code evidence without pretending unfinished VFS assets exist.
+  OutputStream's full candidate graph exceeds IOE0's4-raw-class limit with a custom
+  root; its EVM checks remain pending on actual VFS0a, rather than changing that cap.
+
 ## Pending acceptance, do not promote preparation to completion
 
 Two disjoint runtime/harness workers started from `cca4841`, model Sol/high with

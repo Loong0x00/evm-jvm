@@ -193,3 +193,7 @@ Java8 generic/default stream Code; constructor optionB no-callback NEW family gu
 Two runtime/harness workers only; runtime<=256KiB remains a measured acceptance gate.
 VFS0a-only test allowance4096 slices/case supports full q1 wrapper-copy chains; old
 profiles keep256. IOE0 remains last accepted. No production VFS acceptance or MC run.
+
+Latest user directive: if the target is unfinished, continue; demonstrate only once
+it is genuinely achieved. VFS implementation remains active; do not present a
+Code-only probe or standalone kernel as Minecraft readiness.
