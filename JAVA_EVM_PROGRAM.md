@@ -316,3 +316,19 @@ JAVA_EVM_MC_ZI0_PARENT_PREFLIGHT.md authorizes ONE bounded persistent-index work
 actual SSTORE/trie/durable per-call publication,20554/32768entries,mid-index/final
 new-process reopen,exact packing/root/lookup/phase/error policy before freeze.
 No production ZIP/inflate/ClassLoader/JVM mount/MC/EULA/listener/Done achieved here.
+
+### First readiness workload: vanilla superflat (user agreed)
+
+Use unchanged official1.12.2 with superflat rather than normal terrain for the
+first genuine guest Done goal. Disabling structures is a proposed supported-config
+reduction, not a bytecode patch. Parent static javap confirms dedicated server reads
+level-type/generator-settings/generate-structures; MinecraftServer.l() still loops
+-192..192 by16 on both axes,625 spawn load/generate requests. View-distance cannot
+reduce that loop to two chunks; neighbor generation may add work. Superflat does
+not remove registration/libraries/thread/time/network/heap/NBT and region-I/O costs.
+32MiB AS0 raw storage is NOT expanded Java heap or mutable VFS storage. No implicit
+quota increases, pre-generated host world fallback, runtime branch patch or EULA
+acceptance. No actual server/config/EULA execution occurred. max-tick-time is read
+by nz.aT(); nz.j() starts its watchdog only when positive (after the Done site),
+so disabling that optional watchdog is a later supported-config option, not a
+shortcut around world preparation or the external20min/4GiB verification limits.

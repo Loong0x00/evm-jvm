@@ -253,3 +253,11 @@ intersection; fixed only an ignored prototype copy. ZIP64 prelude policy remains
 explicitly unresolved. Dense EOCD signatures cost78.01M vs69.11M fill sample.
 ZI0 NOT frozen/accepted. Next ONE-worker persistent-index preflight must measure
 real SSTORE,20554/32768 entries,per-mutation disk and cross-process reopening.
+
+User-selected first Minecraft readiness target: unchanged vanilla1.12.2 with a
+superflat world, not default noisy terrain. Prefer supported configuration to
+reduce generation work; no patched server/host-generated fallback or fake Done.
+Static parent javap verified MinecraftServer.l() still requests25x25 spawn chunk
+positions (offsets-192..192 step16), independent of view distance. This is625
+requests, not an upper bound on total generated neighbors. No configuration/EULA
+file has been installed and Minecraft has still not executed.
