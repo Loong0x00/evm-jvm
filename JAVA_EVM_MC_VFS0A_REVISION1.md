@@ -61,3 +61,19 @@ and testdata/local/vfs0a: actual controls/chains, opaque transport/durability fi
 Parent retains independent32 groups, revised pin review, integration, watchdog/legacy
 runs and acceptance. No third worker, Fast/priority, push/settings/core edits or fake
 Done. Last accepted IOE08f29f8c; Minecraft/EULA/listener have not run.
+
+## Parent integrated revision1 pins (not acceptance)
+
+Runtime6b8caf8f8 integratede38c5e734, harness02e9c31..761a991 integrated throughb9211d274.
+Final293010B runtime SHA78d57a051311538c13ed6b60a59ceab5800722bf49ec9e9f3683bb23521739c9;
+source168a965ad0aa43eb3216d97cf38169da63d0a4294ea9f9651ab86ddd0d0c04c3;
+combined6dc889b2461775397d7cdbdffd0c82c9fa1f8e9680ddb3a5b06af270f2a549b8.
+ABIunchanged16346751accb944db73a8a8b33bee6923c9ccabca1896af41f4926a2895e6520.
+New FIS1515B/cdda6fb532785d7e43d535bea0225e0bd5e920e28b39353c54f13e3d41ef9a65,
+source0041c83044413ba6e4199e6a8be990a8810283aa07f5c5587ee69653945e26e8;
+FOS1618B/50aa63fa914989dada682851a65c9ce0c5400fd0f8e4e52246553ee2fc084315,
+source79f3010db7a8ee7adea15937dec5a06798da6f48017a34a265fcd73f4ebb82e8.
+Eight new images now6050B; parent independently recompiled all8 and verified30 inherited
+commitments unchanged. Other6 new images unchanged. Original5976B pins are historical.
+Parent must rerun FINAL293010B artifact: harness worker reported success on DIFFERENT
+292377B/569bf7072f663539595052985a0c99c77aa32197bc9f4c85236413b619c87475 intermediate.

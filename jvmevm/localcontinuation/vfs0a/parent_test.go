@@ -30,8 +30,8 @@ var vfsParentImagePins = map[string]string{
 	"java/io/File":             "aee6861b45213674f41d257a87a0508b3b9ca1d900ec995234bd51d129b83bc4",
 	"java/io/InputStream":      "224fd0acae8f99ca75c2cba79902dca8408fe91fa839599a96377a31a687ba72",
 	"java/io/OutputStream":     "2698b53831772935d798d8739ffe77b786f343e30f7bc5d7b1d1ae5c8efeb4c2",
-	"java/io/FileInputStream":  "68fd8bf1cdb48a5309b60a28ec9573dd68b5cc96318487b82f93cfce058e4545",
-	"java/io/FileOutputStream": "4e5175528984798d6da3ef9c3cd58395e0f66788be9e11ed1a2a35fb2015f6a8",
+	"java/io/FileInputStream":  "cdda6fb532785d7e43d535bea0225e0bd5e920e28b39353c54f13e3d41ef9a65",
+	"java/io/FileOutputStream": "50aa63fa914989dada682851a65c9ce0c5400fd0f8e4e52246553ee2fc084315",
 }
 
 func vfsParentImage(t *testing.T, name string) []byte {
@@ -64,7 +64,7 @@ func TestVFS0aParentFrozenEightImages(t *testing.T) {
 	for name := range vfsParentImagePins {
 		total += len(vfsParentImage(t, name))
 	}
-	if total != 5976 {
+	if total != 6050 {
 		t.Fatalf("eight images total %d", total)
 	}
 }
