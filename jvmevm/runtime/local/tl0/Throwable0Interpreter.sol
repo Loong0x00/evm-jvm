@@ -624,7 +624,7 @@ contract Throwable0Interpreter {
     ) private returns (ThrowableSliceResult memory out, bytes memory checkpoint) {
         if (gasleft() <= COMMIT_RESERVE) revert LC0ControlError(7);
         _validateRestoredReferences(p, s);
-        _validateInitAndFrames(p, s);
+        _validateInitAndFrames(p, s, false);
         bytes memory machine = _encodeMachine(p, s, entryClass, entry, args);
         bytes32 machineRoot = keccak256(abi.encode(
             DMACH, TL0_SCHEMA, artifact, config, keccak256(machine)
@@ -703,7 +703,7 @@ contract Throwable0Interpreter {
         bytes32 computed = keccak256(abi.encode(
             DMACH, TL0_SCHEMA, e.artifactRoot, e.configRoot, keccak256(e.machineBytes)
         ));
-        if (computed != e.machineStateRoot) revert LC0StateError(3, 176);
+        if (computed != e.machineStateRoot) revert LC0StateError(3, 180);
     }
 
     function _machineSize(
@@ -1055,6 +1055,9 @@ contract Throwable0Interpreter {
                 revert LC0StateError(6, base + recordAt);
             }
             if (k == HEAP_OBJECT) {
+                if ((p.classes[ci].accessFlags & (0x0200 | 0x0400)) != 0) {
+                    revert LC0StateError(6, base + recordAt);
+                }
                 _validateHierarchy(p.classes, ci, s.parentLinks, s.hierarchyState);
             }
             a.heap.metadata[h] = meta; a.heap.classes[h] = ci; a.heap.ranks[h] = uint8(rank);
@@ -1188,7 +1191,7 @@ contract Throwable0Interpreter {
         }
         s.arena = a;
         _validateRestoredReferences(p, s);
-        _validateInitAndFrames(p, s);
+        _validateInitAndFrames(p, s, true);
         if ((pre.lifecycle == 3 && (!a.pending.active || pre.javaKind != a.pending.kind
                 || pre.javaRef != a.pending.ref))
             || (pre.lifecycle == 2 && a.pending.active)) revert LC0StateError(7, 0);
@@ -1275,6 +1278,9 @@ contract Throwable0Interpreter {
                 continue;
             }
             uint256 ci = s.arena.heap.classes[h];
+            if ((p.classes[ci].accessFlags & (0x0200 | 0x0400)) != 0) {
+                revert LC0StateError(6, 0);
+            }
             if (layouts[ci].length == 0 && s.arena.heap.objectHeap[h].length != 0) {
                 layouts[ci] = _checkpointFieldLayout(p, s, ci, s.arena.heap.objectHeap[h].length);
             }
@@ -1385,7 +1391,9 @@ contract Throwable0Interpreter {
         return _typeAssignable(p.classes, s.arena.heap.classes[h], target, s.parentLinks);
     }
 
-    function _validateInitAndFrames(Program memory p, RuntimeState memory s) private pure {
+    function _validateInitAndFrames(
+        Program memory p, RuntimeState memory s, bool restoredCheckpoint
+    ) private pure {
         bool[] memory hasContinuation = new bool[](p.classes.length);
         bool[] memory hasInitializer = new bool[](p.classes.length);
         for (uint256 i; i < s.depth; ++i) {
@@ -1429,7 +1437,7 @@ contract Throwable0Interpreter {
             // caller may already point at athrow while its constructor callee still
             // legitimately owns UNINIT duplicates of the eventual receiver.
             if (i + 1 == s.depth && !s.arena.pending.active) {
-                _validateAthrowBoundary(p, s, f);
+                _validateAthrowBoundary(p, s, f, restoredCheckpoint);
             }
         }
         for (uint256 i; i < p.classes.length; ++i) {
@@ -1466,20 +1474,26 @@ contract Throwable0Interpreter {
     }
 
     function _validateAthrowBoundary(
-        Program memory p, RuntimeState memory s, Frame memory f
+        Program memory p, RuntimeState memory s, Frame memory f, bool restoredCheckpoint
     ) private pure {
         Selected memory sel = p.selected[f.classIndex][f.methodIndex];
         if (!sel.loaded || f.pc >= sel.codeLength
             || uint8(p.classes[f.classIndex].data[sel.codeOffset + f.pc]) != 0xbf) return;
         if (f.sp == 0 || _valueKind(f.stack[f.sp - 1]) != KIND_REF) {
-            revert LC0StateError(5, 0);
+            if (restoredCheckpoint) revert LC0StateError(5, 0);
+            // A checkpoint boundary must not relabel the guest's hard bytecode
+            // error just because a different quantum reaches this PC first.
+            revert BytecodeError(f.sp == 0 ? 3 : 14, f.pc);
         }
         uint256 ref = _payload(f.stack[f.sp - 1]);
         if (ref == 0) return; // executing athrow null deterministically raises NPE.
         if (ref > s.nextHandle
             || _heapKindAt(s.arena.heap.metadata[ref]) != HEAP_OBJECT
             || !_typeAssignable(p.classes, s.arena.heap.classes[ref],
-                s.arena.throwableClass, s.parentLinks)) revert LC0StateError(7, 0);
+                s.arena.throwableClass, s.parentLinks)) {
+            if (restoredCheckpoint) revert LC0StateError(7, 0);
+            revert BytecodeError(14, f.pc);
+        }
     }
 
     function _validArrayLeaf(uint8 rank, uint256 leaf, uint256 classCount)
@@ -3466,6 +3480,7 @@ contract Throwable0Interpreter {
                 uint256 thrown = f.stack[f.sp - 1];
                 _requireKind(thrown, KIND_REF, opPC);
                 uint256 thrownHandle = _payload(thrown);
+                --f.sp; // Consume every REF operand, including null, before raising.
                 if (thrownHandle == 0) {
                     nextHandle = _raiseJava(
                         6, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
@@ -3481,7 +3496,6 @@ contract Throwable0Interpreter {
                 uint256 rethrownKind = _exactKnownKind(
                     arena, heapClasses[thrownHandle]
                 );
-                --f.sp; // athrow consumes the initialized reference before unwind.
                 arena.pending = PendingException(true, rethrownKind, thrownHandle, opPC);
                 continue;
             } else if (op == 0xc0 || op == 0xc1) { // checkcast / instanceof

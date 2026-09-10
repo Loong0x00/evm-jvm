@@ -179,3 +179,14 @@ java-mc-lc0-test: java-mc-lc0-check
 	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/lc0
 java-mc-lc0-demo: java-mc-lc0-check
 	go test -count=1 -v -timeout=20m -run '^TestLC0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/lc0
+
+# LOCAL constructor-backed Throwable continuation, not Minecraft startup proof.
+.PHONY: java-mc-tl0-build java-mc-tl0-check java-mc-tl0-test java-mc-tl0-demo
+java-mc-tl0-build:
+	cd jvmevm/runtime/local/tl0 && npm ci --ignore-scripts && npm run build
+java-mc-tl0-check:
+	cd jvmevm/runtime/local/tl0 && npm ci --ignore-scripts && npm run check
+java-mc-tl0-test: java-mc-tl0-check
+	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/tl0
+java-mc-tl0-demo: java-mc-tl0-check
+	go test -count=1 -v -timeout=20m -run '^TestTL0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/tl0

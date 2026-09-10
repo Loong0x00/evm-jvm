@@ -1489,7 +1489,7 @@ func TestTL0VerifyCASOOGRetryAndNewProcess(t *testing.T) {
 		}
 	})
 	t.Run("32-real-new-process-reopen-and-cross-namespace-store-refusal", func(t *testing.T) {
-		restart := tl0VerifyCompileTrusted(t, map[string]string{"TLRestart.java": `public final class TLRestart {static final class P extends RuntimeException{}public static int run(){P p=new P();try{throw p;}catch(P q){return p==q?32:0;}}`}, []string{"TLRestart"})
+		restart := tl0VerifyCompileTrusted(t, map[string]string{"TLRestart.java": `public final class TLRestart {static final class P extends RuntimeException{}public static int run(){P p=new P();try{throw p;}catch(P q){return p==q?32:0;}}}`}, []string{"TLRestart", "TLRestart$P"})
 		rawRestart := tl0VerifyRaw(restart, "TLRestart") // Root's only dependency is emitted as a nested class and is loaded as a supplied class below.
 		// Include the nested class while starting, but persist both raw bytes in one
 		// compact helper bundle file with an explicit length prefix.
