@@ -105,3 +105,16 @@ and is NEVER presented as EVM-issued state. It verifies the75-byte initial VFS s
 root rehash layout, bounded counts, trailing bytes and every truncation (with outer
 length repaired to exercise inner bounds too). All parent preparation tests pass2.798s
 and package vet passes; the initial actual24-root EVM failures are still unresolved.
+
+Parent independent initial-artifact normal `build.js --check` under revision1 passed:
+175.839s,834547712B peak process-group RSS, no watchdog limit hit; source/runtime/ABI/
+combined output remained identical to the recorded initial candidate. Logs
+`/tmp/mc-vfs0a-parent-initial-rebuild.{log,json}`. This proves reproducibility and
+new LOCAL size compliance only, not functional correctness.
+
+Parent reran the24 fixture pins/rebuild and Java8/21 C-locale host oracles: all pass
+1.232s (external1.587s,285679616B peak groupRSS). Logs
+`/tmp/mc-vfs0a-parent-corpus-oracles.{log,json}`. Protected existing EVM/core and
+accepted profile paths have no diff from IOE0 acceptance. Two revision1 runtime/
+harness correction workers are active from9653767; no third/Fast worker or VFS
+acceptance. All24 initial actual EVM controls remain recorded failures pending fixes.
