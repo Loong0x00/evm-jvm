@@ -1,0 +1,144 @@
+package main
+
+import (
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0"
+)
+
+const input = "/home/user/evm-jvm/mc-startup-inventory/build/java-diff-mc-startup-preflight/artifacts/minecraft_server.1.12.2.jar"
+const directory = "build/java-diff-mc-zi0-official-index/state"
+const reportPath = "evidence/java-evm/zi0/official-index-0936b7ebd/report.json"
+
+func pageAssertion(at common.Address, index uint32, b []byte) common.Hash {
+	var args abi.Arguments
+	for _, s := range []string{"bytes32", "address", "uint32", "uint32", "bytes32"} {
+		t, e := abi.NewType(s, "", nil)
+		if e != nil {
+			panic(e)
+		}
+		args = append(args, abi.Argument{Type: t})
+	}
+	raw, e := args.Pack(crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), at, index, uint32(len(b)), crypto.Keccak256Hash(b))
+	if e != nil {
+		panic(e)
+	}
+	return crypto.Keccak256Hash(raw)
+}
+func must(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+func main() {
+	start := time.Now()
+	f, e := os.Open(input)
+	must(e)
+	raw, e := io.ReadAll(io.LimitReader(f, 33554433))
+	must(e)
+	must(f.Close())
+	digest := fmt.Sprintf("%x", sha256.Sum256(raw))
+	if len(raw) != 30222121 || digest != "fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e" {
+		panic("official raw input transport pin mismatch")
+	}
+	if _, e := os.Lstat(directory); !os.IsNotExist(e) {
+		panic("refuse overwrite or reuse existing experiment store")
+	}
+	owner := common.HexToAddress("0x5a49304d434a4152000000000000000000000001")
+	s, e := zi0.Open(directory, owner, uint32(len(raw)))
+	must(e)
+	defer s.Close()
+	creation, e := s.Creation()
+	must(e)
+	var appendGas, appendMax, scanGas, scanMax, viewGas uint64
+	appends, scans := 0, 0
+	for at := 0; at < len(raw); at += 8192 {
+		end := at + 8192
+		if end > len(raw) {
+			end = len(raw)
+		}
+		b := raw[at:end]
+		op, e := s.Append(uint32(at), b, pageAssertion(creation.Controller, uint32(at/8192), b), zi0.OrdinaryGas)
+		must(e)
+		appendGas += op.GasUsed
+		if op.GasUsed > appendMax {
+			appendMax = op.GasUsed
+		}
+		appends++
+	}
+	h, e := s.Head(zi0.OrdinaryGas)
+	must(e)
+	viewGas += h.GasUsed
+	seal, e := s.Seal(h.AS0.Cursor, h.AS0.ChainCommitment, zi0.OrdinaryGas)
+	must(e)
+	h, e = s.Head(zi0.OrdinaryGas)
+	must(e)
+	viewGas += h.GasUsed
+	created, e := s.CreateIndex(h.AS0.ContentCommitment, zi0.OrdinaryGas)
+	must(e)
+	discovered, e := s.Discover(zi0.OrdinaryGas)
+	must(e)
+	for {
+		h, e = s.Head(zi0.OrdinaryGas)
+		must(e)
+		viewGas += h.GasUsed
+		if h.Index.NextEntry == h.Index.Count {
+			break
+		}
+		op, e := s.Scan(h.Index.NextEntry, h.Index.CDCursor, h.Index.Rolling, 64, zi0.OrdinaryGas)
+		must(e)
+		scans++
+		scanGas += op.GasUsed
+		if op.GasUsed > scanMax {
+			scanMax = op.GasUsed
+		}
+	}
+	finished, e := s.Finish(h.Index.Count, h.Index.CDCursor, h.Index.Rolling, zi0.OrdinaryGas)
+	must(e)
+	h, e = s.Head(zi0.OrdinaryGas)
+	must(e)
+	viewGas += h.GasUsed
+	if h.Index.Phase != 2 || h.Index.Count != 20554 || h.Index.CDSize != 2100796 {
+		panic("EVM-discovered directory disagrees with static test oracle")
+	}
+	type lookup struct {
+		Name   string
+		Index  uint32
+		Packed common.Hash
+	}
+	var found []lookup
+	for _, name := range []string{"log4j2.xml", "META-INF/log4j-provider.properties", "net/minecraft/server/MinecraftServer.class", "org/apache/logging/log4j/LogManager.class"} {
+		r, e := s.Lookup([]byte(name), zi0.OrdinaryGas)
+		must(e)
+		if !r.Found {
+			panic("EVM resource lookup missing: " + name)
+		}
+		viewGas += r.GasUsed
+		found = append(found, lookup{name, r.Index, r.PackedRecord})
+	}
+	must(s.Close())
+	s, e = zi0.Open(directory, owner, uint32(len(raw)))
+	must(e)
+	defer s.Close()
+	reopened, e := s.Head(zi0.OrdinaryGas)
+	must(e)
+	viewGas += reopened.GasUsed
+	c, e := s.Creation()
+	must(e)
+	if c.Performed || h.StateRoot != reopened.StateRoot || h.Index.FinalRoot != reopened.Index.FinalRoot {
+		panic("sealed disk reopen mismatch")
+	}
+	out := map[string]any{"scope": "REAL official JAR EVM ZIP INDEX ONLY; no inflate, Java execution, EULA, listener or Minecraft readiness", "inputBytes": len(raw), "inputHostSHA256": digest, "head": h, "lookups": found, "appendCalls": appends, "scanCalls": scans, "publications": appends + scans + 5, "createAS0Gas": creation.GasUsed, "appendGasSum": appendGas, "appendGasMax": appendMax, "sealGas": seal.GasUsed, "createIndexGas": created.GasUsed, "discoverGas": discovered.GasUsed, "scanGasSum": scanGas, "scanGasMax": scanMax, "finishGas": finished.GasUsed, "viewGasSum": viewGas, "reopenedWithoutCreate": true, "elapsedMS": time.Since(start).Milliseconds()}
+	encoded, e := json.MarshalIndent(out, "", "  ")
+	must(e)
+	must(os.WriteFile(reportPath, append(encoded, '\n'), 0600))
+	fmt.Println(string(encoded))
+}

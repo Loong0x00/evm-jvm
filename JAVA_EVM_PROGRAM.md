@@ -408,3 +408,19 @@ codeKeccak0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77.
 ZIPmetadata/COMPRESSEDrangesonly; noinflate/plainCRC/ClassLoader/MC/EULA/listener/
 Done or officialwholeJAREVMSHA256. NextEVMDEFLATE/output-bounds/CRC preflight is
 separate. FirstfutureMCreadiness remainsunchanged1.12.2superflat, notdefaultterrain.
+
+### Actual official server JAR indexed in EVM (post-acceptance)
+
+Parent transported30222121B of the pinned original1.12.2 JAR into EVM-created AS0
+pages and accepted ZI0, no hostZIPparser/catalogue/extraction. EVM discovered20554
+entries/2100796BCD and resolved real log4j2.xml/provider/MinecraftServer/LogManager
+names/ranges; returned packed metadata agrees with prior static oracles.3690page
+appends+322scans+5othermutations=4017per-callpublications.25.178s126558208B sampled
+RSS, ordinary100M calls; same-processsealedreopen noCREATE. Evidence/driver in
+`evidence/java-evm/zi0/official-index-0936b7ebd/`. AS0root5c77ef7a...5ac9,
+ZI0root4f339e85...8f4e,trie01359526...843d8f. No server payloads inGit. Host input
+SHA256fe1f9274... is transportverification, not wholeJAREVMSHA256 proof. The JAR
+container was indexed, NOT Java classes inflated/executed or Minecraft launched.
+NextONE Sol/high DI0 preflight perJAVA_EVM_MC_DI0_PREPARATION.md: EVM method0/raw
+DEFLATE/plainCRC and output bounds overEVMZI0metadata, generatedfixturesonly,
+32KiBhistory/resume/immutableoutput ownership measurements before freeze.

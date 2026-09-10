@@ -6,8 +6,12 @@ Go repair27cb00967 integrated and parent corrected verified binding cache/ordina
 100M tests/true20554-entry new-process continuation. Final20.546s/519057408B,
 823 per-call publications and high32MiB offsets pass. NO inflate/plainCRC/
 ClassLoader/MC/EULA/listener/Done. VFS0a72aa13f15 remains latest JVM/filesystem;
-AS064ea6b62f remains accepted byte-store dependency. No workers currently active.
+AS064ea6b62f remains accepted byte-store dependency. DI0 preflight follows JAVA_EVM_MC_DI0_PREPARATION.md; one worker authorized.
 Earlier candidate/preflight status in historical notes is superseded by the review.
+Parent subsequently indexed the REAL official1.12.2 JAR through accepted EVM
+AS0/ZI0:20554entries,4017publications,25.178s; four real early-resource lookups
+match static inventory. This is ZIP INDEX ONLY, no Java/inflate/MC execution.
+Evidence: evidence/java-evm/zi0/official-index-0936b7ebd/ (no server payloads).
 
 LATEST USER: important information must NOT live only in /tmp. Keep plans and
 constraints in repository docs; archive key acceptance/failure/reproduction evidence
