@@ -1,3 +1,7 @@
+> CURRENT REVISION: JAVA_EVM_MC_VFS0A_REVISION1.md explicitly selects a320KiB
+> VFS0a-only LOCAL installation cap after the measured initial256KiB failure.
+> Historical candidate evidence below is retained; semantic/path gates remain pending.
+
 # MC-VFS0a local continuation runtime candidate — size blocked
 
 `VFS0aInterpreter.sol` is a production-integration candidate forked from accepted

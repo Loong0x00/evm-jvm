@@ -136,8 +136,8 @@ func vfs0aHarnessLoad() ([]byte, abi.ABI, error) {
 			vfs0aHarnessLoadErr = fmt.Errorf("vfs0a: decode pinned runtime artifact: %w", err)
 			return
 		}
-		if len(vfs0aHarnessCode) == 0 || len(vfs0aHarnessCode) > 256*1024 {
-			vfs0aHarnessLoadErr = fmt.Errorf("vfs0a: runtime size %d is outside LOCAL range 1..262144", len(vfs0aHarnessCode))
+		if len(vfs0aHarnessCode) == 0 || len(vfs0aHarnessCode) > 320*1024 {
+			vfs0aHarnessLoadErr = fmt.Errorf("vfs0a: runtime size %d is outside LOCAL range 1..327680", len(vfs0aHarnessCode))
 		}
 	})
 	return vfs0aHarnessCode, vfs0aHarnessABI, vfs0aHarnessLoadErr

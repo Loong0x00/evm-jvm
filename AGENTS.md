@@ -203,3 +203,9 @@ JAVA_EVM_MC_VFS0A_PATH_REVIEW.md. Lexical .. collapse must not silently open thr
 missing/file intermediate parents; ENOTDIR needs honest handling, and mkdirs has
 measured canonical fallback unlike mkdir/open/stat. Preserve reproductions and
 reconcile at runtime handoff; core-fixture green is insufficient for acceptance.
+
+LATEST VFS0a revision: JAVA_EVM_MC_VFS0A_REVISION1.md. Parent independently measured
+287440B (25296B over initial256KiB); explicitly select320KiB LOCAL installation for
+this UNACCEPTED profile under artistic priority, rather than requiring module migration.
+Old caps/core/opcode accounting unchanged;100M/1B gas,1MiB blob,25M reserve unchanged.
+Path traversal/ENOTDIR correction mandatory before acceptance; no Minecraft Done.

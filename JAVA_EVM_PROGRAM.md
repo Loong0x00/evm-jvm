@@ -250,3 +250,9 @@ harness workers; parent independently verifies32 groups. Retain256KiB runtime ca
 1MiB checkpoint,100M/1B calls and20min/4GiB gate; explicitly allow4096 slices only in
 new VFS0a tests for genuine q1 Java path/message-copy chains. All accepted budgets,
 artifacts and upstream EVM remain unchanged. No Minecraft/EULA/listener/Done yet.
+
+LATEST VFS0a revision: JAVA_EVM_MC_VFS0A_REVISION1.md. Parent independently measured
+287440B (25296B over initial256KiB); explicitly select320KiB LOCAL installation for
+this UNACCEPTED profile under artistic priority, rather than requiring module migration.
+Old caps/core/opcode accounting unchanged;100M/1B gas,1MiB blob,25M reserve unchanged.
+Path traversal/ENOTDIR correction mandatory before acceptance; no Minecraft Done.

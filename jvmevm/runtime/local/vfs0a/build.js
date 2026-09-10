@@ -106,9 +106,9 @@ if ((output.errors || []).some(e => e.severity === 'error')) process.exit(1);
 const c = output.contracts[sourceName].VFS0aInterpreter;
 const hex = c.evm.deployedBytecode.object.toLowerCase();
 const runtimeBytes = Buffer.from(hex, 'hex').length;
-const capPassed = runtimeBytes <= 256 * 1024;
+const capPassed = runtimeBytes <= 320 * 1024;
 if (!capPassed && !measureOverCap) {
-  throw new Error(`VFS0a runtime ${runtimeBytes} bytes exceeds 256 KiB by ${runtimeBytes - 256 * 1024} bytes`);
+  throw new Error(`VFS0a runtime ${runtimeBytes} bytes exceeds 320 KiB by ${runtimeBytes - 320 * 1024} bytes`);
 }
 const runtimePath = path.join(dir, 'VFS0aInterpreter.runtime.hex');
 const abiPath = path.join(dir, 'VFS0aInterpreter.abi.json');
@@ -130,5 +130,5 @@ if (check) {
 }
 console.log(JSON.stringify({compiler: solc.version(), runtimeBytes,
   runtimeSHA256: sha256(Buffer.from(hex, 'hex')), sourceSHA256: sha256(source),
-  acceptanceCapBytes: 256 * 1024, acceptanceCapPassed: capPassed,
+  acceptanceCapBytes: 320 * 1024, acceptanceCapPassed: capPassed,
   settings: {optimizer: 200, viaIR: true, evmVersion: 'cancun', metadata: false}}));

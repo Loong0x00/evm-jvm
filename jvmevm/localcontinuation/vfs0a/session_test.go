@@ -154,7 +154,7 @@ func vfs0aHarnessRequireRuntime(t *testing.T) {
 	if err != nil {
 		t.Fatalf("required pinned VFS0a runtime dependency unavailable: %v", err)
 	}
-	if len(code) == 0 || len(code) > 256*1024 {
+	if len(code) == 0 || len(code) > 320*1024 {
 		t.Fatalf("runtime length %d outside frozen LOCAL bound", len(code))
 	}
 	if _, err := ABI(); err != nil {

@@ -1,6 +1,8 @@
 # MC-VFS0a: frozen bounded LOCAL implementation contract
 
-Status: **implementation authorized, NOT accepted**. Dependency: accepted IOE0
+Status: **implementation authorized, NOT accepted**.
+CURRENT amendment: JAVA_EVM_MC_VFS0A_REVISION1.md overrides the initial code cap
+with explicit VFS0a-only320KiB and requires the ENOTDIR/operation-specific path fix. Dependency: accepted IOE0
 `8f29f8c` (233286B, SHA256 `507ed54d56d4cbe5e559013fbf5a3e598d75a28c0ffe33735573f646eac659a0`).
 This plan supersedes conflicting candidate recommendations in the three VFS0a
 preflights. Parent owns freeze/integration/acceptance. Exactly two Sol/high workers,

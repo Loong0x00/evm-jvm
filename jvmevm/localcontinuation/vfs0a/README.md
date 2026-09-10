@@ -39,7 +39,7 @@ constructor chain completes, then resumes without reopening/truncating or
 installing code.
 
 Ordinary calls use 100,000,000 gas; explicit boundary work may use
-1,000,000,000 gas. The runtime remains limited to 256 KiB, checkpoints to 1
+1,000,000,000 gas. The runtime remains limited to 320 KiB (VFS0a revision1 only), checkpoints to 1
 MiB, ordinary cases to 4,096 dispatch units, and dedicated quota cases to
 65,536 units. The external acceptance gate remains 20 minutes/4 GiB. This
 package adds no host filesystem production bridge, Java/path/heap parser,
