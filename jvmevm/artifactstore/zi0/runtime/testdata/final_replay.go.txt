@@ -1,0 +1,1532 @@
+package main
+
+import (
+	"bytes"
+	"compress/flate"
+	"crypto/sha256"
+	"encoding/binary"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"hash/crc32"
+	"io/fs"
+	"math/big"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"reflect"
+	"runtime"
+	"sort"
+	"strconv"
+	"strings"
+	"syscall"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/tracing"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/core/vm"
+	evmrun "github.com/ethereum/go-ethereum/core/vm/runtime"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethdb"
+	"github.com/ethereum/go-ethereum/ethdb/leveldb"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/triedb"
+)
+
+const ordinary = uint64(100_000_000)
+const boundary = uint64(1_000_000_000)
+
+var work = os.Getenv("ZI0_REPLAY_WORK")
+
+var owner = common.HexToAddress("0x5a49310000000000000000000000000000000001")
+var other = common.HexToAddress("0x5a49310000000000000000000000000000000002")
+
+type artifact struct {
+	ABI      json.RawMessage `json:"abi"`
+	Bytecode string          `json:"bytecode"`
+	Runtime  string          `json:"runtime"`
+}
+type ent struct {
+	name           string
+	data           []byte
+	method         uint16
+	descriptor     int
+	flags          uint16
+	extra, comment []byte
+}
+type built struct {
+	raw           []byte
+	cd, eocd      uint32
+	locals, datas []uint32
+	central       [][]byte
+}
+type durable interface {
+	ethdb.Database
+	SyncKeyValue() error
+}
+type env struct {
+	disk          durable
+	trie          *triedb.Database
+	st            *state.StateDB
+	root          common.Hash
+	dir           string
+	commits       int
+	commitNS      int64
+	maxCommitNS   int64
+	manifestBytes int64
+	maxCallNS     int64
+}
+type manifest struct {
+	Format              string         `json:"format"`
+	Context             string         `json:"context"`
+	Root                common.Hash    `json:"root"`
+	Owner               common.Address `json:"owner"`
+	Store               common.Address `json:"store"`
+	Index               common.Address `json:"index"`
+	Length              uint32         `json:"length"`
+	Content             common.Hash    `json:"content"`
+	AS0Code             common.Hash    `json:"as0Code"`
+	ZI0Code             common.Hash    `json:"zi0Code"`
+	Next, Cursor, Count uint32         `json:"-"`
+	Rolling             common.Hash    `json:"-"`
+	Phase               uint8          `json:"-"`
+}
+type gasStats struct {
+	AS0Create, AS0Append, AS0AppendMax, AS0Seal, IndexCreate, Discover, ScanTotal, ScanMax, Finish uint64
+	Scans                                                                                          int
+}
+type runResult struct {
+	Name            string   `json:"name"`
+	Entries         int      `json:"entries"`
+	Bytes           int      `json:"bytes"`
+	CDBytes         uint32   `json:"cd_bytes"`
+	Gas             gasStats `json:"gas"`
+	Root            string   `json:"index_root,omitempty"`
+	StateRoot       string   `json:"state_root,omitempty"`
+	Commits         int      `json:"commits"`
+	CommitMS        int64    `json:"commit_ms"`
+	MaxCommitMS     int64    `json:"max_commit_ms"`
+	MaxCallMS       int64    `json:"max_call_ms"`
+	DiskBytes       int64    `json:"disk_bytes,omitempty"`
+	DiskBeforeIndex int64    `json:"disk_before_index,omitempty"`
+	IndexDiskDelta  int64    `json:"index_disk_delta,omitempty"`
+	ElapsedMS       int64    `json:"elapsed_ms"`
+	Reopened        bool     `json:"new_process_reopened,omitempty"`
+}
+type controlResult struct {
+	Name, Outcome string
+	ErrorCode     uint64 `json:"error_code,omitempty"`
+	Gas           uint64 `json:"gas"`
+	RolledBack    bool   `json:"rolled_back"`
+	Retry         bool   `json:"retry,omitempty"`
+	Detail        string `json:"detail,omitempty"`
+}
+type finalReport struct {
+	Solc                                 string `json:"solc"`
+	SourceSHA, RuntimeSHA, RuntimeKeccak string
+	InitBytes, RuntimeBytes              int
+	Runs                                 []runResult     `json:"runs"`
+	Controls                             []controlResult `json:"controls"`
+	Independent                          []controlResult `json:"independent_probes"`
+	RSSKiB                               int64           `json:"rss_kib"`
+	ElapsedMS                            int64           `json:"elapsed_ms"`
+}
+
+func cfg(st *state.StateDB, from common.Address, gas uint64) *evmrun.Config {
+	z := common.Hash{}
+	return &evmrun.Config{ChainConfig: params.AllDevChainProtocolChanges, Difficulty: new(big.Int), Origin: from, Coinbase: common.Address{}, BlockNumber: big.NewInt(1), Time: 1, GasLimit: gas, GasPrice: new(big.Int), Value: new(big.Int), BaseFee: new(big.Int).SetUint64(params.InitialBaseFee), BlobBaseFee: new(big.Int).SetUint64(params.BlobTxMinBlobGasprice), Random: &z, State: st, GetHashFn: func(uint64) common.Hash { return common.Hash{} }, EVMConfig: vm.Config{}}
+}
+func newEnv(dir string) (*env, error) {
+	var d durable
+	if dir == "" {
+		d = rawdb.NewMemoryDatabase()
+	} else {
+		if err := os.MkdirAll(filepath.Join(dir, "state"), 0700); err != nil {
+			return nil, err
+		}
+		kv, e := leveldb.New(filepath.Join(dir, "state"), 16, 16, "zi0-preflight", false)
+		if e != nil {
+			return nil, e
+		}
+		d = rawdb.NewDatabase(kv)
+	}
+	t := triedb.NewDatabase(d, triedb.HashDefaults)
+	s, e := state.New(types.EmptyRootHash, state.NewDatabase(t, nil))
+	if e != nil {
+		return nil, e
+	}
+	return &env{disk: d, trie: t, st: s, root: types.EmptyRootHash, dir: dir}, nil
+}
+func openEnv(dir string, m manifest) (*env, error) {
+	kv, e := leveldb.New(filepath.Join(dir, "state"), 16, 16, "zi0-preflight", false)
+	if e != nil {
+		return nil, e
+	}
+	d := rawdb.NewDatabase(kv)
+	t := triedb.NewDatabase(d, triedb.HashDefaults)
+	s, e := state.New(m.Root, state.NewDatabase(t, nil))
+	if e != nil {
+		return nil, e
+	}
+	if m.Format != "MC-ZI0-PERSISTENCE-PREFLIGHT-1" || m.Context != "all-dev-chain:block=1,time=1,value=0" || m.Owner == (common.Address{}) || m.Store == (common.Address{}) || m.Index == (common.Address{}) || crypto.Keccak256Hash(s.GetCode(m.Store)) != m.AS0Code || crypto.Keccak256Hash(s.GetCode(m.Index)) != m.ZI0Code {
+		return nil, errors.New("durable manifest binding/code mismatch")
+	}
+	return &env{disk: d, trie: t, st: s, root: m.Root, dir: dir}, nil
+}
+func (e *env) close() { e.trie.Close(); e.disk.Close() }
+func (e *env) commit(m *manifest) error {
+	start := time.Now()
+	r, x := e.st.Commit(1, true, true)
+	if x != nil {
+		return x
+	}
+	if x = e.trie.Commit(r, false); x != nil {
+		return x
+	}
+	if x = e.disk.SyncKeyValue(); x != nil {
+		return x
+	}
+	if e.dir != "" {
+		m.Root = r
+		b, _ := json.MarshalIndent(m, "", "  ")
+		tmp := filepath.Join(e.dir, ".head.tmp")
+		f, x := os.OpenFile(tmp, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0600)
+		if x != nil {
+			return x
+		}
+		if _, x = f.Write(append(b, '\n')); x == nil {
+			x = f.Sync()
+		}
+		f.Close()
+		if x != nil {
+			return x
+		}
+		if x = os.Rename(tmp, filepath.Join(e.dir, "durable-head.json")); x != nil {
+			return x
+		}
+		dd, x := os.Open(e.dir)
+		if x != nil {
+			return x
+		}
+		x = dd.Sync()
+		dd.Close()
+		if x != nil {
+			return x
+		}
+		e.manifestBytes += int64(len(b) + 1)
+	}
+	s, x := state.New(r, state.NewDatabase(e.trie, nil))
+	if x != nil {
+		return x
+	}
+	e.st = s
+	e.root = r
+	e.commits++
+	ns := time.Since(start).Nanoseconds()
+	e.commitNS += ns
+	if ns > e.maxCommitNS {
+		e.maxCommitNS = ns
+	}
+	return nil
+}
+func readManifest(dir string) (manifest, error) {
+	var m manifest
+	b, e := os.ReadFile(filepath.Join(dir, "durable-head.json"))
+	if e != nil {
+		return m, e
+	}
+	e = json.Unmarshal(b, &m)
+	return m, e
+}
+func diskSize(dir string) int64 {
+	var n int64
+	filepath.WalkDir(dir, func(p string, d fs.DirEntry, e error) error {
+		if e == nil && !d.IsDir() {
+			if q, x := d.Info(); x == nil {
+				n += q.Size()
+			}
+		}
+		return nil
+	})
+	return n
+}
+func call(e *env, from, to common.Address, data []byte, gas uint64) ([]byte, uint64, error) {
+	start := time.Now()
+	o, left, x := evmrun.Call(to, data, cfg(e.st, from, gas))
+	ns := time.Since(start).Nanoseconds()
+	if ns > e.maxCallNS {
+		e.maxCallNS = ns
+	}
+	return o, gas - left, x
+}
+func create(e *env, from common.Address, code []byte, gas uint64) (common.Address, uint64, error) {
+	start := time.Now()
+	_, a, left, x := evmrun.Create(code, cfg(e.st, from, gas))
+	ns := time.Since(start).Nanoseconds()
+	if ns > e.maxCallNS {
+		e.maxCallNS = ns
+	}
+	return a, gas - left, x
+}
+func mustABI(a artifact) abi.ABI {
+	x, e := abi.JSON(bytes.NewReader(a.ABI))
+	if e != nil {
+		panic(e)
+	}
+	return x
+}
+func loadArtifacts() (artifact, abi.ABI, []byte) {
+	b, e := os.ReadFile(filepath.Join(work, "prototype.json"))
+	if e != nil {
+		panic(e)
+	}
+	var a artifact
+	if json.Unmarshal(b, &a) != nil {
+		panic("artifact")
+	}
+	z := mustABI(a)
+	code, e := hex.DecodeString(strings.TrimPrefix(a.Bytecode, "0x"))
+	if e != nil {
+		panic(e)
+	}
+	return a, z, code
+}
+func enc(ts []string, v ...interface{}) []byte {
+	var a abi.Arguments
+	for _, s := range ts {
+		t, _ := abi.NewType(s, "", nil)
+		a = append(a, abi.Argument{Type: t})
+	}
+	b, e := a.Pack(v...)
+	if e != nil {
+		panic(e)
+	}
+	return b
+}
+func pi(at common.Address, i uint32, raw []byte) common.Hash {
+	return crypto.Keccak256Hash(enc([]string{"bytes32", "address", "uint32", "uint32", "bytes32"}, crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), at, i, uint32(len(raw)), crypto.Keccak256Hash(raw)))
+}
+func view(e *env, a abi.ABI, to common.Address, name string, args ...interface{}) []interface{} {
+	d, x := a.Pack(name, args...)
+	if x != nil {
+		panic(x)
+	}
+	o, _, x := call(e, owner, to, d, ordinary)
+	if x != nil {
+		panic(fmt.Sprintf("view %s: %v 0x%x", name, x, o))
+	}
+	v, x := a.Unpack(name, o)
+	if x != nil {
+		panic(x)
+	}
+	return v
+}
+func mutate(e *env, m *manifest, from, to common.Address, a abi.ABI, name string, gas uint64, args ...interface{}) ([]byte, uint64, error) {
+	d, x := a.Pack(name, args...)
+	if x != nil {
+		panic(x)
+	}
+	old := e.root
+	o, g, x := call(e, from, to, d, gas)
+	if x != nil {
+		s, y := state.New(old, state.NewDatabase(e.trie, nil))
+		if y != nil {
+			panic(y)
+		}
+		e.st = s
+		return o, g, x
+	}
+	if x = e.commit(m); x != nil {
+		return nil, g, x
+	}
+	return o, g, nil
+}
+func deployArchive(e *env, m *manifest, raw []byte) (common.Address, common.Hash, gasStats) {
+	pa, x := as0.ABI()
+	if x != nil {
+		panic(x)
+	}
+	init, x := as0.InitCode()
+	if x != nil {
+		panic(x)
+	}
+	arg, _ := pa.Pack("", uint32(len(raw)))
+	store, g, x := create(e, owner, append(init, arg...), ordinary)
+	if x != nil {
+		panic(x)
+	}
+	m.Store = store
+	m.Length = uint32(len(raw))
+	m.AS0Code = crypto.Keccak256Hash(e.st.GetCode(store))
+	if x = e.commit(m); x != nil {
+		panic(x)
+	}
+	gs := gasStats{AS0Create: g}
+	var cur uint32
+	for i := uint32(0); int(cur) < len(raw); i++ {
+		n := 8192
+		if len(raw)-int(cur) < n {
+			n = len(raw) - int(cur)
+		}
+		page := raw[cur : int(cur)+n]
+		_, g, x = mutate(e, m, owner, store, pa, "append", ordinary, cur, page, pi(store, i, page))
+		if x != nil {
+			panic(fmt.Sprintf("append %d: %v", i, x))
+		}
+		gs.AS0Append += g
+		if g > gs.AS0AppendMax {
+			gs.AS0AppendMax = g
+		}
+		cur += uint32(n)
+	}
+	chain := view(e, pa, store, "chainCommitment")[0].([32]byte)
+	d, _ := pa.Pack("seal", cur, chain)
+	_, g, x = call(e, owner, store, d, ordinary)
+	if x != nil {
+		panic(x)
+	}
+	gs.AS0Seal = g
+	root := common.Hash(view(e, pa, store, "contentCommitment")[0].([32]byte))
+	m.Content = root
+	if x = e.commit(m); x != nil {
+		panic(x)
+	}
+	return store, root, gs
+}
+func deployIndex(e *env, m *manifest, za abi.ABI, code []byte, store common.Address, content common.Hash, gs *gasStats) common.Address {
+	arg, _ := za.Pack("", store, [32]byte(content))
+	idx, g, x := create(e, owner, append(code, arg...), ordinary)
+	if x != nil {
+		panic(fmt.Sprintf("index create: %v", x))
+	}
+	m.Index = idx
+	m.ZI0Code = crypto.Keccak256Hash(e.st.GetCode(idx))
+	if x = e.commit(m); x != nil {
+		panic(x)
+	}
+	gs.IndexCreate = g
+	return idx
+}
+func head(e *env, za abi.ABI, idx common.Address, m *manifest) {
+	m.Phase = view(e, za, idx, "phase")[0].(uint8)
+	m.Next = view(e, za, idx, "nextEntry")[0].(uint32)
+	m.Cursor = view(e, za, idx, "cdCursor")[0].(uint32)
+	m.Count = view(e, za, idx, "count")[0].(uint32)
+	m.Rolling = common.Hash(view(e, za, idx, "rolling")[0].([32]byte))
+}
+func discover(e *env, m *manifest, za abi.ABI, idx common.Address, gs *gasStats) ([]byte, error) {
+	o, g, x := mutate(e, m, owner, idx, za, "discover", ordinary)
+	gs.Discover = g
+	if x == nil {
+		head(e, za, idx, m)
+	}
+	return o, x
+}
+func scans(e *env, m *manifest, za abi.ABI, idx common.Address, q uint16, gs *gasStats, stop uint32) error {
+	for m.Next < m.Count && (stop == 0 || m.Next < stop) {
+		n := q
+		if uint32(n) > m.Count-m.Next {
+			n = uint16(m.Count - m.Next)
+		}
+		_, g, x := mutate(e, m, owner, idx, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), n)
+		if x != nil {
+			return fmt.Errorf("scan at %d q%d gas%d: %w", m.Next, n, g, x)
+		}
+		gs.ScanTotal += g
+		gs.Scans++
+		if g > gs.ScanMax {
+			gs.ScanMax = g
+		}
+		head(e, za, idx, m)
+	}
+	return nil
+}
+func finish(e *env, m *manifest, za abi.ABI, idx common.Address, gs *gasStats) error {
+	_, g, x := mutate(e, m, owner, idx, za, "finish", ordinary, m.Count, m.Cursor, [32]byte(m.Rolling))
+	gs.Finish = g
+	if x == nil {
+		head(e, za, idx, m)
+	}
+	return x
+}
+func verifyFinal(e *env, m manifest, za abi.ABI) error {
+	if m.Phase != 2 {
+		return errors.New("not final")
+	}
+	for _, i := range []uint32{0, m.Count - 1} {
+		if m.Count == 0 {
+			break
+		}
+		v := view(e, za, m.Index, "entry", i)
+		name := v[0].([]byte)
+		packed := v[1].([32]byte)
+		w := view(e, za, m.Index, "lookup", name)
+		if !w[0].(bool) || w[1].(uint32) != i || w[2].([32]byte) != packed {
+			return errors.New("entry/lookup mismatch")
+		}
+		bad := append([]byte(nil), name...)
+		bad[len(bad)-1] ^= 0x80
+		if view(e, za, m.Index, "lookup", bad)[0].(bool) {
+			return errors.New("non-equal full name matched")
+		}
+	}
+	return nil
+}
+func errCode(out []byte) (uint64, bool) {
+	sel := crypto.Keccak256([]byte("ZI0Error(uint256)"))[:4]
+	if len(out) != 36 || !bytes.Equal(out[:4], sel) {
+		return 0, false
+	}
+	return new(big.Int).SetBytes(out[4:]).Uint64(), true
+}
+
+func put16(b *bytes.Buffer, v uint16) { binary.Write(b, binary.LittleEndian, v) }
+func put32(b *bytes.Buffer, v uint32) { binary.Write(b, binary.LittleEndian, v) }
+func deflate(x []byte) []byte {
+	var b bytes.Buffer
+	w, _ := flate.NewWriter(&b, flate.DefaultCompression)
+	w.Write(x)
+	w.Close()
+	return b.Bytes()
+}
+func makezip(es []ent, prefix int, order []int, comment []byte) built {
+	var out bytes.Buffer
+	out.Write(bytes.Repeat([]byte{'X'}, prefix))
+	z := built{}
+	for _, e := range es {
+		z.locals = append(z.locals, uint32(out.Len()))
+		name := []byte(e.name)
+		payload := e.data
+		if e.method == 8 {
+			payload = deflate(e.data)
+		}
+		flags := uint16(0x800) | e.flags
+		if e.descriptor >= 0 {
+			flags |= 8
+		}
+		crc := crc32.ChecksumIEEE(e.data)
+		put32(&out, 0x04034b50)
+		put16(&out, 20)
+		put16(&out, flags)
+		put16(&out, e.method)
+		put16(&out, 0)
+		put16(&out, 0)
+		if e.descriptor >= 0 {
+			put32(&out, 0)
+			put32(&out, 0)
+			put32(&out, 0)
+		} else {
+			put32(&out, crc)
+			put32(&out, uint32(len(payload)))
+			put32(&out, uint32(len(e.data)))
+		}
+		put16(&out, uint16(len(name)))
+		put16(&out, uint16(len(e.extra)))
+		out.Write(name)
+		out.Write(e.extra)
+		z.datas = append(z.datas, uint32(out.Len()))
+		out.Write(payload)
+		if e.descriptor >= 0 {
+			if e.descriptor == 1 {
+				put32(&out, 0x08074b50)
+			}
+			put32(&out, crc)
+			put32(&out, uint32(len(payload)))
+			put32(&out, uint32(len(e.data)))
+		}
+		var c bytes.Buffer
+		put32(&c, 0x02014b50)
+		put16(&c, 0x0314)
+		put16(&c, 20)
+		put16(&c, flags)
+		put16(&c, e.method)
+		put16(&c, 0)
+		put16(&c, 0)
+		put32(&c, crc)
+		put32(&c, uint32(len(payload)))
+		put32(&c, uint32(len(e.data)))
+		put16(&c, uint16(len(name)))
+		put16(&c, uint16(len(e.extra)))
+		put16(&c, uint16(len(e.comment)))
+		put16(&c, 0)
+		put16(&c, 0)
+		put32(&c, 0)
+		put32(&c, z.locals[len(z.locals)-1])
+		c.Write(name)
+		c.Write(e.extra)
+		c.Write(e.comment)
+		z.central = append(z.central, c.Bytes())
+	}
+	z.cd = uint32(out.Len())
+	if order == nil {
+		order = make([]int, len(es))
+		for i := range order {
+			order[i] = i
+		}
+	}
+	for _, i := range order {
+		out.Write(z.central[i])
+	}
+	cds := uint32(out.Len()) - z.cd
+	z.eocd = uint32(out.Len())
+	put32(&out, 0x06054b50)
+	put16(&out, 0)
+	put16(&out, 0)
+	put16(&out, uint16(len(es)))
+	put16(&out, uint16(len(es)))
+	put32(&out, cds)
+	put32(&out, z.cd)
+	put16(&out, uint16(len(comment)))
+	out.Write(comment)
+	z.raw = out.Bytes()
+	return z
+}
+func namesN(n int, targetNameBytes int) []ent {
+	es := make([]ent, n)
+	remain := targetNameBytes
+	for i := 0; i < n; i++ {
+		left := n - i
+		l := remain / left
+		if l < 8 {
+			l = 8
+		}
+		base := fmt.Sprintf("p/%05d/", i)
+		if len(base) > l {
+			l = len(base)
+		}
+		name := base + strings.Repeat(string(rune('a'+i%26)), l-len(base))
+		es[i] = ent{name: name, data: []byte{byte(i), byte(i >> 8)}, method: 8, descriptor: -1}
+		remain -= len(name)
+	}
+	if remain != 0 {
+		panic(fmt.Sprintf("name sizing %d", remain))
+	}
+	return es
+}
+func maxRecords() []ent {
+	extra := make([]byte, 1024)
+	binary.LittleEndian.PutUint16(extra, 0x1234)
+	binary.LittleEndian.PutUint16(extra[2:], 1020)
+	for i := 4; i < len(extra); i++ {
+		extra[i] = byte(i)
+	}
+	es := make([]ent, 64)
+	for i := range es {
+		base := fmt.Sprintf("max/%02d/", i)
+		es[i] = ent{name: base + strings.Repeat("n", 256-len(base)), data: []byte{byte(i)}, method: uint16((i % 2) * 8), descriptor: -1, extra: append([]byte(nil), extra...), comment: bytes.Repeat([]byte{byte(i)}, 1024)}
+	}
+	return es
+}
+
+func runFull(name string, z built, q uint16, dir string, split bool) (runResult, error) {
+	start := time.Now()
+	os.RemoveAll(dir)
+	e, x := newEnv(dir)
+	if x != nil {
+		return runResult{}, x
+	}
+	m := manifest{Format: "MC-ZI0-PERSISTENCE-PREFLIGHT-1", Context: "all-dev-chain:block=1,time=1,value=0", Owner: owner}
+	_, za, code := loadArtifacts()
+	store, content, gs := deployArchive(e, &m, z.raw)
+	diskBeforeIndex := int64(0)
+	if dir != "" {
+		diskBeforeIndex = diskSize(dir)
+	}
+	idx := deployIndex(e, &m, za, code, store, content, &gs)
+	if out, discoverErr := discover(e, &m, za, idx, &gs); discoverErr != nil {
+		code, exact := errCode(out)
+		return runResult{}, fmt.Errorf("discover gas=%d exact=%v code=%d data=0x%x: %w", gs.Discover, exact, code, out, discoverErr)
+	}
+	if split {
+		half := m.Count / 2
+		if x = scans(e, &m, za, idx, q, &gs, half); x != nil {
+			return runResult{}, x
+		}
+		parentCommits, parentCommitNS, parentMax, parentCallMax := e.commits, e.commitNS, e.maxCommitNS, e.maxCallNS
+		e.close()
+		exe, _ := os.Executable()
+		cmd := exec.Command(exe, "resume", dir, strconv.Itoa(int(q)))
+		cmd.Env = os.Environ()
+		out, x := cmd.CombinedOutput()
+		if x != nil {
+			return runResult{}, fmt.Errorf("resume: %v %s", x, out)
+		}
+		var child runResult
+		if x = json.Unmarshal(out, &child); x != nil {
+			return runResult{}, fmt.Errorf("resume json: %v %s", x, out)
+		}
+		child.Name = name
+		child.Bytes = len(z.raw)
+		child.CDBytes = z.eocd - z.cd
+		child.Gas.AS0Create = gs.AS0Create
+		child.Gas.AS0Append = gs.AS0Append
+		child.Gas.AS0AppendMax = gs.AS0AppendMax
+		child.Gas.AS0Seal = gs.AS0Seal
+		child.Gas.IndexCreate = gs.IndexCreate
+		child.Gas.Discover = gs.Discover
+		child.Gas.ScanTotal += gs.ScanTotal
+		child.Gas.Scans += gs.Scans
+		if gs.ScanMax > child.Gas.ScanMax {
+			child.Gas.ScanMax = gs.ScanMax
+		}
+		child.Commits += parentCommits
+		child.CommitMS += parentCommitNS / 1e6
+		if parentMax/1e6 > child.MaxCommitMS {
+			child.MaxCommitMS = parentMax / 1e6
+		}
+		if parentCallMax/1e6 > child.MaxCallMS {
+			child.MaxCallMS = parentCallMax / 1e6
+		}
+		// A second fresh process reopens the FINAL root and exercises full-byte entry/lookup.
+		verify := exec.Command(exe, "verify", dir)
+		verify.Env = os.Environ()
+		verified, verifyErr := verify.CombinedOutput()
+		if verifyErr != nil {
+			return runResult{}, fmt.Errorf("final reopen: %v %s", verifyErr, verified)
+		}
+		if strings.TrimSpace(string(verified)) != child.Root {
+			return runResult{}, fmt.Errorf("final reopen root mismatch: %s", verified)
+		}
+		child.DiskBytes = diskSize(dir)
+		child.DiskBeforeIndex = diskBeforeIndex
+		child.IndexDiskDelta = child.DiskBytes - diskBeforeIndex
+		child.Reopened = true
+		child.ElapsedMS = time.Since(start).Milliseconds()
+		return child, nil
+	}
+	if x = scans(e, &m, za, idx, q, &gs, 0); x != nil {
+		return runResult{}, x
+	}
+	if x = finish(e, &m, za, idx, &gs); x != nil {
+		return runResult{}, x
+	}
+	if x = verifyFinal(e, m, za); x != nil {
+		return runResult{}, x
+	}
+	root := common.Hash(view(e, za, idx, "finalRoot")[0].([32]byte))
+	r := runResult{Name: name, Entries: len(z.central), Bytes: len(z.raw), CDBytes: z.eocd - z.cd, Gas: gs, Root: root.Hex(), StateRoot: e.root.Hex(), Commits: e.commits, CommitMS: e.commitNS / 1e6, MaxCommitMS: e.maxCommitNS / 1e6, MaxCallMS: e.maxCallNS / 1e6, ElapsedMS: time.Since(start).Milliseconds()}
+	if dir != "" {
+		r.DiskBytes = diskSize(dir)
+	}
+	e.close()
+	return r, nil
+}
+func verifyMode(dir string) {
+	m, x := readManifest(dir)
+	if x != nil {
+		panic(x)
+	}
+	e, x := openEnv(dir, m)
+	if x != nil {
+		panic(x)
+	}
+	defer e.close()
+	_, za, _ := loadArtifacts()
+	head(e, za, m.Index, &m)
+	if x = verifyFinal(e, m, za); x != nil {
+		panic(x)
+	}
+	fmt.Println(common.Hash(view(e, za, m.Index, "finalRoot")[0].([32]byte)).Hex())
+}
+func resumeMode(dir string, q uint16) {
+	m, x := readManifest(dir)
+	if x != nil {
+		panic(x)
+	}
+	e, x := openEnv(dir, m)
+	if x != nil {
+		panic(x)
+	}
+	_, za, _ := loadArtifacts()
+	if common.Hash(view(e, za, m.Index, "content")[0].([32]byte)) != m.Content || view(e, za, m.Index, "store")[0].(common.Address) != m.Store {
+		panic("reopen binding mismatch")
+	}
+	head(e, za, m.Index, &m)
+	gs := gasStats{}
+	if x = scans(e, &m, za, m.Index, q, &gs, 0); x != nil {
+		panic(x)
+	}
+	if x = finish(e, &m, za, m.Index, &gs); x != nil {
+		panic(x)
+	}
+	if x = verifyFinal(e, m, za); x != nil {
+		panic(x)
+	}
+	root := common.Hash(view(e, za, m.Index, "finalRoot")[0].([32]byte))
+	r := runResult{Entries: int(m.Count), Gas: gs, Root: root.Hex(), StateRoot: e.root.Hex(), Commits: e.commits, CommitMS: e.commitNS / 1e6, MaxCommitMS: e.maxCommitNS / 1e6, MaxCallMS: e.maxCallNS / 1e6, DiskBytes: diskSize(dir), Reopened: true}
+	e.close()
+	b, _ := json.Marshal(r)
+	fmt.Println(string(b))
+}
+
+func control(name string, z built, mut func(*built), wantCode uint64) controlResult {
+	if mut != nil {
+		mut(&z)
+	}
+	e, _ := newEnv("")
+	defer e.close()
+	m := manifest{Format: "MC-ZI0-PERSISTENCE-PREFLIGHT-1", Context: "all-dev-chain:block=1,time=1,value=0", Owner: owner}
+	_, za, code := loadArtifacts()
+	store, content, gs := deployArchive(e, &m, z.raw)
+	idx := deployIndex(e, &m, za, code, store, content, &gs)
+	before := e.root
+	out, g, callErr := mutate(e, &m, owner, idx, za, "discover", ordinary)
+	maxGas := g
+	if callErr == nil {
+		head(e, za, idx, &m)
+	}
+	for callErr == nil && m.Next < m.Count {
+		n := uint16(64)
+		if uint32(n) > m.Count-m.Next {
+			n = uint16(m.Count - m.Next)
+		}
+		before = e.root
+		out, g, callErr = mutate(e, &m, owner, idx, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), n)
+		if g > maxGas {
+			maxGas = g
+		}
+		if callErr == nil {
+			head(e, za, idx, &m)
+		}
+	}
+	if callErr == nil {
+		before = e.root
+		out, g, callErr = mutate(e, &m, owner, idx, za, "finish", ordinary, m.Count, m.Cursor, [32]byte(m.Rolling))
+		if g > maxGas {
+			maxGas = g
+		}
+		if callErr == nil {
+			head(e, za, idx, &m)
+		}
+	}
+	if callErr == nil {
+		if wantCode != 0 {
+			panic(name + ": unexpectedly accepted")
+		}
+		return controlResult{Name: name, Outcome: "ok", Gas: maxGas, RolledBack: true}
+	}
+	if errors.Is(callErr, vm.ErrOutOfGas) || strings.Contains(callErr.Error(), "out of gas") {
+		panic(name + ": unexpected OOG")
+	}
+	c, ok := errCode(out)
+	if !ok {
+		panic(fmt.Sprintf("%s non-ZI error %v 0x%x", name, callErr, out))
+	}
+	if wantCode == 0 {
+		panic(name + ": positive control unexpectedly reverted")
+	}
+	if c != wantCode {
+		panic(fmt.Sprintf("%s code %d want %d", name, c, wantCode))
+	}
+	return controlResult{Name: name, Outcome: "ZI0Error", ErrorCode: c, Gas: g, RolledBack: e.root == before}
+}
+
+func constructorControl(name, kind string, z built, want uint64) controlResult {
+	e, _ := newEnv("")
+	defer e.close()
+	m := manifest{Format: "MC-ZI0-PERSISTENCE-PREFLIGHT-1", Context: "all-dev-chain:block=1,time=1,value=0", Owner: owner}
+	a, za, code := loadArtifacts()
+	_ = a
+	pa, _ := as0.ABI()
+	init, _ := as0.InitCode()
+	arg, _ := pa.Pack("", uint32(len(z.raw)))
+	store, _, x := create(e, owner, append(init, arg...), ordinary)
+	if x != nil {
+		panic(x)
+	}
+	m.Store = store
+	m.Length = uint32(len(z.raw))
+	e.commit(&m)
+	var content common.Hash
+	if kind != "unsealed" {
+		var cur uint32
+		for i := uint32(0); int(cur) < len(z.raw); i++ {
+			n := 8192
+			if len(z.raw)-int(cur) < n {
+				n = len(z.raw) - int(cur)
+			}
+			page := z.raw[cur : int(cur)+n]
+			if _, _, x = mutate(e, &m, owner, store, pa, "append", ordinary, cur, page, pi(store, i, page)); x != nil {
+				panic(x)
+			}
+			cur += uint32(n)
+		}
+		chain := view(e, pa, store, "chainCommitment")[0].([32]byte)
+		if _, _, x = mutate(e, &m, owner, store, pa, "seal", ordinary, cur, chain); x != nil {
+			panic(x)
+		}
+		content = common.Hash(view(e, pa, store, "contentCommitment")[0].([32]byte))
+	} else {
+		content[31] = 1
+	}
+	if kind == "wrong-root" {
+		content[0] ^= 1
+	}
+	if kind == "wrong-code" {
+		store = common.HexToAddress("0xdead")
+	}
+	carg, _ := za.Pack("", store, [32]byte(content))
+	before := e.root
+	out, _, left, x := evmrun.Create(append(code, carg...), cfg(e.st, owner, ordinary))
+	_ = out
+	g := ordinary - left
+	if x == nil {
+		panic(name + ": accepted")
+	}
+	c, ok := errCode(out)
+	if !ok || c != want {
+		panic(fmt.Sprintf("%s constructor error data=0x%x c=%d", name, out, c))
+	}
+	s, y := state.New(before, state.NewDatabase(e.trie, nil))
+	if y != nil {
+		panic(y)
+	}
+	e.st = s
+	return controlResult{Name: name, Outcome: "ZI0Error", ErrorCode: c, Gas: g, RolledBack: e.root == before}
+}
+func duplicateAcrossControl(z built) controlResult {
+	e, _ := newEnv("")
+	defer e.close()
+	m := manifest{Format: "MC-ZI0-PERSISTENCE-PREFLIGHT-1", Context: "all-dev-chain:block=1,time=1,value=0", Owner: owner}
+	_, za, code := loadArtifacts()
+	store, content, gs := deployArchive(e, &m, z.raw)
+	idx := deployIndex(e, &m, za, code, store, content, &gs)
+	if _, x := discover(e, &m, za, idx, &gs); x != nil {
+		panic(x)
+	}
+	if _, _, x := mutate(e, &m, owner, idx, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1)); x != nil {
+		panic(x)
+	}
+	head(e, za, idx, &m)
+	before := e.root
+	o, g, x := mutate(e, &m, owner, idx, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1))
+	c, ok := errCode(o)
+	if x == nil || !ok || c != 18 || e.root != before {
+		panic("cross-batch duplicate control failed")
+	}
+	return controlResult{Name: "duplicate-across-batches", Outcome: "ZI0Error", ErrorCode: c, Gas: g, RolledBack: true}
+}
+func stateControls(z built) []controlResult {
+	e, _ := newEnv("")
+	defer e.close()
+	m := manifest{Format: "MC-ZI0-PERSISTENCE-PREFLIGHT-1", Context: "all-dev-chain:block=1,time=1,value=0", Owner: owner}
+	_, za, code := loadArtifacts()
+	store, content, gs := deployArchive(e, &m, z.raw)
+	idx := deployIndex(e, &m, za, code, store, content, &gs)
+	var out []controlResult
+	carg, _ := za.Pack("", store, [32]byte(content))
+	idx2, g2, x2 := create(e, other, append(append([]byte(nil), code...), carg...), ordinary)
+	if x2 != nil || crypto.Keccak256Hash(e.st.GetCode(idx)) != crypto.Keccak256Hash(e.st.GetCode(idx2)) {
+		panic("runtime identity differs by owner")
+	}
+	if x2 = e.commit(&m); x2 != nil {
+		panic(x2)
+	}
+	out = append(out, controlResult{Name: "fixed-runtime-identity-across-owners", Outcome: "ok", Gas: g2, RolledBack: true})
+	probe := func(name, method string, from common.Address, want uint64, args ...interface{}) {
+		before := e.root
+		o, g, x := mutate(e, &m, from, idx, za, method, ordinary, args...)
+		if x == nil {
+			panic(name + ": accepted")
+		}
+		c, ok := errCode(o)
+		if !ok || c != want || e.root != before {
+			panic(fmt.Sprintf("%s bad refusal c=%d exact=%v rollback=%v", name, c, ok, e.root == before))
+		}
+		out = append(out, controlResult{Name: name, Outcome: "ZI0Error", ErrorCode: c, Gas: g, RolledBack: true})
+	}
+	probe("owner-refusal", "discover", other, 1)
+	if o, x := discover(e, &m, za, idx, &gs); x != nil {
+		panic(fmt.Sprintf("discover %x %v", o, x))
+	}
+	probe("early-entry", "entry", owner, 30, uint32(0))
+	probe("early-lookup", "lookup", owner, 30, []byte("a"))
+	probe("early-finish", "finish", owner, 29, m.Count, m.Cursor, [32]byte(m.Rolling))
+	probe("scan-zero", "scan", owner, 11, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(0))
+	probe("scan-65", "scan", owner, 11, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(65))
+	probe("wrong-cursor", "scan", owner, 10, m.Next, m.Cursor+1, [32]byte(m.Rolling), uint16(1))
+	bad := m.Rolling
+	bad[0] ^= 1
+	probe("wrong-rolling-root", "scan", owner, 10, m.Next, m.Cursor, [32]byte(bad), uint16(1))
+	before := e.root
+	probe("failed-batch-rollback", "scan", owner, 10, m.Next+1, m.Cursor, [32]byte(m.Rolling), uint16(1))
+	if e.root != before {
+		panic("failed batch changed root")
+	}
+	if _, _, x := mutate(e, &m, owner, idx, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1)); x != nil {
+		panic(x)
+	}
+	head(e, za, idx, &m)
+	out[len(out)-1].Retry = true
+	if m.Next < m.Count {
+		if x := scans(e, &m, za, idx, 64, &gs, 0); x != nil {
+			panic(x)
+		}
+	}
+	badFinish := m.Rolling
+	badFinish[0] ^= 1
+	probe("wrong-finish-root", "finish", owner, 29, m.Count, m.Cursor, [32]byte(badFinish))
+	if x := finish(e, &m, za, idx, &gs); x != nil {
+		panic(x)
+	}
+	out[len(out)-1].Retry = true
+	probe("post-final-scan", "scan", owner, 4, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1))
+	if x := verifyFinal(e, m, za); x != nil {
+		panic(x)
+	}
+	return out
+}
+
+// The following helpers are independent TEST-only probes. They do not alter the
+// copied Solidity or install host-derived state/code.
+type stateProbeSnapshot struct {
+	Root, StorageRoot, ActualRoot common.Hash
+	Nonces                        [3]uint64
+	Slots                         map[common.Hash]common.Hash
+	Logs                          int
+	LogDigest                     [32]byte
+}
+
+type opcodeProbe struct {
+	SStores, OOGFaults, ChangedWrites int
+}
+
+func mappingSlot(key common.Hash, slot uint64) common.Hash {
+	return crypto.Keccak256Hash(enc([]string{"bytes32", "uint256"}, key, new(big.Int).SetUint64(slot)))
+}
+
+func recordSlot(index uint32) common.Hash {
+	return mappingSlot(common.BytesToHash(new(big.Int).SetUint64(uint64(index)).Bytes()), 7)
+}
+
+func probeSnapshot(e *env, idx, store common.Address, names [][]byte) stateProbeSnapshot {
+	s := stateProbeSnapshot{Root: e.root, ActualRoot: e.st.Copy().IntermediateRoot(true), StorageRoot: e.st.GetStorageRoot(idx), Slots: make(map[common.Hash]common.Hash), Logs: len(e.st.Logs())}
+	s.Nonces = [3]uint64{e.st.GetNonce(idx), e.st.GetNonce(store), e.st.GetNonce(owner)}
+	for i := uint64(0); i <= 8; i++ {
+		k := common.BigToHash(new(big.Int).SetUint64(i))
+		s.Slots[k] = e.st.GetState(idx, k)
+	}
+	for i, name := range names {
+		nh := crypto.Keccak256Hash(name)
+		s.Slots[mappingSlot(nh, 8)] = e.st.GetState(idx, mappingSlot(nh, 8))
+		s.Slots[recordSlot(uint32(i))] = e.st.GetState(idx, recordSlot(uint32(i)))
+	}
+	b, err := json.Marshal(e.st.Logs())
+	if err == nil {
+		s.LogDigest = sha256.Sum256(b)
+	}
+	return s
+}
+
+func restoreProbeState(e *env, root common.Hash) {
+	s, err := state.New(root, state.NewDatabase(e.trie, nil))
+	if err != nil {
+		panic(err)
+	}
+	e.st = s
+}
+
+func setupStaging(es []ent) (*env, *manifest, abi.ABI, built) {
+	z := makezip(es, 0, nil, nil)
+	e, err := newEnv("")
+	if err != nil {
+		panic(err)
+	}
+	m := &manifest{Format: "MC-ZI0-PERSISTENCE-PREFLIGHT-1", Context: "all-dev-chain:block=1,time=1,value=0", Owner: owner}
+	_, za, code := loadArtifacts()
+	store, content, gs := deployArchive(e, m, z.raw)
+	idx := deployIndex(e, m, za, code, store, content, &gs)
+	if out, err := discover(e, m, za, idx, &gs); err != nil {
+		panic(fmt.Sprintf("staging discover 0x%x: %v", out, err))
+	}
+	if len(es) > 1 {
+		if _, _, err := mutate(e, m, owner, idx, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1)); err != nil {
+			panic(err)
+		}
+		head(e, za, idx, m)
+	}
+	return e, m, za, z
+}
+
+func setupFinal(es []ent) (*env, *manifest, abi.ABI, built) {
+	e, m, za, z := setupStaging(es)
+	gs := gasStats{}
+	idx := m.Index
+	if err := scans(e, m, za, idx, 64, &gs, 0); err != nil {
+		panic(err)
+	}
+	if err := finish(e, m, za, idx, &gs); err != nil {
+		panic(err)
+	}
+	if err := verifyFinal(e, *m, za); err != nil {
+		panic(err)
+	}
+	return e, m, za, z
+}
+
+func setEntrySizes(z *built, index int, comp, plain uint32) {
+	local := int(z.locals[index])
+	binary.LittleEndian.PutUint32(z.raw[local+18:], comp)
+	binary.LittleEndian.PutUint32(z.raw[local+22:], plain)
+	central := int(z.cd)
+	for i := 0; i < index; i++ {
+		central += len(z.central[i])
+	}
+	binary.LittleEndian.PutUint32(z.raw[central+20:], comp)
+	binary.LittleEndian.PutUint32(z.raw[central+24:], plain)
+}
+
+func denseValidEndingEOCD() built {
+	z := makezip(nil, 70000, nil, nil)
+	last := int(z.eocd)
+	first := len(z.raw) - 65557
+	for p := first; p+22 < last; p += 22 {
+		binary.LittleEndian.PutUint32(z.raw[p:], 0x06054b50)
+		binary.LittleEndian.PutUint16(z.raw[p+4:], 0)
+		binary.LittleEndian.PutUint16(z.raw[p+6:], 0)
+		binary.LittleEndian.PutUint16(z.raw[p+8:], 0)
+		binary.LittleEndian.PutUint16(z.raw[p+10:], 0)
+		binary.LittleEndian.PutUint32(z.raw[p+12:], 0)
+		binary.LittleEndian.PutUint32(z.raw[p+16:], uint32(p))
+		binary.LittleEndian.PutUint16(z.raw[p+20:], uint16(len(z.raw)-p-22))
+	}
+	return z
+}
+
+func maxRecordTLVs() []ent {
+	extra := make([]byte, 1024)
+	for i := 0; i < 256; i++ {
+		binary.LittleEndian.PutUint16(extra[i*4:], uint16(i+2))
+		// Each of the 256 records is a valid zero-length TLV; no aggregate filler.
+		binary.LittleEndian.PutUint16(extra[i*4+2:], 0)
+	}
+	es := make([]ent, 64)
+	for i := range es {
+		base := fmt.Sprintf("tlv/%02d/", i)
+		es[i] = ent{name: base + strings.Repeat("n", 256-len(base)), data: []byte{byte(i)}, method: uint16((i % 2) * 8), descriptor: -1, extra: append([]byte(nil), extra...), comment: bytes.Repeat([]byte{byte(i)}, 1024)}
+	}
+	return es
+}
+
+func zeroOwnerConstructorProbe() controlResult {
+	es := []ent{{name: "zero-owner", data: []byte("z"), method: 0, descriptor: -1}}
+	e, err := newEnv("")
+	if err != nil {
+		panic(err)
+	}
+	defer e.close()
+	m := &manifest{Format: "MC-ZI0-PERSISTENCE-PREFLIGHT-1", Context: "all-dev-chain:block=1,time=1,value=0", Owner: owner}
+	_, _, code := loadArtifacts()
+	store, content, _ := deployArchive(e, m, makezip(es, 0, nil, nil).raw)
+	_, za, _ := loadArtifacts()
+	carg, packErr := za.Pack("", store, [32]byte(content))
+	if packErr != nil {
+		panic(packErr)
+	}
+	out, _, left, callErr := evmrun.Create(append(code, carg...), cfg(e.st, common.Address{}, ordinary))
+	used := ordinary - left
+	c, ok := errCode(out)
+	if callErr == nil || !ok || c != 1 {
+		panic(fmt.Sprintf("production zero-owner refusal: code=%d exact=%v err=%v out=%x", c, ok, callErr, out))
+	}
+	return controlResult{Name: "constructor-zero-owner", Outcome: "ZI0Error", ErrorCode: c, Gas: used, RolledBack: false, Detail: "constructor state/code reverted; top-level failed CREATE still increments the zero creator nonce"}
+}
+func noOpScanProbe() []controlResult {
+	var out []controlResult
+	e, m, za, _ := setupStaging(nil)
+	before := probeSnapshot(e, m.Index, m.Store, nil)
+	raw, gas, err := mutate(e, m, owner, m.Index, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1))
+	c, ok := errCode(raw)
+	after := probeSnapshot(e, m.Index, m.Store, nil)
+	if err == nil || !ok || c != 11 || !reflect.DeepEqual(before, after) {
+		panic("empty pre-finish scan production refusal")
+	}
+	out = append(out, controlResult{Name: "scan-empty-before-finish", Outcome: "ZI0Error", ErrorCode: c, Gas: gas, RolledBack: true})
+	e.close()
+
+	es := []ent{{name: "eof-a", data: []byte("a"), method: 0, descriptor: -1}, {name: "eof-b", data: []byte("b"), method: 0, descriptor: -1}}
+	e, m, za, _ = setupStaging(es)
+	gs := gasStats{}
+	if err = scans(e, m, za, m.Index, 64, &gs, 0); err != nil {
+		panic(err)
+	}
+	before = probeSnapshot(e, m.Index, m.Store, [][]byte{[]byte(es[0].name), []byte(es[1].name)})
+	raw, gas, err = mutate(e, m, owner, m.Index, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1))
+	c, ok = errCode(raw)
+	after = probeSnapshot(e, m.Index, m.Store, [][]byte{[]byte(es[0].name), []byte(es[1].name)})
+	if err == nil || !ok || c != 11 || !reflect.DeepEqual(before, after) {
+		panic("EOF scan production refusal")
+	}
+	out = append(out, controlResult{Name: "scan-at-eof", Outcome: "ZI0Error", ErrorCode: c, Gas: gas, RolledBack: true})
+	e.close()
+	return out
+}
+func geometryProbe() []controlResult {
+	base := []ent{{name: "a", data: []byte("stored payload"), method: 0, descriptor: -1}, {name: "dir/b", data: bytes.Repeat([]byte("deflated"), 20), method: 8, descriptor: -1}}
+	z := makezip(base, 0, nil, nil)
+	overlap := z.locals[1] + 10 - z.datas[0]
+	setEntrySizes(&z, 0, overlap, overlap)
+	rangez := makezip(base, 0, nil, nil)
+	rangeSize := rangez.cd - rangez.datas[0] + 1
+	setEntrySizes(&rangez, 0, rangeSize, rangeSize)
+	return []controlResult{control("geometry-local-order-overlap", z, nil, 27), control("geometry-data-range", rangez, nil, 23)}
+}
+
+func isProbeOOG(err error) bool {
+	return errors.Is(err, vm.ErrOutOfGas) || (err != nil && strings.Contains(strings.ToLower(err.Error()), "out of gas"))
+}
+
+func tracedCall(e *env, from, to common.Address, data []byte, gas uint64) ([]byte, uint64, error, opcodeProbe) {
+	var p opcodeProbe
+	var pending bool
+	var addr common.Address
+	var key, oldValue, newValue common.Hash
+	hooks := &tracing.Hooks{
+		OnOpcode: func(_ uint64, op byte, _ uint64, _ uint64, ctx tracing.OpContext, _ []byte, _ int, err error) {
+			// Diagnostic only: confirm a changed SSTORE completed before the NEXT opcode.
+			if pending {
+				if oldValue != newValue && e.st.GetState(addr, key) == newValue {
+					p.ChangedWrites++
+				}
+				pending = false
+			}
+			if op == byte(vm.SSTORE) && err == nil {
+				p.SStores++
+				stack := ctx.StackData()
+				if len(stack) >= 2 {
+					addr = ctx.Address()
+					key = common.Hash(stack[len(stack)-1].Bytes32())
+					oldValue = e.st.GetState(addr, key)
+					newValue = common.Hash(stack[len(stack)-2].Bytes32())
+					pending = true
+				}
+			}
+		},
+		OnFault: func(_ uint64, op byte, _ uint64, _ uint64, _ tracing.OpContext, _ int, err error) {
+			if op != byte(vm.SSTORE) && isProbeOOG(err) {
+				p.OOGFaults++
+			}
+		},
+	}
+	start := time.Now()
+	o, left, err := evmrun.Call(to, data, &evmrun.Config{ChainConfig: params.AllDevChainProtocolChanges, Difficulty: new(big.Int), Origin: from, Coinbase: common.Address{}, BlockNumber: big.NewInt(1), Time: 1, GasLimit: gas, GasPrice: new(big.Int), Value: new(big.Int), BaseFee: new(big.Int).SetUint64(params.InitialBaseFee), BlobBaseFee: new(big.Int).SetUint64(params.BlobTxMinBlobGasprice), Random: new(common.Hash), State: e.st, EVMConfig: vm.Config{Tracer: hooks}, GetHashFn: func(uint64) common.Hash { return common.Hash{} }})
+	ns := time.Since(start).Nanoseconds()
+	if ns > e.maxCallNS {
+		e.maxCallNS = ns
+	}
+	return o, gas - left, err, p
+}
+
+func oogRollbackProbe() controlResult {
+	es := []ent{{name: "oog-a", data: []byte("a"), method: 0, descriptor: -1}, {name: "oog-b", data: []byte("b"), method: 0, descriptor: -1}}
+	e, m, za, z := setupStaging(es)
+	defer e.close()
+	before := probeSnapshot(e, m.Index, m.Store, [][]byte{[]byte(es[0].name), []byte(es[1].name)})
+	beforeRoot := e.root
+	input, err := za.Pack("scan", m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1))
+	if err != nil {
+		panic(err)
+	}
+	var chosen uint64
+	var used uint64
+	var trace opcodeProbe
+	var oogAfter stateProbeSnapshot
+	var oogError string
+	for gas := uint64(100_000); gas <= 25_000_000; gas += 100_000 {
+		restoreProbeState(e, beforeRoot)
+		_, used, err, trace = tracedCall(e, owner, m.Index, input, gas)
+		if !isProbeOOG(err) {
+			continue
+		}
+		after := probeSnapshot(e, m.Index, m.Store, [][]byte{[]byte(es[0].name), []byte(es[1].name)})
+		if !reflect.DeepEqual(before, after) || e.root != beforeRoot {
+			panic(fmt.Sprintf("OOG changed EVM state gas=%d", gas))
+		}
+		if trace.ChangedWrites > 0 {
+			oogAfter = after
+			oogError = err.Error()
+			chosen = gas
+			break
+		}
+	}
+	if chosen == 0 {
+		return controlResult{Name: "direct-low-gas-after-sstore", Outcome: "BLOCKER-no-oog-after-sstore-within-ordinary", Gas: used, RolledBack: e.root == beforeRoot, Detail: "no cap increase permitted"}
+	}
+	// No host reload occurs between the direct OOG and this valid retry.
+	_, retryGas, err := mutate(e, m, owner, m.Index, za, "scan", ordinary, m.Next, m.Cursor, [32]byte(m.Rolling), uint16(1))
+	if err != nil {
+		panic(fmt.Sprintf("valid retry after OOG: %v", err))
+	}
+	head(e, za, m.Index, m)
+	retryRoot := e.root
+	retryNext, retryCursor, retryRolling := m.Next, m.Cursor, m.Rolling
+	fresh, fm, fza, fz := setupStaging(es)
+	defer fresh.close()
+	_, _, err = mutate(fresh, fm, owner, fm.Index, fza, "scan", ordinary, fm.Next, fm.Cursor, [32]byte(fm.Rolling), uint16(1))
+	if err != nil {
+		panic(err)
+	}
+	head(fresh, fza, fm.Index, fm)
+	if retryRoot != fresh.root || retryNext != fm.Next || retryCursor != fm.Cursor || retryRolling != fm.Rolling || crypto.Keccak256Hash(z.raw) != crypto.Keccak256Hash(fz.raw) {
+		panic("retry differs from same fresh binding")
+	}
+	return controlResult{Name: "direct-low-gas-after-sstore", Outcome: "OOG-rollback-retry-ok", Gas: chosen, RolledBack: true, Retry: true, Detail: fmt.Sprintf("used=%d sstore_opcodes_reached=%d completed_changed_writes=%d oog_faults=%d error=%q retry_gas=%d retry_root=%s pre_root=%s post_oog_root=%s actual_roots=%s/%s pre_storage=%s post_oog_storage=%s nonces=%v/%v logs=%d/%d map0=%s/%s map1=%s/%s record0=%s/%s", used, trace.SStores, trace.ChangedWrites, trace.OOGFaults, oogError, retryGas, retryRoot.Hex(), before.Root.Hex(), oogAfter.Root.Hex(), before.ActualRoot.Hex(), oogAfter.ActualRoot.Hex(), before.StorageRoot.Hex(), oogAfter.StorageRoot.Hex(), before.Nonces, oogAfter.Nonces, before.Logs, oogAfter.Logs, before.Slots[mappingSlot(crypto.Keccak256Hash([]byte(es[0].name)), 8)].Hex(), oogAfter.Slots[mappingSlot(crypto.Keccak256Hash([]byte(es[0].name)), 8)].Hex(), before.Slots[mappingSlot(crypto.Keccak256Hash([]byte(es[1].name)), 8)].Hex(), oogAfter.Slots[mappingSlot(crypto.Keccak256Hash([]byte(es[1].name)), 8)].Hex(), before.Slots[recordSlot(0)].Hex(), oogAfter.Slots[recordSlot(0)].Hex())}
+}
+
+func collisionRedirectProbe() controlResult {
+	es := []ent{{name: "collision-first", data: []byte("1"), method: 0, descriptor: -1}, {name: "collision-second", data: []byte("2"), method: 0, descriptor: -1}}
+	e, m, za, _ := setupFinal(es)
+	defer e.close()
+	idx := m.Index
+	name0 := []byte(es[0].name)
+	beforeLookup := view(e, za, idx, "lookup", name0)
+	if !beforeLookup[0].(bool) || beforeLookup[1].(uint32) != 0 {
+		panic("collision control initial lookup failed")
+	}
+	nameHash := crypto.Keccak256Hash(name0)
+	key := mappingSlot(nameHash, 8)
+	old := e.st.GetState(idx, key)
+	if old != common.BigToHash(big.NewInt(1)) {
+		panic(fmt.Sprintf("unexpected nameIndex slot %s", old.Hex()))
+	}
+	e.st.SetState(idx, key, common.BigToHash(big.NewInt(2)))
+	if err := e.commit(m); err != nil {
+		panic(err)
+	}
+	beforeRoot := e.root
+	input, _ := za.Pack("lookup", name0)
+	out, gas, err := call(e, owner, idx, input, ordinary)
+	code, exact := errCode(out)
+	if err == nil || isProbeOOG(err) || !exact || code != 19 || e.root != beforeRoot || e.st.GetState(idx, key) != common.BigToHash(big.NewInt(2)) {
+		panic(fmt.Sprintf("redirect mismatch failed err=%v code=%d exact=%v root=%s", err, code, exact, e.root.Hex()))
+	}
+	e.st.SetState(idx, key, old)
+	if err := e.commit(m); err != nil {
+		panic(err)
+	}
+	after := view(e, za, idx, "lookup", name0)
+	if !after[0].(bool) || after[1].(uint32) != beforeLookup[1].(uint32) || after[2].([32]byte) != beforeLookup[2].([32]byte) {
+		panic("original valid lookup did not survive redirect restore")
+	}
+	return controlResult{Name: "test-only-nameindex-bucket-redirect", Outcome: "ZI0Error", ErrorCode: 19, Gas: gas, RolledBack: true, Detail: "isolated TEST-only memory-state redirect to existing entry; full-byte mismatch rejected, then original lookup restored"}
+}
+
+func opaqueNameProbe() controlResult {
+	es := []ent{
+		{name: "foo", data: []byte("0"), method: 0, descriptor: -1},
+		{name: "./foo", data: []byte("1"), method: 0, descriptor: -1},
+		{name: "foo/.", data: []byte("2"), method: 0, descriptor: -1},
+		{name: "foo/../foo", data: []byte("3"), method: 0, descriptor: -1},
+		{name: "a\x00b", data: []byte("4"), method: 0, descriptor: -1},
+		{name: "é/ß", data: []byte("5"), method: 0, descriptor: -1},
+	}
+	e, m, za, _ := setupFinal(es)
+	defer e.close()
+	for i, ent := range es {
+		v := view(e, za, m.Index, "lookup", []byte(ent.name))
+		if !v[0].(bool) || v[1].(uint32) != uint32(i) {
+			panic(fmt.Sprintf("opaque exact lookup %q failed", ent.name))
+		}
+	}
+	for _, absent := range []string{"xfoo", "foo/", "./foo/", "a/b", "é"} {
+		v := view(e, za, m.Index, "lookup", []byte(absent))
+		if v[0].(bool) {
+			panic(fmt.Sprintf("opaque name was normalized %q", absent))
+		}
+	}
+	return controlResult{Name: "opaque-binary-nonascii-dot-slash-names", Outcome: "ok", Gas: 0, RolledBack: true, Detail: "exact byte hits and distinct normalization-looking absent controls"}
+}
+
+func finalBoundsProbe() []controlResult {
+	es := []ent{{name: "bounds", data: []byte("b"), method: 0, descriptor: -1}}
+	e, m, za, _ := setupFinal(es)
+	defer e.close()
+	var out []controlResult
+	probe := func(label, method string, args ...interface{}) {
+		input, err := za.Pack(method, args...)
+		if err != nil {
+			panic(err)
+		}
+		before := e.root
+		data, gas, callErr := call(e, owner, m.Index, input, ordinary)
+		if callErr == nil || isProbeOOG(callErr) {
+			panic(label + " unexpectedly succeeded/OOG")
+		}
+		code, exact := errCode(data)
+		if !exact || e.root != before {
+			panic(fmt.Sprintf("%s selector/root mismatch code=%d exact=%v", label, code, exact))
+		}
+		out = append(out, controlResult{Name: label, Outcome: "ZI0Error", ErrorCode: code, Gas: gas, RolledBack: true})
+	}
+	probe("entry-index-bound", "entry", uint32(1))
+	probe("lookup-empty-length", "lookup", []byte{})
+	probe("lookup-overlength", "lookup", bytes.Repeat([]byte{'x'}, 257))
+	return out
+}
+
+func independentProbes() []controlResult {
+	var out []controlResult
+	out = append(out, zeroOwnerConstructorProbe())
+	out = append(out, noOpScanProbe()...)
+	out = append(out, geometryProbe()...)
+	out = append(out, control("dense-valid-ending-eocd-candidates", denseValidEndingEOCD(), nil, 6))
+	out = append(out, oogRollbackProbe())
+	out = append(out, collisionRedirectProbe())
+	out = append(out, opaqueNameProbe())
+	out = append(out, finalBoundsProbe()...)
+	return out
+}
+
+func main() {
+	if len(os.Args) > 1 && os.Args[1] == "resume" {
+		q, _ := strconv.Atoi(os.Args[3])
+		resumeMode(os.Args[2], uint16(q))
+		return
+	}
+	if len(os.Args) > 1 && os.Args[1] == "verify" {
+		verifyMode(os.Args[2])
+		return
+	}
+	start := time.Now()
+	a, _, _ := loadArtifacts()
+	src, _ := os.ReadFile(filepath.Join(work, "ZI0Persistent.sol"))
+	run := common.FromHex(a.Runtime)
+	rep := finalReport{Solc: "0.8.30+commit.73712a01", SourceSHA: fmt.Sprintf("%x", sha256.Sum256(src)), RuntimeSHA: fmt.Sprintf("%x", sha256.Sum256(run)), RuntimeKeccak: crypto.Keccak256Hash(run).Hex(), InitBytes: (len(a.Bytecode) - 2) / 2, RuntimeBytes: len(run)}
+	// Exact target static name total and CD bytes: 945484 + 1155312 = 2100796.
+	target := makezip(namesN(20554, 1155312), 0, nil, nil)
+	r, x := runFull("target-20554-q64-disk-newprocess", target, 64, filepath.Join(work, "disk-target"), true)
+	if x != nil {
+		panic(x)
+	}
+	rep.Runs = append(rep.Runs, r)
+	capz := makezip(namesN(32768, 4194304-32768*46), 0, nil, nil)
+	r, x = runFull("capacity-32768-q64-memory", capz, 64, "", false)
+	if x != nil {
+		panic(x)
+	}
+	rep.Runs = append(rep.Runs, r)
+	maxz := makezip(maxRecords(), 0, nil, nil)
+	r, x = runFull("simultaneous-max-fields-64", maxz, 64, "", false)
+	if x != nil {
+		panic(x)
+	}
+	rep.Runs = append(rep.Runs, r)
+	tlvz := makezip(maxRecordTLVs(), 0, nil, nil)
+	r, x = runFull("simultaneous-max-fields-64-zero-length-tlvs", tlvz, 64, "", false)
+	if x != nil {
+		panic(x)
+	}
+	rep.Runs = append(rep.Runs, r)
+	empty := makezip(nil, 0, nil, nil)
+	r, x = runFull("empty", empty, 1, "", false)
+	if x != nil {
+		panic(x)
+	}
+	rep.Runs = append(rep.Runs, r)
+	// q1/q64 are redeployed from identical empty state, hence identical controller/index addresses and binding.
+	same := makezip(namesN(128, 128*16), 8170, nil, nil)
+	r1, x := runFull("same-128-q1", same, 1, "", false)
+	if x != nil {
+		panic(x)
+	}
+	r64, x := runFull("same-128-q64", same, 64, "", false)
+	if x != nil {
+		panic(x)
+	}
+	if r1.Root != r64.Root {
+		panic("q roots differ")
+	}
+	rep.Runs = append(rep.Runs, r1, r64)
+	// Core persistent controls (all generated); detailed original/parent suites are run separately below.
+	rep.Controls = append(rep.Controls, control("cd-cap-plus-one", makezip(namesN(32768, 4194304-32768*46+1), 0, nil, nil), nil, 7))
+	rep.Controls = append(rep.Controls, control("dense-eocd-signatures", makezip(nil, 70000, nil, bytes.Repeat([]byte("PK\x05\x06"), 16383)), nil, 0))
+	loc := makezip(nil, 20, nil, nil)
+	binary.LittleEndian.PutUint32(loc.raw, 0x07064b50)
+	binary.LittleEndian.PutUint32(loc.raw[16:], 1)
+	rep.Controls = append(rep.Controls, control("zip64-locator-structural-empty", loc, nil, 9))
+	// Marker bytes in normal opaque payload/name are not searched and remain valid.
+	opaque := makezip([]ent{{name: "opaque-PK\x06\x07-name", data: []byte("payload-PK\x06\x07-PK\x05\x06"), method: 0, descriptor: -1}}, 0, nil, nil)
+	rep.Controls = append(rep.Controls, control("opaque-name-payload-markers", opaque, nil, 0))
+	base := []ent{{name: "a", data: []byte("stored payload"), method: 0, descriptor: -1}, {name: "dir/b", data: bytes.Repeat([]byte("deflated"), 20), method: 8, descriptor: -1}}
+	// Re-execute the original 25 parser shapes through the persistent scanner.
+	rep.Controls = append(rep.Controls,
+		control("original-stored-deflated", makezip(base, 0, nil, nil), nil, 0),
+		constructorControl("original-wrong-content-root", "wrong-root", makezip(base, 0, nil, nil), 3),
+		constructorControl("original-wrong-code-binding", "wrong-code", makezip(base, 0, nil, nil), 2),
+		constructorControl("original-unsealed-store", "unsealed", makezip(base, 0, nil, nil), 3),
+		control("original-descriptor-nosig", makezip([]ent{{name: "d", data: bytes.Repeat([]byte("D"), 91), method: 8, descriptor: 0}}, 0, nil, nil), nil, 0),
+		control("original-descriptor-signature", makezip([]ent{{name: "d", data: bytes.Repeat([]byte("S"), 91), method: 8, descriptor: 1}}, 0, nil, nil), nil, 0),
+		control("original-empty", makezip(nil, 0, nil, nil), nil, 0),
+		control("original-comment-false-signatures", makezip(base, 0, nil, []byte("xPK\x05\x06yPK\x01\x02zPK\x03\x04")), nil, 0),
+		control("original-cross-as0-8192", makezip(base, 8180, nil, bytes.Repeat([]byte("C"), 5000)), nil, 0),
+		control("original-cross-read-4096", makezip(base, 4080, nil, bytes.Repeat([]byte("R"), 5000)), nil, 0),
+		control("original-max-eocd-window", makezip(base, 70000, nil, bytes.Repeat([]byte("W"), 65000)), nil, 0),
+		control("original-bounded-128", makezip(namesN(128, 128*16), 0, nil, nil), nil, 0),
+		control("original-truncated", makezip(base, 0, nil, nil), func(z *built) { z.raw = z.raw[:len(z.raw)-1] }, 6),
+		control("original-bad-local-signature", makezip(base, 0, nil, nil), func(z *built) { z.raw[0] = 0 }, 20),
+		control("original-local-name-mismatch", makezip(base, 0, nil, nil), func(z *built) { z.raw[30] ^= 1 }, 22),
+		control("original-empty-name", makezip([]ent{{name: "", data: []byte("x"), method: 0, descriptor: -1}}, 0, nil, nil), nil, 13),
+		control("original-duplicate-name", makezip([]ent{{name: "same", data: []byte("1"), method: 0, descriptor: -1}, {name: "same", data: []byte("2"), method: 0, descriptor: -1}}, 0, nil, nil), nil, 18),
+		control("original-central-reordered", makezip(base, 0, []int{1, 0}, nil), nil, 27),
+		control("original-zip64-extra", makezip([]ent{{name: "z", data: []byte("x"), method: 0, descriptor: -1, extra: []byte{1, 0, 0, 0}}}, 0, nil, nil), nil, 17),
+		control("original-encryption", makezip([]ent{{name: "e", data: []byte("x"), method: 0, descriptor: -1, flags: 1}}, 0, nil, nil), nil, 14),
+		control("original-unsupported-method", makezip([]ent{{name: "m", data: []byte("x"), method: 9, descriptor: -1}}, 0, nil, nil), nil, 15),
+	)
+	ov := makezip(base, 0, nil, nil)
+	rep.Controls = append(rep.Controls, control("original-overlap", ov, func(z *built) {
+		v := z.locals[1] + 10 - z.datas[0]
+		binary.LittleEndian.PutUint32(z.raw[18:], v)
+		binary.LittleEndian.PutUint32(z.raw[int(z.cd)+20:], v)
+	}, 15))
+	md := makezip(base, 0, nil, nil)
+	rep.Controls = append(rep.Controls, control("original-multidisk", md, func(z *built) { binary.LittleEndian.PutUint16(z.raw[int(z.eocd)+4:], 1) }, 6))
+	br := makezip(base, 0, nil, nil)
+	rep.Controls = append(rep.Controls, control("original-bad-range", br, func(z *built) { binary.LittleEndian.PutUint32(z.raw[int(z.cd)+20:], 0xffffff00) }, 15))
+	amb := makezip(base, 0, nil, bytes.Repeat([]byte{0}, 40))
+	fake := int(amb.eocd) + 27
+	binary.LittleEndian.PutUint32(amb.raw[fake:], 0x06054b50)
+	binary.LittleEndian.PutUint16(amb.raw[fake+8:], uint16(len(base)))
+	binary.LittleEndian.PutUint16(amb.raw[fake+10:], uint16(len(base)))
+	binary.LittleEndian.PutUint32(amb.raw[fake+12:], uint32(fake)-amb.cd)
+	binary.LittleEndian.PutUint32(amb.raw[fake+16:], amb.cd)
+	binary.LittleEndian.PutUint16(amb.raw[fake+20:], uint16(len(amb.raw)-fake-22))
+	rep.Controls = append(rep.Controls, control("original-ambiguous-eocd", amb, nil, 6))
+	// Parent's twelve definite refusals: nine reserved bits, two stored-only option bits, descriptor/CD overlap.
+	for _, bit := range []uint16{4, 7, 8, 9, 10, 12, 13, 14, 15} {
+		rep.Controls = append(rep.Controls, control(fmt.Sprintf("parent-reserved-flag-%d", bit), makezip([]ent{{name: "x", data: []byte("p"), method: 8, descriptor: -1, flags: 1 << bit}}, 0, nil, nil), nil, 14))
+	}
+	for _, bit := range []uint16{1, 2} {
+		rep.Controls = append(rep.Controls, control(fmt.Sprintf("parent-stored-option-%d", bit), makezip([]ent{{name: "x", data: []byte("p"), method: 0, descriptor: -1, flags: 1 << bit}}, 0, nil, nil), nil, 14))
+	}
+	do := makezip([]ent{{name: "x", data: make([]byte, 0x00140314), method: 0, descriptor: 0}}, 0, nil, nil)
+	do.raw = append(append([]byte(nil), do.raw[:do.cd-12]...), do.raw[do.cd:]...)
+	do.cd -= 12
+	do.eocd -= 12
+	binary.LittleEndian.PutUint16(do.raw[8:], 8)
+	binary.LittleEndian.PutUint16(do.raw[do.cd+10:], 8)
+	binary.LittleEndian.PutUint32(do.raw[do.cd+16:], 0x02014b50)
+	binary.LittleEndian.PutUint32(do.raw[do.cd+24:], 0x00080808)
+	binary.LittleEndian.PutUint32(do.raw[do.eocd+16:], do.cd)
+	rep.Controls = append(rep.Controls, control("parent-last-descriptor-overlap", do, nil, 26))
+	// Cross-batch duplicate and CAS/phase/owner rollback+retry controls.
+	rep.Controls = append(rep.Controls, duplicateAcrossControl(makezip([]ent{{name: "dup", data: []byte("1"), method: 0, descriptor: -1}, {name: "dup", data: []byte("2"), method: 0, descriptor: -1}}, 0, nil, nil)))
+	rep.Controls = append(rep.Controls, stateControls(makezip(base, 0, nil, nil))...)
+	// Independent parent probes are deliberately separate from the historical controls.
+	rep.Independent = independentProbes()
+	sort.Slice(rep.Independent, func(i, j int) bool { return rep.Independent[i].Name < rep.Independent[j].Name })
+	var ru syscall.Rusage
+	syscall.Getrusage(syscall.RUSAGE_SELF, &ru)
+	rep.RSSKiB = ru.Maxrss
+	rep.ElapsedMS = time.Since(start).Milliseconds()
+	sort.Slice(rep.Controls, func(i, j int) bool { return rep.Controls[i].Name < rep.Controls[j].Name })
+	b, _ := json.MarshalIndent(rep, "", "  ")
+	os.WriteFile(filepath.Join(work, "report.json"), append(b, '\n'), 0644)
+	fmt.Println(string(b))
+	_ = runtime.GOOS
+}
