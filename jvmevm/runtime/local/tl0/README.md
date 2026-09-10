@@ -47,5 +47,6 @@ EIP-3860 limits. It is for explicit local code installation and `runtime.Call`,
 not CREATE or standard-chain deployment evidence. Ordinary calls remain bounded at
 100,000,000 gas / 30 seconds and dedicated boundaries at 1,000,000,000 gas /
 120 seconds, with the unchanged 25,000,000-gas commit reserve and 1..4096 JVM and
-internal units per call. This artifact does not claim TL0 acceptance, Java SE,
-Minecraft startup, VFS, scheduling, I/O, listeners, or Throwable APIs/stack traces.
+internal units per call. Parent acceptance, retained corrections and actual gates
+are in `JAVA_EVM_MC_TL0_REVIEW.md`. This is not Java SE, Minecraft startup, VFS,
+scheduling, I/O, listeners, or Throwable APIs/stack traces.

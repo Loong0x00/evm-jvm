@@ -59,18 +59,19 @@ recovery. Two additional review workers were provider-blocked, NOT counted as pa
 original independent verifier + parent checks passed. Old LB0/stock remain unchanged.
 100Mordinary/1Bboundary,1MiBcheckpoint,4rawclasses/64KiB. VFS proposal remains unfrozen;
 next library/platform work must preserve these accepted profiles and use one Solidity writer.
-**MC-TL0 frozen** in JAVA_EVM_MC_TL0_PLAN.md: separate Throwable0Interpreter + tl0
-Go package, unchanged27bootstraps, fresh ordinary Throwable identity, kind0 dynamic
-outcome and EIIE cause records.24roots/20q1q7chains/32coreprobes; legal post-super
-constructor self-throws and escaped REF aliases must survive. Never use a blanket
-active-constructor/UNINIT-alias rejection.100M/1Bcalls unchanged; new TL0 quota tests
-alone may use65536dispatchunits/case. One writer runtime/local/tl0, separate harness
-and verifier write sets in plan. No TL0 implementation accepted yet. String/VFS
-remain proposals; no full-profile deployment, further libraries or MC startup claim.
+**MC-TL0 accepted**; JAVA_EVM_MC_TL0_{PLAN,REVIEW}.md. Separate Throwable0Interpreter,
+runtime212574B SHAc1a9a48d..., unchanged27bootstraps, fresh ordinary Throwable identity,
+kind0 dynamic outcomes and EIIE cause records.24roots/20q1q7chains/32independentprobes
+plus9parentgroups pass, including18concretecanonicalkinds andopaqueMUTF8classname.
+Parentfixednullathrowconsumption, quantum-dependentharderror, headeroffset andabstract
+heapdynamicclassvalidation. Legalpost-superREF/UNINITcoexistence andescapedrefs retained.
+100M/1Bcalls unchanged; TL0quota testsonly65536units/case. Exact1MiBretry384675172gas,
+validation328666379gas. Alllegacygatespass, LC0/LB0/stock remain unchanged. String/VFS
+remain proposals; no newThrowableAPIs/full-profiledeployment/MCstartup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
-Runtime is over EIP170 deployment size: local runtime.Execute only, not mainnet
+Runtimes are over EIP170 deployment size: explicit LOCAL Execute/Call mechanisms, not mainnet
 CREATE compatibility; no consensus-core or host-Java fallback changes.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,
 superseding earlier stop-after-each-batch instructions. Worker scope comes from

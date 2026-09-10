@@ -56,6 +56,12 @@ This is not a guest filesystem or standard-deployment claim. Run
 `make java-mc-lc0-test java-mc-lc0-demo`; see `JAVA_EVM_MC_LC0_REVIEW.md`.
 The next VFS/platform proposal is `JAVA_EVM_MC_VFS_PROPOSAL.md`, not an implementation.
 
+**MC-TL0 accepted:** the separate 212,574-byte runtime adds constructor-backed
+Throwable identity, dynamic throw/catch/rethrow and retained initializer-wrapper
+causes across actual continuation/restart.24roots,20q1/q7chains,32independent probes
+and parent regressions pass. It does not add message/stack-trace APIs or Java I/O.
+Run `make java-mc-tl0-test java-mc-tl0-demo`; see `JAVA_EVM_MC_TL0_REVIEW.md`.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:
