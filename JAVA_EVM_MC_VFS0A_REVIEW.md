@@ -141,3 +141,28 @@ Two isolated adversarial/boundary review workers are now examining the FINAL art
 parent keeps reserved tests/production fixes and independently replays the32 acceptance
 groups/findings. At most two reviewers; no third/Fast worker. New Make targets expose
 the development file-layer test/example without claiming startup; old targets unchanged.
+
+## Independent reviewer disposition and parent takeover
+
+Boundary reviewer2662b18da integrated9c4fda304: assigned boundary/rollback groups pass
+on293010B, including genuine exact1MiB/+1. Parent is independently replaying them.
+The other reviewer was blocked by its provider and produced NO tests or acceptance
+evidence. Parent takes over those remaining local VM-state checks; no blocked review
+is counted as a pass and no attempt is made to bypass the provider restriction.
+
+Parent already reproduced six gaps in read-only checkpoint validation on293010B:
+a regular file accepted as another inode's parent; slash, dot, non-ASCII and control
+bytes accepted as inode components; and WRITE descriptor accepted on a read-only
+inode. All use genuine EVM-issued successful controls, then TEST-only changed/root-
+rehashed blobs sent only to validateCheckpoint views, NOT live resume. Live ownership/
+head integrity is not shown bypassed. Logs `/tmp/mc-vfs0a-parent-directory-rules-initial.log`
+and `/tmp/mc-vfs0a-parent-readonly-writer-initial.log` preserve actual failures and
+successful duplicate/cycle/noncanonical-bool rejection controls. Production correction
+is now parent-owned; new artifact and final reruns are required before acceptance.
+
+The combined historical Make gate hit its20min WALL watchdog while reaching stockS1;
+peak855453696B. It is NOT a full pass. Earlier IOE0/SC0/TL0/LC0/interpreter2231/smoke/
+fast/LB0/AOT/stockS0 stages passed in its preserved log. A separate bounded remaining
+S1/S2a/S2b-L+vet run is in progress, without raising a timeout or altering old artifacts.
+Logs `/tmp/mc-vfs0a-parent-legacy-watchdog.json` and
+`/tmp/mc-vfs0a-parent-legacy-remainder.{log,json}` distinguish the two phases.

@@ -12,6 +12,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/common"
+	evmruntime "github.com/ethereum/go-ethereum/core/vm/runtime"
 	"github.com/ethereum/go-ethereum/crypto"
 )
 
@@ -421,5 +422,97 @@ func TestVFS0aParentWireReaderLayout(t *testing.T) {
 	binary.BigEndian.PutUint32(bad[c.VFSOffset+8:], 65)
 	if _, e := vfsParentDecodeWire(bad); e == nil {
 		t.Fatal("unbounded inode count")
+	}
+}
+
+func vfsParentValidateCall(t *testing.T, s *Session, raw [][]byte, blob []byte) ([]byte, uint64, error) {
+	t.Helper()
+	input, e := s.contractABI.Pack("validateCheckpoint", raw, blob)
+	if e != nil {
+		t.Fatal(e)
+	}
+	const gas = uint64(100_000_000)
+	out, left, e := evmruntime.Call(s.contract, input, s.vfs0aHarnessRuntimeConfig(s.stateDB.Copy(), gas))
+	return out, gas - left, e
+}
+
+func vfsParentReviewSeedCheckpoint(t *testing.T) (*Session, [][]byte, Result, vfsParentCheckpointWire) {
+	t.Helper()
+	raw := [][]byte{vfsParentCompileOracle(t, "PWire", "public class PWire {public static int run(){return 1;}}", 1)}
+	s, e := NewMemory(common.HexToAddress("0x7d01"))
+	if e != nil {
+		t.Fatal(e)
+	}
+	t.Cleanup(func() { s.Close() })
+	id := crypto.Keccak256Hash([]byte(t.Name()))
+	r, e := s.Start(id, raw, "PWire", "run", nil, []SeedFile{{Path: []byte("a"), Data: []byte("x")}, {Path: []byte("b"), Data: []byte("y")}}, 4096, 4096, 100_000_000)
+	if e != nil || r.Slice.Lifecycle != 2 || r.Slice.Result != 1 {
+		t.Fatalf("issued control: %+v %v", r, e)
+	}
+	c, e := vfsParentDecodeWire(r.Checkpoint)
+	if e != nil {
+		t.Fatal(e)
+	}
+	if _, _, e := vfsParentValidateCall(t, s, raw, r.Checkpoint); e != nil {
+		t.Fatalf("valid issued checkpoint rejected: %v", e)
+	}
+	return s, raw, r, c
+}
+
+func TestVFS0aParent24DirectoryWireRules(t *testing.T) {
+	s, raw, r, c := vfsParentReviewSeedCheckpoint(t)
+	cases := []struct {
+		name   string
+		change func([]byte)
+	}{
+		{"regular-file-parent", func(b []byte) { binary.BigEndian.PutUint32(b[c.Inodes[4].ParentOffset:], c.Inodes[3].ID) }},
+		{"slash-component", func(b []byte) { b[c.Inodes[3].NameOffset] = '/' }},
+		{"dot-component", func(b []byte) { b[c.Inodes[3].NameOffset] = '.' }},
+		{"non-ascii-component", func(b []byte) { b[c.Inodes[3].NameOffset] = 0x80 }},
+		{"control-component", func(b []byte) { b[c.Inodes[3].NameOffset] = 0 }},
+		{"duplicate-sibling", func(b []byte) { b[c.Inodes[4].NameOffset] = 'a' }},
+		{"self-parent", func(b []byte) { binary.BigEndian.PutUint32(b[c.Inodes[3].ParentOffset:], c.Inodes[3].ID) }},
+		{"readonly-boolean-two", func(b []byte) { b[c.Inodes[3].ReadOnlyOffset] = 2 }},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			bad := append([]byte(nil), r.Checkpoint...)
+			tc.change(bad)
+			bad = vfsParentRehashForView(t, bad)
+			out, gas, e := vfsParentValidateCall(t, s, raw, bad)
+			if e == nil {
+				t.Fatalf("EVM view accepted invalid VFS directory structure; gas%d output%x", gas, out)
+			}
+			if len(out) < 4 {
+				t.Fatalf("expected bounded profile rejection, got %v gas%d", e, gas)
+			}
+			t.Logf("rejected gas%d data%x", gas, out)
+		})
+	}
+}
+
+func TestVFS0aParent23ReadonlyWriterState(t *testing.T) {
+	src := `import java.io.*;public class PReadOnlyState {public static int run()throws IOException{FileOutputStream o=new FileOutputStream(new File("f"));o.write(1);o.close();return 1;}}`
+	raw := [][]byte{vfsParentCompileOracle(t, "PReadOnlyState", src, 1)}
+	tr := vfsParentNativeRun(t, "PReadOnlyState", raw, nil, 1, 4096, 4096, nil)
+	c := tr.Snapshots[len(tr.Snapshots)-1]
+	s, e := NewMemory(common.HexToAddress("0x7d02"))
+	if e != nil {
+		t.Fatal(e)
+	}
+	defer s.Close()
+	if _, _, e := vfsParentValidateCall(t, s, raw, tr.Final.Checkpoint); e != nil {
+		t.Fatal(e)
+	}
+	bad := append([]byte(nil), tr.Final.Checkpoint...)
+	target := c.Descriptors[0].Inode
+	bad[c.Inodes[target-1].ReadOnlyOffset] = 1
+	bad = vfsParentRehashForView(t, bad)
+	out, gas, e := vfsParentValidateCall(t, s, raw, bad)
+	if e == nil {
+		t.Fatalf("EVM view accepted WRITE descriptor on effective-readonly inode; gas%d out%x", gas, out)
+	}
+	if len(out) < 4 {
+		t.Fatalf("unbounded rejection: %v gas%d", e, gas)
 	}
 }
