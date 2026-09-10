@@ -224,3 +224,14 @@ java-mc-vfs0a-test: java-mc-vfs0a-check
 java-mc-vfs0a-demo: java-mc-vfs0a-check
 	@echo "Development Java/EVM file-layer example; NOT Minecraft startup."
 	go test -count=1 -v -timeout=2m -run '^TestVFS0aParentTruncateBeforeBind$$' ./jvmevm/localcontinuation/vfs0a
+
+# Immutable EVM raw-byte artifact store, not ZIP/ClassLoader/Minecraft startup.
+.PHONY: java-mc-as0-build java-mc-as0-check java-mc-as0-test java-mc-as0-demo
+java-mc-as0-build:
+	cd jvmevm/artifactstore/as0/runtime && npm ci --ignore-scripts && npm run build
+java-mc-as0-check:
+	cd jvmevm/artifactstore/as0/runtime && npm ci --ignore-scripts && npm run check
+java-mc-as0-test: java-mc-as0-check
+	go test -count=1 -timeout=18m ./jvmevm/artifactstore/as0
+java-mc-as0-demo: java-mc-as0-check
+	go test -count=1 -v -timeout=18m -run '^TestAS0HarnessFull32MiBDiskPerAppendNewProcess$$' ./jvmevm/artifactstore/as0

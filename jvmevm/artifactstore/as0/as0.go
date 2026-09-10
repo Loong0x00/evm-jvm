@@ -109,6 +109,9 @@ func decodeCode(label, encoded string) ([]byte, error) {
 }
 
 func validateABI(contract abi.ABI) error {
+	if contract.HasFallback() || contract.HasReceive() {
+		return fmt.Errorf("as0: frozen ABI has no fallback or receive")
+	}
 	type methodShape struct {
 		sig, mutability                          string
 		inputs, inputNames, outputs, outputNames []string
@@ -157,7 +160,7 @@ func validateABI(contract abi.ABI) error {
 	}
 	page, ok := contract.Events["PageIssued"]
 	pageNames := []string{"index", "page", "length", "codeHash", "pageCommitment", "chainCommitment"}
-	if !ok || page.Sig != "PageIssued(uint32,address,uint32,bytes32,bytes32,bytes32)" || len(page.Inputs) != len(pageNames) || !page.Inputs[0].Indexed || !page.Inputs[1].Indexed {
+	if !ok || page.Anonymous || page.Sig != "PageIssued(uint32,address,uint32,bytes32,bytes32,bytes32)" || len(page.Inputs) != len(pageNames) || !page.Inputs[0].Indexed || !page.Inputs[1].Indexed {
 		return fmt.Errorf("as0: embedded ABI PageIssued differs from frozen shape")
 	}
 	for i, input := range page.Inputs {
@@ -172,7 +175,7 @@ func validateABI(contract abi.ABI) error {
 	}
 	sealed, ok := contract.Events["Sealed"]
 	sealedNames := []string{"length", "pages", "contentCommitment"}
-	if !ok || len(contract.Events) != 2 || sealed.Sig != "Sealed(uint32,uint32,bytes32)" || len(sealed.Inputs) != len(sealedNames) {
+	if !ok || sealed.Anonymous || len(contract.Events) != 2 || sealed.Sig != "Sealed(uint32,uint32,bytes32)" || len(sealed.Inputs) != len(sealedNames) {
 		return fmt.Errorf("as0: embedded ABI Sealed differs from frozen shape")
 	}
 	for i, input := range sealed.Inputs {

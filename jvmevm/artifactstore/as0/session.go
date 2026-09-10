@@ -569,6 +569,9 @@ func (s *Session) headLocked(gas uint64) (Head, error) {
 	if head.Owner == (common.Address{}) || head.Owner != s.owner || head.DeclaredLength != s.declaredLength || head.Cursor > head.DeclaredLength || head.PageSize != PageSize || head.MaxPages != MaxPages || head.MaxLength != MaxLength || head.ChainCommitment == (common.Hash{}) || uint64(head.PageCount)*uint64(PageSize) < uint64(head.Cursor) || uint64(head.PageCount)*uint64(PageSize) > uint64(head.Cursor)+uint64(PageSize-1) {
 		return Head{GasUsed: head.GasUsed}, errors.New("as0: EVM getters violate frozen identity, limits, or page/cursor shape")
 	}
+	if head.Cursor != head.DeclaredLength && head.Cursor%PageSize != 0 {
+		return Head{GasUsed: head.GasUsed}, errors.New("as0: EVM returned a partial page before the declared end")
+	}
 	wantPages := (head.DeclaredLength + PageSize - 1) / PageSize
 	if head.Sealed {
 		if head.Cursor != head.DeclaredLength || head.PageCount != wantPages || head.ContentCommitment == (common.Hash{}) {
@@ -749,6 +752,20 @@ func prepareDirectory(directory string) (bool, error) {
 		case stateDirectory:
 			if !entryInfo.IsDir() {
 				return false, fmt.Errorf("as0: store entry %q must be a real directory", name)
+			}
+			// LevelDB opens its own files after this function returns. Reject
+			// links below the state directory as well as fixed top-level links;
+			// otherwise e.g. CURRENT could redirect that later open outside it.
+			if err := filepath.WalkDir(filepath.Join(directory, name), func(path string, entry os.DirEntry, walkErr error) error {
+				if walkErr != nil {
+					return walkErr
+				}
+				if entry.Type()&os.ModeSymlink != 0 {
+					return fmt.Errorf("as0: linked state entry %q is not supported", path)
+				}
+				return nil
+			}); err != nil {
+				return false, err
 			}
 		case markerName, manifestName:
 			if !entryInfo.Mode().IsRegular() {
