@@ -1,0 +1,522 @@
+{
+  "schema": 1,
+  "compiler": "javac --release 8 -g:none",
+  "fixtures": [
+    {
+      "id": "chars-empty",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "empty",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 0,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "chars-ascii-length",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "asciiLength",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 5,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "chars-nul-units",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "nulUnits",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "chars-surrogate-pair",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "surrogatePair",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "chars-isolated-high",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "isolatedHigh",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 55296,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "chars-isolated-low",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "isolatedLow",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 56320,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "chars-defensive",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "defensive",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 97099,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "chars-hash-cache",
+      "group": "SC0Chars",
+      "source": "SC0Chars.java",
+      "sourceSHA256": "61ac10c50473cbce5b9e40e4ed7a30e54ac38164db206da52d91dff9e5761c77",
+      "entryClass": "SC0Chars",
+      "entry": "hashCache",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 2112,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Chars.class",
+          "sha256": "3f51600ba70a8e9c64f9f03d7eac02e0f725372ae2e9302c6490308dda4b0ae0"
+        }
+      ]
+    },
+    {
+      "id": "copy-distinct",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "copyDistinct",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "copy-hash",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "copyHash",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 2112,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "copy-category2-caller",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "category2Caller",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "copy-literal-intern",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "literalCopyIntern",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 111,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "copy-constructed-first",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "constructedFirst",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 111,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "copy-earlier-handle-insert",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "earlierHandleInsert",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "copy-hash-collision",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "hashCollision",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "copy-interface-dispatch",
+      "group": "SC0CopyIntern",
+      "source": "SC0CopyIntern.java",
+      "sourceSHA256": "74c105c09c58015135c98d176553ca017168bf34c2dc60433e789f589d8b73fd",
+      "entryClass": "SC0CopyIntern",
+      "entry": "interfaceDispatch",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0CopyIntern.class",
+          "sha256": "e39be2088b4678c32c6bcf0ed1fb403f88fa8318f81cae42b35521fe0262533a"
+        }
+      ]
+    },
+    {
+      "id": "flow-null-chars",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "nullChars",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        }
+      ]
+    },
+    {
+      "id": "flow-null-copy",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "nullCopy",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        }
+      ]
+    },
+    {
+      "id": "flow-fail-then-valid",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "failThenValid",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 12,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        }
+      ]
+    },
+    {
+      "id": "flow-chars-in-clinit",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "charsInClinit",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        },
+        {
+          "name": "SC0Flow$CharsHolder.class",
+          "sha256": "983b3de4a536e806fead4fe58b4c35520fbf455d69b9739673ecb3d26c77d6d2"
+        }
+      ]
+    },
+    {
+      "id": "flow-init-failure-then-ncdfe",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "initFailureThenNCDFE",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 3,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        },
+        {
+          "name": "SC0Flow$BrokenHolder.class",
+          "sha256": "0e2dbe88c993a35781ccb1e8861bf57af7df89f7074b473d247e08ca735b10eb"
+        }
+      ]
+    },
+    {
+      "id": "flow-loop64",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "loop64",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 64076,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        }
+      ]
+    },
+    {
+      "id": "flow-argument-failure",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "argumentFailure",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        }
+      ]
+    },
+    {
+      "id": "flow-throwable-integration",
+      "group": "SC0Flow",
+      "source": "SC0Flow.java",
+      "sourceSHA256": "91249c6714221fe960f47e46d4d53613da82683c59fa4587b340052316da8166",
+      "entryClass": "SC0Flow",
+      "entry": "throwableIntegration",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "SC0Flow.class",
+          "sha256": "fac656a70a783f0df685a7e4614a2224e84d5bdd669656f94da2cf983104d9d7"
+        },
+        {
+          "name": "SC0Flow$StringThrowable.class",
+          "sha256": "5c6d82daaec185c71ef32e6c3cb94fb4236888e26673f7c8f30a10de0495fdbe"
+        }
+      ]
+    }
+  ]
+}
