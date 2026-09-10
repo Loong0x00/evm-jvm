@@ -424,3 +424,23 @@ container was indexed, NOT Java classes inflated/executed or Minecraft launched.
 NextONE Sol/high DI0 preflight perJAVA_EVM_MC_DI0_PREPARATION.md: EVM method0/raw
 DEFLATE/plainCRC and output bounds overEVMZI0metadata, generatedfixturesonly,
 32KiBhistory/resume/immutableoutput ownership measurements before freeze.
+
+### DI0 parent replay and next explicit preflight scope
+
+db1bea2b1->28ffe5ec4 preflight integrated. Parent exactartifact/21cases/q1q128/OOG
+reportreplayed22.575s44314624B sampledRSS. Generated10-case Java8u504Inflater/
+ZipFile/ZipInputStream comparison:prototypeacceptsHLIT287/288 andHDIST31/32 butJ8
+rejects; nonzero finalunusedbitsprototype23 butJ8accepts. Fulltrailingbyte J8Inflater/
+ZipFileacceptwithremaining1,ZipInputStreamrejects compressed-size mismatch.
+ParentDISPOSABLEcopy fixescounts<=286/30(error27) andignoresunusedfinalbits; exact
+wholecompressedrange retainedasnarrowprofile. Strongoracles forbiderror0/OOGpositive
+passes. Corrected21case22.622s44290048B plus10compatcases pass. Noacceptedcodechanges.
+STATICCENsizesonly:19007classes/20554entries;65995526Bdeclaredplain; only3over64KiB:
+AbstractLogger90309,BinIO73635,en_us.lang158794. ProposalDI0-only256KiBplaintextentry
+coversallcurrentdeclaredsizes, notguaranteedruntime/VFSJavaheapcapacity. See
+JAVA_EVM_MC_DI0_PARENT_PREFLIGHT.md forboundedimmutableoutputpages/durabledisk/
+newprocess/expandedsize/windowwrap/structuralgas tests beforefreeze. Source/oracles/
+generatedfixtures/reports tracked evidence/java-evm/di0/parent-db1bea2b1/.
+NextSol/high persistenceprototype +Terra/high pureGo/Java tree-oracle worker in
+separateownedpaths; noSoliditypeerwrites/Fast/priority/settings/spawn/push. NoDI0
+acceptance, officialinflation/ClassLoader/Javaexecution/MC/EULA/listener/Done.

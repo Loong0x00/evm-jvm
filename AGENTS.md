@@ -1,5 +1,13 @@
 # Java-inside-EVM agent guide
 
+CURRENT DI0 PREFLIGHT: JAVA_EVM_MC_DI0_PARENT_PREFLIGHT.md supersedes the initial
+proposal for next tests. Original21 replayed; parent Java8 oracle found count-header
+and terminal-padding differences, fixed only a disposable copy.64KiB is too small
+for AbstractLogger90309B/BinIO73635B/en_us158794B; DI0-only256KiB is now an EXPLICIT
+unaccepted preflight proposal, no accepted quota change. Two disjoint workers:
+Sol/high output-pages+persistence, Terra/high pureGo/Java tree fixture/oracles; one
+Solidity writer. No DI0 freeze/acceptance/inflated official JAR/Java/MC/Done.
+
 LATEST ACCEPTED COMPONENT: ZI0 bounded EVM ZIP directory/index. See
 JAVA_EVM_MC_ZI0_REVIEW.md and frozen PLAN. Runtime9177B/completeinit9937B unchanged;
 Go repair27cb00967 integrated and parent corrected verified binding cache/ordinary

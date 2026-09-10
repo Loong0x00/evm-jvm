@@ -1,0 +1,97 @@
+package main
+
+import (
+	"bytes"
+	"compress/flate"
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+)
+
+// Test-only generated streams: complete code-length tree for lengths0 and1;
+// singleton EOB literal tree; no matches and empty distance alphabet.
+func countStream(nlit, ndist int) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(2, 2)
+	w.bits(uint(nlit-257), 5)
+	w.bits(uint(ndist-1), 5)
+	w.bits(14, 4)
+	order := []int{16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1}
+	for _, s := range order {
+		if s == 0 || s == 1 {
+			w.bits(1, 3)
+		} else {
+			w.bits(0, 3)
+		}
+	}
+	for i := 0; i < nlit+ndist; i++ {
+		if i == 256 {
+			w.code(1, 1)
+		} else {
+			w.code(0, 1)
+		}
+	}
+	w.code(0, 1)
+	return w.b
+}
+func main() {
+	raw, e := os.ReadFile("build/java-diff-mc-di0-parent-db1bea2b1/DI0Inflate.json")
+	if e != nil {
+		panic(e)
+	}
+	var art artifact
+	if e = json.Unmarshal(raw, &art); e != nil {
+		panic(e)
+	}
+	fs := []fixture{}
+	for _, pair := range [][2]int{{257, 1}, {286, 30}, {287, 1}, {288, 1}, {257, 31}, {257, 32}} {
+		fs = append(fs, fixture{name: fmt.Sprintf("counts-%d-%d", pair[0], pair[1]), plain: []byte{}, comp: countStream(pair[0], pair[1]), method: 8, q: 1})
+	}
+	pad := fixedStream(1)
+	nz := append([]byte(nil), pad...)
+	nz[len(nz)-1] |= 128
+	align := rawStored([]byte("A"))
+	align[0] |= 0xf8
+	fs = append(fs, fixture{name: "fixed-padding-zero", plain: []byte("A"), comp: pad, method: 8, q: 1}, fixture{name: "fixed-padding-nonzero", plain: []byte("A"), comp: nz, method: 8, q: 1, wantErr: 23}, fixture{name: "fixed-trailing-byte", plain: []byte("A"), comp: append(append([]byte(nil), pad...), 0), method: 8, q: 1, wantErr: 23}, fixture{name: "stored-alignment-nonzero", plain: []byte("A"), comp: align, method: 8, q: 1})
+	z := buildZIP(fs, 0)
+	if e := os.WriteFile("evidence/java-evm/di0/parent-db1bea2b1/generated/compat.zip", z.raw, 0600); e != nil {
+		panic(e)
+	}
+	env, idx, root, da, base, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	defer env.db.Close()
+	type row struct {
+		Name, GoError             string
+		GoPlainBytes, GoRemaining int
+		EVM                       result
+	}
+	var rows []row
+	for _, f := range fs {
+		single := buildZIP([]fixture{f}, 0)
+		if e = os.WriteFile("evidence/java-evm/di0/parent-db1bea2b1/generated/"+f.name+".zip", single.raw, 0600); e != nil {
+			panic(e)
+		}
+		if e = os.WriteFile("evidence/java-evm/di0/parent-db1bea2b1/generated/"+f.name+".deflate", f.comp, 0600); e != nil {
+			panic(e)
+		}
+		src := bytes.NewReader(f.comp)
+		dec := flate.NewReader(src)
+		got, err := io.ReadAll(dec)
+		dec.Close()
+		msg := ""
+		if err != nil {
+			msg = err.Error()
+		}
+		r := runOne(env, idx, root, da, hexCode(art.Bytecode), hexCode(art.Runtime), f, base)
+		rows = append(rows, row{f.name, msg, len(got), src.Len(), r})
+	}
+	out, e := json.MarshalIndent(rows, "", "  ")
+	if e != nil {
+		panic(e)
+	}
+	fmt.Println(string(out))
+}
