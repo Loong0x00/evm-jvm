@@ -246,3 +246,10 @@ NEXT preflight: JAVA_EVM_MC_ZI0_PREPARATION.md, EVM ZIP directory/entry-range in
 against accepted AS0 sealed bytes. One worker only; no ZIP/DEFLATE/ClassLoader
 implementation frozen yet. Static server metadata may size bounds, never act as
 production catalogue/offset authority. Preserve all AS0/VFS budgets and no MC run.
+
+ZI0 parent replay: JAVA_EVM_MC_ZI0_PARENT_PREFLIGHT.md. Original25 reproduced,
+but parent found unsupported flag bits/method0 options and final descriptor/CD
+intersection; fixed only an ignored prototype copy. ZIP64 prelude policy remains
+explicitly unresolved. Dense EOCD signatures cost78.01M vs69.11M fill sample.
+ZI0 NOT frozen/accepted. Next ONE-worker persistent-index preflight must measure
+real SSTORE,20554/32768 entries,per-mutation disk and cross-process reopening.

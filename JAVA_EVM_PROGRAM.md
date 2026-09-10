@@ -304,3 +304,15 @@ AcceptedVFS0a control367.334s/278855680BRSS, allpriorcore/runtimepathsunchanged.
 AS0 supplies EVM-created immutable bytes only, not ZIP/inflate/ClassLoader/JVM mount
 or officialwholeJARSHA256 proof. Next resource/archive interpretation is separate.
 No Minecraft/EULA/listener/Done. No automatic public push of these later commits.
+
+### ZI0 index preflight remains unaccepted
+
+9012fe450->2e76ab392 integrated raw inventory/25-case view prototype. Parent rebuilt
+identical artifacts/replayed25 and independently verified pinned static20554-entry,
+2100796-byte CD inventory. Parent then found flags/method0-option and final-descriptor
+range gaps; only ignored measurement code corrected. ZIP64 prelude policy still
+needs a precise rule. Dense-signature tail78.01Mgas, not69.11M worst-case claim.
+JAVA_EVM_MC_ZI0_PARENT_PREFLIGHT.md authorizes ONE bounded persistent-index worker:
+actual SSTORE/trie/durable per-call publication,20554/32768entries,mid-index/final
+new-process reopen,exact packing/root/lookup/phase/error policy before freeze.
+No production ZIP/inflate/ClassLoader/JVM mount/MC/EULA/listener/Done achieved here.
