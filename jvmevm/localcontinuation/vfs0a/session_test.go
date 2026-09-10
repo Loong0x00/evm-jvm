@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/binary"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math/big"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -315,9 +315,10 @@ func vfs0aHarnessRunChain(t *testing.T, session *Session, fixture vfs0aHarnessFi
 	if err != nil {
 		t.Fatalf("%s start: %v", profile, err)
 	}
-	var units uint64
+	var units, priorJvm, priorInternal uint64
+	var parentRoot common.Hash
 	for slices := 1; ; slices++ {
-		vfs0aHarnessCheckSlice(t, session, instance, result, jvm, internal, slices)
+		vfs0aHarnessCheckSlice(t, session, instance, result, parentRoot, priorJvm, priorInternal, jvm, internal, slices)
 		units += result.Slice.ExecutedJvmSteps + uint64(result.Slice.ExecutedInternalSteps)
 		if units > 4096 {
 			t.Fatalf("%s exceeded ordinary 4096 units", profile)
@@ -335,6 +336,7 @@ func vfs0aHarnessRunChain(t *testing.T, session *Session, fixture vfs0aHarnessFi
 		if slices >= 4096 {
 			t.Fatalf("%s exceeded VFS0a-only 4096-slice allowance", profile)
 		}
+		parentRoot, priorJvm, priorInternal = result.Slice.CheckpointRoot, result.Slice.TotalJvmSteps, result.Slice.TotalInternalSteps
 		result, err = session.Resume(instance, result.Slice.Epoch, result.Slice.CheckpointRoot, fixture.Raw, result.Checkpoint, jvm, internal, vfs0aHarnessOrdinaryGas)
 		if err != nil {
 			t.Fatalf("%s resume epoch %d: %v", profile, result.Slice.Epoch, err)
@@ -342,24 +344,43 @@ func vfs0aHarnessRunChain(t *testing.T, session *Session, fixture vfs0aHarnessFi
 	}
 }
 
-func vfs0aHarnessCheckSlice(t *testing.T, session *Session, instance common.Hash, result Result, jvm uint64, internal uint32, number int) {
+func vfs0aHarnessCheckSlice(t *testing.T, session *Session, instance common.Hash, result Result, parentRoot common.Hash, priorJvm, priorInternal, jvm uint64, internal uint32, number int) {
 	t.Helper()
-	if result.Slice.Schema != 1 || result.Slice.Epoch != uint64(number) || result.Slice.ExecutedJvmSteps > jvm || result.Slice.ExecutedInternalSteps > internal || result.Slice.VFSStateRoot == (common.Hash{}) {
-		t.Fatalf("invalid slice %d: %+v", number, result.Slice)
+	if result.Slice.Schema != 1 || result.Slice.Epoch != uint64(number) || result.Slice.ExecutedJvmSteps > jvm || result.Slice.ExecutedInternalSteps > internal || result.Slice.VFSStateRoot == (common.Hash{}) || result.GasUsed == 0 || result.GasUsed > vfs0aHarnessOrdinaryGas {
+		t.Fatalf("invalid slice %d: %+v gas=%d", number, result.Slice, result.GasUsed)
 	}
-	if len(result.Logs) != 1 || result.Logs[0].Address != vfs0aHarnessContractAddress {
+	if result.Slice.TotalJvmSteps != priorJvm+result.Slice.ExecutedJvmSteps || result.Slice.TotalInternalSteps != priorInternal+uint64(result.Slice.ExecutedInternalSteps) {
+		t.Fatalf("slice %d counter delta mismatch: prior=%d/%d result=%+v", number, priorJvm, priorInternal, result.Slice)
+	}
+	if len(result.Logs) != 1 || result.Logs[0].Address != vfs0aHarnessContractAddress || len(result.Logs[0].Topics) != 3 {
 		t.Fatalf("slice %d log mismatch", number)
 	}
 	stored, err := session.ReadCheckpoint(result.Slice.CheckpointRoot)
 	if err != nil || !bytes.Equal(stored, result.Checkpoint) {
 		t.Fatalf("stored checkpoint: %v", err)
 	}
-	if len(result.Checkpoint) < 280 || string(result.Checkpoint[:8]) != "JVMVF0A1" || binary.BigEndian.Uint32(result.Checkpoint[8:12]) != 1 || int(binary.BigEndian.Uint32(result.Checkpoint[276:280])) != len(result.Checkpoint)-280 || common.BytesToHash(result.Checkpoint[180:212]) != result.Slice.MachineStateRoot || common.BytesToHash(result.Checkpoint[244:276]) != result.Slice.VFSStateRoot {
-		t.Fatalf("slice %d violates frozen 280-byte envelope", number)
+	view := vfs0aHarnessReadCheckpointView(t, result.Checkpoint)
+	if crypto.Keccak256Hash(result.Checkpoint) != result.Slice.CheckpointRoot || view.Instance != instance || view.Epoch != result.Slice.Epoch || view.Parent != parentRoot || view.Runtime != session.codeHash || view.Machine != result.Slice.MachineStateRoot || view.VFS != result.Slice.VFSStateRoot || view.Lifecycle != result.Slice.Lifecycle || view.Result != result.Slice.Result || view.TotalJvm != result.Slice.TotalJvmSteps || view.TotalInternal != result.Slice.TotalInternalSteps || view.InodeCount != result.Slice.InodeCount || view.DescriptorCount != result.Slice.DescriptorCount || view.LogicalFileBytes != result.Slice.LogicalFileBytes {
+		t.Fatalf("slice %d violates frozen checkpoint/result mapping: view=%+v result=%+v", number, view, result.Slice)
 	}
 	head, err := session.Head(instance)
-	if err != nil || head.Owner != session.owner || head.Epoch != result.Slice.Epoch || head.CheckpointRoot != result.Slice.CheckpointRoot || head.MachineStateRoot != result.Slice.MachineStateRoot || head.VFSStateRoot != result.Slice.VFSStateRoot || head.SeedRoot != common.BytesToHash(result.Checkpoint[212:244]) || head.Lifecycle != result.Slice.Lifecycle || head.RuntimeCodeHash != session.codeHash {
+	if err != nil || head.Owner != session.owner || head.Epoch != result.Slice.Epoch || head.CheckpointRoot != result.Slice.CheckpointRoot || head.MachineStateRoot != result.Slice.MachineStateRoot || head.VFSStateRoot != result.Slice.VFSStateRoot || head.SeedRoot != view.Seed || head.ArtifactRoot != view.Artifact || head.ConfigRoot != view.Config || head.Lifecycle != result.Slice.Lifecycle || head.RuntimeCodeHash != session.codeHash {
 		t.Fatalf("head mismatch: %+v err=%v slice=%+v", head, err, result.Slice)
+	}
+	event := session.contractABI.Events["CheckpointCommitted"]
+	if result.Logs[0].Topics[0] != event.ID || result.Logs[0].Topics[1] != instance || result.Logs[0].Topics[2] != common.BigToHash(new(big.Int).SetUint64(result.Slice.Epoch)) {
+		t.Fatalf("slice %d indexed event mismatch", number)
+	}
+	var payload struct {
+		CheckpointRoot     common.Hash `abi:"checkpointRoot"`
+		MachineStateRoot   common.Hash `abi:"machineStateRoot"`
+		VFSStateRoot       common.Hash `abi:"vfsStateRoot"`
+		Lifecycle          uint8       `abi:"lifecycle"`
+		TotalJvmSteps      uint64      `abi:"totalJvmSteps"`
+		TotalInternalSteps uint64      `abi:"totalInternalSteps"`
+	}
+	if err := session.contractABI.UnpackIntoInterface(&payload, "CheckpointCommitted", result.Logs[0].Data); err != nil || payload.CheckpointRoot != result.Slice.CheckpointRoot || payload.MachineStateRoot != result.Slice.MachineStateRoot || payload.VFSStateRoot != result.Slice.VFSStateRoot || payload.Lifecycle != result.Slice.Lifecycle || payload.TotalJvmSteps != result.Slice.TotalJvmSteps || payload.TotalInternalSteps != result.Slice.TotalInternalSteps {
+		t.Fatalf("slice %d event payload=%+v err=%v", number, payload, err)
 	}
 }
 
@@ -393,11 +414,24 @@ func TestVFS0aHarnessInspectFileIsReadOnlyView(t *testing.T) {
 		t.Fatalf("inspect changed head: %+v %+v %v", before, after, err)
 	}
 	missing, err := session.InspectFile(fixture.Raw, result.Checkpoint, []byte("absent"), 0, 4096)
-	if err != nil || !reflect.DeepEqual(missing, FileInspection{}) {
+	if err != nil || missing.Kind != 0 || missing.EffectiveReadOnly || missing.Inode != 0 || len(missing.Data) != 0 || missing.FileRoot != (common.Hash{}) {
 		t.Fatalf("missing view=%+v err=%v", missing, err)
+	}
+	beyond, err := session.InspectFile(fixture.Raw, result.Checkpoint, []byte("created"), 100, 4096)
+	if err != nil || beyond.Kind != 2 || beyond.Inode != view.Inode || beyond.FileRoot != view.FileRoot || len(beyond.Data) != 0 {
+		t.Fatalf("beyond-EOF view=%+v err=%v", beyond, err)
 	}
 	if _, err := session.InspectFile(fixture.Raw, result.Checkpoint, []byte("created"), 0, 4097); err == nil {
 		t.Fatal("4097-byte inspect accepted")
+	}
+	malformed := append([]byte(nil), result.Checkpoint...)
+	malformed[len(malformed)-1] ^= 1
+	if _, err := session.InspectFile(fixture.Raw, malformed, []byte("created"), 0, 1); err == nil {
+		t.Fatal("malformed copied-state checkpoint inspected")
+	}
+	finalHead, err := session.Head(id)
+	if err != nil || finalHead != before {
+		t.Fatalf("failed/bounded views changed head: %+v %+v %v", before, finalHead, err)
 	}
 	if _, err := session.Resume(id, result.Slice.Epoch+1, result.Slice.CheckpointRoot, fixture.Raw, result.Checkpoint, 1, 1, vfs0aHarnessOrdinaryGas); err == nil {
 		t.Fatal("inspection improperly authorized wrong-epoch resume")
@@ -518,6 +552,10 @@ func TestVFS0aHarnessPendingTruncateNewProcessResume(t *testing.T) {
 	}
 	if cp.Slice.Lifecycle != 1 || cp.Slice.DescriptorCount != 1 {
 		t.Fatalf("no runnable first descriptor checkpoint: %+v", cp.Slice)
+	}
+	pending := vfs0aHarnessReadCheckpointView(t, cp.Checkpoint)
+	if len(pending.Descriptors) != 1 || pending.Descriptors[0].Phase != 1 || pending.Descriptors[0].BindDepth == 0 || pending.Descriptors[0].BindPC != 29 {
+		t.Fatalf("checkpoint is not in the exact pending-bind corridor: %+v", pending.Descriptors)
 	}
 	view, err := session.InspectFile(fixture.Raw, cp.Checkpoint, []byte("truncate"), 0, 16)
 	if err != nil || view.Kind != 2 || len(view.Data) != 0 {

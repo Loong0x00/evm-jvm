@@ -47,7 +47,7 @@ const (
 	vfs0aHarnessMaxCheckpointSize = 1 << 20
 )
 
-var vfs0aHarnessContractAddress = common.HexToAddress("0x4a564d45564d494f453052554e54494d45000001")
+var vfs0aHarnessContractAddress = common.HexToAddress("0x4a564d45564d564653304152554e54494d450001")
 
 type vfs0aHarnessManifest struct {
 	Format          uint32         `json:"format"`
@@ -262,15 +262,15 @@ func (s *Session) vfs0aHarnessReopen() error {
 // already-installed VFS0a runtime. Seed paths and data and the returned checkpoint
 // remain opaque to production Go. Seeds are deliberately absent from Resume.
 func (s *Session) Start(instance common.Hash, rawClasses [][]byte, entryClass, entry string, args []int32, seeds []SeedFile, maxJvmSteps uint64, maxInternalSteps uint32, gas uint64) (Result, error) {
-	return s.vfs0aHarnessSlice("start", gas, instance, rawClasses, entryClass, entry, args, seeds, maxJvmSteps, maxInternalSteps)
+	return s.vfs0aHarnessSlice("start", gas, maxJvmSteps, maxInternalSteps, instance, rawClasses, entryClass, entry, args, seeds, maxJvmSteps, maxInternalSteps)
 }
 
 // Resume transports the caller's opaque parent checkpoint back to the EVM.
 func (s *Session) Resume(instance common.Hash, expectedEpoch uint64, expectedRoot common.Hash, rawClasses [][]byte, checkpoint []byte, maxJvmSteps uint64, maxInternalSteps uint32, gas uint64) (Result, error) {
-	return s.vfs0aHarnessSlice("resume", gas, instance, expectedEpoch, expectedRoot, rawClasses, checkpoint, maxJvmSteps, maxInternalSteps)
+	return s.vfs0aHarnessSlice("resume", gas, maxJvmSteps, maxInternalSteps, instance, expectedEpoch, expectedRoot, rawClasses, checkpoint, maxJvmSteps, maxInternalSteps)
 }
 
-func (s *Session) vfs0aHarnessSlice(method string, gas uint64, inputs ...interface{}) (Result, error) {
+func (s *Session) vfs0aHarnessSlice(method string, gas, maxJvmSteps uint64, maxInternalSteps uint32, inputs ...interface{}) (Result, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	var result Result
@@ -316,7 +316,7 @@ func (s *Session) vfs0aHarnessSlice(method string, gas uint64, inputs ...interfa
 		}
 		result.Slice, checkpoint = decoded.Result, decoded.ChildCheckpoint
 	}
-	if err := vfs0aHarnessValidateSliceResult(result.Slice); err != nil {
+	if err := vfs0aHarnessValidateSliceResult(result.Slice, maxJvmSteps, maxInternalSteps); err != nil {
 		s.stateDB.RevertToSnapshot(snapshot)
 		return Result{GasUsed: result.GasUsed}, err
 	}
@@ -340,9 +340,12 @@ func (s *Session) vfs0aHarnessSlice(method string, gas uint64, inputs ...interfa
 	return result, nil
 }
 
-func vfs0aHarnessValidateSliceResult(result SliceResult) error {
-	if result.Schema != 1 || len(result.JavaClass) > 65535 || result.VFSStateRoot == (common.Hash{}) || result.InodeCount < 3 || result.InodeCount > 64 || result.DescriptorCount > 32 || result.LogicalFileBytes > 65536 {
-		return errors.New("vfs0a: EVM returned an invalid slice schema, VFS counters, or oversized Java class name")
+func vfs0aHarnessValidateSliceResult(result SliceResult, maxJvmSteps uint64, maxInternalSteps uint32) error {
+	if result.Schema != 1 || result.Epoch == 0 || result.CheckpointRoot == (common.Hash{}) || result.MachineStateRoot == (common.Hash{}) || len(result.JavaClass) > 65535 || result.VFSStateRoot == (common.Hash{}) || result.InodeCount < 3 || result.InodeCount > 64 || result.DescriptorCount > 32 || result.LogicalFileBytes > 65536 {
+		return errors.New("vfs0a: EVM returned an invalid slice schema, roots, VFS counters, or oversized Java class name")
+	}
+	if result.ExecutedJvmSteps > maxJvmSteps || result.ExecutedInternalSteps > maxInternalSteps || result.ExecutedJvmSteps > result.TotalJvmSteps || uint64(result.ExecutedInternalSteps) > result.TotalInternalSteps {
+		return errors.New("vfs0a: EVM returned counters outside the requested slice budget or cumulative totals")
 	}
 	switch result.Lifecycle {
 	case 1: // RUNNABLE
@@ -385,6 +388,13 @@ func (s *Session) Head(instance common.Hash) (Head, error) {
 	if err := s.contractABI.UnpackIntoInterface(&head, "head", output); err != nil {
 		return head, fmt.Errorf("vfs0a: decode head: %w", err)
 	}
+	if head.Epoch == 0 {
+		if head != (Head{}) {
+			return Head{}, errors.New("vfs0a: EVM returned a noncanonical absent head")
+		}
+	} else if head.Owner == (common.Address{}) || head.CheckpointRoot == (common.Hash{}) || head.MachineStateRoot == (common.Hash{}) || head.VFSStateRoot == (common.Hash{}) || head.SeedRoot == (common.Hash{}) || head.ArtifactRoot == (common.Hash{}) || head.ConfigRoot == (common.Hash{}) || head.RuntimeCodeHash == (common.Hash{}) || head.Lifecycle < 1 || head.Lifecycle > 3 {
+		return Head{}, errors.New("vfs0a: EVM returned an invalid committed head")
+	}
 	return head, nil
 }
 
@@ -411,6 +421,13 @@ func (s *Session) InspectFile(rawClasses [][]byte, checkpoint, path []byte, offs
 	}
 	if len(inspection.Data) > 4096 || len(inspection.Data) > int(maxBytes) {
 		return FileInspection{}, errors.New("vfs0a: EVM returned an oversized file inspection")
+	}
+	if inspection.Kind == 0 {
+		if inspection.EffectiveReadOnly || inspection.Inode != 0 || len(inspection.Data) != 0 || inspection.FileRoot != (common.Hash{}) {
+			return FileInspection{}, errors.New("vfs0a: EVM returned a noncanonical missing-file inspection")
+		}
+	} else if inspection.Kind > 2 || inspection.Inode == 0 || inspection.FileRoot == (common.Hash{}) || (inspection.Kind == 1 && len(inspection.Data) != 0) {
+		return FileInspection{}, errors.New("vfs0a: EVM returned an invalid file inspection")
 	}
 	return inspection, nil
 }

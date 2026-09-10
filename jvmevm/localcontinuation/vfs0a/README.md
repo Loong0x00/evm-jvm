@@ -1,7 +1,13 @@
 # LOCAL MC-VFS0a continuation transport
 
 Package `vfs0a` is the bounded opaque Go transport for the frozen
-`VFS0aInterpreter` profile. It loads only the embedded
+`VFS0aInterpreter` profile. **VFS0a remains unaccepted.** The integrated original
+287440-byte artifact is known nonfunctional: its first actual EVM run reverted all
+24 roots with `ThrowableProfileError(2,37-or-38,0)`. Runtime correction and a fresh
+artifact are dependencies of the behavioral gates below; tests do not skip or mask
+that failure.
+
+The harness loads only the embedded
 `vfs0aassets.Artifact()` and validates the exact five-method/one-event ABI. There is
 no artifact fallback or missing-artifact test skip.
 
@@ -13,8 +19,9 @@ all native effects occur in EVM code. `InspectFile` is a bounded EVM view over a
 fully validated checkpoint. It uses a copied state and neither publishes a
 head nor grants resume authority.
 
-The oversized runtime is explicitly installed once at LOCAL address
-`0x4a564d45564d564653304152554e54494d450001`; this is not CREATE or standard
+The oversized runtime is explicitly installed once at the frozen LOCAL address
+`0x4a564d45564d564653304152554e54494d450001` (the initial harness's accidental
+IOE0 address was corrected); this is not CREATE or standard
 chain deployment evidence. Calls retain the fixed dev-chain context, finite
 1..1,000,000,000 gas range, 1 MiB checkpoint cap, owner/epoch/root CAS, exact
 17-field result, ten-field head, and VFS roots/counters.
@@ -28,15 +35,20 @@ the old root; an ambiguous post-rename failure poisons the session until reopen.
 Failed publication returns diagnostic gas only—never speculative result,
 checkpoint, or logs. Reads are bounded and internal symlinks are refused.
 
-The trusted fixture corpus pins the plan's 24 Java-8-primary roots in three
-groups and opaque seed records. Tests run all 24 one-call controls and full
+The trusted fixture corpus pins the plan's original 24 Java-8-primary roots in three
+groups and opaque seed records. A separate seven-root regression bundle preserves
+stock Java 8/21 observations for `file/child`, `missing/../seed`, and
+`file/../seed`, including ENOTDIR messages for both stream wrappers and the distinct
+`mkdir`/`mkdirs` behavior; it does not change the original root identities.
+Tests require all 24 one-call controls and full
 q1/q7 chains for the selected ten roots, with at most 4,096 units and 4,096
 slices per VFS0a case. Java 8 and Java 21 C-locale host-only oracles run in
 owned temporary directories; both currently return 1 for every root, so there
-are no secondary-version differences to retarget. A disk/new-process test
-pauses after output truncation has created the first descriptor and before the
-constructor chain completes, then resumes without reopening/truncating or
-installing code.
+are no secondary-version differences to retarget. A disk/new-process test pauses only at a decoded test-only descriptor phase1 with
+nonzero bind depth/PC—not merely at a nonzero descriptor count—after output
+truncation and before handle binding. It then resumes without reopening/truncating
+or installing code and compares exact terminal roots/counters with an uninterrupted
+control. Production Go still has no checkpoint/heap/path parser.
 
 Ordinary calls use 100,000,000 gas; explicit boundary work may use
 1,000,000,000 gas. The runtime remains limited to 320 KiB (VFS0a revision1 only), checkpoints to 1

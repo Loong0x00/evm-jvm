@@ -19,3 +19,11 @@ closed descriptors, and Java null/bounds/zero-length precedence. They do not
 provide host files to production execution: EVM `start` receives only the raw
 seed records and all path, inode, descriptor, byte, message, and Java effects
 are runtime-owned.
+
+`regressions/` is a separate post-freeze seven-root bundle for the path blocker in
+`JAVA_EVM_MC_VFS0A_PATH_REVIEW.md`. It pins Java 8/21 C-locale ENOENT/ENOTDIR
+results for input and output opens through missing/file prefixes and the measured
+`mkdir == false` but `mkdirs == true` distinction. It does not alter the original
+24-root manifest, sources, classes, IDs, or expectations. Its actual-EVM test is a
+mandatory correction gate, not evidence that the currently integrated old runtime
+passes.
