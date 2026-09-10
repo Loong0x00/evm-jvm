@@ -4,8 +4,10 @@ import (
 	"bytes"
 	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"reflect"
+	"strconv"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -97,6 +99,40 @@ func TestVFS0aHarnessSeedConfigAndCopiedInspectProvenance(t *testing.T) {
 	failed, err := sessionB.Resume(instance, result.Slice.Epoch, result.Slice.CheckpointRoot, fixture.Raw, result.Checkpoint, 1, 1, vfs0aHarnessOrdinaryGas)
 	if err == nil || failed.GasUsed == 0 || !reflect.DeepEqual(failed.Slice, SliceResult{}) || len(failed.Checkpoint) != 0 || len(failed.Logs) != 0 {
 		t.Fatalf("copied inspection granted resume provenance: result=%+v error=%v", failed, err)
+	}
+}
+
+func TestVFS0aHarnessRuntimeHasNoSourceTreeFallback(t *testing.T) {
+	if os.Getenv("JVMEVM_VFS0A_EMBED_CHILD") != "" {
+		wantHash := os.Getenv("JVMEVM_VFS0A_EMBED_HASH")
+		wantSize, err := strconv.Atoi(os.Getenv("JVMEVM_VFS0A_EMBED_SIZE"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		code, err := Runtime()
+		if err != nil {
+			t.Fatal(err)
+		}
+		hash, err := RuntimeHash()
+		if err != nil || hash != wantHash || len(code) != wantSize {
+			t.Fatalf("embedded runtime changed outside source tree: size=%d hash=%s error=%v", len(code), hash, err)
+		}
+		return
+	}
+	code, err := Runtime()
+	if err != nil {
+		t.Fatal(err)
+	}
+	hash, err := RuntimeHash()
+	if err != nil {
+		t.Fatal(err)
+	}
+	empty := t.TempDir()
+	cmd := exec.Command(os.Args[0], "-test.run=^TestVFS0aHarnessRuntimeHasNoSourceTreeFallback$")
+	cmd.Dir = empty
+	cmd.Env = append(os.Environ(), "JVMEVM_VFS0A_EMBED_CHILD=1", "JVMEVM_VFS0A_EMBED_HASH="+hash, "JVMEVM_VFS0A_EMBED_SIZE="+strconv.Itoa(len(code)))
+	if output, err := cmd.CombinedOutput(); err != nil {
+		t.Fatalf("new-process embedded runtime check: %v\n%s", err, output)
 	}
 }
 
