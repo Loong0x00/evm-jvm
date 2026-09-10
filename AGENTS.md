@@ -1,5 +1,11 @@
 # Java-inside-EVM agent guide
 
+CURRENT FROZEN IMPLEMENTATION: JAVA_EVM_MC_ZI0_PLAN.md after parent gates in
+JAVA_EVM_MC_ZI0_IMPLEMENTATION_PREFLIGHT.md. ZI0 is NOT accepted. Two disjoint
+runtime/harness writers authorized; one Solidity writer, no prior-profile/core
+changes. Earlier ZI0 preflight-only instructions below are historical. AS0 and
+VFS remain latest accepted components; no inflate/ClassLoader/MC/Done claim.
+
 LATEST USER: important information must NOT live only in /tmp. Keep plans and
 constraints in repository docs; archive key acceptance/failure/reproduction evidence
 under Git-tracked evidence/java-evm/ with hashes. Temporary build/test directories

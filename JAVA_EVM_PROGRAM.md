@@ -364,3 +364,18 @@ nonzero owner/no at-end scan policies and full disk hardening gates. ONE Luna/hi
 pure-Go probe worker is active in mc-zi0-parent-probes; no Solidity edits authorized.
 Parent will independently inspect/replay its geometry/OOG/full-byte/max-TLV probes
 before freeze. All key evidence stays in evidence/java-evm/, not only temporary paths.
+
+### ZI0 production implementation now frozen, not accepted
+
+See JAVA_EVM_MC_ZI0_PLAN.md and JAVA_EVM_MC_ZI0_IMPLEMENTATION_PREFLIGHT.md. Parent
+integrated Luna pure-Go probesd385a9197->9113e7a5b, strengthened positive oracle,
+actual-state-root/SSTORE-completion rollback proof and denseEOCD22-byte candidates.
+Final parent replay18.730s277540864B sampledRSS; max-TLV64 scan47.226Mgas and dense
+validEOCD79.233Mgas remain under100M. Zero-owner/no-op observations become explicit
+production refusals1/11. ZIP64 structural policy and exactABI/record/root/transport
+specified. Separate namespace manages ordinary AS0 upload plus separate ZI0 CREATE,
+per-call durable publication, final-only lookup, pinned metadata before DB open,
+old-root recovery/ambiguous poison. No silently copied toy-transport guards.
+Next2 disjoint implementation workers: Sol/high runtime, Luna/high Go harness
+(frozen pure coding), parent independent16-group acceptance. NoFast/priority/global
+settings changes/spawn/peer writes/push. All new key evidence is tracked in repo.

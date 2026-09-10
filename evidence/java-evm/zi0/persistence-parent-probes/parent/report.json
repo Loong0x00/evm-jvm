@@ -1,0 +1,649 @@
+{
+  "solc": "0.8.30+commit.73712a01",
+  "SourceSHA": "ab85fdb4f8710c4d58c639de191c62873ee26f29fc87b92223f0e476700f8b85",
+  "RuntimeSHA": "808ef488ad768c3a5082db37bf6ec4735f4d2c2d2f74b43887a09069896ef974",
+  "RuntimeKeccak": "0x50e118d99c52d2953f2aed608e37683d5bf136c6a63d9970ccb8f80dc0948dc6",
+  "InitBytes": 9752,
+  "RuntimeBytes": 9102,
+  "runs": [
+    {
+      "name": "target-20554-q64-disk-newprocess",
+      "entries": 20554,
+      "bytes": 4057736,
+      "cd_bytes": 2100796,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 881638867,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1920141,
+        "Discover": 69091506,
+        "ScanTotal": 2383134028,
+        "ScanMax": 7465246,
+        "Finish": 45028,
+        "Scans": 322
+      },
+      "index_root": "0xd77e340054c70abdea5388ddec218812af50d189060545ddf961ed4a045f2759",
+      "state_root": "0x6584d08a063daeed008eb0762fa3ad4e321c1c0c26c993194fd75143c1654d35",
+      "commits": 823,
+      "commit_ms": 4602,
+      "max_commit_ms": 10,
+      "max_call_ms": 94,
+      "disk_bytes": 41449537,
+      "disk_before_index": 6187730,
+      "index_disk_delta": 35261807,
+      "elapsed_ms": 7789,
+      "new_process_reopened": true
+    },
+    {
+      "name": "capacity-32768-q64-memory",
+      "entries": 32768,
+      "bytes": 8159254,
+      "cd_bytes": 4194304,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 1772693340,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1920141,
+        "Discover": 69091506,
+        "ScanTotal": 4459095973,
+        "ScanMax": 8718707,
+        "Finish": 45028,
+        "Scans": 512
+      },
+      "index_root": "0xede967e8de0f9228d75b81620e4347fa913b388b88131a7e7eb8c4494e521e99",
+      "state_root": "0x16ed55f9bba5455b167614ed37ef86c646c38f9116a28fd709f1da16d9fef367",
+      "commits": 1514,
+      "commit_ms": 715,
+      "max_commit_ms": 3,
+      "max_call_ms": 98,
+      "elapsed_ms": 6414
+    },
+    {
+      "name": "simultaneous-max-fields-64",
+      "entries": 64,
+      "bytes": 234550,
+      "cd_bytes": 150400,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 51052452,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1920141,
+        "Discover": 69091506,
+        "ScanTotal": 18535140,
+        "ScanMax": 18535140,
+        "Finish": 45028,
+        "Scans": 1
+      },
+      "index_root": "0xaa6279df6cf7cbd2682ef4019f7ff516c8d324dc59bdfd5254debce4a796d99a",
+      "state_root": "0xd160e6d058693b5cdfbad8c82b1dd62d507e8fa3fdcf24ec1471038f30db61c3",
+      "commits": 35,
+      "commit_ms": 5,
+      "max_commit_ms": 0,
+      "max_call_ms": 93,
+      "elapsed_ms": 130
+    },
+    {
+      "name": "simultaneous-max-fields-64-zero-length-tlvs",
+      "entries": 64,
+      "bytes": 234550,
+      "cd_bytes": 150400,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 51052452,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1920141,
+        "Discover": 69091506,
+        "ScanTotal": 47225700,
+        "ScanMax": 47225700,
+        "Finish": 45028,
+        "Scans": 1
+      },
+      "index_root": "0x100c0e40226799bfae5559723e82bf9a298358710731d9f8868ab1a2bb217564",
+      "state_root": "0x7e05bd6bd76fc8e287183237c6e8e41297ad46c2e70d3af415786044e69f04bd",
+      "commits": 35,
+      "commit_ms": 4,
+      "max_commit_ms": 0,
+      "max_call_ms": 95,
+      "elapsed_ms": 172
+    },
+    {
+      "name": "empty",
+      "entries": 0,
+      "bytes": 22,
+      "cd_bytes": 0,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 185844,
+        "AS0AppendMax": 185844,
+        "AS0Seal": 34194,
+        "IndexCreate": 1920141,
+        "Discover": 70900,
+        "ScanTotal": 0,
+        "ScanMax": 0,
+        "Finish": 45028,
+        "Scans": 0
+      },
+      "index_root": "0xbe4162501e0eeae514d56a8e2a5dc97448f7358c3e16a9bebc061689d561c5b3",
+      "state_root": "0xc127753ddaa601fd8ef7056b53c60c8b7932a699f5a74e5f6d1b2c09b86bdaa1",
+      "commits": 6,
+      "commit_ms": 0,
+      "max_commit_ms": 0,
+      "max_call_ms": 0,
+      "elapsed_ms": 1
+    },
+    {
+      "name": "same-128-q1",
+      "entries": 128,
+      "bytes": 23168,
+      "cd_bytes": 7936,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 5106474,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1920141,
+        "Discover": 24419026,
+        "ScanTotal": 16735709,
+        "ScanMax": 150945,
+        "Finish": 45028,
+        "Scans": 128
+      },
+      "index_root": "0x71c502e5d13f44ea440557daadde34b662a7f1f670c134f767a275a7b795cb3e",
+      "state_root": "0xac5887bfefdcefe2f5630294af397b2a69b91e8f733ce049f411b85ce30d1fa9",
+      "commits": 136,
+      "commit_ms": 9,
+      "max_commit_ms": 0,
+      "max_call_ms": 32,
+      "elapsed_ms": 68
+    },
+    {
+      "name": "same-128-q64",
+      "entries": 128,
+      "bytes": 23168,
+      "cd_bytes": 7936,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 5106474,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1920141,
+        "Discover": 24419026,
+        "ScanTotal": 10802777,
+        "ScanMax": 5415007,
+        "Finish": 45028,
+        "Scans": 2
+      },
+      "index_root": "0x71c502e5d13f44ea440557daadde34b662a7f1f670c134f767a275a7b795cb3e",
+      "state_root": "0xac5887bfefdcefe2f5630294af397b2a69b91e8f733ce049f411b85ce30d1fa9",
+      "commits": 10,
+      "commit_ms": 2,
+      "max_commit_ms": 1,
+      "max_call_ms": 32,
+      "elapsed_ms": 49
+    }
+  ],
+  "controls": [
+    {
+      "Name": "cd-cap-plus-one",
+      "Outcome": "ZI0Error",
+      "error_code": 7,
+      "gas": 69065247,
+      "rolled_back": true
+    },
+    {
+      "Name": "dense-eocd-signatures",
+      "Outcome": "ok",
+      "gas": 78054633,
+      "rolled_back": true
+    },
+    {
+      "Name": "duplicate-across-batches",
+      "Outcome": "ZI0Error",
+      "error_code": 18,
+      "gas": 55430,
+      "rolled_back": true
+    },
+    {
+      "Name": "early-entry",
+      "Outcome": "ZI0Error",
+      "error_code": 30,
+      "gas": 15307,
+      "rolled_back": true
+    },
+    {
+      "Name": "early-finish",
+      "Outcome": "ZI0Error",
+      "error_code": 29,
+      "gas": 17610,
+      "rolled_back": true
+    },
+    {
+      "Name": "early-lookup",
+      "Outcome": "ZI0Error",
+      "error_code": 30,
+      "gas": 15379,
+      "rolled_back": true
+    },
+    {
+      "Name": "failed-batch-rollback",
+      "Outcome": "ZI0Error",
+      "error_code": 10,
+      "gas": 17577,
+      "rolled_back": true,
+      "retry": true
+    },
+    {
+      "Name": "fixed-runtime-identity-across-owners",
+      "Outcome": "ok",
+      "gas": 1920141,
+      "rolled_back": true
+    },
+    {
+      "Name": "opaque-name-payload-markers",
+      "Outcome": "ok",
+      "gas": 202680,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-ambiguous-eocd",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 289044,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-bad-local-signature",
+      "Outcome": "ZI0Error",
+      "error_code": 20,
+      "gas": 52310,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-bad-range",
+      "Outcome": "ZI0Error",
+      "error_code": 15,
+      "gas": 40595,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-bounded-128",
+      "Outcome": "ok",
+      "gas": 15819696,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-central-reordered",
+      "Outcome": "ZI0Error",
+      "error_code": 27,
+      "gas": 134988,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-comment-false-signatures",
+      "Outcome": "ok",
+      "gas": 287205,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-cross-as0-8192",
+      "Outcome": "ok",
+      "gas": 14133539,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-cross-read-4096",
+      "Outcome": "ok",
+      "gas": 9822421,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-descriptor-nosig",
+      "Outcome": "ok",
+      "gas": 191643,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-descriptor-signature",
+      "Outcome": "ok",
+      "gas": 195839,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-duplicate-name",
+      "Outcome": "ZI0Error",
+      "error_code": 18,
+      "gas": 125702,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-empty",
+      "Outcome": "ok",
+      "gas": 70900,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-empty-name",
+      "Outcome": "ZI0Error",
+      "error_code": 13,
+      "gas": 40025,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-encryption",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-local-name-mismatch",
+      "Outcome": "ZI0Error",
+      "error_code": 22,
+      "gas": 58100,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-max-eocd-window",
+      "Outcome": "ok",
+      "gas": 69091506,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-multidisk",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 243231,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-overlap",
+      "Outcome": "ZI0Error",
+      "error_code": 15,
+      "gas": 40595,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-stored-deflated",
+      "Outcome": "ok",
+      "gas": 271435,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-truncated",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 239170,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-unsealed-store",
+      "Outcome": "ZI0Error",
+      "error_code": 3,
+      "gas": 72164,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-unsupported-method",
+      "Outcome": "ZI0Error",
+      "error_code": 15,
+      "gas": 40532,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-wrong-code-binding",
+      "Outcome": "ZI0Error",
+      "error_code": 2,
+      "gas": 69308,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-wrong-content-root",
+      "Outcome": "ZI0Error",
+      "error_code": 3,
+      "gas": 75001,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-zip64-extra",
+      "Outcome": "ZI0Error",
+      "error_code": 17,
+      "gas": 45812,
+      "rolled_back": true
+    },
+    {
+      "Name": "owner-refusal",
+      "Outcome": "ZI0Error",
+      "error_code": 1,
+      "gas": 2412,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-last-descriptor-overlap",
+      "Outcome": "ZI0Error",
+      "error_code": 26,
+      "gas": 72938,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-10",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-12",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-13",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-14",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-15",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-4",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-7",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-8",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-9",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40265,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-stored-option-1",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40343,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-stored-option-2",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 40343,
+      "rolled_back": true
+    },
+    {
+      "Name": "post-final-scan",
+      "Outcome": "ZI0Error",
+      "error_code": 4,
+      "gas": 4863,
+      "rolled_back": true
+    },
+    {
+      "Name": "scan-65",
+      "Outcome": "ZI0Error",
+      "error_code": 11,
+      "gas": 19818,
+      "rolled_back": true
+    },
+    {
+      "Name": "scan-zero",
+      "Outcome": "ZI0Error",
+      "error_code": 11,
+      "gas": 19795,
+      "rolled_back": true
+    },
+    {
+      "Name": "wrong-cursor",
+      "Outcome": "ZI0Error",
+      "error_code": 10,
+      "gas": 17627,
+      "rolled_back": true
+    },
+    {
+      "Name": "wrong-finish-root",
+      "Outcome": "ZI0Error",
+      "error_code": 29,
+      "gas": 19933,
+      "rolled_back": true,
+      "retry": true
+    },
+    {
+      "Name": "wrong-rolling-root",
+      "Outcome": "ZI0Error",
+      "error_code": 10,
+      "gas": 19756,
+      "rolled_back": true
+    },
+    {
+      "Name": "zip64-locator-structural-empty",
+      "Outcome": "ZI0Error",
+      "error_code": 9,
+      "gas": 70306,
+      "rolled_back": true
+    }
+  ],
+  "independent_probes": [
+    {
+      "Name": "constructor-zero-owner-observation",
+      "Outcome": "observed-accepted-not-pass",
+      "gas": 1900241,
+      "rolled_back": false,
+      "detail": "created=0xBd770416a3345F91E4B34576cb804a576fa48EB1 owner=0x0000000000000000000000000000000000000000"
+    },
+    {
+      "Name": "dense-valid-ending-eocd-candidates",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 79233310,
+      "rolled_back": true
+    },
+    {
+      "Name": "direct-low-gas-after-sstore",
+      "Outcome": "OOG-rollback-retry-ok",
+      "gas": 100000,
+      "rolled_back": true,
+      "retry": true,
+      "detail": "used=100000 sstore_opcodes_reached=1 completed_changed_writes=1 oog_faults=0 error=\"out of gas\" retry_gas=116395 retry_root=0x591bfecd347f035d5c2cb0b3277fac4b1e2e10aab4fef599315d840f92bac30e pre_root=0xfdca6b30873731ce9a0484abf863c0f77c5737db6ac9af5984ddd2bf09226bc3 post_oog_root=0xfdca6b30873731ce9a0484abf863c0f77c5737db6ac9af5984ddd2bf09226bc3 actual_roots=0xfdca6b30873731ce9a0484abf863c0f77c5737db6ac9af5984ddd2bf09226bc3/0xfdca6b30873731ce9a0484abf863c0f77c5737db6ac9af5984ddd2bf09226bc3 pre_storage=0x5dcd86360f3810afc9c18280f9909b0006bf47ae178887fd7840a3e47b247325 post_oog_storage=0x5dcd86360f3810afc9c18280f9909b0006bf47ae178887fd7840a3e47b247325 nonces=[1 2 2]/[1 2 2] logs=0/0 map0=0x0000000000000000000000000000000000000000000000000000000000000001/0x0000000000000000000000000000000000000000000000000000000000000001 map1=0x0000000000000000000000000000000000000000000000000000000000000000/0x0000000000000000000000000000000000000000000000000000000000000000 record0=0x00000000000000000100005e8b7be4300000001000000800008c000000000076/0x00000000000000000100005e8b7be4300000001000000800008c000000000076"
+    },
+    {
+      "Name": "entry-index-bound",
+      "Outcome": "ZI0Error",
+      "error_code": 31,
+      "gas": 15353,
+      "rolled_back": true
+    },
+    {
+      "Name": "geometry-data-range",
+      "Outcome": "ZI0Error",
+      "error_code": 23,
+      "gas": 58485,
+      "rolled_back": true
+    },
+    {
+      "Name": "geometry-local-order-overlap",
+      "Outcome": "ZI0Error",
+      "error_code": 27,
+      "gas": 135025,
+      "rolled_back": true
+    },
+    {
+      "Name": "lookup-empty-length",
+      "Outcome": "ZI0Error",
+      "error_code": 32,
+      "gas": 15418,
+      "rolled_back": true
+    },
+    {
+      "Name": "lookup-overlength",
+      "Outcome": "ZI0Error",
+      "error_code": 32,
+      "gas": 15441,
+      "rolled_back": true
+    },
+    {
+      "Name": "opaque-binary-nonascii-dot-slash-names",
+      "Outcome": "ok",
+      "gas": 0,
+      "rolled_back": true,
+      "detail": "exact byte hits and distinct normalization-looking absent controls"
+    },
+    {
+      "Name": "scan-at-eof-no-op",
+      "Outcome": "ok-observed",
+      "gas": 22900,
+      "rolled_back": true,
+      "detail": "success with unchanged committed root/state before finish"
+    },
+    {
+      "Name": "scan-empty-before-finish-no-op",
+      "Outcome": "ok-observed",
+      "gas": 22900,
+      "rolled_back": true,
+      "detail": "success with unchanged committed root/state; policy remains an observation"
+    },
+    {
+      "Name": "test-only-nameindex-bucket-redirect",
+      "Outcome": "ZI0Error",
+      "error_code": 19,
+      "gas": 34883,
+      "rolled_back": true,
+      "detail": "isolated TEST-only memory-state redirect to existing entry; full-byte mismatch rejected, then original lookup restored"
+    }
+  ],
+  "rss_kib": 271036,
+  "elapsed_ms": 18706
+}

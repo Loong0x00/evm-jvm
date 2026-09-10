@@ -1,11 +1,12 @@
-# MC-ZI0 production plan — DRAFT pending final parent probes
+# MC-ZI0 production plan — implementation freeze
 
-Status: **NOT FROZEN / NOT ACCEPTED**. This draft fixes the proposed interface and
-transport scope for review; no production implementation is authorized yet. Parent
-independently reproduced2bb841b0c in18.423s/269950976B sampled groupRSS, identical
-EVM gas/roots/counters/54 controls. Evidence is Git-tracked under
-`evidence/java-evm/zi0/persistence-preflight-2bb841b0c/`. Additional parent probes
-must finish before changing this header to FROZEN.
+Status: **FROZEN FOR IMPLEMENTATION / NOT ACCEPTED** after independent parent
+preflights. See JAVA_EVM_MC_ZI0_IMPLEMENTATION_PREFLIGHT.md. Parent reproduced
+2bb841b0c in18.423s/269950976B sampled groupRSS (identical54 controls), exact32MiB
+high-offset ZIP, and strengthened Luna probes in18.730s/277540864B (54 retained+
+12 extra probes,7 measured runs). Key evidence is Git-tracked under
+`evidence/java-evm/zi0/`. This authorizes only the disjoint implementation write
+sets below, not production acceptance or additional runtime capabilities.
 
 ZI0 is ONLY an EVM ZIP directory/index/committed compressed-range component. AS0
 64ea6b62f remains accepted byte storage, VFS0a72aa13f15 accepted JVM/filesystem.
@@ -168,7 +169,8 @@ Address,RuntimeCodeHash,all13 typed scalar getter values and its getter GasUsed.
 Index.Address0 explicitly means not yet constructed and other index fields are zero.
 Head.GasUsed is the sum of actual AS0+index getter gas, not prior mutation gas.
 Runtime()/InitCode()/ABI() return defensive embedded copies/decoded ABI with errors,
-never paths/compiler fallback. All exported entry points check closed/poison state.
+never paths/compiler fallback. Session entry points except idempotent Close check
+closed/poison state.
 
 Every successful CREATE/Append/Seal/CreateIndex/Discover/Scan/Finish commits+reloads
 in memory; disk additionally syncs trie AND code, then unique manifest temp fsync,
@@ -190,12 +192,18 @@ Publication temps must be owned unique regular files. Preserve unknown failure e
 never overwrite a damaged store with a fresh root. Use AS0 accepted transport guards
 as the minimum precedent, not the disposable preflight transport's shortcuts.
 
+Pin the accepted preflight/AS0 execution context: AllDevChainProtocolChanges,
+block1,time1,zero difficulty/coinbase/value/gasPrice/random/GetHashFn output,
+InitialBaseFee and BlobTxMinBlobGasprice. Origin is the bound nonzero owner; gas
+is the explicit call allowance. No EVM/consensus/size-limit overrides. Manifest
+context must bind this exact profile, not accept caller-selected VM rules.
+
 Report each EVM operation gas and view sums honestly; separate AS0 upload/index
 CREATE/discover/scans/finish/reads, publication counts, CPU/RSS and disk bytes. Neither
 aggregate gas nor LevelDB disk delta is computational instruction count or Java heap.
 Do not count changed-query misses as exercising the full-byte collision guard.
 
-## Implementation/acceptance gates (after freeze only)
+## Authorized implementation and mandatory acceptance gates
 
 At most2 disjoint workers: runtime owns ONLY `jvmevm/artifactstore/zi0/runtime/**`;
 harness owns package except runtime/** and parent_test.go. Parent owns docs/Make/
@@ -222,5 +230,5 @@ Sixteen parent gate groups:
 15 embedded source-independent executable and concurrent stale-call/refusal checks;
 16 final artifacts under watchdog, vet, AS0 regression and protected older/core paths.
 
-All acceptance is final-artifact evidence, not worker completion or this draft. No
+All acceptance is final-artifact evidence, not worker completion or this freeze. No
 production ABI/code pins may be declared accepted before independent final gates.
