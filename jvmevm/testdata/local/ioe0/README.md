@@ -16,3 +16,8 @@ Neither host JVM participates in EVM execution. The paired positive roots avoid
 VM-origin ArithmeticException `getMessage`, which is deliberately a hard profile
 error in IOE0 rather than a fabricated Java value. Synthetic Object-publication
 codec probes are EVM-only and are not substitutions for host-JDK oracle rows.
+
+Secondary-oracle observations are explicit: Java21 returns0 for `implicitNPE`,
+`wrappedNPE`, and `constructorFailureAfterSuper` because its helpful NPE message
+is nonnull. Java8 and EVM retain the frozen result1 for those roots; the Java21
+feature is not disabled and its output is not treated as a Java8 match.

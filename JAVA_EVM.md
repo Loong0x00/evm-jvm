@@ -69,6 +69,13 @@ copy/restart.24roots/21chains/32independent groups and parent checks pass. Only 
 literals and other TL0 objects remain supported. No builder, Java I/O or VFS claim.
 Run `make java-mc-sc0-test java-mc-sc0-demo`; see `JAVA_EVM_MC_SC0_REVIEW.md`.
 
+**MC-IOE0 accepted:** a separate233286-byte runtime executes the bounded Java I/O
+exception message/cause constructor/getter Code, including exact EIIE cause fields
+across restart.24Java8/EVMroots,20chains and32parent-independent groups pass. Java21
+helpful-NPE differences are recorded, not substituted for Java8. No file bridge/VFS
+or complete Throwable API is claimed. Run `make java-mc-ioe0-test java-mc-ioe0-demo`;
+see `JAVA_EVM_MC_IOE0_REVIEW.md`.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:

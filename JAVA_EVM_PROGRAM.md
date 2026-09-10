@@ -176,7 +176,7 @@ routine permission to start the next verified increment.
 | Local MC-LC0 | EVM-owned single-stack checkpoints/start/resume/CAS/durable restart | ACCEPTED; actual15/36/10 q1/q7/internal1 chains, new-process reopen and1MiBboundary; JAVA_EVM_MC_LC0_REVIEW.md |
 | Local MC-TL0 | fresh Throwable identity/constructor/catch/cause continuation | ACCEPTED;24roots/20chains/32independentprobes/parentgates; JAVA_EVM_MC_TL0_REVIEW.md |
 | Local MC-SC0 | char-array/copy String constructors and nonliteral intern | ACCEPTED;24roots/21chains/32independentgroups/parentgates; JAVA_EVM_MC_SC0_REVIEW.md |
-| Local MC-IOE0 | fresh I/O exception messages and bounded cause getters | FROZEN JAVA_EVM_MC_IOE0_PLAN.md; two workers plus parent verification; no implementation accepted |
+| Local MC-IOE0 | fresh I/O exception messages and bounded cause getters | ACCEPTED;24roots/20chains/32parentgroups/alllegacygates; JAVA_EVM_MC_IOE0_REVIEW.md |
 | Local platform later | VFS/minimal scheduler/main/JAR and further libraries | VFS proposal prepared; no MC execution |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | local MC dependency priority; selected1.12.2 static inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |

@@ -78,11 +78,13 @@ copybacking/write-receiver constraints,null-pendingphase andfull-poolvalidationg
 objectquota makesitunreachable.32seededUTF16JVMvectorsand2048-char13/51-slicecopy agree.
 Oldprofiles/core unchanged;100M/1B,1MiB caps unchanged. IOexceptionproposal is next,
 not implementation/VFS/main/MC/EULA/listener/Done evidence.
-**MC-IOE0 frozen** in JAVA_EVM_MC_IOE0_PLAN.md: separate IOException0Interpreter/ioe0,
-SC0base2251d6c preserved;30images (24unchanged+3changed+3IO). GenuineJava message/cause
-constructors/getters; EIIE field replaces side table. No VM AE-message strings ornew
-message heap/quotas; unmodeledVMgetter results hard-fail exact profile, notfake null.
-24roots/20chains/32parent-independentgroups, oldprofiles unchanged, notaccepted yet.
+**MC-IOE0 accepted**; JAVA_EVM_MC_IOE0_{PLAN,REVIEW}.md. Separate IOException0Interpreter,
+runtime233286B SHA507ed54d...,source de0a45a5...,30images(24unchanged+3changed+3IO).
+GenuineJava message/causeconstructors/getters; EIIE field replaces side table. NoVM
+AE-messageStrings/newmessageheap/quotas; unmodeledVMgettershard-profile, notfake null.
+24Java8/EVMroots/20chains/32parentgroups+2supplementarygroups pass. Java21threehelpful-
+NPEmessage differences pinned assecondary, notretargeted. Fulllegacygates pass; all
+olderprofiles/core unchanged. VFS0a proposal next, no guestfilesystem/MCrun yet.
 LATEST user: keep work/progress in repository files; prefer one or two agents.
 Use at most TWO parallel workers now (runtime/harness); parent owns independent
 validation and final acceptance. No third verifier worker for IOE0.

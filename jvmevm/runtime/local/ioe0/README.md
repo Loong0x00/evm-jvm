@@ -37,11 +37,12 @@ npm run check
 ```
 
 The build pins solc `0.8.30+commit.73712a01.Emscripten.clang`, optimizer 200,
-via-IR, Cancun, and disabled metadata. Current worker candidate: source SHA-256
+via-IR, Cancun, and disabled metadata. Accepted artifact: source SHA-256
 `de0a45a5911f5e792aa69f776096a78afaf11e246b7b53d5cf67f9b7a1df7086`;
 runtime 233286 bytes, SHA-256
 `507ed54d56d4cbe5e559013fbf5a3e598d75a28c0ffe33735573f646eac659a0`.
 The oversized runtime is for explicit LOCAL code installation, not CREATE or
 standard-chain deployment evidence. This library slice is not VFS, file/stream
 support, logging, scheduling, a listener, Minecraft startup, or EULA execution.
-Parent integration and independent acceptance remain pending.
+Parent acceptance, independent gates and precise limitations are recorded in
+`JAVA_EVM_MC_IOE0_REVIEW.md`.
