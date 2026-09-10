@@ -123,6 +123,17 @@ jvmevm/artifactstore/zi0/runtime/testdata/replay.sh
 The runtime-local Go test independently supplies the production-policy zero-owner
 and correctly-CASed EOF refusals as a fast mandatory control.
 
+The exact 32 MiB generated high-offset test also passed on this final artifact in
+1.122s. EVM lookup returned packed name/local/data positions
+33,554,388/33,554,269/33,554,321 (all above bit 24); AS0's 4096 append calls totaled
+7,289,399,396 gas with maximum 1,830,926, discover used 69,092,450, scan 147,939,
+and final root was
+`aac611eaae0f38f73eda5923cf7bb34f27863d0427bcc79efbd3d23f504d608f`.
+The output is retained at `testdata/max32m-final-artifact.log`, SHA-256
+`ca89c80ad21f32202f6158ef07ce81edd03f055e863be14e971c8c5f824899b3`;
+the test source remains the Git-tracked parent max32m reproducer referenced by the
+frozen implementation preflight and uses `final_replay.go.txt` for final artifacts.
+
 These are generated-fixture measurements, not general upper bounds. Frozen limits remain
 32 MiB AS0, 8192-byte pages, 4096-byte reads, 32,768 ZIP entries, 4 MiB central
 directory, 256-byte names, 1024-byte extras/comments, 64 scan units, 100M/30s
