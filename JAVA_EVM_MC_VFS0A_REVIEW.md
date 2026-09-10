@@ -94,3 +94,14 @@ ThrowableProfileError(2,37-or-38,0),0.925s. See CANDIDATE_FINDINGS: integer hand
 incorrectly use a reference-only helper; stat status kinds also conflict; pending
 bind corridor/PC checks need correction. Path amendment remains mandatory. No q1/q7
 VFS chain or production filesystem result has passed yet. IOE0 remains last accepted.
+
+## Parent decoder preparation (not a passed VFS behavioral gate)
+
+Parent validation_test.go now has a bounded TEST-only VFA1 Java/VFS wire reader,
+frame/heap/inode/descriptor mutation offsets and independently computed VFS/machine
+roots for read-only malformed-state probes. It never issues or authorizes resume.
+The layout unit fixture is explicitly synthetic, has no valid guest program/heap,
+and is NEVER presented as EVM-issued state. It verifies the75-byte initial VFS section,
+root rehash layout, bounded counts, trailing bytes and every truncation (with outer
+length repaired to exercise inner bounds too). All parent preparation tests pass2.798s
+and package vet passes; the initial actual24-root EVM failures are still unresolved.
