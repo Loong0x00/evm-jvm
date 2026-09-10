@@ -1,3 +1,9 @@
+> CURRENT: parent-accepted bounded LOCAL VFS0a, final292968B runtime
+> SHA256717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86.
+> See JAVA_EVM_MC_VFS0A_REVIEW.md for final fixes/gates/limits. Older candidate and
+> overlay observations below are historical; they are not the final acceptance.
+> This is Java/EVM file work, NOT Minecraft startup or standard deployment.
+
 # LOCAL MC-VFS0a continuation transport
 
 Package `vfs0a` is the bounded opaque Go transport for the frozen

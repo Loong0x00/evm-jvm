@@ -76,6 +76,14 @@ helpful-NPE differences are recorded, not substituted for Java8. No file bridge/
 or complete Throwable API is claimed. Run `make java-mc-ioe0-test java-mc-ioe0-demo`;
 see `JAVA_EVM_MC_IOE0_REVIEW.md`.
 
+**MC-VFS0a accepted:** the separate292968-byte LOCAL runtime executes bounded Java
+File/stream Code against an EVM-owned byte filesystem, including real pause/resume
+between truncation and constructor handle storage.24roots/20chains, path regressions,
+quota/rollback/new-process tests and parent review pass on the final artifact.
+Explicit320KiB LOCAL code ceiling,1MiB checkpoint and64KiB file contents: not standard
+deployment, a world-capacity filesystem or Minecraft startup. See
+`JAVA_EVM_MC_VFS0A_REVIEW.md`; run `make java-mc-vfs0a-test java-mc-vfs0a-demo`.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:

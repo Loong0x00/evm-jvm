@@ -256,3 +256,16 @@ LATEST VFS0a revision: JAVA_EVM_MC_VFS0A_REVISION1.md. Parent independently meas
 this UNACCEPTED profile under artistic priority, rather than requiring module migration.
 Old caps/core/opcode accounting unchanged;100M/1B gas,1MiB blob,25M reserve unchanged.
 Path traversal/ENOTDIR correction mandatory before acceptance; no Minecraft Done.
+
+## Latest accepted LOCAL profile: VFS0a
+
+MC-VFS0a accepted after parent fixes in6eafabfe7 and final-artifact reruns; see
+JAVA_EVM_MC_VFS0A_REVIEW.md. Runtime292968B SHA717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86,
+sourceb95f0788f3a45b580216697866e32814e590670a55144186fc130391986497f3.38bootstrap
+images,30old unchanged/new8=6050B; genuine Java/EVM File/streams and atomic continued
+filesystem state.24controls/20chains,7path roots,boundaries and parent32-group
+coverage pass on finalartifact;365.259s/290459648BRSS. Exact1MiB293704621gas/+1 rejects.
+Initial256KiB failure and explicit320KiB VFS-only LOCAL revision retained. Legacy
+combinedwalltimeout plus separate successful remainder are recorded as TWO phases.
+No fullSE/standarddeployment/world capacity/MCstartup/EULA/listener/Done claim.
+One static next-entry frontier worker is preparing workload-dependent next steps.

@@ -1,3 +1,9 @@
+> CURRENT: parent-accepted bounded LOCAL VFS0a, final292968B runtime
+> SHA256717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86.
+> See JAVA_EVM_MC_VFS0A_REVIEW.md for final fixes/gates/limits. Older candidate and
+> overlay observations below are historical; they are not the final acceptance.
+> This is Java/EVM file work, NOT Minecraft startup or standard deployment.
+
 # MC-VFS0a trusted fixtures
 
 This directory pins the frozen VFS0a Java-8 corpus: exactly 24 static integer

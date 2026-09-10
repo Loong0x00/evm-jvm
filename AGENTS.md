@@ -1,5 +1,13 @@
 # Java-inside-EVM agent guide
 
+LATEST ACCEPTED: MC-VFS0a bounded LOCAL filesystem; see JAVA_EVM_MC_VFS0A_REVIEW.md.
+Runtime292968B SHA717683f8..., sourceb95f0788...,38images/6050B new8. Parent fixed
+VFS name/parent/readonly-descriptor validation; final suite365.259s/290459648B passes.
+Provider-blocked reviewer NOT counted; parent took over its checks. Explicit320KiB
+VFS-only LOCAL cap,1MiB checkpoint and100M/1B gas unchanged fromrevision1. No MC,
+EULA, listener or genuineDone. Next-entry frontier is static proposal only.
+
+
 LATEST endpoint: unchanged Minecraft Java server executing in EVM.
 LATEST priority/resource refinement: LOCAL artistic experiment first. User now
 permits relaxed local gas budgets and work split across transactions/blocks.

@@ -1,4 +1,108 @@
-# MC-VFS0a parent review — NOT ACCEPTED
+# MC-VFS0a parent acceptance
+
+Status: **ACCEPTED — bounded LOCAL Java/EVM filesystem profile** after parent fixes
+and final-artifact reruns at implementation `6eafabfe7`. This does NOT accept full
+Java SE, a world-capable filesystem, mainnet deployment or Minecraft startup.
+No Minecraft/EULA/listener/real Done has occurred.
+
+## Final artifact and reproducibility
+
+- Runtime **292968B**, SHA256 `717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86`.
+- Source SHA256 `b95f0788f3a45b580216697866e32814e590670a55144186fc130391986497f3`.
+- Combined SHA256 `849d7e1bdae3a403239b9f84b5d32d446040b31ad4508b3e55e27426ab4aca6a`.
+- ABI unchanged `16346751accb944db73a8a8b33bee6923c9ccabca1896af41f4926a2895e6520`.
+- Pinned solc0.8.30/optimizer200/viaIR/Cancun/metadataoff normal check passed
+ 177.783s/826277888B groupRSS; `/tmp/mc-vfs0a-parent-fixed-repro.{log,json}`.
+-38 bootstrap identities:30 IOE0 unchanged plus8 totaling6050B. Parent recompiled
+ all8; final FIS1515B/cdda6fb5... and FOS1618B/50aa63fa... carry real Java ENOTDIR
+ suffix Code. All six other new images remain unchanged. Exact pins in REVISION1.
+
+## What is accepted
+
+Real File/FIS/FOS and generic base stream Java Code invokes ten exact private native
+EVM primitives. EVM owns all path interpretation, inodes, descriptors, cursors, bytes,
+permissions, codec validation and head publication. No production host Java/filesystem
+executor, native Java message allocation, world fallback or fabricated outcome.
+
+File lexical strings remain separate from operation-specific traversal. Open/stat/
+mkdir do not erase invalid intermediate traversal; ENOTDIR messages are Java Code.
+mkdirs retains the observed Java8 canonical fallback. Inspect is explicitly a canonical
+read-only namespace view, not proof of Java File traversal or authority to resume.
+
+Real pending-open/truncate-before-handle-store checkpoints validate exact parsed FIS/
+FOS method/frame/stack/owner/putfield corridors. Resume never reopens/truncates. Partial
+or failed constructors retain legal default states; a bound failing subclass can keep
+an escaped usable stream. NEW File/InputStream/OutputStream families use the explicit
+canonical no-callback Object profile; Object Code still executes. Other IOE0 objects
+retain their constructor semantics. Base close/flush empty Code is exactly scoped to
+Java8 defaults; File* close changes descriptors. No GC/finalizer/implicit close.
+
+## Acceptance evidence and32-group accounting
+
+The following are coverage groups, not32 independent agent completions. One boundary
+reviewer delivered; the other provider-blocked review contributed NO passing evidence.
+Parent took over the missing groups, found/fixed six validation gaps, then independently
+ran ALL tests on the new292968B artifact (not either worker's earlier artifact).
+
+| groups | Final evidence |
+|---|---|
+|01|38image pins,8Java8 recompiles, final source/ABI/artifact rebuild; namespace/code hashes|
+|02|all8 reserved-image refusals, ordinary lookalike native refusal, virtual/special/static foreign private call refusals|
+|03|File Comparable/cast bridge; actual VFS generic OutputStream/AutoCloseable/default Code; InputStream Code controls|
+|04|path regressions and empty/control/non-ASCII/component64/65/depth16/17/path256/257 controls|
+|05|NEW-family Object restriction with successful plain Object/Throwable controls and three inherited fields|
+|06|failed File/FIS constructors retain typed null/zero fields; one/q1 equality, no filesystem effect|
+|07–09|both six-PC FIS/FOS corridors; wrong method/depth/owner/local0/ref kind/ID/handle/stack and extra operand view refusals|
+|10|149-slice native truncate/bind/write/close, independent machine/VFS/FILE roots and EVM views|
+|11|five Java open failures and quota failures with no committed filesystem effects|
+|12|initialized escaped stream survives later subclass constructor failure, one/q7 equality|
+|13–14|byte sign/low8/null/bounds/zero/closed; gaps/stale reads/current-EOF append|
+|15|repeated genuine FNFE/String identity, exact messages and cause getters, one/q7 equality|
+|16|genuine message-frame OOM under explicit1024-object quota,247 calls/10327 JVM steps; no descriptor/file effect|
+|17–21|raw seeds/order/RO/count/bytes;64/65inodes;32/33closed descriptors;64KiB perfile/all-files;4096/4097 transfers|
+|22|actual combined exact1MiB checkpoint and +1 atomic rejection, no padding/rehash-as-live|
+|23–24|parent fixes reject file-parent/noncanonical names/readonly writers; duplicate/cycle/bool and root/counter/framing controls|
+|25–28|owner/epoch/root/artifact/budgets, OOG/reserve/retry, quantum/internal1 equality, copied inspect/view-versus-live authority|
+|29–31|distinct stores/old blob refusals, bounded reads, durability failure outputs, native-write and pending-bind true new-process reopening|
+|32|final-artifact whole suite/repro, inherited profile preservation and recorded legacy phases|
+
+Final whole package: **PASS364.919s**, external365.259s, **290459648B** peak groupRSS,
+no FAIL/SKIP or watchdog limit hit. Log `/tmp/mc-vfs0a-parent-fixed-full-suite.log`,
+watchdog `/tmp/mc-vfs0a-parent-fixed-full-suite.json`. This includes the boundary
+reviewer tests with their artifact assertion deliberately repinned and rerun, not
+retroactively relabeling the reviewer's293010B measurements.
+
+Core corpus24 Java8/EVM controls +20 full q1/q7 chains passes; seven additional path
+roots and selected chains pass; Java21 agrees on this declared corpus. IOE0's earlier
+helpful-NPE differences are still separately documented, not erased by this profile.
+Final exact1MiB uses130950 primitive cells plus119 seed bytes, **293704621gas**;
++1 rejects LC0StateError(1,0). No unreachable quota combination is substituted.
+
+The initial combined legacy Make command hit its20min wall bound, not a runtime
+failure; preserved logs show passed IOE0/SC0/TL0/LC0/interpreter2231/smoke/fast/LB0/
+AOT/stockS0 before stockS1. A separate bounded remainder S1/S2a/S2b-L+vet passed
+124.462s/628736000B. These are TWO phases, not a claim the timed-out command passed.
+Protected accepted-profile/core paths have no diff from IOE0 acceptance.
+
+## Resource and scope honesty
+
+Initial256KiB VFS candidate failed its size gate; REVISION1 explicitly selected a
+VFS0a-only320KiB LOCAL installation policy under the user's artistic priority. Old
+caps/core/EVM semantics unchanged.100M/30s ordinary,1B/120s boundary,25M reserve,
+1MiB checkpoint,64KiB ALL file contents,64inodes,32descriptors including closed,
+16seeds,4096transfer;1..4096 units/call,4096 ordinary/65536 dedicated total units,
+VFS-only4096 slices/case;20min/4GiB external gate. This is tiny LOCAL capacity, not
+Minecraft-world capacity/performance evidence. Code is still oversized for CREATE.
+
+Run `make java-mc-vfs0a-test java-mc-vfs0a-demo`. The example is Java/EVM file work,
+NOT Minecraft readiness. Next dependency work is separate; static entry-frontier
+preparation does not authorize server/EULA execution.
+
+---
+Earlier NOT ACCEPTED labels, old hashes, failed commands and worker-only observations
+below are retained historical evidence. The current disposition is the summary above.
+
+# Historical parent review log — pre-acceptance records
 
 Frozen input/implementation contract: `cca4841`, JAVA_EVM_MC_VFS0A_PLAN.md.
 Last accepted profile remains IOE0 `8f29f8c`. No production VFS runtime/continuation,
