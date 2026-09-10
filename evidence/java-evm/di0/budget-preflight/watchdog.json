@@ -1,0 +1,14 @@
+{
+  "command": [
+    "timeout",
+    "--signal=KILL",
+    "1200",
+    "bash",
+    "-lc",
+    "ulimit -v 4194304; cd '/home/user/evm-jvm/mc-di0-budget-preflight/build/java-diff-mc-di0-budget-preflight'; ./replay DI0Inflate.json > gate3-execution-report.json; cd '/home/user/evm-jvm/mc-di0-budget-preflight'; '/home/user/evm-jvm/mc-di0-budget-preflight/build/java-diff-mc-di0-budget-preflight/trees' > '/home/user/evm-jvm/mc-di0-budget-preflight/build/java-diff-mc-di0-budget-preflight/gate3-trees-report.json'; cd '/home/user/evm-jvm/mc-di0-budget-preflight/build/java-diff-mc-di0-budget-preflight'; ./performance DI0Inflate.json > gate3-performance-report.json; /usr/lib/jvm/java-8-openjdk/bin/java -Xms16m -Xmx256m -XX:MaxMetaspaceSize=128m -Xss1m -cp java8 InflateOracle '/home/user/evm-jvm/mc-di0-budget-preflight/evidence/java-evm/di0/budget-preflight/trees/generated' > gate3-java8-report.json"
+  ],
+  "exit": 0,
+  "elapsed": 40.74675076297717,
+  "peakGroupRSS": 194138112,
+  "limit": null
+}

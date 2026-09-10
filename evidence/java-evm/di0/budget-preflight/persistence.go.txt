@@ -1,0 +1,402 @@
+package main
+
+import (
+	"bytes"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"runtime"
+	"syscall"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethdb"
+	"github.com/ethereum/go-ethereum/ethdb/leveldb"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0"
+	"github.com/ethereum/go-ethereum/triedb"
+)
+
+type durableDB interface {
+	ethdb.Database
+	SyncKeyValue() error
+}
+type diskManifest struct {
+	Format   uint32      `json:"format"`
+	Context  string      `json:"context"`
+	Root     common.Hash `json:"root"`
+	Sequence uint64      `json:"sequence"`
+}
+
+const diskContext = "di0-persistence-preflight:all-dev-chain:block1-time1:v1"
+
+func syncDirectory(path string) error {
+	f, e := os.Open(path)
+	if e != nil {
+		return e
+	}
+	defer f.Close()
+	return f.Sync()
+}
+func (e *env) publishDisk() error {
+	if err := e.durable.SyncKeyValue(); err != nil {
+		return fmt.Errorf("sync trie/code: %w", err)
+	}
+	e.sequence++
+	raw, _ := json.MarshalIndent(diskManifest{1, diskContext, e.root, e.sequence}, "", "  ")
+	raw = append(raw, '\n')
+	tmp := filepath.Join(e.directory, fmt.Sprintf("durable-head.tmp-%d", os.Getpid()))
+	f, err := os.OpenFile(tmp, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0600)
+	if err != nil {
+		return err
+	}
+	ok := false
+	defer func() {
+		if !ok {
+			_ = os.Remove(tmp)
+		}
+	}()
+	if _, err = f.Write(raw); err == nil {
+		err = f.Sync()
+	}
+	if x := f.Close(); err == nil {
+		err = x
+	}
+	if err != nil {
+		return err
+	}
+	if err = os.Rename(tmp, filepath.Join(e.directory, "durable-head.json")); err != nil {
+		return err
+	}
+	if err = syncDirectory(e.directory); err != nil {
+		return err
+	}
+	ok = true
+	return nil
+}
+func readDiskManifest(dir string) (diskManifest, error) {
+	var m diskManifest
+	raw, e := os.ReadFile(filepath.Join(dir, "durable-head.json"))
+	if e != nil {
+		return m, e
+	}
+	d := json.NewDecoder(bytes.NewReader(raw))
+	d.DisallowUnknownFields()
+	if e = d.Decode(&m); e != nil {
+		return m, e
+	}
+	if m.Format != 1 || m.Context != diskContext || m.Root == (common.Hash{}) || m.Sequence == 0 {
+		return m, errors.New("invalid disk manifest")
+	}
+	return m, nil
+}
+func newDiskEnv(dir string, fresh bool) (*env, error) {
+	if fresh {
+		if e := os.MkdirAll(filepath.Join(dir, "state"), 0700); e != nil {
+			return nil, e
+		}
+		if e := os.WriteFile(filepath.Join(dir, "STORE-FORMAT"), []byte("JVMEVM-MC-DI0-PREFLIGHT-1\n"), 0600); e != nil {
+			return nil, e
+		}
+		if e := syncDirectory(dir); e != nil {
+			return nil, e
+		}
+	}
+	kv, e := leveldb.New(filepath.Join(dir, "state"), 16, 16, "jvmevm/di0-preflight", false)
+	if e != nil {
+		return nil, e
+	}
+	raw := rawdb.NewDatabase(kv)
+	d, ok := raw.(durableDB)
+	if !ok {
+		raw.Close()
+		return nil, errors.New("database lacks SyncKeyValue")
+	}
+	td := triedb.NewDatabase(raw, triedb.HashDefaults)
+	root := types.EmptyRootHash
+	seq := uint64(0)
+	if !fresh {
+		m, x := readDiskManifest(dir)
+		if x != nil {
+			td.Close()
+			raw.Close()
+			return nil, x
+		}
+		root, seq = m.Root, m.Sequence
+	}
+	st, e := state.New(root, state.NewDatabase(td, nil))
+	if e != nil {
+		td.Close()
+		raw.Close()
+		return nil, e
+	}
+	return &env{db: td, st: st, root: root, durable: d, directory: dir, sequence: seq}, nil
+}
+
+type childReport struct {
+	Stage          string      `json:"stage"`
+	PID            int         `json:"pid"`
+	Before         common.Hash `json:"beforeRoot"`
+	After          common.Hash `json:"afterRoot"`
+	BeforeSequence uint64      `json:"beforeSequence"`
+	AfterSequence  uint64      `json:"afterSequence"`
+	Phase          uint32      `json:"phase"`
+	Work           uint32      `json:"work"`
+	Output         uint32      `json:"output"`
+	Pages          uint32      `json:"pages"`
+	Calls          int         `json:"calls"`
+	GasTotal       uint64      `json:"gasTotal"`
+	GasMax         uint64      `json:"gasMax"`
+	Verified       bool        `json:"verified"`
+	ElapsedMS      int64       `json:"elapsedMS"`
+	RSSKiB         int64       `json:"rssKiB"`
+}
+
+func childRun(artifactPath, dir, stage string, index, zroot, di common.Hash, name string) (childReport, error) {
+	start := time.Now()
+	var cr childReport
+	cr.Stage = stage
+	cr.PID = os.Getpid()
+	raw, e := os.ReadFile(artifactPath)
+	if e != nil {
+		return cr, e
+	}
+	var art artifact
+	if e = json.Unmarshal(raw, &art); e != nil {
+		return cr, e
+	}
+	da, e := abiFromArtifact(art)
+	if e != nil {
+		return cr, e
+	}
+	run := hexCode(art.Runtime)
+	de, e := newDiskEnv(dir, false)
+	if e != nil {
+		return cr, e
+	}
+	defer de.close()
+	m, e := readDiskManifest(dir)
+	if e != nil {
+		return cr, e
+	}
+	cr.Before = m.Root
+	cr.BeforeSequence = m.Sequence
+	ia, dd := common.BytesToAddress(index[12:]), common.BytesToAddress(di[12:])
+	zr := zroot
+	if de.st.GetCodeHash(ia) != common.HexToHash("0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77") || !bytes.Equal(de.st.GetCode(dd), run) {
+		return cr, errors.New("reopen code pin mismatch")
+	}
+	if getterHash(de, ia, mustZIABI(), "finalRoot") != zr {
+		return cr, errors.New("reopen ZI0 FINAL root mismatch")
+	}
+	fs := fixtures()
+	var f fixture
+	found := false
+	for _, q := range fs {
+		if q.name == name {
+			f = q
+			found = true
+			break
+		}
+	}
+	if !found {
+		return cr, errors.New("fixture missing")
+	}
+	addGas := func(g uint64) {
+		cr.Calls++
+		cr.GasTotal += g
+		if g > cr.GasMax {
+			cr.GasMax = g
+		}
+	}
+	switch stage {
+	case "verified":
+		if getterU32(de, dd, da, "phase") != 1 || getterU32(de, dd, da, "work") != 1 {
+			return cr, errors.New("not mid-decode")
+		}
+		for getterU32(de, dd, da, "phase") == 1 {
+			w := getterU32(de, dd, da, "work")
+			_, g, x := de.call(dd, pack(da, "step", w, uint16(128)))
+			addGas(g)
+			if x != nil {
+				return cr, x
+			}
+		}
+		cr.Verified = getterU32(de, dd, da, "phase") == 2 && getterHash(de, dd, da, "finalRoot") == common.Hash{}
+	case "mid-publish":
+		if getterU32(de, dd, da, "phase") != 2 || getterU32(de, dd, da, "publishedPages") != 0 {
+			return cr, errors.New("not verified")
+		}
+		_, g, x := de.call(dd, pack(da, "publish", uint8(0), getterHash(de, dd, da, "publicationRolling"), uint8(1)))
+		addGas(g)
+		if x != nil {
+			return cr, x
+		}
+		cr.Verified = getterU32(de, dd, da, "phase") == 3 && getterU32(de, dd, da, "publishedPages") == 1
+	case "final":
+		if getterU32(de, dd, da, "phase") != 3 || getterU32(de, dd, da, "publishedPages") != 1 {
+			return cr, errors.New("not mid-publication")
+		}
+		for getterU32(de, dd, da, "phase") == 3 {
+			p := uint8(getterU32(de, dd, da, "publishedPages"))
+			_, g, x := de.call(dd, pack(da, "publish", p, getterHash(de, dd, da, "publicationRolling"), uint8(1)))
+			addGas(g)
+			if x != nil {
+				return cr, x
+			}
+		}
+		cr.Verified = getterU32(de, dd, da, "phase") == 4 && getterHash(de, dd, da, "finalRoot") != (common.Hash{})
+	case "read":
+		if getterU32(de, dd, da, "phase") != 4 {
+			return cr, errors.New("not FINAL")
+		}
+		n := getterU32(de, dd, da, "outputCount")
+		var got []byte
+		for at := uint32(0); at < n; {
+			take := uint32(4096)
+			if n-at < take {
+				take = n - at
+			}
+			b, g, x := de.view(dd, pack(da, "read", at, take))
+			addGas(g)
+			if x != nil {
+				return cr, x
+			}
+			got = append(got, unpack(da, "read", b)[0].([]byte)...)
+			at += take
+		}
+		cr.Verified = bytes.Equal(got, f.plain) && crypto.Keccak256Hash(got) == crypto.Keccak256Hash(f.plain)
+	default:
+		return cr, errors.New("unknown child stage")
+	}
+	cr.Phase = getterU32(de, dd, da, "phase")
+	cr.Work = getterU32(de, dd, da, "work")
+	cr.Output = getterU32(de, dd, da, "outputCount")
+	cr.Pages = getterU32(de, dd, da, "publishedPages")
+	m, e = readDiskManifest(dir)
+	if e != nil {
+		return cr, e
+	}
+	cr.After = m.Root
+	cr.AfterSequence = m.Sequence
+	var u syscall.Rusage
+	_ = syscall.Getrusage(syscall.RUSAGE_SELF, &u)
+	cr.RSSKiB = u.Maxrss
+	cr.ElapsedMS = time.Since(start).Milliseconds()
+	return cr, nil
+}
+func abiFromArtifact(a artifact) (abi.ABI, error) { return abi.JSON(bytes.NewReader(a.ABI)) }
+func mustZIABI() abi.ABI {
+	a, e := zi0.ABI()
+	if e != nil {
+		panic(e)
+	}
+	return a
+}
+
+func diskChildMain() {
+	if len(os.Args) != 9 {
+		panic("disk child args")
+	}
+	idx := common.HexToHash(os.Args[5])
+	zr := common.HexToHash(os.Args[6])
+	di := common.HexToHash(os.Args[7])
+	cr, e := childRun(os.Args[2], os.Args[3], os.Args[4], idx, zr, di, os.Args[8])
+	if e != nil {
+		panic(e)
+	}
+	json.NewEncoder(os.Stdout).Encode(cr)
+}
+func dirBytes(path string) int64 {
+	var n int64
+	_ = filepath.Walk(path, func(_ string, i os.FileInfo, e error) error {
+		if e == nil && !i.IsDir() {
+			n += i.Size()
+		}
+		return nil
+	})
+	return n
+}
+func runPersistence(artifactPath string, art artifact, z zipBuilt) (map[string]interface{}, error) {
+	main, e := runPersistenceCase(artifactPath, art, z, "size-90309", "disk-store")
+	if e != nil {
+		return nil, e
+	}
+	dynamic, e := runPersistenceCase(artifactPath, art, z, "deflate-dynamic-go", "disk-store-dynamic-cache")
+	if e != nil {
+		return nil, e
+	}
+	main["dynamicCacheFreshProcesses"] = dynamic
+	return main, nil
+}
+func runPersistenceCase(artifactPath string, art artifact, z zipBuilt, fixtureName, directoryName string) (map[string]interface{}, error) {
+	abs, e := filepath.Abs(artifactPath)
+	if e != nil {
+		return nil, e
+	}
+	dir := filepath.Join(filepath.Dir(abs), directoryName)
+	if e = os.RemoveAll(dir); e != nil {
+		return nil, e
+	}
+	if e = os.MkdirAll(dir, 0700); e != nil {
+		return nil, e
+	}
+	de, e := newDiskEnv(dir, true)
+	if e != nil {
+		return nil, e
+	}
+	de, index, zroot, da, base, e := setupEnv(de, z, art)
+	if e != nil {
+		return nil, e
+	}
+	init, run := hexCode(art.Bytecode), hexCode(art.Runtime)
+	out, di, g, e := de.create(append(init, pack(da, "", index, zroot, []byte(fixtureName))...))
+	if e != nil || !bytes.Equal(out, run) {
+		return nil, fmt.Errorf("disk DI create: %w", e)
+	}
+	_, hg, e := de.call(di, pack(da, "step", uint32(0), uint16(1)))
+	if e != nil {
+		return nil, e
+	}
+	initial, _ := readDiskManifest(dir)
+	de.close()
+	exe, e := os.Executable()
+	if e != nil {
+		return nil, e
+	}
+	stages := []string{"verified", "mid-publish", "final", "read"}
+	reports := make([]childReport, 0, len(stages))
+	prev := initial.Root
+	for _, stage := range stages {
+		cmd := exec.Command(exe, "--disk-child", abs, dir, stage, common.BytesToHash(index.Bytes()).Hex(), zroot.Hex(), common.BytesToHash(di.Bytes()).Hex(), fixtureName)
+		cmd.Dir = filepath.Dir(abs)
+		var stdout, stderr bytes.Buffer
+		cmd.Stdout = &stdout
+		cmd.Stderr = &stderr
+		if e = cmd.Run(); e != nil {
+			return nil, fmt.Errorf("child %s: %w: %s", stage, e, stderr.String())
+		}
+		var cr childReport
+		if e = json.Unmarshal(stdout.Bytes(), &cr); e != nil {
+			return nil, e
+		}
+		if !cr.Verified || cr.Before != prev {
+			return nil, fmt.Errorf("child %s verification/root chain: verified=%v before=%s want=%s phase=%d work=%d output=%d pages=%d", stage, cr.Verified, cr.Before, prev, cr.Phase, cr.Work, cr.Output, cr.Pages)
+		}
+		prev = cr.After
+		reports = append(reports, cr)
+	}
+	final, e := readDiskManifest(dir)
+	if e != nil {
+		return nil, e
+	}
+	pubs := final.Sequence
+	return map[string]interface{}{"directory": "ignored build " + directoryName, "fixture": fixtureName, "initialRoot": initial.Root, "finalRoot": final.Root, "initialSequence": initial.Sequence, "successfulDurablePublications": pubs, "everyMutationCommitReload": true, "everyMutationTrieCodeSyncManifestFileRenameDirFsync": true, "AS0ZI0Gas": base, "DI0CreateGas": g, "midDecodeHeaderGas": hg, "freshProcessStages": reports, "distinctChildPIDs": reports[0].PID != reports[1].PID && reports[1].PID != reports[2].PID && reports[2].PID != reports[3].PID, "diskBytes": dirBytes(dir), "goRuntime": runtime.Version()}, nil
+}
