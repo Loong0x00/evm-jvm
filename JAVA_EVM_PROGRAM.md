@@ -124,8 +124,10 @@ routine permission to start the next verified increment.
 - Parent owns stage contracts, disjoint write sets, integration and independent
   checks. Workers implement on separate Git branches/worktrees, return commits
   plus evidence, and never spawn more workers themselves.
-- At most 3 concurrent Sol/high workers initially. Only one writes the monolithic
-  Solidity runtime until a reviewed modular architecture allows real independence.
+- Latest user preference: persist work/progress in repository files and prefer one
+  or two parallel agents. Use at most TWO concurrent Sol/high workers now; parent
+  performs independent integration/verification. Only one writes production Solidity
+  until a reviewed modular architecture allows real independence.
 - Parallelize oracle fixtures and verification tooling against a frozen interface.
   Do not create fake parallelism with conflicting runtime edits.
 - Merge fixtures/tooling and runtime in dependency order, test the combined
@@ -174,6 +176,7 @@ routine permission to start the next verified increment.
 | Local MC-LC0 | EVM-owned single-stack checkpoints/start/resume/CAS/durable restart | ACCEPTED; actual15/36/10 q1/q7/internal1 chains, new-process reopen and1MiBboundary; JAVA_EVM_MC_LC0_REVIEW.md |
 | Local MC-TL0 | fresh Throwable identity/constructor/catch/cause continuation | ACCEPTED;24roots/20chains/32independentprobes/parentgates; JAVA_EVM_MC_TL0_REVIEW.md |
 | Local MC-SC0 | char-array/copy String constructors and nonliteral intern | ACCEPTED;24roots/21chains/32independentgroups/parentgates; JAVA_EVM_MC_SC0_REVIEW.md |
+| Local MC-IOE0 | fresh I/O exception messages and bounded cause getters | FROZEN JAVA_EVM_MC_IOE0_PLAN.md; two workers plus parent verification; no implementation accepted |
 | Local platform later | VFS/minimal scheduler/main/JAR and further libraries | VFS proposal prepared; no MC execution |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | local MC dependency priority; selected1.12.2 static inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
