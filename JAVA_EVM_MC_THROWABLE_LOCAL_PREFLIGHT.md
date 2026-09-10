@@ -2,7 +2,10 @@
 
 Status: **documentation and ignored prototype evidence only; no implementation
 freeze or acceptance claim**. Prepared at `8a6566271bb8885cb99ceef51520507777438f9c`
-after accepted MC-LC0. Authority remains `JAVA_EVM_PROGRAM.md`. The target remains
+after accepted MC-LC0. Parent replay is recorded in `JAVA_EVM_MC_TL0_PLAN.md`.
+That frozen successor overrides this proposal's invalid blanket bans on active
+constructor receivers/UNINIT aliases and its suggested host MUTF8 processing.
+Authority remains `JAVA_EVM_PROGRAM.md`. The target remains
 unchanged official vanilla Minecraft 1.12.2, Java 8, and eventually the genuine
 guest `Done (...)` marker—not full Java SE.
 

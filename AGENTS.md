@@ -59,7 +59,14 @@ recovery. Two additional review workers were provider-blocked, NOT counted as pa
 original independent verifier + parent checks passed. Old LB0/stock remain unchanged.
 100Mordinary/1Bboundary,1MiBcheckpoint,4rawclasses/64KiB. VFS proposal remains unfrozen;
 next library/platform work must preserve these accepted profiles and use one Solidity writer.
-M5d-b0 retained; still no full-profile deployment, libraries or MC startup claim.
+**MC-TL0 frozen** in JAVA_EVM_MC_TL0_PLAN.md: separate Throwable0Interpreter + tl0
+Go package, unchanged27bootstraps, fresh ordinary Throwable identity, kind0 dynamic
+outcome and EIIE cause records.24roots/20q1q7chains/32coreprobes; legal post-super
+constructor self-throws and escaped REF aliases must survive. Never use a blanket
+active-constructor/UNINIT-alias rejection.100M/1Bcalls unchanged; new TL0 quota tests
+alone may use65536dispatchunits/case. One writer runtime/local/tl0, separate harness
+and verifier write sets in plan. No TL0 implementation accepted yet. String/VFS
+remain proposals; no full-profile deployment, further libraries or MC startup claim.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
