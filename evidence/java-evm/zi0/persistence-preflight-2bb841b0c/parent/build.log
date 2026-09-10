@@ -1,0 +1,28 @@
+Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+--> ZI0Persistent.sol
+
+
+Warning: This declaration shadows an existing declaration.
+  --> ZI0Persistent.sol:70:108:
+   |
+70 |  ... _u16(t,p+8);uint16 nt=_u16(t,p+10);uint32 cs=_u32(t,p+12);uint32 co=_u32(t,p+16 ...
+   |                                         ^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> ZI0Persistent.sol:73:101:
+   |
+73 |         if(found!=1)revert ZI0Error(6);uint32 eo=uint32(uint(size-tail)+ep);uint32 co=_u32(t,ep+16);uint32 cs=_u32(t,ep+12);uint32 ct=_u16(t,ep+10);
+   |                                                                                                     ^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+  --> ZI0Persistent.sol:70:131:
+   |
+70 |  ... u16(t,p+10);uint32 cs=_u32(t,p+12);uint32 co=_u32(t,p+16);
+   |                                         ^^^^^^^^^
+Note: The shadowed declaration is here:
+  --> ZI0Persistent.sol:73:77:
+   |
+73 |         if(found!=1)revert ZI0Error(6);uint32 eo=uint32(uint(size-tail)+ep);uint32 co=_u32(t,ep+16);uint32 cs=_u32(t,ep+12);uint32 ct=_u16(t,ep+10);
+   |                                                                             ^^^^^^^^^
+
+
