@@ -1,0 +1,950 @@
+// Disposable MC-DI0 preflight driver. Copy to ignored build as replay.go.
+// Host code only creates trusted generated ZIP fixtures, computes labelled oracles,
+// ABI-transports calls, and reports results. DI0 receives no offsets/codes/plaintext.
+package main
+
+import (
+	"bytes"
+	"compress/flate"
+	"crypto/sha256"
+	"encoding/binary"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"hash/crc32"
+	"io"
+	"math/big"
+	"os"
+	"runtime"
+	"sort"
+	"syscall"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/core/vm"
+	evmrun "github.com/ethereum/go-ethereum/core/vm/runtime"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/triedb"
+)
+
+const gas = uint64(100_000_000)
+
+var owner = common.HexToAddress("0xd100000000000000000000000000000000000001")
+
+type artifact struct {
+	ABI      json.RawMessage `json:"abi"`
+	Bytecode string          `json:"bytecode"`
+	Runtime  string          `json:"runtime"`
+}
+type fixture struct {
+	name        string
+	plain, comp []byte
+	method      uint16
+	crc         *uint32
+	declared    *uint32
+	wantErr     uint64
+	q           uint16
+}
+type zipBuilt struct {
+	raw   []byte
+	names []string
+}
+type env struct {
+	db      *triedb.Database
+	st      *state.StateDB
+	root    common.Hash
+	commits int
+}
+type gasReport struct {
+	AS0Create, AppendTotal, AppendMax, Seal, ZI0Create, Discover, Scan, Finish, DI0Create, StepTotal, StepMax, Read uint64
+	Appends, Steps                                                                                                  int
+}
+type result struct {
+	Name, Kind, Outcome, PlainSHA, OutputSHA, FinalRoot, OutputRolling, StateRoot, Binding string
+	Plain, Compressed                                                                      uint32
+	DataStart, Work, InputByte, OutputCount                                                uint32
+	InputBit, Phase                                                                        uint8
+	Pending                                                                                uint16
+	BlockFinal                                                                             bool
+	Calls                                                                                  int
+	Error                                                                                  uint64
+	Gas                                                                                    gasReport
+}
+type report struct {
+	Revision, Solc, Oracle, SourceSHA, ArtifactSHA, RuntimeSHA, RuntimeKeccak, FixtureZIPSHA, ZI0RuntimeKeccak, AS0RuntimeKeccak string
+	InitBytes, RuntimeBytes, ZIPBytes                                                                                            int
+	Results                                                                                                                      []result
+	QEquality, OOG                                                                                                               map[string]interface{}
+	ElapsedMS                                                                                                                    int64
+	RSSKiB                                                                                                                       int64
+}
+
+func cfg(st *state.StateDB, limit uint64) *evmrun.Config {
+	z := common.Hash{}
+	return &evmrun.Config{ChainConfig: params.AllDevChainProtocolChanges, Difficulty: new(big.Int), Origin: owner, Coinbase: common.Address{}, BlockNumber: big.NewInt(1), Time: 1, GasLimit: limit, GasPrice: new(big.Int), Value: new(big.Int), BaseFee: new(big.Int).SetUint64(params.InitialBaseFee), BlobBaseFee: new(big.Int).SetUint64(params.BlobTxMinBlobGasprice), Random: &z, State: st, GetHashFn: func(uint64) common.Hash { return common.Hash{} }, EVMConfig: vm.Config{}}
+}
+func newEnv() (*env, error) {
+	d := rawdb.NewMemoryDatabase()
+	t := triedb.NewDatabase(d, triedb.HashDefaults)
+	s, e := state.New(types.EmptyRootHash, state.NewDatabase(t, nil))
+	return &env{db: t, st: s, root: types.EmptyRootHash}, e
+}
+func (e *env) commit() error {
+	r, x := e.st.Commit(1, true, true)
+	if x != nil {
+		return x
+	}
+	if x = e.db.Commit(r, false); x != nil {
+		return x
+	}
+	s, x := state.New(r, state.NewDatabase(e.db, nil))
+	if x != nil {
+		return x
+	}
+	e.st = s
+	e.root = r
+	e.commits++
+	return nil
+}
+func (e *env) create(init []byte) ([]byte, common.Address, uint64, error) {
+	snap := e.st.Snapshot()
+	out, a, left, x := evmrun.Create(init, cfg(e.st, gas))
+	used := gas - left
+	if x != nil {
+		e.st.RevertToSnapshot(snap)
+		return out, a, used, x
+	}
+	x = e.commit()
+	return out, a, used, x
+}
+func (e *env) callLimit(to common.Address, input []byte, limit uint64) ([]byte, uint64, error) {
+	snap := e.st.Snapshot()
+	out, left, x := evmrun.Call(to, input, cfg(e.st, limit))
+	used := limit - left
+	if x != nil {
+		e.st.RevertToSnapshot(snap)
+		return out, used, x
+	}
+	x = e.commit()
+	return out, used, x
+}
+func (e *env) call(to common.Address, input []byte) ([]byte, uint64, error) {
+	return e.callLimit(to, input, gas)
+}
+func (e *env) view(to common.Address, input []byte) ([]byte, uint64, error) {
+	s := e.st.Copy()
+	out, left, x := evmrun.Call(to, input, cfg(s, gas))
+	return out, gas - left, x
+}
+func pack(a abi.ABI, name string, args ...interface{}) []byte {
+	b, e := a.Pack(name, args...)
+	if e != nil {
+		panic(e)
+	}
+	return b
+}
+func unpack(a abi.ABI, name string, b []byte) []interface{} {
+	v, e := a.Unpack(name, b)
+	if e != nil {
+		panic(e)
+	}
+	return v
+}
+func hexCode(s string) []byte {
+	b, e := hex.DecodeString(s)
+	if e != nil {
+		panic(e)
+	}
+	return b
+}
+func hash(b []byte) string { h := sha256.Sum256(b); return hex.EncodeToString(h[:]) }
+
+// Bit writer emits RFC1951 data bits least-significant-bit first and Huffman
+// code bits in canonical most-significant-bit order (RFC1951 section 3.1.1).
+type bitWriter struct {
+	b []byte
+	n uint8
+}
+
+func (w *bitWriter) bit(v uint) {
+	if w.n == 0 {
+		w.b = append(w.b, 0)
+	}
+	if v&1 != 0 {
+		w.b[len(w.b)-1] |= 1 << w.n
+	}
+	w.n++
+	if w.n == 8 {
+		w.n = 0
+	}
+}
+func (w *bitWriter) bits(v uint, n uint8) {
+	for i := uint8(0); i < n; i++ {
+		w.bit(v >> i)
+	}
+}
+func (w *bitWriter) code(v uint, n uint8) {
+	for i := int(n) - 1; i >= 0; i-- {
+		w.bit(v >> i)
+	}
+}
+func canonical(lens []uint8) map[int][2]uint {
+	count := [16]uint{}
+	for _, l := range lens {
+		if l > 0 {
+			count[l]++
+		}
+	}
+	next := [16]uint{}
+	var c uint
+	for i := 1; i < 16; i++ {
+		c = (c + count[i-1]) << 1
+		next[i] = c
+	}
+	m := map[int][2]uint{}
+	for s, l := range lens {
+		if l > 0 {
+			m[s] = [2]uint{next[l], uint(l)}
+			next[l]++
+		}
+	}
+	return m
+}
+func fixedStream(n int) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(1, 2)
+	ll := make([]uint8, 288)
+	for i := 0; i < 144; i++ {
+		ll[i] = 8
+	}
+	for i := 144; i < 256; i++ {
+		ll[i] = 9
+	}
+	for i := 256; i < 280; i++ {
+		ll[i] = 7
+	}
+	for i := 280; i < 288; i++ {
+		ll[i] = 8
+	}
+	lm := canonical(ll)
+	dm := canonical(bytes.Repeat([]byte{5}, 32))
+	emit := func(s int) { x := lm[s]; w.code(x[0], uint8(x[1])) }
+	left := n
+	if left > 0 {
+		emit(65)
+		left--
+	}
+	for left > 0 {
+		if left < 3 {
+			emit(65)
+			left--
+			continue
+		}
+		take := left
+		if take > 258 {
+			take = 258
+		}
+		s, eb, ev := lengthCode(take)
+		emit(s)
+		w.bits(uint(ev), eb)
+		d := dm[0]
+		w.code(d[0], uint8(d[1]))
+		left -= take
+	}
+	emit(256)
+	return w.b
+}
+func lengthCode(n int) (int, uint8, int) {
+	bases := []int{3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258}
+	extras := []uint8{0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0}
+	for i, b := range bases {
+		max := b
+		if extras[i] > 0 {
+			max = b + (1 << extras[i]) - 1
+		}
+		if n <= max {
+			return 257 + i, extras[i], n - b
+		}
+	}
+	panic("length")
+}
+func rawStored(p []byte) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(0, 2)
+	for w.n != 0 {
+		w.bit(0)
+	}
+	n := uint16(len(p))
+	w.b = append(w.b, byte(n), byte(n>>8), byte(^n), byte(^n>>8))
+	w.b = append(w.b, p...)
+	return w.b
+}
+func multiBlock() []byte {
+	w := bitWriter{}
+	w.bits(0, 1)
+	w.bits(0, 2)
+	for w.n != 0 {
+		w.bit(0)
+	}
+	w.b = append(w.b, 2, 0, 0xfd, 0xff, 'A', 'B')
+	w.bits(1, 1)
+	w.bits(1, 2)
+	ll := make([]uint8, 288)
+	for i := 0; i < 144; i++ {
+		ll[i] = 8
+	}
+	for i := 144; i < 256; i++ {
+		ll[i] = 9
+	}
+	for i := 256; i < 280; i++ {
+		ll[i] = 7
+	}
+	for i := 280; i < 288; i++ {
+		ll[i] = 8
+	}
+	m := canonical(ll)
+	for _, s := range []int{67, 256} {
+		x := m[s]
+		w.code(x[0], uint8(x[1]))
+	}
+	return w.b
+}
+func goDeflate(p []byte, level int) []byte {
+	var b bytes.Buffer
+	w, _ := flate.NewWriter(&b, level)
+	_, _ = w.Write(p)
+	_ = w.Close()
+	return b.Bytes()
+}
+func dynamicNoDistance() []byte { // valid literal-only stream with RFC1951's zero distance codes
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(2, 2)
+	w.bits(0, 5)
+	w.bits(0, 5)
+	w.bits(14, 4)
+	order := []int{16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1}
+	cl := make([]uint8, 19)
+	cl[18] = 1
+	cl[0] = 2
+	cl[1] = 2
+	for _, s := range order {
+		w.bits(uint(cl[s]), 3)
+	}
+	cm := canonical(cl)
+	put := func(s int) { x := cm[s]; w.code(x[0], uint8(x[1])) }
+	put(18)
+	w.bits(54, 7)
+	put(1)
+	put(18)
+	w.bits(127, 7)
+	put(18)
+	w.bits(41, 7)
+	put(1)
+	put(0)
+	ll := make([]uint8, 257)
+	ll[65] = 1
+	ll[256] = 1
+	m := canonical(ll)
+	x := m[65]
+	w.code(x[0], uint8(x[1]))
+	x = m[256]
+	w.code(x[0], uint8(x[1]))
+	return w.b
+}
+func dynamicRepeats() []byte { // valid empty stream; CL stream executes repeat symbols 18,17,16
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(2, 2)
+	w.bits(0, 5)
+	w.bits(0, 5)
+	w.bits(14, 4) // 257 LL,1 DIST,18 CL lengths
+	order := []int{16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1}
+	cl := make([]uint8, 19)
+	cl[16] = 2
+	cl[17] = 2
+	cl[18] = 2
+	cl[2] = 3
+	cl[1] = 3
+	for _, s := range order {
+		w.bits(uint(cl[s]), 3)
+	}
+	cm := canonical(cl)
+	put := func(s int) { x := cm[s]; w.code(x[0], uint8(x[1])) }
+	put(18)
+	w.bits(127, 7) // 138 zeros
+	put(18)
+	w.bits(84, 7) // 95 zeros
+	put(17)
+	w.bits(7, 3) // 10 zeros => 243; need 253 total: correction below uses another 17
+	put(17)
+	w.bits(7, 3) // total 253 zeros
+	put(2)
+	put(16)
+	w.bits(0, 2) // four LL symbols 253..256 of length2
+	put(1)       // one distance symbol length1
+	ll := make([]uint8, 257)
+	for i := 253; i <= 256; i++ {
+		ll[i] = 2
+	}
+	m := canonical(ll)
+	x := m[256]
+	w.code(x[0], uint8(x[1]))
+	return w.b
+}
+func badCL(over bool) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(2, 2)
+	w.bits(0, 5)
+	w.bits(0, 5)
+	w.bits(0, 4)
+	if over {
+		w.bits(1, 3)
+		w.bits(1, 3)
+		w.bits(1, 3)
+		w.bits(0, 3)
+	} else {
+		w.bits(2, 3)
+		w.bits(0, 3)
+		w.bits(0, 3)
+		w.bits(0, 3)
+	}
+	return w.b
+}
+func badRepeat16() []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(2, 2)
+	w.bits(0, 5)
+	w.bits(0, 5)
+	w.bits(0, 4)
+	w.bits(1, 3)
+	w.bits(0, 3)
+	w.bits(0, 3)
+	w.bits(1, 3)
+	w.bit(1)
+	return w.b
+}
+func fixedSpecial(sym int, dist *int) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(1, 2)
+	ll := make([]uint8, 288)
+	for i := 0; i < 144; i++ {
+		ll[i] = 8
+	}
+	for i := 144; i < 256; i++ {
+		ll[i] = 9
+	}
+	for i := 256; i < 280; i++ {
+		ll[i] = 7
+	}
+	for i := 280; i < 288; i++ {
+		ll[i] = 8
+	}
+	lm := canonical(ll)
+	x := lm[sym]
+	w.code(x[0], uint8(x[1]))
+	if dist != nil {
+		dm := canonical(bytes.Repeat([]byte{5}, 32))
+		d := dm[*dist]
+		w.code(d[0], uint8(d[1]))
+	}
+	return w.b
+}
+func maxDistanceStream() []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(1, 2)
+	ll := make([]uint8, 288)
+	for i := 0; i < 144; i++ {
+		ll[i] = 8
+	}
+	for i := 144; i < 256; i++ {
+		ll[i] = 9
+	}
+	for i := 256; i < 280; i++ {
+		ll[i] = 7
+	}
+	for i := 280; i < 288; i++ {
+		ll[i] = 8
+	}
+	lm := canonical(ll)
+	dm := canonical(bytes.Repeat([]byte{5}, 32))
+	put := func(s int) { x := lm[s]; w.code(x[0], uint8(x[1])) }
+	for i := 0; i < 32768; i++ {
+		put(66)
+	}
+	put(257)
+	d := dm[29]
+	w.code(d[0], uint8(d[1]))
+	w.bits(8191, 13)
+	put(256)
+	return w.b
+}
+
+func fixtures() []fixture {
+	stored := make([]byte, 9000)
+	for i := range stored {
+		stored[i] = byte((i*131 + 17) % 251)
+	}
+	dyn := bytes.Repeat([]byte("dynamic-huffman-evidence-0123456789/"), 400)
+	dyn = dyn[:11864]
+	dc := goDeflate(dyn, flate.BestCompression)
+	if (dc[0]>>1)&3 != 2 {
+		panic(fmt.Sprintf("Go fixture did not select dynamic block: %02x", dc[0]))
+	}
+	badcrc := uint32(1)
+	short := uint32(2)
+	long := uint32(8)
+	tooBig := uint32(65537)
+	empty := []byte{}
+	trailing := append(append([]byte{}, fixedStream(3)...), 0)
+	padding := append([]byte{}, fixedStream(1)...)
+	padding[len(padding)-1] |= 0x80
+	d0 := 0
+	d30 := 30
+	return []fixture{
+		{"method0", bytes.Repeat([]byte{0x5a}, 904), nil, 0, nil, nil, 0, 16},
+		{"deflate-stored-cross", stored, rawStored(stored), 8, nil, nil, 0, 64},
+		{"deflate-fixed-overlap", bytes.Repeat([]byte{'A'}, 33457), fixedStream(33457), 8, nil, nil, 0, 64},
+		{"deflate-dynamic-go", dyn, dc, 8, nil, nil, 0, 64},
+		{"deflate-dynamic-repeats-empty", empty, dynamicRepeats(), 8, nil, nil, 0, 1},
+		{"deflate-dynamic-no-distance", []byte{'A'}, dynamicNoDistance(), 8, nil, nil, 0, 1},
+		{"deflate-multiblock", []byte("ABC"), multiBlock(), 8, nil, nil, 0, 4},
+		{"distance-32768", bytes.Repeat([]byte{'B'}, 32771), maxDistanceStream(), 8, nil, nil, 0, 128},
+		{"bad-crc", []byte("crc"), fixedStream(3), 8, &badcrc, nil, 25, 8},
+		{"bad-length-short", []byte("length"), fixedStream(6), 8, nil, &short, 26, 8},
+		{"bad-length-long", []byte("length"), fixedStream(6), 8, nil, &long, 24, 8},
+		{"reserved-block", empty, []byte{7}, 8, nil, nil, 13, 1},
+		{"reserved-symbol-286", empty, fixedSpecial(286, nil), 8, nil, nil, 15, 1},
+		{"distance-before-output", bytes.Repeat([]byte{'x'}, 3), fixedSpecial(257, &d0), 8, nil, nil, 17, 2},
+		{"reserved-distance-30", bytes.Repeat([]byte{'x'}, 3), fixedSpecial(257, &d30), 8, nil, nil, 16, 2},
+		{"trailing-byte", []byte("AAA"), trailing, 8, nil, nil, 23, 8},
+		{"nonzero-padding", []byte("A"), padding, 8, nil, nil, 23, 8},
+		{"dynamic-over-tree", empty, badCL(true), 8, nil, nil, 20, 1},
+		{"dynamic-under-tree", empty, badCL(false), 8, nil, nil, 21, 1},
+		{"dynamic-repeat16-first", empty, badRepeat16(), 8, nil, nil, 18, 1},
+		{"output-cap", empty, []byte{3, 0}, 8, nil, &tooBig, 5, 1},
+	}
+}
+
+func buildZIP(fs []fixture, prefix int) zipBuilt {
+	var out bytes.Buffer
+	out.Write(bytes.Repeat([]byte{0x42}, prefix))
+	type cen struct{ b []byte }
+	cs := []cen{}
+	names := []string{}
+	for _, f := range fs {
+		name := []byte(f.name)
+		local := uint32(out.Len())
+		plain := uint32(len(f.plain))
+		if f.declared != nil {
+			plain = *f.declared
+		}
+		crc := crc32.ChecksumIEEE(f.plain)
+		if f.crc != nil {
+			crc = *f.crc
+		}
+		comp := f.comp
+		if f.method == 0 {
+			comp = f.plain
+		}
+		h := make([]byte, 30)
+		binary.LittleEndian.PutUint32(h, 0x04034b50)
+		binary.LittleEndian.PutUint16(h[4:], 20)
+		binary.LittleEndian.PutUint16(h[6:], 0x800)
+		binary.LittleEndian.PutUint16(h[8:], f.method)
+		binary.LittleEndian.PutUint32(h[14:], crc)
+		binary.LittleEndian.PutUint32(h[18:], uint32(len(comp)))
+		binary.LittleEndian.PutUint32(h[22:], plain)
+		binary.LittleEndian.PutUint16(h[26:], uint16(len(name)))
+		out.Write(h)
+		out.Write(name)
+		out.Write(comp)
+		c := make([]byte, 46)
+		binary.LittleEndian.PutUint32(c, 0x02014b50)
+		binary.LittleEndian.PutUint16(c[4:], 20)
+		binary.LittleEndian.PutUint16(c[6:], 20)
+		binary.LittleEndian.PutUint16(c[8:], 0x800)
+		binary.LittleEndian.PutUint16(c[10:], f.method)
+		binary.LittleEndian.PutUint32(c[16:], crc)
+		binary.LittleEndian.PutUint32(c[20:], uint32(len(comp)))
+		binary.LittleEndian.PutUint32(c[24:], plain)
+		binary.LittleEndian.PutUint16(c[28:], uint16(len(name)))
+		binary.LittleEndian.PutUint32(c[42:], local)
+		c = append(c, name...)
+		cs = append(cs, cen{c})
+		names = append(names, f.name)
+	}
+	cd := uint32(out.Len())
+	for _, c := range cs {
+		out.Write(c.b)
+	}
+	cdsz := uint32(out.Len()) - cd
+	e := make([]byte, 22)
+	binary.LittleEndian.PutUint32(e, 0x06054b50)
+	binary.LittleEndian.PutUint16(e[8:], uint16(len(fs)))
+	binary.LittleEndian.PutUint16(e[10:], uint16(len(fs)))
+	binary.LittleEndian.PutUint32(e[12:], cdsz)
+	binary.LittleEndian.PutUint32(e[16:], cd)
+	out.Write(e)
+	return zipBuilt{out.Bytes(), names}
+}
+func abiEncode(types_ []string, vals ...interface{}) []byte {
+	args := abi.Arguments{}
+	for _, s := range types_ {
+		t, e := abi.NewType(s, "", nil)
+		if e != nil {
+			panic(e)
+		}
+		args = append(args, abi.Argument{Type: t})
+	}
+	b, e := args.Pack(vals...)
+	if e != nil {
+		panic(e)
+	}
+	return b
+}
+func pagePi(controller common.Address, index uint32, raw []byte) common.Hash {
+	return crypto.Keccak256Hash(abiEncode([]string{"bytes32", "address", "uint32", "uint32", "bytes32"}, crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), controller, index, uint32(len(raw)), crypto.Keccak256Hash(raw)))
+}
+
+func setup(z zipBuilt, art artifact) (*env, common.Address, common.Hash, abi.ABI, gasReport, error) {
+	var gr gasReport
+	e, x := newEnv()
+	if x != nil {
+		return nil, common.Address{}, common.Hash{}, abi.ABI{}, gr, x
+	}
+	aa, _ := as0.ABI()
+	ai, _ := as0.InitCode()
+	ar, _ := as0.Runtime()
+	args := pack(aa, "", uint32(len(z.raw)))
+	out, store, g, x := e.create(append(ai, args...))
+	gr.AS0Create = g
+	if x != nil || !bytes.Equal(out, ar) {
+		return nil, store, common.Hash{}, abi.ABI{}, gr, fmt.Errorf("AS0 create: %w", x)
+	}
+	for at, idx := 0, uint32(0); at < len(z.raw); idx++ {
+		n := 8192
+		if len(z.raw)-at < n {
+			n = len(z.raw) - at
+		}
+		raw := z.raw[at : at+n]
+		pi := pagePi(store, idx, raw)
+		_, g, x = e.call(store, pack(aa, "append", uint32(at), raw, pi))
+		gr.AppendTotal += g
+		gr.Appends++
+		if g > gr.AppendMax {
+			gr.AppendMax = g
+		}
+		if x != nil {
+			return nil, store, common.Hash{}, abi.ABI{}, gr, fmt.Errorf("append: %w", x)
+		}
+		at += n
+	}
+	b, _, x := e.view(store, pack(aa, "chainCommitment"))
+	if x != nil {
+		return nil, store, common.Hash{}, abi.ABI{}, gr, x
+	}
+	chain := unpack(aa, "chainCommitment", b)[0].([32]byte)
+	_, gr.Seal, x = e.call(store, pack(aa, "seal", uint32(len(z.raw)), chain))
+	if x != nil {
+		return nil, store, common.Hash{}, abi.ABI{}, gr, x
+	}
+	b, _, _ = e.view(store, pack(aa, "contentCommitment"))
+	content := unpack(aa, "contentCommitment", b)[0].([32]byte)
+	za, _ := zi0.ABI()
+	zi, _ := zi0.InitCode()
+	zr, _ := zi0.Runtime()
+	zargs := pack(za, "", store, content)
+	out, index, g, x := e.create(append(zi, zargs...))
+	gr.ZI0Create = g
+	if x != nil || !bytes.Equal(out, zr) {
+		return nil, index, common.Hash{}, abi.ABI{}, gr, fmt.Errorf("ZI create: %w", x)
+	}
+	_, gr.Discover, x = e.call(index, pack(za, "discover"))
+	if x != nil {
+		return nil, index, common.Hash{}, abi.ABI{}, gr, x
+	}
+	for {
+		b, _, _ := e.view(index, pack(za, "nextEntry"))
+		next := unpack(za, "nextEntry", b)[0].(uint32)
+		b, _, _ = e.view(index, pack(za, "count"))
+		count := unpack(za, "count", b)[0].(uint32)
+		if next == count {
+			break
+		}
+		b, _, _ = e.view(index, pack(za, "cdCursor"))
+		cur := unpack(za, "cdCursor", b)[0].(uint32)
+		b, _, _ = e.view(index, pack(za, "rolling"))
+		roll := unpack(za, "rolling", b)[0].([32]byte)
+		_, g, x = e.call(index, pack(za, "scan", next, cur, roll, uint16(64)))
+		gr.Scan += g
+		if x != nil {
+			return nil, index, common.Hash{}, abi.ABI{}, gr, x
+		}
+	}
+	b, _, _ = e.view(index, pack(za, "count"))
+	count := unpack(za, "count", b)[0].(uint32)
+	b, _, _ = e.view(index, pack(za, "cdCursor"))
+	cur := unpack(za, "cdCursor", b)[0].(uint32)
+	b, _, _ = e.view(index, pack(za, "rolling"))
+	roll := unpack(za, "rolling", b)[0].([32]byte)
+	_, gr.Finish, x = e.call(index, pack(za, "finish", count, cur, roll))
+	if x != nil {
+		return nil, index, common.Hash{}, abi.ABI{}, gr, x
+	}
+	b, _, _ = e.view(index, pack(za, "finalRoot"))
+	root := unpack(za, "finalRoot", b)[0].([32]byte)
+	da, x := abi.JSON(bytes.NewReader(art.ABI))
+	return e, index, root, da, gr, x
+}
+func getterU32(e *env, a common.Address, ab abi.ABI, n string) uint32 {
+	b, _, x := e.view(a, pack(ab, n))
+	if x != nil {
+		panic(x)
+	}
+	v := unpack(ab, n, b)[0]
+	switch z := v.(type) {
+	case uint32:
+		return z
+	case uint16:
+		return uint32(z)
+	case uint8:
+		return uint32(z)
+	}
+	panic(n)
+}
+func getterHash(e *env, a common.Address, ab abi.ABI, n string) common.Hash {
+	b, _, x := e.view(a, pack(ab, n))
+	if x != nil {
+		panic(x)
+	}
+	return unpack(ab, n, b)[0].([32]byte)
+}
+func stateFields(e *env, a common.Address, ab abi.ABI, r *result) {
+	r.DataStart = getterU32(e, a, ab, "dataStart")
+	r.Work = getterU32(e, a, ab, "work")
+	r.InputByte = getterU32(e, a, ab, "inputByte")
+	r.OutputCount = getterU32(e, a, ab, "outputCount")
+	r.InputBit = uint8(getterU32(e, a, ab, "inputBit"))
+	r.Phase = uint8(getterU32(e, a, ab, "phase"))
+	r.Pending = uint16(getterU32(e, a, ab, "pendingLength"))
+	r.Binding = getterHash(e, a, ab, "binding").Hex()
+	b, _, _ := e.view(a, pack(ab, "blockFinal"))
+	r.BlockFinal = unpack(ab, "blockFinal", b)[0].(bool)
+}
+func errCode(out []byte) uint64 {
+	if len(out) != 36 {
+		return 0
+	}
+	return new(big.Int).SetBytes(out[4:]).Uint64()
+}
+func runOne(e *env, index common.Address, root common.Hash, da abi.ABI, init []byte, run []byte, f fixture, base gasReport) result {
+	r := result{Name: f.name, Plain: uint32(len(f.plain)), Compressed: uint32(len(f.comp)), PlainSHA: hash(f.plain), Gas: base}
+	if f.method == 0 {
+		r.Compressed = r.Plain
+	}
+	args := pack(da, "", index, root, []byte(f.name))
+	out, di, g, x := e.create(append(init, args...))
+	r.Gas.DI0Create = g
+	if x != nil {
+		r.Error = errCode(out)
+		if r.Error == f.wantErr {
+			r.Outcome = "expected-constructor-rejection"
+		} else {
+			r.Outcome = fmt.Sprintf("unexpected-create:%v", x)
+		}
+		return r
+	}
+	if !bytes.Equal(out, run) {
+		r.Outcome = "runtime-mismatch"
+		return r
+	}
+	r.Kind = "EVM AS0+ZI0 lookup/range + EVM decode/CRC"
+	for getterU32(e, di, da, "phase") == 1 {
+		w := getterU32(e, di, da, "work")
+		out, g, x = e.call(di, pack(da, "step", w, f.q))
+		r.Gas.StepTotal += g
+		r.Gas.Steps++
+		if g > r.Gas.StepMax {
+			r.Gas.StepMax = g
+		}
+		if x != nil {
+			r.Error = errCode(out)
+			if r.Error == f.wantErr {
+				r.Outcome = "expected-EVM-rejection"
+			} else {
+				r.Outcome = fmt.Sprintf("unexpected-step-%d:%v", r.Error, x)
+			}
+			break
+		}
+		if r.Gas.Steps > 100000 {
+			r.Outcome = "step-limit"
+			break
+		}
+	}
+	r.Calls = r.Gas.Steps
+	stateFields(e, di, da, &r)
+	r.StateRoot = e.root.Hex()
+	if r.Outcome != "" {
+		return r
+	}
+	n := getterU32(e, di, da, "outputCount")
+	var got []byte
+	for at := uint32(0); at < n; {
+		take := uint32(4096)
+		if n-at < take {
+			take = n - at
+		}
+		b, g, x := e.view(di, pack(da, "read", at, take))
+		r.Gas.Read += g
+		if x != nil {
+			r.Outcome = x.Error()
+			return r
+		}
+		got = append(got, unpack(da, "read", b)[0].([]byte)...)
+		at += take
+	}
+	r.OutputSHA = hash(got)
+	r.OutputRolling = getterHash(e, di, da, "outputRolling").Hex()
+	r.FinalRoot = getterHash(e, di, da, "finalRoot").Hex()
+	if bytes.Equal(got, f.plain) && crc32.ChecksumIEEE(got) == crc32.ChecksumIEEE(f.plain) {
+		r.Outcome = "verified-EVM-output"
+	} else {
+		r.Outcome = "oracle-mismatch"
+	}
+	return r
+}
+
+func main() {
+	start := time.Now()
+	if len(os.Args) != 2 {
+		panic("usage: replay artifact.json")
+	}
+	raw, e := os.ReadFile(os.Args[1])
+	if e != nil {
+		panic(e)
+	}
+	var art artifact
+	if e = json.Unmarshal(raw, &art); e != nil {
+		panic(e)
+	}
+	init, run := hexCode(art.Bytecode), hexCode(art.Runtime)
+	fs := fixtures()
+	for _, f := range fs {
+		if f.wantErr == 0 && f.method == 8 {
+			rd := flate.NewReader(bytes.NewReader(f.comp))
+			p, x := io.ReadAll(rd)
+			_ = rd.Close()
+			if x != nil || !bytes.Equal(p, f.plain) {
+				panic("trusted Go raw-DEFLATE fixture oracle failed: " + f.name)
+			}
+		}
+	}
+	z := buildZIP(fs, 8150)
+	ev, index, root, da, base, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	defer ev.db.Close()
+	results := []result{}
+	for _, f := range fs {
+		results = append(results, runOne(ev, index, root, da, init, run, f, base))
+	}
+	// Direct OOG is diagnostic gas only: no trace or partial bytes are consumed.
+	oenv, oi, oroot, oda, _, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	oargs := pack(oda, "", oi, oroot, []byte(fs[2].name))
+	out, odi, _, e := oenv.create(append(init, oargs...))
+	if e != nil || !bytes.Equal(out, run) {
+		panic("OOG setup")
+	}
+	before := oenv.root
+	out, used, fail := oenv.callLimit(odi, pack(oda, "step", uint32(0), uint16(128)), 5_000)
+	rolled := fail != nil && len(out) == 0 && oenv.root == before && getterU32(oenv, odi, oda, "work") == 0 && getterU32(oenv, odi, oda, "outputCount") == 0
+	_, retryGas, retryErr := oenv.call(odi, pack(oda, "step", uint32(0), uint16(1)))
+	retry := retryErr == nil && getterU32(oenv, odi, oda, "work") == 1
+	oenv.db.Close()
+	oog := map[string]interface{}{"gasLimit": 5000, "gasUsed": used, "error": fmt.Sprint(fail), "rolledBack": rolled, "retryGas": retryGas, "retrySucceeded": retry}
+	// Replay an identical complete accepted AS0+ZI0 state twice. The DI contract has
+	// the same CREATE address and binding; only step quantum differs.
+	target := fs[2]
+	a1, i1, rt1, d1, b1, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	target.q = 1
+	q1 := runOne(a1, i1, rt1, d1, init, run, target, b1)
+	a1.db.Close()
+	a2, i2, rt2, d2, b2, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	target.q = 128
+	q128 := runOne(a2, i2, rt2, d2, init, run, target, b2)
+	a2.db.Close()
+	eq := q1.Outcome == "verified-EVM-output" && q128.Outcome == q1.Outcome && q1.OutputSHA == q128.OutputSHA && q1.OutputRolling == q128.OutputRolling && q1.FinalRoot == q128.FinalRoot && q1.StateRoot == q128.StateRoot && q1.Work == q128.Work
+	dynamic := fs[3]
+	a3, i3, rt3, d3, b3, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	dynamic.q = 1
+	dq1 := runOne(a3, i3, rt3, d3, init, run, dynamic, b3)
+	a3.db.Close()
+	a4, i4, rt4, d4, b4, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	dynamic.q = 128
+	dq128 := runOne(a4, i4, rt4, d4, init, run, dynamic, b4)
+	a4.db.Close()
+	deq := dq1.Outcome == "verified-EVM-output" && dq128.Outcome == dq1.Outcome && dq1.OutputSHA == dq128.OutputSHA && dq1.OutputRolling == dq128.OutputRolling && dq1.FinalRoot == dq128.FinalRoot && dq1.StateRoot == dq128.StateRoot && dq1.Work == dq128.Work
+	ziRun, _ := zi0.Runtime()
+	asRun, _ := as0.Runtime()
+	var usage syscall.Rusage
+	_ = syscall.Getrusage(syscall.RUSAGE_SELF, &usage)
+	rep := report{Revision: "cfa093d94", Solc: "0.8.30+commit.73712a01.Emscripten.clang optimizer=200 viaIR Cancun metadata-off", Oracle: runtime.Version() + " standard compress/flate + hash/crc32; generated-fixture test oracle only", SourceSHA: hash([]byte(mustRead("DI0Inflate.sol"))), ArtifactSHA: hash(raw), RuntimeSHA: hash(run), RuntimeKeccak: crypto.Keccak256Hash(run).Hex(), FixtureZIPSHA: hash(z.raw), ZI0RuntimeKeccak: crypto.Keccak256Hash(ziRun).Hex(), AS0RuntimeKeccak: crypto.Keccak256Hash(asRun).Hex(), InitBytes: len(init), RuntimeBytes: len(run), ZIPBytes: len(z.raw), Results: results, OOG: oog, QEquality: map[string]interface{}{"equal": eq && deq, "fixed_overlap_q1": q1, "fixed_overlap_q128": q128, "dynamic_q1": dq1, "dynamic_q128": dq128}, ElapsedMS: time.Since(start).Milliseconds(), RSSKiB: usage.Maxrss}
+	enc := json.NewEncoder(os.Stdout)
+	enc.SetIndent("", "  ")
+	if e = enc.Encode(rep); e != nil {
+		panic(e)
+	}
+	if !eq || !deq {
+		panic("quantum equality failed")
+	}
+	if !rolled || !retry {
+		panic("OOG rollback failed")
+	}
+	for _, r := range results {
+		if !(r.Outcome == "verified-EVM-output" || r.Outcome == "expected-EVM-rejection" || r.Outcome == "expected-constructor-rejection") {
+			panic(r.Name + ":" + r.Outcome)
+		}
+	}
+}
+func mustRead(p string) string {
+	b, e := os.ReadFile(p)
+	if e != nil {
+		panic(e)
+	}
+	return string(b)
+}
+
+var _ = errors.New
+var _ = io.EOF
+var _ = sort.Strings
