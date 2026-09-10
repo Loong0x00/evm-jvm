@@ -1,0 +1,11 @@
+$ npm ci --ignore-scripts --no-audit --no-fund
+$ node compile.js
+solc=0.8.30+commit.73712a01.Emscripten.clang
+init_bytes=15094
+runtime_bytes=12885
+$ compare artifact
+3344a2ab8132397e6cd2d1fcbcda3aa230fb215adc3232f5b63b9d8c6dcef4a9  build/java-diff-mc-di0-persistence-preflight-repro/DI0Inflate.json
+$ gofmt check
+$ go vet
+$ go build -trimpath
+PASS
