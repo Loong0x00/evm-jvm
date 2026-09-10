@@ -2,7 +2,9 @@
 set -eu
 
 runtime_dir=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
-work=${1:-$(mktemp -d "${TMPDIR:-/tmp}/zi0-final-replay.XXXXXX")}
+# Callers choose a disposable workspace and archive stdout/report under the
+# repository's evidence/java-evm/ tree. Never put the sole evidence in /tmp.
+work=${1:?usage: replay.sh EXPLICIT_WORKSPACE (archive results under evidence/java-evm/)}
 mkdir -p "$work"
 cp "$runtime_dir/ZI0ZipIndex.sol" "$work/ZI0Persistent.sol"
 cp "$runtime_dir/testdata/final_replay.go.txt" "$work/main.go"

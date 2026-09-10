@@ -1,5 +1,11 @@
 # Java-inside-EVM agent guide
 
+CURRENT INTEGRATION: ZI0 runtime+Go delivered, NOT accepted. Parent reproduced
+fresh-disk Open missing real AS0 CREATE and extra-event ABI acceptance. See
+JAVA_EVM_MC_ZI0_CANDIDATE_FINDINGS.md. ONE Sol/high Go-repair/test worker now owns
+zi0/** except runtime/** and parent_test.go; parent independent tests/runtime
+review. Stub-only compile is not a behavioral gate. All old quotas/core unchanged.
+
 CURRENT FROZEN IMPLEMENTATION: JAVA_EVM_MC_ZI0_PLAN.md after parent gates in
 JAVA_EVM_MC_ZI0_IMPLEMENTATION_PREFLIGHT.md. ZI0 is NOT accepted. Two disjoint
 runtime/harness writers authorized; one Solidity writer, no prior-profile/core

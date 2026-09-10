@@ -1,0 +1,17 @@
+=== RUN   TestZI0ParentFreshOrdinaryCreate
+=== RUN   TestZI0ParentFreshOrdinaryCreate/memory
+=== RUN   TestZI0ParentFreshOrdinaryCreate/disk
+    parent_test.go:75: fresh session did not actually CREATE AS0: {Performed:false Controller:0x0000000000000000000000000000000000000000 GasUsed:0 RuntimeCodeHash:0x0000000000000000000000000000000000000000000000000000000000000000 StateRoot:0x0000000000000000000000000000000000000000000000000000000000000000}
+--- FAIL: TestZI0ParentFreshOrdinaryCreate (0.00s)
+    --- PASS: TestZI0ParentFreshOrdinaryCreate/memory (0.00s)
+    --- FAIL: TestZI0ParentFreshOrdinaryCreate/disk (0.00s)
+=== RUN   TestZI0ParentRealArtifactPipeline
+=== RUN   TestZI0ParentRealArtifactPipeline/memory
+=== RUN   TestZI0ParentRealArtifactPipeline/disk
+    parent_test.go:120: zi0: AS0 append emitted unexpected success logs
+--- FAIL: TestZI0ParentRealArtifactPipeline (0.00s)
+    --- PASS: TestZI0ParentRealArtifactPipeline/memory (0.00s)
+    --- FAIL: TestZI0ParentRealArtifactPipeline/disk (0.00s)
+FAIL
+FAIL	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0	0.008s
+FAIL
