@@ -1,5 +1,10 @@
 # MC next-entry frontier — static note only
 
+Parent status update: VFS0a was subsequently accepted at `72aa13f15`. The worker
+status below describes its earlier base revision. This frontier remains STATIC only;
+no Minecraft execution or new class-loading implementation is claimed.
+
+
 Status: **small static planning note; no implementation freeze or acceptance**.
 VFS0a remains **NOT accepted** while the parent finishes final acceptance of the
 state-corrected 292968-byte candidate. IOE0 remains the last accepted profile.
