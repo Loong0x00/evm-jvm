@@ -124,8 +124,9 @@ Use at most TWO parallel workers now (runtime/harness); parent owns independent
 validation and final acceptance. No third verifier worker for IOE0.
 Latest user permits Luna/Terra for pure coding tasks, superseding Sol-only for
 that role. Local model registry lists openai-codex/gpt-5.6-luna and
-openai-codex/gpt-5.6-terra; inference availability is not yet tested. Use explicit
-per-task model selection, not global settings changes; Sol/high remains the default
+openai-codex/gpt-5.6-terra. Luna successfully completed d385a9197 pure-Go probes;
+Terra inference is not yet tested. Use explicit per-task model selection, not global
+settings changes; Sol/high remains the default
 for semantics/architecture-sensitive work. Parent independently verifies every
 model's delivery. Keep at most TWO workers and one production Solidity writer.
 All workers MUST NOT request Fast/priority. Do not pass --fast or re-enable the

@@ -1,28 +1,39 @@
 # ZI0 persistent-parent probes
 
 Measurement only: **not frozen, accepted, or Minecraft readiness evidence**. This
-worker copied the committed `2bb841b0c` Go driver and changed only its workspace
-to `build/java-diff-mc-zi0-parent-probes`; the Solidity and artifact are untouched.
+worker copied the committed `2bb841b0c` Go driver, changed its workspace to
+`build/java-diff-mc-zi0-parent-probes`, and added Go probes; Solidity and artifact
+are untouched. Parent strengthened several checks afterward; see
+`JAVA_EVM_MC_ZI0_IMPLEMENTATION_PREFLIGHT.md` and the `parent/` captures.
 No official JAR, host index/extraction, class loading, MC execution, EULA, listener,
 or production installer was used.
 
 ## Reproduction and pins
 
+Use a disposable workspace and a NEW evidence run directory; never overwrite the
+historical logs below. The original worker reproduction is:
+
 ```sh
+mkdir -p build/java-diff-mc-zi0-parent-probes
+cp evidence/java-evm/zi0/persistence-preflight-2bb841b0c/worker/{ZI0Persistent.sol,prototype.json} \
+  build/java-diff-mc-zi0-parent-probes/
 cp evidence/java-evm/zi0/persistence-parent-probes/main.go.txt \
   build/java-diff-mc-zi0-parent-probes/main.go
 gofmt -w build/java-diff-mc-zi0-parent-probes/main.go
 go build -o build/java-diff-mc-zi0-parent-probes/probe \
   build/java-diff-mc-zi0-parent-probes/main.go
-python3 evidence/java-evm/watchdog.py \
-  evidence/java-evm/zi0/persistence-parent-probes/replay-final-2.log \
-  evidence/java-evm/zi0/persistence-parent-probes/watchdog-final-2.json \
+# Set RUN to a fresh evidence directory and create it without -p (refuse reuse).
+RUN=evidence/java-evm/zi0/persistence-parent-probes/reproduction-new
+mkdir "$RUN"
+python3 evidence/java-evm/watchdog.py "$RUN/replay.log" "$RUN/watchdog.json" \
   build/java-diff-mc-zi0-parent-probes/probe
 ```
 
 The run exited 0 in 18.506 s under the unchanged 20-minute/4 GiB watchdog;
 peak process-group RSS was 292,483,072 bytes. It retained the copied 54-control
-suite and added seven ordinary runs plus 12 independent probes. Durable hashes:
+suite, measured seven runs in total, and added12 independent probes. The quoted
+final worker measurements correspond to watchdog-final-5.json (also copied as
+watchdog-final.json), not watchdog-final-2.json. Durable hashes:
 
 | item | SHA-256 |
 |---|---|
