@@ -1,16 +1,13 @@
 # Java-inside-EVM agent guide
 
-CURRENT INTEGRATION: ZI0 runtime+Go delivered, NOT accepted. Parent reproduced
-fresh-disk Open missing real AS0 CREATE and extra-event ABI acceptance. See
-JAVA_EVM_MC_ZI0_CANDIDATE_FINDINGS.md. ONE Sol/high Go-repair/test worker now owns
-zi0/** except runtime/** and parent_test.go; parent independent tests/runtime
-review. Stub-only compile is not a behavioral gate. All old quotas/core unchanged.
-
-CURRENT FROZEN IMPLEMENTATION: JAVA_EVM_MC_ZI0_PLAN.md after parent gates in
-JAVA_EVM_MC_ZI0_IMPLEMENTATION_PREFLIGHT.md. ZI0 is NOT accepted. Two disjoint
-runtime/harness writers authorized; one Solidity writer, no prior-profile/core
-changes. Earlier ZI0 preflight-only instructions below are historical. AS0 and
-VFS remain latest accepted components; no inflate/ClassLoader/MC/Done claim.
+LATEST ACCEPTED COMPONENT: ZI0 bounded EVM ZIP directory/index. See
+JAVA_EVM_MC_ZI0_REVIEW.md and frozen PLAN. Runtime9177B/completeinit9937B unchanged;
+Go repair27cb00967 integrated and parent corrected verified binding cache/ordinary
+100M tests/true20554-entry new-process continuation. Final20.546s/519057408B,
+823 per-call publications and high32MiB offsets pass. NO inflate/plainCRC/
+ClassLoader/MC/EULA/listener/Done. VFS0a72aa13f15 remains latest JVM/filesystem;
+AS064ea6b62f remains accepted byte-store dependency. No workers currently active.
+Earlier candidate/preflight status in historical notes is superseded by the review.
 
 LATEST USER: important information must NOT live only in /tmp. Keep plans and
 constraints in repository docs; archive key acceptance/failure/reproduction evidence
@@ -19,7 +16,7 @@ are for disposable, reproducible intermediates only. Preserve essential state or
 reproducer before cleanup. Existing /tmp mentions below are historical provenance;
 use durable evidence links in the current reviews. Never overwrite historical runs.
 
-LATEST ACCEPTED COMPONENT: AS0 immutable EVM artifact-byte store; see
+ACCEPTED DEPENDENCY: AS0 immutable EVM artifact-byte store; see
 JAVA_EVM_MC_AS0_REVIEW.md.2831B runtime/3166B init;32MiB4096pages in memory and
 per-call durable disk, full EVM readback and new-process continuation pass. Parent
 fixed Go ABI/fallback/event checks,nested-state links,canonical cursor checks; no

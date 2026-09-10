@@ -1,3 +1,8 @@
+> CURRENT: parent-accepted bounded ZI0 EVM ZIP metadata/index component.
+> See JAVA_EVM_MC_ZI0_REVIEW.md for final repairs, parent gates and proof limits.
+> Historical worker/prototype figures below are not the complete acceptance proof.
+> No inflation, plaintext CRC, Java ClassLoader or Minecraft startup is claimed.
+
 # MC-ZI0 ZIP index EVM runtime
 
 > Status: frozen-plan production runtime **candidate**, not accepted ZI0. Parent

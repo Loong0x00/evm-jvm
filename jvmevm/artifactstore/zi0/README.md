@@ -1,3 +1,8 @@
+> CURRENT: parent-accepted bounded ZI0 EVM ZIP metadata/index component.
+> See JAVA_EVM_MC_ZI0_REVIEW.md for final repairs, parent gates and proof limits.
+> Historical worker/prototype figures below are not the complete acceptance proof.
+> No inflation, plaintext CRC, Java ClassLoader or Minecraft startup is claimed.
+
 # MC-ZI0 opaque transport
 
 This package is the Go transport for the frozen `ZI0ZipIndex` EVM artifact. It

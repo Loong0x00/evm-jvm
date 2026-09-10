@@ -1,6 +1,6 @@
 # MC-ZI0 production plan — implementation freeze
 
-Status: **FROZEN FOR IMPLEMENTATION / NOT ACCEPTED** after independent parent
+Status: **ACCEPTED IMPLEMENTATION**; see JAVA_EVM_MC_ZI0_REVIEW.md. Original freeze followed independent parent
 preflights. See JAVA_EVM_MC_ZI0_IMPLEMENTATION_PREFLIGHT.md. Parent reproduced
 2bb841b0c in18.423s/269950976B sampled groupRSS (identical54 controls), exact32MiB
 high-offset ZIP, and strengthened Luna probes in18.730s/277540864B (54 retained+

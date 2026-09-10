@@ -687,3 +687,8 @@ corrected with stricter lifecycle/operand checks.
 S2a is still one frame, without calls, heap, Throwable objects/handlers or libraries.
 Next frame-storage and call-metadata prototypes must establish safe gas/dirty
 budgets. This is not a Minecraft startup or full-interpreter deployment claim.
+
+**MC-ZI0 accepted component:** EVM ZIP directory/index lookup over sealed AS0
+bytes, with per-call durable publication and new-process resume. This is compressed
+range/metadata access, not inflation, Java class loading or Minecraft startup.
+See `JAVA_EVM_MC_ZI0_REVIEW.md`; run `make java-mc-zi0-test java-mc-zi0-demo`.

@@ -394,3 +394,17 @@ JAVA_EVM_MC_ZI0_CANDIDATE_FINDINGS.md governs ONE Sol/high followup Go repair+re
 suite worker atmc-zi0-transport-repair. Parent independently reviews runtime/tests.
 Make targets exist but candidate test/demo intentionally fail until corrected;
 no ZI0 acceptance, no inflated/resource/class/MC outcome is claimed.
+
+### ZI0 accepted bounded ZIP directory/index component
+
+See JAVA_EVM_MC_ZI0_REVIEW.md. Final parent ordinary-budget suite20.546s/519057408B
+sampledRSS, realfull20554 new-processresume,percallSync/publicationfailure retry,
+32768/exact4MiBCD and32MiBhighoffsets,realruntime9177B. Repair27cb00967->095a3d407
+fixedlive fresh-diskCREATE failure/ABI/head guards; parent removedhiddenpublish
+EVMgetter using ONLYconstructor-verified/reopen-validatedimmutablebinding cache.
+No Solidity/acceptedAS0VFS/core changes. AS0regression4.111s/288174080B passes.
+RuntimeSHA74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3;
+codeKeccak0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77.
+ZIPmetadata/COMPRESSEDrangesonly; noinflate/plainCRC/ClassLoader/MC/EULA/listener/
+Done or officialwholeJAREVMSHA256. NextEVMDEFLATE/output-bounds/CRC preflight is
+separate. FirstfutureMCreadiness remainsunchanged1.12.2superflat, notdefaultterrain.
