@@ -1,0 +1,181 @@
+{
+  "storage": [
+    {
+      "astId": 60,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "owner",
+      "offset": 0,
+      "slot": "0",
+      "type": "t_address"
+    },
+    {
+      "astId": 62,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "store",
+      "offset": 0,
+      "slot": "1",
+      "type": "t_address"
+    },
+    {
+      "astId": 64,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "content",
+      "offset": 0,
+      "slot": "2",
+      "type": "t_bytes32"
+    },
+    {
+      "astId": 66,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "length",
+      "offset": 0,
+      "slot": "3",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 68,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "phase",
+      "offset": 4,
+      "slot": "3",
+      "type": "t_uint8"
+    },
+    {
+      "astId": 70,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "eocd",
+      "offset": 5,
+      "slot": "3",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 72,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "cdOffset",
+      "offset": 9,
+      "slot": "3",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 74,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "cdSize",
+      "offset": 13,
+      "slot": "3",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 76,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "count",
+      "offset": 17,
+      "slot": "3",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 78,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "nextEntry",
+      "offset": 21,
+      "slot": "3",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 80,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "cdCursor",
+      "offset": 25,
+      "slot": "3",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 82,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "prevLocal",
+      "offset": 0,
+      "slot": "4",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 84,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "prevEnd",
+      "offset": 4,
+      "slot": "4",
+      "type": "t_uint32"
+    },
+    {
+      "astId": 86,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "rolling",
+      "offset": 0,
+      "slot": "5",
+      "type": "t_bytes32"
+    },
+    {
+      "astId": 88,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "finalRoot",
+      "offset": 0,
+      "slot": "6",
+      "type": "t_bytes32"
+    },
+    {
+      "astId": 92,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "records",
+      "offset": 0,
+      "slot": "7",
+      "type": "t_mapping(t_uint32,t_uint256)"
+    },
+    {
+      "astId": 96,
+      "contract": "ZI0Persistent.sol:ZI0Persistent",
+      "label": "nameIndex",
+      "offset": 0,
+      "slot": "8",
+      "type": "t_mapping(t_bytes32,t_uint32)"
+    }
+  ],
+  "types": {
+    "t_address": {
+      "encoding": "inplace",
+      "label": "address",
+      "numberOfBytes": "20"
+    },
+    "t_bytes32": {
+      "encoding": "inplace",
+      "label": "bytes32",
+      "numberOfBytes": "32"
+    },
+    "t_mapping(t_bytes32,t_uint32)": {
+      "encoding": "mapping",
+      "key": "t_bytes32",
+      "label": "mapping(bytes32 => uint32)",
+      "numberOfBytes": "32",
+      "value": "t_uint32"
+    },
+    "t_mapping(t_uint32,t_uint256)": {
+      "encoding": "mapping",
+      "key": "t_uint32",
+      "label": "mapping(uint32 => uint256)",
+      "numberOfBytes": "32",
+      "value": "t_uint256"
+    },
+    "t_uint256": {
+      "encoding": "inplace",
+      "label": "uint256",
+      "numberOfBytes": "32"
+    },
+    "t_uint32": {
+      "encoding": "inplace",
+      "label": "uint32",
+      "numberOfBytes": "4"
+    },
+    "t_uint8": {
+      "encoding": "inplace",
+      "label": "uint8",
+      "numberOfBytes": "1"
+    }
+  }
+}
