@@ -186,3 +186,10 @@ Stop/escalate genuine blockers, budget/safety constraints or platform-boundary
 decisions—not merely because a small stage ended. Do not claim a full JVM or
 arbitrary Java support from subset counts. Preserve finite timeouts/gas and
 separate EVM/unsupported/harness failures from structured Java outcomes.
+
+VFS0a IMPLEMENTATION FROZEN: JAVA_EVM_MC_VFS0A_PLAN.md supersedes candidate conflicts.
+Parent froze eight new bootstrap inputs (5976B), retaining File Comparable and actual
+Java8 generic/default stream Code; constructor optionB no-callback NEW family guard.
+Two runtime/harness workers only; runtime<=256KiB remains a measured acceptance gate.
+VFS0a-only test allowance4096 slices/case supports full q1 wrapper-copy chains; old
+profiles keep256. IOE0 remains last accepted. No production VFS acceptance or MC run.

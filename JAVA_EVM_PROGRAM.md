@@ -239,3 +239,14 @@ S2b NOT frozen. Old16-childwrites~3.8M and192coldwords>4.2M cannot be guaranteed
 800kreserve; measure/refactor, never modify stocklimits. Reuse old268caseoracle
 withoutclaiming S2a alreadyexecutescalls/frames. M5d-b0 remainsqueued. No MCstartup/
 EULA execution. One productionSoliditywriter, continuousauthority/no routineconfirmation.
+
+## Current VFS0a implementation handoff
+
+IOE0 accepted `8f29f8c`; VFS0a is frozen for implementation, not accepted. See
+`JAVA_EVM_MC_VFS0A_PLAN.md`. Parent independently replayed kernel output hash, corrected
+File Comparable/inherited stream method semantics, froze5976B of eight new images,
+and selected explicit no-callback allocation profile. Exactly two disjoint runtime/
+harness workers; parent independently verifies32 groups. Retain256KiB runtime cap,
+1MiB checkpoint,100M/1B calls and20min/4GiB gate; explicitly allow4096 slices only in
+new VFS0a tests for genuine q1 Java path/message-copy chains. All accepted budgets,
+artifacts and upstream EVM remain unchanged. No Minecraft/EULA/listener/Done yet.
