@@ -444,3 +444,19 @@ generatedfixtures/reports tracked evidence/java-evm/di0/parent-db1bea2b1/.
 NextSol/high persistenceprototype +Terra/high pureGo/Java tree-oracle worker in
 separateownedpaths; noSoliditypeerwrites/Fast/priority/settings/spawn/push. NoDI0
 acceptance, officialinflation/ClassLoader/Javaexecution/MC/EULA/listener/Done.
+
+### DI0 valid-batch gas blocker after persistence replay
+
+0218f76f5->46a111e7c output/persistence prototype independently rebuilt/replayed:
+37cases deterministicfieldsmatch,60per-mutationpubs/fourfreshprocesses,36.119s/
+105246720BsampledRSS. Runtime12885/init15094(maxcomplete15478), acceptedlimitsunchanged.
+Terraoracleproviderblocked; uncommittedworktreepreserved butNOcompletedresultcounted.
+Parentgenerated22Go/Java8fixturechecks:manytree/repeat/symbolcornersagree; however
+validfull286-symboldepth15literalAstream q128 hits100M OOG(q1/q64work);32emptydynamic
+blocks q64/q128alsoOOG(q1/q8work). AllthreeJava8APIsaccept. Strictparentgateexits1,
+nooutput/work/pagerootsuccessharvested. Lowering128to64aloneNOTsolution. See
+JAVA_EVM_MC_DI0_BUDGET_PREFLIGHT.md andtracked evidence/java-evm/di0/parent-0218f76f5/.
+NextONE Sol/high boundedEVMdecoderoptimization(precompute/reusecanonicalstructures,
+fixedcodespecializationasappropriate)mustrespect128requestedactionupperbound and
+100Mordinarybudgetfornewvalidcasesorreportexplicitremainingpolicyproposal; no
+silent1B/quantumretarget/falsepositive/refusal. ProductionDI0stillunfrozen/unaccepted.

@@ -1,5 +1,14 @@
 # Java-inside-EVM agent guide
 
+CURRENT DI0 BLOCKER: JAVA_EVM_MC_DI0_BUDGET_PREFLIGHT.md. Parent independently
+replayed output/persistence37 cases/60publications/fourprocesses, but additional
+Java8-valid deep-tree q128 and repeated-empty-dynamic q64/q128 exceed100M. Strict
+parent gate exits1; do not count those as malformed input or success. Terra was
+provider-blocked with no completed commit/result counted; parent wrote its own
+22-case Go/Java8 checks. ONE Sol/high optimization preflight now authorized, only
+evidence/java-evm/di0/budget-preflight/ and its result note/ignoredbuild. No DI0
+freeze/acceptance, gas cap increase or official inflation/Java/MC/Done claim.
+
 CURRENT DI0 PREFLIGHT: JAVA_EVM_MC_DI0_PARENT_PREFLIGHT.md supersedes the initial
 proposal for next tests. Original21 replayed; parent Java8 oracle found count-header
 and terminal-padding differences, fixed only a disposable copy.64KiB is too small
