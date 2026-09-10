@@ -259,7 +259,7 @@ func (s *Session) reopen(m manifest) error {
 		if e != nil {
 			return e
 		}
-		if ih.Owner != s.owner || ih.Store != s.as0Address || ih.Length != s.length || ih.RuntimeCodeHash != s.zi0Hash || ih.Content != m.Content || ih.Phase > 2 {
+		if !ah.Sealed || ah.ContentCommitment != m.Content || ih.Owner != s.owner || ih.Store != s.as0Address || ih.Length != s.length || ih.RuntimeCodeHash != s.zi0Hash || ih.Content != m.Content || ih.Phase > 2 {
 			return errors.New("zi0: reopened ZI0 getters differ from manifest")
 		}
 	} else if m.Content != (common.Hash{}) {
