@@ -243,7 +243,19 @@ contract VFS0aInterpreter {
         uint64 cursor;
         uint8 phase; // PENDING_BIND=1, BOUND=2, CLOSED=3
         uint16 bindDepth;
-        uint32 bindPC;
+        uint32 bindPC; // exact reserved constructor putfield PC while pending
+    }
+
+    struct VFSBindPlan {
+        uint256 method;
+        uint32 invokePC;
+        uint32 afterInvokePC;
+        uint32 afterStorePC;
+        uint32 afterLoadPC;
+        uint32 successPC;
+        uint32 afterOwnerPC;
+        uint32 putfieldPC;
+        uint8 idLocal;
     }
 
     struct VFSState {
@@ -1128,6 +1140,44 @@ contract VFS0aInterpreter {
         }
     }
 
+    // Walk the normalized lexical spelling in operation order, before dot-dot can
+    // erase a failed intermediate lookup. failure=1 is ENOENT and failure=2 is
+    // ENOTDIR. A missing final ordinary component also reports the parent/name so
+    // mkdir or output-open can create it without repeating a canonicalized walk.
+    function _walkVFSPath(VFSState memory fs, bytes memory lexical)
+        private pure returns (uint32 id, uint32 createParent, bytes memory leaf, uint8 failure)
+    {
+        bool absolute = lexical[0] == 0x2f;
+        id = absolute ? 1 : 2;
+        uint256 i = absolute ? 1 : 0;
+        while (i <= lexical.length) {
+            uint256 j = i;
+            while (j < lexical.length && lexical[j] != 0x2f) ++j;
+            uint256 len = j - i;
+            if (len != 0) {
+                if (fs.inodes[id - 1].kind != 1) return (0, 0, bytes(""), 2);
+                if (len == 1 && lexical[i] == 0x2e) {
+                    // The current component must still be a directory; checked above.
+                } else if (len == 2 && lexical[i] == 0x2e && lexical[i + 1] == 0x2e) {
+                    id = fs.inodes[id - 1].parent;
+                    // _canonicalPath has already rejected lexical root escape.
+                    if (id == 0) return (0, 0, bytes(""), 1);
+                } else {
+                    bytes memory component = new bytes(len);
+                    for (uint256 k; k < len; ++k) component[k] = lexical[i + k];
+                    uint32 child = _findChild(fs, id, component);
+                    if (child == 0) {
+                        if (j == lexical.length) return (0, id, component, 1);
+                        return (0, 0, bytes(""), 1);
+                    }
+                    id = child;
+                }
+            }
+            if (j == lexical.length) break;
+            i = j + 1;
+        }
+    }
+
     function _effectiveReadOnly(VFSState memory fs, uint32 id) private pure returns (bool) {
         if (id == type(uint32).max) return _effectiveReadOnly(fs, id);
         while (id != 0) {
@@ -1154,9 +1204,21 @@ contract VFS0aInterpreter {
         fs.inodes = next;
     }
 
-    function _mkdirVFS(VFSState memory fs, bytes memory canonical, bool recursive)
+    function _mkdirVFS(VFSState memory fs, bytes memory lexical, bool recursive)
         private pure returns (bool)
     {
+        if (!recursive) {
+            (uint32 existing, uint32 createParent, bytes memory leaf, uint8 failure) =
+                _walkVFSPath(fs, lexical);
+            if (existing != 0 || failure != 1 || createParent == 0
+                || _effectiveReadOnly(fs, createParent)) return false;
+            _addInode(fs, 1, false, createParent, leaf, bytes(""));
+            return true;
+        }
+
+        // File.mkdirs has a measured Java8/21 canonical fallback unlike mkdir,
+        // stat and open. Preserve that operation-specific behavior.
+        bytes memory canonical = _canonicalPath(lexical, 0);
         (bytes[] memory comps, uint256 count) = _pathComponents(canonical);
         if (count == 0) return false;
         uint32 parent = 1;
@@ -1168,7 +1230,7 @@ contract VFS0aInterpreter {
                 if (i + 1 == count) return false;
                 continue;
             }
-            if ((!recursive && i + 1 < count) || _effectiveReadOnly(fs, parent)) return false;
+            if (_effectiveReadOnly(fs, parent)) return false;
             parent = _addInode(fs, 1, false, parent, comps[i], bytes(""));
         }
         return true;
@@ -1181,29 +1243,26 @@ contract VFS0aInterpreter {
     }
 
     function _openVFS(
-        VFSState memory fs, bytes memory canonical, uint32 owner, uint16 depth,
-        uint32 pc, bool reading, bool append
+        VFSState memory fs, bytes memory lexical, uint32 owner, uint16 depth,
+        uint32 bindPC, uint256 pc, bool reading, bool append
     ) private pure returns (int32) {
         if (owner == 0 || depth == 0 || _pendingDescriptorCount(fs) != 0) {
             revert VFS0aProfileError(4, pc);
         }
-        uint32 inode = _lookupPath(fs, canonical);
+        (uint32 inode, uint32 parent, bytes memory leaf, uint8 failure) =
+            _walkVFSPath(fs, lexical);
         if (reading) {
+            if (failure == 2) return -4;
             if (inode == 0) return -1;
             if (fs.inodes[inode - 1].kind != 2) return -2;
         } else if (inode != 0) {
             if (fs.inodes[inode - 1].kind != 2) return -2;
             if (_effectiveReadOnly(fs, inode)) return -3;
         } else {
-            (bytes[] memory comps, uint256 count) = _pathComponents(canonical);
-            if (count == 0) return -2;
-            uint32 parent = 1;
-            for (uint256 i; i + 1 < count; ++i) {
-                parent = _findChild(fs, parent, comps[i]);
-                if (parent == 0 || fs.inodes[parent - 1].kind != 1) return -1;
-            }
+            if (failure == 2) return -4;
+            if (parent == 0) return -1;
             if (_effectiveReadOnly(fs, parent)) return -3;
-            inode = _addInode(fs, 2, false, parent, comps[count - 1], bytes(""));
+            inode = _addInode(fs, 2, false, parent, leaf, bytes(""));
         }
         if (fs.descriptors.length >= MAX_VFS_DESCRIPTORS) {
             revert VFS0aQuotaError(3, fs.descriptors.length + 1, MAX_VFS_DESCRIPTORS);
@@ -1218,7 +1277,7 @@ contract VFS0aInterpreter {
         VFSDescriptor[] memory next = new VFSDescriptor[](fs.descriptors.length + 1);
         for (uint256 i; i < fs.descriptors.length; ++i) next[i] = fs.descriptors[i];
         next[fs.descriptors.length] = VFSDescriptor(
-            id, inode, owner, flags, cursor, 1, depth, pc
+            id, inode, owner, flags, cursor, 1, depth, bindPC
         );
         fs.descriptors = next;
         return int32(id);
@@ -1245,12 +1304,14 @@ contract VFS0aInterpreter {
     }
 
     function _bindDescriptor(
-        VFSState memory fs, uint32 id, uint32 owner, uint16 depth, uint32 invokePC,
+        VFSState memory fs, uint32 id, uint32 owner, uint16 depth, uint32 bindPC,
         uint256 putfieldPC
     ) private pure {
         VFSDescriptor memory d = _descriptor(fs, id, putfieldPC);
         if (d.phase != 1 || d.ownerRef != owner || d.bindDepth != depth
-            || d.bindPC != invokePC) revert VFS0aProfileError(4, putfieldPC);
+            || d.bindPC != bindPC || bindPC != putfieldPC) {
+            revert VFS0aProfileError(4, putfieldPC);
+        }
         fs.descriptors[id - 1].phase = 2;
         fs.descriptors[id - 1].bindDepth = 0;
         fs.descriptors[id - 1].bindPC = 0;
@@ -2961,6 +3022,144 @@ contract VFS0aInterpreter {
         revert ThrowableAPIProfileError(kind, invokePC);
     }
 
+    function _vfsMemberRefMatches(
+        ClassInfo memory c, uint256 refIndex, uint8 tag, bytes memory name,
+        bytes memory descriptor
+    ) private pure returns (bool) {
+        if (refIndex == 0 || refIndex >= c.cp.length || uint8(c.cp[refIndex]) != tag) return false;
+        uint256 ref = c.cp[refIndex];
+        uint256 ownerClassIndex = (ref >> 8) & 0xffff;
+        uint256 natIndex = (ref >> 24) & 0xffff;
+        if (ownerClassIndex == 0 || ownerClassIndex >= c.cp.length
+            || uint8(c.cp[ownerClassIndex]) != 7 || natIndex == 0 || natIndex >= c.cp.length
+            || uint8(c.cp[natIndex]) != 12) return false;
+        uint256 ownerNameIndex = (c.cp[ownerClassIndex] >> 8) & 0xffff;
+        uint256 nameIndex = (c.cp[natIndex] >> 8) & 0xffff;
+        uint256 descriptorIndex = (c.cp[natIndex] >> 24) & 0xffff;
+        if (ownerNameIndex == 0 || ownerNameIndex >= c.cp.length
+            || nameIndex == 0 || nameIndex >= c.cp.length
+            || descriptorIndex == 0 || descriptorIndex >= c.cp.length
+            || uint8(c.cp[ownerNameIndex]) != 1 || uint8(c.cp[nameIndex]) != 1
+            || uint8(c.cp[descriptorIndex]) != 1) return false;
+        (uint256 oo, uint256 on) = _utf(c.cp[ownerNameIndex]);
+        (uint256 no, uint256 nn) = _utf(c.cp[nameIndex]);
+        (uint256 doff, uint256 dn) = _utf(c.cp[descriptorIndex]);
+        return _equalsCross(c.data, oo, on, c.data, c.thisNameOffset, c.thisNameLength)
+            && _equalsLiteral(c.data, no, nn, name)
+            && _equalsLiteral(c.data, doff, dn, descriptor);
+    }
+
+    // Derive every pending-bind PC from the parsed reserved constructor Code. The
+    // image itself is pinned, but neither serialized PCs nor old numeric constants
+    // are treated as authority after a Java image revision.
+    function _vfsBindPlan(ClassInfo[] memory classes, uint256 streamClass, bool input)
+        private pure returns (VFSBindPlan memory plan)
+    {
+        ClassInfo memory c = classes[streamClass];
+        bytes memory ctorDescriptor = input
+            ? bytes("(Ljava/io/File;)V") : bytes("(Ljava/io/File;Z)V");
+        uint256 found;
+        for (uint256 i; i < c.methods.length; ++i) {
+            uint256 meta = c.methods[i];
+            (uint256 no, uint256 nn) = _utf(c.cp[(meta >> 16) & 0xffff]);
+            (uint256 doff, uint256 dn) = _utf(c.cp[(meta >> 32) & 0xffff]);
+            if (_equalsLiteral(c.data, no, nn, bytes("<init>"))
+                && _equalsLiteral(c.data, doff, dn, ctorDescriptor)) {
+                if (found != 0 || uint16(meta) != 0x0001 || _methodCodeCount(meta) != 1) {
+                    revert VFS0aProfileError(4, 0);
+                }
+                found = i + 1;
+            }
+        }
+        if (found == 0) revert VFS0aProfileError(4, 0);
+        plan.method = found - 1;
+        Selected memory sel = _loadSpecialCallee(c, plan.method, 0, true, streamClass);
+        if (sel.maxStack != 4 || sel.maxLocals != (input ? 3 : 4)) {
+            revert VFS0aProfileError(4, 0);
+        }
+        uint8 local = input ? 2 : 3;
+        uint8 storeOp = uint8(0x3b + local);
+        uint8 loadOp = uint8(0x1a + local);
+        uint256 matched;
+        for (uint256 at; at < sel.codeLength;) {
+            uint8 op = uint8(c.data[sel.codeOffset + at]);
+            uint256 width = _instructionWidth(c.data, sel.codeOffset, sel.codeLength, op, at);
+            if (op == 0xb7 && _vfsMemberRefMatches(
+                c, _unsigned16(c.data, sel.codeOffset + at + 1), 10,
+                bytes("open0"), input ? bytes("(Ljava/io/File;)I")
+                    : bytes("(Ljava/io/File;Z)I")
+            )) {
+                if (matched != 0 || at + 14 >= sel.codeLength
+                    || uint8(c.data[sel.codeOffset + at + 3]) != storeOp
+                    || uint8(c.data[sel.codeOffset + at + 4]) != loadOp
+                    || uint8(c.data[sel.codeOffset + at + 5]) != 0x9e
+                    || _decodedTarget(c.data, sel.codeOffset, at + 5) != at + 14
+                    || uint8(c.data[sel.codeOffset + at + 8]) != 0x2a
+                    || uint8(c.data[sel.codeOffset + at + 9]) != loadOp
+                    || uint8(c.data[sel.codeOffset + at + 10]) != 0xb5
+                    || !_vfsMemberRefMatches(
+                        c, _unsigned16(c.data, sel.codeOffset + at + 11), 9,
+                        bytes("handle"), bytes("I")
+                    ) || uint8(c.data[sel.codeOffset + at + 13]) != 0xb1) {
+                    revert VFS0aProfileError(4, at);
+                }
+                matched = at + 1;
+            }
+            at += width;
+        }
+        if (matched == 0) revert VFS0aProfileError(4, 0);
+        uint32 invokePC = uint32(matched - 1);
+        plan.invokePC = invokePC;
+        plan.afterInvokePC = invokePC + 3;
+        plan.afterStorePC = invokePC + 4;
+        plan.afterLoadPC = invokePC + 5;
+        plan.successPC = invokePC + 8;
+        plan.afterOwnerPC = invokePC + 9;
+        plan.putfieldPC = invokePC + 10;
+        plan.idLocal = local;
+    }
+
+    function _requireVFSOpenFrame(
+        ClassInfo[] memory classes, Frame memory f, uint256 owner, uint256 depth,
+        uint256 pc, uint256 streamClass, bool input
+    ) private pure returns (VFSBindPlan memory plan) {
+        plan = _vfsBindPlan(classes, streamClass, input);
+        if (depth == 0 || f.classIndex != streamClass || f.methodIndex != plan.method
+            || !f.isConstructor || !f.isConstructorLinked || f.thisHandle != owner
+            || f.pc != plan.afterInvokePC || pc != plan.invokePC || f.locals.length == 0
+            || !f.initialized[0] || _valueKind(f.locals[0]) != KIND_REF
+            || _payload(f.locals[0]) != owner) revert VFS0aProfileError(4, pc);
+    }
+
+    function _pendingVFSFrameValid(
+        Frame memory f, VFSDescriptor memory d, VFSBindPlan memory plan
+    ) private pure returns (bool) {
+        if (!f.isConstructor || !f.isConstructorLinked || f.methodIndex != plan.method
+            || f.thisHandle != d.ownerRef || f.locals.length <= plan.idLocal
+            || !f.initialized[0] || _valueKind(f.locals[0]) != KIND_REF
+            || _payload(f.locals[0]) != d.ownerRef) return false;
+        uint256 idCell;
+        if (f.pc == plan.afterInvokePC) {
+            if (f.sp != 1 || f.initialized[plan.idLocal]) return false;
+            idCell = f.stack[0];
+        } else {
+            if (!f.initialized[plan.idLocal]) return false;
+            idCell = f.locals[plan.idLocal];
+            if (f.pc == plan.afterStorePC || f.pc == plan.successPC) {
+                if (f.sp != 0) return false;
+            } else if (f.pc == plan.afterLoadPC) {
+                if (f.sp != 1 || f.stack[0] != idCell) return false;
+            } else if (f.pc == plan.afterOwnerPC) {
+                if (f.sp != 1 || _valueKind(f.stack[0]) != KIND_REF
+                    || _payload(f.stack[0]) != d.ownerRef) return false;
+            } else if (f.pc == plan.putfieldPC) {
+                if (f.sp != 2 || _valueKind(f.stack[0]) != KIND_REF
+                    || _payload(f.stack[0]) != d.ownerRef || f.stack[1] != idCell) return false;
+            } else return false;
+        }
+        return _valueKind(idCell) == KIND_INT && uint32(_payload(idCell)) == d.id;
+    }
+
     function _maybeBindVFSHandle(
         ClassInfo[] memory classes, uint256 fieldClass, uint256 field, uint256 owner,
         uint256 value, Frame memory f, uint256 depth, VFSState memory fs,
@@ -2975,11 +3174,16 @@ contract VFS0aInterpreter {
         if (!_equalsLiteral(c.data, no, nn, bytes("handle"))
             || !_equalsLiteral(c.data, doff, dn, bytes("I"))) return;
         uint32 id = uint32(_payload(value));
-        uint32 expectedPC = _isNamedClass(c, bytes("java/io/FileInputStream")) ? 18 : 19;
-        uint32 expectedPut = _isNamedClass(c, bytes("java/io/FileInputStream")) ? 28 : 29;
-        if (!f.isConstructor || f.classIndex != fieldClass || f.thisHandle != owner
-            || pc != expectedPut || id == 0) revert VFS0aProfileError(4, pc);
-        _bindDescriptor(fs, id, uint32(owner), uint16(depth), expectedPC, pc);
+        bool input = _isNamedClass(c, bytes("java/io/FileInputStream"));
+        VFSBindPlan memory plan = _vfsBindPlan(classes, fieldClass, input);
+        if (!f.isConstructor || !f.isConstructorLinked || f.classIndex != fieldClass
+            || f.methodIndex != plan.method || f.thisHandle != owner
+            || pc != plan.putfieldPC || id == 0 || depth == 0
+            || f.locals.length == 0 || !f.initialized[0]
+            || _valueKind(f.locals[0]) != KIND_REF || _payload(f.locals[0]) != owner) {
+            revert VFS0aProfileError(4, pc);
+        }
+        _bindDescriptor(fs, id, uint32(owner), uint16(depth), plan.putfieldPC, pc);
         parentLinks; // field resolution already proved the canonical owner relation.
     }
 
@@ -2987,11 +3191,11 @@ contract VFS0aInterpreter {
         _validateVFS(s.vfs, 0);
         uint256 fis = s.arena.stringClass + 10;
         uint256 fos = s.arena.stringClass + 11;
-        uint256 fisOffset = _canonicalFieldOffset(
-            p.classes, fis, bytes("handle"), bytes("I"), s.parentLinks, 0
+        uint256 fisOffset = _canonicalVFSFieldOffset(
+            p.classes, fis, bytes("handle"), bytes("I"), KIND_INT, s.parentLinks, 0
         );
-        uint256 fosOffset = _canonicalFieldOffset(
-            p.classes, fos, bytes("handle"), bytes("I"), s.parentLinks, 0
+        uint256 fosOffset = _canonicalVFSFieldOffset(
+            p.classes, fos, bytes("handle"), bytes("I"), KIND_INT, s.parentLinks, 0
         );
         uint256 pending;
         for (uint256 i; i < s.vfs.descriptors.length; ++i) {
@@ -3005,33 +3209,16 @@ contract VFS0aInterpreter {
             uint256 offset = input ? fisOffset : fosOffset;
             if (!_typeAssignable(p.classes, s.arena.heap.classes[d.ownerRef], wanted,
                 s.parentLinks)) revert VFS0aStateError(5, i);
-            uint32 fieldID = uint32(_payload(s.arena.heap.objectHeap[d.ownerRef][offset]));
+            uint256 fieldCell = s.arena.heap.objectHeap[d.ownerRef][offset];
+            if (_valueKind(fieldCell) != KIND_INT) revert VFS0aStateError(5, i);
+            uint32 fieldID = uint32(_payload(fieldCell));
             if (d.phase == 1) {
                 ++pending;
-                if (fieldID != 0 || d.bindDepth == 0 || d.bindDepth > s.depth) {
-                    revert VFS0aStateError(5, i);
-                }
+                VFSBindPlan memory plan = _vfsBindPlan(p.classes, wanted, input);
+                if (fieldID != 0 || d.bindDepth == 0 || d.bindDepth != s.depth
+                    || d.bindPC != plan.putfieldPC) revert VFS0aStateError(5, i);
                 Frame memory f = s.frames[d.bindDepth - 1];
-                uint32 invokePC = input ? 18 : 19;
-                bool validPC = input
-                    ? (f.pc == 21 || f.pc == 22 || f.pc == 23 || f.pc == 26
-                        || f.pc == 27 || f.pc == 28)
-                    : (f.pc == 22 || f.pc == 23 || f.pc == 24 || f.pc == 27
-                        || f.pc == 28 || f.pc == 29);
-                if (!f.isConstructor || f.classIndex != wanted || f.thisHandle != d.ownerRef
-                    || d.bindPC != invokePC || !validPC || f.locals.length == 0
-                    || !f.initialized[0] || _payload(f.locals[0]) != d.ownerRef) {
-                    revert VFS0aStateError(5, i);
-                }
-                uint256 idCell;
-                if (input) {
-                    if (f.pc == 21 && f.sp == 1) idCell = f.stack[0];
-                    else if (f.locals.length > 2 && f.initialized[2]) idCell = f.locals[2];
-                } else {
-                    if (f.pc == 22 && f.sp == 1) idCell = f.stack[0];
-                    else if (f.locals.length > 3 && f.initialized[3]) idCell = f.locals[3];
-                }
-                if (_valueKind(idCell) != KIND_INT || uint32(_payload(idCell)) != d.id) {
+                if (f.classIndex != wanted || !_pendingVFSFrameValid(f, d, plan)) {
                     revert VFS0aStateError(5, i);
                 }
             } else if (fieldID != d.id) revert VFS0aStateError(5, i);
@@ -3044,7 +3231,9 @@ contract VFS0aInterpreter {
             bool output = _typeAssignable(p.classes, ci, fos, s.parentLinks);
             if (!input && !output) continue;
             uint256 offset = input ? fisOffset : fosOffset;
-            uint32 id = uint32(_payload(s.arena.heap.objectHeap[h][offset]));
+            uint256 fieldCell = s.arena.heap.objectHeap[h][offset];
+            if (_valueKind(fieldCell) != KIND_INT) revert VFS0aStateError(5, h);
+            uint32 id = uint32(_payload(fieldCell));
             if (id != 0) {
                 VFSDescriptor memory d = _descriptor(s.vfs, id, 0);
                 if (d.ownerRef != h || d.phase == 1) revert VFS0aStateError(5, h);
@@ -3107,10 +3296,10 @@ contract VFS0aInterpreter {
         revert VFS0aProfileError(2, pc);
     }
 
-    function _fileCanonicalPath(
+    function _fileLexicalPath(
         ClassInfo[] memory classes, ExceptionArena memory arena, uint256[] memory parentLinks,
         uint256 fileRef, uint256 pc
-    ) private pure returns (bytes memory) {
+    ) private pure returns (bytes memory lexical) {
         uint256 fileClass = arena.stringClass + 7;
         if (fileRef == 0 || fileRef > arena.nextHandle
             || _heapKindAt(arena.heap.metadata[fileRef]) != HEAP_OBJECT
@@ -3121,16 +3310,22 @@ contract VFS0aInterpreter {
             classes, fileClass, bytes("path"), bytes("Ljava/lang/String;"),
             parentLinks, pc
         );
-        uint256 stringRef = _payload(arena.heap.objectHeap[fileRef][offset]);
+        uint256 pathCell = arena.heap.objectHeap[fileRef][offset];
+        if (_valueKind(pathCell) != KIND_REF) revert VFS0aProfileError(4, pc);
+        uint256 stringRef = _payload(pathCell);
         if (stringRef == 0 || stringRef > arena.nextHandle
             || arena.heap.classes[stringRef] != arena.stringClass) revert VFS0aProfileError(1, pc);
         uint64[] memory units = _stringUnits(arena, stringRef, pc);
-        bytes memory lexical = new bytes(units.length);
+        lexical = new bytes(units.length);
         for (uint256 i; i < units.length; ++i) {
             if (units[i] < 0x20 || units[i] > 0x7e) revert VFS0aProfileError(1, pc);
             lexical[i] = bytes1(uint8(units[i]));
         }
-        return _canonicalPath(_lexicalPath(lexical, pc), pc);
+        lexical = _lexicalPath(lexical, pc);
+        // Validate root escape, component/depth and canonical length bounds without
+        // using the collapsed result for Java stat/mkdir/open traversal.
+        _canonicalPath(lexical, pc);
+        return lexical;
     }
 
     function _streamHandle(
@@ -3141,10 +3336,12 @@ contract VFS0aInterpreter {
         if (!_typeAssignable(classes, arena.heap.classes[owner], streamClass, parentLinks)) {
             revert VFS0aProfileError(4, pc);
         }
-        uint256 offset = _canonicalFieldOffset(
-            classes, streamClass, bytes("handle"), bytes("I"), parentLinks, pc
+        uint256 offset = _canonicalVFSFieldOffset(
+            classes, streamClass, bytes("handle"), bytes("I"), KIND_INT, parentLinks, pc
         );
-        return uint32(_payload(arena.heap.objectHeap[owner][offset]));
+        uint256 handleCell = arena.heap.objectHeap[owner][offset];
+        if (_valueKind(handleCell) != KIND_INT) revert VFS0aProfileError(4, pc);
+        return uint32(_payload(handleCell));
     }
 
     function _runVFSNative(
@@ -3154,20 +3351,29 @@ contract VFS0aInterpreter {
     ) private pure returns (uint256 packed) {
         int32 status;
         if (binding == 1 || binding == 2) {
-            bytes memory path = _fileCanonicalPath(classes, arena, parentLinks, owner, pc);
+            bytes memory path = _fileLexicalPath(classes, arena, parentLinks, owner, pc);
             if (binding == 1) {
-                uint32 id = _lookupPath(fs, path);
-                status = id == 0 ? int32(0) : int32(uint32(fs.inodes[id - 1].kind));
+                (uint32 id,,, uint8 failure) = _walkVFSPath(fs, path);
+                // Inode wire kinds are DIR=1/FILE=2, while File.stat0's Java-facing
+                // statuses are missing=0/FILE=1/DIR=2. Both ENOENT and ENOTDIR are
+                // false for the boolean File stat surface.
+                status = failure != 0 || id == 0 ? int32(0)
+                    : (fs.inodes[id - 1].kind == 2 ? int32(1) : int32(2));
             } else {
                 status = _mkdirVFS(fs, path, _payload(f.stack[base + 1]) != 0) ? int32(1) : int32(0);
             }
         } else if (binding == 3 || binding == 7) {
-            bytes memory path = _fileCanonicalPath(
+            bool input = binding == 3;
+            uint256 streamClass = arena.stringClass + (input ? 10 : 11);
+            VFSBindPlan memory plan = _requireVFSOpenFrame(
+                classes, f, owner, depth, pc, streamClass, input
+            );
+            bytes memory path = _fileLexicalPath(
                 classes, arena, parentLinks, _payload(f.stack[base + 1]), pc
             );
             bool append = binding == 7 && _payload(f.stack[base + 2]) != 0;
-            status = _openVFS(fs, path, uint32(owner), uint16(depth), uint32(pc),
-                binding == 3, append);
+            status = _openVFS(fs, path, uint32(owner), uint16(depth), plan.putfieldPC,
+                pc, input, append);
         } else if (binding == 4 || binding == 5) {
             uint32 id = _streamHandle(classes, arena, parentLinks, owner, true, pc);
             uint32 requested = binding == 4 ? 1 : uint32(_payload(f.stack[base + 3]));
@@ -8639,7 +8845,36 @@ contract VFS0aInterpreter {
         return 0;
     }
 
-    // Resolve pinned private fields from their declaring owner/name/descriptor;
+    // Resolve pinned VFS fields with their exact computational type. This is
+    // deliberately separate from Throwable's REF-only helper below: adding the
+    // stream handle:I must not weaken canonical Throwable reference validation.
+    function _canonicalVFSFieldOffset(
+        ClassInfo[] memory classes, uint256 owner, bytes memory name,
+        bytes memory descriptor, uint256 expectedKind, uint256[] memory parentLinks, uint256 pc
+    ) private pure returns (uint256 offset) {
+        if (classes[owner].cp.length == 0) {
+            classes[owner] = _parseBundleClass(classes[owner].data);
+        }
+        uint256 foundPlusOne;
+        for (uint256 i; i < classes[owner].fields.length; ++i) {
+            FieldInfo memory field = classes[owner].fields[i];
+            (uint256 no, uint256 nn) = _utf(classes[owner].cp[field.nameIndex]);
+            (uint256 doff, uint256 dn) = _utf(classes[owner].cp[field.descriptorIndex]);
+            if (!_equalsLiteral(classes[owner].data, no, nn, name)
+                || !_equalsLiteral(classes[owner].data, doff, dn, descriptor)) continue;
+            if (foundPlusOne != 0 || (field.accessFlags & 0x0008) != 0
+                || _fieldKind(classes[owner], field) != expectedKind) {
+                revert VFS0aProfileError(4, pc);
+            }
+            foundPlusOne = i + 1;
+        }
+        if (foundPlusOne == 0) revert VFS0aProfileError(4, pc);
+        return _instanceFieldOffset(
+            classes, owner, owner, foundPlusOne - 1, parentLinks, pc
+        );
+    }
+
+    // Resolve pinned private Throwable fields from their declaring owner/name/descriptor;
     // no host-supplied slot number or dynamic-class coincidence is trusted.
     function _canonicalFieldOffset(
         ClassInfo[] memory classes, uint256 owner, bytes memory name,
@@ -9460,11 +9695,11 @@ contract VFS0aInterpreter {
     }
 
     function _bootstrapFileInputStream() private pure returns (bytes memory) {
-        return hex"cafebabe0000003400560a001b00340700350a000200340a001a003609001a00370700380a001a00390a0006003a0a001a003b07003c08003d0a000a003a0a001a003e07003f0a000e00340a001a00400a001a00410800420800430800440a004500460a001800470a001800480700490a0018004a07004b07004c01000668616e646c65010001490100063c696e69743e010011284c6a6176612f696f2f46696c653b2956010004436f646501000d537461636b4d61705461626c6507004b07004d01000a457863657074696f6e7301000472656164010003282949010005285b422949010007285b4249492949010005636c6f736501000328295601000c6572726f724d657373616765010023284c6a6176612f696f2f46696c653b49294c6a6176612f6c616e672f537472696e673b07004907004e0100056f70656e30010011284c6a6176612f696f2f46696c653b2949010008726561644f6e65300100057265616430010006636c6f7365300c001e002a01001e6a6176612f6c616e672f4e756c6c506f696e746572457863657074696f6e0c002f00300c001c001d01001d6a6176612f696f2f46696c654e6f74466f756e64457863657074696f6e0c002b002c0c001e004f0c003100260100136a6176612f696f2f494f457863657074696f6e01000d53747265616d20436c6f7365640c002500280100236a6176612f6c616e672f496e6465784f75744f66426f756e6473457863657074696f6e0c003200280c0033002601001c20284e6f20737563682066696c65206f72206469726563746f727929010011202849732061206469726563746f72792901001420285065726d697373696f6e2064656e6965642907004d0c005000510c005200260c005300540100106a6176612f6c616e672f537472696e670c001e00550100176a6176612f696f2f46696c65496e70757453747265616d0100136a6176612f696f2f496e70757453747265616d01000c6a6176612f696f2f46696c650100025b43010015284c6a6176612f6c616e672f537472696e673b2956010005706174683001001428294c6a6176612f6c616e672f537472696e673b0100066c656e67746801000663686172417401000428492943010005285b4329560021001a001b000000010002001c001d0000000a0001001e001f0002002000000052000400030000002d2ab700012bc7000bbb000259b70003bf2a2bb700043d1c9e00092a1cb50005b1bb0006592b1cb80007b70008bf000000010021000000130002ff001000020700220700230000fc000f0100240000000400010006000100250026000200200000002f00030002000000172ab700093c1b10fea0000dbb000a59120bb7000cbf1bac000000010021000000060001fc0015010024000000040001000a000100250027000200200000001500040002000000092a2b032bbeb6000dac000000000024000000040001000a000100250028000200200000005d000400060000003f2bbe36041c9b000f1d9b000b1c15041d64a4000bbb000e59b7000fbf1d9a000503ac2a2b1c1db700103605150510fea0000dbb000a59120bb7000cbf1505ac0000000100210000000c0004fc0014010705fc0019010024000000040001000a00010029002a000200200000002c00030002000000142ab700113c1b99000dbb000a59120bb7000cbfb1000000010021000000060001fc0013010024000000040001000a000a002b002c00010020000000b200040009000000771b02a0000912124da700121b10fea0000912134da7000612144d2ab600154e2db6001636042cb6001636051504150560bc053a0603360715071504a20014190615072d1507b6001755840701a7ffeb03360815081505a20017190615071508602c1508b6001755840801a7ffe8bb0018591906b70019b00000000100210000002900070b0bfc000207002dff001c00080700230107002d07002d010107002e01000017fc000201fa001a0102002f003000000102003100260000010200320028000001020033002600000000";
+        return hex"cafebabe0000003400580a001c00350700360a000200350a001b003709001b00380700390a001b003a0a0006003b0a001b003c07003d08003e0a000a003b0a001b003f0700400a000e00350a001b00410a001b00420800430800440800450800460a004700480a001900490a0019004a07004b0a0019004c07004d07004e01000668616e646c65010001490100063c696e69743e010011284c6a6176612f696f2f46696c653b2956010004436f646501000d537461636b4d61705461626c6507004d07004f01000a457863657074696f6e7301000472656164010003282949010005285b422949010007285b4249492949010005636c6f736501000328295601000c6572726f724d657373616765010023284c6a6176612f696f2f46696c653b49294c6a6176612f6c616e672f537472696e673b07004b0700500100056f70656e30010011284c6a6176612f696f2f46696c653b2949010008726561644f6e65300100057265616430010006636c6f7365300c001f002b01001e6a6176612f6c616e672f4e756c6c506f696e746572457863657074696f6e0c003000310c001d001e01001d6a6176612f696f2f46696c654e6f74466f756e64457863657074696f6e0c002c002d0c001f00510c003200270100136a6176612f696f2f494f457863657074696f6e01000d53747265616d20436c6f7365640c002600290100236a6176612f6c616e672f496e6465784f75744f66426f756e6473457863657074696f6e0c003300290c0034002701001c20284e6f20737563682066696c65206f72206469726563746f727929010011202849732061206469726563746f72792901001220284e6f742061206469726563746f72792901001420285065726d697373696f6e2064656e6965642907004f0c005200530c005400270c005500560100106a6176612f6c616e672f537472696e670c001f00570100176a6176612f696f2f46696c65496e70757453747265616d0100136a6176612f696f2f496e70757453747265616d01000c6a6176612f696f2f46696c650100025b43010015284c6a6176612f6c616e672f537472696e673b2956010005706174683001001428294c6a6176612f6c616e672f537472696e673b0100066c656e67746801000663686172417401000428492943010005285b4329560021001b001c000000010002001d001e0000000a0001001f00200002002100000052000400030000002d2ab700012bc7000bbb000259b70003bf2a2bb700043d1c9e00092a1cb50005b1bb0006592b1cb80007b70008bf000000010022000000130002ff001000020700230700240000fc000f0100250000000400010006000100260027000200210000002f00030002000000172ab700093c1b10fea0000dbb000a59120bb7000cbf1bac000000010022000000060001fc0015010025000000040001000a000100260028000200210000001500040002000000092a2b032bbeb6000dac000000000025000000040001000a000100260029000200210000005d000400060000003f2bbe36041c9b000f1d9b000b1c15041d64a4000bbb000e59b7000fbf1d9a000503ac2a2b1c1db700103605150510fea0000dbb000a59120bb7000cbf1505ac0000000100220000000c0004fc0014010705fc0019010025000000040001000a0001002a002b000200210000002c00030002000000142ab700113c1b99000dbb000a59120bb7000cbfb1000000010022000000060001fc0013010025000000040001000a000a002c002d00010021000000bf00040009000000831b02a0000912124da7001e1b10fea0000912134da700121b10fca0000912144da7000612154d2ab600164e2db6001736042cb6001736051504150560bc053a0603360715071504a20014190615072d1507b6001855840701a7ffeb03360815081505a20017190615071508602c1508b6001855840801a7ffe8bb0019591906b7001ab00000000100220000002a00080b0b0bfc000207002eff001c00080700240107002e07002e010107002f01000017fc000201fa001a01020030003100000102003200270000010200330029000001020034002700000000";
     }
 
     function _bootstrapFileOutputStream() private pure returns (bytes memory) {
-        return hex"cafebabe00000034005c0a001b00390a001c003a07003b0a0003003a0a001b003c09001b003d07003e0a001b003f0a000700400a001b00410700420800430a000b00400a001b00440700450a000f003a0a001b00460a001b004708004808004908004a0a004b004c0a0019004d0a0019004e07004f0a0019005007005107005201000668616e646c65010001490100063c696e69743e010011284c6a6176612f696f2f46696c653b2956010004436f646501000a457863657074696f6e73010012284c6a6176612f696f2f46696c653b5a295601000d537461636b4d61705461626c65070051070053010005777269746501000428492956010005285b422956010007285b4249492956010005636c6f736501000328295601000c6572726f724d657373616765010023284c6a6176612f696f2f46696c653b49294c6a6176612f6c616e672f537472696e673b07004f0700540100056f70656e30010012284c6a6176612f696f2f46696c653b5a294901000977726974654f6e653001000428492949010006777269746530010007285b4249492949010006636c6f7365300100032829490c001f00230c001f002c01001e6a6176612f6c616e672f4e756c6c506f696e746572457863657074696f6e0c003100320c001d001e01001d6a6176612f696f2f46696c654e6f74466f756e64457863657074696f6e0c002d002e0c001f00550c003300340100136a6176612f696f2f494f457863657074696f6e01000d53747265616d20436c6f7365640c0027002a0100236a6176612f6c616e672f496e6465784f75744f66426f756e6473457863657074696f6e0c003500360c0037003801001c20284e6f20737563682066696c65206f72206469726563746f727929010011202849732061206469726563746f72792901001420285065726d697373696f6e2064656e696564290700530c005600570c005800380c0059005a0100106a6176612f6c616e672f537472696e670c001f005b0100186a6176612f696f2f46696c654f757470757453747265616d0100146a6176612f696f2f4f757470757453747265616d01000c6a6176612f696f2f46696c650100025b43010015284c6a6176612f6c616e672f537472696e673b2956010005706174683001001428294c6a6176612f6c616e672f537472696e673b0100066c656e67746801000663686172417401000428492943010005285b4329560021001b001c000000010002001d001e0000000b0001001f0020000200210000001300030002000000072a2b03b70001b100000000002200000004000100070001001f00230002002100000054000400040000002e2ab700022bc7000bbb000359b70004bf2a2b1cb700053e1d9e00092a1db50006b1bb0007592b1db80008b70009bf000000010024000000140002ff00100003070025070026010000fc00100100220000000400010007000100270028000200210000002f00030003000000172a1bb7000a3d1c10fea0000dbb000b59120cb7000dbfb1000000010024000000060001fc0016010022000000040001000b000100270029000200210000001500040002000000092a2b032bbeb6000eb1000000000022000000040001000b00010027002a000200210000005a000400060000003c2bbe36041c9b000f1d9b000b1c15041d64a4000bbb000f59b70010bf1d9a0004b12a2b1c1db700113605150510fea0000dbb000b59120cb7000dbfb10000000100240000000c0004fc0014010704fc0019010022000000040001000b0001002b002c000200210000002c00030002000000142ab700123c1b99000dbb000b59120cb7000dbfb1000000010024000000060001fc0013010022000000040001000b000a002d002e00010021000000b200040009000000771b02a0000912134da700121b10fea0000912144da7000612154d2ab600164e2db6001736042cb6001736051504150560bc053a0603360715071504a20014190615072d1507b6001855840701a7ffeb03360815081505a20017190615071508602c1508b6001855840801a7ffe8bb0019591906b7001ab00000000100240000002900070b0bfc000207002fff001c00080700260107002f07002f010107003001000017fc000201fa001a01020031003200000102003300340000010200350036000001020037003800000000";
+        return hex"cafebabe00000034005e0a001c003a0a001d003b07003c0a0003003b0a001c003d09001c003e07003f0a001c00400a000700410a001c00420700430800440a000b00410a001c00450700460a000f003b0a001c00470a001c004808004908004a08004b08004c0a004d004e0a001a004f0a001a00500700510a001a005207005307005401000668616e646c65010001490100063c696e69743e010011284c6a6176612f696f2f46696c653b2956010004436f646501000a457863657074696f6e73010012284c6a6176612f696f2f46696c653b5a295601000d537461636b4d61705461626c65070053070055010005777269746501000428492956010005285b422956010007285b4249492956010005636c6f736501000328295601000c6572726f724d657373616765010023284c6a6176612f696f2f46696c653b49294c6a6176612f6c616e672f537472696e673b0700510700560100056f70656e30010012284c6a6176612f696f2f46696c653b5a294901000977726974654f6e653001000428492949010006777269746530010007285b4249492949010006636c6f7365300100032829490c002000240c0020002d01001e6a6176612f6c616e672f4e756c6c506f696e746572457863657074696f6e0c003200330c001e001f01001d6a6176612f696f2f46696c654e6f74466f756e64457863657074696f6e0c002e002f0c002000570c003400350100136a6176612f696f2f494f457863657074696f6e01000d53747265616d20436c6f7365640c0028002b0100236a6176612f6c616e672f496e6465784f75744f66426f756e6473457863657074696f6e0c003600370c0038003901001c20284e6f20737563682066696c65206f72206469726563746f727929010011202849732061206469726563746f72792901001220284e6f742061206469726563746f72792901001420285065726d697373696f6e2064656e696564290700550c005800590c005a00390c005b005c0100106a6176612f6c616e672f537472696e670c0020005d0100186a6176612f696f2f46696c654f757470757453747265616d0100146a6176612f696f2f4f757470757453747265616d01000c6a6176612f696f2f46696c650100025b43010015284c6a6176612f6c616e672f537472696e673b2956010005706174683001001428294c6a6176612f6c616e672f537472696e673b0100066c656e67746801000663686172417401000428492943010005285b4329560021001c001d000000010002001e001f0000000b000100200021000200220000001300030002000000072a2b03b70001b100000000002300000004000100070001002000240002002200000054000400040000002e2ab700022bc7000bbb000359b70004bf2a2b1cb700053e1d9e00092a1db50006b1bb0007592b1db80008b70009bf000000010025000000140002ff00100003070026070027010000fc00100100230000000400010007000100280029000200220000002f00030003000000172a1bb7000a3d1c10fea0000dbb000b59120cb7000dbfb1000000010025000000060001fc0016010023000000040001000b00010028002a000200220000001500040002000000092a2b032bbeb6000eb1000000000023000000040001000b00010028002b000200220000005a000400060000003c2bbe36041c9b000f1d9b000b1c15041d64a4000bbb000f59b70010bf1d9a0004b12a2b1c1db700113605150510fea0000dbb000b59120cb7000dbfb10000000100250000000c0004fc0014010704fc0019010023000000040001000b0001002c002d000200220000002c00030002000000142ab700123c1b99000dbb000b59120cb7000dbfb1000000010025000000060001fc0013010023000000040001000b000a002e002f00010022000000bf00040009000000831b02a0000912134da7001e1b10fea0000912144da700121b10fca0000912154da7000612164d2ab600174e2db6001836042cb6001836051504150560bc053a0603360715071504a20014190615072d1507b6001955840701a7ffeb03360815081505a20017190615071508602c1508b6001955840801a7ffe8bb001a591906b7001bb00000000100250000002a00080b0b0bfc0002070030ff001c000807002701070030070030010107003101000017fc000201fa001a01020032003300000102003400350000010200360037000001020038003900000000";
     }
 
     function _bootstrapComparable() private pure returns (bytes memory) {

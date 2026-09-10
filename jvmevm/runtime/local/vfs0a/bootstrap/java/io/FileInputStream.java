@@ -42,6 +42,7 @@ public class FileInputStream extends InputStream {
         String suffix;
         if (status == -1) suffix = " (No such file or directory)";
         else if (status == -2) suffix = " (Is a directory)";
+        else if (status == -4) suffix = " (Not a directory)";
         else suffix = " (Permission denied)";
         String path = file.path0();
         int first = path.length();

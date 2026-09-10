@@ -31,8 +31,8 @@ const pins = [
   {fn: '_bootstrapFile', source: 'bootstrap/java/io/File.java', sourceSHA256: '8a7a73c9aa27481f585523b9e389aaae0018550fee33470f2cabbb880fc72378', classHex: 'bootstrap/java/io/File.class.hex', bytes: 1267, classSHA256: 'aee6861b45213674f41d257a87a0508b3b9ca1d900ec995234bd51d129b83bc4'},
   {fn: '_bootstrapInputStream', source: 'bootstrap/java/io/InputStream.java', sourceSHA256: '3468cf45fceaf0f720028330ae8ad41c895625235f37a655e3d8e55864fc2714', classHex: 'bootstrap/java/io/InputStream.class.hex', bytes: 595, classSHA256: '224fd0acae8f99ca75c2cba79902dca8408fe91fa839599a96377a31a687ba72'},
   {fn: '_bootstrapOutputStream', source: 'bootstrap/java/io/OutputStream.java', sourceSHA256: 'e9d18ab9aa2dafcbb2be033bf85a21e344346f16ccd9210f936cfc1808f8fbcb', classHex: 'bootstrap/java/io/OutputStream.class.hex', bytes: 601, classSHA256: '2698b53831772935d798d8739ffe77b786f343e30f7bc5d7b1d1ae5c8efeb4c2'},
-  {fn: '_bootstrapFileInputStream', source: 'bootstrap/java/io/FileInputStream.java', sourceSHA256: 'dfe7fdd545d48c5fdacaa57985e3a5a839ebfe6ea929adc9338dbe3c7e34d78b', classHex: 'bootstrap/java/io/FileInputStream.class.hex', bytes: 1478, classSHA256: '68fd8bf1cdb48a5309b60a28ec9573dd68b5cc96318487b82f93cfce058e4545'},
-  {fn: '_bootstrapFileOutputStream', source: 'bootstrap/java/io/FileOutputStream.java', sourceSHA256: '18d546ad0458c82df99aa2762171e76fff7ed6f287277a7b98123ea8e77e7768', classHex: 'bootstrap/java/io/FileOutputStream.class.hex', bytes: 1581, classSHA256: '4e5175528984798d6da3ef9c3cd58395e0f66788be9e11ed1a2a35fb2015f6a8'},
+  {fn: '_bootstrapFileInputStream', source: 'bootstrap/java/io/FileInputStream.java', sourceSHA256: '0041c83044413ba6e4199e6a8be990a8810283aa07f5c5587ee69653945e26e8', classHex: 'bootstrap/java/io/FileInputStream.class.hex', bytes: 1515, classSHA256: 'cdda6fb532785d7e43d535bea0225e0bd5e920e28b39353c54f13e3d41ef9a65'},
+  {fn: '_bootstrapFileOutputStream', source: 'bootstrap/java/io/FileOutputStream.java', sourceSHA256: '79f3010db7a8ee7adea15937dec5a06798da6f48017a34a265fcd73f4ebb82e8', classHex: 'bootstrap/java/io/FileOutputStream.class.hex', bytes: 1618, classSHA256: '50aa63fa914989dada682851a65c9ce0c5400fd0f8e4e52246553ee2fc084315'},
 ];
 const imagePins = [
   ['Object','af9136af3be2c44ce120ac403beccb8b1cc963fc83dc1457e63f8b69dd497fe0'],
@@ -71,8 +71,8 @@ const imagePins = [
   ['File','aee6861b45213674f41d257a87a0508b3b9ca1d900ec995234bd51d129b83bc4'],
   ['InputStream','224fd0acae8f99ca75c2cba79902dca8408fe91fa839599a96377a31a687ba72'],
   ['OutputStream','2698b53831772935d798d8739ffe77b786f343e30f7bc5d7b1d1ae5c8efeb4c2'],
-  ['FileInputStream','68fd8bf1cdb48a5309b60a28ec9573dd68b5cc96318487b82f93cfce058e4545'],
-  ['FileOutputStream','4e5175528984798d6da3ef9c3cd58395e0f66788be9e11ed1a2a35fb2015f6a8'],
+  ['FileInputStream','cdda6fb532785d7e43d535bea0225e0bd5e920e28b39353c54f13e3d41ef9a65'],
+  ['FileOutputStream','50aa63fa914989dada682851a65c9ce0c5400fd0f8e4e52246553ee2fc084315'],
 ];
 const bootstrapImages = imagePins.map(([name, expected]) => {
   const match = source.match(new RegExp(`function _bootstrap${name}\\(\\)[\\s\\S]*?return hex"([0-9a-f]+)";`));
