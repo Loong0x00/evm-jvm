@@ -1,0 +1,651 @@
+{
+  "solc": "0.8.30+commit.73712a01",
+  "SourceSHA": "78329d1610c0ba180c7e267989bf36190a9d9eb536020acce42234066a94a2ae",
+  "RuntimeSHA": "74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3",
+  "RuntimeKeccak": "0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77",
+  "InitBytes": 9873,
+  "RuntimeBytes": 9177,
+  "runs": [
+    {
+      "name": "target-20554-q64-disk-newprocess",
+      "entries": 20554,
+      "bytes": 4057736,
+      "cd_bytes": 2100796,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 881638867,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1935216,
+        "Discover": 69092534,
+        "ScanTotal": 2387173354,
+        "ScanMax": 7478124,
+        "Finish": 46129,
+        "Scans": 322
+      },
+      "index_root": "0xd77e340054c70abdea5388ddec218812af50d189060545ddf961ed4a045f2759",
+      "state_root": "0xc27148e9cb616b6a65e488c8413ee0dba4c7b9327c75a827957a8191a1770cb6",
+      "commits": 823,
+      "commit_ms": 4637,
+      "max_commit_ms": 19,
+      "max_call_ms": 93,
+      "disk_bytes": 41517395,
+      "disk_before_index": 6187730,
+      "index_disk_delta": 35329665,
+      "elapsed_ms": 7837,
+      "new_process_reopened": true
+    },
+    {
+      "name": "capacity-32768-q64-memory",
+      "entries": 32768,
+      "bytes": 8159254,
+      "cd_bytes": 4194304,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 1772693340,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1935216,
+        "Discover": 69092534,
+        "ScanTotal": 4470603173,
+        "ScanMax": 8741182,
+        "Finish": 46129,
+        "Scans": 512
+      },
+      "index_root": "0xede967e8de0f9228d75b81620e4347fa913b388b88131a7e7eb8c4494e521e99",
+      "state_root": "0x8f7f35a7a351f473131c861e0a35698be2b6e822881f6bbfa77777574986ee09",
+      "commits": 1514,
+      "commit_ms": 698,
+      "max_commit_ms": 2,
+      "max_call_ms": 96,
+      "elapsed_ms": 6421
+    },
+    {
+      "name": "simultaneous-max-fields-64",
+      "entries": 64,
+      "bytes": 234550,
+      "cd_bytes": 150400,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 51052452,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1935216,
+        "Discover": 69092534,
+        "ScanTotal": 18625447,
+        "ScanMax": 18625447,
+        "Finish": 46129,
+        "Scans": 1
+      },
+      "index_root": "0xaa6279df6cf7cbd2682ef4019f7ff516c8d324dc59bdfd5254debce4a796d99a",
+      "state_root": "0x58a59f06eef4b5d02f8e3d48d51ddd414b2400bc82df0c17d19d1a54f47861be",
+      "commits": 35,
+      "commit_ms": 4,
+      "max_commit_ms": 0,
+      "max_call_ms": 97,
+      "elapsed_ms": 133
+    },
+    {
+      "name": "simultaneous-max-fields-64-zero-length-tlvs",
+      "entries": 64,
+      "bytes": 234550,
+      "cd_bytes": 150400,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 51052452,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1935216,
+        "Discover": 69092534,
+        "ScanTotal": 47642407,
+        "ScanMax": 47642407,
+        "Finish": 46129,
+        "Scans": 1
+      },
+      "index_root": "0x100c0e40226799bfae5559723e82bf9a298358710731d9f8868ab1a2bb217564",
+      "state_root": "0x84fbf60c70c56bc609e7d3dc3fe8a5bfa89b720fcfd329721d79231ac09ad5f8",
+      "commits": 35,
+      "commit_ms": 3,
+      "max_commit_ms": 0,
+      "max_call_ms": 94,
+      "elapsed_ms": 171
+    },
+    {
+      "name": "empty",
+      "entries": 0,
+      "bytes": 22,
+      "cd_bytes": 0,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 185844,
+        "AS0AppendMax": 185844,
+        "AS0Seal": 34194,
+        "IndexCreate": 1935216,
+        "Discover": 72000,
+        "ScanTotal": 0,
+        "ScanMax": 0,
+        "Finish": 46129,
+        "Scans": 0
+      },
+      "index_root": "0xbe4162501e0eeae514d56a8e2a5dc97448f7358c3e16a9bebc061689d561c5b3",
+      "state_root": "0xd11a12e88f4327c236feb0690289a8efe3723cd22dd6f9c07bd5284977c25031",
+      "commits": 6,
+      "commit_ms": 0,
+      "max_commit_ms": 0,
+      "max_call_ms": 0,
+      "elapsed_ms": 0
+    },
+    {
+      "name": "same-128-q1",
+      "entries": 128,
+      "bytes": 23168,
+      "cd_bytes": 7936,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 5106474,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1935216,
+        "Discover": 24420101,
+        "ScanTotal": 16890077,
+        "ScanMax": 152151,
+        "Finish": 46129,
+        "Scans": 128
+      },
+      "index_root": "0x71c502e5d13f44ea440557daadde34b662a7f1f670c134f767a275a7b795cb3e",
+      "state_root": "0x10d725dbd0bc87a5fd0e2fb32e3e07bc818169139161532fdd67b5f42fd2ae62",
+      "commits": 136,
+      "commit_ms": 7,
+      "max_commit_ms": 0,
+      "max_call_ms": 33,
+      "elapsed_ms": 65
+    },
+    {
+      "name": "same-128-q64",
+      "entries": 128,
+      "bytes": 23168,
+      "cd_bytes": 7936,
+      "gas": {
+        "AS0Create": 611673,
+        "AS0Append": 5106474,
+        "AS0AppendMax": 1830926,
+        "AS0Seal": 34194,
+        "IndexCreate": 1935216,
+        "Discover": 24420101,
+        "ScanTotal": 10797057,
+        "ScanMax": 5412147,
+        "Finish": 46129,
+        "Scans": 2
+      },
+      "index_root": "0x71c502e5d13f44ea440557daadde34b662a7f1f670c134f767a275a7b795cb3e",
+      "state_root": "0x10d725dbd0bc87a5fd0e2fb32e3e07bc818169139161532fdd67b5f42fd2ae62",
+      "commits": 10,
+      "commit_ms": 2,
+      "max_commit_ms": 1,
+      "max_call_ms": 38,
+      "elapsed_ms": 53
+    }
+  ],
+  "controls": [
+    {
+      "Name": "cd-cap-plus-one",
+      "Outcome": "ZI0Error",
+      "error_code": 7,
+      "gas": 69066275,
+      "rolled_back": true
+    },
+    {
+      "Name": "dense-eocd-signatures",
+      "Outcome": "ok",
+      "gas": 78055661,
+      "rolled_back": true
+    },
+    {
+      "Name": "duplicate-across-batches",
+      "Outcome": "ZI0Error",
+      "error_code": 18,
+      "gas": 56504,
+      "rolled_back": true
+    },
+    {
+      "Name": "early-entry",
+      "Outcome": "ZI0Error",
+      "error_code": 30,
+      "gas": 16408,
+      "rolled_back": true
+    },
+    {
+      "Name": "early-finish",
+      "Outcome": "ZI0Error",
+      "error_code": 29,
+      "gas": 18711,
+      "rolled_back": true
+    },
+    {
+      "Name": "early-lookup",
+      "Outcome": "ZI0Error",
+      "error_code": 30,
+      "gas": 16480,
+      "rolled_back": true
+    },
+    {
+      "Name": "failed-batch-rollback",
+      "Outcome": "ZI0Error",
+      "error_code": 10,
+      "gas": 18678,
+      "rolled_back": true,
+      "retry": true
+    },
+    {
+      "Name": "fixed-runtime-identity-across-owners",
+      "Outcome": "ok",
+      "gas": 1935216,
+      "rolled_back": true
+    },
+    {
+      "Name": "opaque-name-payload-markers",
+      "Outcome": "ok",
+      "gas": 203781,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-ambiguous-eocd",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 290144,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-bad-local-signature",
+      "Outcome": "ZI0Error",
+      "error_code": 20,
+      "gas": 53569,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-bad-range",
+      "Outcome": "ZI0Error",
+      "error_code": 15,
+      "gas": 41879,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-bounded-128",
+      "Outcome": "ok",
+      "gas": 15820780,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-central-reordered",
+      "Outcome": "ZI0Error",
+      "error_code": 27,
+      "gas": 136041,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-comment-false-signatures",
+      "Outcome": "ok",
+      "gas": 288305,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-cross-as0-8192",
+      "Outcome": "ok",
+      "gas": 14134625,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-cross-read-4096",
+      "Outcome": "ok",
+      "gas": 9823512,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-descriptor-nosig",
+      "Outcome": "ok",
+      "gas": 192744,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-descriptor-signature",
+      "Outcome": "ok",
+      "gas": 196940,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-duplicate-name",
+      "Outcome": "ZI0Error",
+      "error_code": 18,
+      "gas": 126641,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-empty",
+      "Outcome": "ok",
+      "gas": 72000,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-empty-name",
+      "Outcome": "ZI0Error",
+      "error_code": 13,
+      "gas": 41321,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-encryption",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-local-name-mismatch",
+      "Outcome": "ZI0Error",
+      "error_code": 22,
+      "gas": 59453,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-max-eocd-window",
+      "Outcome": "ok",
+      "gas": 69092534,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-multidisk",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 244332,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-overlap",
+      "Outcome": "ZI0Error",
+      "error_code": 15,
+      "gas": 41879,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-stored-deflated",
+      "Outcome": "ok",
+      "gas": 272535,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-truncated",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 240271,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-unsealed-store",
+      "Outcome": "ZI0Error",
+      "error_code": 3,
+      "gas": 72900,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-unsupported-method",
+      "Outcome": "ZI0Error",
+      "error_code": 15,
+      "gas": 41819,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-wrong-code-binding",
+      "Outcome": "ZI0Error",
+      "error_code": 2,
+      "gas": 69329,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-wrong-content-root",
+      "Outcome": "ZI0Error",
+      "error_code": 3,
+      "gas": 75749,
+      "rolled_back": true
+    },
+    {
+      "Name": "original-zip64-extra",
+      "Outcome": "ZI0Error",
+      "error_code": 17,
+      "gas": 46864,
+      "rolled_back": true
+    },
+    {
+      "Name": "owner-refusal",
+      "Outcome": "ZI0Error",
+      "error_code": 1,
+      "gas": 2412,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-last-descriptor-overlap",
+      "Outcome": "ZI0Error",
+      "error_code": 26,
+      "gas": 68110,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-10",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-12",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-13",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-14",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-15",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-4",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-7",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-8",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-reserved-flag-9",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41555,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-stored-option-1",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41633,
+      "rolled_back": true
+    },
+    {
+      "Name": "parent-stored-option-2",
+      "Outcome": "ZI0Error",
+      "error_code": 14,
+      "gas": 41633,
+      "rolled_back": true
+    },
+    {
+      "Name": "post-final-scan",
+      "Outcome": "ZI0Error",
+      "error_code": 4,
+      "gas": 4863,
+      "rolled_back": true
+    },
+    {
+      "Name": "scan-65",
+      "Outcome": "ZI0Error",
+      "error_code": 11,
+      "gas": 20939,
+      "rolled_back": true
+    },
+    {
+      "Name": "scan-zero",
+      "Outcome": "ZI0Error",
+      "error_code": 11,
+      "gas": 20916,
+      "rolled_back": true
+    },
+    {
+      "Name": "wrong-cursor",
+      "Outcome": "ZI0Error",
+      "error_code": 10,
+      "gas": 18728,
+      "rolled_back": true
+    },
+    {
+      "Name": "wrong-finish-root",
+      "Outcome": "ZI0Error",
+      "error_code": 29,
+      "gas": 21034,
+      "rolled_back": true,
+      "retry": true
+    },
+    {
+      "Name": "wrong-rolling-root",
+      "Outcome": "ZI0Error",
+      "error_code": 10,
+      "gas": 20857,
+      "rolled_back": true
+    },
+    {
+      "Name": "zip64-locator-structural-empty",
+      "Outcome": "ZI0Error",
+      "error_code": 9,
+      "gas": 71407,
+      "rolled_back": true
+    }
+  ],
+  "independent_probes": [
+    {
+      "Name": "constructor-zero-owner",
+      "Outcome": "ZI0Error",
+      "error_code": 1,
+      "gas": 331,
+      "rolled_back": false,
+      "detail": "constructor state/code reverted; top-level failed CREATE still increments the zero creator nonce"
+    },
+    {
+      "Name": "dense-valid-ending-eocd-candidates",
+      "Outcome": "ZI0Error",
+      "error_code": 6,
+      "gas": 79234338,
+      "rolled_back": true
+    },
+    {
+      "Name": "direct-low-gas-after-sstore",
+      "Outcome": "OOG-rollback-retry-ok",
+      "gas": 100000,
+      "rolled_back": true,
+      "retry": true,
+      "detail": "used=100000 sstore_opcodes_reached=1 completed_changed_writes=1 oog_faults=0 error=\"out of gas\" retry_gas=117532 retry_root=0x7fc9b321a526cbc514fe97c1be102f9b47d9948b2982891ac4c1d95152b490a0 pre_root=0x9abac90659c86be39975f2beed92075f7b56c94e1169e30683eaebf0012c4611 post_oog_root=0x9abac90659c86be39975f2beed92075f7b56c94e1169e30683eaebf0012c4611 actual_roots=0x9abac90659c86be39975f2beed92075f7b56c94e1169e30683eaebf0012c4611/0x9abac90659c86be39975f2beed92075f7b56c94e1169e30683eaebf0012c4611 pre_storage=0xe8d8170b6b3fffae730a30f2c892f0302e24108ab67dd52f756ce4f707321bc2 post_oog_storage=0xe8d8170b6b3fffae730a30f2c892f0302e24108ab67dd52f756ce4f707321bc2 nonces=[1 2 2]/[1 2 2] logs=0/0 map0=0x0000000000000000000000000000000000000000000000000000000000000001/0x0000000000000000000000000000000000000000000000000000000000000001 map1=0x0000000000000000000000000000000000000000000000000000000000000000/0x0000000000000000000000000000000000000000000000000000000000000000 record0=0x00000000000000000100005e8b7be4300000001000000800008c000000000076/0x00000000000000000100005e8b7be4300000001000000800008c000000000076"
+    },
+    {
+      "Name": "entry-index-bound",
+      "Outcome": "ZI0Error",
+      "error_code": 31,
+      "gas": 16454,
+      "rolled_back": true
+    },
+    {
+      "Name": "geometry-data-range",
+      "Outcome": "ZI0Error",
+      "error_code": 23,
+      "gas": 59683,
+      "rolled_back": true
+    },
+    {
+      "Name": "geometry-local-order-overlap",
+      "Outcome": "ZI0Error",
+      "error_code": 27,
+      "gas": 136078,
+      "rolled_back": true
+    },
+    {
+      "Name": "lookup-empty-length",
+      "Outcome": "ZI0Error",
+      "error_code": 32,
+      "gas": 16519,
+      "rolled_back": true
+    },
+    {
+      "Name": "lookup-overlength",
+      "Outcome": "ZI0Error",
+      "error_code": 32,
+      "gas": 16542,
+      "rolled_back": true
+    },
+    {
+      "Name": "opaque-binary-nonascii-dot-slash-names",
+      "Outcome": "ok",
+      "gas": 0,
+      "rolled_back": true,
+      "detail": "exact byte hits and distinct normalization-looking absent controls"
+    },
+    {
+      "Name": "scan-at-eof",
+      "Outcome": "ZI0Error",
+      "error_code": 11,
+      "gas": 20977,
+      "rolled_back": true
+    },
+    {
+      "Name": "scan-empty-before-finish",
+      "Outcome": "ZI0Error",
+      "error_code": 11,
+      "gas": 20977,
+      "rolled_back": true
+    },
+    {
+      "Name": "test-only-nameindex-bucket-redirect",
+      "Outcome": "ZI0Error",
+      "error_code": 19,
+      "gas": 35984,
+      "rolled_back": true,
+      "detail": "isolated TEST-only memory-state redirect to existing entry; full-byte mismatch rejected, then original lookup restored"
+    }
+  ],
+  "rss_kib": 270200,
+  "elapsed_ms": 18693
+}
+ZI0 final replay retained at build/java-diff-mc-zi0-parent-runtime-replay-14c565614

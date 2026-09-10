@@ -117,7 +117,8 @@ The exact adjusted driver and disposable-workspace wrapper are retained as
 `testdata/final_replay.go.txt` and `testdata/replay.sh`; rerun from repository root:
 
 ```sh
-jvmevm/artifactstore/zi0/runtime/testdata/replay.sh
+# Supply a disposable workspace; retain stdout/report in a NEW evidence run.
+jvmevm/artifactstore/zi0/runtime/testdata/replay.sh build/java-diff-mc-zi0-runtime-replay
 ```
 
 The runtime-local Go test independently supplies the production-policy zero-owner

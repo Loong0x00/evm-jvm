@@ -1,0 +1,14 @@
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState/page-count-truncation
+    parent_test.go:224: noncanonical page-count-truncation accepted: {Owner:0x00000000000000000000000000005a4930700003 Controller:0x9Fe84BE106c7782FEf5AF8744BB562F5520E0d69 DeclaredLength:8193 Cursor:0 Sealed:false PageCount:0 ChainCommitment:0xd502541a60f4808c017a013c7d1f9247adcd31c887f5df5eb312b389cd3a4ab9 ContentCommitment:0x0000000000000000000000000000000000000000000000000000000000000000 PageSize:8192 MaxPages:4096 MaxLength:33554432 RuntimeCodeHash:0xc8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896 StateRoot:0xd025fc0b2796777f9de011c38674ccf7b1276a9f38a3f7a8ad8120c2945c5718 GasUsed:17295}
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState/partial-before-end
+    parent_test.go:224: noncanonical partial-before-end accepted: {Owner:0x00000000000000000000000000005a4930700003 Controller:0x9Fe84BE106c7782FEf5AF8744BB562F5520E0d69 DeclaredLength:8193 Cursor:1 Sealed:false PageCount:0 ChainCommitment:0xd502541a60f4808c017a013c7d1f9247adcd31c887f5df5eb312b389cd3a4ab9 ContentCommitment:0x0000000000000000000000000000000000000000000000000000000000000000 PageSize:8192 MaxPages:4096 MaxLength:33554432 RuntimeCodeHash:0xc8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896 StateRoot:0xd025fc0b2796777f9de011c38674ccf7b1276a9f38a3f7a8ad8120c2945c5718 GasUsed:17295}
+=== RUN   TestZI0ParentAS0HeadMalformedCopiedState/wrong-owner
+    parent_test.go:224: noncanonical wrong-owner accepted: {Owner:0x00000000000000000000000000005a4930700002 Controller:0x9Fe84BE106c7782FEf5AF8744BB562F5520E0d69 DeclaredLength:8193 Cursor:0 Sealed:false PageCount:0 ChainCommitment:0xd502541a60f4808c017a013c7d1f9247adcd31c887f5df5eb312b389cd3a4ab9 ContentCommitment:0x0000000000000000000000000000000000000000000000000000000000000000 PageSize:8192 MaxPages:4096 MaxLength:33554432 RuntimeCodeHash:0xc8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896 StateRoot:0xd025fc0b2796777f9de011c38674ccf7b1276a9f38a3f7a8ad8120c2945c5718 GasUsed:17295}
+--- FAIL: TestZI0ParentAS0HeadMalformedCopiedState (0.00s)
+    --- FAIL: TestZI0ParentAS0HeadMalformedCopiedState/page-count-truncation (0.00s)
+    --- FAIL: TestZI0ParentAS0HeadMalformedCopiedState/partial-before-end (0.00s)
+    --- FAIL: TestZI0ParentAS0HeadMalformedCopiedState/wrong-owner (0.00s)
+FAIL
+FAIL	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0	0.004s
+FAIL

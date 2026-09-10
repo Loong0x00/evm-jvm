@@ -21,6 +21,11 @@ actual embedded production artifacts and retained failures IN REPO under
 2. validateABI accepts an extra event, despite frozen ABI having zero events. Parent
    ExactABINoEvent fails. Exact20 entries must mean constructor+error+18functions,
    not just the function map count.
+3. Parent TEST-only copied-state probes also reproduce the missing AS0 Head guards:
+   pageCount2^32 truncates to0, cursor1/pageCount0 before EOF is accepted, and a changed
+   owner is returned despite session binding. These are malformed copied-state
+   validation gaps, NOT demonstrated live EVM owner bypasses. head-before.{log,json}
+   and parent tests retain all three failures.
 
 Parent real artifact two-entry upload/seal/CREATE/discover/scan/finish/lookup works
 in MEMORY only so far. Failing parent tests are committed in
@@ -50,6 +55,14 @@ fallback. Implement all frozen transport tests and close the missing behavior:
   process reopen, full-byte guards/geometry/CAS/owner/EOF, metadata-beforeDB, links,
   no adoption/wipe/redeploy, positive success or exact expected semantic error.
   Self-report or a previously accepted AS0 driver is not actual ZI0 session evidence.
+
+Parent independently rebuilt the real production Solidity artifact byte-identically,
+ran its runtime tests and full runtime replay: exit0,19.107s/300404736B sampled RSS.
+All7 runs/54 controls/12 probes matched worker EVM outputs. This is evidence for
+runtime behavior using its standalone replay driver, NOT successful operation of
+this new Go Session's broken disk path. runtime-{repro,tests,full-replay,report} files
+are archived alongside the parent failures. Runtime source17317B SHA78329d1610c0ba180c7e267989bf36190a9d9eb536020acce42234066a94a2ae;
+init9873B (+64args=9937), runtime9177B pins remain unchanged.
 
 No production Sol changes are currently required by these findings. Parent made the
 runtime testdata wrapper require an explicit workspace instead of a default /tmp

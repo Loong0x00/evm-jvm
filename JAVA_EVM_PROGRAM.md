@@ -379,3 +379,18 @@ old-root recovery/ambiguous poison. No silently copied toy-transport guards.
 Next2 disjoint implementation workers: Sol/high runtime, Luna/high Go harness
 (frozen pure coding), parent independent16-group acceptance. NoFast/priority/global
 settings changes/spawn/peer writes/push. All new key evidence is tracked in repo.
+
+### Integrated ZI0 candidate still blocked on real transport
+
+Runtime549e0e809/119935802 ->ab1a0b88e/d10d9700d, Goacd40faa3/8d076105f
+->f0f4ea441/14c565614. Parent actual runtime rebuild/full replay passes19.107s/
+300404736B sampledRSS, all7run/54control/12probe EVM results identical. Runtime9177B
+SHA74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3.
+BUT Go worker delivered ONLY stub compilation/vet and no behavior tests. Parent
+normal disk Open lacks AS0 CREATE, returns zero identity; append fails. Extra-event
+ABI acceptance and three copied-AS0Head guard omissions also reproduced. Failures
+and final runtime gates are retained in evidence/java-evm/zi0/production-14c565614/.
+JAVA_EVM_MC_ZI0_CANDIDATE_FINDINGS.md governs ONE Sol/high followup Go repair+real
+suite worker atmc-zi0-transport-repair. Parent independently reviews runtime/tests.
+Make targets exist but candidate test/demo intentionally fail until corrected;
+no ZI0 acceptance, no inflated/resource/class/MC outcome is claimed.

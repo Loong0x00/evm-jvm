@@ -235,3 +235,14 @@ java-mc-as0-test: java-mc-as0-check
 	go test -count=1 -timeout=18m ./jvmevm/artifactstore/as0
 java-mc-as0-demo: java-mc-as0-check
 	go test -count=1 -v -timeout=18m -run '^TestAS0HarnessFull32MiBDiskPerAppendNewProcess$$' ./jvmevm/artifactstore/as0
+
+# ZI0 EVM ZIP metadata/ranges only; not inflation/ClassLoader/Minecraft readiness.
+.PHONY: java-mc-zi0-build java-mc-zi0-check java-mc-zi0-test java-mc-zi0-demo
+java-mc-zi0-build:
+	cd jvmevm/artifactstore/zi0/runtime && npm ci --ignore-scripts && npm run build
+java-mc-zi0-check:
+	cd jvmevm/artifactstore/zi0/runtime && npm ci --ignore-scripts && npm run check
+java-mc-zi0-test: java-mc-zi0-check
+	go test -count=1 -timeout=18m ./jvmevm/artifactstore/zi0/...
+java-mc-zi0-demo: java-mc-zi0-check
+	go test -count=1 -v -timeout=18m -run '^TestZI0ParentRealArtifactPipeline$$' ./jvmevm/artifactstore/zi0

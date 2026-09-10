@@ -3,8 +3,10 @@ package zi0
 import (
 	"archive/zip"
 	"bytes"
+	"encoding/binary"
 	"encoding/json"
 	zi0assets "github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0/runtime"
+	"math/big"
 	"testing"
 
 	"github.com/ethereum/go-ethereum/accounts/abi"
@@ -192,5 +194,35 @@ func TestZI0ParentExactABINoEvent(t *testing.T) {
 	}
 	if e = validateABI(a); e == nil {
 		t.Fatal("non-frozen event accepted by exact ABI validator")
+	}
+}
+
+func TestZI0ParentAS0HeadMalformedCopiedState(t *testing.T) {
+	for _, kind := range []string{"page-count-truncation", "partial-before-end", "wrong-owner"} {
+		t.Run(kind, func(t *testing.T) {
+			s, e := NewMemory(common.HexToAddress("0x5a4930700003"), 8193)
+			if e != nil {
+				t.Fatal(e)
+			}
+			defer s.Close()
+			original := s.state
+			s.state = original.Copy()
+			defer func() { s.state = original }()
+			// TEST-only changed state, never a production page/state installer.
+			if kind == "page-count-truncation" {
+				s.state.SetState(s.as0Address, common.BigToHash(big.NewInt(3)), common.BigToHash(new(big.Int).Lsh(big.NewInt(1), 32)))
+			} else {
+				word := s.state.GetState(s.as0Address, common.Hash{})
+				if kind == "partial-before-end" {
+					binary.BigEndian.PutUint32(word[4:8], 1)
+				} else {
+					word[31] ^= 1
+				}
+				s.state.SetState(s.as0Address, common.Hash{}, word)
+			}
+			if h, e := s.Head(OrdinaryGas); e == nil {
+				t.Fatalf("noncanonical %s accepted: %+v", kind, h.AS0)
+			}
+		})
 	}
 }
