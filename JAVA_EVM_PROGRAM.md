@@ -269,3 +269,14 @@ Initial256KiB failure and explicit320KiB VFS-only LOCAL revision retained. Legac
 combinedwalltimeout plus separate successful remainder are recorded as TWO phases.
 No fullSE/standarddeployment/world capacity/MCstartup/EULA/listener/Done claim.
 One static next-entry frontier worker is preparing workload-dependent next steps.
+
+## Next artifact-data dependency preparation
+
+Static frontier bf4b8e15f confirms pre-main LogManager and resource initialization;
+parent replayed the4-entry34977B/five-entry46841B measurements and exact clinit PCs.
+See JAVA_EVM_MC_AS0_PREPARATION.md: measure an EVM-created immutable raw byte-page
+store first, separate from64KiB mutable VFS/1MiB checkpoints, before ZIP/DEFLATE/
+lazy class loading and launch. Candidate32MiB/8KiBpage limits require measurements.
+Explicit hash scope: EVM commits actual received pages; host SHA256 input-pin checking
+is transport integrity, NOT EVM whole-JAR SHA256 proof or a host ClassLoader.
+No new production interface frozen, no MC/EULA/listener/Done, no automatic GitHub push.

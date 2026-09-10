@@ -217,3 +217,11 @@ LATEST VFS0a revision: JAVA_EVM_MC_VFS0A_REVISION1.md. Parent independently meas
 this UNACCEPTED profile under artistic priority, rather than requiring module migration.
 Old caps/core/opcode accounting unchanged;100M/1B gas,1MiB blob,25M reserve unchanged.
 Path traversal/ENOTDIR correction mandatory before acceptance; no Minecraft Done.
+
+NEXT preparation: JAVA_EVM_MC_AS0_PREPARATION.md splits the static CD0 proposal into
+opaque immutable EVM byte pages first, then ZIP/DEFLATE and lazy class loading.
+One measurement worker only; no AS0 implementation freeze yet. EVM page/content
+commitments are NOT whole-JAR official SHA256 verification. Host raw-file hashing
+may check input transport integrity, never provide class/resource execution authority.
+Do not fake Log4j, run Minecraft, accept EULA, or change accepted VFS caps to cross
+its4-class/64KiB frontier. VFS0a remains the latest accepted profile72aa13f15.
