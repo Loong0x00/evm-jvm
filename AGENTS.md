@@ -241,3 +241,8 @@ length for a fixed controller code hash. Ordinary EVM CREATE for controller/page
 no measurements-only SHA/comparator API in production. TWO disjoint runtime/harness
 workers; parent16group acceptance. AS0 remains UNACCEPTED, unmounted from JVM;
 VFS0a72aa13f15 remains latest accepted, noZIP/inflate/classloading/MC/Done yet.
+
+NEXT preflight: JAVA_EVM_MC_ZI0_PREPARATION.md, EVM ZIP directory/entry-range indexing
+against accepted AS0 sealed bytes. One worker only; no ZIP/DEFLATE/ClassLoader
+implementation frozen yet. Static server metadata may size bounds, never act as
+production catalogue/offset authority. Preserve all AS0/VFS budgets and no MC run.
