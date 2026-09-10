@@ -63,7 +63,8 @@ source/artifact was copied or committed here. Against those exact bytes:
   wrappers and mkdir distinction, passed in 103.419s;
 - exact phase1/FOS putfield-PC29 pending-truncate disk/new-process resume passed in
   5.625s without code reinstall;
-- the complete package passed in 306.588s.
+- the final harness package (including new-process embed independence) passed in
+  301.122s.
 
 Reproduction used `go test -overlay=/tmp/vfs0a-runtime-r1-overlay.json
 ./jvmevm/localcontinuation/vfs0a -count=1`; the overlay mapped only
