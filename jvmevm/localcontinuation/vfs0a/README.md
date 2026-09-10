@@ -50,9 +50,32 @@ truncation and before handle binding. It then resumes without reopening/truncati
 or installing code and compares exact terminal roots/counters with an uninterrupted
 control. Production Go still has no checkpoint/heap/path parser.
 
+## Harness-r1 verification record
+
+At harness commit time, the read-only runtime-r1 peer had a freshly built but not yet
+integrated 292377-byte candidate, deployed-runtime SHA-256
+`569bf7072f663539595052985a0c99c77aa32197bc9f4c85236413b619c87475`.
+A Go overlay replaced only the embedded artifact input with that peer file; no runtime
+source/artifact was copied or committed here. Against those exact bytes:
+
+- all original 24 controls and the selected ten full q1/q7 chains passed in 185.332s;
+- all seven path/ENOTDIR actual-EVM controls, plus q1/q7 for the two file-prefix
+  wrappers and mkdir distinction, passed in 103.419s;
+- exact phase1/FOS putfield-PC29 pending-truncate disk/new-process resume passed in
+  5.625s without code reinstall;
+- the complete package passed in 306.588s.
+
+Reproduction used `go test -overlay=/tmp/vfs0a-runtime-r1-overlay.json
+./jvmevm/localcontinuation/vfs0a -count=1`; the overlay mapped only
+`jvmevm/runtime/local/vfs0a/artifacts/VFS0aInterpreter.json` to the peer's same path.
+This is dependency evidence, not a claim that this branch's old embedded artifact
+passes: a direct `seedFile` replay still fails with the retained
+`ThrowableProfileError(2,37,0)`. Parent must integrate and independently hash/retest
+the final runtime before acceptance.
+
 Ordinary calls use 100,000,000 gas; explicit boundary work may use
-1,000,000,000 gas. The runtime remains limited to 320 KiB (VFS0a revision1 only), checkpoints to 1
-MiB, ordinary cases to 4,096 dispatch units, and dedicated quota cases to
-65,536 units. The external acceptance gate remains 20 minutes/4 GiB. This
+1,000,000,000 gas. The runtime remains limited to 320 KiB (VFS0a revision1 only),
+checkpoints to 1 MiB, ordinary cases to 4,096 dispatch units, and dedicated quota
+cases to 65,536 units. The external acceptance gate remains 20 minutes/4 GiB. This
 package adds no host filesystem production bridge, Java/path/heap parser,
 Minecraft/JAR/EULA execution, listener, or readiness claim.
