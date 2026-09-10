@@ -1,0 +1,10 @@
+const fs=require('fs');
+const solc=require('/home/user/evm-jvm/geth/jvmevm/runtime/node_modules/solc');
+const source=fs.readFileSync(__dirname+'/ZI0Prototype.sol','utf8');
+const input={language:'Solidity',sources:{'ZI0Prototype.sol':{content:source}},settings:{optimizer:{enabled:true,runs:200},viaIR:true,evmVersion:'cancun',metadata:{appendCBOR:false,bytecodeHash:'none'},outputSelection:{'*':{'*':['abi','evm.bytecode.object','evm.deployedBytecode.object']}}}};
+const out=JSON.parse(solc.compile(JSON.stringify(input)));
+for(const e of out.errors||[]) console.error(e.formattedMessage);
+if((out.errors||[]).some(e=>e.severity==='error'))process.exit(1);
+const c=out.contracts['ZI0Prototype.sol'].ZI0Prototype;
+fs.writeFileSync(__dirname+'/prototype.json',JSON.stringify({abi:c.abi,bytecode:'0x'+c.evm.bytecode.object,runtime:'0x'+c.evm.deployedBytecode.object},null,2));
+console.log(JSON.stringify({solc:solc.version(),init:c.evm.bytecode.object.length/2,runtime:c.evm.deployedBytecode.object.length/2}));

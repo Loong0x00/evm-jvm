@@ -1,0 +1,47 @@
+=== RUN   TestAS0Parent16ExactABI
+=== RUN   TestAS0Parent16ExactABI/fallback
+=== RUN   TestAS0Parent16ExactABI/receive
+=== RUN   TestAS0Parent16ExactABI/anonymous-PageIssued
+=== RUN   TestAS0Parent16ExactABI/anonymous-Sealed
+--- PASS: TestAS0Parent16ExactABI (0.00s)
+    --- PASS: TestAS0Parent16ExactABI/fallback (0.00s)
+    --- PASS: TestAS0Parent16ExactABI/receive (0.00s)
+    --- PASS: TestAS0Parent16ExactABI/anonymous-PageIssued (0.00s)
+    --- PASS: TestAS0Parent16ExactABI/anonymous-Sealed (0.00s)
+=== RUN   TestAS0Parent15NestedStateLinkRefused
+--- PASS: TestAS0Parent15NestedStateLinkRefused (0.00s)
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/0/0x0000000000000000000000000000000000000000
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/0/0x000000000000000000000000000000000000A502
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/1/0x0000000000000000000000000000000000000000
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/1/0x000000000000000000000000000000000000A502
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/8193/0x0000000000000000000000000000000000000000
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/8193/0x000000000000000000000000000000000000A502
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/33554432/0x0000000000000000000000000000000000000000
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/33554432/0x000000000000000000000000000000000000A502
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/33554433/0x0000000000000000000000000000000000000000
+=== RUN   TestAS0Parent0102ConstructorCodeIdentity/33554433/0x000000000000000000000000000000000000A502
+--- PASS: TestAS0Parent0102ConstructorCodeIdentity (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/0/0x0000000000000000000000000000000000000000 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/0/0x000000000000000000000000000000000000A502 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/1/0x0000000000000000000000000000000000000000 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/1/0x000000000000000000000000000000000000A502 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/8193/0x0000000000000000000000000000000000000000 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/8193/0x000000000000000000000000000000000000A502 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/33554432/0x0000000000000000000000000000000000000000 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/33554432/0x000000000000000000000000000000000000A502 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/33554433/0x0000000000000000000000000000000000000000 (0.00s)
+    --- PASS: TestAS0Parent0102ConstructorCodeIdentity/33554433/0x000000000000000000000000000000000000A502 (0.00s)
+=== RUN   TestAS0Parent030405060708PageRootsAndByteRanges
+--- PASS: TestAS0Parent030405060708PageRootsAndByteRanges (0.00s)
+=== RUN   TestAS0Parent09ReadChecksIssuedCode
+--- PASS: TestAS0Parent09ReadChecksIssuedCode (0.00s)
+=== RUN   TestAS0Parent101314PerCallPublicationAndRetry
+--- PASS: TestAS0Parent101314PerCallPublicationAndRetry (0.00s)
+=== RUN   TestAS0Parent09HeadRejectsNonfinalPartialCursor
+--- PASS: TestAS0Parent09HeadRejectsNonfinalPartialCursor (0.00s)
+=== RUN   TestAS0Parent11All32MiBReadback
+    parent_test.go:458: all32MiB EVM readback SHA256(transport only)=f0c2d9e6b1bf2c241f831969ef8a26f41aece0cb3625fb4fb9ea5751241d0269 appendTotalGas=7289399396 maxAppendGas=1830926 readTotalGas=139689984
+--- PASS: TestAS0Parent11All32MiBReadback (1.35s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0	1.365s

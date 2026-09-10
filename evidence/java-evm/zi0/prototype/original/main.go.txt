@@ -1,0 +1,376 @@
+package main
+
+import (
+	"bytes"
+	"compress/flate"
+	"encoding/binary"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"hash/crc32"
+	"math/big"
+	"os"
+	"sort"
+	"syscall"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/core/vm"
+	"github.com/ethereum/go-ethereum/core/vm/runtime"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/triedb"
+)
+
+const ordinary = uint64(100_000_000)
+
+type artifact struct {
+	ABI      json.RawMessage `json:"abi"`
+	Bytecode string          `json:"bytecode"`
+	Runtime  string          `json:"runtime"`
+}
+type ent struct {
+	name       string
+	data       []byte
+	method     uint16
+	descriptor int
+	flags      uint16
+	extra      []byte
+	comment    []byte
+}
+type built struct {
+	raw           []byte
+	cd, eocd      uint32
+	locals, datas []uint32
+	central       [][]byte
+}
+type report struct {
+	Name          string `json:"name"`
+	Size          int    `json:"size"`
+	Pages         int    `json:"pages"`
+	Want          string `json:"want"`
+	Got           string `json:"got"`
+	AS0Create     uint64 `json:"as0_create_gas"`
+	AS0Append     uint64 `json:"as0_append_gas"`
+	AS0AppendMax  uint64 `json:"as0_append_max_gas"`
+	AS0Seal       uint64 `json:"as0_seal_gas"`
+	ScannerCreate uint64 `json:"scanner_create_gas"`
+	Scan          uint64 `json:"scan_gas"`
+	Count         uint32 `json:"count,omitempty"`
+	CDSize        uint32 `json:"cd_size,omitempty"`
+	Root          string `json:"index_root,omitempty"`
+}
+
+func put16(b *bytes.Buffer, v uint16) { binary.Write(b, binary.LittleEndian, v) }
+func put32(b *bytes.Buffer, v uint32) { binary.Write(b, binary.LittleEndian, v) }
+func deflate(x []byte) []byte {
+	var b bytes.Buffer
+	w, _ := flate.NewWriter(&b, flate.DefaultCompression)
+	w.Write(x)
+	w.Close()
+	return b.Bytes()
+}
+func makezip(es []ent, prefix int, order []int, comment []byte) built {
+	var out bytes.Buffer
+	out.Write(bytes.Repeat([]byte{'X'}, prefix))
+	z := built{}
+	for _, e := range es {
+		z.locals = append(z.locals, uint32(out.Len()))
+		name := []byte(e.name)
+		payload := e.data
+		if e.method == 8 {
+			payload = deflate(e.data)
+		}
+		flags := uint16(0x800) | e.flags
+		if e.descriptor >= 0 {
+			flags |= 8
+		}
+		crc := crc32.ChecksumIEEE(e.data)
+		put32(&out, 0x04034b50)
+		put16(&out, 20)
+		put16(&out, flags)
+		put16(&out, e.method)
+		put16(&out, 0)
+		put16(&out, 0)
+		if e.descriptor >= 0 {
+			put32(&out, 0)
+			put32(&out, 0)
+			put32(&out, 0)
+		} else {
+			put32(&out, crc)
+			put32(&out, uint32(len(payload)))
+			put32(&out, uint32(len(e.data)))
+		}
+		put16(&out, uint16(len(name)))
+		put16(&out, uint16(len(e.extra)))
+		out.Write(name)
+		out.Write(e.extra)
+		z.datas = append(z.datas, uint32(out.Len()))
+		out.Write(payload)
+		if e.descriptor >= 0 {
+			if e.descriptor == 1 {
+				put32(&out, 0x08074b50)
+			}
+			put32(&out, crc)
+			put32(&out, uint32(len(payload)))
+			put32(&out, uint32(len(e.data)))
+		}
+		var c bytes.Buffer
+		put32(&c, 0x02014b50)
+		put16(&c, 0x0314)
+		put16(&c, 20)
+		put16(&c, flags)
+		put16(&c, e.method)
+		put16(&c, 0)
+		put16(&c, 0)
+		put32(&c, crc)
+		put32(&c, uint32(len(payload)))
+		put32(&c, uint32(len(e.data)))
+		put16(&c, uint16(len(name)))
+		put16(&c, uint16(len(e.extra)))
+		put16(&c, uint16(len(e.comment)))
+		put16(&c, 0)
+		put16(&c, 0)
+		put32(&c, 0)
+		put32(&c, z.locals[len(z.locals)-1])
+		c.Write(name)
+		c.Write(e.extra)
+		c.Write(e.comment)
+		z.central = append(z.central, c.Bytes())
+	}
+	z.cd = uint32(out.Len())
+	if order == nil {
+		order = make([]int, len(es))
+		for i := range order {
+			order[i] = i
+		}
+	}
+	for _, i := range order {
+		out.Write(z.central[i])
+	}
+	cds := uint32(out.Len()) - z.cd
+	z.eocd = uint32(out.Len())
+	put32(&out, 0x06054b50)
+	put16(&out, 0)
+	put16(&out, 0)
+	put16(&out, uint16(len(es)))
+	put16(&out, uint16(len(es)))
+	put32(&out, cds)
+	put32(&out, z.cd)
+	put16(&out, uint16(len(comment)))
+	out.Write(comment)
+	z.raw = out.Bytes()
+	return z
+}
+func cfg(st *state.StateDB, owner common.Address, gas uint64) *runtime.Config {
+	zero := common.Hash{}
+	return &runtime.Config{ChainConfig: params.AllDevChainProtocolChanges, Difficulty: new(big.Int), Origin: owner, Coinbase: common.Address{}, BlockNumber: big.NewInt(1), Time: 1, GasLimit: gas, GasPrice: new(big.Int), Value: new(big.Int), BaseFee: new(big.Int).SetUint64(params.InitialBaseFee), BlobBaseFee: new(big.Int).SetUint64(params.BlobTxMinBlobGasprice), Random: &zero, State: st, GetHashFn: func(uint64) common.Hash { return common.Hash{} }, EVMConfig: vm.Config{}}
+}
+func enc(typesx []string, v ...interface{}) []byte {
+	var a abi.Arguments
+	for _, s := range typesx {
+		t, _ := abi.NewType(s, "", nil)
+		a = append(a, abi.Argument{Type: t})
+	}
+	x, e := a.Pack(v...)
+	if e != nil {
+		panic(e)
+	}
+	return x
+}
+func pi(at common.Address, i uint32, raw []byte) common.Hash {
+	return crypto.Keccak256Hash(enc([]string{"bytes32", "address", "uint32", "uint32", "bytes32"}, crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), at, i, uint32(len(raw)), crypto.Keccak256Hash(raw)))
+}
+func call(st *state.StateDB, owner, to common.Address, data []byte, gas uint64) ([]byte, uint64, error) {
+	o, left, e := runtime.Call(to, data, cfg(st, owner, gas))
+	return o, gas - left, e
+}
+func getter(st *state.StateDB, owner, to common.Address, a abi.ABI, name string) []interface{} {
+	d, _ := a.Pack(name)
+	o, _, e := call(st, owner, to, d, ordinary)
+	if e != nil {
+		panic(e)
+	}
+	v, e := a.Unpack(name, o)
+	if e != nil {
+		panic(e)
+	}
+	return v
+}
+func badcode(out []byte) string {
+	if len(out) != 36 {
+		return "revert"
+	}
+	return fmt.Sprintf("Bad(%d)", new(big.Int).SetBytes(out[4:]).Uint64())
+}
+func one(name string, z built, wantOK bool, mut func([]byte), proto artifact, pa abi.ABI) report {
+	raw := append([]byte(nil), z.raw...)
+	if name == "truncated" {
+		raw = raw[:len(raw)-1]
+	}
+	if mut != nil {
+		mut(raw)
+	}
+	r := report{Name: name, Size: len(raw), Pages: (len(raw) + 8191) / 8192}
+	owner := common.HexToAddress("0x5a49300000000000000000000000000000000001")
+	db := rawdb.NewMemoryDatabase()
+	td := triedb.NewDatabase(db, triedb.HashDefaults)
+	defer td.Close()
+	st, e := state.New(types.EmptyRootHash, state.NewDatabase(td, nil))
+	if e != nil {
+		panic(e)
+	}
+	init, _ := as0.InitCode()
+	args, _ := pa.Pack("", uint32(len(raw)))
+	code := append(init, args...)
+	_, store, left, e := runtime.Create(code, cfg(st, owner, ordinary))
+	r.AS0Create = ordinary - left
+	if e != nil {
+		panic(e)
+	}
+	var cursor uint32
+	for i := uint32(0); int(cursor) < len(raw); i++ {
+		n := 8192
+		if len(raw)-int(cursor) < n {
+			n = len(raw) - int(cursor)
+		}
+		page := raw[cursor : uint32(cursor)+uint32(n)]
+		d, _ := pa.Pack("append", cursor, page, pi(store, i, page))
+		_, g, e := call(st, owner, store, d, ordinary)
+		if e != nil {
+			panic(fmt.Sprintf("append %s: %v", name, e))
+		}
+		r.AS0Append += g
+		if g > r.AS0AppendMax {
+			r.AS0AppendMax = g
+		}
+		cursor += uint32(n)
+	}
+	chain := getter(st, owner, store, pa, "chainCommitment")[0].([32]byte)
+	var root [32]byte
+	if name == "unsealed-store" {
+		root[31] = 1
+	} else {
+		d, _ := pa.Pack("seal", cursor, chain)
+		_, r.AS0Seal, e = call(st, owner, store, d, ordinary)
+		if e != nil {
+			panic(e)
+		}
+		root = getter(st, owner, store, pa, "contentCommitment")[0].([32]byte)
+	}
+	pb, _ := hex.DecodeString(proto.Bytecode[2:])
+	_, scanner, left, e := runtime.Create(pb, cfg(st, owner, ordinary))
+	r.ScannerCreate = ordinary - left
+	if e != nil {
+		panic(e)
+	}
+	sa, e := abi.JSON(bytes.NewReader(proto.ABI))
+	if e != nil {
+		panic(e)
+	}
+	callStore := store
+	callRoot := root
+	if name == "wrong-content-root" {
+		callRoot[0] ^= 1
+	}
+	if name == "wrong-code-binding" {
+		callStore = common.HexToAddress("0xdead")
+	}
+	d, _ := sa.Pack("scan", callStore, callRoot)
+	var out []byte
+	out, r.Scan, e = call(st, owner, scanner, d, ordinary)
+	if e != nil {
+		r.Got = badcode(out)
+	} else {
+		v, u := sa.Unpack("scan", out)
+		if u != nil {
+			panic(u)
+		}
+		r.Got = "ok"
+		r.Root = common.Hash(v[0].([32]byte)).Hex()
+		r.Count = v[1].(uint32)
+		r.CDSize = v[3].(uint32)
+	}
+	if wantOK {
+		r.Want = "ok"
+	} else {
+		r.Want = "reject"
+	}
+	if (e == nil) != wantOK {
+		panic(fmt.Sprintf("%s wantOK=%v got=%s", name, wantOK, r.Got))
+	}
+	return r
+}
+func main() {
+	start := time.Now()
+	doc, err := os.ReadFile("build/java-diff-mc-zi0-parent/original/prototype.json")
+	if err != nil {
+		panic(err)
+	}
+	var proto artifact
+	if json.Unmarshal(doc, &proto) != nil {
+		panic("json")
+	}
+	pa, err := as0.ABI()
+	if err != nil {
+		panic(err)
+	}
+	base := []ent{{"a", []byte("stored payload"), 0, -1, 0, nil, nil}, {"dir/b", bytes.Repeat([]byte("deflated"), 20), 8, -1, 0, nil, nil}}
+	cases := []report{}
+	add := func(n string, z built, ok bool, m func([]byte)) { cases = append(cases, one(n, z, ok, m, proto, pa)) }
+	add("stored-deflated", makezip(base, 0, nil, nil), true, nil)
+	add("wrong-content-root", makezip(base, 0, nil, nil), false, nil)
+	add("wrong-code-binding", makezip(base, 0, nil, nil), false, nil)
+	add("unsealed-store", makezip(base, 0, nil, nil), false, nil)
+	add("descriptor-nosig", makezip([]ent{{"d", bytes.Repeat([]byte("D"), 91), 8, 0, 0, nil, nil}}, 0, nil, nil), true, nil)
+	add("descriptor-signature", makezip([]ent{{"d", bytes.Repeat([]byte("S"), 91), 8, 1, 0, nil, nil}}, 0, nil, nil), true, nil)
+	add("empty-archive", makezip(nil, 0, nil, nil), true, nil)
+	add("comment-false-signatures", makezip(base, 0, nil, []byte("xPK\x05\x06yPK\x01\x02zPK\x03\x04")), true, nil)
+	add("cross-as0-8192", makezip(base, 8180, nil, bytes.Repeat([]byte("C"), 5000)), true, nil)
+	add("cross-read-4096", makezip(base, 4080, nil, bytes.Repeat([]byte("R"), 5000)), true, nil)
+	add("max-eocd-window", makezip(base, 70000, nil, bytes.Repeat([]byte("W"), 65000)), true, nil)
+	many := make([]ent, 128)
+	for i := range many {
+		many[i] = ent{fmt.Sprintf("path/%03d.class", i), bytes.Repeat([]byte{byte(i)}, 20+i%9), uint16(i % 2 * 8), -1, 0, nil, nil}
+	}
+	add("bounded-128", makezip(many, 0, nil, nil), true, nil)
+	add("truncated", makezip(base, 0, nil, nil), false, nil)
+	add("bad-local-signature", makezip(base, 0, nil, nil), false, func(x []byte) { x[0] = 0 })
+	add("local-name-mismatch", makezip(base, 0, nil, nil), false, func(x []byte) { x[30] ^= 1 })
+	add("empty-name", makezip([]ent{{"", []byte("x"), 0, -1, 0, nil, nil}}, 0, nil, nil), false, nil)
+	add("duplicate-name", makezip([]ent{{"same", []byte("1"), 0, -1, 0, nil, nil}, {"same", []byte("2"), 0, -1, 0, nil, nil}}, 0, nil, nil), false, nil)
+	add("central-reordered", makezip(base, 0, []int{1, 0}, nil), false, nil)
+	ov := makezip(base, 0, nil, nil)
+	add("overlap", ov, false, func(x []byte) {
+		v := ov.locals[1] + 10 - ov.datas[0]
+		binary.LittleEndian.PutUint32(x[18:], v)
+		binary.LittleEndian.PutUint32(x[int(ov.cd)+20:], v)
+	})
+	add("zip64-extra", makezip([]ent{{"z", []byte("x"), 0, -1, 0, []byte{1, 0, 0, 0}, nil}}, 0, nil, nil), false, nil)
+	add("encryption", makezip([]ent{{"e", []byte("x"), 0, -1, 1, nil, nil}}, 0, nil, nil), false, nil)
+	md := makezip(base, 0, nil, nil)
+	add("multidisk", md, false, func(x []byte) { binary.LittleEndian.PutUint16(x[int(md.eocd)+4:], 1) })
+	add("unsupported-method", makezip([]ent{{"m", []byte("x"), 9, -1, 0, nil, nil}}, 0, nil, nil), false, nil)
+	add("bad-range", makezip(base, 0, nil, nil), false, func(x []byte) { binary.LittleEndian.PutUint32(x[int(makezip(base, 0, nil, nil).cd)+20:], 0xffffff00) })
+	// A second structurally valid EOCD-like record in the real EOCD comment must be rejected as ambiguous.
+	q := makezip(base, 0, nil, bytes.Repeat([]byte{0}, 40))
+	fakeAt := int(q.eocd) + 22 + 5
+	binary.LittleEndian.PutUint32(q.raw[fakeAt:], 0x06054b50)
+	binary.LittleEndian.PutUint16(q.raw[fakeAt+8:], uint16(len(base)))
+	binary.LittleEndian.PutUint16(q.raw[fakeAt+10:], uint16(len(base)))
+	binary.LittleEndian.PutUint32(q.raw[fakeAt+12:], uint32(fakeAt)-q.cd)
+	binary.LittleEndian.PutUint32(q.raw[fakeAt+16:], q.cd)
+	binary.LittleEndian.PutUint16(q.raw[fakeAt+20:], uint16(len(q.raw)-fakeAt-22))
+	add("ambiguous-eocd-in-comment", q, false, nil)
+	sort.Slice(cases, func(i, j int) bool { return cases[i].Name < cases[j].Name })
+	var usage syscall.Rusage
+	_ = syscall.Getrusage(syscall.RUSAGE_SELF, &usage)
+	sum := map[string]interface{}{"elapsed_ms": time.Since(start).Milliseconds(), "max_rss_kib": usage.Maxrss, "prototype_init_bytes": (len(proto.Bytecode) - 2) / 2, "prototype_runtime_bytes": (len(proto.Runtime) - 2) / 2, "prototype_runtime_keccak": crypto.Keccak256Hash(common.FromHex(proto.Runtime)).Hex(), "cases": cases}
+	encj, _ := json.MarshalIndent(sum, "", "  ")
+	fmt.Println(string(encj))
+}

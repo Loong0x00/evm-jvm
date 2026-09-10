@@ -12,7 +12,7 @@ No Minecraft/EULA/listener/real Done has occurred.
 - Combined SHA256 `849d7e1bdae3a403239b9f84b5d32d446040b31ad4508b3e55e27426ab4aca6a`.
 - ABI unchanged `16346751accb944db73a8a8b33bee6923c9ccabca1896af41f4926a2895e6520`.
 - Pinned solc0.8.30/optimizer200/viaIR/Cancun/metadataoff normal check passed
- 177.783s/826277888B groupRSS; `/tmp/mc-vfs0a-parent-fixed-repro.{log,json}`.
+ 177.783s/826277888B groupRSS; `evidence/java-evm/vfs0a/mc-vfs0a-parent-fixed-repro.{log,json}`.
 -38 bootstrap identities:30 IOE0 unchanged plus8 totaling6050B. Parent recompiled
  all8; final FIS1515B/cdda6fb5... and FOS1618B/50aa63fa... carry real Java ENOTDIR
  suffix Code. All six other new images remain unchanged. Exact pins in REVISION1.
@@ -67,8 +67,8 @@ ran ALL tests on the new292968B artifact (not either worker's earlier artifact).
 |32|final-artifact whole suite/repro, inherited profile preservation and recorded legacy phases|
 
 Final whole package: **PASS364.919s**, external365.259s, **290459648B** peak groupRSS,
-no FAIL/SKIP or watchdog limit hit. Log `/tmp/mc-vfs0a-parent-fixed-full-suite.log`,
-watchdog `/tmp/mc-vfs0a-parent-fixed-full-suite.json`. This includes the boundary
+no FAIL/SKIP or watchdog limit hit. Log `evidence/java-evm/vfs0a/mc-vfs0a-parent-fixed-full-suite.log`,
+watchdog `evidence/java-evm/vfs0a/mc-vfs0a-parent-fixed-full-suite.json`. This includes the boundary
 reviewer tests with their artifact assertion deliberately repinned and rerun, not
 retroactively relabeling the reviewer's293010B measurements.
 

@@ -11,7 +11,7 @@ rebuilt it with pinned solc0.8.30/optimizer200/viaIR/Cancun/metadataoff, and com
 its full JSON artifact byte-for-byte with the delivery. Source SHA
 26575cac482b05946796aa60b6c712e53560c114b0eea1e9456a92498d485254 matched.
 All25 original outcomes reproduced: watchdog0.213s/21590016B sampled group RSS,
-exit0/no limit, `/tmp/mc-zi0-parent-replay.{log,json}`. This is a view-only toy
+exit0/no limit, `evidence/java-evm/zi0/mc-zi0-parent-replay.{log,json}`. This is a view-only toy
 parser over genuinely EVM-created/sealed AS0; NOT persistent indexing evidence.
 
 Parent separately rehashed the official JAR and reran the raw static inventory;
@@ -38,7 +38,7 @@ successful dense-signature control. Against the original runtime:
   allowed by the positive page/tail controls. Searching arbitrary names/payloads for
   signatures would conflict with opaque-name/data semantics and is not a fix.
 
-Failures retained in `/tmp/mc-zi0-parent-gaps-before.{log,json}` (exit1,0.320s,
+Failures retained in `evidence/java-evm/zi0/mc-zi0-parent-gaps-before.{log,json}` (exit1,0.320s,
 26542080B sampled RSS). These are toy-prototype/profile gaps, NOT bypasses of
 accepted AS0 or VFS. Raw compressed bytes/CRC claims remain unverified by design.
 
@@ -57,7 +57,7 @@ All25 original cases still pass (0.214s/22933504B). Twelve definite parent refus
 probes now reject; the dense-signature control still succeeds. The ZIP64-prelude
 case is explicitly recorded as an unchanged ACCEPTED OBSERVATION pending a policy
 choice, NOT counted as a corrected refusal. The14-case corrected observation run
-passes0.316s/27004928B. Logs `/tmp/mc-zi0-parent-corrected-{replay,gaps}.{log,json}`;
+passes0.316s/27004928B. Logs `evidence/java-evm/zi0/mc-zi0-parent-corrected-{replay,gaps}.{log,json}`;
 source/artifact/driver under `build/java-diff-mc-zi0-parent/{corrected,corrected-gaps}/`.
 
 The worker error formatter printed Bad(n) for any36-byte error, including bubbled

@@ -1,5 +1,12 @@
 # Java-inside-EVM agent guide
 
+LATEST USER: important information must NOT live only in /tmp. Keep plans and
+constraints in repository docs; archive key acceptance/failure/reproduction evidence
+under Git-tracked evidence/java-evm/ with hashes. Temporary build/test directories
+are for disposable, reproducible intermediates only. Preserve essential state or a
+reproducer before cleanup. Existing /tmp mentions below are historical provenance;
+use durable evidence links in the current reviews. Never overwrite historical runs.
+
 LATEST ACCEPTED COMPONENT: AS0 immutable EVM artifact-byte store; see
 JAVA_EVM_MC_AS0_REVIEW.md.2831B runtime/3166B init;32MiB4096pages in memory and
 per-call durable disk, full EVM readback and new-process continuation pass. Parent
@@ -109,9 +116,14 @@ Do not freeze the earlier proposal's unnormalized-prefix/no-gap assumptions.
 LATEST user: keep work/progress in repository files; prefer one or two agents.
 Use at most TWO parallel workers now (runtime/harness); parent owns independent
 validation and final acceptance. No third verifier worker for IOE0.
-New workers keep Sol/high but MUST NOT request Fast/priority (latest user
-instruction overrides historical stage plans). Do not pass --fast or re-enable
-the disabled preference. Existing running workers need not be restarted.
+Latest user permits Luna/Terra for pure coding tasks, superseding Sol-only for
+that role. Local model registry lists openai-codex/gpt-5.6-luna and
+openai-codex/gpt-5.6-terra; inference availability is not yet tested. Use explicit
+per-task model selection, not global settings changes; Sol/high remains the default
+for semantics/architecture-sensitive work. Parent independently verifies every
+model's delivery. Keep at most TWO workers and one production Solidity writer.
+All workers MUST NOT request Fast/priority. Do not pass --fast or re-enable the
+disabled preference. Existing running workers need not be restarted.
 Runtimes are over EIP170 deployment size: explicit LOCAL Execute/Call mechanisms, not mainnet
 CREATE compatibility; no consensus-core or host-Java fallback changes.
 Continuous parent orchestration is authorized by `JAVA_EVM_PROGRAM.md`,

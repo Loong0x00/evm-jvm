@@ -59,8 +59,8 @@ checks found omissions in three Go guard areas:
    copied state. Head now requires page alignment unless cursor equals declared length.
 
 These do not demonstrate an EVM ownership/cryptographic bypass or remote exploit.
-Logs `/tmp/mc-as0-parent-shape-before.log`, `/tmp/mc-as0-parent-head-before.log` retain
-failures; `/tmp/mc-as0-parent-final-probes.log` retains successful corrected controls.
+Logs `evidence/java-evm/as0/mc-as0-parent-shape-before.log`, `evidence/java-evm/as0/mc-as0-parent-head-before.log` retain
+failures; `evidence/java-evm/as0/mc-as0-parent-final-probes.log` retains successful corrected controls.
 No workaround changed EVM code/gas/accounting or any accepted profile.
 
 ## Sixteen coverage groups and final evidence
@@ -85,11 +85,11 @@ No workaround changed EVM code/gas/accounting or any accepted profile.
 |16|final patched package/vet/repro watchdog and unchanged accepted VFS/core paths|
 
 Final entire package: **PASS4.096s**, external4.358s, **282877952B** observed peak group
-RSS, exit0/no watchdog limit hit; `/tmp/mc-as0-parent-final-suite.{log,json}`.
+RSS, exit0/no watchdog limit hit; `evidence/java-evm/as0/mc-as0-parent-final-suite.{log,json}`.
 Focused parent tests PASS1.365s; final vet and pinned build check pass. The relocated
 `go test -c -trimpath` executable, run in its own directory without source/compiler
 fallback, completed the full32MiB disk/new-process test in1.63s. Logs:
-`/tmp/mc-as0-parent-relocated.log`, `/tmp/mc-as0-parent-final-repro.log`.
+`evidence/java-evm/as0/mc-as0-parent-relocated.log`, `evidence/java-evm/as0/mc-as0-parent-final-repro.log`.
 
 Both production memory and PER-CALL durable disk controls measured:
 controller CREATE611673gas; append aggregate **7289399396gas across4096 calls**;
@@ -104,7 +104,7 @@ transport commits/reloads EVERY mutation, in memory as well as on disk. Neither
 sum is one-call gas, instruction count, wall-time prediction or signed intrinsic gas.
 
 Accepted VFS0a full control passed again: external367.334s/278855680B groupRSS,
-`/tmp/mc-as0-parent-vfs-control.{log,json}`. Protected accepted runtime/continuation/
+`evidence/java-evm/as0/mc-as0-parent-vfs-control.{log,json}`. Protected accepted runtime/continuation/
 stock/core paths have no diff from72aa13f15; no global full-geth CI claim is made.
 
 ## Limits and next boundary

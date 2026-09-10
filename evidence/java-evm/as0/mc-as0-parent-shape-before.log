@@ -1,0 +1,20 @@
+=== RUN   TestAS0Parent16ExactABI
+=== RUN   TestAS0Parent16ExactABI/fallback
+    parent_test.go:47: non-frozen ABI shape accepted
+=== RUN   TestAS0Parent16ExactABI/receive
+    parent_test.go:47: non-frozen ABI shape accepted
+=== RUN   TestAS0Parent16ExactABI/anonymous-PageIssued
+    parent_test.go:47: non-frozen ABI shape accepted
+=== RUN   TestAS0Parent16ExactABI/anonymous-Sealed
+    parent_test.go:47: non-frozen ABI shape accepted
+--- FAIL: TestAS0Parent16ExactABI (0.00s)
+    --- FAIL: TestAS0Parent16ExactABI/fallback (0.00s)
+    --- FAIL: TestAS0Parent16ExactABI/receive (0.00s)
+    --- FAIL: TestAS0Parent16ExactABI/anonymous-PageIssued (0.00s)
+    --- FAIL: TestAS0Parent16ExactABI/anonymous-Sealed (0.00s)
+=== RUN   TestAS0Parent15NestedStateLinkRefused
+    parent_test.go:83: nested LevelDB CURRENT symlink accepted
+--- FAIL: TestAS0Parent15NestedStateLinkRefused (0.00s)
+FAIL
+FAIL	github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0	0.006s
+FAIL

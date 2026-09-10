@@ -1,0 +1,57 @@
+=== RUN   TestAS0HarnessFull32MiBMemory
+    full_test.go:73: full-memory bytes=33554432 pages=4096 createGas=611673 appendTotalGas=7289399396 appendMaxGas=1830926 sealGas=34194 readGas=24835 root=0x13b09aaa76659801fdaed2731b9ad81dc70618b472ea18cc996f8d1f835e58f6
+--- PASS: TestAS0HarnessFull32MiBMemory (1.10s)
+=== RUN   TestAS0HarnessFull32MiBDiskPerAppendNewProcess
+    full_test.go:163: full-disk-per-call bytes=33554432 pages=4096 createGas=611673 appendTotalGas=7289399396 appendMaxGas=1830926 sealGas=34194 readGas=24835 root=0x8bb74da2d592c2ebc7c9859bf98448f5f9ee257eb68ead79d728b9a9b12cc18e child="{\"controller\":\"0x4feb48e16f5a5af075e2a6e4835a2b736c1102b2\",\"root\":\"0x8bb74da2d592c2ebc7c9859bf98448f5f9ee257eb68ead79d728b9a9b12cc18e\",\"content\":\"0xe0a22812f4fcc785f3c05ac4125b4b7d4f79bdcd04f515ab011189d672fbb1bf\",\"firstPage\":\"0xa59d638fbfdd739f6583153f0d78b87d30a9f346\",\"midPage\":\"0x798eabe657fd950cc9858e71a7609525fdb77b55\",\"lastPage\":\"0x02a65c9c3a90491ed33b47ef1b97543f4020e266\",\"totalGas\":3644674048,\"maxGas\":1779626,\"sealGas\":34194,\"readGas\":24835}\nPASS"
+--- PASS: TestAS0HarnessFull32MiBDiskPerAppendNewProcess (1.60s)
+=== RUN   TestAS0HarnessEmbeddedArtifactAndOrdinaryCreate
+    session_test.go:116: runtime=2831B sha256=e7f8e95b0af80bf15e89a01ceb635d8ae858560c606cc86ac3877d8f0de69b13 codeHash=0xc8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896 init=3166B sha256=b792253995eafb2ecbc6d7c6c6f28fc0fc03ad0d5073a97f4c62b4ea93dd0f88
+--- PASS: TestAS0HarnessEmbeddedArtifactAndOrdinaryCreate (0.00s)
+=== RUN   TestAS0HarnessOneBytePartialExactFullAndReads
+=== RUN   TestAS0HarnessOneBytePartialExactFullAndReads/1
+=== RUN   TestAS0HarnessOneBytePartialExactFullAndReads/8193
+=== RUN   TestAS0HarnessOneBytePartialExactFullAndReads/8192
+--- PASS: TestAS0HarnessOneBytePartialExactFullAndReads (0.00s)
+    --- PASS: TestAS0HarnessOneBytePartialExactFullAndReads/1 (0.00s)
+    --- PASS: TestAS0HarnessOneBytePartialExactFullAndReads/8193 (0.00s)
+    --- PASS: TestAS0HarnessOneBytePartialExactFullAndReads/8192 (0.00s)
+=== RUN   TestAS0HarnessPostCreateRollbackOOGAndRetryAddress
+--- PASS: TestAS0HarnessPostCreateRollbackOOGAndRetryAddress (0.00s)
+=== RUN   TestAS0HarnessDiskEveryCallReopenAndPublicationFailures
+=== RUN   TestAS0HarnessDiskEveryCallReopenAndPublicationFailures/1
+=== RUN   TestAS0HarnessDiskEveryCallReopenAndPublicationFailures/2
+--- PASS: TestAS0HarnessDiskEveryCallReopenAndPublicationFailures (0.00s)
+    --- PASS: TestAS0HarnessDiskEveryCallReopenAndPublicationFailures/1 (0.00s)
+    --- PASS: TestAS0HarnessDiskEveryCallReopenAndPublicationFailures/2 (0.00s)
+=== RUN   TestAS0HarnessAmbiguousRenamePoisonsAndReopenRecovers
+--- PASS: TestAS0HarnessAmbiguousRenamePoisonsAndReopenRecovers (0.00s)
+=== RUN   TestAS0HarnessNamespaceInitialFailureAndInternalLinks
+=== RUN   TestAS0HarnessNamespaceInitialFailureAndInternalLinks/STORE-FORMAT
+=== RUN   TestAS0HarnessNamespaceInitialFailureAndInternalLinks/durable-head.json
+=== RUN   TestAS0HarnessNamespaceInitialFailureAndInternalLinks/state
+--- PASS: TestAS0HarnessNamespaceInitialFailureAndInternalLinks (0.00s)
+    --- PASS: TestAS0HarnessNamespaceInitialFailureAndInternalLinks/STORE-FORMAT (0.00s)
+    --- PASS: TestAS0HarnessNamespaceInitialFailureAndInternalLinks/durable-head.json (0.00s)
+    --- PASS: TestAS0HarnessNamespaceInitialFailureAndInternalLinks/state (0.00s)
+=== RUN   TestAS0HarnessErrorPrecedenceBoundsAndCopiedViews
+--- PASS: TestAS0HarnessErrorPrecedenceBoundsAndCopiedViews (0.00s)
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/length
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/runtime
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/root
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/format
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/context
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/owner
+=== RUN   TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/controller
+--- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening (0.00s)
+    --- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/length (0.00s)
+    --- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/runtime (0.00s)
+    --- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/root (0.00s)
+    --- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/format (0.00s)
+    --- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/context (0.00s)
+    --- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/owner (0.00s)
+    --- PASS: TestAS0HarnessManifestIdentityCodeStateAndMetadataHardening/controller (0.00s)
+=== RUN   TestAS0HarnessClosedAndArgumentValidation
+--- PASS: TestAS0HarnessClosedAndArgumentValidation (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0	2.718s

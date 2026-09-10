@@ -332,3 +332,22 @@ acceptance. No actual server/config/EULA execution occurred. max-tick-time is re
 by nz.aT(); nz.j() starts its watchdog only when positive (after the Done site),
 so disabling that optional watchdog is a later supported-config option, not a
 shortcut around world preparation or the external20min/4GiB verification limits.
+
+### Durable evidence and worker-model policy (latest user)
+
+Do not keep key information solely in /tmp. Plans/constraints remain in tracked
+repository documents. Recent AS0/VFS acceptance and ZI0 parent failures/replays,
+including disposable reproducible ZIP prototypes, are now tracked under
+`evidence/java-evm/`; verify exact39 captured files with its `verify.py` and manifest.
+Raw old paths in logs/manifests are provenance, not storage dependencies. Keep new
+runs in distinct named evidence directories; caches, binaries and reconstructible
+test DBs may remain temporary. Do not delete irreplaceable failure state first.
+This is a scoped migration of recent key evidence, not a claim to have archived all
+historical /tmp contents. No server JAR/class payloads or credentials are archived.
+
+User explicitly allows Luna/Terra for pure coding. Local offline model listing
+confirms openai-codex/gpt-5.6-luna and openai-codex/gpt-5.6-terra exist in the registry;
+actual inference availability remains untested. Use explicit future task overrides,
+not global configuration changes. Keep Sol/high for semantics-sensitive work as
+appropriate, maxTWO workers/one production Solidity writer/noFast/priority and
+independent parent verification. The current persistent-ZI0 Sol worker continues.

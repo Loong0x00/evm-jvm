@@ -1,0 +1,566 @@
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics/byte-null-bounds-zero-low8
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics/gap-append-current-eof-stale
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-1
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-2
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-3
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-4
+=== RUN   TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-5
+--- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics (0.64s)
+    --- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics/byte-null-bounds-zero-low8 (0.08s)
+    --- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics/gap-append-current-eof-stale (0.07s)
+    --- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-1 (0.07s)
+    --- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-2 (0.08s)
+    --- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-3 (0.05s)
+    --- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-4 (0.06s)
+    --- PASS: TestVFS0aBoundaryFinalArtifactAndSemantics/failed-open-no-effects-5 (0.07s)
+=== RUN   TestVFS0aBoundaryRawBundleLimits
+--- PASS: TestVFS0aBoundaryRawBundleLimits (0.17s)
+=== RUN   TestVFS0aBoundarySeedInodeDescriptorLimits
+=== RUN   TestVFS0aBoundarySeedInodeDescriptorLimits/seed-order-count-bytes-ro
+=== RUN   TestVFS0aBoundarySeedInodeDescriptorLimits/seed-plus-one-and-collision
+=== RUN   TestVFS0aBoundarySeedInodeDescriptorLimits/inode64-65
+=== RUN   TestVFS0aBoundarySeedInodeDescriptorLimits/descriptor32-33-closed
+--- PASS: TestVFS0aBoundarySeedInodeDescriptorLimits (1.43s)
+    --- PASS: TestVFS0aBoundarySeedInodeDescriptorLimits/seed-order-count-bytes-ro (0.15s)
+    --- PASS: TestVFS0aBoundarySeedInodeDescriptorLimits/seed-plus-one-and-collision (0.01s)
+    --- PASS: TestVFS0aBoundarySeedInodeDescriptorLimits/inode64-65 (0.10s)
+    --- PASS: TestVFS0aBoundarySeedInodeDescriptorLimits/descriptor32-33-closed (1.01s)
+=== RUN   TestVFS0aBoundaryTransferAndFileQuotas
+=== RUN   TestVFS0aBoundaryTransferAndFileQuotas/transfer4096-4097
+=== RUN   TestVFS0aBoundaryTransferAndFileQuotas/per-file65536-plus-one
+=== RUN   TestVFS0aBoundaryTransferAndFileQuotas/aggregate-includes-ro-seed
+--- PASS: TestVFS0aBoundaryTransferAndFileQuotas (1.72s)
+    --- PASS: TestVFS0aBoundaryTransferAndFileQuotas/transfer4096-4097 (0.16s)
+    --- PASS: TestVFS0aBoundaryTransferAndFileQuotas/per-file65536-plus-one (0.69s)
+    --- PASS: TestVFS0aBoundaryTransferAndFileQuotas/aggregate-includes-ro-seed (0.70s)
+=== RUN   TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen
+=== RUN   TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen/quantum-internal1
+    boundary_review_test.go:417: q1/internal1 calls=612 counters=608/4
+=== RUN   TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen/oog-reserve-old-root-retry
+=== RUN   TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen/disk-native-write-reopen
+--- PASS: TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen (18.26s)
+    --- PASS: TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen/quantum-internal1 (9.02s)
+    --- PASS: TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen/oog-reserve-old-root-retry (0.04s)
+    --- PASS: TestVFS0aBoundaryQuantumOOGRollbackAndNativeReopen/disk-native-write-reopen (9.04s)
+=== RUN   TestVFS0aBoundaryDurabilityAndStoreNamespace
+--- PASS: TestVFS0aBoundaryDurabilityAndStoreNamespace (0.18s)
+=== RUN   TestVFS0aBoundaryCheckpointExactMiB
+    boundary_review_test.go:626: exact1MiB cells=130950 searchEdge=130966 seedPayload=119 gas=293704621
+--- PASS: TestVFS0aBoundaryCheckpointExactMiB (4.63s)
+=== RUN   TestVFS0aBoundaryNativeWriteChild
+--- PASS: TestVFS0aBoundaryNativeWriteChild (9.40s)
+=== RUN   TestVFS0aParentFrozenEightImages
+--- PASS: TestVFS0aParentFrozenEightImages (0.00s)
+=== RUN   TestVFS0aParentFileCodeOnAcceptedIOE0
+    parent_test.go:172: IOE0 Code-only q4096/internal4096 calls=1 jvm=581 internal=3 maxGas=21915481 checkpoint=2504 machine=0x07943481bef294cc8731c6114179bd1aa589ae185ffa6d026abe779c1d4018af
+    parent_test.go:173: IOE0 Code-only q7/internal1 calls=86 jvm=581 internal=3 maxGas=10947213 checkpoint=2504 machine=0x07943481bef294cc8731c6114179bd1aa589ae185ffa6d026abe779c1d4018af
+--- PASS: TestVFS0aParentFileCodeOnAcceptedIOE0 (1.21s)
+=== RUN   TestVFS0aParentInputStreamCodeOnAcceptedIOE0
+    parent_test.go:190: IOE0 Code-only q4096/internal4096 calls=1 jvm=269 internal=10 maxGas=18687095 checkpoint=1337 machine=0xadaeda6006daa3819eba15bf6f4f1c395334f8a26750b4341fa0eea394d5e867
+    parent_test.go:191: IOE0 Code-only q7/internal1 calls=46 jvm=269 internal=10 maxGas=9272481 checkpoint=1337 machine=0xadaeda6006daa3819eba15bf6f4f1c395334f8a26750b4341fa0eea394d5e867
+--- PASS: TestVFS0aParentInputStreamCodeOnAcceptedIOE0 (0.72s)
+=== RUN   TestVFS0aParentPathTraversalHostOracles
+=== RUN   TestVFS0aParentPathTraversalHostOracles/file/child
+=== RUN   TestVFS0aParentPathTraversalHostOracles/missing/../seed
+=== RUN   TestVFS0aParentPathTraversalHostOracles/file/../seed
+--- PASS: TestVFS0aParentPathTraversalHostOracles (0.67s)
+    --- PASS: TestVFS0aParentPathTraversalHostOracles/file/child (0.17s)
+    --- PASS: TestVFS0aParentPathTraversalHostOracles/missing/../seed (0.16s)
+    --- PASS: TestVFS0aParentPathTraversalHostOracles/file/../seed (0.16s)
+=== RUN   TestVFS0aParentOutputStreamDefaultCode
+    parent_test.go:297: FINAL VFS native q4096/internal4096 calls1 JVM300 internal4 maxGas22589791 checkpoint1144
+    parent_test.go:298: FINAL VFS native q7/internal1 calls47 JVM300 internal4 maxGas8465616 checkpoint1144
+--- PASS: TestVFS0aParentOutputStreamDefaultCode (0.75s)
+=== RUN   TestVFS0aParentTruncateBeforeBind
+    parent_test.go:331: EVM checkpoint epoch119: /work/f truncated, data=, pending constructor PC22
+    parent_test.go:353: EVM checkpoint epoch143: /work/f data=11, descriptor CLOSED
+    parent_test.go:310: FINAL VFS native q1/internal4096 calls149 JVM149 internal3 maxGas9913132 checkpoint1352
+--- PASS: TestVFS0aParentTruncateBeforeBind (2.34s)
+=== RUN   TestVFS0aHarnessPathTraversalJava8And21Oracles
+--- PASS: TestVFS0aHarnessPathTraversalJava8And21Oracles (0.61s)
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM/fileChildInput
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM/missingDotDotInput
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM/fileDotDotInput
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM/fileChildOutput
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM/missingDotDotOutput
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM/fileDotDotOutput
+=== RUN   TestVFS0aHarnessPathTraversalActualEVM/mkdirTraversal
+--- PASS: TestVFS0aHarnessPathTraversalActualEVM (101.23s)
+    --- PASS: TestVFS0aHarnessPathTraversalActualEVM/fileChildInput (0.07s)
+    --- PASS: TestVFS0aHarnessPathTraversalActualEVM/missingDotDotInput (0.08s)
+    --- PASS: TestVFS0aHarnessPathTraversalActualEVM/fileDotDotInput (25.98s)
+    --- PASS: TestVFS0aHarnessPathTraversalActualEVM/fileChildOutput (0.07s)
+    --- PASS: TestVFS0aHarnessPathTraversalActualEVM/missingDotDotOutput (0.08s)
+    --- PASS: TestVFS0aHarnessPathTraversalActualEVM/fileDotDotOutput (25.39s)
+    --- PASS: TestVFS0aHarnessPathTraversalActualEVM/mkdirTraversal (49.56s)
+=== RUN   TestVFS0aHarnessFixturePins
+--- PASS: TestVFS0aHarnessFixturePins (0.00s)
+=== RUN   TestVFS0aHarnessJava8And21Oracles
+--- PASS: TestVFS0aHarnessJava8And21Oracles (1.18s)
+=== RUN   TestVFS0aHarnessContinuationCorpus
+    session_test.go:281: VFS0a runtime bytes=292968 sha256=717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86 codeHash=0xe7f4de699588a3d58624e8ab717a00809759d112952ca1fac8bbc74637118c84
+=== RUN   TestVFS0aHarnessContinuationCorpus/existsMissing
+=== RUN   TestVFS0aHarnessContinuationCorpus/seedFile
+=== RUN   TestVFS0aHarnessContinuationCorpus/seedDirectory
+=== RUN   TestVFS0aHarnessContinuationCorpus/mkdirOnce
+=== RUN   TestVFS0aHarnessContinuationCorpus/mkdirsNested
+=== RUN   TestVFS0aHarnessContinuationCorpus/readonlyMkdir
+=== RUN   TestVFS0aHarnessContinuationCorpus/lexicalAlias
+=== RUN   TestVFS0aHarnessContinuationCorpus/comparablePaths
+=== RUN   TestVFS0aHarnessContinuationCorpus/readSingleEOF
+=== RUN   TestVFS0aHarnessContinuationCorpus/readBulkSlice
+=== RUN   TestVFS0aHarnessContinuationCorpus/createRoundtrip
+=== RUN   TestVFS0aHarnessContinuationCorpus/truncate
+=== RUN   TestVFS0aHarnessContinuationCorpus/append
+=== RUN   TestVFS0aHarnessContinuationCorpus/twoWriterGap
+=== RUN   TestVFS0aHarnessContinuationCorpus/staleReadCursor
+=== RUN   TestVFS0aHarnessContinuationCorpus/closeTwice
+=== RUN   TestVFS0aHarnessContinuationCorpus/nullFileArg
+=== RUN   TestVFS0aHarnessContinuationCorpus/missingInputMessage
+=== RUN   TestVFS0aHarnessContinuationCorpus/missingOutputParentMessage
+=== RUN   TestVFS0aHarnessContinuationCorpus/directoryOpenMessage
+=== RUN   TestVFS0aHarnessContinuationCorpus/readOnlyOutputMessage
+=== RUN   TestVFS0aHarnessContinuationCorpus/nullArrayBeforeClosed
+=== RUN   TestVFS0aHarnessContinuationCorpus/boundsBeforeClosed
+=== RUN   TestVFS0aHarnessContinuationCorpus/zeroLengthClosed
+--- PASS: TestVFS0aHarnessContinuationCorpus (184.94s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/existsMissing (0.02s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/seedFile (0.02s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/seedDirectory (0.04s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/mkdirOnce (0.02s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/mkdirsNested (20.07s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/readonlyMkdir (0.04s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/lexicalAlias (61.75s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/comparablePaths (0.05s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/readSingleEOF (0.03s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/readBulkSlice (5.71s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/createRoundtrip (8.23s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/truncate (8.77s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/append (7.61s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/twoWriterGap (9.34s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/staleReadCursor (9.59s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/closeTwice (0.03s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/nullFileArg (0.02s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/missingInputMessage (30.96s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/missingOutputParentMessage (0.09s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/directoryOpenMessage (0.06s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/readOnlyOutputMessage (22.37s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/nullArrayBeforeClosed (0.03s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/boundsBeforeClosed (0.03s)
+    --- PASS: TestVFS0aHarnessContinuationCorpus/zeroLengthClosed (0.05s)
+=== RUN   TestVFS0aHarnessInspectFileIsReadOnlyView
+--- PASS: TestVFS0aHarnessInspectFileIsReadOnlyView (0.08s)
+=== RUN   TestVFS0aHarnessDiskFailureNoSpeculativePublication
+=== RUN   TestVFS0aHarnessDiskFailureNoSpeculativePublication/1
+=== RUN   TestVFS0aHarnessDiskFailureNoSpeculativePublication/2
+=== RUN   TestVFS0aHarnessDiskFailureNoSpeculativePublication/3
+--- PASS: TestVFS0aHarnessDiskFailureNoSpeculativePublication (0.09s)
+    --- PASS: TestVFS0aHarnessDiskFailureNoSpeculativePublication/1 (0.03s)
+    --- PASS: TestVFS0aHarnessDiskFailureNoSpeculativePublication/2 (0.03s)
+    --- PASS: TestVFS0aHarnessDiskFailureNoSpeculativePublication/3 (0.03s)
+=== RUN   TestVFS0aHarnessAmbiguousPublicationPoisonsUntilReopen
+--- PASS: TestVFS0aHarnessAmbiguousPublicationPoisonsUntilReopen (0.03s)
+=== RUN   TestVFS0aHarnessPendingTruncateNewProcessResume
+--- PASS: TestVFS0aHarnessPendingTruncateNewProcessResume (5.66s)
+=== RUN   TestVFS0aHarnessNamespaceAndBoundedReads
+=== RUN   TestVFS0aHarnessNamespaceAndBoundedReads/state
+=== RUN   TestVFS0aHarnessNamespaceAndBoundedReads/checkpoints
+=== RUN   TestVFS0aHarnessNamespaceAndBoundedReads/durable-head.json
+--- PASS: TestVFS0aHarnessNamespaceAndBoundedReads (0.00s)
+    --- PASS: TestVFS0aHarnessNamespaceAndBoundedReads/state (0.00s)
+    --- PASS: TestVFS0aHarnessNamespaceAndBoundedReads/checkpoints (0.00s)
+    --- PASS: TestVFS0aHarnessNamespaceAndBoundedReads/durable-head.json (0.00s)
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation/JVM_cumulative
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation/internal_cumulative
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation/zero_epoch
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation/zero_checkpoint
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation/zero_machine
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation/JVM_call_budget
+=== RUN   TestVFS0aHarnessSliceResultCounterValidation/internal_call_budget
+--- PASS: TestVFS0aHarnessSliceResultCounterValidation (0.00s)
+    --- PASS: TestVFS0aHarnessSliceResultCounterValidation/JVM_cumulative (0.00s)
+    --- PASS: TestVFS0aHarnessSliceResultCounterValidation/internal_cumulative (0.00s)
+    --- PASS: TestVFS0aHarnessSliceResultCounterValidation/zero_epoch (0.00s)
+    --- PASS: TestVFS0aHarnessSliceResultCounterValidation/zero_checkpoint (0.00s)
+    --- PASS: TestVFS0aHarnessSliceResultCounterValidation/zero_machine (0.00s)
+    --- PASS: TestVFS0aHarnessSliceResultCounterValidation/JVM_call_budget (0.00s)
+    --- PASS: TestVFS0aHarnessSliceResultCounterValidation/internal_call_budget (0.00s)
+=== RUN   TestVFS0aHarnessSeedConfigAndCopiedInspectProvenance
+--- PASS: TestVFS0aHarnessSeedConfigAndCopiedInspectProvenance (0.06s)
+=== RUN   TestVFS0aHarnessRuntimeHasNoSourceTreeFallback
+--- PASS: TestVFS0aHarnessRuntimeHasNoSourceTreeFallback (0.00s)
+=== RUN   TestVFS0aHarnessOldStoresAndCheckpointReadBounds
+--- PASS: TestVFS0aHarnessOldStoresAndCheckpointReadBounds (0.01s)
+=== RUN   TestVFS0aHarnessDurabilityFailureReturnsDiagnosticGasOnly
+--- PASS: TestVFS0aHarnessDurabilityFailureReturnsDiagnosticGasOnly (0.03s)
+=== RUN   TestVFS0aParentWireReaderLayout
+--- PASS: TestVFS0aParentWireReaderLayout (0.00s)
+=== RUN   TestVFS0aParent24DirectoryWireRules
+=== RUN   TestVFS0aParent24DirectoryWireRules/regular-file-parent
+    validation_test.go:490: rejected gas2814078 data9e3c6a2400000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000281
+=== RUN   TestVFS0aParent24DirectoryWireRules/slash-component
+    validation_test.go:490: rejected gas2804557 data9e3c6a2400000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000270
+=== RUN   TestVFS0aParent24DirectoryWireRules/dot-component
+    validation_test.go:490: rejected gas2803921 data9e3c6a2400000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000270
+=== RUN   TestVFS0aParent24DirectoryWireRules/non-ascii-component
+    validation_test.go:490: rejected gas2804532 data9e3c6a2400000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000270
+=== RUN   TestVFS0aParent24DirectoryWireRules/control-component
+    validation_test.go:490: rejected gas2804506 data9e3c6a2400000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000270
+=== RUN   TestVFS0aParent24DirectoryWireRules/duplicate-sibling
+    validation_test.go:490: rejected gas2817047 data9e3c6a2400000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000281
+=== RUN   TestVFS0aParent24DirectoryWireRules/self-parent
+    validation_test.go:490: rejected gas2802841 data9e3c6a2400000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000270
+=== RUN   TestVFS0aParent24DirectoryWireRules/readonly-boolean-two
+    validation_test.go:490: rejected gas3128083 data71540d2000000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000000
+--- PASS: TestVFS0aParent24DirectoryWireRules (0.23s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/regular-file-parent (0.01s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/slash-component (0.01s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/dot-component (0.01s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/non-ascii-component (0.01s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/control-component (0.01s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/duplicate-sibling (0.01s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/self-parent (0.01s)
+    --- PASS: TestVFS0aParent24DirectoryWireRules/readonly-boolean-two (0.01s)
+=== RUN   TestVFS0aParent23ReadonlyWriterState
+    validation_test.go:498: FINAL VFS native q4096/internal4096 calls1 JVM149 internal3 maxGas17216906 checkpoint1361
+--- PASS: TestVFS0aParent23ReadonlyWriterState (0.23s)
+=== RUN   TestVFS0aParent05AllocationProfileAndInheritedFields
+    validation_test.go:580: FINAL VFS native q4096/internal4096 calls1 JVM54 internal4 maxGas10297107 checkpoint1048
+=== RUN   TestVFS0aParent05AllocationProfileAndInheritedFields/PGFile
+=== RUN   TestVFS0aParent05AllocationProfileAndInheritedFields/PGInput
+=== RUN   TestVFS0aParent05AllocationProfileAndInheritedFields/PGOutput
+=== NAME  TestVFS0aParent05AllocationProfileAndInheritedFields
+    validation_test.go:602: FINAL VFS native q4096/internal4096 calls1 JVM198 internal4 maxGas22422648 checkpoint2036
+--- PASS: TestVFS0aParent05AllocationProfileAndInheritedFields (0.96s)
+    --- PASS: TestVFS0aParent05AllocationProfileAndInheritedFields/PGFile (0.18s)
+    --- PASS: TestVFS0aParent05AllocationProfileAndInheritedFields/PGInput (0.18s)
+    --- PASS: TestVFS0aParent05AllocationProfileAndInheritedFields/PGOutput (0.19s)
+=== RUN   TestVFS0aParent070809PendingCorridorViews
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output
+    validation_test.go:628: FINAL VFS native q1/internal4096 calls149 JVM149 internal3 maxGas9876502 checkpoint1356
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc22/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/stack1
+=== RUN   TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input
+    validation_test.go:628: FINAL VFS native q1/internal4096 calls143 JVM143 internal3 maxGas9254840 checkpoint1356
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc21/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-local-id
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/bind-invoke-not-putfield
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-depth
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-owner
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-method
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/local0-uninitialized-tag
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/local0-other-ref
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/already-written-handle
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/stack0
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/stack1
+=== RUN   TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-local-id
+--- PASS: TestVFS0aParent070809PendingCorridorViews (5.58s)
+    --- PASS: TestVFS0aParent070809PendingCorridorViews/output (2.83s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22 (0.12s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc22/stack0 (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23 (0.11s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc23/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24 (0.13s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/stack0 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc24/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27 (0.12s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc27/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28 (0.13s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/stack0 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc28/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29 (0.15s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/stack0 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/stack1 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/output/pc29/wrong-local-id (0.01s)
+    --- PASS: TestVFS0aParent070809PendingCorridorViews/input (2.76s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21 (0.11s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc21/stack0 (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22 (0.11s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc22/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23 (0.12s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/stack0 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc23/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26 (0.11s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc26/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27 (0.12s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/stack0 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc27/wrong-local-id (0.01s)
+        --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28 (0.15s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/bind-invoke-not-putfield (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-depth (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-owner (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-method (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/local0-uninitialized-tag (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/local0-other-ref (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/already-written-handle (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/stack0 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/stack1 (0.01s)
+            --- PASS: TestVFS0aParent070809PendingCorridorViews/input/pc28/wrong-local-id (0.01s)
+=== RUN   TestVFS0aParent12EscapedFailedStreamSubclass
+    validation_test.go:713: FINAL VFS native q4096/internal4096 calls1 JVM184 internal7 maxGas23837750 checkpoint1686
+    validation_test.go:714: FINAL VFS native q7/internal1 calls33 JVM184 internal7 maxGas11819482 checkpoint1686
+--- PASS: TestVFS0aParent12EscapedFailedStreamSubclass (0.74s)
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/io/Flushable
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/io/File
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/io/InputStream
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/io/OutputStream
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/io/FileInputStream
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/io/FileOutputStream
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/lang/AutoCloseable
+=== RUN   TestVFS0aParent02ReservedAndLookalikeNatives/java/io/Closeable
+--- PASS: TestVFS0aParent02ReservedAndLookalikeNatives (0.38s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/io/Flushable (0.00s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/io/File (0.00s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/io/InputStream (0.00s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/io/OutputStream (0.00s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/io/FileInputStream (0.00s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/io/FileOutputStream (0.00s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/lang/AutoCloseable (0.00s)
+    --- PASS: TestVFS0aParent02ReservedAndLookalikeNatives/java/io/Closeable (0.00s)
+=== RUN   TestVFS0aParent06FailedDefaultObjects
+=== RUN   TestVFS0aParent06FailedDefaultObjects/PNullFile
+    validation_test.go:766: FINAL VFS native q4096/internal4096 calls1 JVM20 internal3 maxGas6642715 checkpoint917
+    validation_test.go:767: FINAL VFS native q1/internal1 calls23 JVM20 internal3 maxGas6728384 checkpoint917
+=== RUN   TestVFS0aParent06FailedDefaultObjects/PNullStream
+    validation_test.go:766: FINAL VFS native q4096/internal4096 calls1 JVM45 internal7 maxGas8300210 checkpoint919
+    validation_test.go:767: FINAL VFS native q1/internal1 calls52 JVM45 internal7 maxGas7140711 checkpoint919
+--- PASS: TestVFS0aParent06FailedDefaultObjects (1.13s)
+    --- PASS: TestVFS0aParent06FailedDefaultObjects/PNullFile (0.41s)
+    --- PASS: TestVFS0aParent06FailedDefaultObjects/PNullStream (0.71s)
+=== RUN   TestVFS0aParent15RepeatedMessageCode
+    validation_test.go:795: FINAL VFS native q4096/internal4096 calls1 JVM1823 internal8 maxGas60581584 checkpoint3686
+    validation_test.go:796: FINAL VFS native q7/internal1 calls268 JVM1823 internal8 maxGas13448602 checkpoint3686
+--- PASS: TestVFS0aParent15RepeatedMessageCode (4.99s)
+=== RUN   TestVFS0aParent2528ValidationIsNotLiveAuthority
+=== RUN   TestVFS0aParent2528ValidationIsNotLiveAuthority/owner
+=== RUN   TestVFS0aParent2528ValidationIsNotLiveAuthority/epoch
+=== RUN   TestVFS0aParent2528ValidationIsNotLiveAuthority/root
+=== RUN   TestVFS0aParent2528ValidationIsNotLiveAuthority/artifact
+=== RUN   TestVFS0aParent2528ValidationIsNotLiveAuthority/budget
+--- PASS: TestVFS0aParent2528ValidationIsNotLiveAuthority (0.21s)
+    --- PASS: TestVFS0aParent2528ValidationIsNotLiveAuthority/owner (0.00s)
+    --- PASS: TestVFS0aParent2528ValidationIsNotLiveAuthority/epoch (0.00s)
+    --- PASS: TestVFS0aParent2528ValidationIsNotLiveAuthority/root (0.00s)
+    --- PASS: TestVFS0aParent2528ValidationIsNotLiveAuthority/artifact (0.00s)
+    --- PASS: TestVFS0aParent2528ValidationIsNotLiveAuthority/budget (0.00s)
+=== RUN   TestVFS0aParent16MessageAllocationOOM
+    validation_test.go:911: genuine message-allocation OOM: calls247 JVM10327 internal7 checkpoint45344
+--- PASS: TestVFS0aParent16MessageAllocationOOM (11.58s)
+=== RUN   TestVFS0aParent04PathProfileBounds
+=== RUN   TestVFS0aParent04PathProfileBounds/empty
+=== RUN   TestVFS0aParent04PathProfileBounds/root-escape
+=== RUN   TestVFS0aParent04PathProfileBounds/non-ascii
+=== RUN   TestVFS0aParent04PathProfileBounds/control
+=== RUN   TestVFS0aParent04PathProfileBounds/component64
+=== RUN   TestVFS0aParent04PathProfileBounds/component65
+=== RUN   TestVFS0aParent04PathProfileBounds/depth16
+=== RUN   TestVFS0aParent04PathProfileBounds/depth17
+=== RUN   TestVFS0aParent04PathProfileBounds/path256
+=== RUN   TestVFS0aParent04PathProfileBounds/path257
+--- PASS: TestVFS0aParent04PathProfileBounds (2.62s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/empty (0.19s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/root-escape (0.19s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/non-ascii (0.18s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/control (0.20s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/component64 (0.24s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/component65 (0.24s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/depth16 (0.23s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/depth17 (0.22s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/path256 (0.47s)
+    --- PASS: TestVFS0aParent04PathProfileBounds/path257 (0.47s)
+=== RUN   TestVFS0aParent02PrivateNativeAccessModes
+=== RUN   TestVFS0aParent02PrivateNativeAccessModes/opcodeb6
+    validation_test.go:1048: CallError datad631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000b
+=== RUN   TestVFS0aParent02PrivateNativeAccessModes/opcodeb7
+    validation_test.go:1048: CallError datad631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000b
+=== RUN   TestVFS0aParent02PrivateNativeAccessModes/opcodeb8
+    validation_test.go:1048: CallError datad631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000b
+--- PASS: TestVFS0aParent02PrivateNativeAccessModes (0.21s)
+    --- PASS: TestVFS0aParent02PrivateNativeAccessModes/opcodeb6 (0.02s)
+    --- PASS: TestVFS0aParent02PrivateNativeAccessModes/opcodeb7 (0.02s)
+    --- PASS: TestVFS0aParent02PrivateNativeAccessModes/opcodeb8 (0.02s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/vfs0a	364.919s
