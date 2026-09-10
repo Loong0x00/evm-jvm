@@ -35,3 +35,9 @@ full-byte mismatch, direct post-write OOG rollback, geometry-specific errors,
 adversarial small-TLV extra fields and EOCD candidates. Archive all such new probes
 and results here before the production ABI/transport freeze. No temporary directory
 is sole authority for this evidence.
+
+Parent additionally executed `max32m_test.go.txt` against the same unchanged artifact:
+exact33554432B generated ZIP, high25-bit name/LOC/data offsets33554388/33554269/
+33554321, full AS0 upload then genuine EVM discovery/index/entry/lookup. Pass1.10s
+(external1.166s/216977408B sampledRSS), no limits. This covers actual packed high
+bits, not just an AS0 capacity claim. Logs and watchdog are in parent/max32m*.

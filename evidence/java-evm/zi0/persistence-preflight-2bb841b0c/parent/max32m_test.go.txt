@@ -1,0 +1,59 @@
+package main
+
+import (
+	"bytes"
+	"github.com/ethereum/go-ethereum/common"
+	"math/big"
+	"testing"
+)
+
+// All ZIP decisions execute in ZI0/AS0; Go decoding below is TEST-only oracle work.
+func TestParentExact32MiBHighPackedOffsets(t *testing.T) {
+	const size = 33554432
+	entryName := "parent/high-offset.bin"
+	entries := []ent{{name: entryName, data: []byte("opaque parent payload"), method: 0, descriptor: -1}}
+	base := makezip(entries, 0, nil, nil)
+	z := makezip(entries, size-len(base.raw), nil, nil)
+	if len(z.raw) != size {
+		t.Fatal("bad generated fixture size")
+	}
+	e, x := newEnv("")
+	if x != nil {
+		t.Fatal(x)
+	}
+	defer e.close()
+	m := manifest{Owner: owner}
+	_, za, code := loadArtifacts()
+	store, content, gs := deployArchive(e, &m, z.raw)
+	idx := deployIndex(e, &m, za, code, store, content, &gs)
+	if _, x = discover(e, &m, za, idx, &gs); x != nil {
+		t.Fatal(x)
+	}
+	if x = scans(e, &m, za, idx, 64, &gs, 0); x != nil {
+		t.Fatal(x)
+	}
+	if x = finish(e, &m, za, idx, &gs); x != nil {
+		t.Fatal(x)
+	}
+	v := view(e, za, idx, "entry", uint32(0))
+	if !bytes.Equal(v[0].([]byte), []byte(entryName)) {
+		t.Fatal("high-offset name differs")
+	}
+	p := common.Hash(v[1].([32]byte))
+	n := new(big.Int).SetBytes(p[:])
+	mask := new(big.Int).SetUint64((1 << 25) - 1)
+	for _, f := range []struct {
+		shift uint
+		want  uint32
+	}{{0, z.cd + 46}, {25, z.locals[0]}, {50, z.datas[0]}} {
+		got := new(big.Int).And(new(big.Int).Rsh(new(big.Int).Set(n), f.shift), mask).Uint64()
+		if got != uint64(f.want) || got < (1<<24) {
+			t.Fatalf("packed high field%d=%d want%d", f.shift, got, f.want)
+		}
+	}
+	got := view(e, za, idx, "lookup", []byte(entryName))
+	if !got[0].(bool) || got[2].([32]byte) != v[1].([32]byte) {
+		t.Fatal("high-offset lookup differs")
+	}
+	t.Logf("exact32MiB namePosition=%d local=%d data=%d appendGas=%d maxAppend=%d discover=%d scan=%d finalRoot=%x", z.cd+46, z.locals[0], z.datas[0], gs.AS0Append, gs.AS0AppendMax, gs.Discover, gs.ScanTotal, view(e, za, idx, "finalRoot")[0])
+}

@@ -351,3 +351,16 @@ actual inference availability remains untested. Use explicit future task overrid
 not global configuration changes. Keep Sol/high for semantics-sensitive work as
 appropriate, maxTWO workers/one production Solidity writer/noFast/priority and
 independent parent verification. The current persistent-ZI0 Sol worker continues.
+
+### ZI0 persistent parent baseline and pending final probes
+
+2bb841b0c integrated a00108e08; independent pinned rebuild/full replay archived in
+6a65f64a8. All6 runs gas/roots/counters and54 outcomes identical,18.423s269950976B
+sampledRSS.20554 target-shaped archive823 actual publications;32768entries/exact4MiB
+CD and both new-process reopens pass. Parent exact32MiBZIP high25-bit offsets also
+pass (1.166s216977408B). No production acceptance/freeze yet: draft exact scope is
+JAVA_EVM_MC_ZI0_PLAN.md, including standalone AS0-upload+ZI0 transport namespace,
+nonzero owner/no at-end scan policies and full disk hardening gates. ONE Luna/high
+pure-Go probe worker is active in mc-zi0-parent-probes; no Solidity edits authorized.
+Parent will independently inspect/replay its geometry/OOG/full-byte/max-TLV probes
+before freeze. All key evidence stays in evidence/java-evm/, not only temporary paths.
