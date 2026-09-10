@@ -173,7 +173,8 @@ routine permission to start the next verified increment.
 | Local MC-LB0 | richer-monolith MUTF8/String literals/intern identity | ACCEPTED;64newcases/198parentEVM/17reviewprobes/alllegacygates PASS; JAVA_EVM_MC_LB0_REVIEW.md |
 | Local MC-LC0 | EVM-owned single-stack checkpoints/start/resume/CAS/durable restart | ACCEPTED; actual15/36/10 q1/q7/internal1 chains, new-process reopen and1MiBboundary; JAVA_EVM_MC_LC0_REVIEW.md |
 | Local MC-TL0 | fresh Throwable identity/constructor/catch/cause continuation | ACCEPTED;24roots/20chains/32independentprobes/parentgates; JAVA_EVM_MC_TL0_REVIEW.md |
-| Local platform later | nonliteral String/VFS/minimal scheduler/main/JAR | String/VFS proposals prepared; no MC execution |
+| Local MC-SC0 | char-array/copy String constructors and nonliteral intern | FROZEN JAVA_EVM_MC_SC0_PLAN.md; no-callback Object profile only for String new, no implementation accepted |
+| Local platform later | VFS/minimal scheduler/main/JAR and further libraries | VFS proposal prepared; no MC execution |
 | M6 | minimal class-library/bootstrap/native service inventory and implementation | local MC dependency priority; selected1.12.2 static inventory available |
 | M7 | broader classfile versions, reflection/dynamic features, monitors/threads, conformance/workloads | queued |
 

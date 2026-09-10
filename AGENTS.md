@@ -68,6 +68,13 @@ heapdynamicclassvalidation. Legalpost-superREF/UNINITcoexistence andescapedrefs 
 100M/1Bcalls unchanged; TL0quota testsonly65536units/case. Exact1MiBretry384675172gas,
 validation328666379gas. Alllegacygatespass, LC0/LB0/stock remain unchanged. String/VFS
 remain proposals; no newThrowableAPIs/full-profiledeployment/MCstartup claim.
+**MC-SC0 frozen** in JAVA_EVM_MC_SC0_PLAN.md: separate String0Interpreter/sc0,
+TL0base preserved;26oldimages+new984BStringSHA7999610c.... Genuinechar[]/Stringcopy
+constructors andnonliteralintern; exactno-callbackObject()V guardONLYStringnew
+(StringProfile4), inheritedfields/literals/TL0otherobjects preserved. PartialString
+REF/UNINIT states, immutablebacking aliases andsortedreceiverintern insertion must
+validate/resume.24roots/21chains/32independentgroups; nofullpoolmissliveclaim where
+objectquota makesitunreachable.100M/1B,1MiB unchanged. NoSC0acceptance yet.
 New workers keep Sol/high but MUST NOT request Fast/priority (latest user
 instruction overrides historical stage plans). Do not pass --fast or re-enable
 the disabled preference. Existing running workers need not be restarted.
