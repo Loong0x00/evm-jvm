@@ -201,3 +201,14 @@ java-mc-sc0-test: java-mc-sc0-check
 	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/sc0
 java-mc-sc0-demo: java-mc-sc0-check
 	go test -count=1 -v -timeout=20m -run '^TestSC0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/sc0
+
+# LOCAL exception message/cause Code; not a Java file bridge or MC startup gate.
+.PHONY: java-mc-ioe0-build java-mc-ioe0-check java-mc-ioe0-test java-mc-ioe0-demo
+java-mc-ioe0-build:
+	cd jvmevm/runtime/local/ioe0 && npm ci --ignore-scripts && npm run build
+java-mc-ioe0-check:
+	cd jvmevm/runtime/local/ioe0 && npm ci --ignore-scripts && npm run check
+java-mc-ioe0-test: java-mc-ioe0-check
+	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/ioe0
+java-mc-ioe0-demo: java-mc-ioe0-check
+	go test -count=1 -v -timeout=20m -run '^TestIOE0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/ioe0
