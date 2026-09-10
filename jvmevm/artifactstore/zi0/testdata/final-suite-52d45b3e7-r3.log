@@ -1,0 +1,180 @@
+MC-ZI0 Go transport repair final worker verification r3
+UTC 2026-09-10T16:32:17Z
+base 52d45b3e7e0bd0cb492c514e817f814d80280835
+go version go1.27.0-X:nodwarf5 linux/amd64
+$ go test ./jvmevm/artifactstore/zi0/... -count=1 -v
+=== RUN   TestZI0HarnessAS0PublicationFailureHidesEventPageAndSeal
+--- PASS: TestZI0HarnessAS0PublicationFailureHidesEventPageAndSeal (0.00s)
+=== RUN   TestZI0HarnessEOCDPrefixAmbiguityEmptyZIP64AndTailPolicy
+    behavior_test.go:101: dense-eocd-tail bytes=65557 discoverGas=79223750
+--- PASS: TestZI0HarnessEOCDPrefixAmbiguityEmptyZIP64AndTailPolicy (0.12s)
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/cen-signature
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/cen-name-zero
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/unsupported-flags
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/zip64-size-sentinel
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/unsupported-method
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/stored-size-mismatch
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/central-range
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/cen-extra-framing
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/zip64-cen-extra
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-signature
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-length
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-name
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-extra
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/data-end
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-crc
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/descriptor
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/descriptor-end
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/local-order
+=== RUN   TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/duplicate
+--- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry (0.05s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/cen-signature (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/cen-name-zero (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/unsupported-flags (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/zip64-size-sentinel (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/unsupported-method (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/stored-size-mismatch (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/central-range (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/cen-extra-framing (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/zip64-cen-extra (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-signature (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-length (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-name (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-extra (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/data-end (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/loc-crc (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/descriptor (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/descriptor-end (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/local-order (0.00s)
+    --- PASS: TestZI0HarnessFramingFlagsMethodsExtrasDescriptorsAndGeometry/duplicate (0.00s)
+=== RUN   TestZI0HarnessIndependentPackedRecordRootAndQ1Q64Equality
+    behavior_test.go:286: q1/q64 root=0x6e481fc802b5ac051c0e33fae4678d43ce59256f88e91817e73fb73a07001f26 scans=[128 2]
+--- PASS: TestZI0HarnessIndependentPackedRecordRootAndQ1Q64Equality (0.10s)
+=== RUN   TestZI0HarnessOpaqueNamesAndActualFullByteGuard
+--- PASS: TestZI0HarnessOpaqueNamesAndActualFullByteGuard (0.00s)
+=== RUN   TestZI0HarnessMaxTLVAndAtomicDuplicateAcrossBatch
+    behavior_test.go:355: max-tlv archive=234550 cd=150400 scanGas=18625447
+--- PASS: TestZI0HarnessMaxTLVAndAtomicDuplicateAcrossBatch (0.14s)
+=== RUN   TestZI0HarnessFull20554ExactCDDurableEveryCall
+    full_test.go:259: {"appendCalls":496,"appendGasMax":1830926,"appendGasSum":881638867,"as0CreateGas":611673,"bytes":4057736,"cdBytes":2100796,"discoverGas":69092534,"diskBytes":41513628,"diskFiles":27,"elapsedMS":4504,"entries":20554,"finishGas":46129,"indexCreateGas":1935216,"name":"target-20554-exact2100796-durable","publications":823,"rssKiB":105348,"scanCalls":322,"scanGasMax":7478124,"scanGasSum":2387173374,"sealGas":34194,"stateRoot":"0x9afad3175bb2c98e2412299ddf20f0e91f0a0ad434516395048dd3ad0c4752d3","viewGasSum":16365498}
+--- PASS: TestZI0HarnessFull20554ExactCDDurableEveryCall (4.51s)
+=== RUN   TestZI0HarnessCapacity32768Exact4MiBCDAndPlusOne
+    full_test.go:277: {"appendCalls":997,"appendGasMax":1830926,"appendGasSum":1772693340,"as0CreateGas":611673,"bytes":8159254,"cdBytes":4194304,"discoverGas":69092534,"diskBytes":0,"diskFiles":0,"elapsedMS":7420,"entries":32768,"finishGas":46129,"indexCreateGas":1935216,"name":"capacity-32768-exact4MiB-CD","publications":1514,"rssKiB":279120,"scanCalls":512,"scanGasMax":8741182,"scanGasSum":4470603173,"sealGas":34194,"stateRoot":"0x0fe31ae5d0457a322749820e0f7d8998b63ef5b9a65cc22593930d42b7e5d7aa","viewGasSum":25615806}
+--- PASS: TestZI0HarnessCapacity32768Exact4MiBCDAndPlusOne (9.22s)
+=== RUN   TestZI0HarnessExact32MiBHighOffsets
+    full_test.go:318: {"appendCalls":4096,"appendGasMax":1830926,"appendGasSum":7289399396,"as0CreateGas":611673,"bytes":33554432,"cdBytes":71,"discoverGas":69092450,"diskBytes":0,"diskFiles":0,"elapsedMS":1177,"entries":1,"finishGas":46129,"indexCreateGas":1935216,"name":"exact32MiB-high-offsets","publications":4102,"rssKiB":320192,"scanCalls":1,"scanGasMax":150317,"scanGasSum":150317,"sealGas":34194,"stateRoot":"0x989b0b09a4ad73f8bf442b7c0a2b294d3c276a46ffea8aace75f0e51f79be55b","viewGasSum":358021}
+--- PASS: TestZI0HarnessExact32MiBHighOffsets (1.18s)
+=== RUN   TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary
+    full_test.go:370: fresh-process stage=sealed binary=zi0.test output="=== RUN   TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary\n--- PASS: TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary (0.01s)\nPASS"
+    full_test.go:370: fresh-process stage=bound binary=zi0-relocated.test output="=== RUN   TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary\n--- PASS: TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary (0.01s)\nPASS"
+    full_test.go:370: fresh-process stage=staging binary=zi0.test output="=== RUN   TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary\n--- PASS: TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary (0.03s)\nPASS"
+    full_test.go:370: fresh-process stage=final binary=zi0.test output="=== RUN   TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary\n--- PASS: TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary (0.01s)\nPASS"
+--- PASS: TestZI0HarnessNewProcessAllPhasesAndRelocatedBinary (0.07s)
+=== RUN   TestZI0HarnessPinnedCombinedArtifactAndExactABI
+--- PASS: TestZI0HarnessPinnedCombinedArtifactAndExactABI (0.00s)
+=== RUN   TestZI0HarnessRealLifecycleRecordsRootsCASAndOpaqueViews
+--- PASS: TestZI0HarnessRealLifecycleRecordsRootsCASAndOpaqueViews (0.01s)
+=== RUN   TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex
+=== RUN   TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/prepublication-1
+=== RUN   TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/prepublication-2
+=== RUN   TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/create-index-1
+=== RUN   TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/create-index-2
+=== RUN   TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/create-index-3
+--- PASS: TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex (0.01s)
+    --- PASS: TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/prepublication-1 (0.00s)
+    --- PASS: TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/prepublication-2 (0.00s)
+    --- PASS: TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/create-index-1 (0.00s)
+    --- PASS: TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/create-index-2 (0.00s)
+    --- PASS: TestZI0HarnessPublicationRollbackRetryAndAmbiguousCreateIndex/create-index-3 (0.00s)
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/zi0-pin
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/context
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/content
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/as0-pin
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/root
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/format
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/owner
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/length
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/as0
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/index
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-STORE-FORMAT
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-durable-head.json
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-state
+=== RUN   TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-state-CURRENT
+--- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate (0.01s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/zi0-pin (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/context (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/content (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/as0-pin (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/root (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/format (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/owner (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/length (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/as0 (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/index (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-STORE-FORMAT (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-durable-head.json (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-state (0.00s)
+    --- PASS: TestZI0HarnessManifestNamespacePinsLinksAndNoRecreate/link-state-CURRENT (0.00s)
+=== RUN   TestZI0HarnessClosedGasArgumentsAndHeadDecoderBounds
+--- PASS: TestZI0HarnessClosedGasArgumentsAndHeadDecoderBounds (0.00s)
+=== RUN   TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings
+=== RUN   TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/content-binding
+=== RUN   TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/phase
+=== RUN   TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/cd-cap
+=== RUN   TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/final-root
+--- PASS: TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings (0.00s)
+    --- PASS: TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/content-binding (0.00s)
+    --- PASS: TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/phase (0.00s)
+    --- PASS: TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/cd-cap (0.00s)
+    --- PASS: TestZI0HarnessHeadRejectsAlteredPhaseRootCapsAndBindings/final-root (0.00s)
+=== RUN   TestZI0ParentFreshOrdinaryCreate
+=== RUN   TestZI0ParentFreshOrdinaryCreate/memory
+=== RUN   TestZI0ParentFreshOrdinaryCreate/disk
+--- PASS: TestZI0ParentFreshOrdinaryCreate (0.00s)
+    --- PASS: TestZI0ParentFreshOrdinaryCreate/memory (0.00s)
+    --- PASS: TestZI0ParentFreshOrdinaryCreate/disk (0.00s)
+=== RUN   TestZI0ParentRealArtifactPipeline
+=== RUN   TestZI0ParentRealArtifactPipeline/memory
+=== RUN   TestZI0ParentRealArtifactPipeline/disk
+--- PASS: TestZI0ParentRealArtifactPipeline (0.01s)
+    --- PASS: TestZI0ParentRealArtifactPipeline/memory (0.00s)
+    --- PASS: TestZI0ParentRealArtifactPipeline/disk (0.00s)
+=== RUN   TestZI0ParentExactABINoEvent
+--- PASS: TestZI0ParentExactABINoEvent (0.00s)
+=== RUN   TestZI0HarnessConstructorOwnerBindingRollbackAndRetry
+--- PASS: TestZI0HarnessConstructorOwnerBindingRollbackAndRetry (0.00s)
+=== RUN   TestZI0HarnessDirectOOGRollbackAndValidRetry
+--- PASS: TestZI0HarnessDirectOOGRollbackAndValidRetry (0.00s)
+=== RUN   TestZI0HarnessConcurrentStaleScanSerialized
+--- PASS: TestZI0HarnessConcurrentStaleScanSerialized (0.00s)
+=== RUN   TestZI0HarnessPrepublicationRestoreFailurePoisons
+--- PASS: TestZI0HarnessPrepublicationRestoreFailurePoisons (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0	15.443s
+=== RUN   TestZI0EmbeddedArtifactPinsAndDefensiveCopy
+--- PASS: TestZI0EmbeddedArtifactPinsAndDefensiveCopy (0.00s)
+=== RUN   TestZI0FinalArtifactThroughOrdinaryAS0Create
+    runtime_test.go:424: final artifact gas: as0_create=611673 append=234585 seal=31394 zi0_create=1935216 discover=352708 scan_q1=[128163 120949] finish=43329 root=0x03377da41f9ed5dc837aff9f27c92103bbba5cc7dbd6f4733bdced2c812bd121
+--- PASS: TestZI0FinalArtifactThroughOrdinaryAS0Create (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0/runtime	0.004s
+
+real	0m15.676s
+user	0m24.731s
+sys	0m1.593s
+$ go vet ./jvmevm/artifactstore/zi0/...
+
+real	0m0.074s
+user	0m0.233s
+sys	0m0.054s
+$ go test ./jvmevm/artifactstore/as0 -count=1
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0	3.853s
+
+real	0m4.074s
+user	0m4.918s
+sys	0m0.414s
+$ NODE_PATH=build/java-diff-mc-zi0-transport-repair/zi0-runtime-npm/node_modules node jvmevm/artifactstore/zi0/runtime/build.js --check
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","settings":{"optimizer":200,"viaIR":true,"evmVersion":"cancun","metadata":false},"sourceBytes":17317,"sourceSHA256":"78329d1610c0ba180c7e267989bf36190a9d9eb536020acce42234066a94a2ae","initBytes":9873,"completeInitBytes":9937,"initSHA256":"f3d6d4614cf916cc4be4cd1ef58212642d829d63b710cea9d140181bafd00870","runtimeBytes":9177,"runtimeSHA256":"74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3","runtimeKeccak256":"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77","immutableReferences":0,"abiEntries":20,"functions":18}
+$ git diff --check

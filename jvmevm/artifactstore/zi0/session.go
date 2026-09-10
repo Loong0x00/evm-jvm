@@ -220,12 +220,23 @@ func (s *Session) createAS0() error {
 }
 func (s *Session) initDisk() error {
 	if e := writeNewRegular(filepath.Join(s.directory, markerName), []byte(storeMarker), 0600); e != nil {
-		return e
+		return fmt.Errorf("zi0: write store marker: %w", e)
 	}
 	if e := syncDir(s.directory); e != nil {
+		return fmt.Errorf("zi0: sync initial store layout: %w", e)
+	}
+	// A fresh durable ZI0 namespace starts with the same ordinary AS0 CREATE as
+	// NewMemory.  Publishing an empty trie here would manufacture an address in
+	// metadata without deploying its code and would make the first append call
+	// address zero.  CREATE, trie/code sync, and reload happen before the first
+	// manifest becomes routable.
+	if e := s.createAS0(); e != nil {
 		return e
 	}
-	return s.publish(s.root)
+	if e := s.publish(s.root); e != nil {
+		return fmt.Errorf("zi0: publish initial AS0 head: %w", e)
+	}
+	return nil
 }
 func (s *Session) reopen(m manifest) error {
 	if m.Format != storeFormat || m.Context != contextID || m.Owner != s.owner || m.Length != s.length || m.AS0 == (common.Address{}) || m.AS0CodeHash != s.as0Hash || m.ZI0CodeHash != s.zi0Hash || m.StateRoot == (common.Hash{}) {
@@ -312,7 +323,13 @@ func (s *Session) CreateIndex(content common.Hash, gas uint64) (Operation, error
 	}
 	s.indexAddress = addr
 	if _, e = s.persist(old); e != nil {
-		s.indexAddress = common.Address{}
+		// Before publication, persist restored the prior root and the tentative
+		// route must disappear. After rename, the session is poisoned and its
+		// in-memory route is immaterial until an exact manifest reopen; retain it
+		// so diagnostics cannot describe the committed state as address zero.
+		if s.poison == nil {
+			s.indexAddress = common.Address{}
+		}
 		return Operation{GasUsed: op.GasUsed}, e
 	}
 	op.StateRoot = s.root
@@ -436,8 +453,11 @@ func (s *Session) Read(offset, length uint32, gas uint64) (as0.Read, error) {
 		return r, e
 	}
 	v, e := s.as0ABI.Unpack("read", out)
-	if e != nil || len(v) != 1 {
-		return r, e
+	if e != nil {
+		return r, fmt.Errorf("zi0: decode EVM AS0 read: %w", e)
+	}
+	if len(v) != 1 {
+		return r, fmt.Errorf("zi0: decode EVM AS0 read: got %d values, want 1", len(v))
 	}
 	b, ok := v[0].([]byte)
 	if !ok || len(b) != int(length) {
@@ -459,13 +479,16 @@ func (s *Session) Page(index uint64, gas uint64) (as0.Page, error) {
 		return r, e
 	}
 	v, e := s.as0ABI.Unpack("page", out)
-	if e != nil || len(v) != 3 {
-		return r, e
+	if e != nil {
+		return r, fmt.Errorf("zi0: decode EVM AS0 page: %w", e)
+	}
+	if len(v) != 3 {
+		return r, fmt.Errorf("zi0: decode EVM AS0 page: got %d values, want 3", len(v))
 	}
 	a, ok0 := v[0].(common.Address)
 	ch, ok1 := v[1].([32]byte)
 	pi, ok2 := v[2].([32]byte)
-	if !ok0 || !ok1 || !ok2 {
+	if !ok0 || !ok1 || !ok2 || a == (common.Address{}) || common.Hash(ch) == (common.Hash{}) || common.Hash(pi) == (common.Hash{}) {
 		return as0.Page{GasUsed: u}, errors.New("zi0: noncanonical AS0 page result")
 	}
 	r.Address, r.CodeHash, r.Commitment = a, common.Hash(ch), common.Hash(pi)
@@ -487,12 +510,15 @@ func (s *Session) Entry(index uint32, gas uint64) (Entry, error) {
 		return r, e
 	}
 	v, e := s.zi0ABI.Unpack("entry", out)
-	if e != nil || len(v) != 2 {
-		return r, e
+	if e != nil {
+		return r, fmt.Errorf("zi0: decode EVM entry: %w", e)
+	}
+	if len(v) != 2 {
+		return r, fmt.Errorf("zi0: decode EVM entry: got %d values, want 2", len(v))
 	}
 	n, ok := v[0].([]byte)
 	p, okp := v[1].([32]byte)
-	if !ok || !okp {
+	if !ok || !okp || len(n) == 0 || len(n) > int(MaxName) || !canonicalPackedRecord(p) {
 		return Entry{GasUsed: u}, errors.New("zi0: noncanonical EVM entry result")
 	}
 	r.Name = append([]byte(nil), n...)
@@ -515,17 +541,34 @@ func (s *Session) Lookup(name []byte, gas uint64) (LookupResult, error) {
 		return r, e
 	}
 	v, e := s.zi0ABI.Unpack("lookup", out)
-	if e != nil || len(v) != 3 {
-		return r, e
+	if e != nil {
+		return r, fmt.Errorf("zi0: decode EVM lookup: %w", e)
+	}
+	if len(v) != 3 {
+		return r, fmt.Errorf("zi0: decode EVM lookup: got %d values, want 3", len(v))
 	}
 	f, ok0 := v[0].(bool)
 	i, ok1 := v[1].(uint32)
 	p, ok2 := v[2].([32]byte)
-	if !ok0 || !ok1 || !ok2 {
+	if !ok0 || !ok1 || !ok2 || (!f && (i != 0 || common.Hash(p) != (common.Hash{}))) || (f && (i >= MaxEntries || !canonicalPackedRecord(p))) {
 		return LookupResult{GasUsed: u}, errors.New("zi0: noncanonical lookup result")
 	}
 	r.Found, r.Index, r.PackedRecord = f, i, common.Hash(p)
 	return r, nil
+}
+
+func canonicalPackedRecord(p [32]byte) bool {
+	if common.Hash(p) == (common.Hash{}) {
+		return false
+	}
+	// Bits 195..255 are frozen zero. In ABI's big-endian bytes32 these are
+	// bytes 0..6 and the high five bits of byte 7.
+	for i := 0; i < 7; i++ {
+		if p[i] != 0 {
+			return false
+		}
+	}
+	return p[7]&0xf8 == 0
 }
 
 func (s *Session) Head(gas uint64) (Head, error) {
@@ -549,6 +592,9 @@ func (s *Session) Head(gas uint64) (Head, error) {
 		if e != nil {
 			return h, e
 		}
+		if !a.Sealed || i.Owner != a.Owner || i.Store != a.Controller || i.Content != a.ContentCommitment || i.Length != a.DeclaredLength {
+			return h, errors.New("zi0: AS0 and ZI0 EVM getter bindings disagree")
+		}
 	}
 	return h, nil
 }
@@ -557,97 +603,150 @@ func (s *Session) as0Head(gas uint64) (as0.Head, error) {
 	names := []string{"owner", "declaredLength", "cursor", "isSealed", "pageCount", "chainCommitment", "contentCommitment", "PAGE_SIZE", "MAX_PAGES", "MAX_LENGTH"}
 	st := s.state.Copy()
 	vals := make([]interface{}, len(names))
-	for i, n := range names {
-		o, u, e := s.view(st, s.as0Address, s.as0ABI, n, gas)
-		h.GasUsed += u
-		if e != nil {
-			return h, e
+	for i, name := range names {
+		out, used, err := s.view(st, s.as0Address, s.as0ABI, name, gas)
+		h.GasUsed += used
+		if err != nil {
+			return h, err
 		}
-		v, e := s.as0ABI.Unpack(n, o)
-		if e != nil || len(v) != 1 {
-			return h, e
+		decoded, err := s.as0ABI.Unpack(name, out)
+		if err != nil {
+			return h, fmt.Errorf("zi0: decode AS0 %s getter: %w", name, err)
 		}
-		vals[i] = v[0]
+		if len(decoded) != 1 {
+			return h, fmt.Errorf("zi0: decode AS0 %s getter: got %d values, want 1", name, len(decoded))
+		}
+		vals[i] = decoded[0]
 	}
 	var ok bool
 	if h.Owner, ok = vals[0].(common.Address); !ok {
-		return h, errors.New("zi0: AS0 owner type")
+		return h, errors.New("zi0: noncanonical AS0 owner getter type")
 	}
 	if h.DeclaredLength, ok = vals[1].(uint32); !ok {
-		return h, errors.New("zi0: AS0 length type")
+		return h, errors.New("zi0: noncanonical AS0 length getter type")
 	}
 	if h.Cursor, ok = vals[2].(uint32); !ok {
-		return h, errors.New("zi0: AS0 cursor type")
+		return h, errors.New("zi0: noncanonical AS0 cursor getter type")
 	}
 	if h.Sealed, ok = vals[3].(bool); !ok {
-		return h, errors.New("zi0: AS0 sealed type")
+		return h, errors.New("zi0: noncanonical AS0 sealed getter type")
 	}
-	n, yes := vals[4].(*big.Int)
-	if !yes || !n.IsUint64() {
-		return h, errors.New("zi0: AS0 page count type")
+	pageCount, ok := vals[4].(*big.Int)
+	if !ok || pageCount.Sign() < 0 || !pageCount.IsUint64() || pageCount.Uint64() > uint64(as0.MaxPages) {
+		return h, errors.New("zi0: AS0 page count is noncanonical or out of range")
 	}
-	h.PageCount = uint32(n.Uint64())
-	h.ChainCommitment = common.Hash(vals[5].([32]byte))
-	h.ContentCommitment = common.Hash(vals[6].([32]byte))
-	h.PageSize = vals[7].(uint32)
-	h.MaxPages = vals[8].(uint32)
-	h.MaxLength = vals[9].(uint32)
-	h.Controller = s.as0Address
-	h.RuntimeCodeHash = s.as0Hash
-	h.StateRoot = s.root
+	h.PageCount = uint32(pageCount.Uint64())
+	chain, ok := vals[5].([32]byte)
+	if !ok {
+		return h, errors.New("zi0: noncanonical AS0 chain getter type")
+	}
+	content, ok := vals[6].([32]byte)
+	if !ok {
+		return h, errors.New("zi0: noncanonical AS0 content getter type")
+	}
+	h.ChainCommitment, h.ContentCommitment = common.Hash(chain), common.Hash(content)
+	if h.PageSize, ok = vals[7].(uint32); !ok {
+		return h, errors.New("zi0: noncanonical AS0 page-size getter type")
+	}
+	if h.MaxPages, ok = vals[8].(uint32); !ok {
+		return h, errors.New("zi0: noncanonical AS0 max-pages getter type")
+	}
+	if h.MaxLength, ok = vals[9].(uint32); !ok {
+		return h, errors.New("zi0: noncanonical AS0 max-length getter type")
+	}
+	h.Controller, h.RuntimeCodeHash, h.StateRoot = s.as0Address, s.as0Hash, s.root
+	if h.Controller == (common.Address{}) || s.state.GetCodeHash(h.Controller) != s.as0Hash || h.Owner != s.owner || h.DeclaredLength != s.length || h.Cursor > h.DeclaredLength || h.PageSize != as0.PageSize || h.MaxPages != as0.MaxPages || h.MaxLength != as0.MaxLength || h.ChainCommitment == (common.Hash{}) {
+		return as0.Head{GasUsed: h.GasUsed}, errors.New("zi0: AS0 getters violate bound identity or frozen limits")
+	}
+	covered := uint64(h.PageCount) * uint64(as0.PageSize)
+	if covered < uint64(h.Cursor) || covered > uint64(h.Cursor)+uint64(as0.PageSize-1) || (h.Cursor != h.DeclaredLength && h.Cursor%as0.PageSize != 0) {
+		return as0.Head{GasUsed: h.GasUsed}, errors.New("zi0: AS0 page/cursor geometry is noncanonical")
+	}
+	wantPages := (h.DeclaredLength + as0.PageSize - 1) / as0.PageSize
+	if h.Sealed {
+		if h.Cursor != h.DeclaredLength || h.PageCount != wantPages || h.ContentCommitment == (common.Hash{}) {
+			return as0.Head{GasUsed: h.GasUsed}, errors.New("zi0: AS0 sealed head is noncanonical")
+		}
+	} else if h.ContentCommitment != (common.Hash{}) {
+		return as0.Head{GasUsed: h.GasUsed}, errors.New("zi0: AS0 content was published before seal")
+	}
 	return h, nil
 }
+
 func (s *Session) indexHead(gas uint64) (IndexHead, error) {
 	h := IndexHead{Address: s.indexAddress, RuntimeCodeHash: s.zi0Hash}
 	names := []string{"owner", "store", "content", "length", "phase", "eocd", "cdOffset", "cdSize", "count", "nextEntry", "cdCursor", "rolling", "finalRoot"}
 	st := s.state.Copy()
 	vals := make([]interface{}, len(names))
-	for i, n := range names {
-		o, u, e := s.view(st, s.indexAddress, s.zi0ABI, n, gas)
-		h.GasUsed += u
-		if e != nil {
-			return h, e
+	for i, name := range names {
+		out, used, err := s.view(st, s.indexAddress, s.zi0ABI, name, gas)
+		h.GasUsed += used
+		if err != nil {
+			return h, err
 		}
-		v, e := s.zi0ABI.Unpack(n, o)
-		if e != nil || len(v) != 1 {
-			return h, e
+		decoded, err := s.zi0ABI.Unpack(name, out)
+		if err != nil {
+			return h, fmt.Errorf("zi0: decode ZI0 %s getter: %w", name, err)
 		}
-		vals[i] = v[0]
+		if len(decoded) != 1 {
+			return h, fmt.Errorf("zi0: decode ZI0 %s getter: got %d values, want 1", name, len(decoded))
+		}
+		vals[i] = decoded[0]
 	}
 	var ok bool
 	if h.Owner, ok = vals[0].(common.Address); !ok {
-		return h, errors.New("zi0: ZI0 owner type")
+		return h, errors.New("zi0: noncanonical ZI0 owner getter type")
 	}
 	if h.Store, ok = vals[1].(common.Address); !ok {
-		return h, errors.New("zi0: ZI0 store type")
+		return h, errors.New("zi0: noncanonical ZI0 store getter type")
 	}
-	h.Content = common.Hash(vals[2].([32]byte))
+	content, ok := vals[2].([32]byte)
+	if !ok {
+		return h, errors.New("zi0: noncanonical ZI0 content getter type")
+	}
+	h.Content = common.Hash(content)
 	if h.Length, ok = vals[3].(uint32); !ok {
-		return h, errors.New("zi0: ZI0 length type")
+		return h, errors.New("zi0: noncanonical ZI0 length getter type")
 	}
 	if h.Phase, ok = vals[4].(uint8); !ok {
-		return h, errors.New("zi0: ZI0 phase type")
+		return h, errors.New("zi0: noncanonical ZI0 phase getter type")
 	}
-	if h.EOCD, ok = vals[5].(uint32); !ok {
-		return h, errors.New("zi0: ZI0 eocd type")
+	uint32Fields := []*uint32{&h.EOCD, &h.CDOffset, &h.CDSize, &h.Count, &h.NextEntry, &h.CDCursor}
+	for i, target := range uint32Fields {
+		value, valid := vals[5+i].(uint32)
+		if !valid {
+			return h, fmt.Errorf("zi0: noncanonical ZI0 %s getter type", names[5+i])
+		}
+		*target = value
 	}
-	if h.CDOffset, ok = vals[6].(uint32); !ok {
-		return h, errors.New("zi0: ZI0 cdOffset type")
+	rolling, ok := vals[11].([32]byte)
+	if !ok {
+		return h, errors.New("zi0: noncanonical ZI0 rolling getter type")
 	}
-	if h.CDSize, ok = vals[7].(uint32); !ok {
-		return h, errors.New("zi0: ZI0 cdSize type")
+	finalRoot, ok := vals[12].([32]byte)
+	if !ok {
+		return h, errors.New("zi0: noncanonical ZI0 final-root getter type")
 	}
-	if h.Count, ok = vals[8].(uint32); !ok {
-		return h, errors.New("zi0: ZI0 count type")
+	h.Rolling, h.FinalRoot = common.Hash(rolling), common.Hash(finalRoot)
+	if h.Address == (common.Address{}) || s.state.GetCodeHash(h.Address) != s.zi0Hash || h.Owner != s.owner || h.Store != s.as0Address || h.Content == (common.Hash{}) || h.Length != s.length || h.Phase > 2 || h.Count > MaxEntries || h.CDSize > MaxCD || h.NextEntry > h.Count {
+		return IndexHead{GasUsed: h.GasUsed}, errors.New("zi0: ZI0 getters violate bound identity, phase, or caps")
 	}
-	if h.NextEntry, ok = vals[9].(uint32); !ok {
-		return h, errors.New("zi0: ZI0 nextEntry type")
+	if h.Phase == 0 {
+		if h.EOCD != 0 || h.CDOffset != 0 || h.CDSize != 0 || h.Count != 0 || h.NextEntry != 0 || h.CDCursor != 0 || h.Rolling != (common.Hash{}) || h.FinalRoot != (common.Hash{}) {
+			return IndexHead{GasUsed: h.GasUsed}, errors.New("zi0: BOUND index has staging or final metadata")
+		}
+		return h, nil
 	}
-	if h.CDCursor, ok = vals[10].(uint32); !ok {
-		return h, errors.New("zi0: ZI0 cdCursor type")
+	cdEnd := uint64(h.CDOffset) + uint64(h.CDSize)
+	if h.Length < 22 || cdEnd != uint64(h.EOCD) || uint64(h.EOCD)+22 > uint64(h.Length) || (h.Count == 0) != (h.CDSize == 0) || h.CDCursor < h.CDOffset || uint64(h.CDCursor) > cdEnd || h.Rolling == (common.Hash{}) || h.FinalRoot != (common.Hash{}) && h.Phase != 2 {
+		return IndexHead{GasUsed: h.GasUsed}, errors.New("zi0: ZI0 directory/cursor/root metadata is noncanonical")
 	}
-	h.Rolling = common.Hash(vals[11].([32]byte))
-	h.FinalRoot = common.Hash(vals[12].([32]byte))
+	if h.NextEntry == 0 && h.CDCursor != h.CDOffset {
+		return IndexHead{GasUsed: h.GasUsed}, errors.New("zi0: unscanned ZI0 cursor moved")
+	}
+	if h.Phase == 2 && (h.NextEntry != h.Count || uint64(h.CDCursor) != cdEnd || h.FinalRoot == (common.Hash{}) || h.FinalRoot != h.Rolling) {
+		return IndexHead{GasUsed: h.GasUsed}, errors.New("zi0: FINAL index is incomplete or has mismatched root")
+	}
 	return h, nil
 }
 func (s *Session) view(st *state.StateDB, to common.Address, a abi.ABI, method string, gas uint64, args ...interface{}) ([]byte, uint64, error) {
@@ -863,7 +962,10 @@ func prepareDirectory(dir string) (bool, error) {
 		if e != nil {
 			return false, e
 		}
-		if strings.HasPrefix(name, ".durable-head-") && fi.Mode().IsRegular() {
+		if strings.HasPrefix(name, ".durable-head-") {
+			if x.Type()&os.ModeSymlink != 0 || !fi.Mode().IsRegular() {
+				return false, fmt.Errorf("zi0: publication temp %q must be a real regular file", name)
+			}
 			continue
 		}
 		seen[name] = true
