@@ -62,6 +62,13 @@ causes across actual continuation/restart.24roots,20q1/q7chains,32independent pr
 and parent regressions pass. It does not add message/stack-trace APIs or Java I/O.
 Run `make java-mc-tl0-test java-mc-tl0-demo`; see `JAVA_EVM_MC_TL0_REVIEW.md`.
 
+**MC-SC0 accepted:** the separate225303-byte runtime executes char-array/copy String
+constructor bytecode and content-based receiver `intern()`, including real sliced
+copy/restart.24roots/21chains/32independent groups and parent checks pass. Only String
+`new` requires the explicit no-callback Object constructor profile; inherited fields,
+literals and other TL0 objects remain supported. No builder, Java I/O or VFS claim.
+Run `make java-mc-sc0-test java-mc-sc0-demo`; see `JAVA_EVM_MC_SC0_REVIEW.md`.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:

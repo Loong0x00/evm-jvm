@@ -35,5 +35,7 @@ The build pins solc `0.8.30+commit.73712a01.Emscripten.clang`, optimizer 200,
 via-IR, Cancun and disabled metadata. The runtime ceiling is 256 KiB and checkpoint
 ceiling is 1 MiB. This oversized runtime is for explicit LOCAL code installation,
 not CREATE or standard-chain deployment evidence. Calls retain 100M ordinary / 1B
-boundary gas and the 25M commit reserve. This runtime is not an SC0 acceptance,
-Java SE, Minecraft startup, VFS, I/O, scheduling, listeners or EULA execution claim.
+boundary gas and the 25M commit reserve. Parent acceptance and retained corrections
+are in `JAVA_EVM_MC_SC0_REVIEW.md`. Accepted runtime:225303bytes, SHA256
+`a3fdedbcb6d517d567eb9ee0c9ab69955027a56859db8c26d9ef38e328a67e60`.
+This is not Java SE, Minecraft startup, VFS, I/O, scheduling, listeners or EULA execution.
