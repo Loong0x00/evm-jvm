@@ -225,3 +225,11 @@ commitments are NOT whole-JAR official SHA256 verification. Host raw-file hashin
 may check input transport integrity, never provide class/resource execution authority.
 Do not fake Log4j, run Minecraft, accept EULA, or change accepted VFS caps to cross
 its4-class/64KiB frontier. VFS0a remains the latest accepted profile72aa13f15.
+
+AS0 NOW FROZEN for implementation: JAVA_EVM_MC_AS0_PLAN.md supersedes preparation.
+Parent independently replayed32MiB/4096pages and found/fixed a prototype empty-append
+at-full-before-seal gap. Freeze rejects it and uses constructor-only STORAGE owner/
+length for a fixed controller code hash. Ordinary EVM CREATE for controller/pages;
+no measurements-only SHA/comparator API in production. TWO disjoint runtime/harness
+workers; parent16group acceptance. AS0 remains UNACCEPTED, unmounted from JVM;
+VFS0a72aa13f15 remains latest accepted, noZIP/inflate/classloading/MC/Done yet.

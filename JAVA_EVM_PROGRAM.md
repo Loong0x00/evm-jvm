@@ -280,3 +280,14 @@ lazy class loading and launch. Candidate32MiB/8KiBpage limits require measuremen
 Explicit hash scope: EVM commits actual received pages; host SHA256 input-pin checking
 is transport integrity, NOT EVM whole-JAR SHA256 proof or a host ClassLoader.
 No new production interface frozen, no MC/EULA/listener/Done, no automatic GitHub push.
+
+## AS0 implementation freeze
+
+JAVA_EVM_MC_AS0_PLAN.md now freezes the separate immutable artifact-byte controller/
+transport. Parent32MiB/4096-page replay passed, including EVM-created pages and a
+new-process code/trie read. Parent caught extra empty pages after exact upload;
+fixed prototype rejects them, seals exact page count, and stores constructor-only
+owner/length in storage for fixed code identity. Production excludes measurement SHA/
+comparator APIs. Per-call durable transport must be measured (preflight flushed only
+every256 pages). Two workers own distinct runtime/harness paths; parent verifies.
+No AS0 acceptance, EVM whole-JAR SHA256 proof, ZIP/class loader, or MC startup claim.
