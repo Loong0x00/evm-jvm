@@ -1,0 +1,620 @@
+{
+  "schema": 1,
+  "compiler": "javac --release 8 -g:none",
+  "fixtures": [
+    {
+      "id": "construction-exact-exception",
+      "group": "TL0Construction",
+      "source": "TL0Construction.java",
+      "sourceSHA256": "4628d8034b53bbdcec8bfec39aefdf28c244813f8c61e5611a81dd67bb82a0e3",
+      "entryClass": "TL0Construction",
+      "entry": "exactException",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Construction.class",
+          "sha256": "c8a1ce8a9865939b1346617adfedaf573bd48f6681ae895e46cc3af8b09d18c6"
+        }
+      ]
+    },
+    {
+      "id": "construction-exact-arithmetic",
+      "group": "TL0Construction",
+      "source": "TL0Construction.java",
+      "sourceSHA256": "4628d8034b53bbdcec8bfec39aefdf28c244813f8c61e5611a81dd67bb82a0e3",
+      "entryClass": "TL0Construction",
+      "entry": "exactArithmetic",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Construction.class",
+          "sha256": "c8a1ce8a9865939b1346617adfedaf573bd48f6681ae895e46cc3af8b09d18c6"
+        }
+      ]
+    },
+    {
+      "id": "construction-custom-fields",
+      "group": "TL0Construction",
+      "source": "TL0Construction.java",
+      "sourceSHA256": "4628d8034b53bbdcec8bfec39aefdf28c244813f8c61e5611a81dd67bb82a0e3",
+      "entryClass": "TL0Construction",
+      "entry": "customFields",
+      "args": [
+        17
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 17,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Construction.class",
+          "sha256": "c8a1ce8a9865939b1346617adfedaf573bd48f6681ae895e46cc3af8b09d18c6"
+        },
+        {
+          "name": "TL0Construction$Problem.class",
+          "sha256": "d78f9be6c62e21bb1c729ad3d92de79006638017d29f469f6b6acef03edcf450"
+        }
+      ]
+    },
+    {
+      "id": "construction-hierarchy-fields",
+      "group": "TL0Construction",
+      "source": "TL0Construction.java",
+      "sourceSHA256": "4628d8034b53bbdcec8bfec39aefdf28c244813f8c61e5611a81dd67bb82a0e3",
+      "entryClass": "TL0Construction",
+      "entry": "hierarchyFields",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 37,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Construction.class",
+          "sha256": "c8a1ce8a9865939b1346617adfedaf573bd48f6681ae895e46cc3af8b09d18c6"
+        },
+        {
+          "name": "TL0Construction$Problem.class",
+          "sha256": "d78f9be6c62e21bb1c729ad3d92de79006638017d29f469f6b6acef03edcf450"
+        },
+        {
+          "name": "TL0Construction$Child.class",
+          "sha256": "e87101cbf32b8d0eb9301ddc5f59781aa0bd5ecf56dc6ac0256dd46473574815"
+        }
+      ]
+    },
+    {
+      "id": "construction-distinct",
+      "group": "TL0Construction",
+      "source": "TL0Construction.java",
+      "sourceSHA256": "4628d8034b53bbdcec8bfec39aefdf28c244813f8c61e5611a81dd67bb82a0e3",
+      "entryClass": "TL0Construction",
+      "entry": "distinct",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Construction.class",
+          "sha256": "c8a1ce8a9865939b1346617adfedaf573bd48f6681ae895e46cc3af8b09d18c6"
+        },
+        {
+          "name": "TL0Construction$Problem.class",
+          "sha256": "d78f9be6c62e21bb1c729ad3d92de79006638017d29f469f6b6acef03edcf450"
+        }
+      ]
+    },
+    {
+      "id": "construction-ctor-effects",
+      "group": "TL0Construction",
+      "source": "TL0Construction.java",
+      "sourceSHA256": "4628d8034b53bbdcec8bfec39aefdf28c244813f8c61e5611a81dd67bb82a0e3",
+      "entryClass": "TL0Construction",
+      "entry": "ctorEffects",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 11,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Construction.class",
+          "sha256": "c8a1ce8a9865939b1346617adfedaf573bd48f6681ae895e46cc3af8b09d18c6"
+        },
+        {
+          "name": "TL0Construction$Problem.class",
+          "sha256": "d78f9be6c62e21bb1c729ad3d92de79006638017d29f469f6b6acef03edcf450"
+        }
+      ]
+    },
+    {
+      "id": "identity-local-catch",
+      "group": "TL0Identity",
+      "source": "TL0Identity.java",
+      "sourceSHA256": "b363ef840bc3aabe78fae92b1b4d169889e9514ee7eea7bf5f55b6607bd25f30",
+      "entryClass": "TL0Identity",
+      "entry": "localCatch",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Identity.class",
+          "sha256": "359c1d298417aae8843c82693ae59dd79aa2770b29178fb67b4af30957113db1"
+        },
+        {
+          "name": "TL0Identity$Problem.class",
+          "sha256": "628e4bdba75e5a87127223558be86ea00d1d894b2c2acb2415ce2a35453ed307"
+        }
+      ]
+    },
+    {
+      "id": "identity-field-catch",
+      "group": "TL0Identity",
+      "source": "TL0Identity.java",
+      "sourceSHA256": "b363ef840bc3aabe78fae92b1b4d169889e9514ee7eea7bf5f55b6607bd25f30",
+      "entryClass": "TL0Identity",
+      "entry": "fieldCatch",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Identity.class",
+          "sha256": "359c1d298417aae8843c82693ae59dd79aa2770b29178fb67b4af30957113db1"
+        },
+        {
+          "name": "TL0Identity$Problem.class",
+          "sha256": "628e4bdba75e5a87127223558be86ea00d1d894b2c2acb2415ce2a35453ed307"
+        }
+      ]
+    },
+    {
+      "id": "identity-array-catch",
+      "group": "TL0Identity",
+      "source": "TL0Identity.java",
+      "sourceSHA256": "b363ef840bc3aabe78fae92b1b4d169889e9514ee7eea7bf5f55b6607bd25f30",
+      "entryClass": "TL0Identity",
+      "entry": "arrayCatch",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Identity.class",
+          "sha256": "359c1d298417aae8843c82693ae59dd79aa2770b29178fb67b4af30957113db1"
+        },
+        {
+          "name": "TL0Identity$Problem.class",
+          "sha256": "628e4bdba75e5a87127223558be86ea00d1d894b2c2acb2415ce2a35453ed307"
+        }
+      ]
+    },
+    {
+      "id": "identity-call-unwind",
+      "group": "TL0Identity",
+      "source": "TL0Identity.java",
+      "sourceSHA256": "b363ef840bc3aabe78fae92b1b4d169889e9514ee7eea7bf5f55b6607bd25f30",
+      "entryClass": "TL0Identity",
+      "entry": "callUnwind",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Identity.class",
+          "sha256": "359c1d298417aae8843c82693ae59dd79aa2770b29178fb67b4af30957113db1"
+        },
+        {
+          "name": "TL0Identity$Problem.class",
+          "sha256": "628e4bdba75e5a87127223558be86ea00d1d894b2c2acb2415ce2a35453ed307"
+        }
+      ]
+    },
+    {
+      "id": "identity-rethrow",
+      "group": "TL0Identity",
+      "source": "TL0Identity.java",
+      "sourceSHA256": "b363ef840bc3aabe78fae92b1b4d169889e9514ee7eea7bf5f55b6607bd25f30",
+      "entryClass": "TL0Identity",
+      "entry": "rethrow",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Identity.class",
+          "sha256": "359c1d298417aae8843c82693ae59dd79aa2770b29178fb67b4af30957113db1"
+        },
+        {
+          "name": "TL0Identity$Problem.class",
+          "sha256": "628e4bdba75e5a87127223558be86ea00d1d894b2c2acb2415ce2a35453ed307"
+        }
+      ]
+    },
+    {
+      "id": "identity-known-subclass-catch",
+      "group": "TL0Identity",
+      "source": "TL0Identity.java",
+      "sourceSHA256": "b363ef840bc3aabe78fae92b1b4d169889e9514ee7eea7bf5f55b6607bd25f30",
+      "entryClass": "TL0Identity",
+      "entry": "knownSubclassCatch",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Identity.class",
+          "sha256": "359c1d298417aae8843c82693ae59dd79aa2770b29178fb67b4af30957113db1"
+        },
+        {
+          "name": "TL0Identity$KnownChild.class",
+          "sha256": "773ae7a4b0dd4d606fd2f79f53af9ef4c221a4e647546d5fa53ae47be95d9f69"
+        }
+      ]
+    },
+    {
+      "id": "initialization-failing-constructor",
+      "group": "TL0Initialization",
+      "source": "TL0Initialization.java",
+      "sourceSHA256": "e897d5d27a254e1512752e3022084a567064a9601ee22843d6753f031e13120a",
+      "entryClass": "TL0Initialization",
+      "entry": "failingConstructor",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 7,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Initialization.class",
+          "sha256": "b7e012cf97c1d1990f3f84bb18526bff6ff47811e1fceffcecac611eeab0bcd1"
+        },
+        {
+          "name": "TL0Initialization$Problem.class",
+          "sha256": "e2e5d0d5fbbb01d7497044b949a6d0f0cc0ef2a18f750979d99b47dc32509f0a"
+        },
+        {
+          "name": "TL0Initialization$Broken.class",
+          "sha256": "3e8e82d7c75de54a6cf6d38f80f25d6d37999000699174800676c49a0aa27b74"
+        }
+      ]
+    },
+    {
+      "id": "initialization-init-before-new",
+      "group": "TL0Initialization",
+      "source": "TL0Initialization.java",
+      "sourceSHA256": "e897d5d27a254e1512752e3022084a567064a9601ee22843d6753f031e13120a",
+      "entryClass": "TL0Initialization",
+      "entry": "initBeforeNew",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 3,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Initialization.class",
+          "sha256": "b7e012cf97c1d1990f3f84bb18526bff6ff47811e1fceffcecac611eeab0bcd1"
+        },
+        {
+          "name": "TL0Initialization$BeforeNew.class",
+          "sha256": "60135f21c4ed8747bb90e8b932a006d66daaa7a700caa728836e08ce59fa89c9"
+        }
+      ]
+    },
+    {
+      "id": "initialization-wraps-non-error",
+      "group": "TL0Initialization",
+      "source": "TL0Initialization.java",
+      "sourceSHA256": "e897d5d27a254e1512752e3022084a567064a9601ee22843d6753f031e13120a",
+      "entryClass": "TL0Initialization",
+      "entry": "wrapsNonError",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Initialization.class",
+          "sha256": "b7e012cf97c1d1990f3f84bb18526bff6ff47811e1fceffcecac611eeab0bcd1"
+        },
+        {
+          "name": "TL0Initialization$Problem.class",
+          "sha256": "e2e5d0d5fbbb01d7497044b949a6d0f0cc0ef2a18f750979d99b47dc32509f0a"
+        },
+        {
+          "name": "TL0Initialization$WrapInit.class",
+          "sha256": "da6c25f0131271a6f5003e9028a5572fffd49d27c5bfdef364c4f94351d2a704"
+        }
+      ]
+    },
+    {
+      "id": "initialization-propagates-custom-error",
+      "group": "TL0Initialization",
+      "source": "TL0Initialization.java",
+      "sourceSHA256": "e897d5d27a254e1512752e3022084a567064a9601ee22843d6753f031e13120a",
+      "entryClass": "TL0Initialization",
+      "entry": "propagatesCustomError",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Initialization.class",
+          "sha256": "b7e012cf97c1d1990f3f84bb18526bff6ff47811e1fceffcecac611eeab0bcd1"
+        },
+        {
+          "name": "TL0Initialization$CustomError.class",
+          "sha256": "671248ed215171e10d995e48e0789922a2566089304bbc5fb2822f447e21611f"
+        },
+        {
+          "name": "TL0Initialization$ErrorInit.class",
+          "sha256": "69a0272c356be4515aa26ad3b7c3e57389cb9946a41d1b9c7587353102599383"
+        }
+      ]
+    },
+    {
+      "id": "initialization-second-use",
+      "group": "TL0Initialization",
+      "source": "TL0Initialization.java",
+      "sourceSHA256": "e897d5d27a254e1512752e3022084a567064a9601ee22843d6753f031e13120a",
+      "entryClass": "TL0Initialization",
+      "entry": "secondUse",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 3,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Initialization.class",
+          "sha256": "b7e012cf97c1d1990f3f84bb18526bff6ff47811e1fceffcecac611eeab0bcd1"
+        },
+        {
+          "name": "TL0Initialization$Problem.class",
+          "sha256": "e2e5d0d5fbbb01d7497044b949a6d0f0cc0ef2a18f750979d99b47dc32509f0a"
+        },
+        {
+          "name": "TL0Initialization$SecondInit.class",
+          "sha256": "e2c09b942720bd4fb2b69f611c99318b0eddb7903592e5eb8d092a697956d761"
+        }
+      ]
+    },
+    {
+      "id": "outcome-exact-known",
+      "group": "TL0Outcome",
+      "source": "TL0Outcome.java",
+      "sourceSHA256": "452cf37255cc45be38c1448f901b66d9f97b271d1b382c8d7178acb280bea2cf",
+      "entryClass": "TL0Outcome",
+      "entry": "exactKnown",
+      "args": [],
+      "outcome": {
+        "lifecycle": "UNCAUGHT_JAVA",
+        "result": 0,
+        "javaKind": 1,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0Outcome.class",
+          "sha256": "575e2d337e367fde1890be68afe8e3f1d2534fd386cd2ee557ffcc66f6628084"
+        }
+      ]
+    },
+    {
+      "id": "outcome-custom",
+      "group": "TL0Outcome",
+      "source": "TL0Outcome.java",
+      "sourceSHA256": "452cf37255cc45be38c1448f901b66d9f97b271d1b382c8d7178acb280bea2cf",
+      "entryClass": "TL0Outcome",
+      "entry": "custom",
+      "args": [],
+      "outcome": {
+        "lifecycle": "UNCAUGHT_JAVA",
+        "result": 0,
+        "javaKind": 0,
+        "javaClassHex": "544c304f7574636f6d652450726f626c656d"
+      },
+      "classes": [
+        {
+          "name": "TL0Outcome.class",
+          "sha256": "575e2d337e367fde1890be68afe8e3f1d2534fd386cd2ee557ffcc66f6628084"
+        },
+        {
+          "name": "TL0Outcome$Problem.class",
+          "sha256": "c03628808f39e85ecb1e709ae391c10c935770c707958bea107bb21f85391d08"
+        }
+      ]
+    },
+    {
+      "id": "outcome-subclass-known",
+      "group": "TL0Outcome",
+      "source": "TL0Outcome.java",
+      "sourceSHA256": "452cf37255cc45be38c1448f901b66d9f97b271d1b382c8d7178acb280bea2cf",
+      "entryClass": "TL0Outcome",
+      "entry": "subclassKnown",
+      "args": [],
+      "outcome": {
+        "lifecycle": "UNCAUGHT_JAVA",
+        "result": 0,
+        "javaKind": 0,
+        "javaClassHex": "544c304f7574636f6d65244b6e6f776e4368696c64"
+      },
+      "classes": [
+        {
+          "name": "TL0Outcome.class",
+          "sha256": "575e2d337e367fde1890be68afe8e3f1d2534fd386cd2ee557ffcc66f6628084"
+        },
+        {
+          "name": "TL0Outcome$KnownChild.class",
+          "sha256": "ecf80ef78a60e28ad39f0cfc1f809f864e2419879d13063fe1c20a58aeb8ab68"
+        }
+      ]
+    },
+    {
+      "id": "constructor-self-direct",
+      "group": "TL0ConstructorSelf",
+      "source": "TL0ConstructorSelf.java",
+      "sourceSHA256": "132e574557b4ce7e5bba51035c8fa8145ccaa8438568a17d03f25253c21ae31e",
+      "entryClass": "TL0ConstructorSelf",
+      "entry": "direct",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 101,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0ConstructorSelf.class",
+          "sha256": "2fe2c7ee9f7f9c8430d3f7210ddd3500bdc098b2e23de5b089eccb62aac1bc9a"
+        },
+        {
+          "name": "TL0ConstructorSelf$Direct.class",
+          "sha256": "b8e0479d5df7aa5c7c43c03ed3c25d6485c5a7b94d1a501ed955520fe7f4cf59"
+        }
+      ]
+    },
+    {
+      "id": "constructor-self-through-call",
+      "group": "TL0ConstructorSelf",
+      "source": "TL0ConstructorSelf.java",
+      "sourceSHA256": "132e574557b4ce7e5bba51035c8fa8145ccaa8438568a17d03f25253c21ae31e",
+      "entryClass": "TL0ConstructorSelf",
+      "entry": "throughCall",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 102,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0ConstructorSelf.class",
+          "sha256": "2fe2c7ee9f7f9c8430d3f7210ddd3500bdc098b2e23de5b089eccb62aac1bc9a"
+        },
+        {
+          "name": "TL0ConstructorSelf$Through.class",
+          "sha256": "a36aa1a969f8bb6f282eb81cfdb78bbde09641c249c87e22418be0f022b4943d"
+        }
+      ]
+    },
+    {
+      "id": "constructor-self-escaped-after-failure",
+      "group": "TL0ConstructorSelf",
+      "source": "TL0ConstructorSelf.java",
+      "sourceSHA256": "132e574557b4ce7e5bba51035c8fa8145ccaa8438568a17d03f25253c21ae31e",
+      "entryClass": "TL0ConstructorSelf",
+      "entry": "escapedAfterFailure",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 103,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0ConstructorSelf.class",
+          "sha256": "2fe2c7ee9f7f9c8430d3f7210ddd3500bdc098b2e23de5b089eccb62aac1bc9a"
+        },
+        {
+          "name": "TL0ConstructorSelf$Escaped.class",
+          "sha256": "61f139df428b62d04dc06ddd0a29a0ff6a5a2f932f26b9d50048f20bc82245ea"
+        }
+      ]
+    },
+    {
+      "id": "constructor-self-in-class-init",
+      "group": "TL0ConstructorSelf",
+      "source": "TL0ConstructorSelf.java",
+      "sourceSHA256": "132e574557b4ce7e5bba51035c8fa8145ccaa8438568a17d03f25253c21ae31e",
+      "entryClass": "TL0ConstructorSelf",
+      "entry": "inClassInit",
+      "args": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 201,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "TL0ConstructorSelf.class",
+          "sha256": "2fe2c7ee9f7f9c8430d3f7210ddd3500bdc098b2e23de5b089eccb62aac1bc9a"
+        },
+        {
+          "name": "TL0ConstructorSelf$InitSelf.class",
+          "sha256": "713e39bf64f9d85ec692376f7f9a89cdd81f7d43894e72212dc501bc7b6e1771"
+        },
+        {
+          "name": "TL0ConstructorSelf$InitHolder.class",
+          "sha256": "9492d19b05efec364686f5af0e4c53440d536aa288bbc4c3f69d2770bbcc463f"
+        }
+      ]
+    }
+  ]
+}
