@@ -1476,7 +1476,7 @@ func TestIOE0Verify15CounterAndSharedHandleBounds(t *testing.T) {
 		off   int
 		width int
 		value uint64
-	}{{cp.Machine.HeapHeaderOffset, 4, 65535}, {cp.Machine.HeapHeaderOffset + 4, 2, 1025}, {cp.Machine.HeapHeaderOffset + 10, 4, 65537}} {
+	}{{cp.Machine.HeapHeaderOffset, 4, 65535}, {cp.Machine.HeapHeaderOffset + 4, 2, 1025}, {cp.Machine.HeapHeaderOffset + 12, 4, 65537}, {cp.Machine.HeapHeaderOffset + 8, 4, 262145}} {
 		bad := ioe0VerifyMutateRehash(t, cp.Bytes, mut.off, func(b []byte) {
 			if mut.width == 4 {
 				binary.BigEndian.PutUint32(b, uint32(mut.value))
