@@ -212,3 +212,15 @@ java-mc-ioe0-test: java-mc-ioe0-check
 	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/ioe0
 java-mc-ioe0-demo: java-mc-ioe0-check
 	go test -count=1 -v -timeout=20m -run '^TestIOE0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/ioe0
+
+# Development LOCAL Java file layer. NOT Minecraft startup or final acceptance.
+.PHONY: java-mc-vfs0a-build java-mc-vfs0a-check java-mc-vfs0a-test java-mc-vfs0a-demo
+java-mc-vfs0a-build:
+	cd jvmevm/runtime/local/vfs0a && npm ci --ignore-scripts && npm run build
+java-mc-vfs0a-check:
+	cd jvmevm/runtime/local/vfs0a && npm ci --ignore-scripts && npm run check
+java-mc-vfs0a-test: java-mc-vfs0a-check
+	go test -count=1 -timeout=18m ./jvmevm/localcontinuation/vfs0a
+java-mc-vfs0a-demo: java-mc-vfs0a-check
+	@echo "Development Java/EVM file-layer example; NOT Minecraft startup."
+	go test -count=1 -v -timeout=2m -run '^TestVFS0aParentTruncateBeforeBind$$' ./jvmevm/localcontinuation/vfs0a

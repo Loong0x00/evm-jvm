@@ -5,8 +5,10 @@ package vfs0a
 // Code only, never a VFS native or VFS0a's new constructor/native identity gates.
 // Passing them is not acceptance of the production VFS0a runtime.
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/binary"
 	"encoding/hex"
 	"fmt"
 	"os"
@@ -224,4 +226,144 @@ func TestVFS0aParentPathTraversalHostOracles(t *testing.T) {
 	cleanup := `new java.io.File("onea").delete();new java.io.File("manya").delete();
  new java.io.File("oneb").delete();new java.io.File("manyb").delete();`
 	vfsParentCompileOracle(t, "PPathMkdir", source, 15, setup, cleanup)
+}
+
+type vfsParentNativeTrace struct {
+	Final     Result
+	Snapshots []vfsParentCheckpointWire
+	MaxGas    uint64
+}
+
+func vfsParentNativeRun(t *testing.T, class string, raw [][]byte, seeds []SeedFile, want int32, quantum uint64, internal uint32, observe func(*Session, Result, vfsParentCheckpointWire)) vfsParentNativeTrace {
+	t.Helper()
+	s, err := NewMemory(common.HexToAddress("0x7f01"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer s.Close()
+	id := crypto.Keccak256Hash([]byte(fmt.Sprintf("%s:%s:%d:%d", t.Name(), class, quantum, internal)))
+	const gas = uint64(100_000_000)
+	r, err := s.Start(id, raw, class, "run", nil, seeds, quantum, internal, gas)
+	var tr vfsParentNativeTrace
+	for {
+		if err != nil {
+			t.Fatalf("native q%d call%d: %v revert=%x", quantum, len(tr.Snapshots)+1, err, r.RevertData)
+		}
+		if r.GasUsed > tr.MaxGas {
+			tr.MaxGas = r.GasUsed
+		}
+		c, e := vfsParentDecodeWire(r.Checkpoint)
+		if e != nil {
+			t.Fatal(e)
+		}
+		mr, vr := vfsParentWireRoots(t, c)
+		if mr != r.Slice.MachineStateRoot || vr != r.Slice.VFSStateRoot || c.MachineRoot != mr || c.VFSRoot != vr || crypto.Keccak256Hash(r.Checkpoint) != r.Slice.CheckpointRoot {
+			t.Fatal("independent native root mismatch")
+		}
+		if r.Slice.TotalJvmSteps+r.Slice.TotalInternalSteps > 4096 {
+			t.Fatal("native parent ordinary unit cap")
+		}
+		tr.Snapshots = append(tr.Snapshots, c)
+		if observe != nil {
+			observe(s, r, c)
+		}
+		if r.Slice.Lifecycle != 1 {
+			break
+		}
+		if len(tr.Snapshots) >= 4096 {
+			t.Fatal("native parent slice cap")
+		}
+		r, err = s.Resume(id, r.Slice.Epoch, r.Slice.CheckpointRoot, raw, r.Checkpoint, quantum, internal, gas)
+	}
+	if r.Slice.Lifecycle != 2 || r.Slice.Result != want {
+		t.Fatalf("native outcome%+v want%d", r.Slice, want)
+	}
+	tr.Final = r
+	t.Logf("FINAL VFS native q%d/internal%d calls%d JVM%d internal%d maxGas%d checkpoint%d", quantum, internal, len(tr.Snapshots), r.Slice.TotalJvmSteps, r.Slice.TotalInternalSteps, tr.MaxGas, len(r.Checkpoint))
+	return tr
+}
+
+func TestVFS0aParentOutputStreamDefaultCode(t *testing.T) {
+	source := `import java.io.*;public class POutputCode extends OutputStream {
+ int last,total,count;public void write(int v){last=v;total+=v&255;count++;}
+ public static int run()throws Exception{POutputCode s=new POutputCode();int v=0;
+ s.write(new byte[]{-1,2,3},1,2);if(s.last==3&&s.total==5&&s.count==2)v|=1;
+ s.write(new byte[]{-1});if(s.last==-1&&s.total==260&&s.count==3)v|=2;
+ s.flush();s.close();s.write(7);if(s.last==7&&s.count==4)v|=4;
+ ((AutoCloseable)s).close();if(s.count==4)v|=8;
+ try{s.write(null,-1,-1);}catch(NullPointerException e){v|=16;}
+ s.write(new byte[0],0,0);if(s.count==4)v|=32;return v;}}`
+	raw := [][]byte{vfsParentCompileOracle(t, "POutputCode", source, 63)}
+	a := vfsParentNativeRun(t, "POutputCode", raw, nil, 63, 4096, 4096, nil)
+	b := vfsParentNativeRun(t, "POutputCode", raw, nil, 63, 7, 1, nil)
+	if a.Final.Slice.MachineStateRoot != b.Final.Slice.MachineStateRoot || a.Final.Slice.VFSStateRoot != b.Final.Slice.VFSStateRoot {
+		t.Fatal("OutputStream default Code quantum mismatch")
+	}
+}
+
+func TestVFS0aParentTruncateBeforeBind(t *testing.T) {
+	source := `import java.io.*;public class PBind {
+ public static int run()throws IOException{FileOutputStream out=new FileOutputStream(new File("f"));out.write(17);out.close();return 1;}}`
+	// This host test performs its own create/write inside its owned temporary CWD.
+	raw := [][]byte{vfsParentCompileOracle(t, "PBind", source, 1)}
+	seenPending, seenBound, seenClosed := false, false, false
+	tr := vfsParentNativeRun(t, "PBind", raw, []SeedFile{{Path: []byte("f"), Data: []byte("OLD")}}, 1, 1, 4096, func(s *Session, r Result, c vfsParentCheckpointWire) {
+		if len(c.Descriptors) == 0 {
+			return
+		}
+		if len(c.Descriptors) != 1 {
+			t.Fatal("unexpected extra descriptor")
+		}
+		d := c.Descriptors[0]
+		view, e := s.InspectFile(raw, r.Checkpoint, []byte("f"), 0, 4096)
+		if e != nil {
+			t.Fatal(e)
+		}
+		if view.Kind != 2 || view.EffectiveReadOnly {
+			t.Fatal("file view kind/readonly")
+		}
+		expected := vfsParentHashABI(t, []string{"bytes32", "uint32", "uint32", "uint8", "bool", "bytes", "bytes32"}, crypto.Keccak256Hash([]byte("JVMEVM:MC:VFS0A:FILE:1")), uint32(1), view.Inode, uint8(2), false, []byte("/work/f"), crypto.Keccak256Hash(view.Data))
+		if expected != view.FileRoot {
+			t.Fatal("independent FILE root mismatch")
+		}
+		if d.Phase == 1 {
+			if !seenPending {
+				t.Logf("EVM checkpoint epoch%d: /work/f truncated, data=%x, pending constructor PC%d", r.Slice.Epoch, view.Data, c.Frames[len(c.Frames)-1].PC)
+			}
+			seenPending = true
+			if len(view.Data) != 0 || c.LogicalBytes != 0 || d.PC != 29 || int(d.Depth) != len(c.Frames) {
+				t.Fatal("pending truncate/depth/PC")
+			}
+			f := c.Frames[len(c.Frames)-1]
+			if f.PC != 22 && f.PC != 23 && f.PC != 24 && f.PC != 27 && f.PC != 28 && f.PC != 29 {
+				t.Fatalf("pending frame PC%d", f.PC)
+			}
+			h := c.Heap[d.Owner-1]
+			if !h.Object || len(h.Cells) != 1 {
+				t.Fatal("unexpected canonical stream layout")
+			}
+			cell := r.Checkpoint[h.Cells[0] : h.Cells[0]+32]
+			if cell[23] != 1 || binary.BigEndian.Uint64(cell[24:]) != 0 {
+				t.Fatal("pending handle must be INT0")
+			}
+		} else if d.Phase == 2 {
+			seenBound = true
+		} else if d.Phase == 3 {
+			if !seenClosed {
+				t.Logf("EVM checkpoint epoch%d: /work/f data=%x, descriptor CLOSED", r.Slice.Epoch, view.Data)
+			}
+			seenClosed = true
+			if !bytes.Equal(view.Data, []byte{17}) {
+				t.Fatalf("closed bytes%x", view.Data)
+			}
+		} else {
+			t.Fatal("unknown descriptor phase")
+		}
+	})
+	if !seenPending || !seenBound || !seenClosed {
+		t.Fatalf("missing phases %t/%t/%t", seenPending, seenBound, seenClosed)
+	}
+	if tr.Final.Slice.LogicalFileBytes != 1 {
+		t.Fatal("final logical byte count")
+	}
 }

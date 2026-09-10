@@ -118,3 +118,26 @@ Parent reran the24 fixture pins/rebuild and Java8/21 C-locale host oracles: all 
 accepted profile paths have no diff from IOE0 acceptance. Two revision1 runtime/
 harness correction workers are active from9653767; no third/Fast worker or VFS
 acceptance. All24 initial actual EVM controls remain recorded failures pending fixes.
+
+## Parent FINAL artifact execution (still awaiting boundary/adversarial review)
+
+The integrated FINAL293010B artifact, not the intermediate292377B overlay, passed
+the entire existing package suite:298.715s (external299.429s),283287552B peak groupRSS,
+exit0/no limit hit. Includes original24/20chains, seven path regressions, corrected
+contract address/empty inspection, Java8/21 and durability/newprocess tests.
+Logs `/tmp/mc-vfs0a-parent-final-artifact-suite.{log,json}`. This run predates the two
+extra parent native controls below; those were run separately on the same artifact.
+
+Parent independently ran the full OutputStream generic/default/interface Code on
+VFS0a (not raw IOE0): result63, one22566152gas/JVM300/internal4; q7/internal1 has47
+slices, same roots;1144B checkpoint. Also a real149-slice q1 truncate-before-bind
+chain: parent independently decoded the zero INT handle, top frame PC22..29,
+PENDING_BIND/BOUND/CLOSED phases; checked all machine/VFS roots plus FILE content
+roots and EVM inspect views; final one-byte file17,1352B checkpoint,max9861807gas.
+Logs `/tmp/mc-vfs0a-parent-native-extra.log`, both pass3.168s. This is genuine Java/EVM
+file work, NOT Minecraft or a complete-filesystem acceptance claim.
+
+Two isolated adversarial/boundary review workers are now examining the FINAL artifact;
+parent keeps reserved tests/production fixes and independently replays the32 acceptance
+groups/findings. At most two reviewers; no third/Fast worker. New Make targets expose
+the development file-layer test/example without claiming startup; old targets unchanged.
