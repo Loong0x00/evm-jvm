@@ -291,3 +291,16 @@ owner/length in storage for fixed code identity. Production excludes measurement
 comparator APIs. Per-call durable transport must be measured (preflight flushed only
 every256 pages). Two workers own distinct runtime/harness paths; parent verifies.
 No AS0 acceptance, EVM whole-JAR SHA256 proof, ZIP/class loader, or MC startup claim.
+
+## AS0 accepted immutable artifact-byte component
+
+See JAVA_EVM_MC_AS0_REVIEW.md: runtime2831B SHAe7f8e95b0af80bf15e89a01ceb635d8ae858560c606cc86ac3877d8f0de69b13,
+init3166B SHAb792253995eafb2ecbc6d7c6c6f28fc0fc03ad0d5073a97f4c62b4ea93dd0f88.
+Parent integrated655bdfe21/77efd3a24, fixed only Go guard omissions, independently
+checked16groups and whole32MiB readback. Finalpackage4.096s/external4.358s282877952B
+RSS; full32MiB memory and EVERY-append disk publication/newprocess pass. Append
+7289399396gas aggregate4096calls/max1830926; notonecall or computationalopcount.
+AcceptedVFS0a control367.334s/278855680BRSS, allpriorcore/runtimepathsunchanged.
+AS0 supplies EVM-created immutable bytes only, not ZIP/inflate/ClassLoader/JVM mount
+or officialwholeJARSHA256 proof. Next resource/archive interpretation is separate.
+No Minecraft/EULA/listener/Done. No automatic public push of these later commits.

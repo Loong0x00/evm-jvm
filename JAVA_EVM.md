@@ -84,6 +84,13 @@ Explicit320KiB LOCAL code ceiling,1MiB checkpoint and64KiB file contents: not st
 deployment, a world-capacity filesystem or Minecraft startup. See
 `JAVA_EVM_MC_VFS0A_REVIEW.md`; run `make java-mc-vfs0a-test java-mc-vfs0a-demo`.
 
+**MC-AS0 accepted component:** a small2831-byte controller stores up to32MiB of
+immutable raw bytes in EVM-created code pages. Full memory/per-call durable disk,
+new-process continuation, commitments and full EVM byte readback pass. It is not
+ZIP parsing, decompression, class loading or Minecraft startup. VFS0a remains the
+separate Java/filesystem profile. See `JAVA_EVM_MC_AS0_REVIEW.md`; run
+`make java-mc-as0-test java-mc-as0-demo`.
+
 ## Quickstart / stage gates
 
 Run from the fork, not the unrelated home-directory Git repository:

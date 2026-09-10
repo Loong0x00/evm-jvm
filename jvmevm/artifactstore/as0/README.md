@@ -1,3 +1,8 @@
+> CURRENT: AS0 is parent-accepted as a bounded immutable EVM raw-byte store.
+> See JAVA_EVM_MC_AS0_REVIEW.md for parent Go fixes, final gates and proof limits.
+> Worker candidate/batch-replay observations below are historical, not the sole
+> acceptance evidence. No ZIP/ClassLoader/JVM mounting/Minecraft startup is claimed.
+
 # MC-AS0 opaque Go transport (implementation candidate)
 
 This package drives one frozen `AS0ArtifactStore` instance in the unmodified

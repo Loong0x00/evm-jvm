@@ -1,5 +1,13 @@
 # Java-inside-EVM agent guide
 
+LATEST ACCEPTED COMPONENT: AS0 immutable EVM artifact-byte store; see
+JAVA_EVM_MC_AS0_REVIEW.md.2831B runtime/3166B init;32MiB4096pages in memory and
+per-call durable disk, full EVM readback and new-process continuation pass. Parent
+fixed Go ABI/fallback/event checks,nested-state links,canonical cursor checks; no
+Solidity change. AS0 is NOT a JVM profile or ZIP/class loader; VFS0a72aa13f15 remains
+latest accepted JVM/filesystem. No Minecraft/EULA/listener/Done or new GitHub push.
+
+
 LATEST ACCEPTED: MC-VFS0a bounded LOCAL filesystem; see JAVA_EVM_MC_VFS0A_REVIEW.md.
 Runtime292968B SHA717683f8..., sourceb95f0788...,38images/6050B new8. Parent fixed
 VFS name/parent/readonly-descriptor validation; final suite365.259s/290459648B passes.
