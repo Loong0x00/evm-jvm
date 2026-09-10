@@ -71,11 +71,11 @@ func TestVFS0aParentFrozenEightImages(t *testing.T) {
 
 // Host execution below is a trusted TEST oracle, never a production Java or
 // filesystem evaluator. Only the root class bytes are passed to the EVM.
-func vfsParentCompileOracle(t *testing.T, class, source string, want int32) []byte {
+func vfsParentCompileOracle(t *testing.T, class, source string, want int32, setup ...string) []byte {
 	t.Helper()
 	d := t.TempDir()
 	paths := []string{filepath.Join(d, class+".java"), filepath.Join(d, "OracleMain.java")}
-	sources := []string{source, "public class OracleMain {public static void main(String[] a)throws Exception{System.out.println(" + class + ".run());}}"}
+	sources := []string{source, "public class OracleMain {public static void main(String[] a)throws Exception{" + strings.Join(setup, "\n") + "System.out.println(" + class + ".run());}}"}
 	for i, p := range paths {
 		if err := os.WriteFile(p, []byte(sources[i]), 0600); err != nil {
 			t.Fatal(err)
@@ -190,4 +190,38 @@ func TestVFS0aParentInputStreamCodeOnAcceptedIOE0(t *testing.T) {
 	if a.MachineStateRoot != b.MachineStateRoot || a.TotalJvmSteps != b.TotalJvmSteps || a.TotalInternalSteps != b.TotalInternalSteps {
 		t.Fatal("InputStream Code continuation mismatch")
 	}
+}
+
+// Host-only expectations for newly found path-traversal gaps. These are NOT
+// passing VFS EVM tests. The root Code can be reused against the completed VFS
+// runtime with equivalent raw seeds; setup executes only in the trusted oracle.
+func TestVFS0aParentPathTraversalHostOracles(t *testing.T) {
+	setup := `try(java.io.FileOutputStream f=new java.io.FileOutputStream("file")){f.write(120);}
+ try(java.io.FileOutputStream f=new java.io.FileOutputStream("seed")){f.write(121);}`
+	cases := []struct{ path, message string }{
+		{"file/child", "file/child (Not a directory)"},
+		{"missing/../seed", "missing/../seed (No such file or directory)"},
+		{"file/../seed", "file/../seed (Not a directory)"},
+	}
+	for i, c := range cases {
+		t.Run(c.path, func(t *testing.T) {
+			class := fmt.Sprintf("PPath%d", i)
+			source := fmt.Sprintf(`import java.io.*;public class %s {
+    public static int run()throws IOException{File f=new File(%q);int v=f.exists()?0:1;
+    try(FileInputStream in=new FileInputStream(f)){return -1;}
+    catch(FileNotFoundException e){if(e.getMessage().equals(%q))v|=2;}return v;}}`, class, c.path, c.message)
+			vfsParentCompileOracle(t, class, source, 3, setup)
+		})
+	}
+	source := `import java.io.*;public class PPathMkdir {
+ public static int run(){int v=0;
+ if(!new File("missing/../onea").mkdir())v|=1;
+ if(new File("missing/../manya").mkdirs())v|=2;
+ if(!new File("file/../oneb").mkdir())v|=4;
+ if(new File("file/../manyb").mkdirs())v|=8;return v;}}`
+	// Fresh directory names on every JVM run, because the oracle helper reuses
+	// its owned temporary CWD across JVM8 and21.
+	cleanup := `new java.io.File("onea").delete();new java.io.File("manya").delete();
+ new java.io.File("oneb").delete();new java.io.File("manyb").delete();`
+	vfsParentCompileOracle(t, "PPathMkdir", source, 15, setup, cleanup)
 }

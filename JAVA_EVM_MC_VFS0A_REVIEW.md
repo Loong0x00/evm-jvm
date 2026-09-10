@@ -55,6 +55,17 @@ VFS native is invoked; this is not testing VFS0a's reserved image/native/NEW gat
   OutputStream's full candidate graph exceeds IOE0's4-raw-class limit with a custom
   root; its EVM checks remain pending on actual VFS0a, rather than changing that cap.
 
+## Newly reproduced path blocker
+
+See `JAVA_EVM_MC_VFS0A_PATH_REVIEW.md`: a pure lexical `..` collapse incorrectly
+opens paths through missing/non-directory intermediate components in the standalone
+kernel, and the three-status wrapper cannot represent ENOTDIR. Java8/21 also
+separate mkdir (false) from mkdirs (canonical fallback true) for these prefixes.
+These are acceptance blockers pending parent reconciliation with the runtime worker,
+not a passed production VFS test. Permanent host oracles and original failing kernel
+observations are retained. Combined Code-only/host-oracle tests pass2.634s; they do
+not resolve the native mismatch.
+
 ## Pending acceptance, do not promote preparation to completion
 
 Two disjoint runtime/harness workers started from `cca4841`, model Sol/high with

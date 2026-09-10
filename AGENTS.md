@@ -197,3 +197,9 @@ profiles keep256. IOE0 remains last accepted. No production VFS acceptance or MC
 Latest user directive: if the target is unfinished, continue; demonstrate only once
 it is genuinely achieved. VFS implementation remains active; do not present a
 Code-only probe or standalone kernel as Minecraft readiness.
+
+Parent found a VFS0a acceptance blocker after freeze: see
+JAVA_EVM_MC_VFS0A_PATH_REVIEW.md. Lexical .. collapse must not silently open through
+missing/file intermediate parents; ENOTDIR needs honest handling, and mkdirs has
+measured canonical fallback unlike mkdir/open/stat. Preserve reproductions and
+reconcile at runtime handoff; core-fixture green is insufficient for acceptance.
