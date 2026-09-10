@@ -1313,6 +1313,12 @@ contract String0Interpreter {
         bool[] memory isDefault = new bool[](s.nextHandle + 1);
         bool[] memory isBacking = new bool[](s.nextHandle + 1);
         bool[] memory activeString = new bool[](s.nextHandle + 1);
+        bool[] memory internedHandle = new bool[](s.nextHandle + 1);
+        for (uint256 i; i < s.arena.internCount; ++i) {
+            uint256 h = s.arena.internHandles[i];
+            if (h == 0 || h > s.nextHandle || internedHandle[h]) revert LC0StateError(7, 0);
+            internedHandle[h] = true;
+        }
         bool reliesOnObjectProfile;
 
         for (uint256 i; i < s.depth; ++i) {
@@ -1350,13 +1356,10 @@ contract String0Interpreter {
                 uint32 cached = uint32(_payload(fields[s.arena.stringHashOffset]));
                 if (cached != 0 && cached != actualHash) revert LC0StateError(7, 0);
             }
-            bool interned;
-            for (uint256 i; i < s.arena.internCount; ++i) {
-                if (s.arena.internHandles[i] == h) interned = true;
-            }
-            if (!interned) reliesOnObjectProfile = true;
+            if (!internedHandle[h]) reliesOnObjectProfile = true;
         }
 
+        bytes32[] memory contentFilters = new bytes32[](s.arena.internCount);
         uint256 prior;
         for (uint256 i; i < s.arena.internCount; ++i) {
             uint256 h = s.arena.internHandles[i];
@@ -1365,12 +1368,22 @@ contract String0Interpreter {
             prior = h;
             uint64[] memory units = _stringUnits(s.arena, h, ROOT_FAULT_SENTINEL);
             if (s.arena.internHashes[i] != _stringHash(units)) revert LC0StateError(7, 0);
+            // EVM-local filter over validated memory cells. Equal content always
+            // has the same filter; filter hits still receive full comparison, so
+            // neither Java-hash nor Keccak collisions define String identity.
+            bytes32 filter;
+            assembly ("memory-safe") {
+                filter := keccak256(add(units, 32), mul(mload(units), 32))
+            }
+            contentFilters[i] = filter;
         }
         for (uint256 i; i < s.arena.internCount; ++i) {
             uint64[] memory left = _stringUnits(
                 s.arena, s.arena.internHandles[i], ROOT_FAULT_SENTINEL
             );
             for (uint256 j = i + 1; j < s.arena.internCount; ++j) {
+                if (s.arena.internHashes[i] != s.arena.internHashes[j]
+                    || contentFilters[i] != contentFilters[j]) continue;
                 uint64[] memory right = _stringUnits(
                     s.arena, s.arena.internHandles[j], ROOT_FAULT_SENTINEL
                 );
@@ -1392,6 +1405,9 @@ contract String0Interpreter {
         if (!f.isConstructor || f.classIndex >= p.classes.length
             || f.methodIndex >= p.classes[f.classIndex].methods.length) return 0;
         ClassInfo memory c = p.classes[f.classIndex];
+        // These temporary-alias privileges belong only to the pinned String
+        // constructors, not arbitrary user constructors with the same descriptor.
+        if (!_isNamedClass(c, bytes("java/lang/String"))) return 0;
         uint256 meta = c.methods[f.methodIndex];
         (uint256 no, uint256 nn) = _utf(c.cp[(meta >> 16) & 0xffff]);
         (uint256 doff, uint256 dn) = _utf(c.cp[(meta >> 32) & 0xffff]);
@@ -1424,6 +1440,18 @@ contract String0Interpreter {
             || _valueKind(f.locals[1]) != KIND_REF) revert LC0StateError(7, 0);
         uint8 kind = _activeStringConstructorKind(p, f);
         uint256 source = _payload(f.locals[1]);
+        if (source == 0) {
+            // Pinned Code cannot execute beyond its first null dereference. At
+            // that advanced PC, the NPE (or arena-exhaustion OOM) is still pending;
+            // the next internal unwind removes this handler-free constructor.
+            uint256 faultPC = kind == 1 ? 5 : 6;
+            uint256 afterFaultPC = kind == 1 ? 6 : 9;
+            if (f.pc > afterFaultPC || (f.pc == afterFaultPC
+                && (!s.arena.pending.active || s.arena.pending.faultPC != faultPC
+                    || (s.arena.pending.kind != 6 && s.arena.pending.kind != 7)))) {
+                revert LC0StateError(7, 0);
+            }
+        }
         uint256[] memory own = s.arena.heap.objectHeap[f.thisHandle];
         uint256 backing = _payload(own[s.arena.stringValueOffset]);
         uint32 cached = uint32(_payload(own[s.arena.stringHashOffset]));
@@ -1448,6 +1476,9 @@ contract String0Interpreter {
             if (backing != 0 && (f.pc < 34 || destination == 0 || backing != destination)) {
                 revert LC0StateError(7, 0);
             }
+            if (f.pc == 31) {
+                _requireStringWriteStack(f, _packRef(uint32(destination)));
+            }
             if (destination != 0 && source != 0) {
                 uint64[] memory src = s.arena.heap.arrayHeap[source];
                 uint64[] memory dst = s.arena.heap.arrayHeap[destination];
@@ -1468,6 +1499,14 @@ contract String0Interpreter {
                 || s.arena.heap.classes[source] != s.arena.stringClass)) {
                 revert LC0StateError(7, 0);
             }
+            if (f.pc == 9) {
+                uint256 sourceBacking = source == 0 ? 0
+                    : _payload(s.arena.heap.objectHeap[source][s.arena.stringValueOffset]);
+                _requireStringWriteStack(f, _packRef(uint32(sourceBacking)));
+            }
+            if (f.pc == 17 && source != 0) {
+                _requireStringWriteStack(f, s.arena.heap.objectHeap[source][s.arena.stringHashOffset]);
+            }
             if (f.pc < 12) {
                 if (backing != 0 || cached != 0) revert LC0StateError(7, 0);
             } else {
@@ -1484,6 +1523,14 @@ contract String0Interpreter {
                 }
             }
         }
+    }
+
+    // The three field-write safepoints are part of the pinned bootstrap Code,
+    // not guest-fixture PCs. Their receiver and value must be the actual
+    // constructor target/source, not another otherwise well-formed String/array.
+    function _requireStringWriteStack(Frame memory f, uint256 value) private pure {
+        if (f.sp != 2 || f.stack[0] != _packRef(uint32(f.thisHandle))
+            || f.stack[1] != value) revert LC0StateError(7, 0);
     }
 
     function _validateStringReachability(
@@ -1600,6 +1647,10 @@ contract String0Interpreter {
             uint256 allowed;
             if (ctorKind == 1 && f.locals.length > 2 && f.initialized[2]
                 && _valueKind(f.locals[2]) == KIND_REF) allowed = _payload(f.locals[2]);
+            if (ctorKind == 2 && f.locals.length > 1 && f.initialized[1]
+                && _valueKind(f.locals[1]) == KIND_REF && _payload(f.locals[1]) != 0) {
+                allowed = _payload(s.arena.heap.objectHeap[_payload(f.locals[1])][s.arena.stringValueOffset]);
+            }
             for (uint256 j; j < f.locals.length; ++j) if (f.initialized[j]) {
                 uint256 cell = f.locals[j];
                 if (_valueKind(cell) == KIND_REF && _payload(cell) <= s.nextHandle
@@ -1613,7 +1664,8 @@ contract String0Interpreter {
                 if (_valueKind(cell) != KIND_REF || _payload(cell) > s.nextHandle
                     || !isBacking[_payload(cell)]) continue;
                 bool permitted = (ctorKind == 1 && _payload(cell) == allowed)
-                    || ctorKind == 2;
+                    || (ctorKind == 2 && f.pc == 9 && j + 1 == f.sp
+                        && _payload(cell) == allowed);
                 // At char-constructor pc8 the just-allocated destination has not
                 // reached local2 yet, but is the sole top-stack temporary.
                 if (ctorKind == 1 && f.pc == 8 && j + 1 == f.sp) permitted = true;

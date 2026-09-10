@@ -190,3 +190,14 @@ java-mc-tl0-test: java-mc-tl0-check
 	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/tl0
 java-mc-tl0-demo: java-mc-tl0-check
 	go test -count=1 -v -timeout=20m -run '^TestTL0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/tl0
+
+# LOCAL bytecode String construction, not a VFS or Minecraft startup gate.
+.PHONY: java-mc-sc0-build java-mc-sc0-check java-mc-sc0-test java-mc-sc0-demo
+java-mc-sc0-build:
+	cd jvmevm/runtime/local/sc0 && npm ci --ignore-scripts && npm run build
+java-mc-sc0-check:
+	cd jvmevm/runtime/local/sc0 && npm ci --ignore-scripts && npm run check
+java-mc-sc0-test: java-mc-sc0-check
+	go test -count=1 -timeout=20m ./jvmevm/localcontinuation/sc0
+java-mc-sc0-demo: java-mc-sc0-check
+	go test -count=1 -v -timeout=20m -run '^TestSC0HarnessContinuationCorpus$$' ./jvmevm/localcontinuation/sc0
