@@ -1,0 +1,612 @@
+{
+  "schema": 1,
+  "compiler": "javac --release 8 -g:none",
+  "fixtures": [
+    {
+      "id": "existsMissing",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "existsMissing",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "seedFile",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "seedFile",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "736565642e62696e",
+          "dataHex": "73656564",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "seedDirectory",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "seedDirectory",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "736565642d6469722f6c656166",
+          "dataHex": "78",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "mkdirOnce",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "mkdirOnce",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "mkdirsNested",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "mkdirsNested",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "readonlyMkdir",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "readonlyMkdir",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "6c6f636b6564",
+          "dataHex": "78",
+          "readOnly": true
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "lexicalAlias",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "lexicalAlias",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "comparablePaths",
+      "group": "Paths",
+      "source": "VFS0aPaths.java",
+      "sourceSHA256": "41eb317c9cb8489e60e294849da92bc0fe88dbb6ecd422b545000535cab065ac",
+      "entryClass": "VFS0aPaths",
+      "entry": "comparablePaths",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aPaths.class",
+          "sha256": "ddefbd7f3815514811de6b77b6258d0f0b7c40092a0dfa07b899d009e926758a"
+        }
+      ]
+    },
+    {
+      "id": "readSingleEOF",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "readSingleEOF",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "73696e676c65",
+          "dataHex": "41",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "readBulkSlice",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "readBulkSlice",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "62756c6b",
+          "dataHex": "414243",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "createRoundtrip",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "createRoundtrip",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "truncate",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "truncate",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "7472756e63617465",
+          "dataHex": "6f6c642d64617461",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "append",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "append",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "617070656e64",
+          "dataHex": "4142",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "twoWriterGap",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "twoWriterGap",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "staleReadCursor",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "staleReadCursor",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "7374616c65",
+          "dataHex": "4142434445",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "closeTwice",
+      "group": "Streams",
+      "source": "VFS0aStreams.java",
+      "sourceSHA256": "bd4c9307a364a5484e0a6017767db05631e05271cec6874eb82ce50fa82c54a5",
+      "entryClass": "VFS0aStreams",
+      "entry": "closeTwice",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "636c6f7365",
+          "dataHex": "41",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aStreams.class",
+          "sha256": "53077166b09259be5ba685fe87a19afc396c0c5dda24807723881c7360bb8e00"
+        }
+      ]
+    },
+    {
+      "id": "nullFileArg",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "nullFileArg",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    },
+    {
+      "id": "missingInputMessage",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "missingInputMessage",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    },
+    {
+      "id": "missingOutputParentMessage",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "missingOutputParentMessage",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    },
+    {
+      "id": "directoryOpenMessage",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "directoryOpenMessage",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "6469726563746f72792f6c656166",
+          "dataHex": "78",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    },
+    {
+      "id": "readOnlyOutputMessage",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "readOnlyOutputMessage",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "726561646f6e6c79",
+          "dataHex": "78",
+          "readOnly": true
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    },
+    {
+      "id": "nullArrayBeforeClosed",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "nullArrayBeforeClosed",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "707265636564656e6365",
+          "dataHex": "78",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    },
+    {
+      "id": "boundsBeforeClosed",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "boundsBeforeClosed",
+      "args": [],
+      "seeds": [],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    },
+    {
+      "id": "zeroLengthClosed",
+      "group": "Errors",
+      "source": "VFS0aErrors.java",
+      "sourceSHA256": "5f212585191bef7f969c8f281bf58609d0c5b58d7937c570b9147f8cbc4b94c4",
+      "entryClass": "VFS0aErrors",
+      "entry": "zeroLengthClosed",
+      "args": [],
+      "seeds": [
+        {
+          "pathHex": "7a65726f",
+          "dataHex": "78",
+          "readOnly": false
+        }
+      ],
+      "outcome": {
+        "lifecycle": "RETURNED",
+        "result": 1,
+        "javaKind": 0,
+        "javaClassHex": ""
+      },
+      "classes": [
+        {
+          "name": "VFS0aErrors.class",
+          "sha256": "fdf957ce553921e23402faa10f5c0f423c9755b6566f500778040eb3cb9bd9ee"
+        }
+      ]
+    }
+  ]
+}
