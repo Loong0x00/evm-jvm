@@ -80,3 +80,17 @@ The new4096-slice test allowance is explicit and VFS0a-only, for q1 wrapper loop
 No code/gas/checkpoint cap was raised, and no aggregate-gas estimate or standalone
 size addition proves a production artifact fits. Report any real size blocker before
 parent scope/module review; never edit upstream limits or silently raise the ceiling.
+
+## Integrated initial candidate — no behavioral acceptance
+
+Runtime32a159b->f2b64ff and harness7913c85->06e39c2 are integrated. Initial287440B
+artifact hashes independently agree; initial256KiB gate failed as required. Parent
+revision410a32b explicitly selects a VFS0a-only320KiB LOCAL code allowance under the
+user's artistic priority (REVISION1), no core/gas/checkpoint changes. The original
+size failure remains evidence; initial256KiB statements above are historical.
+
+First actual corpus now reaches EVM and ALL24 one-call controls revert with
+ThrowableProfileError(2,37-or-38,0),0.925s. See CANDIDATE_FINDINGS: integer handles
+incorrectly use a reference-only helper; stat status kinds also conflict; pending
+bind corridor/PC checks need correction. Path amendment remains mandatory. No q1/q7
+VFS chain or production filesystem result has passed yet. IOE0 remains last accepted.
