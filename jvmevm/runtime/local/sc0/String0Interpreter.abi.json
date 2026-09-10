@@ -1,0 +1,717 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ArrayError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "inputIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "BootstrapProfileError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pc",
+        "type": "uint256"
+      }
+    ],
+    "name": "BytecodeError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pc",
+        "type": "uint256"
+      }
+    ],
+    "name": "CallError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "offset",
+        "type": "uint256"
+      }
+    ],
+    "name": "ClassError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "location",
+        "type": "uint256"
+      }
+    ],
+    "name": "FieldError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "classIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "methodIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "entryIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "HandlerError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "classIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "HierarchyError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "classIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "InitError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "location",
+        "type": "uint256"
+      }
+    ],
+    "name": "InterfaceError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "kind",
+        "type": "uint256"
+      }
+    ],
+    "name": "JavaException",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      }
+    ],
+    "name": "LC0ControlError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "byteOffset",
+        "type": "uint256"
+      }
+    ],
+    "name": "LC0StateError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "detail",
+        "type": "uint256"
+      }
+    ],
+    "name": "LinkError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      }
+    ],
+    "name": "MethodError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ObjectError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pc",
+        "type": "uint256"
+      }
+    ],
+    "name": "ReferenceError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "classIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "cpIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "byteOffset",
+        "type": "uint256"
+      }
+    ],
+    "name": "StringConstantError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pc",
+        "type": "uint256"
+      }
+    ],
+    "name": "StringProfileError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "classIndex",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "methodIndex",
+        "type": "uint256"
+      }
+    ],
+    "name": "ThrowableProfileError",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "pc",
+        "type": "uint256"
+      }
+    ],
+    "name": "TypeError",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "instanceId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint64",
+        "name": "epoch",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "checkpointRoot",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "machineStateRoot",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "lifecycle",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "totalJvmSteps",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "totalInternalSteps",
+        "type": "uint64"
+      }
+    ],
+    "name": "CheckpointCommitted",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "instanceId",
+        "type": "bytes32"
+      }
+    ],
+    "name": "head",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "uint64",
+        "name": "epoch",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "checkpointRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "machineStateRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "artifactRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "configRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "runtimeCodeHash",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "lifecycle",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "instanceId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "expectedEpoch",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "expectedCheckpointRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "rawClasses",
+        "type": "bytes[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "checkpoint",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxJvmSteps",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxInternalSteps",
+        "type": "uint32"
+      }
+    ],
+    "name": "resume",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "schema",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "lifecycle",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint64",
+            "name": "epoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "checkpointRoot",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "machineStateRoot",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "totalJvmSteps",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "totalInternalSteps",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "executedJvmSteps",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "executedInternalSteps",
+            "type": "uint32"
+          },
+          {
+            "internalType": "int32",
+            "name": "result",
+            "type": "int32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "javaKind",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "javaRef",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "javaClass",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct String0Interpreter.StringSliceResult",
+        "name": "result",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "childCheckpoint",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "instanceId",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "rawClasses",
+        "type": "bytes[]"
+      },
+      {
+        "internalType": "string",
+        "name": "entryClass",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "entry",
+        "type": "string"
+      },
+      {
+        "internalType": "int32[]",
+        "name": "args",
+        "type": "int32[]"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxJvmSteps",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxInternalSteps",
+        "type": "uint32"
+      }
+    ],
+    "name": "start",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint32",
+            "name": "schema",
+            "type": "uint32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "lifecycle",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint64",
+            "name": "epoch",
+            "type": "uint64"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "checkpointRoot",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "machineStateRoot",
+            "type": "bytes32"
+          },
+          {
+            "internalType": "uint64",
+            "name": "totalJvmSteps",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "totalInternalSteps",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "executedJvmSteps",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "executedInternalSteps",
+            "type": "uint32"
+          },
+          {
+            "internalType": "int32",
+            "name": "result",
+            "type": "int32"
+          },
+          {
+            "internalType": "uint8",
+            "name": "javaKind",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "javaRef",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bytes",
+            "name": "javaClass",
+            "type": "bytes"
+          }
+        ],
+        "internalType": "struct String0Interpreter.StringSliceResult",
+        "name": "result",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "checkpoint",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes[]",
+        "name": "rawClasses",
+        "type": "bytes[]"
+      },
+      {
+        "internalType": "bytes",
+        "name": "checkpoint",
+        "type": "bytes"
+      }
+    ],
+    "name": "validateCheckpoint",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "machineStateRoot",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
