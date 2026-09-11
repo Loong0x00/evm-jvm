@@ -1073,14 +1073,32 @@ func (s *Session) decoderHead(gas uint64) (DI0Head, error) {
 	if h.NameHash != crypto.Keccak256Hash(s.decoderRawName) {
 		return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: DI0 getters differ from constructor route")
 	}
-	if h.PendingLength > 258 || h.PendingDistance > uint16(MaxHistory) || (h.PendingLength == 0) != (h.PendingDistance == 0) || (h.PendingLength > 0 && uint32(h.PendingDistance) > h.OutputCount) {
-		return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: DI0 pending copy is noncanonical")
+	// Stored-DEFLATE LEN is a uint16 byte count, not a Huffman match.
+	// Do not reject a successfully published header before the EVM itself
+	// checks later input/output exhaustion during bounded copy actions.
+	switch {
+	case h.Method == 0:
+		if h.BlockMode != 0 || h.InputBit != 0 || h.PendingLength != 0 || h.PendingDistance != 0 || h.FixedBlock || h.BlockFinal {
+			return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: method0 block state is noncanonical")
+		}
+	case h.BlockMode == 1:
+		if h.PendingDistance != 0 || h.FixedBlock || h.InputBit != 0 || (h.Phase == 1 && h.PendingLength == 0) {
+			return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: stored-block pending state is noncanonical")
+		}
+	case h.BlockMode == 0:
+		if h.PendingLength != 0 || h.PendingDistance != 0 {
+			return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: header boundary has pending copy")
+		}
+	default:
+		if h.PendingLength > 258 || h.PendingDistance > uint16(MaxHistory) || (h.PendingLength == 0) != (h.PendingDistance == 0) || (h.PendingLength > 0 && uint32(h.PendingDistance) > h.OutputCount) {
+			return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: DI0 pending copy is noncanonical")
+		}
 	}
 	if h.Phase >= 2 && (h.InputByte != h.DataStart+h.CompressedSize || h.InputBit != 0 || h.PendingLength != 0 || h.OutputCount != h.PlainSize || h.CRC^0xffffffff != h.ExpectedCRC) {
 		return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: completed decoder cursor, length, or CRC is noncanonical")
 	}
 	pages := uint8((h.PlainSize + OutputPageSize - 1) / OutputPageSize)
-	if h.Phase == 1 && (h.FinalRoot != zero || h.PublishedPages != 0) {
+	if h.Phase == 1 && (h.FinalRoot != zero || h.PublicationRolling != zero || h.PublishedPages != 0) {
 		return DI0Head{GasUsed: h.GasUsed}, errors.New("di0: decoding head exposes publication")
 	}
 	if h.Phase >= 2 && h.PublicationRolling == zero {

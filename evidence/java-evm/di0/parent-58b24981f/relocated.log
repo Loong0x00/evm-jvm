@@ -1,0 +1,66 @@
+=== RUN   TestDI0ParentStoredBlockPendingHeadAndReopen
+--- PASS: TestDI0ParentStoredBlockPendingHeadAndReopen (1.15s)
+=== RUN   TestDI0ParentProcessChild
+    parent_test.go:123: child process entry only
+--- SKIP: TestDI0ParentProcessChild (0.00s)
+=== RUN   TestDI0ParentTrueNewProcessChains
+=== RUN   TestDI0ParentTrueNewProcessChains/stored
+    parent_test.go:285: stage0 pid2436925 work0 phase0 pages0 trie=0x8e94d83d2bf76e6eb150353860d945626ad985af98345a3104a2431c17c21f8d resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage1 pid2436939 work0 phase0 pages0 trie=0x4ed07c61710a8ba23e02fd985a737628fde2de64c4294436f32e5989d3f6b8c2 resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage2 pid2436960 work1 phase1 pages0 trie=0x1f3c3546105478a6aae71769acbe0c60938120af55750e520077720104599049 resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage3 pid2436975 work2049 phase2 pages0 trie=0x9f9df9106a5b85c876412fa2b7021c0c49fd0a1b66d851bf55eef2badd83d088 resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage4 pid2437057 work2049 phase3 pages1 trie=0xaad2883d9ac1643d93401e863b7ca25089dae576a25a7fc28d08adafc64dff86 resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage5 pid2437072 work2049 phase4 pages8 trie=0x33be252e07fe2008861e8538689819871eb8885fa5eedaa22c816972174ad58e resource=0x6fe236e460f8139a98c2d357d4a882cb3c7b345da3404951067d5a761ef12592
+    parent_test.go:285: stage6 pid2437093 work2049 phase4 pages8 trie=0x33be252e07fe2008861e8538689819871eb8885fa5eedaa22c816972174ad58e resource=0x6fe236e460f8139a98c2d357d4a882cb3c7b345da3404951067d5a761ef12592
+=== RUN   TestDI0ParentTrueNewProcessChains/dynamic
+    parent_test.go:285: stage0 pid2437108 work0 phase0 pages0 trie=0xbf90ce6ad0322f020ebcc76423b9c63907e931755478292c386c3c01207f61e4 resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage1 pid2437122 work0 phase0 pages0 trie=0xb31f47a1296503f4ede87e7f237b0ad84510de76adb7998e908b36c02354efb2 resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage2 pid2437149 work1 phase1 pages0 trie=0x5981bd44aedd5f7c88cbb5e4941ab8c1c9c0b3f3442fc3d9da55742b86276ec1 resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage3 pid2437165 work3541 phase2 pages0 trie=0xb6d44db14ea239f75cdec0ba2438d81bf39fd33f02b76e1965d66cbc5928325c resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage4 pid2437225 work3541 phase3 pages1 trie=0x66da8ddb5656dcd0f2ec6844a92e39395e1b88902a3b7dacb4132b3a31cf769b resource=0x0000000000000000000000000000000000000000000000000000000000000000
+    parent_test.go:285: stage5 pid2437243 work3541 phase4 pages12 trie=0xa81b043dbcf61fd8a024afbe9d058a4d8e670d705c53c0d73c375dbba3555b06 resource=0x6364bb38b8c0915b34900edc7f2d6c4ec3a570b1d709e4940ec7d24ec3d92e58
+    parent_test.go:285: stage6 pid2437266 work3541 phase4 pages12 trie=0xa81b043dbcf61fd8a024afbe9d058a4d8e670d705c53c0d73c375dbba3555b06 resource=0x6364bb38b8c0915b34900edc7f2d6c4ec3a570b1d709e4940ec7d24ec3d92e58
+--- PASS: TestDI0ParentTrueNewProcessChains (2.12s)
+    --- PASS: TestDI0ParentTrueNewProcessChains/stored (1.19s)
+    --- PASS: TestDI0ParentTrueNewProcessChains/dynamic (0.93s)
+=== RUN   TestDI0ParentOutputPublicationFailureMatrix
+=== RUN   TestDI0ParentOutputPublicationFailureMatrix/EVM-CREATE
+=== RUN   TestDI0ParentOutputPublicationFailureMatrix/sync-return
+=== RUN   TestDI0ParentOutputPublicationFailureMatrix/after-trie
+=== RUN   TestDI0ParentOutputPublicationFailureMatrix/before-manifest
+=== RUN   TestDI0ParentOutputPublicationFailureMatrix/after-rename
+--- PASS: TestDI0ParentOutputPublicationFailureMatrix (0.85s)
+    --- PASS: TestDI0ParentOutputPublicationFailureMatrix/EVM-CREATE (0.17s)
+    --- PASS: TestDI0ParentOutputPublicationFailureMatrix/sync-return (0.17s)
+    --- PASS: TestDI0ParentOutputPublicationFailureMatrix/after-trie (0.17s)
+    --- PASS: TestDI0ParentOutputPublicationFailureMatrix/before-manifest (0.17s)
+    --- PASS: TestDI0ParentOutputPublicationFailureMatrix/after-rename (0.16s)
+=== RUN   TestDI0ParentPlainSizeFrontiersThroughTransport
+=== RUN   TestDI0ParentPlainSizeFrontiersThroughTransport/0
+=== RUN   TestDI0ParentPlainSizeFrontiersThroughTransport/90309
+=== RUN   TestDI0ParentPlainSizeFrontiersThroughTransport/158794
+=== RUN   TestDI0ParentPlainSizeFrontiersThroughTransport/262144
+=== RUN   TestDI0ParentPlainSizeFrontiersThroughTransport/262145
+--- PASS: TestDI0ParentPlainSizeFrontiersThroughTransport (4.87s)
+    --- PASS: TestDI0ParentPlainSizeFrontiersThroughTransport/0 (0.00s)
+    --- PASS: TestDI0ParentPlainSizeFrontiersThroughTransport/90309 (0.85s)
+    --- PASS: TestDI0ParentPlainSizeFrontiersThroughTransport/158794 (1.51s)
+    --- PASS: TestDI0ParentPlainSizeFrontiersThroughTransport/262144 (2.50s)
+    --- PASS: TestDI0ParentPlainSizeFrontiersThroughTransport/262145 (0.00s)
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/stored-has-distance
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/stored-fixed-flag
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/stored-bit-offset
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/large-huffman-match
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/pending-at-header
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/method0-with-stored-state
+=== RUN   TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/premature-publication-root
+--- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes (0.11s)
+    --- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/stored-has-distance (0.00s)
+    --- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/stored-fixed-flag (0.00s)
+    --- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/stored-bit-offset (0.00s)
+    --- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/large-huffman-match (0.00s)
+    --- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/pending-at-header (0.00s)
+    --- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/method0-with-stored-state (0.00s)
+    --- PASS: TestDI0ParentStoredHeadValidationNotRelaxedForOtherModes/premature-publication-root (0.00s)
+PASS

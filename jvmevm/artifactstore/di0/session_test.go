@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0"
 )
 
-func TestDI0HarnessDurableFreshProcessStagesAndFullPageReads(t *testing.T) {
+func TestDI0HarnessDurableSameProcessStagesAndFullPageReads(t *testing.T) {
 	plain := bytes.Repeat([]byte("durable-dynamic-output-"), 430) // > one output page
 	compressed := di0HarnessDeflate(t, plain)
 	if (compressed[0]>>1)&3 != 2 {

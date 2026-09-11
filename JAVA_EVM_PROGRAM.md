@@ -4,8 +4,9 @@
 DI0 is frozen for implementation, NOT accepted: JAVA_EVM_MC_DI0_PLAN.md and
 JAVA_EVM_MC_DI0_IMPLEMENTATION_PREFLIGHT.md. Parent resolved an additional64-header
 q128/100M OOG with an EXPLICIT gas-aware upper-bound work contract (25M reserve,
-positive progress), not host recovery or a gas increase. Two disjoint Sol/high
-runtime/transport workers, independent16group final gate. DI0-only256KiB resource
+positive progress), not host recovery or a gas increase. Runtime/transport candidates integrated; parent fixed legal stored-block Head/Open
+validation and added genuine subprocess chains. See JAVA_EVM_MC_DI0_CANDIDATE_FINDINGS.md;
+remaining independent16group final gates, no active workers at current checkpoint. DI0-only256KiB resource
 staging is not a Java/VFS quota increase. No official inflation/Java/MC/Done yet.
 
 ## Latest authorization

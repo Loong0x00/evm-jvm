@@ -1,17 +1,18 @@
 # Java-inside-EVM agent guide
 
-CURRENT DI0 IMPLEMENTATION FREEZE: JAVA_EVM_MC_DI0_PLAN.md and
-JAVA_EVM_MC_DI0_IMPLEMENTATION_PREFLIGHT.md. Parent replayed optimized37/29 cases,
-then found another valid q128 OOG at64 empty dynamic blocks. Explicit new rule:
-units1..128 is an upper bound; EVM yields after positive work if remaining gas<25M.
-Parent6 same-binding pairs/5 completeq1..128 sweeps incl64/129blocks, true changed-
-SSTORE OOG rollback and60-publication/fresh-process chains pass. Largest observed
-step75.587M, NOT a universal gas claim. DI0-only256KiB cap now frozen for
-implementation, UNACCEPTED; no JVM/VFS/AS0 quota change. TWO disjoint Sol/high
-runtime/harness workers permitted, sole Solidity writer; parent16group gate.
-No official inflate/Java/ClassLoader/MC/EULA/listener/Done or implicit push.
-Terra fixture task was provider-blocked, no result counted; parent wrote own probes.
-Earlier preflight-only restrictions below are historical, superseded by this freeze.
+CURRENT DI0 CANDIDATE: integrated58b24981f, NOT ACCEPTED. Frozen plan
+JAVA_EVM_MC_DI0_PLAN.md; parent findings JAVA_EVM_MC_DI0_CANDIDATE_FINDINGS.md.
+Runtime14978B Keccak946686a0... independently rebuilt/replayed37/29/4 cases,
+6pairs/5fullq1..128 sweeps. Parent FIXED reachable Go Head/Open rejection of legal
+stored-DEFLATE LEN65535 (mistaken Huffman258/distance validation). Renamed worker
+same-process test honestly; parent added14 actual child-process stored/dynamic
+chains, size frontiers, real-sync/page-CREATE publication failure/retry controls.
+Parent package/relocated/vet/AS0+ZI0 regression pass; remaining16group checklist
+before acceptance. Additional reviewer provider-blocked, no result counted/retry;
+no active workers at this checkpoint. Evidence parent-58b24981f/ underjava-evm/di0.
+No official inflate/ClassLoader/Java/MC/EULA/listener/world/Done or implicit push.
+DI0-only256KiB is frozen/UNACCEPTED, no JVM/VFS/AS0 quota change. Explicit25Mgas
+reserve/positive-work yield remains, units1..128 an upper bound, not host recovery.
 
 LATEST ACCEPTED COMPONENT: ZI0 bounded EVM ZIP directory/index. See
 JAVA_EVM_MC_ZI0_REVIEW.md and frozen PLAN. Runtime9177B/completeinit9937B unchanged;

@@ -1,0 +1,11 @@
+{
+  "command": [
+    "bash",
+    "-c",
+    "set -e; go test -c -trimpath -o build/java-diff-mc-di0-parent-relocated-58b24981f/di0.test ./jvmevm/artifactstore/di0; cd build/java-diff-mc-di0-parent-relocated-58b24981f; ./di0.test -test.v -test.run=\"^TestDI0Parent\" -test.timeout=18m"
+  ],
+  "exit": 0,
+  "elapsed": 9.855800645018462,
+  "peakGroupRSS": 347553792,
+  "limit": null
+}
