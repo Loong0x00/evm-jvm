@@ -1,0 +1,41 @@
+cd jvmevm/artifactstore/as0/runtime && npm ci --ignore-scripts && npm run check
+
+added 9 packages, and audited 10 packages in 1s
+
+1 package is looking for funding
+  run `npm fund` for details
+
+2 vulnerabilities (1 low, 1 high)
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> jvmevm-mc-as0-runtime-build@1.0.0 check
+> node build.js --check
+
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","settings":{"optimizer":200,"viaIR":true,"evmVersion":"cancun","metadata":false},"sourceBytes":7012,"sourceSHA256":"2483cd1fadd424773beb4ba1698b79ce36e4aebe26454e2b50c80e50a8a55be1","initBytes":3166,"initSHA256":"b792253995eafb2ecbc6d7c6c6f28fc0fc03ad0d5073a97f4c62b4ea93dd0f88","runtimeBytes":2831,"runtimeSHA256":"e7f8e95b0af80bf15e89a01ceb635d8ae858560c606cc86ac3877d8f0de69b13","immutableReferences":0,"abiEntries":18}
+go test -count=1 -timeout=18m ./jvmevm/artifactstore/as0
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0	4.017s
+cd jvmevm/artifactstore/zi0/runtime && npm ci --ignore-scripts && npm run check
+
+added 9 packages, and audited 10 packages in 779ms
+
+1 package is looking for funding
+  run `npm fund` for details
+
+2 vulnerabilities (1 low, 1 high)
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> jvmevm-mc-zi0-runtime-build@1.0.0 check
+> node build.js --check
+
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","settings":{"optimizer":200,"viaIR":true,"evmVersion":"cancun","metadata":false},"sourceBytes":17317,"sourceSHA256":"78329d1610c0ba180c7e267989bf36190a9d9eb536020acce42234066a94a2ae","initBytes":9873,"completeInitBytes":9937,"initSHA256":"f3d6d4614cf916cc4be4cd1ef58212642d829d63b710cea9d140181bafd00870","runtimeBytes":9177,"runtimeSHA256":"74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3","runtimeKeccak256":"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77","immutableReferences":0,"abiEntries":20,"functions":18}
+go test -count=1 -timeout=18m ./jvmevm/artifactstore/zi0/...
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0	20.080s
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0/runtime	0.004s
