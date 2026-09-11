@@ -3,8 +3,9 @@
 ## Current dependency milestone
 DI0 accepted within its bounded resource profile: JAVA_EVM_MC_DI0_REVIEW.md.
 Parent final253.599s/491962368B combined16-group gate passed. Genuine EVM ZIP
-method0/raw-DEFLATE, CRC and output pages; no host decoder. Next: selected original
-JAR entry inflation, then lazy class loading/linking/initialization. DI0-only256KiB
+method0/raw-DEFLATE, CRC and output pages; no host decoder. Parent then genuinely decoded the original MinecraftServer.class33457B in EVM
+(official-entry-56848a1b1 evidence), without executing Java. Next: generated-class
+resource-to-existing-JVM bridge preflight, then lazy loading/link/initialization. DI0-only256KiB
 is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.
 
 ## Latest authorization

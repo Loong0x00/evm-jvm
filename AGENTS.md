@@ -1,5 +1,12 @@
 # Java-inside-EVM agent guide
 
+LATEST ACTUAL ORIGINAL-JAR PROOF: after DI0 acceptance56848a1b1, parent EVM decoded
+MinecraftServer.class33457B from original30222121B server JAR, CRCverified/5pages,
+4149mutations/88.570s. evidence/java-evm/di0/official-entry-56848a1b1/. Class bytes
+ONLY: no Java/Minecraft execution. Next ONE Sol/high disposable class-to-existing-
+JVM bridge preflight per JAVA_EVM_MC_CLASS_BRIDGE_PREPARATION.md; generated fixtures
+only, no production/accepted changes or official Java execution; no Fast/priority.
+
 LATEST ACCEPTED RESOURCE COMPONENT: DI0, JAVA_EVM_MC_DI0_REVIEW.md.
 Runtime14978B Keccak946686a0.../combined72773d5c...; final16-group parent gate
 253.599s491962368B includes pinned build/package/vet/fresh runtime37/29/4 cases,
@@ -8,8 +15,7 @@ and8192 EVM reads, actual14 initial-inclusive syncs and4104 post-Open highinputs
 manifest filesystem failures/oldroot/poison, independent B/O/PC/P/F, regressions.
 Parent fixed legal stored LEN65535 Head/Open and empty-trie metadata pre-DB rejection.
 DI0-only262144B cap accepted, NOT a JVM/VFS/AS0 increase. Units1..128 maximum with
-25M EVM gas reserve after positivework; no hostdecode/recovery. No active workers;
-parent continues genuine selected original-JAR entry inflation, then classloading.
+25M EVM gas reserve after positivework; no hostdecode/recovery. Class bridge preparation follows the actual original-JAR proof above.
 No official inflate/Java/MC/EULA/listener/world/Done at DI0 acceptance checkpoint.
 Blocked reviewer produced no result; not retried/credited. No implicit push.
 

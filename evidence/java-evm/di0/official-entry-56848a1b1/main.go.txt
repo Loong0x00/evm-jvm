@@ -1,0 +1,198 @@
+// Opaque original-JAR transport and EVM decoding proof, NOT Java execution.
+// No ZIP parser, host inflater, class catalogue, or decoded page installer.
+package main
+
+import (
+	"bytes"
+	"crypto/sha1"
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/di0"
+)
+
+const gas = uint64(100000000)
+const jarSHA = "fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e"
+
+type Report struct {
+	Scope, InputSHA256, InputSHA1, Name, RuntimeSHA256     string
+	InputBytes, InputPages, Entries, CentralDirectoryBytes uint32
+	SuccessfulMutations                                    uint64
+	MaxMutationGas, TotalMutationGas, MaxStepGas, ReadGas  uint64
+	MaxMutationMillis, ElapsedMillis                       int64
+	IndexRoot, ResourceRoot, TrieRoot, PlainSHA256         string
+	PlainBytes, CompressedBytes, DataStart, Work           uint32
+	OutputPages                                            uint8
+	CRC32                                                  uint32
+	Method                                                 uint8
+	ClassMagic, ReopenNoCreate, ReopenRootEqual            bool
+}
+
+func must(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+func main() {
+	if len(os.Args) != 4 {
+		panic("usage: proof OFFICIAL_JAR NEW_STATE_DIRECTORY OPAQUE_ENTRY_NAME")
+	}
+	start := time.Now()
+	raw, e := os.ReadFile(os.Args[1])
+	must(e)
+	hash := sha256.Sum256(raw)
+	h1 := sha1.Sum(raw)
+	if len(raw) != 30222121 || hex.EncodeToString(hash[:]) != jarSHA || hex.EncodeToString(h1[:]) != "886945bfb2b978778c3a0288fd7fab09d315b25f" {
+		panic("official input transport hash/length mismatch")
+	}
+	dir, e := filepath.Abs(os.Args[2])
+	must(e)
+	if _, e = os.Lstat(dir); !os.IsNotExist(e) {
+		panic("state target must be NEW; refusing overwrite")
+	}
+	owner := common.HexToAddress("0x4449300000000000000000000000000000000001")
+	s, e := di0.Open(dir, owner, uint32(len(raw)))
+	must(e)
+	defer func() {
+		if s != nil {
+			s.Close()
+		}
+	}()
+	r := Report{Scope: "Original pinned JAR bytes; AS0/ZI0/DI0 execution only. NO Java/ClassLoader/MC/EULA/listener/Done.", InputSHA256: jarSHA, InputSHA1: hex.EncodeToString(h1[:]), InputBytes: uint32(len(raw)), Name: os.Args[3]}
+	r.RuntimeSHA256, e = di0.RuntimeHash()
+	must(e)
+	c, e := s.Creation()
+	must(e)
+	if !c.Performed {
+		panic("initial CREATE missing")
+	}
+	r.SuccessfulMutations = 1
+	r.TotalMutationGas = c.GasUsed
+	r.MaxMutationGas = c.GasUsed
+	call := func(label string, fn func() (di0.Operation, error)) {
+		began := time.Now()
+		op, e := fn()
+		must(e)
+		elapsed := time.Since(began).Milliseconds()
+		if op.StateRoot == (common.Hash{}) || len(op.RevertData) != 0 || op.GasUsed == 0 || op.GasUsed >= gas {
+			panic("noncanonical successful receipt")
+		}
+		if elapsed > 30000 {
+			panic("ordinary mutation exceeded30s")
+		}
+		if elapsed > r.MaxMutationMillis {
+			r.MaxMutationMillis = elapsed
+		}
+		if op.GasUsed > r.MaxMutationGas {
+			r.MaxMutationGas = op.GasUsed
+		}
+		if label == "step" && op.GasUsed > r.MaxStepGas {
+			r.MaxStepGas = op.GasUsed
+		}
+		r.SuccessfulMutations++
+		r.TotalMutationGas += op.GasUsed
+	}
+	head := func() di0.Head { h, e := s.Head(gas); must(e); return h }
+	var pageArgs abi.Arguments
+	for _, n := range []string{"bytes32", "address", "uint32", "uint32", "bytes32"} {
+		t, e := abi.NewType(n, "", nil)
+		must(e)
+		pageArgs = append(pageArgs, abi.Argument{Type: t})
+	}
+	for at := 0; at < len(raw); at += 8192 {
+		end := at + 8192
+		if end > len(raw) {
+			end = len(raw)
+		}
+		b := raw[at:end]
+		enc, e := pageArgs.Pack(crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), c.Controller, uint32(at/8192), uint32(len(b)), crypto.Keccak256Hash(b))
+		must(e)
+		pi := crypto.Keccak256Hash(enc) // Opaque input transport assertion checked by EVM.
+		call("append", func() (di0.Operation, error) { return s.Append(uint32(at), b, pi, gas) })
+	}
+	h := head()
+	r.InputPages = h.AS0.PageCount
+	call("seal", func() (di0.Operation, error) { return s.Seal(h.AS0.Cursor, h.AS0.ChainCommitment, gas) })
+	h = head()
+	call("index CREATE", func() (di0.Operation, error) { return s.CreateIndex(h.AS0.ContentCommitment, gas) })
+	call("discover", func() (di0.Operation, error) { return s.DiscoverIndex(gas) })
+	// All ZIP positions/counts come from EVM getters, never a host ZIP parser.
+	for h = head(); h.Index.NextEntry < h.Index.Count; h = head() {
+		call("scan", func() (di0.Operation, error) {
+			return s.ScanIndex(h.Index.NextEntry, h.Index.CDCursor, h.Index.Rolling, 64, gas)
+		})
+	}
+	call("finish", func() (di0.Operation, error) {
+		return s.FinishIndex(h.Index.Count, h.Index.CDCursor, h.Index.Rolling, gas)
+	})
+	h = head()
+	r.Entries = h.Index.Count
+	r.CentralDirectoryBytes = h.Index.CDSize
+	r.IndexRoot = h.Index.FinalRoot.Hex()
+	call("decoder CREATE", func() (di0.Operation, error) { return s.CreateDecoder(h.Index.FinalRoot, []byte(r.Name), gas) })
+	for h = head(); h.Decoder.Phase == 1; h = head() {
+		before := h.Decoder.Work
+		call("step", func() (di0.Operation, error) { return s.Step(before, 128, gas) })
+		after := head()
+		if after.Decoder.Work <= before || after.Decoder.Work > before+128 {
+			panic("no valid bounded progress")
+		}
+	}
+	for h = head(); h.Decoder.Phase != 4; h = head() {
+		call("publish", func() (di0.Operation, error) {
+			return s.Publish(h.Decoder.PublishedPages, h.Decoder.PublicationRolling, 1, gas)
+		})
+	}
+	r.ResourceRoot = h.Decoder.FinalRoot.Hex()
+	r.TrieRoot = h.StateRoot.Hex()
+	r.PlainBytes = h.Decoder.PlainSize
+	r.CompressedBytes = h.Decoder.CompressedSize
+	r.DataStart = h.Decoder.DataStart
+	r.Work = h.Decoder.Work
+	r.OutputPages = h.Decoder.PublishedPages
+	r.CRC32 = h.Decoder.ExpectedCRC
+	r.Method = h.Decoder.Method
+	hashPlain := sha256.New()
+	for at := uint32(0); at < r.PlainBytes; {
+		n := uint32(4096)
+		if n > r.PlainBytes-at {
+			n = r.PlainBytes - at
+		}
+		b, e := s.Read(at, n, gas)
+		must(e)
+		r.ReadGas += b.GasUsed
+		if at == 0 && len(b.Bytes) >= 4 {
+			r.ClassMagic = bytes.Equal(b.Bytes[:4], []byte{0xca, 0xfe, 0xba, 0xbe})
+		}
+		_, e = hashPlain.Write(b.Bytes)
+		must(e)
+		at += n
+	}
+	r.PlainSHA256 = hex.EncodeToString(hashPlain.Sum(nil)) // Observation only, not EVM input.
+	must(s.Close())
+	s = nil
+	s, e = di0.Open(dir, owner, uint32(len(raw)))
+	must(e)
+	c, e = s.Creation()
+	must(e)
+	r.ReopenNoCreate = !c.Performed && c.GasUsed == 0
+	after := head()
+	r.ReopenRootEqual = after.StateRoot.Hex() == r.TrieRoot && after.Decoder.FinalRoot.Hex() == r.ResourceRoot
+	if !r.ReopenNoCreate || !r.ReopenRootEqual {
+		panic("sealed resource reopen mismatch")
+	}
+	must(s.Close())
+	s = nil
+	r.ElapsedMillis = time.Since(start).Milliseconds()
+	b, e := json.MarshalIndent(r, "", "  ")
+	must(e)
+	fmt.Println(string(b))
+}
