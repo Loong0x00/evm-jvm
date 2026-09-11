@@ -1,5 +1,10 @@
 # MC-DI0 preparation — bounded EVM inflation over accepted ZI0
 
+Historical preflight record. Current implementation freeze is
+JAVA_EVM_MC_DI0_PLAN.md, following independent findings and the explicit budget-yield
+refinement in JAVA_EVM_MC_DI0_IMPLEMENTATION_PREFLIGHT.md. DI0 remains UNACCEPTED;
+prior failures below are preserved, not relabeled as passing results.
+
 Status: **PREFLIGHT AUTHORIZATION ONLY**, no DI0 implementation freeze/acceptance.
 ZI00936b7ebd is accepted metadata/index over AS064ea6b62f bytes; VFS0a72aa13f15 is
 latest accepted JVM/filesystem. Parent additionally indexed the actual original

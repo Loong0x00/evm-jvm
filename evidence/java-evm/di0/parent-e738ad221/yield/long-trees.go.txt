@@ -1,0 +1,355 @@
+package main
+
+import (
+	"bytes"
+	"compress/flate"
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+)
+
+var outDir = func() string {
+	if v := os.Getenv("DI0_TREE_OUT"); v != "" {
+		return v + "/"
+	}
+	return "evidence/java-evm/di0/budget-preflight/trees/"
+}()
+
+func balanced(n int) []uint8 {
+	x := []uint8{0}
+	for len(x) < n {
+		at := 0
+		for i := range x {
+			if x[i] < x[at] {
+				at = i
+			}
+		}
+		d := x[at] + 1
+		x[at] = d
+		x = append(x, d)
+	}
+	return x
+}
+func treeStream(ll, dl []uint8, lens func(*bitWriter, func(int)), body func(*bitWriter, map[int][2]uint, map[int][2]uint)) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(2, 2)
+	w.bits(uint(len(ll)-257), 5)
+	w.bits(uint(len(dl)-1), 5)
+	w.bits(15, 4)
+	cl := balanced(19)
+	for _, s := range []int{16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15} {
+		w.bits(uint(cl[s]), 3)
+	}
+	cm := canonical(cl)
+	put := func(s int) { x := cm[s]; w.code(x[0], uint8(x[1])) }
+	if lens == nil {
+		for _, x := range ll {
+			put(int(x))
+		}
+		for _, x := range dl {
+			put(int(x))
+		}
+	} else {
+		lens(&w, put)
+	}
+	if body != nil {
+		body(&w, canonical(ll), canonical(dl))
+	}
+	return w.b
+}
+func treeBlock(w *bitWriter, final uint, ll, dl []uint8, lens func(*bitWriter, func(int)), body func(*bitWriter, map[int][2]uint, map[int][2]uint)) {
+	w.bits(final, 1)
+	w.bits(2, 2)
+	w.bits(uint(len(ll)-257), 5)
+	w.bits(uint(len(dl)-1), 5)
+	w.bits(15, 4)
+	cl := balanced(19)
+	for _, s := range []int{16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15} {
+		w.bits(uint(cl[s]), 3)
+	}
+	cm := canonical(cl)
+	put := func(s int) { x := cm[s]; w.code(x[0], uint8(x[1])) }
+	if lens == nil {
+		for _, x := range ll {
+			put(int(x))
+		}
+		for _, x := range dl {
+			put(int(x))
+		}
+	} else {
+		lens(w, put)
+	}
+	if body != nil {
+		body(w, canonical(ll), canonical(dl))
+	}
+}
+
+func sym(w *bitWriter, m map[int][2]uint, s int)     { x := m[s]; w.code(x[0], uint8(x[1])) }
+func emptyBody(w *bitWriter, ll, dl map[int][2]uint) { sym(w, ll, 256) }
+func litBody(b []byte) func(*bitWriter, map[int][2]uint, map[int][2]uint) {
+	return func(w *bitWriter, ll, dl map[int][2]uint) {
+		for _, c := range b {
+			sym(w, ll, int(c))
+		}
+		sym(w, ll, 256)
+	}
+}
+func fixedLenses() []uint8 {
+	ll := make([]uint8, 288)
+	for i := range ll {
+		switch {
+		case i < 144:
+			ll[i] = 8
+		case i < 256:
+			ll[i] = 9
+		case i < 280:
+			ll[i] = 7
+		default:
+			ll[i] = 8
+		}
+	}
+	return ll
+}
+func fixedAlphabet() ([]byte, []byte) {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(1, 2)
+	m := canonical(fixedLenses())
+	p := make([]byte, 256)
+	for i := range p {
+		p[i] = byte(i)
+		sym(&w, m, i)
+	}
+	sym(&w, m, 256)
+	return p, w.b
+}
+func length284Extra31() []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(1, 2)
+	m := canonical(fixedLenses())
+	sym(&w, m, 65)
+	sym(&w, m, 284)
+	w.bits(31, 5)
+	w.code(0, 5)
+	sym(&w, m, 256)
+	return w.b
+}
+func fixedReservedLiteral(s int) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(1, 2)
+	m := canonical(fixedLenses())
+	sym(&w, m, s)
+	return w.b
+}
+func fixedReservedDistance(s int) []byte {
+	w := bitWriter{}
+	w.bits(1, 1)
+	w.bits(1, 2)
+	lm := canonical(fixedLenses())
+	dm := canonical(bytes.Repeat([]byte{5}, 32))
+	sym(&w, lm, 65)
+	sym(&w, lm, 257)
+	sym(&w, dm, s)
+	return w.b
+}
+func vectors() []fixture {
+	var fs []fixture
+	add := func(name string, plain, comp []byte, err uint64, q uint16) {
+		fs = append(fs, fixture{name: name, plain: plain, comp: comp, method: 8, wantErr: err, q: q})
+	}
+	ll := make([]uint8, 257)
+	ll[256] = 1
+	add("singleton-eob", nil, treeStream(ll, []uint8{0}, nil, emptyBody), 0, 1)
+	add("singleton-distance-unused", nil, treeStream(ll, []uint8{1}, nil, emptyBody), 0, 1)
+	add("two-distance-unused", nil, treeStream(ll, []uint8{1, 1}, nil, emptyBody), 0, 1)
+	add("single-distance-len2", nil, treeStream(ll, []uint8{2}, nil, emptyBody), 21, 1)
+	add("oversubscribed-distance", nil, treeStream(ll, []uint8{1, 1, 1}, nil, emptyBody), 20, 1)
+	ll2 := make([]uint8, 257)
+	ll2[256] = 2
+	add("incomplete-literal-len2", nil, treeStream(ll2, []uint8{0}, nil, emptyBody), 21, 1)
+	over := make([]uint8, 257)
+	over[65] = 1
+	over[66] = 1
+	over[256] = 1
+	add("oversubscribed-literal", nil, treeStream(over, []uint8{0}, nil, nil), 20, 1)
+	add("missing-eob", nil, treeStream(make([]uint8, 257), []uint8{0}, nil, nil), 19, 1)
+	cross := make([]uint8, 257)
+	cross[255] = 1
+	cross[256] = 1
+	add("repeat16-cross-alphabets", []byte{255}, treeStream(cross, []uint8{1, 1}, func(w *bitWriter, put func(int)) {
+		for i := 0; i < 255; i++ {
+			put(0)
+		}
+		put(1)
+		put(16)
+		w.bits(0, 2)
+	}, litBody([]byte{255})), 0, 1)
+	for _, kind := range []int{17, 18} {
+		n := 259
+		if kind == 18 {
+			n = 286
+		}
+		l := make([]uint8, n)
+		l[65] = 1
+		l[256] = 1
+		add(fmt.Sprintf("repeat%d-cross-alphabets", kind), []byte("A"), treeStream(l, []uint8{0}, func(w *bitWriter, put func(int)) {
+			for i := 0; i < 257; i++ {
+				put(int(l[i]))
+			}
+			put(kind)
+			if kind == 17 {
+				w.bits(0, 3)
+			} else {
+				w.bits(19, 7)
+			}
+		}, litBody([]byte("A"))), 0, 1)
+	}
+	add("repeat18-count-overflow", nil, treeStream(ll, []uint8{0}, func(w *bitWriter, put func(int)) { put(18); w.bits(127, 7); put(18); w.bits(127, 7) }, nil), 18, 1)
+	lmatch := make([]uint8, 258)
+	lmatch[65] = 1
+	lmatch[256] = 2
+	lmatch[257] = 2
+	add("empty-distance-used", []byte("AAAA"), treeStream(lmatch, []uint8{0}, nil, func(w *bitWriter, l, d map[int][2]uint) { sym(w, l, 65); sym(w, l, 257); w.bits(0, 24) }), 22, 1)
+	// Full286-symbol literal tree, complete30-symbol distance tree; assign a
+	// depth15 leaf to literal A. Same valid stream at q128 and q1.
+	deep := balanced(256)
+	for i := 0; i < 7; i++ {
+		d := deep[0] + 1
+		deep[0] = d
+		deep = append(deep, d)
+	}
+	for len(deep) < 286 {
+		at := 0
+		for i := range deep {
+			if deep[i] < deep[at] {
+				at = i
+			}
+		}
+		d := deep[at] + 1
+		deep[at] = d
+		deep = append(deep, d)
+	}
+	deep[0], deep[65] = deep[65], deep[0]
+	plain := bytes.Repeat([]byte("A"), 300)
+	stream := treeStream(deep, balanced(30), nil, litBody(plain))
+	add("deep-full-tree-q128", plain, stream, 0, 128)
+	add("deep-full-tree-q1", plain, stream, 0, 1)
+
+	add("deep-full-tree-q64", plain, stream, 0, 64)
+	// Same complete shape with its deepest literal assigned to a different symbol.
+	// This prevents a table implementation specialized to the original A ordering.
+	deepAlt := append([]uint8(nil), deep...)
+	deepAlt[65], deepAlt[90] = deepAlt[90], deepAlt[65]
+	altPlain := bytes.Repeat([]byte("Z"), 300)
+	altStream := treeStream(deepAlt, balanced(30), nil, litBody(altPlain))
+	add("deep-alternate-symbol-q1", altPlain, altStream, 0, 1)
+	add("deep-alternate-symbol-q128", altPlain, altStream, 0, 128)
+
+	// Dynamic -> fixed -> differently ordered dynamic verifies that cached tables
+	// are selected by mode and rebuilt on the next dynamic header in one call.
+	mw := bitWriter{}
+	treeBlock(&mw, 0, deep, balanced(30), nil, litBody([]byte("A")))
+	mw.bits(0, 1)
+	mw.bits(1, 2)
+	fm := canonical(fixedLenses())
+	sym(&mw, fm, 66)
+	sym(&mw, fm, 256)
+	treeBlock(&mw, 1, deepAlt, balanced(30), nil, litBody([]byte("Z")))
+	add("mixed-dynamic-fixed-dynamic-q128", []byte("ABZ"), mw.b, 0, 128)
+
+	ew := bitWriter{}
+	el := make([]uint8, 286)
+	el[256] = 1
+	for i := 0; i < 32; i++ {
+		final := uint(0)
+		if i == 31 {
+			final = 1
+		}
+		treeBlock(&ew, final, el, balanced(30), nil, emptyBody)
+	}
+	for _, q := range []uint16{1, 8, 64, 128} {
+		add(fmt.Sprintf("many-empty-dynamic-q%d", q), nil, ew.b, 0, q)
+	}
+
+	ap, ac := fixedAlphabet()
+	add("fixed-all256-literals", ap, ac, 0, 64)
+	add("fixed-length284-extra31", bytes.Repeat([]byte("A"), 259), length284Extra31(), 0, 64)
+	add("fixed-reserved-literal-286", nil, fixedReservedLiteral(286), 15, 64)
+	add("fixed-reserved-literal-287", nil, fixedReservedLiteral(287), 15, 64)
+	add("fixed-reserved-distance-30", []byte("AAAA"), fixedReservedDistance(30), 16, 64)
+	add("fixed-reserved-distance-31", []byte("AAAA"), fixedReservedDistance(31), 16, 64)
+
+ for _,n:=range []int{64,129}{
+  ew:=bitWriter{};ll:=make([]uint8,286);ll[256]=1
+  for i:=0;i<n;i++{f:=uint(0);if i==n-1{f=1};treeBlock(&ew,f,ll,balanced(30),nil,emptyBody)}
+  add(fmt.Sprintf("many%d-empty-dynamic-q128",n),nil,ew.b,0,128)
+ }
+ return fs
+}
+func treesMain() {
+	artifactPath := os.Getenv("DI0_ARTIFACT")
+	if artifactPath == "" {
+		artifactPath = "build/java-diff-mc-di0-budget-preflight/DI0Inflate.json"
+	}
+	if e := os.MkdirAll(outDir+"generated", 0700); e != nil {
+		panic(e)
+	}
+	b, e := os.ReadFile(artifactPath)
+	if e != nil {
+		panic(e)
+	}
+	var art artifact
+	if e = json.Unmarshal(b, &art); e != nil {
+		panic(e)
+	}
+	fs := vectors()
+	z := buildZIP(fs, 0)
+	if e = os.WriteFile(outDir+"generated/compat.zip", z.raw, 0600); e != nil {
+		panic(e)
+	}
+	env, idx, root, da, base, e := setup(z, art)
+	if e != nil {
+		panic(e)
+	}
+	defer env.db.Close()
+	type row struct {
+		Name, GoError         string
+		GoLength, GoRemaining int
+		EVM                   result
+	}
+	var rows []row
+	for _, f := range fs {
+		for ext, data := range map[string][]byte{".deflate": f.comp, ".zip": buildZIP([]fixture{f}, 0).raw} {
+			if e = os.WriteFile(outDir+"generated/"+f.name+ext, data, 0600); e != nil {
+				panic(e)
+			}
+		}
+		src := bytes.NewReader(f.comp)
+		rd := flate.NewReader(src)
+		got, err := io.ReadAll(rd)
+		rd.Close()
+		msg := ""
+		if err != nil {
+			msg = err.Error()
+		}
+		if f.wantErr == 0 && (err != nil || !bytes.Equal(got, f.plain)) {
+			panic(f.name + ": invalid positive test fixture " + msg)
+		}
+		r := runOne(env, idx, root, da, hexCode(art.Bytecode), hexCode(art.Runtime), f, base)
+		rows = append(rows, row{f.name, msg, len(got), src.Len(), r})
+	}
+	out, e := json.MarshalIndent(rows, "", "  ")
+	if e != nil {
+		panic(e)
+	}
+	fmt.Println(string(out))
+	for _, r := range rows {
+		if r.EVM.Outcome != "verified-EVM-output" && r.EVM.Outcome != "expected-EVM-rejection" && r.EVM.Outcome != "expected-constructor-rejection" {
+			os.Exit(1)
+		}
+	}
+}

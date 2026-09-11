@@ -1,21 +1,17 @@
 # Java-inside-EVM agent guide
 
-CURRENT DI0 BLOCKER: JAVA_EVM_MC_DI0_BUDGET_PREFLIGHT.md. Parent independently
-replayed output/persistence37 cases/60publications/fourprocesses, but additional
-Java8-valid deep-tree q128 and repeated-empty-dynamic q64/q128 exceed100M. Strict
-parent gate exits1; do not count those as malformed input or success. Terra was
-provider-blocked with no completed commit/result counted; parent wrote its own
-22-case Go/Java8 checks. ONE Sol/high optimization preflight now authorized, only
-evidence/java-evm/di0/budget-preflight/ and its result note/ignoredbuild. No DI0
-freeze/acceptance, gas cap increase or official inflation/Java/MC/Done claim.
-
-CURRENT DI0 PREFLIGHT: JAVA_EVM_MC_DI0_PARENT_PREFLIGHT.md supersedes the initial
-proposal for next tests. Original21 replayed; parent Java8 oracle found count-header
-and terminal-padding differences, fixed only a disposable copy.64KiB is too small
-for AbstractLogger90309B/BinIO73635B/en_us158794B; DI0-only256KiB is now an EXPLICIT
-unaccepted preflight proposal, no accepted quota change. Two disjoint workers:
-Sol/high output-pages+persistence, Terra/high pureGo/Java tree fixture/oracles; one
-Solidity writer. No DI0 freeze/acceptance/inflated official JAR/Java/MC/Done.
+CURRENT DI0 IMPLEMENTATION FREEZE: JAVA_EVM_MC_DI0_PLAN.md and
+JAVA_EVM_MC_DI0_IMPLEMENTATION_PREFLIGHT.md. Parent replayed optimized37/29 cases,
+then found another valid q128 OOG at64 empty dynamic blocks. Explicit new rule:
+units1..128 is an upper bound; EVM yields after positive work if remaining gas<25M.
+Parent6 same-binding pairs/5 completeq1..128 sweeps incl64/129blocks, true changed-
+SSTORE OOG rollback and60-publication/fresh-process chains pass. Largest observed
+step75.587M, NOT a universal gas claim. DI0-only256KiB cap now frozen for
+implementation, UNACCEPTED; no JVM/VFS/AS0 quota change. TWO disjoint Sol/high
+runtime/harness workers permitted, sole Solidity writer; parent16group gate.
+No official inflate/Java/ClassLoader/MC/EULA/listener/Done or implicit push.
+Terra fixture task was provider-blocked, no result counted; parent wrote own probes.
+Earlier preflight-only restrictions below are historical, superseded by this freeze.
 
 LATEST ACCEPTED COMPONENT: ZI0 bounded EVM ZIP directory/index. See
 JAVA_EVM_MC_ZI0_REVIEW.md and frozen PLAN. Runtime9177B/completeinit9937B unchanged;

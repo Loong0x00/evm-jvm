@@ -1,5 +1,10 @@
 # DI0 parent output/persistence replay — valid-batch gas blocker
 
+Historical preflight record. Current implementation freeze is
+JAVA_EVM_MC_DI0_PLAN.md, following independent findings and the explicit budget-yield
+refinement in JAVA_EVM_MC_DI0_IMPLEMENTATION_PREFLIGHT.md. DI0 remains UNACCEPTED;
+prior failures below are preserved, not relabeled as passing results.
+
 Status: **NOT FROZEN / NOT ACCEPTED**. Sol output-page preflight0218f76f5 integrated
 46a111e7c. Terra's separate fixture task was provider-blocked and did not deliver a
 completed commit; its uncommitted worktree is preserved but contributes NO acceptance

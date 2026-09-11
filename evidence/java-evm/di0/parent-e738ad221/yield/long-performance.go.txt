@@ -1,0 +1,155 @@
+// Disposable same-binding quantum/performance checks for the optimized DI0 copy.
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+
+	"github.com/ethereum/go-ethereum/crypto"
+)
+
+type quantumRun struct {
+	Result result   `json:"result"`
+	CRC    uint32   `json:"crc"`
+	Pages  []string `json:"pages"`
+}
+type quantumPair struct {
+	Name  string     `json:"name"`
+	Q1    quantumRun `json:"q1"`
+	Q128  quantumRun `json:"q128"`
+	Equal bool       `json:"equal"`
+}
+type quantumSweep struct {
+	Name         string `json:"name"`
+	Quantums     int    `json:"quantums"`
+	AllEqual     bool   `json:"allEqual"`
+	MaxStepGas   uint64 `json:"maxStepGas"`
+	MaxAtQuantum uint16 `json:"maxAtQuantum"`
+	MaxStepSum   uint64 `json:"maxStepSum"`
+}
+type quantumReport struct {
+	ArtifactSHA       string         `json:"artifactSHA"`
+	Pairs             []quantumPair  `json:"pairs"`
+	Sweeps            []quantumSweep `json:"sweeps"`
+	AllEqual          bool           `json:"allEqual"`
+	AllCallsBelow100M bool           `json:"allCallsBelow100M"`
+}
+
+func runQuantum(art artifact, f fixture, q uint16) quantumRun {
+	f.q = q
+	z := buildZIP([]fixture{f}, 0)
+	e, idx, root, da, base, err := setup(z, art)
+	if err != nil {
+		panic(err)
+	}
+	defer e.close()
+	di := crypto.CreateAddress(owner, e.st.GetNonce(owner))
+	r := runOne(e, idx, root, da, hexCode(art.Bytecode), hexCode(art.Runtime), f, base)
+	qr := quantumRun{Result: r, CRC: getterU32(e, di, da, "crc")}
+	for i := uint8(0); i < r.PublishedPages; i++ {
+		out, _, x := e.view(di, pack(da, "page", i))
+		if x != nil {
+			panic(x)
+		}
+		qr.Pages = append(qr.Pages, fmt.Sprint(unpack(da, "page", out)))
+	}
+	return qr
+}
+
+func equalRun(a, b quantumRun) bool {
+	x, y := a.Result, b.Result
+	return x.Outcome == "verified-EVM-output" && y.Outcome == x.Outcome &&
+		x.PlainSHA == y.PlainSHA && x.OutputSHA == y.OutputSHA &&
+		x.FinalRoot == y.FinalRoot && x.OutputRolling == y.OutputRolling &&
+		x.StateRoot == y.StateRoot && x.Binding == y.Binding &&
+		x.Work == y.Work && x.InputByte == y.InputByte && x.InputBit == y.InputBit &&
+		x.OutputCount == y.OutputCount && x.PublishedPages == y.PublishedPages &&
+		x.Phase == y.Phase && x.Pending == y.Pending && x.BlockFinal == y.BlockFinal &&
+		x.PagesVerified && y.PagesVerified && x.IndependentRoot && y.IndependentRoot &&
+		a.CRC == b.CRC && fmt.Sprint(a.Pages) == fmt.Sprint(b.Pages)
+}
+
+func main() {
+	if len(os.Args) != 2 {
+		panic("usage: performance artifact.json")
+	}
+	raw, err := os.ReadFile(os.Args[1])
+	if err != nil {
+		panic(err)
+	}
+	var art artifact
+	if err = json.Unmarshal(raw, &art); err != nil {
+		panic(err)
+	}
+	tv := vectors()
+	pickTree := func(name, newName string) fixture {
+		for _, f := range tv {
+			if f.name == name {
+				f.name = newName
+				return f
+			}
+		}
+		panic(name)
+	}
+	fv := fixtures()
+	pickBase := func(name, newName string) fixture {
+		for _, f := range fv {
+			if f.name == name {
+				f.name = newName
+				return f
+			}
+		}
+		panic(name)
+	}
+	cases := []fixture{
+		pickTree("deep-full-tree-q128", "same-binding-deep"),
+		pickTree("many-empty-dynamic-q128", "same-binding-empty32"),
+		pickBase("history-wrap-different", "same-binding-history-wrap"),
+		pickBase("size-262144", "same-binding-size-262144"),
+ pickTree("many64-empty-dynamic-q128", "same-binding-empty64"),
+ pickTree("many129-empty-dynamic-q128", "same-binding-empty129"),
+	}
+	rep := quantumReport{ArtifactSHA: hash(raw), AllEqual: true, AllCallsBelow100M: true}
+	for _, f := range cases {
+		a := runQuantum(art, f, 1)
+		b := runQuantum(art, f, 128)
+		eq := equalRun(a, b)
+		if !eq {
+			rep.AllEqual = false
+		}
+		if a.Result.Gas.StepMax >= gas || b.Result.Gas.StepMax >= gas {
+			rep.AllCallsBelow100M = false
+		}
+		rep.Pairs = append(rep.Pairs, quantumPair{Name: f.name, Q1: a, Q128: b, Equal: eq})
+	}
+	// Exercise every public quantum on the two former valid-stream blockers and
+	// the cache-transition stream. Keep only bounded aggregate metrics in JSON.
+	for _, f := range []fixture{cases[0], cases[1], cases[4], cases[5], pickTree("mixed-dynamic-fixed-dynamic-q128", "same-binding-mixed")} {
+		ref := runQuantum(art, f, 1)
+		s := quantumSweep{Name: f.name, Quantums: 128, AllEqual: true, MaxStepGas: ref.Result.Gas.StepMax, MaxAtQuantum: 1, MaxStepSum: ref.Result.Gas.StepTotal}
+		for q := uint16(2); q <= 128; q++ {
+			got := runQuantum(art, f, q)
+			if !equalRun(ref, got) {
+				s.AllEqual = false
+				rep.AllEqual = false
+			}
+			if got.Result.Gas.StepMax > s.MaxStepGas {
+				s.MaxStepGas = got.Result.Gas.StepMax
+				s.MaxAtQuantum = q
+			}
+			if got.Result.Gas.StepTotal > s.MaxStepSum {
+				s.MaxStepSum = got.Result.Gas.StepTotal
+			}
+			if got.Result.Gas.StepMax >= gas {
+				rep.AllCallsBelow100M = false
+			}
+		}
+		rep.Sweeps = append(rep.Sweeps, s)
+	}
+	out, _ := json.MarshalIndent(rep, "", "  ")
+	fmt.Println(string(out))
+	if !rep.AllEqual || !rep.AllCallsBelow100M {
+		os.Exit(1)
+	}
+}
