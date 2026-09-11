@@ -1,0 +1,73 @@
+{
+  "status": "pass",
+  "timestampUTC": "2026-09-11T03:32:55.224831+00:00",
+  "baseCommit": "b67ed0865e02be19764d8a577912a06e8b90bb03",
+  "transportCommit": "89de316b9",
+  "runtimeArtifactCommit": "fbe0f2381",
+  "runtimeVerificationCommit": "04b4f8157",
+  "runtimeArtifactSHA256": "72773d5c53533969a6b0d0a1391513330affb11b4cdf300fa4c115bab23613ca",
+  "runtimeSHA256": "8c309455d3b0817725cd775f909abc2477b39fed6e18235114737480b05e17b0",
+  "runtimeKeccak256": "946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37",
+  "overlaySource": "git show fbe0f2381:jvmevm/artifactstore/di0/runtime/{assets.go,combinedartifacts/DI0Resource.json}",
+  "checks": [
+    {
+      "name": "focused-full",
+      "command": [
+        "go",
+        "test",
+        "-overlay=build/java-diff-mc-di0-harness-runtime-fbe0f2381/overlay.json",
+        "./jvmevm/artifactstore/di0",
+        "-count=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 36.838,
+      "log": "focused-full.log",
+      "cumulativeMaxChildRSSBytes": 230412288
+    },
+    {
+      "name": "vet",
+      "command": [
+        "go",
+        "vet",
+        "-overlay=build/java-diff-mc-di0-harness-runtime-fbe0f2381/overlay.json",
+        "./jvmevm/artifactstore/di0"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.073,
+      "log": "vet.log",
+      "cumulativeMaxChildRSSBytes": 230412288
+    },
+    {
+      "name": "accepted-dependencies",
+      "command": [
+        "go",
+        "test",
+        "./jvmevm/artifactstore/as0",
+        "./jvmevm/artifactstore/zi0",
+        "-count=1"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 21.18,
+      "log": "accepted-dependencies.log",
+      "cumulativeMaxChildRSSBytes": 292884480
+    }
+  ],
+  "limits": {
+    "perOrdinaryCallGas": 100000000,
+    "boundaryGas": 1000000000,
+    "perOrdinaryCallTimeoutSeconds": 30,
+    "boundaryTimeoutSeconds": 120,
+    "wholeGateTimeoutSeconds": 1200,
+    "wholeGateMemoryBytes": 4294967296
+  },
+  "combinedProcessMaxChildRSSBytes": 292884480,
+  "testCount": 15,
+  "runtimeSizes": {
+    "initBytes": 17216,
+    "completeInitWith256ByteNameBytes": 17600,
+    "runtimeBytes": 14978
+  },
+  "sourceSHA256": "682d8243a6a0671f151316c8bce0a220ec1934205ca5bb4144a4d635463b4470",
+  "abiCanonicalSHA256": "d44a67c73dd94c463dcb25ce00a8b6814967f3a1f37ed0c60770ce818f63f7ee",
+  "storageLayoutGoCanonicalSHA256": "5c07eef01462da0f9685e37dff3bd65c1e10769b82375963973ff41743ecaffc"
+}
