@@ -8,7 +8,7 @@ s="$repo/evidence/java-evm/class-bridge/preflight"
 w=$1
 [[ $w == /* ]] || w="$repo/$w"
 [[ ! -e $w ]] || { echo 'refusing existing workspace' >&2; exit 2; }
-bash "$s/run.sh" "$w" > "$w-baseline.log"
+bash "$s/run.sh" "$w" # Captured by the outer watchdog; no unignored build-root log.
 python3 "$p/padded_fixtures.py" "$w/classes" "$w/padded"
 for n in 4096 4097 8193 65536 65537; do
  /usr/lib/jvm/java-8-openjdk/bin/java -cp "$w/padded/$n:$w/classes" Oracle BridgeAlpha 7
