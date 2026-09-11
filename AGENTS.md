@@ -1,12 +1,22 @@
 # Java-inside-EVM agent guide
 
+CURRENT BRIDGE FRONTIER: worker e3f45ec22 integrated5ce5ffe37; parent independently
+replayed generated EVMZIP->DI0->VFS0a->Javabytecode results76/203. NOT production
+bridge/ClassLoader acceptance. Parent found legal4097..65536B images failed because
+wrapper used oneDI0read; fixed DISPOSABLE copy to<=4096 chunks, exact64KiB andq7pass,
++1stillrejected. Original/privateStateDB reflection and uncommitted bridge calls are
+not a legal shared-world transport. See JAVA_EVM_MC_CLASS_BRIDGE_PARENT_PREFLIGHT.md.
+Next ONE Sol/high shared-world preflight, constructor-fixed1..4classpackage<=64KiB,
+oneJVMinstance/owner, normalself-ownedDB/no reflection, realcommit/disk/processresume;
+JAVA_EVM_MC_SHARED_WORLD_PREPARATION.md. No accepted/profile/quotachange orMCexecution.
+
 LATEST ACTUAL ORIGINAL-JAR PROOF: after DI0 acceptance56848a1b1, parent EVM decoded
 MinecraftServer.class33457B from original30222121B server JAR, CRCverified/5pages,
 4149mutations/88.570s. Then original AbstractLogger.class90309B/12pages also decoded
 (4164mutations/93.273s), no Java quota change. Evidence
 evidence/java-evm/di0/official-entry-56848a1b1/. Class bytes
-ONLY: no Java/Minecraft execution. Next ONE Sol/high disposable class-to-existing-
-JVM bridge preflight per JAVA_EVM_MC_CLASS_BRIDGE_PREPARATION.md; generated fixtures
+ONLY: no Java/Minecraft execution. That initial disposable bridge preflight is now followed by the shared-world
+measurement above; generated fixtures
 only, no production/accepted changes or official Java execution; no Fast/priority.
 
 LATEST ACCEPTED RESOURCE COMPONENT: DI0, JAVA_EVM_MC_DI0_REVIEW.md.

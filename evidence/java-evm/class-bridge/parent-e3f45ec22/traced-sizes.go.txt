@@ -1,0 +1,32 @@
+package main
+
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "github.com/ethereum/go-ethereum/common"
+)
+var parentDecoder common.Address
+var parentReads []uint32
+func main() {
+ if len(os.Args)!=3 {panic("usage: sizes FIXTURE_DIR ARTIFACT")}
+ type row struct {Size int; Result int32; JVM uint64; Slices int; Binding string; Error string; Selector string; Gas uint64; ReadSizes []uint32}
+ rows:=[]row{};pass:=true
+ for _,size:=range []int{4096,4097,8193,65536,65537} {
+  r:=prepare(filepath.Join(os.Args[1],fmt.Sprintf("alpha-%d.zip",size)),"BridgeAlpha.class",true)
+  b:=attach(r,os.Args[2]);h:=r.head;parentDecoder=h.Decoder.Address;parentReads=nil
+  x:=b.call("start",h.Decoder.Address,[]byte(r.name),h.Index.FinalRoot,h.Decoder.FinalRoot,id(fmt.Sprint(size)),"BridgeAlpha","run",[]int32{7},uint64(4096),uint32(4096))
+  rr:=row{Size:size,Result:x.Slice.Result,JVM:x.Slice.TotalJvmSteps,Binding:x.Binding.Hex(),Selector:selector(x.Revert),Gas:x.Gas,ReadSizes:append([]uint32(nil),parentReads...)}
+  if len(x.Revert)>0 {rr.Error=fmt.Sprintf("%s:0x%x",errorName(b.vfsABI,x.Revert),x.Revert)}
+  if size<=65536 {if len(x.Revert)!=0||x.Slice.Lifecycle!=2||x.Slice.Result!=76||x.Slice.TotalJvmSteps!=181{pass=false}} else {if errorName(b.abi,x.Revert)!="BridgeError(8)"{pass=false}}
+  if len(x.Revert)==0 { var sum uint32;for _,n:=range parentReads{if n>4096||n==0{pass=false};sum+=n};if int(sum)!=size{pass=false} }
+  if size==65536 && len(x.Revert)==0 {
+   q,e:=runChain(b,r,"parent-padded-q7","BridgeAlpha",7,7)
+   if e!=nil||q.Result!=76||q.JVM!=181||q.MachineRoot!=x.Slice.MachineStateRoot{pass=false;rr.Error=fmt.Sprint(e)}
+   rr.Slices=q.Slices
+  }
+  rows=append(rows,rr);r.session.Close()
+ }
+ raw,e:=json.MarshalIndent(rows,"","  ");must(e);fmt.Println(string(raw));if !pass{os.Exit(1)}
+}

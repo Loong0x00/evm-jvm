@@ -1,5 +1,9 @@
 # MC class bytes -> existing EVM JVM bridge preflight
 
+Parent follow-up: JAVA_EVM_MC_CLASS_BRIDGE_PARENT_PREFLIGHT.md independently replays
+this result and fixes a DISPOSABLE single-read4096/65536 boundary gap. Production
+shared-world lifecycle remains unimplemented; this report stays historical.
+
 Status: **DISPOSABLE PREFLIGHT COMPLETED, NOT ACCEPTED**. Base `73e17afbb`. This demonstrates a bounded generated-fixture path and measures the smallest adapter found. It changes no production/accepted runtime, ABI, quota, opcode, gas rule, VFS, Make target, or core file. Parent replay/review is still required before any freeze. No official server/JAR/class was read, uploaded, inflated, or executed; no EULA, listener, world, startup, or Done activity occurred.
 
 ## Selected existing engine and exact boundary
