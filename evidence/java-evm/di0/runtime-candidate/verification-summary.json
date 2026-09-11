@@ -1,0 +1,125 @@
+{
+  "abi": {
+    "constructors": 1,
+    "entries": 35,
+    "errors": 1,
+    "functions": 33
+  },
+  "artifactReportHashes": {
+    "execution-report.json": "d9d1699417ec00f3b31a9d26798864c965bce5d3672258c2ab8f9c34974622eb",
+    "failed-70000-execution-report.json": "3a156db3c0dd0a4cca9af04a9394633becbe200c8a1fca2830f6599ac241f362",
+    "headers64-evm.json": "b2b4f67e1c1f773fd59721f76e89cd6d1ddc718b7d3dc109148d5105935d39de",
+    "headers64-java8.json": "c6bbf3dda072f7669b518b6bbf585158ab47eb27016b0f27e9d7d25d6d390e36",
+    "long-performance-report.json": "6b64fd3f8cecfbafdc70221102affa554ccb90c5e720620616b9ed4668cd1c3b",
+    "trees-evm.json": "248207d953205ee982d14146ea0db85d8c5d25202d01291d2fb207810cabd2c4",
+    "trees-java8.json": "70478d4428091aea9ea7498e4386ca6527964859096f70612663c04b818b5773"
+  },
+  "base": "b67ed0865e02be19764d8a577912a06e8b90bb03",
+  "claimsExcluded": [
+    "official JAR inflation/execution/upload",
+    "Java/ClassLoader execution",
+    "Minecraft/EULA/listener/Done",
+    "DI0 acceptance",
+    "universal gas bound"
+  ],
+  "compiler": {
+    "evmVersion": "cancun",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    },
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "version": "0.8.30+commit.73712a01.Emscripten.clang",
+    "viaIR": true
+  },
+  "failedTrial": {
+    "changedSSTOREProof": false,
+    "counted": false,
+    "evmFrameRolledBack": true,
+    "gasLimit": 70000,
+    "realOOG": "out of gas",
+    "reason": "70k rolled back but production dependency checks moved the diagnostic point; no completed changed SSTORE was proved"
+  },
+  "freshReplay": {
+    "allExactSelectors": true,
+    "completeQuantumSweeps": 5,
+    "constructorEmptyNameCode": 4,
+    "constructorLongNameCode": 4,
+    "durablePublications": 60,
+    "headers64": 4,
+    "javaVersion": "1.8.0_504",
+    "largestObservedStepGas": 75607496,
+    "mainCases": 37,
+    "mainElapsedMS": 11031,
+    "mainOutcomes": {
+      "expected-EVM-rejection": 16,
+      "expected-constructor-rejection": 1,
+      "verified-EVM-output": 20
+    },
+    "mainRSSKiB": 75796,
+    "ordinaryStepGasCap": 100000000,
+    "rootPrecedesNameCode": 3,
+    "sameBindingPairs": 6,
+    "trees": 29
+  },
+  "initialArtifactCommit": "fbe0f23817cd8c2dc802adf1afa3a93b008b9aed",
+  "limits": {
+    "archiveBytes": 33554432,
+    "as0PageBytes": 8192,
+    "as0ReadBytes": 4096,
+    "completeInitBytes": 49152,
+    "copyBytes": 32,
+    "historyBytes": 32768,
+    "outputBytes": 262144,
+    "outputPageBytes": 8192,
+    "outputPages": 32,
+    "publishUnits": 1,
+    "rawNameBytes": 256,
+    "readBytes": 4096,
+    "runtimeBytes": 24576,
+    "stepReserveGas": 25000000,
+    "stepUnits": 128
+  },
+  "pins": {
+    "AS0RuntimeCodeKeccak256": "c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896",
+    "ZI0RuntimeCodeKeccak256": "0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77",
+    "combinedArtifactSHA256": "72773d5c53533969a6b0d0a1391513330affb11b4cdf300fa4c115bab23613ca",
+    "initSHA256": "604d6a515fcb5efb539f998987ddba94c7f1e1d1fe3e712a5b95606bc1dab576",
+    "packageLockSHA256": "4acbd5d51df58e973fe6ee65f3332fd7869a4a8c272025329af4373e60e1e4d3",
+    "runtimeKeccak256": "946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37",
+    "runtimeSHA256": "8c309455d3b0817725cd775f909abc2477b39fed6e18235114737480b05e17b0",
+    "sourceSHA256": "682d8243a6a0671f151316c8bce0a220ec1934205ca5bb4144a4d635463b4470"
+  },
+  "rollback": {
+    "EVMFrameRolledBackWithoutHostRestore": true,
+    "postWriteProof": true,
+    "publishError": "execution reverted",
+    "publishGasLimit": 7400000,
+    "publishGasUsed": 7374596,
+    "publishRetryGas": 7492855,
+    "publishRetrySameChild": true,
+    "publishRolledBack": true,
+    "retryGas": 96096,
+    "retrySucceeded": true,
+    "stepError": "out of gas: not enough gas for reentrancy sentry",
+    "stepGasLimit": 90000,
+    "stepGasUsed": 90000
+  },
+  "rootLabels": {
+    "fixture": "method0",
+    "note": "DI0 resource final root and EVM trie state root are independent labels and are not interchangeable",
+    "resourceFinalRoot": "0x79a817a5a9a265421a0909c4efded8477e25ccc48800bffe12116d40fbc4daea",
+    "trieStateRoot": "0xc37fa4d6516ecec8ab86fb93b0c8572450ef3dc92bbbfeaee96748394df77687"
+  },
+  "sizes": {
+    "initBytes": 17216,
+    "maximumCompleteInitBytes": 17600,
+    "maximumConstructorArgumentBytes": 384,
+    "runtimeBytes": 14978,
+    "sourceBytes": 18513
+  },
+  "status": "bounded production runtime candidate; not accepted DI0"
+}
