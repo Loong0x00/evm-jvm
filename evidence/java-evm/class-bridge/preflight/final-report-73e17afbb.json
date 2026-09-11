@@ -1,0 +1,1083 @@
+{
+  "baseCommit": "73e17afbb5373b0cc2938b8b90ca950146fe8e9b",
+  "generatedAtUTC": "2026-09-11T08:58:21Z",
+  "compiler": {
+    "artifactSHA256": "cfdb6298ab3a5b2add12d74ac8b9f310fd59c936afe0d29a20d2e16448c38657",
+    "settings": {
+      "evmVersion": "cancun",
+      "metadata": {
+        "appendCBOR": false,
+        "bytecodeHash": "none"
+      },
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "outputSelection": {
+        "*": {
+          "*": [
+            "abi",
+            "evm.bytecode.object",
+            "evm.deployedBytecode.object"
+          ]
+        }
+      },
+      "viaIR": true
+    },
+    "sourceSHA256": "76f95867bbb9714aa4cd49b9222529be64236282d8e06a94f5e8d63f2678342b",
+    "version": "0.8.30+commit.73712a01.Emscripten.clang"
+  },
+  "pins": {
+    "di0CombinedSHA256": "72773d5c53533969a6b0d0a1391513330affb11b4cdf300fa4c115bab23613ca",
+    "di0RuntimeKeccak": "0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37",
+    "vfs0aRuntimeKeccak": "0xe7f4de699588a3d58624e8ab717a00809759d112952ca1fac8bbc74637118c84",
+    "vfs0aRuntimeSHA256": "717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86",
+    "vfsAddress": "0x4a564d45564d564653304152554e54494d450001"
+  },
+  "successes": [
+    {
+      "label": "alpha-direct",
+      "entryClass": "BridgeAlpha",
+      "input": 7,
+      "result": 76,
+      "slices": 1,
+      "totalGas": 4110646,
+      "inputBinding": "0xe33fe6b6bc9d3be7784a402150b07ef135d9e1a2fb6d2d3aa9d3084bcc7aa5e7",
+      "resourceF": "0xe3c0a96cc4f0b0d614b25aaae1b472dcd19b051dcec7f7bf471961e423ef1c94",
+      "indexRoot": "0xc0304bef1330e923aace0c958d38e93585499e487c13348dadcca28d5edf074f",
+      "checkpointRoot": "0xe70df8499b53fdb76d9088cdd1fdc0e7fad12ecc0e8df26926ef53c8043b4fef",
+      "machineRoot": "0xba2f3365dda7158542e7ac1cfd96b67bd74c7204f836441d2ba0ab0db6af4643",
+      "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396",
+      "jvmSteps": 181,
+      "internalSteps": 2,
+      "engineOwner": "0xac487a04804410a554ce30b62bf6f3328ece69fa"
+    },
+    {
+      "label": "alpha-q7",
+      "entryClass": "BridgeAlpha",
+      "input": 7,
+      "result": 76,
+      "slices": 26,
+      "totalGas": 92686438,
+      "inputBinding": "0xe33fe6b6bc9d3be7784a402150b07ef135d9e1a2fb6d2d3aa9d3084bcc7aa5e7",
+      "resourceF": "0xe3c0a96cc4f0b0d614b25aaae1b472dcd19b051dcec7f7bf471961e423ef1c94",
+      "indexRoot": "0xc0304bef1330e923aace0c958d38e93585499e487c13348dadcca28d5edf074f",
+      "checkpointRoot": "0x8e2de3c61a639ae1dcec7593a714380f9345b5c1a68021c5806e700bde83f7cc",
+      "machineRoot": "0xba2f3365dda7158542e7ac1cfd96b67bd74c7204f836441d2ba0ab0db6af4643",
+      "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396",
+      "jvmSteps": 181,
+      "internalSteps": 2,
+      "engineOwner": "0xac487a04804410a554ce30b62bf6f3328ece69fa"
+    },
+    {
+      "label": "beta-direct",
+      "entryClass": "BridgeBeta",
+      "input": 8,
+      "result": 203,
+      "slices": 1,
+      "totalGas": 4289248,
+      "inputBinding": "0xcc12e525423528d03a2bdd41fda7470ab8e6a82dd8dce28dd03c09f6f65fe1ed",
+      "resourceF": "0xad0957c92663d3116e0ef507166ddb0f07557e5e36e1a09eb6f12e3e239a6489",
+      "indexRoot": "0x80e6a311605a98a47689bd54c545f954caac6363633560a8008a858968e3a7f4",
+      "checkpointRoot": "0x71ce1abee3595a51cdd48265428098cbd10a1735263e93a8c30f2bbfa81148c0",
+      "machineRoot": "0x4a2dd5234e6b5e6104b9cc48610bfc411a9fa63d2f1c3db6b8ee5c18acda15c9",
+      "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396",
+      "jvmSteps": 225,
+      "internalSteps": 2,
+      "engineOwner": "0xac487a04804410a554ce30b62bf6f3328ece69fa"
+    }
+  ],
+  "failures": [
+    {
+      "label": "declared-name-mismatch",
+      "selector": "0x427cfac5",
+      "error": "LinkError",
+      "gas": 180985,
+      "headAbsent": true
+    },
+    {
+      "label": "malformed-class",
+      "selector": "0x8e473891",
+      "error": "ClassError",
+      "gas": 117393,
+      "headAbsent": true
+    },
+    {
+      "label": "unauthorized-caller",
+      "selector": "0xfea3e2a6",
+      "error": "BridgeError(10)",
+      "gas": 3488,
+      "headAbsent": true
+    },
+    {
+      "label": "unverified-di0",
+      "selector": "0xfea3e2a6",
+      "error": "BridgeError(4)",
+      "gas": 23361,
+      "headAbsent": true
+    },
+    {
+      "label": "wrong-archive-name-binding",
+      "selector": "0xfea3e2a6",
+      "error": "BridgeError(5)",
+      "gas": 22389,
+      "headAbsent": true
+    },
+    {
+      "label": "wrong-resource-F",
+      "selector": "0xfea3e2a6",
+      "error": "BridgeError(7)",
+      "gas": 31717,
+      "headAbsent": true
+    }
+  ],
+  "resources": [
+    {
+      "decoder": "0xa34cab08996b906a7adfdef1e67418172cfb2b45",
+      "decoderWork": 255,
+      "indexRoot": "0xc0304bef1330e923aace0c958d38e93585499e487c13348dadcca28d5edf074f",
+      "name": "BridgeAlpha.class",
+      "plainBytes": 295,
+      "publishedPages": 1,
+      "resourceF": "0xe3c0a96cc4f0b0d614b25aaae1b472dcd19b051dcec7f7bf471961e423ef1c94",
+      "resourceStateRoot": "0xa77fa3dedd132d3d06018accafd5ed7ccd8426e8d293a976bc338243b684efac",
+      "tracker": {
+        "driverOperations": 52,
+        "accountedGetterMutationAndAdapterCalls": 523,
+        "gas": 109427822,
+        "maxCallWallMs": 9,
+        "measures": [
+          {
+            "label": "as0-create",
+            "gas": 611673,
+            "wallMs": 2,
+            "kind": "CREATE"
+          },
+          {
+            "label": "as0-append",
+            "gas": 259102,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "as0-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "as0-seal",
+            "gas": 34194,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "sealed-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-create",
+            "gas": 1935216,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "zi0-discover",
+            "gas": 454217,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-scan",
+            "gas": 143978,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish",
+            "gas": 46129,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-final-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-create",
+            "gas": 3294230,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "di0-bound-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 1786281,
+            "wallMs": 3,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 2046115,
+            "wallMs": 3,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-publish",
+            "gas": 437032,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-publish-head",
+            "gas": 137237,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "bridge-create",
+            "gas": 778934,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "bridge-start-revert",
+            "gas": 3488,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-start-revert",
+            "gas": 31717,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-start-revert",
+            "gas": 22389,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-start",
+            "gas": 4110646,
+            "wallMs": 9,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-start",
+            "gas": 3221453,
+            "wallMs": 5,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3534670,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3612780,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3594937,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3535197,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3609232,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3591362,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3536910,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3534670,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3612780,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3594937,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3535197,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3609232,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3591362,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3536910,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3534670,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3612780,
+            "wallMs": 7,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3594937,
+            "wallMs": 7,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3535197,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3609232,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3591362,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3536910,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3534670,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3612780,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3594937,
+            "wallMs": 6,
+            "kind": "CALL"
+          },
+          {
+            "label": "bridge-resume",
+            "gas": 3677334,
+            "wallMs": 6,
+            "kind": "CALL"
+          }
+        ]
+      },
+      "zipBytes": 386,
+      "zipSHA256": "dde76bc612b725ff9ea487c99bdc9d4800a3c8e3addfa636846adf55bbaee5f0"
+    },
+    {
+      "decoder": "0xa34cab08996b906a7adfdef1e67418172cfb2b45",
+      "decoderWork": 260,
+      "indexRoot": "0x80e6a311605a98a47689bd54c545f954caac6363633560a8008a858968e3a7f4",
+      "name": "BridgeBeta.class",
+      "plainBytes": 301,
+      "publishedPages": 1,
+      "resourceF": "0xad0957c92663d3116e0ef507166ddb0f07557e5e36e1a09eb6f12e3e239a6489",
+      "resourceStateRoot": "0x43325cb49208f4fd55d77f3373a85c35b17a1264971ee23cd66fb443e17cfce9",
+      "tracker": {
+        "driverOperations": 25,
+        "accountedGetterMutationAndAdapterCalls": 388,
+        "gas": 18632405,
+        "maxCallWallMs": 7,
+        "measures": [
+          {
+            "label": "as0-create",
+            "gas": 611673,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "as0-append",
+            "gas": 258683,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "as0-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "as0-seal",
+            "gas": 34194,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "sealed-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-create",
+            "gas": 1935216,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "zi0-discover",
+            "gas": 452085,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-scan",
+            "gas": 143192,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish",
+            "gas": 46129,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-final-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-create",
+            "gas": 3293974,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "di0-bound-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 3358127,
+            "wallMs": 4,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 1977952,
+            "wallMs": 3,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 139621,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-publish",
+            "gas": 442030,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-publish-head",
+            "gas": 137237,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "bridge-create",
+            "gas": 778934,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "bridge-start",
+            "gas": 4289248,
+            "wallMs": 7,
+            "kind": "CALL"
+          }
+        ]
+      },
+      "zipBytes": 384,
+      "zipSHA256": "4857f79984eb21368f807d72684e4bcd1ff41c238eefce9d1320c2f5e1f3460b"
+    },
+    {
+      "decoder": "0xa34cab08996b906a7adfdef1e67418172cfb2b45",
+      "decoderWork": 0,
+      "indexRoot": "0xae3ec600ded9cab2fb4a902c8eebe84424f9f810c800f48d8f20f04a35534e2f",
+      "name": "BridgeMalformed.class",
+      "plainBytes": 295,
+      "publishedPages": 0,
+      "resourceF": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "resourceStateRoot": "0x59b66904e51c1e801fdf70cf9f13beb2aa714a5bea1e32a45a44e4ea608e250e",
+      "tracker": {
+        "driverOperations": 17,
+        "accountedGetterMutationAndAdapterCalls": 170,
+        "gas": 7952171,
+        "maxCallWallMs": 0,
+        "measures": [
+          {
+            "label": "as0-create",
+            "gas": 611673,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "as0-append",
+            "gas": 260502,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "as0-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "as0-seal",
+            "gas": 34194,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "sealed-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-create",
+            "gas": 1935216,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "zi0-discover",
+            "gas": 461560,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-scan",
+            "gas": 147150,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish",
+            "gas": 46129,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-final-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-create",
+            "gas": 3295254,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "di0-bound-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "bridge-create",
+            "gas": 778934,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "bridge-start-revert",
+            "gas": 23361,
+            "wallMs": 0,
+            "kind": "CALL"
+          }
+        ]
+      },
+      "zipBytes": 393,
+      "zipSHA256": "900f33a7cb4839e96db9f3682fd89a698307735e34136affdac52519edbc5f18"
+    },
+    {
+      "decoder": "0xa34cab08996b906a7adfdef1e67418172cfb2b45",
+      "decoderWork": 255,
+      "indexRoot": "0xf68cf78a2ca29736f5b5aa4e6c05bd92b89d15520c74cf16be31fb76614ce54b",
+      "name": "BridgeAlias.class",
+      "plainBytes": 295,
+      "publishedPages": 1,
+      "resourceF": "0x081e010bb428754530c3f4c897085c995b35716f347cc9e1432869ac7221d6f4",
+      "resourceStateRoot": "0x8a0749fa17305b7c853bd9ff67c638e65eb8bee1d50a5dd80ab121193be288e9",
+      "tracker": {
+        "driverOperations": 23,
+        "accountedGetterMutationAndAdapterCalls": 335,
+        "gas": 12754129,
+        "maxCallWallMs": 3,
+        "measures": [
+          {
+            "label": "as0-create",
+            "gas": 611673,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "as0-append",
+            "gas": 259102,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "as0-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "as0-seal",
+            "gas": 34194,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "sealed-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-create",
+            "gas": 1935216,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "zi0-discover",
+            "gas": 454217,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-scan",
+            "gas": 143978,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish",
+            "gas": 46129,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-final-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-create",
+            "gas": 3294230,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "di0-bound-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 1786281,
+            "wallMs": 3,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 2046115,
+            "wallMs": 3,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-publish",
+            "gas": 437032,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-publish-head",
+            "gas": 137237,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "bridge-create",
+            "gas": 778934,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "bridge-start-revert",
+            "gas": 180985,
+            "wallMs": 0,
+            "kind": "CALL"
+          }
+        ]
+      },
+      "zipBytes": 386,
+      "zipSHA256": "57735b77a58a4e164ca39361027e42eb232fcf16cd2a4199ef3e7cfb55bb8134"
+    },
+    {
+      "decoder": "0xa34cab08996b906a7adfdef1e67418172cfb2b45",
+      "decoderWork": 255,
+      "indexRoot": "0xae3ec600ded9cab2fb4a902c8eebe84424f9f810c800f48d8f20f04a35534e2f",
+      "name": "BridgeMalformed.class",
+      "plainBytes": 295,
+      "publishedPages": 1,
+      "resourceF": "0x59c29c1664b7f5b68fd562c4d96920e5063d47df62725055e0ec4a238d25b223",
+      "resourceStateRoot": "0xf195072f4d9ce9e7386bbc5e4364c478789c90d66fb284892db9548cd7d4bdd3",
+      "tracker": {
+        "driverOperations": 23,
+        "accountedGetterMutationAndAdapterCalls": 335,
+        "gas": 14253189,
+        "maxCallWallMs": 4,
+        "measures": [
+          {
+            "label": "as0-create",
+            "gas": 611673,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "as0-append",
+            "gas": 260502,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "as0-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "as0-seal",
+            "gas": 34194,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "sealed-head",
+            "gas": 17295,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-create",
+            "gas": 1935216,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "zi0-discover",
+            "gas": 461560,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-scan",
+            "gas": 147150,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-scan-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "zi0-finish",
+            "gas": 46129,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "zi0-final-head",
+            "gas": 49576,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-create",
+            "gas": 3295254,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "di0-bound-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 3343953,
+            "wallMs": 4,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-step-q128",
+            "gas": 2038156,
+            "wallMs": 3,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-step-head",
+            "gas": 125304,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "di0-publish",
+            "gas": 437032,
+            "wallMs": 0,
+            "kind": "CALL"
+          },
+          {
+            "label": "di0-publish-head",
+            "gas": 137237,
+            "wallMs": 0,
+            "kind": "view-group"
+          },
+          {
+            "label": "bridge-create",
+            "gas": 778934,
+            "wallMs": 0,
+            "kind": "CREATE"
+          },
+          {
+            "label": "bridge-start-revert",
+            "gas": 117393,
+            "wallMs": 0,
+            "kind": "CALL"
+          }
+        ]
+      },
+      "zipBytes": 393,
+      "zipSHA256": "900f33a7cb4839e96db9f3682fd89a698307735e34136affdac52519edbc5f18"
+    }
+  ],
+  "totals": {
+    "accountedGetterMutationAndAdapterCalls": 1751,
+    "gasIncludingGetterViews": 163019716,
+    "maxTopLevelCallWallMs": 9,
+    "recordedDriverOperations": 140,
+    "resourceSessions": 5
+  }
+}

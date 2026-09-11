@@ -1,0 +1,103 @@
+public final class BridgeAlpha {
+  public BridgeAlpha();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  private static int twist(int);
+    Code:
+       0: iload_0
+       1: iconst_5
+       2: imul
+       3: iload_0
+       4: iconst_1
+       5: iushr
+       6: ixor
+       7: ireturn
+
+  public static int run(int);
+    Code:
+       0: iconst_3
+       1: istore_1
+       2: iconst_0
+       3: istore_2
+       4: iload_2
+       5: iload_0
+       6: if_icmpge     42
+       9: iload_2
+      10: iconst_1
+      11: iand
+      12: ifne          27
+      15: iload_1
+      16: iload_2
+      17: iconst_2
+      18: iadd
+      19: invokestatic  #2                  // Method twist:(I)I
+      22: iadd
+      23: istore_1
+      24: goto          36
+      27: iload_1
+      28: iload_2
+      29: iconst_1
+      30: isub
+      31: invokestatic  #2                  // Method twist:(I)I
+      34: isub
+      35: istore_1
+      36: iinc          2, 1
+      39: goto          4
+      42: iload_1
+      43: ireturn
+}
+public final class BridgeBeta {
+  public BridgeBeta();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  private static int fold(int, int);
+    Code:
+       0: iload_0
+       1: iload_1
+       2: bipush        7
+       4: imul
+       5: iadd
+       6: iload_1
+       7: iconst_2
+       8: ishl
+       9: ixor
+      10: ireturn
+
+  public static int run(int);
+    Code:
+       0: bipush        11
+       2: istore_1
+       3: iconst_0
+       4: istore_2
+       5: iload_2
+       6: iload_0
+       7: if_icmpge     41
+      10: iload_1
+      11: iload_2
+      12: invokestatic  #2                  // Method fold:(II)I
+      15: istore_1
+      16: iload_1
+      17: ifge          29
+      20: iload_1
+      21: ineg
+      22: bipush        9
+      24: iadd
+      25: istore_1
+      26: goto          35
+      29: iload_1
+      30: iload_2
+      31: iconst_3
+      32: iand
+      33: iadd
+      34: istore_1
+      35: iinc          2, 1
+      38: goto          5
+      41: iload_1
+      42: ireturn
+}
