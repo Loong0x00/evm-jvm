@@ -2,7 +2,9 @@
 
 LATEST ACTUAL ORIGINAL-JAR PROOF: after DI0 acceptance56848a1b1, parent EVM decoded
 MinecraftServer.class33457B from original30222121B server JAR, CRCverified/5pages,
-4149mutations/88.570s. evidence/java-evm/di0/official-entry-56848a1b1/. Class bytes
+4149mutations/88.570s. Then original AbstractLogger.class90309B/12pages also decoded
+(4164mutations/93.273s), no Java quota change. Evidence
+evidence/java-evm/di0/official-entry-56848a1b1/. Class bytes
 ONLY: no Java/Minecraft execution. Next ONE Sol/high disposable class-to-existing-
 JVM bridge preflight per JAVA_EVM_MC_CLASS_BRIDGE_PREPARATION.md; generated fixtures
 only, no production/accepted changes or official Java execution; no Fast/priority.
