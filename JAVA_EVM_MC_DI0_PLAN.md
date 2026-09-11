@@ -1,5 +1,8 @@
 # MC-DI0 bounded resource decoder — implementation freeze
 
+Current status: DI0 accepted by JAVA_EVM_MC_DI0_REVIEW.md. The freeze/candidate
+record below is historical; its failures and scope decisions remain preserved.
+
 Status: **FROZEN FOR IMPLEMENTATION, NOT ACCEPTED**. See
 JAVA_EVM_MC_DI0_IMPLEMENTATION_PREFLIGHT.md for independent replay, the additional
 64-header counterexample and explicit EVM budget-yield refinement. This freeze is

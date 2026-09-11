@@ -54,6 +54,11 @@ const (
 	faultAfterTrie faultPoint = iota + 1
 	faultBeforeManifest
 	faultAfterManifestRename
+	faultAfterTempCreate
+	faultAfterTempWrite
+	faultAfterTempSync
+	faultAfterTempClose
+	faultAfterDirectorySync
 )
 
 type Session struct {
@@ -260,7 +265,7 @@ func (s *Session) initDisk() error {
 	return nil
 }
 func (s *Session) reopen(m manifest) error {
-	if m.Format != storeFormat || m.Context != contextID || m.Owner != s.owner || m.Length != s.length || m.AS0 == (common.Address{}) || m.AS0CodeHash != s.as0Hash || m.ZI0CodeHash != s.zi0Hash || m.DI0CodeHash != s.di0Hash || m.StateRoot == (common.Hash{}) {
+	if m.Format != storeFormat || m.Context != contextID || m.Owner != s.owner || m.Length != s.length || m.AS0 == (common.Address{}) || m.AS0CodeHash != s.as0Hash || m.ZI0CodeHash != s.zi0Hash || m.DI0CodeHash != s.di0Hash || m.StateRoot == (common.Hash{}) || m.StateRoot == types.EmptyRootHash {
 		return errors.New("di0: manifest identity or code pin mismatch")
 	}
 	if e := s.reload(m.StateRoot); e != nil {
@@ -1256,6 +1261,10 @@ func (s *Session) publish(r common.Hash) error {
 		return e
 	}
 	name := f.Name()
+	if e = s.inject(faultAfterTempCreate); e != nil {
+		f.Close()
+		return e
+	}
 	if e = f.Chmod(0600); e != nil {
 		f.Close()
 		return e
@@ -1264,11 +1273,22 @@ func (s *Session) publish(r common.Hash) error {
 		f.Close()
 		return e
 	}
+	if e = s.inject(faultAfterTempWrite); e != nil {
+		f.Close()
+		return e
+	}
 	if e = f.Sync(); e != nil {
 		f.Close()
 		return e
 	}
+	if e = s.inject(faultAfterTempSync); e != nil {
+		f.Close()
+		return e
+	}
 	if e = f.Close(); e != nil {
+		return e
+	}
+	if e = s.inject(faultAfterTempClose); e != nil {
 		return e
 	}
 	if e = os.Rename(name, filepath.Join(s.directory, manifestName)); e != nil {
@@ -1278,6 +1298,9 @@ func (s *Session) publish(r common.Hash) error {
 		return fmt.Errorf("%w: %v", errPublished, e)
 	}
 	if e = syncDir(s.directory); e != nil {
+		return fmt.Errorf("%w: %v", errPublished, e)
+	}
+	if e = s.inject(faultAfterDirectorySync); e != nil {
 		return fmt.Errorf("%w: %v", errPublished, e)
 	}
 	return nil
@@ -1413,7 +1436,7 @@ func readDiskMetadata(dir string, owner common.Address, length uint32, as0Hash, 
 	wantAS0, wantIndex, wantDecoder := crypto.CreateAddress(owner, 0), crypto.CreateAddress(owner, 1), crypto.CreateAddress(owner, 2)
 	indexAbsent := m.Index == (common.Address{})
 	decoderAbsent := m.Decoder == (common.Address{})
-	if m.Format != storeFormat || m.Context != contextID || m.Owner != owner || m.Length != length || m.AS0 != wantAS0 || (!indexAbsent && m.Index != wantIndex) || (!decoderAbsent && m.Decoder != wantDecoder) || m.Index == m.AS0 || (!decoderAbsent && (m.Decoder == m.AS0 || m.Decoder == m.Index)) || m.AS0CodeHash != as0Hash || m.ZI0CodeHash != zi0Hash || m.DI0CodeHash != di0Hash || indexAbsent != (m.Content == (common.Hash{})) || indexAbsent && !decoderAbsent || decoderAbsent != (m.IndexRoot == (common.Hash{})) || decoderAbsent != (len(m.RawName) == 0) || len(m.RawName) > int(zi0.MaxName) || m.StateRoot == (common.Hash{}) {
+	if m.Format != storeFormat || m.Context != contextID || m.Owner != owner || m.Length != length || m.AS0 != wantAS0 || (!indexAbsent && m.Index != wantIndex) || (!decoderAbsent && m.Decoder != wantDecoder) || m.Index == m.AS0 || (!decoderAbsent && (m.Decoder == m.AS0 || m.Decoder == m.Index)) || m.AS0CodeHash != as0Hash || m.ZI0CodeHash != zi0Hash || m.DI0CodeHash != di0Hash || indexAbsent != (m.Content == (common.Hash{})) || indexAbsent && !decoderAbsent || decoderAbsent != (m.IndexRoot == (common.Hash{})) || decoderAbsent != (len(m.RawName) == 0) || len(m.RawName) > int(zi0.MaxName) || m.StateRoot == (common.Hash{}) || m.StateRoot == types.EmptyRootHash {
 		return manifest{}, errors.New("di0: manifest binding mismatch")
 	}
 	return m, nil

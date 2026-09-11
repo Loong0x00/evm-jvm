@@ -1,13 +1,11 @@
 # Continuous JVM-in-EVM program
 
 ## Current dependency milestone
-DI0 is frozen for implementation, NOT accepted: JAVA_EVM_MC_DI0_PLAN.md and
-JAVA_EVM_MC_DI0_IMPLEMENTATION_PREFLIGHT.md. Parent resolved an additional64-header
-q128/100M OOG with an EXPLICIT gas-aware upper-bound work contract (25M reserve,
-positive progress), not host recovery or a gas increase. Runtime/transport candidates integrated; parent fixed legal stored-block Head/Open
-validation and added genuine subprocess chains. See JAVA_EVM_MC_DI0_CANDIDATE_FINDINGS.md;
-remaining independent16group final gates, no active workers at current checkpoint. DI0-only256KiB resource
-staging is not a Java/VFS quota increase. No official inflation/Java/MC/Done yet.
+DI0 accepted within its bounded resource profile: JAVA_EVM_MC_DI0_REVIEW.md.
+Parent final253.599s/491962368B combined16-group gate passed. Genuine EVM ZIP
+method0/raw-DEFLATE, CRC and output pages; no host decoder. Next: selected original
+JAR entry inflation, then lazy class loading/linking/initialization. DI0-only256KiB
+is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.
 
 ## Latest authorization
 SELECTED MC VERSION (explicit user choice): Minecraft Java server **1.12.2**,

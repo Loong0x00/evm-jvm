@@ -1,6 +1,6 @@
 # MC-DI0 bounded EVM resource decoder runtime candidate
 
-Status: frozen-plan production runtime candidate, **not accepted DI0**. This package
+Status: **accepted bounded DI0**, see JAVA_EVM_MC_DI0_REVIEW.md. This package
 contains the `DI0Resource` Solidity source, pinned reproducible build, exact combined
 artifact, and defensive Go embed. It decodes generated/test ZIP method 0 and raw
 DEFLATE method 8 resources using accepted AS0/ZI0 EVM dependencies, verifies output
@@ -45,4 +45,4 @@ runtime gates remain 100M/30s and 1B/120s respectively; those are test budgets, 
 universal gas claims.
 
 See `evidence/java-evm/di0/runtime-candidate/` for final candidate build and replay
-records. Only parent integration and independent final gates may accept DI0.
+records. Parent integration and independent final gates are recorded in that review.

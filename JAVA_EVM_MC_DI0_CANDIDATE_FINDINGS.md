@@ -1,5 +1,8 @@
 # DI0 production candidate — parent integration findings
 
+Current status: DI0 accepted by JAVA_EVM_MC_DI0_REVIEW.md. The freeze/candidate
+record below is historical; its failures and scope decisions remain preserved.
+
 Status: **integrated, NOT ACCEPTED**. Frozen plan remains JAVA_EVM_MC_DI0_PLAN.md.
 Runtime worker fbe0f2381/04b4f8157/1a4c24205 integrated124d93f8a/b46f830b5/fb6e267b3;
 transport89de316b9/089db4d7b integratedf4b74b531/58b24981f. All write sets checked.

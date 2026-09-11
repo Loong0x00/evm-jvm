@@ -1,20 +1,19 @@
 # Java-inside-EVM agent guide
 
-CURRENT DI0 CANDIDATE: integrated58b24981f, NOT ACCEPTED. Frozen plan
-JAVA_EVM_MC_DI0_PLAN.md; parent findings JAVA_EVM_MC_DI0_CANDIDATE_FINDINGS.md.
-Runtime14978B Keccak946686a0... independently rebuilt/replayed37/29/4 cases,
-6pairs/5fullq1..128 sweeps. Parent FIXED reachable Go Head/Open rejection of legal
-stored-DEFLATE LEN65535 (mistaken Huffman258/distance validation). Renamed worker
-same-process test honestly; parent added14 actual child-process stored/dynamic
-chains, size frontiers, real-sync/page-CREATE publication failure/retry controls.
-Parent package/relocated/vet/AS0+ZI0 regression pass; remaining16group checklist
-before acceptance. Additional reviewer provider-blocked, no result counted/retry;
-no active workers at this checkpoint. Evidence parent-58b24981f/ underjava-evm/di0.
-No official inflate/ClassLoader/Java/MC/EULA/listener/world/Done or implicit push.
-DI0-only256KiB is frozen/UNACCEPTED, no JVM/VFS/AS0 quota change. Explicit25Mgas
-reserve/positive-work yield remains, units1..128 an upper bound, not host recovery.
+LATEST ACCEPTED RESOURCE COMPONENT: DI0, JAVA_EVM_MC_DI0_REVIEW.md.
+Runtime14978B Keccak946686a0.../combined72773d5c...; final16-group parent gate
+253.599s491962368B includes pinned build/package/vet/fresh runtime37/29/4 cases,
+6pairs/5q1..128 sweeps,14 true child processes, size frontiers, exact32MiB highoffset
+and8192 EVM reads, actual14 initial-inclusive syncs and4104 post-Open highinputsyncs,
+manifest filesystem failures/oldroot/poison, independent B/O/PC/P/F, regressions.
+Parent fixed legal stored LEN65535 Head/Open and empty-trie metadata pre-DB rejection.
+DI0-only262144B cap accepted, NOT a JVM/VFS/AS0 increase. Units1..128 maximum with
+25M EVM gas reserve after positivework; no hostdecode/recovery. No active workers;
+parent continues genuine selected original-JAR entry inflation, then classloading.
+No official inflate/Java/MC/EULA/listener/world/Done at DI0 acceptance checkpoint.
+Blocked reviewer produced no result; not retried/credited. No implicit push.
 
-LATEST ACCEPTED COMPONENT: ZI0 bounded EVM ZIP directory/index. See
+ACCEPTED DEPENDENCY: ZI0 bounded EVM ZIP directory/index. See
 JAVA_EVM_MC_ZI0_REVIEW.md and frozen PLAN. Runtime9177B/completeinit9937B unchanged;
 Go repair27cb00967 integrated and parent corrected verified binding cache/ordinary
 100M tests/true20554-entry new-process continuation. Final20.546s/519057408B,

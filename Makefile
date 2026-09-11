@@ -246,3 +246,14 @@ java-mc-zi0-test: java-mc-zi0-check
 	go test -count=1 -timeout=18m ./jvmevm/artifactstore/zi0/...
 java-mc-zi0-demo: java-mc-zi0-check
 	go test -count=1 -v -timeout=18m -run '^TestZI0ParentRealArtifactPipeline$$' ./jvmevm/artifactstore/zi0
+
+# DI0 bounded EVM resource inflation only; not Java or Minecraft readiness.
+.PHONY: java-mc-di0-build java-mc-di0-check java-mc-di0-test java-mc-di0-demo
+java-mc-di0-build:
+	cd jvmevm/artifactstore/di0/runtime && npm ci --ignore-scripts && npm run build
+java-mc-di0-check:
+	cd jvmevm/artifactstore/di0/runtime && npm ci --ignore-scripts && npm run check
+java-mc-di0-test: java-mc-di0-check
+	go test -count=1 -timeout=18m ./jvmevm/artifactstore/di0/...
+java-mc-di0-demo: java-mc-di0-check
+	go test -count=1 -v -timeout=18m -run '^TestDI0ParentIndependentResourceCommitments$$' ./jvmevm/artifactstore/di0

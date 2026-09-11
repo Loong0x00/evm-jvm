@@ -1,0 +1,21 @@
+=== RUN   TestDI0ParentEveryMutationReallySyncsAndReloads
+=== RUN   TestDI0ParentEveryMutationReallySyncsAndReloads/false
+    parent_acceptance_test.go:151: actual completed sync calls=14; initial CREATE included; every success reloaded; disk=false
+=== RUN   TestDI0ParentEveryMutationReallySyncsAndReloads/true
+    parent_acceptance_test.go:151: actual completed sync calls=14; initial CREATE included; every success reloaded; disk=true
+--- PASS: TestDI0ParentEveryMutationReallySyncsAndReloads (0.34s)
+    --- PASS: TestDI0ParentEveryMutationReallySyncsAndReloads/false (0.17s)
+    --- PASS: TestDI0ParentEveryMutationReallySyncsAndReloads/true (0.17s)
+=== RUN   TestDI0ParentFull32MiBHighOffsetDurableInput
+    parent_acceptance_test.go:208: input=33554432 pages=4096 dataStart=33554313 full EVM reads=8192 post-Open real syncs=4104 (initial Open CREATE excluded); trie=0x53342d6665be3fc81b1bcc17c3f64204307e8864c235386343a1e825e7d69150 resource=0xa75c5083ccb7d52d1d4a30139c1919b816981cedccbaf2d2bea62e5006e040fc
+--- PASS: TestDI0ParentFull32MiBHighOffsetDurableInput (7.48s)
+=== RUN   TestDI0ParentRealManifestFilesystemFailures
+=== RUN   TestDI0ParentRealManifestFilesystemFailures/create-temp
+    parent_acceptance_test.go:264: real OS create-temp failure left prior root/manifest and gas-only receipt; normal retry passed
+=== RUN   TestDI0ParentRealManifestFilesystemFailures/rename
+    parent_acceptance_test.go:264: real OS rename failure left prior root/manifest and gas-only receipt; normal retry passed
+--- PASS: TestDI0ParentRealManifestFilesystemFailures (0.00s)
+    --- PASS: TestDI0ParentRealManifestFilesystemFailures/create-temp (0.00s)
+    --- PASS: TestDI0ParentRealManifestFilesystemFailures/rename (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/di0	7.831s
