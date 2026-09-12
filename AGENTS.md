@@ -24,9 +24,13 @@ UTF16 code units incl NUL/surrogates, typed NPE/terminal blob and root/CAS integ
 Link frontier now parent-verified with corrections: JAVA_EVM_MC_LINK_FRONTIER_PARENT_PREFLIGHT.md,
 15.961s/336994304B. PC38 was invokevirtual, NOT null-checkcast35; independentnonnull
 cast17 and eager-preloaded controls verified. Demand loading is NOT implemented or
-proven uniquely necessary. Next DISPOSABLE capacity baseline comparison (8/256KiB
-COPY ONLY) per JAVA_EVM_MC_CAPACITY_COMPARISON_PREPARATION.md; all ACCEPTED quotas
-and engine/CB0/core remain unchanged, no original Java/MC execution.
+proven uniquely necessary. DISPOSABLE8/256KiB baseline now parent-verified: JAVA_EVM_MC_CAPACITY_BASELINE_PARENT_PREFLIGHT.md,
+264.469s/865628160B. Fixed copied same-session VM-domain cache; actual bounds3680args.
+24worlds/94processes/566DI0reads pass, including5/6/8 and262144/+1. BUT181969B dense
+3-class package hitsordinaryLC0Control7; q1epoch1survivesresume refusal,1BBOUNDARY
+only direct/resume124505990/127622437gas. No broadfeasibility/profilepromotion. Next
+cost attribution and origin-preserving launch design; all ACCEPTED quotas and
+engine/CB0/core unchanged, no original Java/MC execution.
 
 CURRENT BRIDGE FRONTIER: worker e3f45ec22 integrated5ce5ffe37; parent independently
 replayed generated EVMZIP->DI0->VFS0a->Javabytecode results76/203. NOT production

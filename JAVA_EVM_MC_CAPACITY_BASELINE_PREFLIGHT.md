@@ -1,6 +1,8 @@
 # MC capacity baseline disposable preflight
 
-**Worker draft at base `7b46769c5`; not accepted and not a profile promotion.**
+**Original worker draft at base `7b46769c5`, preserved below.** Parent completed a
+verified DISPOSABLE experiment with repairs AND an ordinary-gas density counterexample:
+JAVA_EVM_MC_CAPACITY_BASELINE_PARENT_PREFLIGHT.md. Not an accepted profile promotion.
 
 This records the narrowly authorized COPY-only experiment described in
 `JAVA_EVM_MC_CAPACITY_COMPARISON_PREPARATION.md`. Its only experimental input

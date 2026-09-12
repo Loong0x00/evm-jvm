@@ -16,9 +16,11 @@ Generated guest-main launch now independently verified with existing root ABI:
 JAVA_EVM_MC_MAIN_ENTRY_PARENT_PREFLIGHT.md,17.197s/335765504B; real UTF16 contents,
 119 process receipts, terminal return/NPE and corrected strict verification. Next
 link-frontier parent15.961s/336994304B verifies actual missing-reference/cast
-semantics and eager-preloaded controls. Next DISPOSABLE8-image/256KiB capacity
-baseline comparison, NOT accepted quota changes; see
-JAVA_EVM_MC_CAPACITY_COMPARISON_PREPARATION.md. Demand loading not implemented.
+semantics and eager-preloaded controls. DISPOSABLE8/256KiB capacity experiment now parent-verified, NOT accepted quotas:
+JAVA_EVM_MC_CAPACITY_BASELINE_PARENT_PREFLIGHT.md,264.469s/865628160B. One90874B
+dense class works ordinary; two dense classes181969B fail ordinary reserve even
+afterq1epoch1, though explicit1Bboundary works. Next isolate preparation/continuation
+cost and preserve separate launcher/JAR origins without repacking the official JAR. Demand loading not implemented.
 DefaultTerra/high, independent gates, no silent entry/loader/quota expansion.
 Latest user cancelled the pause: continue after dependency gates, no implicit push. DI0-only256KiB
 is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.
