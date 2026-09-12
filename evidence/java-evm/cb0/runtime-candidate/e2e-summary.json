@@ -1,0 +1,176 @@
+{
+  "status": "controller-only EVM replay passed; candidate only, not acceptance",
+  "baseCommit": "0d684f599355f2375f91d0f4692aa86405e5af16",
+  "artifactSHA256": "b7a4c0e7affbc0a94850433f14f013ed10631261db7cfac5eac861323a196955",
+  "adapterDriverSHA256": "ab4d39b4c2ff1126a710dd20cdc781e794ea284708772801b24975e187399ee4",
+  "adapterBinarySHA256": "2de28127a25dd49a6f73f5441c276df68177743f90fbfb11dc50586631ea7d6a",
+  "fixtures": {
+    "sharedTwoZIPSHA256": "fd9a32ed7552da6c8ddc80899de608b1621fdeb7e6a57c2d2eb945d97aaea595",
+    "boundarySevenZIPSHA256": "b384a6ab34a3d1e0e4de4ab8c4bc1a9f8b2d8a1dc1a8f1a42c500cc7dd3a73ae"
+  },
+  "generatedJava8Oracle": {
+    "input7": 317,
+    "input9": 299
+  },
+  "outcomes": {
+    "direct": {
+      "result": 317,
+      "slices": 1,
+      "jvmSteps": 36,
+      "internalSteps": 5,
+      "lifecycle": 2,
+      "totalClassBytes": 602,
+      "stage": "final-reopened"
+    },
+    "q1": {
+      "result": 317,
+      "slices": 36,
+      "jvmSteps": 36,
+      "internalSteps": 5,
+      "lifecycle": 2,
+      "totalClassBytes": 602,
+      "stage": "final-reopened"
+    },
+    "q7": {
+      "result": 317,
+      "slices": 6,
+      "jvmSteps": 36,
+      "internalSteps": 5,
+      "lifecycle": 2,
+      "totalClassBytes": 602,
+      "stage": "final-reopened"
+    },
+    "input9": {
+      "result": 299,
+      "slices": 1,
+      "jvmSteps": 36,
+      "internalSteps": 5,
+      "lifecycle": 2,
+      "totalClassBytes": 602,
+      "stage": "final-reopened"
+    }
+  },
+  "negativeResumeFailures": [
+    {
+      "label": "unauthorized-owner",
+      "name": "CB0Error",
+      "code": 17
+    },
+    {
+      "label": "wrong-package-root",
+      "name": "CB0Error",
+      "code": 18
+    },
+    {
+      "label": "wrong-engine-CAS",
+      "name": "LC0ControlError",
+      "code": 3
+    }
+  ],
+  "boundary": {
+    "paging": {
+      "actualReadCount": 18,
+      "actualReadSizes": [
+        4096,
+        1,
+        4096,
+        4096,
+        1,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4096,
+        4094
+      ],
+      "aggregate": 65536,
+      "allAtMost4096": true,
+      "gas": 4187497,
+      "includesCrossPage8193": true,
+      "lifecycle": 2,
+      "machineRoot": "0x4719b5241317e427096fd2452f1df0efd96ca040245de6cbe045ea0d203385ac",
+      "result": 9,
+      "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+    },
+    "constructorAndLinkFailures": [
+      {
+        "label": "empty-package",
+        "name": "CB0Error",
+        "code": 2
+      },
+      {
+        "label": "empty-class-name",
+        "name": "CB0Error",
+        "code": 6
+      },
+      {
+        "label": "aggregate-65537",
+        "name": "CB0Error",
+        "code": 12
+      },
+      {
+        "label": "wrong-decoder-ref",
+        "name": "CB0Error",
+        "code": 4
+      },
+      {
+        "label": "wrong-raw-name",
+        "name": "CB0Error",
+        "code": 8
+      },
+      {
+        "label": "wrong-resource-F",
+        "name": "CB0Error",
+        "code": 10
+      },
+      {
+        "label": "non-final",
+        "name": "CB0Error",
+        "code": 7
+      },
+      {
+        "label": "decoder-owner-mismatch",
+        "name": "CB0Error",
+        "code": 14
+      },
+      {
+        "label": "wrong-package-assertion",
+        "name": "CB0Error",
+        "code": 16
+      },
+      {
+        "label": "five-class-count",
+        "name": "CB0Error",
+        "code": 2
+      },
+      {
+        "label": "duplicate-name-distinct-decoder",
+        "name": "CB0Error",
+        "code": 5
+      },
+      {
+        "label": "duplicate-decoder",
+        "name": "CB0Error",
+        "code": 5
+      },
+      {
+        "label": "wrong-index-root",
+        "name": "CB0Error",
+        "code": 9
+      },
+      {
+        "label": "declared-class-name-mismatch",
+        "name": "LinkError",
+        "code": null
+      }
+    ]
+  },
+  "caveat": "The ignored adapter reuses only the retained generated-fixture EVM driver with CB0 artifact-schema, production-domain, and CB0Error adaptations. It is not the production cb0 transport implementation or its memory/disk/IO acceptance gate."
+}

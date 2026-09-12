@@ -7,6 +7,12 @@ pragma solidity 0.8.30;
 contract CB0ClassCoordinator {
     error CB0Error(uint256 code);
 
+    struct SeedFile {
+        bytes path;
+        bytes data;
+        bool readOnly;
+    }
+
     address private constant ENGINE = 0x4a564D45564D564653304152554e54494D450001;
     bytes32 private constant ENGINE_CODEHASH = hex"e7f4de699588a3d58624e8ab717a00809759d112952ca1fac8bbc74637118c84";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
@@ -133,10 +139,11 @@ contract CB0ClassCoordinator {
         if (assertedPackageRoot != packageRoot) revert CB0Error(18);
         if (entryAt >= classCount) revert CB0Error(19);
         bytes[] memory classes = _loadAll();
+        SeedFile[] memory seeds = new SeedFile[](0);
         bytes memory data = abi.encodeWithSignature(
             "start(bytes32,bytes[],string,string,int32[],(bytes,bytes,bool)[],uint64,uint32)",
             instanceId, classes, _internalName(rawNames[entryAt]), entry, args,
-            new bytes[](0), maxJvmSteps, maxInternalSteps
+            seeds, maxJvmSteps, maxInternalSteps
         );
         return _engineCall(data);
     }
