@@ -1,0 +1,304 @@
+--- VFS0aInterpreter.sol.orig
++++ VFS0aInterpreter.sol.selected
+@@ -287,7 +287,7 @@
+ 
+     struct Program {
+         ClassInfo[] classes;
+-        Selected[][] selected;
++        Selected[][][] selected;
+         uint256[][] referenceCaches;
+         uint256[][] fieldCaches;
+         uint256 rootClass;
+@@ -700,19 +700,20 @@
+         if ((access & 0x0008) == 0) revert MethodError(6);
+         if ((access & (0x0020 | 0x0100 | 0x0400)) != 0) revert MethodError(7);
+         if (_methodCodeCount(rootMeta) != 1) revert MethodError(_methodCodeCount(rootMeta) == 0 ? 4 : 3);
+-        p.selected = new Selected[][](count);
++        p.selected = new Selected[][][](count);
+         p.referenceCaches = new uint256[][](count);
+         p.fieldCaches = new uint256[][](count);
+-        p.selected[p.rootClass] = new Selected[](p.classes[p.rootClass].methods.length);
++        p.selected[p.rootClass] = new Selected[][](p.classes[p.rootClass].methods.length);
+         p.referenceCaches[p.rootClass] = new uint256[](p.classes[p.rootClass].cp.length);
+         p.fieldCaches[p.rootClass] = new uint256[](p.classes[p.rootClass].cp.length);
+-        p.selected[p.rootClass][p.rootMethod] = _loadRoot(
++        Selected memory rootSelection = _loadRoot(
+             p.classes[p.rootClass], rootMeta, p.rootClass, p.rootMethod
+         );
+-        Selected memory rs = p.selected[p.rootClass][p.rootMethod];
++        _predecode(p.classes[p.rootClass], rootSelection);
++        _putSelection(p.selected, p.rootClass, p.rootMethod, rootSelection);
++        Selected memory rs = _selectedAt(p.selected, p.rootClass, p.rootMethod);
+         if (args.length != rs.argumentCount) revert MethodError(9);
+         if (rs.maxLocals < rs.argumentWords) revert MethodError(10);
+-        _predecode(p.classes[p.rootClass], rs);
+     }
+ 
+     function _freshState(Program memory p, int32[] memory args)
+@@ -722,7 +723,7 @@
+         s.lifecycle = 1;
+         s.frames = new Frame[](MAX_FRAMES);
+         s.frames[0] = _newFrame(
+-            p.rootClass, p.rootMethod, p.selected[p.rootClass][p.rootMethod], 0
++            p.rootClass, p.rootMethod, _selectedAt(p.selected, p.rootClass, p.rootMethod), 0
+         );
+         s.frames[0].callPC = ROOT_FAULT_SENTINEL;
+         for (uint256 i; i < args.length; ++i) {
+@@ -1898,11 +1899,11 @@
+         bool initializer, bool isCtor
+     ) private pure returns (Selected memory sel) {
+         if (p.selected[ci].length == 0) {
+-            p.selected[ci] = new Selected[](p.classes[ci].methods.length);
++            p.selected[ci] = new Selected[][](p.classes[ci].methods.length);
+             p.referenceCaches[ci] = new uint256[](p.classes[ci].cp.length);
+             p.fieldCaches[ci] = new uint256[](p.classes[ci].cp.length);
+         }
+-        if (p.selected[ci][mi].loaded) return p.selected[ci][mi];
++        if (_selectionLoaded(p.selected, ci, mi)) return _selectedAt(p.selected, ci, mi);
+         if (ci == p.rootClass && mi == p.rootMethod) {
+             sel = _loadRoot(p.classes[ci], p.classes[ci].methods[mi], ci, mi);
+         } else if (initializer) {
+@@ -1915,7 +1916,31 @@
+             sel = _loadSpecialCallee(p.classes[ci], mi, callPC, isCtor, ci);
+         }
+         _predecode(p.classes[ci], sel);
+-        p.selected[ci][mi] = sel;
++        _putSelection(p.selected, ci, mi, sel);
++    }
++
++    // A class table is only method-sized pointers.  A slot owns exactly one
++    // Selected object only after that method is resolved; no unselected method
++    // can alias the mutable handler cache of another slot.
++    function _selectionLoaded(Selected[][][] memory selected, uint256 ci, uint256 mi)
++        private pure returns (bool)
++    {
++        return selected[ci].length != 0 && selected[ci][mi].length == 1
++            && selected[ci][mi][0].loaded;
++    }
++
++    function _selectedAt(Selected[][][] memory selected, uint256 ci, uint256 mi)
++        private pure returns (Selected memory)
++    {
++        return selected[ci][mi][0];
++    }
++
++    function _putSelection(
++        Selected[][][] memory selected, uint256 ci, uint256 mi, Selected memory value
++    ) private pure {
++        Selected[] memory slot = new Selected[](1);
++        slot[0] = value;
++        selected[ci][mi] = slot;
+     }
+ 
+     function _validateRestoredReferences(Program memory p, RuntimeState memory s) private pure {
+@@ -2692,7 +2717,7 @@
+     function _validateAthrowBoundary(
+         Program memory p, RuntimeState memory s, Frame memory f, bool restoredCheckpoint
+     ) private pure {
+-        Selected memory sel = p.selected[f.classIndex][f.methodIndex];
++        Selected memory sel = _selectedAt(p.selected, f.classIndex, f.methodIndex);
+         if (!sel.loaded || f.pc >= sel.codeLength
+             || uint8(p.classes[f.classIndex].data[sel.codeOffset + f.pc]) != 0xbf) return;
+         if (f.sp == 0 || _valueKind(f.stack[f.sp - 1]) != KIND_REF) {
+@@ -3567,7 +3592,7 @@
+ 
+     function _execute(
+         ClassInfo[] memory classes,
+-        Selected[][] memory selected,
++        Selected[][][] memory selected,
+         uint256[][] memory referenceCaches,
+         uint256[][] memory fieldCaches,
+         uint256 rootClass,
+@@ -3655,7 +3680,7 @@
+                     continue;
+                 }
+                 Selected memory throwingSelection =
+-                    selected[throwing.classIndex][throwing.methodIndex];
++                    _selectedAt(selected, throwing.classIndex, throwing.methodIndex);
+                 bool caught;
+                 for (uint256 hi = 0; hi < throwingSelection.handlerStarts.length; ++hi) {
+                     if (arena.pending.faultPC < throwingSelection.handlerStarts[hi]
+@@ -3767,14 +3792,17 @@
+                 if (initializing.initializerPlusOne != 0 && !initializerStarted[initializingClass]) {
+                     initializerStarted[initializingClass] = true;
+                     if (selected[initializingClass].length == 0) {
+-                        selected[initializingClass] = new Selected[](initializing.methods.length);
++                        selected[initializingClass] = new Selected[][](initializing.methods.length);
+                         referenceCaches[initializingClass] = new uint256[](initializing.cp.length);
+                         fieldCaches[initializingClass] = new uint256[](initializing.cp.length);
+                     }
+                     uint256 initializerMethod = initializing.initializerPlusOne - 1;
+-                    selected[initializingClass][initializerMethod] =
++                    Selected memory initializerSelection =
+                         _loadInitializer(initializing, initializerMethod, initializingClass);
+-                    _predecode(initializing, selected[initializingClass][initializerMethod]);
++                    _predecode(initializing, initializerSelection);
++                    _putSelection(
++                        selected, initializingClass, initializerMethod, initializerSelection
++                    );
+                     if (depth == MAX_FRAMES) {
+                         nextHandle = _raiseJava(
+                             2, f.callPC, arena, classes, objectHeap, heapKinds,
+@@ -3784,7 +3812,7 @@
+                     }
+                     Frame memory initializer = _newFrame(
+                         initializingClass, initializerMethod,
+-                        selected[initializingClass][initializerMethod], f.callPC
++                        _selectedAt(selected, initializingClass, initializerMethod), f.callPC
+                     );
+                     initializer.isInitializer = true;
+                     frames[depth] = initializer;
+@@ -3797,7 +3825,7 @@
+                 continue;
+             }
+             ClassInfo memory c = classes[f.classIndex];
+-            Selected memory selection = selected[f.classIndex][f.methodIndex];
++            Selected memory selection = _selectedAt(selected, f.classIndex, f.methodIndex);
+             if (f.pc >= selection.codeLength) revert BytecodeError(7, f.pc);
+             if (state.totalJvmSteps == type(uint64).max) revert LC0ControlError(6);
+             ++executedJvmSteps;
+@@ -4566,20 +4594,19 @@
+                     continue;
+                 }
+                 if (selected[calleeClass].length == 0) {
+-                    selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
++                    selected[calleeClass] = new Selected[][](classes[calleeClass].methods.length);
+                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                     fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                 }
+                 uint8 stringBinding = _stringNativeBinding(classes[calleeClass], callee);
+-                if (!selected[calleeClass][callee].loaded) {
+-                    selected[calleeClass][callee] = stringBinding == 0
++                if (!_selectionLoaded(selected, calleeClass, callee)) {
++                    Selected memory loadedTarget = stringBinding == 0
+                         ? _loadVirtualCallee(classes[calleeClass], callee, opPC, calleeClass)
+                         : _loadStringNativeCallee(classes[calleeClass], callee, opPC, calleeClass);
+-                    if (stringBinding == 0) {
+-                        _predecode(classes[calleeClass], selected[calleeClass][callee]);
+-                    }
++                    if (stringBinding == 0) _predecode(classes[calleeClass], loadedTarget);
++                    _putSelection(selected, calleeClass, callee, loadedTarget);
+                 }
+-                Selected memory target = selected[calleeClass][callee];
++                Selected memory target = _selectedAt(selected, calleeClass, callee);
+                 if (!_sameMethodDescriptor(classes[resolved.owner], resolved.method,
+                     classes[calleeClass], callee)) revert CallError(4, opPC);
+                 _guardCanonicalThrowableGetter(
+@@ -4689,17 +4716,21 @@
+                     uint256 interfaceMethod = interfaceResolved.method;
+                     if (selected[interfaceClass].length == 0) {
+                         selected[interfaceClass] =
+-                            new Selected[](classes[interfaceClass].methods.length);
++                            new Selected[][](classes[interfaceClass].methods.length);
+                         referenceCaches[interfaceClass] = new uint256[](classes[interfaceClass].cp.length);
+                         fieldCaches[interfaceClass] = new uint256[](classes[interfaceClass].cp.length);
+                     }
+-                    if (!selected[interfaceClass][interfaceMethod].loaded) {
+-                        selected[interfaceClass][interfaceMethod] = _loadVirtualCallee(
++                    if (!_selectionLoaded(selected, interfaceClass, interfaceMethod)) {
++                        Selected memory loadedInterfaceTarget = _loadVirtualCallee(
+                             classes[interfaceClass], interfaceMethod, opPC, interfaceClass
+                         );
+-                        _predecode(classes[interfaceClass], selected[interfaceClass][interfaceMethod]);
++                        _predecode(classes[interfaceClass], loadedInterfaceTarget);
++                        _putSelection(
++                            selected, interfaceClass, interfaceMethod, loadedInterfaceTarget
++                        );
+                     }
+-                    Selected memory interfaceTarget = selected[interfaceClass][interfaceMethod];
++                    Selected memory interfaceTarget =
++                        _selectedAt(selected, interfaceClass, interfaceMethod);
+                     if (depth == MAX_FRAMES) {
+                     nextHandle = _raiseJava(
+                         2, opPC, arena, classes, objectHeap, heapKinds, heapClasses,
+@@ -4730,23 +4761,22 @@
+                     classes[calleeClass], callee, opPC, isConstructor
+                 );
+                 if (selected[calleeClass].length == 0) {
+-                    selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
++                    selected[calleeClass] = new Selected[][](classes[calleeClass].methods.length);
+                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                     fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                 }
+-                if (!selected[calleeClass][callee].loaded) {
+-                    selected[calleeClass][callee] = vfsBinding == 0
++                if (!_selectionLoaded(selected, calleeClass, callee)) {
++                    Selected memory loadedTarget = vfsBinding == 0
+                         ? _loadSpecialCallee(
+                             classes[calleeClass], callee, opPC, isConstructor, calleeClass
+                         )
+                         : _loadVFSNativeCallee(
+                             classes[calleeClass], callee, opPC, calleeClass
+                         );
+-                    if (vfsBinding == 0) {
+-                        _predecode(classes[calleeClass], selected[calleeClass][callee]);
+-                    }
++                    if (vfsBinding == 0) _predecode(classes[calleeClass], loadedTarget);
++                    _putSelection(selected, calleeClass, callee, loadedTarget);
+                 }
+-                Selected memory target = selected[calleeClass][callee];
++                Selected memory target = _selectedAt(selected, calleeClass, callee);
+                 if (isConstructor && target.returnKind != 2) revert CallError(4, opPC);
+                 if (f.sp < target.argumentCount + 1) revert BytecodeError(3, opPC);
+                 uint256 base = f.sp - target.argumentCount - 1;
+@@ -4853,19 +4883,18 @@
+                 );
+                 else _validateNativeBinding(classes[calleeClass], callee, opPC);
+                 if (selected[calleeClass].length == 0) {
+-                    selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
++                    selected[calleeClass] = new Selected[][](classes[calleeClass].methods.length);
+                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                     fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                 }
+                 // Finish selected-method descriptor/Code/native validation before an
+                 // active-use initialization can produce unrelated side effects.
+-                if (!selected[calleeClass][callee].loaded) {
+-                    selected[calleeClass][callee] = nativeBinding == 0
++                if (!_selectionLoaded(selected, calleeClass, callee)) {
++                    Selected memory loadedTarget = nativeBinding == 0
+                         ? _loadCallee(classes[calleeClass], callee, opPC, calleeClass)
+                         : _loadNativeCallee(classes[calleeClass], callee, opPC);
+-                    if (nativeBinding == 0) {
+-                        _predecode(classes[calleeClass], selected[calleeClass][callee]);
+-                    }
++                    if (nativeBinding == 0) _predecode(classes[calleeClass], loadedTarget);
++                    _putSelection(selected, calleeClass, callee, loadedTarget);
+                 }
+                 if (initializationState[calleeClass] == 3) {
+                     nextHandle = _raiseJava(
+@@ -4897,7 +4926,7 @@
+                         continue;
+                     }
+                 }
+-                Selected memory target = selected[calleeClass][callee];
++                Selected memory target = _selectedAt(selected, calleeClass, callee);
+                 if (f.sp < target.argumentCount) revert BytecodeError(3, opPC);
+                 uint256 base = f.sp - target.argumentCount;
+                 for (uint256 i = 0; i < target.argumentCount; ++i) {
+@@ -4998,20 +5027,19 @@
+                     continue;
+                 }
+                 if (selected[calleeClass].length == 0) {
+-                    selected[calleeClass] = new Selected[](classes[calleeClass].methods.length);
++                    selected[calleeClass] = new Selected[][](classes[calleeClass].methods.length);
+                     referenceCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                     fieldCaches[calleeClass] = new uint256[](classes[calleeClass].cp.length);
+                 }
+                 uint8 interfaceStringBinding = _stringNativeBinding(classes[calleeClass], callee);
+-                if (!selected[calleeClass][callee].loaded) {
+-                    selected[calleeClass][callee] = interfaceStringBinding == 0
++                if (!_selectionLoaded(selected, calleeClass, callee)) {
++                    Selected memory loadedTarget = interfaceStringBinding == 0
+                         ? _loadVirtualCallee(classes[calleeClass], callee, opPC, calleeClass)
+                         : _loadStringNativeCallee(classes[calleeClass], callee, opPC, calleeClass);
+-                    if (interfaceStringBinding == 0) {
+-                        _predecode(classes[calleeClass], selected[calleeClass][callee]);
+-                    }
++                    if (interfaceStringBinding == 0) _predecode(classes[calleeClass], loadedTarget);
++                    _putSelection(selected, calleeClass, callee, loadedTarget);
+                 }
+-                Selected memory target = selected[calleeClass][callee];
++                Selected memory target = _selectedAt(selected, calleeClass, callee);
+                 if (!_sameMethodDescriptor(classes[resolved.owner], resolved.method,
+                     classes[calleeClass], callee)) revert CallError(4, opPC);
+                 _guardCanonicalThrowableGetter(

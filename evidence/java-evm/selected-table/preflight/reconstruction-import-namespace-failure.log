@@ -1,0 +1,24 @@
+patching file /home/user/evm-jvm/mc-selected-table-preflight/build/java-diff-mc-owncapacity-selected-patch/selectedvfsassets/VFS0aInterpreter.sol
+patching file /home/user/evm-jvm/mc-selected-table-preflight/build/java-diff-mc-owncapacity-selected-patch/selectedcb0/runtime/CB0ClassCoordinator.sol
+patching file /home/user/evm-jvm/mc-selected-table-preflight/build/java-diff-mc-owncapacity-selected-patch/selectedcb0/runtime/build.js
+patching file /home/user/evm-jvm/mc-selected-table-preflight/build/java-diff-mc-owncapacity-selected-patch/selectedcb0/artifact.go
+patching file /home/user/evm-jvm/mc-selected-table-preflight/build/java-diff-mc-owncapacity-selected-patch/selectedcb0/cb0.go
+patching file /home/user/evm-jvm/mc-selected-table-preflight/build/java-diff-mc-owncapacity-selected-patch/selectedcb0/head.go
+patching file /home/user/evm-jvm/mc-selected-table-preflight/build/java-diff-mc-owncapacity-selected-patch/selectedcb0/session.go
+# github.com/ethereum/go-ethereum/build/java-diff-mc-owncapacity-selected-patch/selectedcb0
+build/java-diff-mc-owncapacity-selected-patch/selectedcb0/artifact.go:15:2: no required module provides package github.com/ethereum/go-ethereum/build/java-diff-mc-capacity-proto-smoke/capacitycb0/runtime; to add it:
+	go get github.com/ethereum/go-ethereum/build/java-diff-mc-capacity-proto-smoke/capacitycb0/runtime
+# github.com/ethereum/go-ethereum/build/java-diff-mc-owncapacity-selected-patch/selectedcb0
+build/java-diff-mc-owncapacity-selected-patch/selectedcb0/cb0.go:10:2: no required module provides package github.com/ethereum/go-ethereum/build/java-diff-mc-capacity-proto-smoke/capacityvfs; to add it:
+	go get github.com/ethereum/go-ethereum/build/java-diff-mc-capacity-proto-smoke/capacityvfs
+FAIL	github.com/ethereum/go-ethereum/build/java-diff-mc-owncapacity-selected-patch/selectedcb0 [setup failed]
+?   	github.com/ethereum/go-ethereum/build/java-diff-mc-owncapacity-selected-patch/selectedvfs	[no test files]
+FAIL
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/mc-selected-table-preflight/evidence/java-evm/selected-table/preflight/reconstruct_selected_copy.py", line 52, in <module>
+    subprocess.run(['go','test','./'+str((out/'selectedvfs').relative_to(root)),'./'+str(c.relative_to(root))],cwd=root,check=True)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['go', 'test', './build/java-diff-mc-owncapacity-selected-patch/selectedvfs', './build/java-diff-mc-owncapacity-selected-patch/selectedcb0']' returned non-zero exit status 1.

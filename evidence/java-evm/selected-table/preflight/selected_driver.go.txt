@@ -1,0 +1,361 @@
+// Generated-only selected-table experiment. __PACKAGE__/__ASSETS__/__DOMAIN__ replaced
+// in a fresh build. Public transport calls; observer API exists ONLY in optimized COPY.
+package main
+
+import (
+	assets "__ASSETS__"
+	cb0 "__PACKAGE__"
+	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/tracing"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/di0"
+	"math/big"
+	"os"
+	"strings"
+	"time"
+)
+
+const domain = "__DOMAIN__"
+
+var owner = common.HexToAddress("0x4341504143495459000000000000000000000001")
+
+const ordinary = uint64(100000000)
+
+var mutations []map[string]interface{}
+
+func must(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+func emit(v interface{}) { b, e := json.MarshalIndent(v, "", "  "); must(e); fmt.Println(string(b)) }
+func pack(ts []string, vs ...interface{}) []byte {
+	var a abi.Arguments
+	for _, s := range ts {
+		t, e := abi.NewType(s, "", nil)
+		must(e)
+		a = append(a, abi.Argument{Type: t})
+	}
+	b, e := a.Pack(vs...)
+	must(e)
+	return b
+}
+func head(s *cb0.Session) cb0.Head { h, e := s.Head(ordinary); must(e); return h }
+func sha(b []byte) string          { x := sha256.Sum256(b); return hex.EncodeToString(x[:]) }
+func receipt(name string, op cb0.Operation, e error) {
+	if e != nil {
+		panic(fmt.Sprintf("%s: %v raw=%x", name, e, op.RevertData))
+	}
+	if op.GasUsed == 0 || op.GasUsed > ordinary || op.StateRoot == (common.Hash{}) {
+		panic("bad published mutation receipt")
+	}
+	mutations = append(mutations, map[string]interface{}{"method": name, "gas": op.GasUsed, "root": op.StateRoot})
+}
+func setupFailure(s *cb0.Session, name string, before cb0.Head, op cb0.Operation, e error) map[string]interface{} {
+	after := head(s)
+	if e == nil || op.StateRoot != (common.Hash{}) || op.CreatedAddress != (common.Address{}) || len(op.Logs) != 0 || before.StateRoot != after.StateRoot {
+		panic("bad setup refusal")
+	}
+	return map[string]interface{}{"command": "setup-refusal", "pid": os.Getpid(), "stage": name, "error": e.Error(), "gas": op.GasUsed, "rawRevert": "0x" + hex.EncodeToString(op.RevertData), "beforeRoot": before.StateRoot, "afterRoot": after.StateRoot, "registeredDecoders": len(after.Decoders), "mutations": mutations}
+}
+func prepare(s *cb0.Session, raw []byte, names []string) (common.Hash, map[string]interface{}) {
+	init, e := s.Initialization()
+	must(e)
+	if !init.EngineInstalled || !init.AS0Creation.Performed {
+		panic("not fresh initial state")
+	}
+	mutations = append(mutations, map[string]interface{}{"method": "initialAS0Create", "gas": init.AS0Creation.GasUsed, "root": init.StateRoot})
+	var op cb0.Operation
+	for off := uint32(0); off < uint32(len(raw)); {
+		end := off + 8192
+		if end > uint32(len(raw)) {
+			end = uint32(len(raw))
+		}
+		page := raw[off:end]
+		pi := crypto.Keccak256Hash(pack([]string{"bytes32", "address", "uint32", "uint32", "bytes32"}, crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), init.AS0Creation.Controller, off/8192, uint32(len(page)), crypto.Keccak256Hash(page)))
+		op, e = s.Append(off, page, pi, ordinary)
+		receipt("append", op, e)
+		off = end
+	}
+	h := head(s)
+	op, e = s.Seal(h.AS0.Cursor, h.AS0.ChainCommitment, ordinary)
+	receipt("seal", op, e)
+	h = head(s)
+	op, e = s.CreateIndex(h.AS0.ContentCommitment, ordinary)
+	receipt("createIndex", op, e)
+	op, e = s.DiscoverIndex(ordinary)
+	receipt("discover", op, e)
+	for h = head(s); h.Index.NextEntry < h.Index.Count; h = head(s) {
+		op, e = s.ScanIndex(h.Index.NextEntry, h.Index.CDCursor, h.Index.Rolling, 64, ordinary)
+		receipt("scan", op, e)
+	}
+	op, e = s.FinishIndex(h.Index.Count, h.Index.CDCursor, h.Index.Rolling, ordinary)
+	receipt("finishIndex", op, e)
+	for slot, n := range names {
+		h = head(s)
+		op, e = s.CreateDecoder(uint8(slot), h.Index.FinalRoot, []byte(n+".class"), ordinary)
+		if e != nil {
+			return common.Hash{}, setupFailure(s, "createDecoder", h, op, e)
+		}
+		receipt("createDecoder", op, e)
+		for h = head(s); h.Decoders[slot].Phase == 1; h = head(s) {
+			op, e = s.StepDecoder(uint8(slot), h.Decoders[slot].Work, 128, ordinary)
+			receipt("decode", op, e)
+		}
+		for h = head(s); h.Decoders[slot].Phase != 4; h = head(s) {
+			op, e = s.PublishDecoder(uint8(slot), h.Decoders[slot].PublishedPages, h.Decoders[slot].PublicationRolling, 1, ordinary)
+			receipt("publish", op, e)
+		}
+	}
+	h = head(s)
+	addr := crypto.CreateAddress(owner, uint64(2+len(h.Decoders)))
+	H := crypto.Keccak256Hash
+	roll := H(pack([]string{"bytes32", "address", "address", "address", "bytes32", "bytes32", "bytes32", "uint8"}, H([]byte(domain+"/package/v1")), addr, owner, init.EngineAddress, init.EngineCodeHash, common.HexToHash("0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37"), common.HexToHash("0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77"), uint8(len(names))))
+	refs := []cb0.ResourceBinding{}
+	var total uint32
+	for i, n := range names {
+		d := h.Decoders[i]
+		rawName := []byte(n + ".class")
+		refs = append(refs, cb0.ResourceBinding{Slot: uint8(i), RawName: rawName, IndexRoot: d.IndexRoot, ResourceRoot: d.FinalRoot})
+		total += d.PlainSize
+		roll = H(pack([]string{"bytes32", "bytes32", "uint8", "address", "bytes32", "bytes32", "bytes32", "uint32"}, H([]byte(domain+"/resource/v1")), roll, uint8(i), d.Address, H(rawName), d.IndexRoot, d.FinalRoot, d.PlainSize))
+	}
+	pkg := H(pack([]string{"bytes32", "bytes32", "uint32", "address", "bytes32"}, H([]byte(domain+"/package/v1")), roll, total, h.Index.Address, h.Index.FinalRoot))
+	op, e = s.CreateCoordinator(common.Hash{}, refs, pkg, ordinary)
+	if e != nil {
+		return common.Hash{}, setupFailure(s, "createCoordinator", h, op, e)
+	}
+	receipt("createCoordinator", op, e)
+	return pkg, nil
+}
+
+type fragment struct {
+	Slot      int    `json:"slot"`
+	Offset    uint32 `json:"offset"`
+	Requested uint32 `json:"requested"`
+	Returned  int    `json:"returned"`
+	Gas       uint64 `json:"gas"`
+	Success   bool   `json:"success"`
+}
+type observer struct {
+	Reads         []fragment `json:"reads"`
+	RootCalls     int        `json:"rootCalls"`
+	MaxEVMSeconds float64    `json:"maxEvmSeconds"`
+	EVMSeconds    float64    `json:"evmSeconds"`
+	Enabled       bool       `json:"enabled"`
+}
+
+func observe(s *cb0.Session, h cb0.Head) *observer {
+	o := &observer{}
+	setter, ok := interface{}(s).(interface{ ParentTrace(*tracing.Hooks) error })
+	if !ok {
+		return o
+	}
+	o.Enabled = true
+	a, e := di0.ABI()
+	must(e)
+	read := a.Methods["read"]
+	slots := map[common.Address]int{}
+	for i, d := range h.Decoders {
+		slots[d.Address] = i
+	}
+	pending := map[int]int{}
+	var began time.Time
+	hooks := &tracing.Hooks{OnEnter: func(depth int, typ byte, from, to common.Address, input []byte, gas uint64, value *big.Int) {
+		if depth == 0 {
+			o.RootCalls++
+			began = time.Now()
+		}
+		slot, yes := slots[to]
+		if !yes || len(input) != 68 || !bytes.Equal(input[:4], read.ID) {
+			return
+		}
+		if from != h.Coordinator.Address {
+			panic("not coordinator class read")
+		}
+		v, e := read.Inputs.Unpack(input[4:])
+		must(e)
+		off := v[0].(uint32)
+		n := v[1].(uint32)
+		pending[depth] = len(o.Reads)
+		o.Reads = append(o.Reads, fragment{Slot: slot, Offset: off, Requested: n})
+	}, OnExit: func(depth int, out []byte, gas uint64, e error, reverted bool) {
+		if depth == 0 {
+			t := time.Since(began).Seconds()
+			o.EVMSeconds += t
+			if t > o.MaxEVMSeconds {
+				o.MaxEVMSeconds = t
+			}
+		}
+		i, yes := pending[depth]
+		if !yes {
+			return
+		}
+		delete(pending, depth)
+		o.Reads[i].Gas = gas
+		o.Reads[i].Success = e == nil && !reverted
+		if e == nil && !reverted {
+			v, x := read.Outputs.Unpack(out)
+			must(x)
+			o.Reads[i].Returned = len(v[0].([]byte))
+		}
+	}}
+	must(setter.ParentTrace(hooks))
+	return o
+}
+func clearTrace(s *cb0.Session) {
+	if x, ok := interface{}(s).(interface{ ParentTrace(*tracing.Hooks) error }); ok {
+		must(x.ParentTrace(nil))
+	}
+}
+func fault(s *cb0.Session, on bool) {
+	x, ok := interface{}(s).(interface{ ParentPublicationFault(bool) error })
+	if !ok {
+		panic("fault fixture requires prototype")
+	}
+	must(x.ParentPublicationFault(on))
+}
+func java(s *cb0.Session, h cb0.Head, mode int32, q, gas uint64, pubFail bool) map[string]interface{} {
+	o := observe(s, h)
+	if pubFail {
+		fault(s, true)
+	}
+	began := time.Now()
+	var r cb0.JavaResult
+	var e error
+	if h.Java.Epoch == 0 {
+		r, e = s.Start(h.Coordinator.PackageRoot, 0, "run", []int32{mode}, q, 4096, gas)
+	} else {
+		cp, x := s.ReadCheckpoint(h.Java.CheckpointRoot)
+		must(x)
+		r, e = s.Resume(h.Coordinator.PackageRoot, h.Java.Epoch, h.Java.CheckpointRoot, cp, q, 4096, gas)
+	}
+	wall := time.Since(began).Seconds()
+	clearTrace(s)
+	if pubFail {
+		fault(s, false)
+	}
+	after := head(s)
+	result := map[string]interface{}{"command": "java", "pid": os.Getpid(), "budget": gas, "quantum": q, "gas": r.GasUsed, "wallSeconds": wall, "trace": o, "beforeRoot": h.StateRoot, "afterRoot": after.StateRoot, "beforeEpoch": h.Java.Epoch, "beforeCheckpointRoot": h.Java.CheckpointRoot, "head": after, "slice": r.Slice, "receiptRoot": r.StateRoot, "rawRevert": "0x" + hex.EncodeToString(r.RevertData), "logs": len(r.Logs), "checkpointBytes": len(r.Checkpoint), "publicationFaultRequested": pubFail}
+	if e != nil {
+		result["error"] = e.Error()
+		if r.Slice.Schema != 0 || r.StateRoot != (common.Hash{}) || len(r.Checkpoint) != 0 || len(r.Logs) != 0 || h.StateRoot != after.StateRoot || h.Java != after.Java {
+			panic("failed call leaked/changed published state")
+		}
+		return result
+	}
+	if crypto.Keccak256Hash(r.Checkpoint) != r.Slice.CheckpointRoot {
+		panic("checkpoint mismatch")
+	}
+	cp, x := s.ReadCheckpoint(r.Slice.CheckpointRoot)
+	must(x)
+	if !bytes.Equal(cp, r.Checkpoint) {
+		panic("published checkpoint differs")
+	}
+	result["checkpointSHA256"] = sha(cp)
+	return result
+}
+func maxargs() {
+	var d struct {
+		ABI      json.RawMessage `json:"abi"`
+		Bytecode string          `json:"bytecode"`
+	}
+	must(json.Unmarshal(assets.Artifact(), &d))
+	a, e := abi.JSON(bytes.NewReader(d.ABI))
+	must(e)
+	n := int(cb0.MaxResources)
+	ads := make([]common.Address, n)
+	names := make([][]byte, n)
+	roots := make([]common.Hash, n)
+	for i := range names {
+		names[i] = append(bytes.Repeat([]byte{byte('A' + i)}, 250), []byte(".class")...)
+		ads[i] = crypto.CreateAddress(owner, uint64(i)+2)
+		roots[i] = crypto.Keccak256Hash(names[i])
+	}
+	b, e := a.Pack("", owner, common.Hash{}, ads, names, roots, roots, common.Hash{})
+	must(e)
+	code, e := hex.DecodeString(strings.TrimPrefix(d.Bytecode, "0x"))
+	must(e)
+	emit(map[string]interface{}{"command": "maxargs", "names": n, "nameBytes": 256, "argumentBytes": len(b), "initBytes": len(code), "completeInitBytes": len(code) + len(b)})
+}
+func main() {
+	cmd := flag.String("command", "setup", "")
+	dir := flag.String("dir", "", "")
+	zipPath := flag.String("zip", "", "")
+	names := flag.String("names", "", "")
+	length := flag.Uint("length", 0, "")
+	mode := flag.Int("mode", 7, "")
+	q := flag.Uint64("quantum", 4096, "")
+	gas := flag.Uint64("gas", ordinary, "")
+	mem := flag.Bool("memory", false, "")
+	pubFail := flag.Bool("publication-failure", false, "")
+	flag.Parse()
+	if *cmd == "maxargs" {
+		maxargs()
+		return
+	}
+	var s *cb0.Session
+	var e error
+	fresh := *cmd == "setup" || *cmd == "warm"
+	if fresh {
+		raw, x := os.ReadFile(*zipPath)
+		must(x)
+		if *mem {
+			s, e = cb0.NewMemory(owner, uint32(len(raw)))
+		} else {
+			s, e = cb0.Open(*dir, owner, uint32(len(raw)))
+		}
+		must(e)
+		defer s.Close()
+		setupTrace := observe(s, cb0.Head{})
+		_, failure := prepare(s, raw, strings.Split(*names, ","))
+		clearTrace(s)
+		if failure != nil {
+			failure["setupTrace"] = setupTrace
+			emit(failure)
+			return
+		}
+		h := head(s)
+		if *cmd == "setup" {
+			emit(map[string]interface{}{"command": "setup", "pid": os.Getpid(), "head": h, "mutations": mutations, "setupTrace": setupTrace})
+			return
+		}
+		r := java(s, h, int32(*mode), *q, *gas, *pubFail)
+		r["mutations"] = mutations
+		r["setupTrace"] = setupTrace
+		r["memory"] = *mem
+		emit(r)
+		return
+	}
+	if *length == 0 || *length > 33554432 {
+		panic("bad immutable archive length")
+	}
+	s, e = cb0.Open(*dir, owner, uint32(*length))
+	must(e)
+	defer s.Close()
+	init, e := s.Initialization()
+	must(e)
+	if init.EngineInstalled || init.AS0Creation.Performed || init.AS0Creation.GasUsed != 0 {
+		panic("reopen installed/created")
+	}
+	h := head(s)
+	if *cmd == "terminal" {
+		cp, x := s.ReadCheckpoint(h.Java.CheckpointRoot)
+		must(x)
+		if crypto.Keccak256Hash(cp) != h.Java.CheckpointRoot {
+			panic("bad reopened checkpoint")
+		}
+		emit(map[string]interface{}{"command": "terminal", "pid": os.Getpid(), "head": h, "checkpointBytes": len(cp), "checkpointSHA256": sha(cp), "initialization": init})
+		return
+	}
+	r := java(s, h, int32(*mode), *q, *gas, *pubFail)
+	r["initialization"] = init
+	emit(r)
+}
