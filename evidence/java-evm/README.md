@@ -81,3 +81,11 @@ explicit nested engine-event amendment, complete549.346s/1202511872B final obser
 and54.842s/351748096B test-only audit delta. Eight actual input-to-terminal processes,
 exact64KiB package, high32MiB input and durable Java317/299 are generated fixtures,
 NOT original Minecraft execution or a general loader. No push follows implicitly.
+
+## Selected-table parent COPY
+
+`selected-table/parent-b55892680/` retains actual worker-order regression, emitted
+unused getter allocations, both parent repairs, fresh331.597450s/874287104B gate,
+source/debug/driver/fixtures/receipts/opaque checkpoints. Dense ordinary progress
+and broad alias/persistence evidence are generated-only, not8/256KiB promotion,
+MR0 acceptance or original Minecraft execution. See parent Selected preflight.

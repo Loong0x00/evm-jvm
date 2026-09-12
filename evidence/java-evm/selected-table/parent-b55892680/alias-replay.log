@@ -1,0 +1,94 @@
+{
+  "distinctProcesses": 524,
+  "javaCalls": 504,
+  "classBytes": 3247,
+  "oracle": {
+    "7": "R:525",
+    "19": "R:561",
+    "99": "X:java.lang.RuntimeException"
+  },
+  "cases": {
+    "('baseline', 7, 4096)": {
+      "slices": 1,
+      "maxGas": 15436349,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "73866251b9b24502cc43c9cca095978ca7b04eae592cf05b88d75914550c962c"
+    },
+    "('baseline', 7, 7)": {
+      "slices": 31,
+      "maxGas": 10466623,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "73866251b9b24502cc43c9cca095978ca7b04eae592cf05b88d75914550c962c"
+    },
+    "('baseline', 7, 1)": {
+      "slices": 214,
+      "maxGas": 10181476,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "73866251b9b24502cc43c9cca095978ca7b04eae592cf05b88d75914550c962c"
+    },
+    "('baseline', 19, 4096)": {
+      "slices": 1,
+      "maxGas": 15436349,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "9b601fc9a32a0b9c000c9f8186a1ffc6b5d8bc6b53f8c1abd853ef976bc6a1d8"
+    },
+    "('baseline', 99, 7)": {
+      "slices": 5,
+      "maxGas": 7590136,
+      "jvm": 28,
+      "internal": 6,
+      "opaquePayloadSHA256": "f46c96d3dc7b01f18782aeb6dcac20abac8667e841c41662f84966cd46e2687f"
+    },
+    "('optimized', 7, 4096)": {
+      "slices": 1,
+      "maxGas": 16383517,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "73866251b9b24502cc43c9cca095978ca7b04eae592cf05b88d75914550c962c"
+    },
+    "('optimized', 7, 7)": {
+      "slices": 31,
+      "maxGas": 10438322,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "73866251b9b24502cc43c9cca095978ca7b04eae592cf05b88d75914550c962c"
+    },
+    "('optimized', 7, 1)": {
+      "slices": 214,
+      "maxGas": 10147915,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "73866251b9b24502cc43c9cca095978ca7b04eae592cf05b88d75914550c962c"
+    },
+    "('optimized', 19, 4096)": {
+      "slices": 1,
+      "maxGas": 16383517,
+      "jvm": 214,
+      "internal": 16,
+      "opaquePayloadSHA256": "9b601fc9a32a0b9c000c9f8186a1ffc6b5d8bc6b53f8c1abd853ef976bc6a1d8"
+    },
+    "('optimized', 99, 7)": {
+      "slices": 5,
+      "maxGas": 7597833,
+      "jvm": 28,
+      "internal": 6,
+      "opaquePayloadSHA256": "f46c96d3dc7b01f18782aeb6dcac20abac8667e841c41662f84966cd46e2687f"
+    }
+  },
+  "aliasCoverage": [
+    "32 unselected methods",
+    "distinct selected signatures/long args and result",
+    "clinit",
+    "constructors/super/private special",
+    "virtual/interface/default",
+    "separate repeated Arithmetic/NPE/Runtime handler caches",
+    "caught athrow",
+    "uncaught RuntimeException",
+    "String.equals native",
+    "fresh process restore"
+  ]
+}

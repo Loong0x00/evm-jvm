@@ -1,5 +1,13 @@
 # Continuous JVM-in-EVM program
 
+LATEST SELECTED COPY: parent independently verified JAVA_EVM_MC_SELECTED_TABLE_PARENT_PREFLIGHT.md.
+Restored actual root refusal precedence and removed compiler-discarded736B getter
+allocations. Fresh331.597450s/874287104B gate; dense181969B now63485032 ordinary gas,
+20Java/direct1/q1=20/q7=3. Alias524process/504calls, same-quantum opaque payloads
+identical to baseline; Selected allocations dense5111→10. Accepted4/65536 unchanged,
+no MR0 merge/originalJava/Minecraft/push. MR0 repaired worker a2efa63fa awaits parent
+independent review/rebuild/replay, not accepted from worker completion.
+
 ## Current dependency milestone
 DI0 accepted within its bounded resource profile: JAVA_EVM_MC_DI0_REVIEW.md.
 Parent final253.599s/491962368B combined16-group gate passed. Genuine EVM ZIP

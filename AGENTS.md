@@ -6,6 +6,14 @@ parent rebuild/replay/acceptance, not worker completion. Max2 disjoint workers,
 one Solidity writer; noFast/priority/settings/push. PreviousSol descriptions below
 are historical scopes, not permission to override the current default.
 
+LATEST SELECTED COPY: parent independently verified JAVA_EVM_MC_SELECTED_TABLE_PARENT_PREFLIGHT.md.
+Restored actual root refusal precedence and removed compiler-discarded736B getter
+allocations. Fresh331.597450s/874287104B gate; dense181969B now63485032 ordinary gas,
+20Java/direct1/q1=20/q7=3. Alias524process/504calls, same-quantum opaque payloads
+identical to baseline; Selected allocations dense5111→10. Accepted4/65536 unchanged,
+no MR0 merge/originalJava/Minecraft/push. MR0 repaired worker a2efa63fa awaits parent
+independent review/rebuild/replay, not accepted from worker completion.
+
 CURRENT SHARED WORLD: parent salvaged interrupted uncommitted drafts (not credited
 worker result) and independently completed generated two-class shared-world proof,
 NOreflection/privateSession. Actual cross-class init/call results317/299,36Java/5
