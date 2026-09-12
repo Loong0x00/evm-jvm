@@ -1,0 +1,18 @@
+$ go test ./jvmevm/localcontinuation/cb0
+--- FAIL: TestCB0ArtifactValidationPinsComputedRuntimeKeccak (0.00s)
+    artifact_validation_test.go:20: runtime hash=0x0377ea7221ada38bbc85344b0ee8fc057774040c92b3995981cbe7ada316aebc want 0x0000000000000000000000000000000000000000000000000000000000000000
+--- FAIL: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange (0.00s)
+    --- FAIL: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/binding_output_name (0.00s)
+        artifact_validation_test.go:84: changed output ABI was accepted
+    --- FAIL: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/start_output_type (0.00s)
+        artifact_validation_test.go:84: changed output ABI was accepted
+--- FAIL: TestCB0HeadValidationRejectsCopiedStateShape (0.01s)
+    --- FAIL: TestCB0HeadValidationRejectsCopiedStateShape/fixed_engine_code_pin (0.00s)
+        head_validation_test.go:68: invalid copied shape accepted: <nil>
+FAIL
+FAIL	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0	0.025s
+FAIL
+
+real	0m0.373s
+user	0m0.901s
+sys	0m0.136s

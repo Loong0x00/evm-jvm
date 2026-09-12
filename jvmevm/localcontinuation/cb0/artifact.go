@@ -24,7 +24,7 @@ const (
 	cb0RuntimeSHA256  = "c4f72b172b43eff872a73a3c35663a1d3580937df3ae41375931b04007f953bb"
 	cb0ABISHA256      = "24167399ecaf9269c33414693f4d915ecd4a30acd1413ea0cd834a4380eb92d0"
 	cb0LayoutSHA256   = "8119393c6cef7af91a63b701db3298014a3770f464b2d413a08067e2241fb326"
-	cb0RuntimeKeccak  = "" // populated by the code pin below rather than artifact assertions.
+	cb0RuntimeKeccak  = "0377ea7221ada38bbc85344b0ee8fc057774040c92b3995981cbe7ada316aebc"
 )
 
 var (
@@ -136,6 +136,9 @@ func cb0ValidateArtifact(raw []byte) (cb0Loaded, error) {
 		return cb0Loaded{}, errors.New("cb0: coordinator code hash or frozen size differs")
 	}
 	runHash := crypto.Keccak256Hash(run)
+	if runHash != common.HexToHash("0x"+cb0RuntimeKeccak) {
+		return cb0Loaded{}, errors.New("cb0: computed runtime Keccak pin differs")
+	}
 	if d.CodeHashes.BytecodeSHA256 != cb0InitSHA256 || d.CodeHashes.DeployedSHA256 != cb0RuntimeSHA256 || d.CodeHashes.DeployedKeccak256 != strings.TrimPrefix(runHash.Hex(), "0x") {
 		return cb0Loaded{}, errors.New("cb0: artifact code hash fields differ")
 	}
@@ -216,32 +219,51 @@ func cb0ValidateABI(a abi.ABI) error {
 	if a.HasFallback() || a.HasReceive() || len(a.Events) != 0 {
 		return errors.New("cb0: ABI has forbidden surface")
 	}
-	want := map[string]struct{ sig, mut string }{
-		"owner": {"owner()", "view"}, "finalIndex": {"finalIndex()", "view"}, "finalIndexRoot": {"finalIndexRoot()", "view"}, "packageRoot": {"packageRoot()", "view"}, "instanceId": {"instanceId()", "view"}, "totalClassBytes": {"totalClassBytes()", "view"}, "classCount": {"classCount()", "view"}, "classBinding": {"classBinding(uint8)", "view"},
-		"start": {"start(bytes32,uint8,string,int32[],uint64,uint32)", "nonpayable"}, "resume": {"resume(bytes32,uint64,bytes32,bytes,uint64,uint32)", "nonpayable"},
+	type methodShape struct {
+		sig, mut                             string
+		inNames, inTypes, outNames, outTypes []string
+	}
+	want := map[string]methodShape{
+		"owner":           {"owner()", "view", nil, nil, []string{""}, []string{"address"}},
+		"finalIndex":      {"finalIndex()", "view", nil, nil, []string{""}, []string{"address"}},
+		"finalIndexRoot":  {"finalIndexRoot()", "view", nil, nil, []string{""}, []string{"bytes32"}},
+		"packageRoot":     {"packageRoot()", "view", nil, nil, []string{""}, []string{"bytes32"}},
+		"instanceId":      {"instanceId()", "view", nil, nil, []string{""}, []string{"bytes32"}},
+		"totalClassBytes": {"totalClassBytes()", "view", nil, nil, []string{""}, []string{"uint32"}},
+		"classCount":      {"classCount()", "view", nil, nil, []string{""}, []string{"uint8"}},
+		"classBinding":    {"classBinding(uint8)", "view", []string{"at"}, []string{"uint8"}, []string{"decoder", "rawName", "resourceRoot", "classSize"}, []string{"address", "bytes", "bytes32", "uint32"}},
+		"start":           {"start(bytes32,uint8,string,int32[],uint64,uint32)", "nonpayable", []string{"assertedPackageRoot", "entryAt", "entry", "args", "maxJvmSteps", "maxInternalSteps"}, []string{"bytes32", "uint8", "string", "int32[]", "uint64", "uint32"}, []string{"engineReturn"}, []string{"bytes"}},
+		"resume":          {"resume(bytes32,uint64,bytes32,bytes,uint64,uint32)", "nonpayable", []string{"assertedPackageRoot", "expectedEpoch", "expectedCheckpointRoot", "checkpoint", "maxJvmSteps", "maxInternalSteps"}, []string{"bytes32", "uint64", "bytes32", "bytes", "uint64", "uint32"}, []string{"engineReturn"}, []string{"bytes"}},
 	}
 	if len(a.Methods) != len(want) {
 		return errors.New("cb0: ABI method count differs")
 	}
-	for n, w := range want {
-		m, ok := a.Methods[n]
-		if !ok || m.RawName != n || m.Sig != w.sig || m.StateMutability != w.mut {
-			return fmt.Errorf("cb0: ABI method %s differs", n)
+	for name, shape := range want {
+		m, ok := a.Methods[name]
+		if !ok || m.RawName != name || m.Sig != shape.sig || m.StateMutability != shape.mut || !cb0ABIArguments(m.Inputs, shape.inNames, shape.inTypes) || !cb0ABIArguments(m.Outputs, shape.outNames, shape.outTypes) {
+			return fmt.Errorf("cb0: ABI method %s differs", name)
 		}
 	}
-	if len(a.Constructor.Inputs) != 7 || a.Constructor.StateMutability != "nonpayable" {
+	constructorNames := []string{"fixedOwner", "fixedInstanceSalt", "fixedDecoders", "fixedRawNames", "assertedIndexRoots", "assertedResourceRoots", "assertedPackageRoot"}
+	constructorTypes := []string{"address", "bytes32", "address[]", "bytes[]", "bytes32[]", "bytes32[]", "bytes32"}
+	if a.Constructor.StateMutability != "nonpayable" || !cb0ABIArguments(a.Constructor.Inputs, constructorNames, constructorTypes) || len(a.Constructor.Outputs) != 0 {
 		return errors.New("cb0: constructor differs")
 	}
-	names := []string{"fixedOwner", "fixedInstanceSalt", "fixedDecoders", "fixedRawNames", "assertedIndexRoots", "assertedResourceRoots", "assertedPackageRoot"}
-	types := []string{"address", "bytes32", "address[]", "bytes[]", "bytes32[]", "bytes32[]", "bytes32"}
-	for i, in := range a.Constructor.Inputs {
-		if in.Name != names[i] || in.Type.String() != types[i] {
-			return errors.New("cb0: constructor argument differs")
-		}
-	}
 	e, ok := a.Errors["CB0Error"]
-	if !ok || len(a.Errors) != 1 || e.Sig != "CB0Error(uint256)" {
+	if !ok || len(a.Errors) != 1 || e.Name != "CB0Error" || e.Sig != "CB0Error(uint256)" || !cb0ABIArguments(e.Inputs, []string{"code"}, []string{"uint256"}) {
 		return errors.New("cb0: error surface differs")
 	}
 	return nil
+}
+
+func cb0ABIArguments(got abi.Arguments, names, types []string) bool {
+	if len(got) != len(names) || len(got) != len(types) {
+		return false
+	}
+	for i, arg := range got {
+		if arg.Name != names[i] || arg.Type.String() != types[i] {
+			return false
+		}
+	}
+	return true
 }
