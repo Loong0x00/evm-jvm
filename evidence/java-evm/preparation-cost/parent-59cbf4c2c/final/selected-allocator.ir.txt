@@ -1,0 +1,55 @@
+function allocate_and_zero_memory_struct_struct_Selected() -> memPtr
+            {
+                /// @src 0:13640:13644  "4096"
+                let memPtr_1 := /** @src 0:344:508660  "contract VFS0aInterpreter {..." */ mload(64)
+                /// @src 0:13640:13644  "4096"
+                let newFreePtr := add(memPtr_1, /** @src 0:344:508660  "contract VFS0aInterpreter {..." */ 736)
+                /// @src 0:13640:13644  "4096"
+                if or(gt(newFreePtr, 0xffffffffffffffff), lt(newFreePtr, memPtr_1))
+                {
+                    mstore(/** @src -1:-1:-1 */ 0, /** @src 0:13640:13644  "4096" */ shl(224, 0x4e487b71))
+                    mstore(4, 0x41)
+                    revert(/** @src -1:-1:-1 */ 0, /** @src 0:13640:13644  "4096" */ 0x24)
+                }
+                mstore(/** @src 0:344:508660  "contract VFS0aInterpreter {..." */ 64, /** @src 0:13640:13644  "4096" */ newFreePtr)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                memPtr := memPtr_1
+                mstore(memPtr_1, /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 32), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 64), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 96), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 128), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 160), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 192), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 224), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 256), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 288), 96)
+                mstore(add(memPtr_1, 320), 96)
+                mstore(add(memPtr_1, 352), 96)
+                mstore(add(memPtr_1, 384), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 416), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 448), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 480), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 512), 96)
+                mstore(add(memPtr_1, 544), 96)
+                mstore(add(memPtr_1, 576), 96)
+                mstore(add(memPtr_1, 608), 96)
+                mstore(add(memPtr_1, 640), 96)
+                mstore(add(memPtr_1, 672), /** @src -1:-1:-1 */ 0)
+                /// @src 0:344:508660  "contract VFS0aInterpreter {..."
+                mstore(add(memPtr_1, 704), /** @src -1:-1:-1 */ 0)
+            }
+            /// @src 0:344:508660  "contract VFS0aInterpreter {..."

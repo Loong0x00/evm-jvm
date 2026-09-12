@@ -1,0 +1,52 @@
+patching file /home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/capacityvfsassets/VFS0aInterpreter.sol
+patching file /home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/capacitycb0/runtime/CB0ClassCoordinator.sol
+patching file /home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/capacitycb0/runtime/build.js
+patching file /home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/capacitycb0/artifact.go
+patching file /home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/capacitycb0/cb0.go
+patching file /home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/capacitycb0/head.go
+patching file /home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/capacitycb0/session.go
+{
+  "experimentalGoRepair": "VM instance cache domain matches actual coordinator",
+  "constructorBytesToMeasure": 3680,
+  "experimentalObserver": "read-only EVM hooks, no effects on guest data/gas",
+  "fault": "COPY-only after actual trie/code sync, never accepted API"
+}
+verified 12 fixtures
+/home/user/evm-jvm/geth/build/java-diff-mc-capacity-cost-parent-59cbf4c2c/fixtures
+{
+  "padded262144": {
+    "gas": 7879725,
+    "error": null,
+    "root": "0x516bb11e7eca4b98ed4ad2e2d8dccb023761c8d9acb58aca73d4f174aa803110"
+  },
+  "bigMethodRich": {
+    "gas": 48451006,
+    "error": null,
+    "root": "0x735adef6abd7429d2356c468267ebcd0f759c777c6bb517a7bc63d6dd1f836b5"
+  },
+  "density181969": {
+    "gas": 74874471,
+    "error": "cb0: EVM coordinator start failed: execution reverted (revert_data=0xf15d73430000000000000000000000000000000000000000000000000000000000000007)",
+    "root": "0x569d62aab274908fa724a2076adcfeab380bf87a650cebc740711f572db26c7a"
+  },
+  "density181969-boundary": {
+    "gas": 124505990,
+    "error": null,
+    "root": "0xa4870df70484f9fa182ea3ca830650840352854442adb8cbd7d7f3df2d84e797"
+  },
+  "density-q1-first": {
+    "gas": 50952310,
+    "error": null,
+    "root": "0xf95d19f2a22caac974742638a93ff6bbefae136f3d973fe96a4901a5d92fa1f7"
+  },
+  "density-q1-refusal": {
+    "gas": 77090888,
+    "error": "cb0: EVM coordinator resume failed: execution reverted (revert_data=0xf15d73430000000000000000000000000000000000000000000000000000000000000007)",
+    "root": "0xf95d19f2a22caac974742638a93ff6bbefae136f3d973fe96a4901a5d92fa1f7"
+  },
+  "density-q1-boundary-resume": {
+    "gas": 127622437,
+    "error": null,
+    "root": "0xd3b096216528a3c2a46609c91ea414478a4b0db573afdb8e97922ee9f3e9de3b"
+  }
+}

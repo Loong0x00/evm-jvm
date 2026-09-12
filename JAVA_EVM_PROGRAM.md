@@ -20,7 +20,10 @@ semantics and eager-preloaded controls. DISPOSABLE8/256KiB capacity experiment n
 JAVA_EVM_MC_CAPACITY_BASELINE_PARENT_PREFLIGHT.md,264.469s/865628160B. One90874B
 dense class works ordinary; two dense classes181969B fail ordinary reserve even
 afterq1epoch1, though explicit1Bboundary works. Next isolate preparation/continuation
-cost and preserve separate launcher/JAR origins without repacking the official JAR. Demand loading not implemented.
+cost now quantified by compiler-helper/memory observations: Selected per-method
+allocation is the next COPY-only target, not a broad cache rewrite. See
+JAVA_EVM_MC_PREPARATION_COST_PARENT_PREFLIGHT.md. Direct-main MR0 was chosen for
+origin preservation; candidate compilation is NOT EVM/persistence acceptance. Demand loading not implemented.
 DefaultTerra/high, independent gates, no silent entry/loader/quota expansion.
 Latest user cancelled the pause: continue after dependency gates, no implicit push. DI0-only256KiB
 is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.

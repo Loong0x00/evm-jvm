@@ -1,0 +1,19 @@
+// Read-only diagnostic helpers inserted into the COPY replay driver.
+func memoryObservation(v *pcCost,o *observer,k string,op byte,cost uint64,scope tracing.OpContext){
+ mem:=scope.MemoryData();old:=uint64(len(mem));if old>v.MemoryBeforeMax{v.MemoryBeforeMax=old}
+ st:=scope.StackData();word:=func(n int)uint64{if len(st)<=n||!st[len(st)-1-n].IsUint64(){panic("nonbounded diagnostic memory argument")};return st[len(st)-1-n].Uint64()}
+ end:=old;touch:=func(off,n uint64){if n==0{return};if off>1<<32||n>1<<32{panic("memory diagnostic cap")};if off+n>end{end=off+n}}
+ switch op {
+ case 0x51,0x52:touch(word(0),32)
+ case 0x53:touch(word(0),1)
+ case 0x37,0x39,0x3e:touch(word(0),word(2))
+ case 0x5e:touch(word(0),word(2));touch(word(1),word(2))
+ case 0x20,0xf3,0xfd:touch(word(0),word(1))
+ }
+ if end>old{a,b:=(old+31)/32,(end+31)/32;mg:=3*(b-a)+(b*b)/512-(a*a)/512;if mg>cost{panic("memory cost exceeds opcode cost")};v.MemoryGrowthGas+=mg;v.MemoryGrowthBytes+=(b-a)*32}
+ if op==0x52&&word(0)==64 {
+  next:=word(1);var prior uint64
+  if len(mem)>=96 {for _,b:=range mem[64:88]{if b!=0{panic("wide free memory pointer")}};prior=binary.BigEndian.Uint64(mem[88:96])}
+  if next>prior {v.FreePointerIncrease+=next-prior;v.FreePointerWrites++;o.AllocationSizes[fmt.Sprintf("%s/%d",scope.Address().Hex(),next-prior)]++} else if next<prior {v.FreePointerRewinds++}
+ }
+}

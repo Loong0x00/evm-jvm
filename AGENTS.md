@@ -29,8 +29,13 @@ proven uniquely necessary. DISPOSABLE8/256KiB baseline now parent-verified: JAVA
 24worlds/94processes/566DI0reads pass, including5/6/8 and262144/+1. BUT181969B dense
 3-class package hitsordinaryLC0Control7; q1epoch1survivesresume refusal,1BBOUNDARY
 only direct/resume124505990/127622437gas. No broadfeasibility/profilepromotion. Next
-cost attribution and origin-preserving launch design; all ACCEPTED quotas and
-engine/CB0/core unchanged, no original Java/MC execution.
+cost attribution now parent-verified: JAVA_EVM_MC_PREPARATION_COST_PARENT_PREFLIGHT.md.
+DebugIR/entries/freepointer reveal736B Selected per method,5111allocations and
+68.26M VFS memory-expansion gas in dense1B direct. No optimization yet. Next
+COPY-only Selected-table lazy allocation per JAVA_EVM_MC_SELECTED_TABLE_PREPARATION.md.
+MR0direct-main candidate compiles ONLY and needs realtransport/EVMgates; source
+review flags name-only overload selection and overrestrictive local0validation.
+All ACCEPTED quotas and engine/CB0/core unchanged, no original Java/MC execution.
 
 CURRENT BRIDGE FRONTIER: worker e3f45ec22 integrated5ce5ffe37; parent independently
 replayed generated EVMZIP->DI0->VFS0a->Javabytecode results76/203. NOT production

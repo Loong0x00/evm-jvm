@@ -1,6 +1,8 @@
 # Preparation-cost attribution preflight (COPY-only)
 
-**Status: measurement draft; not an acceptance or optimization.** This is a bounded
+**Original worker measurement draft, retained below.** Parent verified/further
+resolved allocation costs in JAVA_EVM_MC_PREPARATION_COST_PARENT_PREFLIGHT.md.
+Named bucket0 does not itself exclude semantic phases; no optimization/acceptance. This is a bounded
 COPY of the capacity-baseline prototype at `ea1fa2c8a`. Accepted CB0 remains four
 classes / 65536 bytes. The COPY-only 8 / 262144-byte transport is not promoted.
 
