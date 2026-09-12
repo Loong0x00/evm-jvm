@@ -1,0 +1,14 @@
+2026-03-12 initial driver attempt (preserved refusal)
+
+The first local driver draft used an incorrect DI0 runtime Keccak in its CB0
+package assertion. Setup reached the accepted EVM coordinator and was refused:
+
+panic: cb0: EVM coordinator constructor failed: execution reverted
+(revert_data=0x27cad6590000000000000000000000000000000000000000000000000000000000000010)
+
+CB0Error(16) is the frozen package-assertion refusal. This was not treated as
+success, not retried with a changed engine/profile/quota, and no EVM/JVM source
+was modified. The replay driver now uses the accepted DI0 pin
+946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37
+from jvmevm/localcontinuation/cb0/artifact.go and the accepted ZI0 pin.
+The corrected generated-only run is final-report.json.

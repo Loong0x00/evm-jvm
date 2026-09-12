@@ -1,0 +1,216 @@
+{
+  "assertions": [
+    "opaque ZIP uploaded through public cb0 APIs",
+    "EVM-derived frozen-domain package assertion",
+    "all runtime class reads are CB0 FINAL DI0 reads",
+    "persistent q1 start/resume/terminal used 54 distinct processes without reinstall",
+    "direct/q7/q1 roots agree for mode1"
+  ],
+  "fixture": {
+    "files": {
+      "Launcher.class": "79fe25bc64186f44075795855b74f63fb7541bd2750db7dbc058c69473ba5f3a",
+      "TargetMain.class": "8059aa62a849d7b01b3fd1fc98dcd5b702fb35f91e766abc21e19c42994a4605",
+      "main-entry-generated.zip": "4eae36f7769eee73ea7c6646d85995cdf3e087e8d9e624989d13ef2af256f928"
+    },
+    "java": "openjdk version \"1.8.0_504\"",
+    "javac": "javac 1.8.0_504",
+    "oracle": "0:R:341\n1:R:381\n2:R:351\n3:X:java.lang.NullPointerException\n"
+  },
+  "gas": "Every recorded Java Start/Resume call is <= ordinary 100000000 gas; no 1B boundary calls were used.",
+  "mode1": {
+    "mode1-direct": {
+      "final": {
+        "as0ContentRoot": "0x24f4791f35148d370d8a527c18554dfcc671f343818f9ea0bf64a76e3a671e42",
+        "checkpointRoot": "0xc93c408a30ceb5e0dc12628cde31ec7d4408275c963c9a731eace80515046c92",
+        "checkpointSHA256": "46947614d65680d3dd73a8687f968fff15b3003f16268949fd3d85a49b2bbe0f",
+        "command": "slice",
+        "decoderRoots": [
+          "0x82fb30dd80d26062742f6e54ff6de1cf51a714d41329bc1df9d0131831372869",
+          "0x91c53eec8c6057275d2b68c98eb7c1d261ce142d66a9c4edec36dc331245e81d"
+        ],
+        "epoch": 1,
+        "gasUsed": 8363235,
+        "indexRoot": "0xe88aad7b64d18466bafe968307e2817f3e41b0c420aaece30fd3d2e3ba023c86",
+        "javaKind": 0,
+        "lifecycle": 2,
+        "machineRoot": "0x7d35e3c2002de0511415cc74f8d1dac44bf9f8b40da2fe86905787bacd2b62a3",
+        "nestedEngineLogs": 1,
+        "packageRoot": "0x9ac1aa2e0f1b35ac1acbc1ea39ec478aac6a91ff95a25a34363394ba683ebaa1",
+        "pid": 696171,
+        "reopenedEngineInstalled": false,
+        "result": 381,
+        "stateRoot": "0x9c9cf2131a9e2f0b1c1ed481e51533d427b1c864ec20d4c41634cf9ef72b8cf6",
+        "totalInternalSteps": 4,
+        "totalJvmSteps": 54,
+        "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+      },
+      "gasMax": 8363235,
+      "gasMin": 8363235,
+      "gasSum": 8363235,
+      "ordinaryGasCap": 100000000,
+      "slices": 1
+    },
+    "mode1-q1": {
+      "final": {
+        "as0ContentRoot": "0x24f4791f35148d370d8a527c18554dfcc671f343818f9ea0bf64a76e3a671e42",
+        "checkpointRoot": "0x03d49986e5261982afdf43b56a3cca45e52c12404dc39b5e28c9276e1522a0e6",
+        "checkpointSHA256": "d4cf7c4ea63cd04794ee9b354d453566267eb2c52be9d7bca952e1db56270ce5",
+        "command": "slice",
+        "decoderRoots": [
+          "0x82fb30dd80d26062742f6e54ff6de1cf51a714d41329bc1df9d0131831372869",
+          "0x91c53eec8c6057275d2b68c98eb7c1d261ce142d66a9c4edec36dc331245e81d"
+        ],
+        "epoch": 54,
+        "gasUsed": 7983840,
+        "indexRoot": "0xe88aad7b64d18466bafe968307e2817f3e41b0c420aaece30fd3d2e3ba023c86",
+        "javaKind": 0,
+        "lifecycle": 2,
+        "machineRoot": "0x7d35e3c2002de0511415cc74f8d1dac44bf9f8b40da2fe86905787bacd2b62a3",
+        "nestedEngineLogs": 1,
+        "packageRoot": "0x9ac1aa2e0f1b35ac1acbc1ea39ec478aac6a91ff95a25a34363394ba683ebaa1",
+        "pid": 697581,
+        "reopenedEngineInstalled": false,
+        "result": 381,
+        "stateRoot": "0x4d02519e3d7a04b21aad67720a12f12144a3ed1445db1d3c3daf9b80d94ffb49",
+        "totalInternalSteps": 4,
+        "totalJvmSteps": 54,
+        "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+      },
+      "gasMax": 8340874,
+      "gasMin": 3470936,
+      "gasSum": 391473862,
+      "ordinaryGasCap": 100000000,
+      "slices": 54
+    },
+    "mode1-q7": {
+      "final": {
+        "as0ContentRoot": "0x24f4791f35148d370d8a527c18554dfcc671f343818f9ea0bf64a76e3a671e42",
+        "checkpointRoot": "0xf09109711b84a51a3d77e28700e6d3bb787db96c29d9c00c4ebf291a51bbd41b",
+        "checkpointSHA256": "9fe17e92fbb3ed32150520fc3f3218bac7dc70e4f4fcf906154a381b3f26f61c",
+        "command": "slice",
+        "decoderRoots": [
+          "0x82fb30dd80d26062742f6e54ff6de1cf51a714d41329bc1df9d0131831372869",
+          "0x91c53eec8c6057275d2b68c98eb7c1d261ce142d66a9c4edec36dc331245e81d"
+        ],
+        "epoch": 8,
+        "gasUsed": 8274042,
+        "indexRoot": "0xe88aad7b64d18466bafe968307e2817f3e41b0c420aaece30fd3d2e3ba023c86",
+        "javaKind": 0,
+        "lifecycle": 2,
+        "machineRoot": "0x7d35e3c2002de0511415cc74f8d1dac44bf9f8b40da2fe86905787bacd2b62a3",
+        "nestedEngineLogs": 1,
+        "packageRoot": "0x9ac1aa2e0f1b35ac1acbc1ea39ec478aac6a91ff95a25a34363394ba683ebaa1",
+        "pid": 696390,
+        "reopenedEngineInstalled": false,
+        "result": 381,
+        "stateRoot": "0x2f0402535503da123f35b11f60604ddf7a6714a501ebef28dec48508a239fd81",
+        "totalInternalSteps": 4,
+        "totalJvmSteps": 54,
+        "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+      },
+      "gasMax": 8428965,
+      "gasMin": 5319420,
+      "gasSum": 61113723,
+      "ordinaryGasCap": 100000000,
+      "slices": 8
+    }
+  },
+  "other": {
+    "mode0-direct": {
+      "final": {
+        "as0ContentRoot": "0x24f4791f35148d370d8a527c18554dfcc671f343818f9ea0bf64a76e3a671e42",
+        "checkpointRoot": "0xb7e1f6aedf6306eaea4ec07c9f8d748d5ff2bdbc97df5107ce34005e54b32bac",
+        "checkpointSHA256": "dc49d98bd351f2267e510b83054c889df602d1bfcdcdfdaf188426b2495e5c4d",
+        "command": "slice",
+        "decoderRoots": [
+          "0x82fb30dd80d26062742f6e54ff6de1cf51a714d41329bc1df9d0131831372869",
+          "0x91c53eec8c6057275d2b68c98eb7c1d261ce142d66a9c4edec36dc331245e81d"
+        ],
+        "epoch": 1,
+        "gasUsed": 6312798,
+        "indexRoot": "0xe88aad7b64d18466bafe968307e2817f3e41b0c420aaece30fd3d2e3ba023c86",
+        "javaKind": 0,
+        "lifecycle": 2,
+        "machineRoot": "0x17a3b18033a55d37006c3d730025b90edc2469129215ffdedab5138dc6821469",
+        "nestedEngineLogs": 1,
+        "packageRoot": "0x9ac1aa2e0f1b35ac1acbc1ea39ec478aac6a91ff95a25a34363394ba683ebaa1",
+        "pid": 697650,
+        "reopenedEngineInstalled": false,
+        "result": 341,
+        "stateRoot": "0x31e3841c34e12a5bd2608ef4e42cb0a8a0da01f6b9386d76f03a1f8cc7aeb66e",
+        "totalInternalSteps": 4,
+        "totalJvmSteps": 24,
+        "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+      },
+      "gasMax": 6312798,
+      "gasMin": 6312798,
+      "gasSum": 6312798,
+      "ordinaryGasCap": 100000000,
+      "slices": 1
+    },
+    "mode2-direct": {
+      "final": {
+        "as0ContentRoot": "0x24f4791f35148d370d8a527c18554dfcc671f343818f9ea0bf64a76e3a671e42",
+        "checkpointRoot": "0x3b6fa3e01385864e2fb0a91747d5a771405b94ece39ac93281aa8599129366ba",
+        "checkpointSHA256": "f80bf4a0bcd1f839cb5b898ea3a05da6678144a69167fb2d93af7589874f2afc",
+        "command": "slice",
+        "decoderRoots": [
+          "0x82fb30dd80d26062742f6e54ff6de1cf51a714d41329bc1df9d0131831372869",
+          "0x91c53eec8c6057275d2b68c98eb7c1d261ce142d66a9c4edec36dc331245e81d"
+        ],
+        "epoch": 1,
+        "gasUsed": 8356038,
+        "indexRoot": "0xe88aad7b64d18466bafe968307e2817f3e41b0c420aaece30fd3d2e3ba023c86",
+        "javaKind": 0,
+        "lifecycle": 2,
+        "machineRoot": "0xf9494cd0da19d511c5184e0c9a7b8904c252471baabbce25e3a71d6b756de819",
+        "nestedEngineLogs": 1,
+        "packageRoot": "0x9ac1aa2e0f1b35ac1acbc1ea39ec478aac6a91ff95a25a34363394ba683ebaa1",
+        "pid": 697708,
+        "reopenedEngineInstalled": false,
+        "result": 351,
+        "stateRoot": "0xb86e321eb36407a4620ceab3d794bf5307b663a399c7fbb2bc933377c4567126",
+        "totalInternalSteps": 4,
+        "totalJvmSteps": 57,
+        "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+      },
+      "gasMax": 8356038,
+      "gasMin": 8356038,
+      "gasSum": 8356038,
+      "ordinaryGasCap": 100000000,
+      "slices": 1
+    },
+    "mode3-null": {
+      "final": {
+        "as0ContentRoot": "0x24f4791f35148d370d8a527c18554dfcc671f343818f9ea0bf64a76e3a671e42",
+        "checkpointRoot": "0xa3c4a731f401560246f67740ee4cb3d046d8d2badf66b647c838ad91e7b1939d",
+        "checkpointSHA256": "6a3695d6cd989aacc08750c704a7e28ffc99b36c9f4dc89af73c605afc9d3d44",
+        "command": "slice",
+        "decoderRoots": [
+          "0x82fb30dd80d26062742f6e54ff6de1cf51a714d41329bc1df9d0131831372869",
+          "0x91c53eec8c6057275d2b68c98eb7c1d261ce142d66a9c4edec36dc331245e81d"
+        ],
+        "epoch": 1,
+        "gasUsed": 5451060,
+        "indexRoot": "0xe88aad7b64d18466bafe968307e2817f3e41b0c420aaece30fd3d2e3ba023c86",
+        "javaKind": 6,
+        "lifecycle": 3,
+        "machineRoot": "0x804fbd0e891a604a88575f084ac4636ce298e3001beb60443874ed7212ff94c6",
+        "nestedEngineLogs": 1,
+        "packageRoot": "0x9ac1aa2e0f1b35ac1acbc1ea39ec478aac6a91ff95a25a34363394ba683ebaa1",
+        "pid": 697782,
+        "reopenedEngineInstalled": false,
+        "result": 0,
+        "stateRoot": "0x5cbe4051a44989cee469086a58287d87ac997a37cfbf2cbee36f7579fba23c75",
+        "totalInternalSteps": 5,
+        "totalJvmSteps": 22,
+        "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+      },
+      "gasMax": 5451060,
+      "gasMin": 5451060,
+      "gasSum": 5451060,
+      "ordinaryGasCap": 100000000,
+      "slices": 1
+    }
+  }
+}
