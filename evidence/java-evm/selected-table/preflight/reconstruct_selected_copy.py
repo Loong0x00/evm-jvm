@@ -34,7 +34,7 @@ for rel,pt in [('artifact.go','cb0-artifact.go.capacity.patch.gz'),('cb0.go','cb
  p=c/rel
  # Capacity patches carry their original disposable import path.  Rewrite every
  # copied Go import to this fresh namespace (the only package identity change).
- p.write_text(p.read_text().replace('github.com/ethereum/go-ethereum/build/java-diff-mc-capacity-proto-smoke',module).replace('/capacitycb0/', '/selectedcb0/').replace('/capacityvfs', '/selectedvfs'))
+ p.write_text(p.read_text().replace('package capacitycb0', 'package selectedcb0', 1).replace('github.com/ethereum/go-ethereum/build/java-diff-mc-capacity-proto-smoke',module).replace('/capacitycb0/', '/selectedcb0/').replace('/capacityvfs', '/selectedvfs'))
 (out/'base-sources.json').write_text(json.dumps(records,indent=2)+'\n')
 # The parent recipe expected the repository-local pinned modules.  This isolated
 # reconstruction installs each copied lockfile locally instead, so it never mutates
