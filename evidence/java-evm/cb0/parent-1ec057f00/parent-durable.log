@@ -1,0 +1,30 @@
+=== RUN   TestCB0ParentJavaPublicationFailures
+=== RUN   TestCB0ParentJavaPublicationFailures/blob
+=== RUN   TestCB0ParentJavaPublicationFailures/sync
+=== RUN   TestCB0ParentJavaPublicationFailures/trie
+=== RUN   TestCB0ParentJavaPublicationFailures/manifest
+=== RUN   TestCB0ParentJavaPublicationFailures/rename
+--- PASS: TestCB0ParentJavaPublicationFailures (0.99s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/blob (0.27s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/sync (0.17s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/trie (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/manifest (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/rename (0.19s)
+=== RUN   TestCB0ParentActualSyncAndEventCounts
+=== RUN   TestCB0ParentActualSyncAndEventCounts/false
+    parent_acceptance_test.go:181: disk=false actual post-initial syncs=21, Java events/slices=6
+=== RUN   TestCB0ParentActualSyncAndEventCounts/true
+    parent_acceptance_test.go:181: disk=true actual post-initial syncs=21, Java events/slices=6
+--- PASS: TestCB0ParentActualSyncAndEventCounts (0.33s)
+    --- PASS: TestCB0ParentActualSyncAndEventCounts/false (0.09s)
+    --- PASS: TestCB0ParentActualSyncAndEventCounts/true (0.24s)
+=== RUN   TestCB0ParentClassBoundaryAndJavaException
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/65536
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/65537
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/exception
+--- PASS: TestCB0ParentClassBoundaryAndJavaException (1.43s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/65536 (0.71s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/65537 (0.70s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/exception (0.02s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0	2.756s

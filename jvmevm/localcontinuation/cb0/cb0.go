@@ -55,6 +55,7 @@ type Initialization struct {
 // EVM failures return only GasUsed and RevertData; publication failures return
 // only GasUsed.
 type JavaResult struct {
+	Logs       []*types.Log
 	Slice      vfs0a.SliceResult
 	Checkpoint []byte
 	StateRoot  common.Hash

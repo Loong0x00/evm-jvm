@@ -1,0 +1,38 @@
+=== RUN   TestCB0ParentGeneratedJavaPipeline
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0_1]
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[1_0]
+    parent_test.go:145: legal ordered package [1 0]: cb0: invalid bounded resource binding
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0]
+    parent_test.go:145: legal ordered package [0]: cb0: coordinator binding count differs
+--- FAIL: TestCB0ParentGeneratedJavaPipeline (0.15s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[0_1] (0.09s)
+    --- FAIL: TestCB0ParentGeneratedJavaPipeline/[1_0] (0.03s)
+    --- FAIL: TestCB0ParentGeneratedJavaPipeline/[0] (0.03s)
+=== RUN   TestCB0ParentMetadataBeforeDB
+    parent_test.go:201: invalid metadata reached locked DB: cb0: open state database: resource temporarily unavailable
+--- FAIL: TestCB0ParentMetadataBeforeDB (0.00s)
+=== RUN   TestCB0ParentMarkerAndNestedLinks
+=== RUN   TestCB0ParentMarkerAndNestedLinks/marker
+    parent_test.go:230: foreign/linked state accepted
+=== RUN   TestCB0ParentMarkerAndNestedLinks/link
+    parent_test.go:230: foreign/linked state accepted
+--- FAIL: TestCB0ParentMarkerAndNestedLinks (0.01s)
+    --- FAIL: TestCB0ParentMarkerAndNestedLinks/marker (0.01s)
+    --- FAIL: TestCB0ParentMarkerAndNestedLinks/link (0.01s)
+=== RUN   TestCB0ParentChild
+    parent_test.go:238: child entry
+--- SKIP: TestCB0ParentChild (0.00s)
+=== RUN   TestCB0ParentActualNewProcesses
+    parent_test.go:302: === RUN   TestCB0ParentChild
+            parent_test.go:288: stagestart pid254147 epoch1 state=0xcb5f276daca1adaa9569bc21064ed7beaee020c744077e39c2a4388ebf41421d
+        --- PASS: TestCB0ParentChild (0.05s)
+        PASS
+    parent_test.go:302: === RUN   TestCB0ParentChild
+            parent_test.go:253: reopen reports reinstall/CREATE
+        --- FAIL: TestCB0ParentChild (0.01s)
+        FAIL
+    parent_test.go:304: stageresume: exit status 1
+--- FAIL: TestCB0ParentActualNewProcesses (0.06s)
+FAIL
+FAIL	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0	0.226s
+FAIL

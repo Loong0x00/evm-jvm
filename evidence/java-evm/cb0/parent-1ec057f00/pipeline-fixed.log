@@ -1,0 +1,68 @@
+=== RUN   TestCB0ArtifactValidationPinsComputedRuntimeKeccak
+--- PASS: TestCB0ArtifactValidationPinsComputedRuntimeKeccak (0.00s)
+=== RUN   TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange
+=== RUN   TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/binding_output_name
+=== RUN   TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/start_output_type
+--- PASS: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange (0.00s)
+    --- PASS: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/binding_output_name (0.00s)
+    --- PASS: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/start_output_type (0.00s)
+=== RUN   TestCB0HeadValidationInitialWorld
+--- PASS: TestCB0HeadValidationInitialWorld (0.01s)
+=== RUN   TestCB0HeadValidationBoundaryGas
+--- PASS: TestCB0HeadValidationBoundaryGas (0.00s)
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape/AS0_controller_code_pin
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape/ordinary_creator_nonce
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape/fixed_engine_code_pin
+--- PASS: TestCB0HeadValidationRejectsCopiedStateShape (0.01s)
+    --- PASS: TestCB0HeadValidationRejectsCopiedStateShape/AS0_controller_code_pin (0.00s)
+    --- PASS: TestCB0HeadValidationRejectsCopiedStateShape/ordinary_creator_nonce (0.00s)
+    --- PASS: TestCB0HeadValidationRejectsCopiedStateShape/fixed_engine_code_pin (0.00s)
+=== RUN   TestCB0ParentGeneratedJavaPipeline
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0_1]
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[1_0]
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0]
+--- PASS: TestCB0ParentGeneratedJavaPipeline (0.20s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[0_1] (0.08s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[1_0] (0.08s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[0] (0.04s)
+=== RUN   TestCB0ParentMetadataBeforeDB
+--- PASS: TestCB0ParentMetadataBeforeDB (0.00s)
+=== RUN   TestCB0ParentMarkerAndNestedLinks
+=== RUN   TestCB0ParentMarkerAndNestedLinks/marker
+=== RUN   TestCB0ParentMarkerAndNestedLinks/link
+--- PASS: TestCB0ParentMarkerAndNestedLinks (0.01s)
+    --- PASS: TestCB0ParentMarkerAndNestedLinks/marker (0.00s)
+    --- PASS: TestCB0ParentMarkerAndNestedLinks/link (0.00s)
+=== RUN   TestCB0ParentChild
+    parent_test.go:238: child entry
+--- SKIP: TestCB0ParentChild (0.00s)
+=== RUN   TestCB0ParentActualNewProcesses
+    parent_test.go:302: === RUN   TestCB0ParentChild
+            parent_test.go:288: stagestart pid278629 epoch1 state=0xcb5f276daca1adaa9569bc21064ed7beaee020c744077e39c2a4388ebf41421d
+        --- PASS: TestCB0ParentChild (0.05s)
+        PASS
+    parent_test.go:302: === RUN   TestCB0ParentChild
+            parent_test.go:288: stageresume pid278649 epoch2 state=0x2e6d292ae9a48a42063a988e59abe34f6c72e487141e6232382ed63940b67f1e
+        --- PASS: TestCB0ParentChild (0.02s)
+        PASS
+    parent_test.go:302: === RUN   TestCB0ParentChild
+            parent_test.go:288: stagefinish pid278666 epoch6 state=0x0625fd3ee65211e3fb2d873dd2300c6703b48f6633e93539551cf0cb627606cf
+        --- PASS: TestCB0ParentChild (0.04s)
+        PASS
+    parent_test.go:302: === RUN   TestCB0ParentChild
+        --- PASS: TestCB0ParentChild (0.01s)
+        PASS
+--- PASS: TestCB0ParentActualNewProcesses (0.13s)
+=== RUN   TestCB0AtomicInitialRootAndReopen
+--- PASS: TestCB0AtomicInitialRootAndReopen (0.00s)
+=== RUN   TestCB0DiskInitialRootReopensWithoutCreate
+--- PASS: TestCB0DiskInitialRootReopensWithoutCreate (0.01s)
+=== RUN   TestCB0ArtifactAndFrozenRanges
+--- PASS: TestCB0ArtifactAndFrozenRanges (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0	0.366s
+=== RUN   TestCB0EmbeddedArtifactPinsSchemaCapsABIAndDefensiveCopy
+--- PASS: TestCB0EmbeddedArtifactPinsSchemaCapsABIAndDefensiveCopy (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0/runtime	0.002s

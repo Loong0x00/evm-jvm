@@ -12,8 +12,13 @@ NOreflection/privateSession. Actual cross-class init/call results317/299,36Java/
 internal;direct/q1/q7 slices1/36/6,memory/disk roots equal,15actualprocesses,terminal
 checkpoint retained,4class/exact64KiB paging and+1 refusals,actualIOdelta counters.
 7.456s325885952Bfinalfreshgate. See JAVA_EVM_MC_SHARED_WORLD_PARENT_PREFLIGHT.md.
-CB0 production implementation NOW FROZEN: JAVA_EVM_MC_CB0_PLAN.md, NOT ACCEPTED.
-Two defaultTerra runtime/transport workers next; no original Java/MC execution.
+CB0 production now parent ACCEPTED: JAVA_EVM_MC_CB0_REVIEW.md. Final complete
+549.346s/1202511872B gate; parent fixed subset/order, pre-DB marker/context/links,
+reopen flags, strict Head/ABI and nested engine checkpoint events (explicit amendment).
+Actual opaque pipeline, Java exceptions/terminal blobs, publication errors/CAS,
+full32MiB/8192 EVM reads/high offset and exact64KiB package pass. No original Java/MC
+execution. Next generated main(String[]) guest-launch/link-frontier preflight; first
+measure whether a real Java launcher avoids any new engine ABI. No quota changes.
 
 CURRENT BRIDGE FRONTIER: worker e3f45ec22 integrated5ce5ffe37; parent independently
 replayed generated EVMZIP->DI0->VFS0a->Javabytecode results76/203. NOT production

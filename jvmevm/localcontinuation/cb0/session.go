@@ -74,6 +74,7 @@ type Session struct {
 	decoders                                                                          []common.Address
 	coordinator                                                                       common.Address
 	packageRoot                                                                       common.Hash
+	instanceID                                                                        common.Hash
 	javaHead                                                                          common.Hash
 	directory                                                                         string
 	disk                                                                              cb0Disk
@@ -122,13 +123,23 @@ func Open(directory string, owner common.Address, length uint32) (*Session, erro
 		return nil, err
 	}
 	if fresh {
-		if err := os.WriteFile(filepath.Join(abs, cb0MarkerName), []byte(StoreMarker), 0600); err != nil {
+		if err := cb0WriteNewRegular(filepath.Join(abs, cb0MarkerName), []byte(StoreMarker)); err != nil {
 			return nil, err
 		}
 		if err := os.Mkdir(filepath.Join(abs, cb0BlobDirectory), 0700); err != nil {
 			return nil, err
 		}
 		if err := cb0SyncDir(abs); err != nil {
+			return nil, err
+		}
+	}
+	// Validate the bounded namespace/identity BEFORE even attempting LevelDB open.
+	if !fresh {
+		loaded, err := cb0ArtifactLoad()
+		if err != nil {
+			return nil, err
+		}
+		if _, err = cb0ReadDiskMetadata(abs, owner, length, loaded.runtimeHash); err != nil {
 			return nil, err
 		}
 	}
@@ -420,18 +431,20 @@ func (s *Session) CreateCoordinator(salt common.Hash, bindings []ResourceBinding
 	if s.coordinator != (common.Address{}) {
 		return op, errors.New("cb0: coordinator already created")
 	}
-	if len(bindings) == 0 || len(bindings) > int(MaxResources) || len(bindings) != len(s.decoders) {
+	if len(bindings) == 0 || len(bindings) > int(MaxResources) || len(bindings) > len(s.decoders) {
 		return op, errors.New("cb0: coordinator binding count differs")
 	}
 	decs := make([]common.Address, len(bindings))
 	names := make([][]byte, len(bindings))
 	indices := make([]common.Hash, len(bindings))
 	resources := make([]common.Hash, len(bindings))
+	seenSlots := make(map[uint8]bool, len(bindings))
 	for i, b := range bindings {
-		if b.Slot != uint8(i) || b.Slot >= uint8(len(s.decoders)) || len(b.RawName) == 0 || len(b.RawName) > int(MaxRawNameBytes) || b.IndexRoot == (common.Hash{}) || b.ResourceRoot == (common.Hash{}) {
+		if seenSlots[b.Slot] || b.Slot >= uint8(len(s.decoders)) || len(b.RawName) == 0 || len(b.RawName) > int(MaxRawNameBytes) || b.IndexRoot == (common.Hash{}) || b.ResourceRoot == (common.Hash{}) {
 			return op, errors.New("cb0: invalid bounded resource binding")
 		}
-		decs[i] = s.decoders[i]
+		seenSlots[b.Slot] = true
+		decs[i] = s.decoders[b.Slot]
 		names[i] = append([]byte(nil), b.RawName...)
 		indices[i], resources[i] = b.IndexRoot, b.ResourceRoot
 	}
@@ -454,10 +467,12 @@ func (s *Session) CreateCoordinator(salt common.Hash, bindings []ResourceBinding
 	}
 	s.coordinator = addr
 	s.packageRoot = asserted
+	s.instanceID = crypto.Keccak256Hash(crypto.Keccak256([]byte("MC-CB0/vm/v1")), common.LeftPadBytes(addr[:], 32), asserted[:], salt[:])
 	if err = s.cb0Persist(old, nil, common.Hash{}); err != nil {
 		if s.poison == nil {
 			s.coordinator = common.Address{}
 			s.packageRoot = common.Hash{}
+			s.instanceID = common.Hash{}
 		}
 		return Operation{GasUsed: op.GasUsed}, err
 	}
@@ -552,6 +567,7 @@ func (s *Session) cb0Java(method string, gas uint64, args ...interface{}) (JavaR
 		return result, err
 	}
 	old, snap := s.root, s.state.Snapshot()
+	beforeLogs := len(s.state.Logs())
 	out, left, err := evmruntime.Call(s.coordinator, data, s.cb0Config(s.state, gas))
 	result.GasUsed = gas - left
 	if err != nil {
@@ -583,10 +599,24 @@ func (s *Session) cb0Java(method string, gas uint64, args ...interface{}) (JavaR
 		err = s.cb0EngineUnpack("resume", engineReturn, &r)
 		decoded.Result, decoded.Checkpoint = r.Result, r.ChildCheckpoint
 	}
-	if err != nil || s.cb0SliceValid(decoded.Result) == false || len(decoded.Checkpoint) == 0 || len(decoded.Checkpoint) > int(MaxCheckpointBytes) || crypto.Keccak256Hash(decoded.Checkpoint) != decoded.Result.CheckpointRoot {
+	if err != nil || !s.cb0SliceValid(decoded.Result) || decoded.Result.ExecutedJvmSteps > args[len(args)-2].(uint64) || decoded.Result.ExecutedInternalSteps > args[len(args)-1].(uint32) || (method == "start" && decoded.Result.Epoch != 1) || (method == "resume" && (args[1].(uint64) == ^uint64(0) || decoded.Result.Epoch != args[1].(uint64)+1)) || len(decoded.Checkpoint) == 0 || len(decoded.Checkpoint) > int(MaxCheckpointBytes) || crypto.Keccak256Hash(decoded.Checkpoint) != decoded.Result.CheckpointRoot {
 		s.cb0Rollback(snap, old)
 		return JavaResult{GasUsed: result.GasUsed}, errors.New("cb0: invalid EVM Java slice or checkpoint")
 	}
+	// The unchanged engine emits one exact CheckpointCommitted; CB0 itself
+	// emits no events. Validate nested logs, do not silently drop them.
+	engineABI, err := vfs0a.ABI()
+	if err != nil {
+		return JavaResult{GasUsed: result.GasUsed}, err
+	}
+	event := engineABI.Events["CheckpointCommitted"]
+	expectedData, err := event.Inputs.NonIndexed().Pack(decoded.Result.CheckpointRoot, decoded.Result.MachineStateRoot, decoded.Result.VFSStateRoot, decoded.Result.Lifecycle, decoded.Result.TotalJvmSteps, decoded.Result.TotalInternalSteps)
+	logs := s.state.Logs()
+	if err != nil || len(logs) != beforeLogs+1 || logs[beforeLogs].Address != cb0EngineAddress || len(logs[beforeLogs].Topics) != 3 || logs[beforeLogs].Topics[0] != event.ID || logs[beforeLogs].Topics[1] != s.instanceID || logs[beforeLogs].Topics[2] != common.BigToHash(new(big.Int).SetUint64(decoded.Result.Epoch)) || !bytes.Equal(logs[beforeLogs].Data, expectedData) {
+		s.cb0Rollback(snap, old)
+		return JavaResult{GasUsed: result.GasUsed}, errors.New("cb0: engine checkpoint event differs from slice")
+	}
+	result.Logs = copiedLogs(logs[beforeLogs:])
 	result.Slice, result.Checkpoint = decoded.Result, append([]byte(nil), decoded.Checkpoint...)
 	// The manifest must publish the exact EVM-issued Java head alongside the
 	// trie root. Restore the prior route before a pre-rename failure.
@@ -609,7 +639,7 @@ func (s *Session) cb0EngineUnpack(method string, out []byte, v interface{}) erro
 	return a.UnpackIntoInterface(v, method, out)
 }
 func (s *Session) cb0SliceValid(r vfs0a.SliceResult) bool {
-	if r.Schema != 1 || r.Epoch == 0 || r.CheckpointRoot == (common.Hash{}) || r.MachineStateRoot == (common.Hash{}) || r.VFSStateRoot == (common.Hash{}) || r.InodeCount < 3 || r.InodeCount > 64 || r.DescriptorCount > 32 || r.LogicalFileBytes > 65536 || r.Lifecycle < 1 || r.Lifecycle > 3 {
+	if len(r.JavaClass) > 65535 || r.ExecutedJvmSteps > r.TotalJvmSteps || uint64(r.ExecutedInternalSteps) > r.TotalInternalSteps || r.Schema != 1 || r.Epoch == 0 || r.CheckpointRoot == (common.Hash{}) || r.MachineStateRoot == (common.Hash{}) || r.VFSStateRoot == (common.Hash{}) || r.InodeCount < 3 || r.InodeCount > 64 || r.DescriptorCount > 32 || r.LogicalFileBytes > 65536 || r.Lifecycle < 1 || r.Lifecycle > 3 {
 		return false
 	}
 	if r.Lifecycle == 1 {
@@ -894,7 +924,6 @@ func (s *Session) cb0Publish(root common.Hash, blob []byte, blobRoot common.Hash
 		return err
 	}
 	name := f.Name()
-	defer os.Remove(name)
 	if err = f.Chmod(0600); err == nil {
 		_, err = f.Write(append(raw, '\n'))
 	}
@@ -951,7 +980,6 @@ func (s *Session) cb0WriteBlob(root common.Hash, b []byte) error {
 		return e
 	}
 	name := f.Name()
-	defer os.Remove(name)
 	if e = f.Chmod(0600); e == nil {
 		_, e = f.Write(b)
 	}
@@ -999,7 +1027,7 @@ func (s *Session) cb0Reopen() error {
 		return errors.New("cb0: coordinator route differs")
 	}
 	s.as0Address, s.indexAddress, s.decoders, s.coordinator, s.packageRoot, s.javaHead = m.AS0, m.Index, append([]common.Address(nil), m.Decoders...), m.Coordinator, m.PackageRoot, m.JavaHead
-	s.initialization = Initialization{true, cb0EngineAddress, s.engineHash, m.StateRoot, as0.Creation{Performed: false, Controller: m.AS0, RuntimeCodeHash: s.as0Hash, StateRoot: m.StateRoot}}
+	s.initialization = Initialization{false, cb0EngineAddress, s.engineHash, m.StateRoot, as0.Creation{Performed: false, Controller: m.AS0, RuntimeCodeHash: s.as0Hash, StateRoot: m.StateRoot}}
 	if m.JavaHead != (common.Hash{}) {
 		b, e := cb0ReadRegular(filepath.Join(s.directory, cb0BlobDirectory, m.JavaHead.Hex()[2:]+".checkpoint"), int64(MaxCheckpointBytes))
 		if e != nil || len(b) == 0 || crypto.Keccak256Hash(b) != m.JavaHead {
@@ -1008,9 +1036,11 @@ func (s *Session) cb0Reopen() error {
 	}
 	// Re-read all reachable controller/engine anchors from EVM state; the
 	// manifest routes are bounded transport pointers, never authority.
-	if _, err := s.Head(OrdinaryGas); err != nil {
+	head, err := s.Head(OrdinaryGas)
+	if err != nil {
 		return fmt.Errorf("cb0: reopen EVM anchors: %w", err)
 	}
+	s.instanceID = head.Coordinator.InstanceID
 	return nil
 }
 
@@ -1090,8 +1120,29 @@ func cb0PrepareDirectory(dir string) (bool, error) {
 		if !want[entry.Name()] || entry.Type()&os.ModeSymlink != 0 {
 			return false, fmt.Errorf("cb0: refuse unsupported directory entry %q", entry.Name())
 		}
-		if (entry.Name() == cb0StateDirectory || entry.Name() == cb0BlobDirectory) != info.IsDir() {
+		isDataDir := entry.Name() == cb0StateDirectory || entry.Name() == cb0BlobDirectory
+		if isDataDir != info.IsDir() || (!isDataDir && !info.Mode().IsRegular()) {
 			return false, fmt.Errorf("cb0: unsupported entry shape %q", entry.Name())
+		}
+		if isDataDir {
+			if e = filepath.WalkDir(filepath.Join(dir, entry.Name()), func(path string, d os.DirEntry, err error) error {
+				if err != nil {
+					return err
+				}
+				if d.Type()&os.ModeSymlink != 0 {
+					return fmt.Errorf("cb0: linked internal entry %q", path)
+				}
+				i, err := d.Info()
+				if err != nil {
+					return err
+				}
+				if !i.IsDir() && !i.Mode().IsRegular() {
+					return fmt.Errorf("cb0: unsupported internal entry %q", path)
+				}
+				return nil
+			}); e != nil {
+				return false, e
+			}
 		}
 		seen[entry.Name()] = true
 	}
@@ -1155,4 +1206,53 @@ func cb0SyncDir(path string) error {
 	}
 	defer d.Close()
 	return d.Sync()
+}
+
+// Only bounded metadata/routing assertions are checked here. The EVM remains
+// the class/ZIP/decoder authority; no byte catalogue or evaluator is involved.
+func cb0ReadDiskMetadata(dir string, owner common.Address, length uint32, coordHash common.Hash) (cb0Manifest, error) {
+	marker, e := cb0ReadRegular(filepath.Join(dir, cb0MarkerName), int64(len(StoreMarker)))
+	if e != nil || string(marker) != StoreMarker {
+		return cb0Manifest{}, errors.New("cb0: invalid namespace marker")
+	}
+	m, e := cb0ReadManifest(filepath.Join(dir, cb0ManifestName))
+	if e != nil {
+		return m, e
+	}
+	if m.Format != StoreFormat || m.Context != cb0Context || m.Owner != owner || m.Length != length || m.StateRoot == (common.Hash{}) || m.StateRoot == types.EmptyRootHash || m.Engine != cb0EngineAddress || m.EngineCodeHash != cb0VFSCode || m.AS0CodeHash != cb0AS0Code || m.ZI0CodeHash != cb0ZI0Code || m.DI0CodeHash != cb0DI0Code || m.CoordinatorCodeHash != coordHash || m.AS0 != crypto.CreateAddress(owner, 0) || len(m.Decoders) > int(MaxResources) {
+		return m, errors.New("cb0: manifest binding mismatch")
+	}
+	if m.Index == (common.Address{}) {
+		if len(m.Decoders) != 0 || m.Coordinator != (common.Address{}) {
+			return m, errors.New("cb0: manifest absent index has dependent routes")
+		}
+	} else if m.Index != crypto.CreateAddress(owner, 1) {
+		return m, errors.New("cb0: manifest index route mismatch")
+	}
+	for i, a := range m.Decoders {
+		if a != crypto.CreateAddress(owner, uint64(i)+2) {
+			return m, errors.New("cb0: manifest decoder route mismatch")
+		}
+	}
+	if m.Coordinator == (common.Address{}) {
+		if m.PackageRoot != (common.Hash{}) || m.JavaHead != (common.Hash{}) {
+			return m, errors.New("cb0: manifest absent coordinator has Java/package data")
+		}
+	} else if len(m.Decoders) == 0 || m.Coordinator != crypto.CreateAddress(owner, uint64(2+len(m.Decoders))) || m.PackageRoot == (common.Hash{}) {
+		return m, errors.New("cb0: manifest coordinator binding mismatch")
+	}
+	return m, nil
+}
+func cb0WriteNewRegular(path string, b []byte) error {
+	f, e := os.OpenFile(path, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	if e != nil {
+		return e
+	}
+	if _, e = f.Write(b); e == nil {
+		e = f.Sync()
+	}
+	if x := f.Close(); e == nil {
+		e = x
+	}
+	return e
 }

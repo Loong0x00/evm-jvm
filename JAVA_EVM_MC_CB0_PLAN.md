@@ -1,7 +1,8 @@
 # MC-CB0 fixed class package / LOCAL shared-world coordinator
 
-Status: **FROZEN FOR IMPLEMENTATION, NOT ACCEPTED**. Independent evidence and draft
-corrections: JAVA_EVM_MC_SHARED_WORLD_PARENT_PREFLIGHT.md. Latest user says continue
+Status: **ACCEPTED WITH EXPLICIT EVENT AMENDMENT**. Parent final549.346s/1202511872B
+complete20min4GiB gate; JAVA_EVM_MC_CB0_REVIEW.md. Preserve the original shared-world
+preflight and JAVA_EVM_MC_CB0_EVENT_AMENDMENT.md correction. Latest user says continue
 (no pause), default agent model is5.6 Terra. Use default model, high reasoning; no
 Sol override/Fast/priority/global settings changes. Parent independently verifies.
 
@@ -147,7 +148,8 @@ check shallow route/count/name encoding bounds but cannot become class authority
 Start(packageRoot,entryAt uint8,entry string,args []int32,jvm uint64,internal uint32,gas);
 Resume(packageRoot,epoch uint64,checkpointRoot,checkpoint []byte,jvm uint64,internal uint32,gas).
 These return JavaResult{Slice vfs0a.SliceResult,Checkpoint []byte,StateRoot,GasUsed,
-RevertData []byte}; no emitted logs permitted. Decode outer bytes then exact engine
+RevertData []byte,Logs []*types.Log}; exactly one validated nested VFS0a event
+per successful Java call, per JAVA_EVM_MC_CB0_EVENT_AMENDMENT.md. CB0 ABI has no events. Decode outer bytes then exact engine
 result, validate schema/counters/lifecycle and nonempty<=1MiB checkpoint hash for
 ALL successful lifecycle outcomes, including terminal. Java exceptions are genuine
 engine outcomes, not EVM errors. Publish before returning slice/checkpoint/root.

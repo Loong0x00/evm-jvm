@@ -1,0 +1,24 @@
+=== RUN   TestCB0ParentMetadataBeforeDB
+--- PASS: TestCB0ParentMetadataBeforeDB (0.01s)
+=== RUN   TestCB0ParentMarkerAndNestedLinks
+=== RUN   TestCB0ParentMarkerAndNestedLinks/marker
+=== RUN   TestCB0ParentMarkerAndNestedLinks/link
+--- PASS: TestCB0ParentMarkerAndNestedLinks (0.01s)
+    --- PASS: TestCB0ParentMarkerAndNestedLinks/marker (0.00s)
+    --- PASS: TestCB0ParentMarkerAndNestedLinks/link (0.00s)
+=== RUN   TestCB0ParentActualNewProcesses
+    parent_test.go:302: === RUN   TestCB0ParentChild
+            parent_test.go:275: cb0: invalid EVM Java slice or checkpoint
+        --- FAIL: TestCB0ParentChild (0.05s)
+        FAIL
+    parent_test.go:304: stagestart: exit status 1
+--- FAIL: TestCB0ParentActualNewProcesses (0.05s)
+=== RUN   TestCB0AtomicInitialRootAndReopen
+--- PASS: TestCB0AtomicInitialRootAndReopen (0.00s)
+=== RUN   TestCB0DiskInitialRootReopensWithoutCreate
+--- PASS: TestCB0DiskInitialRootReopensWithoutCreate (0.01s)
+=== RUN   TestCB0ArtifactAndFrozenRanges
+--- PASS: TestCB0ArtifactAndFrozenRanges (0.00s)
+FAIL
+FAIL	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0	0.071s
+FAIL

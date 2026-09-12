@@ -1,0 +1,18 @@
+{
+  "command": [
+    "env",
+    "TMPDIR=/home/user/evm-jvm/geth/build/java-diff-mc-cb0-parent-tmp",
+    "go",
+    "test",
+    "-v",
+    "-count=1",
+    "-timeout=18m",
+    "-run",
+    "^TestCB0Parent(ActualNewProcesses|RealDirectorySyncFailure|ActualSyncAndEventCounts)",
+    "./jvmevm/localcontinuation/cb0"
+  ],
+  "exit": 1,
+  "elapsed": 2.246809463991667,
+  "peakGroupRSS": 277528576,
+  "limit": null
+}

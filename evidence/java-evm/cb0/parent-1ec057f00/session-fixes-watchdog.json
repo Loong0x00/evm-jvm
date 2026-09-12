@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-v",
+    "-count=1",
+    "-timeout=18m",
+    "-run",
+    "^TestCB0(ParentMetadata|ParentMarker|ParentActual|Atomic|DiskInitial|Artifact)",
+    "./jvmevm/localcontinuation/cb0"
+  ],
+  "exit": 1,
+  "elapsed": 0.4270030210027471,
+  "peakGroupRSS": 300441600,
+  "limit": null
+}

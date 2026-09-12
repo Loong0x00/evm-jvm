@@ -7,8 +7,13 @@ method0/raw-DEFLATE, CRC and output pages; no host decoder. Parent then genuinel
 and AbstractLogger.class90309B (official-entry-56848a1b1 evidence), without executing
 Java or raising its quotas. Generated-class bridge now independently replayed; parent
 fixed paged reads up to64KiB. Self-owned shared-world preflight now passes with real cross-class Java and durable
-process continuation. CB0 production implementation is frozen (NOT accepted) in
-JAVA_EVM_MC_CB0_PLAN.md; defaultTerra workers and independent parent quality gates.
+process continuation. CB0 production bridge is now parent ACCEPTED: JAVA_EVM_MC_CB0_REVIEW.md,
+549.346s/1202511872B complete gate, generated317/299, durable Java plus terminal
+checkpoints, full32MiB/high-offset and exact64KiB package. Parent corrected legal
+subset/order, pre-DB metadata/links, no-reinstall receipt and exact nested engine
+event handling. Still fixed<=4 classes/65536B, not a lazy loader or original Java.
+Next generated guest-main launch/link-frontier investigation; defaultTerra/high,
+independent parent gates and no silent entry/loader/quota expansion.
 Latest user cancelled the pause: continue after dependency gates, no implicit push. DI0-only256KiB
 is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.
 

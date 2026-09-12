@@ -1,0 +1,593 @@
+cd jvmevm/artifactstore/as0/runtime && npm ci --ignore-scripts && npm run check
+
+added 9 packages, and audited 10 packages in 863ms
+
+1 package is looking for funding
+  run `npm fund` for details
+
+2 vulnerabilities (1 low, 1 high)
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> jvmevm-mc-as0-runtime-build@1.0.0 check
+> node build.js --check
+
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","settings":{"optimizer":200,"viaIR":true,"evmVersion":"cancun","metadata":false},"sourceBytes":7012,"sourceSHA256":"2483cd1fadd424773beb4ba1698b79ce36e4aebe26454e2b50c80e50a8a55be1","initBytes":3166,"initSHA256":"b792253995eafb2ecbc6d7c6c6f28fc0fc03ad0d5073a97f4c62b4ea93dd0f88","runtimeBytes":2831,"runtimeSHA256":"e7f8e95b0af80bf15e89a01ceb635d8ae858560c606cc86ac3877d8f0de69b13","immutableReferences":0,"abiEntries":18}
+go test -count=1 -timeout=18m ./jvmevm/artifactstore/as0
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0	24.351s
+cd jvmevm/artifactstore/zi0/runtime && npm ci --ignore-scripts && npm run check
+
+added 9 packages, and audited 10 packages in 811ms
+
+1 package is looking for funding
+  run `npm fund` for details
+
+2 vulnerabilities (1 low, 1 high)
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> jvmevm-mc-zi0-runtime-build@1.0.0 check
+> node build.js --check
+
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","settings":{"optimizer":200,"viaIR":true,"evmVersion":"cancun","metadata":false},"sourceBytes":17317,"sourceSHA256":"78329d1610c0ba180c7e267989bf36190a9d9eb536020acce42234066a94a2ae","initBytes":9873,"completeInitBytes":9937,"initSHA256":"f3d6d4614cf916cc4be4cd1ef58212642d829d63b710cea9d140181bafd00870","runtimeBytes":9177,"runtimeSHA256":"74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3","runtimeKeccak256":"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77","immutableReferences":0,"abiEntries":20,"functions":18}
+go test -count=1 -timeout=18m ./jvmevm/artifactstore/zi0/...
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0	29.666s
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0/runtime	0.004s
+cd jvmevm/artifactstore/di0/runtime && npm ci --ignore-scripts && npm run check
+
+added 9 packages, and audited 10 packages in 845ms
+
+1 package is looking for funding
+  run `npm fund` for details
+
+2 vulnerabilities (1 low, 1 high)
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> jvmevm-mc-di0-runtime-build@1.0.0 check
+> node build.js --check
+
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","settings":{"optimizer":200,"viaIR":true,"evmVersion":"cancun","metadata":false},"sourceBytes":18513,"sourceSHA256":"682d8243a6a0671f151316c8bce0a220ec1934205ca5bb4144a4d635463b4470","initBytes":17216,"maximumConstructorArgumentBytes":384,"maximumCompleteInitBytes":17600,"initSHA256":"604d6a515fcb5efb539f998987ddba94c7f1e1d1fe3e712a5b95606bc1dab576","runtimeBytes":14978,"runtimeSHA256":"8c309455d3b0817725cd775f909abc2477b39fed6e18235114737480b05e17b0","runtimeKeccak256":"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37","immutableReferences":0,"abiEntries":35,"functions":33}
+go test -count=1 -timeout=18m ./jvmevm/artifactstore/di0/...
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/di0	74.379s
+ok  	github.com/ethereum/go-ethereum/jvmevm/artifactstore/di0/runtime	0.002s
+cd jvmevm/runtime/local/vfs0a && npm ci --ignore-scripts && npm run check
+
+added 9 packages, and audited 10 packages in 794ms
+
+1 package is looking for funding
+  run `npm fund` for details
+
+2 vulnerabilities (1 low, 1 high)
+
+To address all issues, run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+> jvmevm-vfs0a-runtime-build@1.0.0 check
+> node build.js --check
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:2448:14:
+     |
+2448 |         for (uint256 head; head < tail; ++head) {
+     |              ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:489:5:
+    |
+489 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:2594:18:
+     |
+2594 |                 (bool found, uint256 target) = _findClass(p.classes, data, nameOff, nameLen);
+     |                  ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:2603:10:
+     |
+2603 |         (bool found, uint256 target) = _findClass(p.classes, data, off + 1, n - 2);
+     |          ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:2594:30:
+     |
+2594 |                 (bool found, uint256 target) = _findClass(p.classes, data, nameOff, nameLen);
+     |                              ^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:2603:22:
+     |
+2603 |         (bool found, uint256 target) = _findClass(p.classes, data, off + 1, n - 2);
+     |                      ^^^^^^^^^^^^^^
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:2756:17:
+     |
+2756 |                 uint256 head = k == KIND_LONG_TAIL ? KIND_LONG : KIND_DOUBLE;
+     |                 ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:489:5:
+    |
+489 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:2993:9:
+     |
+2993 |         uint256 start = (meta >> 48) & 0xffffffffffffffff;
+     |         ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:3018:9:
+     |
+3018 |         uint256 start = (meta >> 48) & 0xffffffffffffffff;
+     |         ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:5458:9:
+     |
+5458 |         uint256 start = (meta >> 48) & 0xffffffffffffffff;
+     |         ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:5647:9:
+     |
+5647 |         uint256 head;
+     |         ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:489:5:
+    |
+489 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:5643:37:
+     |
+5643 |         ClassInfo[] memory classes, uint256 start, uint256[] memory parentLinks
+     |                                     ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:5892:9:
+     |
+5892 |         uint256 start = (meta >> 48) & 0xffffffffffffffff;
+     |         ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:5944:9:
+     |
+5944 |         uint256 head;
+     |         ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:489:5:
+    |
+489 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:5937:37:
+     |
+5937 |         ClassInfo[] memory classes, uint256 start, bool startIsInterface,
+     |                                     ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:6109:9:
+     |
+6109 |         uint256 start = (meta >> 48) & 0xffffffffffffffff;
+     |         ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:6303:13:
+     |
+6303 |             ClassInfo memory referenceClass = classes[resolved.referenceClass];
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:6322:9:
+     |
+6322 |         ClassInfo memory referenceClass = classes[resolved.referenceClass];
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:7351:9:
+     |
+7351 |         uint256 head;
+     |         ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:489:5:
+    |
+489 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:7486:18:
+     |
+7486 |                 (bool found, uint256 wantedLeafClass) = _findClass(
+     |                  ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:7507:10:
+     |
+7507 |         (bool found, uint256 wantedClass) = _findClass(classes, descriptorData, nameOffset, nameLength);
+     |          ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:7633:13:
+     |
+7633 |             uint256 payloadRemaining = remaining - header - fixedSize;
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:7649:9:
+     |
+7649 |         uint256 payloadRemaining = remaining - header - fixedSize;
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:7706:44:
+     |
+7706 |     function _readCode(ClassInfo memory c, uint256 start, uint256 length, Selected memory s)
+     |                                            ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> VFS0aInterpreter.sol:7739:48:
+     |
+7739 |     function _readCallCode(ClassInfo memory c, uint256 start, uint256 length, Selected memory s)
+     |                                                ^^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> VFS0aInterpreter.sol:411:5:
+    |
+411 |     function start(
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9319:13:
+     |
+9319 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9402:9:
+     |
+9402 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9335:13:
+     |
+9335 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9402:9:
+     |
+9402 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9343:13:
+     |
+9343 |             uint256 v3 = stack[sp - 3];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9405:9:
+     |
+9405 |         uint256 v3 = stack[sp - 3];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9357:13:
+     |
+9357 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9402:9:
+     |
+9402 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9366:17:
+     |
+9366 |                 uint256 v2 = stack[sp - 2];
+     |                 ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9373:13:
+     |
+9373 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9373:13:
+     |
+9373 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9402:9:
+     |
+9402 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9376:13:
+     |
+9376 |             uint256 v3 = stack[sp - 3];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9405:9:
+     |
+9405 |         uint256 v3 = stack[sp - 3];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9386:13:
+     |
+9386 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9402:9:
+     |
+9402 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> VFS0aInterpreter.sol:9394:13:
+     |
+9394 |             uint256 v3 = stack[sp - 3];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> VFS0aInterpreter.sol:9405:9:
+     |
+9405 |         uint256 v3 = stack[sp - 3];
+     |         ^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8376:24:
+     |
+8376 |         uint64 mask = (uint64(1) << shift) - 1;
+     |                        ^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8378:23:
+     |
+8378 |         uint64 half = uint64(1) << (shift - 1);
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8398:27:
+     |
+8398 |             significand = magnitude << (precision - exponent - 1);
+     |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8400:29:
+     |
+8400 |         if (significand == (uint64(1) << precision)) {
+     |                             ^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8404:32:
+     |
+8404 |         uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+     |                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8405:34:
+     |
+8405 |         uint64 sign = negative ? uint64(1) << (fractionBits + (fractionBits == 23 ? 8 : 11)) : 0;
+     |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8406:24:
+     |
+8406 |         return sign | (uint64(exponent + bias) << fractionBits) | (significand & fractionMask);
+     |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8414:32:
+     |
+8414 |         uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+     |                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8418:26:
+     |
+8418 |         uint64 minimum = uint64(1) << (targetBits - 1);
+     |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8430:28:
+     |
+8430 |             ? fraction : ((uint64(1) << fractionBits) | fraction);
+     |                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8432:15:
+     |
+8432 |             ? significand << (uint256(exponent) - fractionBits)
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8450:33:
+     |
+8450 |             uint64 normalized = fraction << (52 - top);
+     |                                 ^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8484:19:
+     |
+8484 |                 : significand << (23 - top);
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8495:15:
+     |
+8495 |             ? significand << uint256(subnormalShift)
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8504:32:
+     |
+8504 |         uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+     |                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> VFS0aInterpreter.sol:8511:26:
+     |
+8511 |         uint64 signBit = uint64(1) << (exponentBits + fractionBits);
+     |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> VFS0aInterpreter.sol:3265:90:
+     |
+3265 |     function _vfsNativeBinding(ClassInfo memory c, uint256 method) private pure returns (uint8) {
+     |                                                                                          ^^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> VFS0aInterpreter.sol:5472:29:
+     |
+5472 |     ) private pure returns (uint256) {
+     |                             ^^^^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> VFS0aInterpreter.sol:7336:29:
+     |
+7336 |     ) private pure returns (bool) {
+     |                             ^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> VFS0aInterpreter.sol:7372:29:
+     |
+7372 |     ) private pure returns (bool) {
+     |                             ^^^^
+
+
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    --> VFS0aInterpreter.sol:3574:9:
+     |
+3574 |         uint256 root,
+     |         ^^^^^^^^^^^^
+
+
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    --> VFS0aInterpreter.sol:3576:9:
+     |
+3576 |         uint256 throwableBootstrapAt,
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    --> VFS0aInterpreter.sol:7193:38:
+     |
+7193 |         uint64[][] memory arrayHeap, uint256[] memory heapKinds,
+     |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Contract code size is 292968 bytes and exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on Mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+ --> VFS0aInterpreter.sol:7:1:
+  |
+7 | contract VFS0aInterpreter {
+  | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: Contract initcode size is 292996 bytes and exceeds 49152 bytes (a limit introduced in Shanghai). This contract may not be deployable on Mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+ --> VFS0aInterpreter.sol:7:1:
+  |
+7 | contract VFS0aInterpreter {
+  | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","runtimeBytes":292968,"runtimeSHA256":"717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86","sourceSHA256":"b95f0788f3a45b580216697866e32814e590670a55144186fc130391986497f3","acceptanceCapBytes":327680,"acceptanceCapPassed":true,"settings":{"optimizer":200,"viaIR":true,"evmVersion":"cancun","metadata":false}}
+go test -count=1 -timeout=18m ./jvmevm/localcontinuation/vfs0a
+ok  	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/vfs0a	391.432s

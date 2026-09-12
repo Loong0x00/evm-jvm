@@ -1,0 +1,46 @@
+=== RUN   TestCB0ParentJavaPublicationFailures
+=== RUN   TestCB0ParentJavaPublicationFailures/blob
+=== RUN   TestCB0ParentJavaPublicationFailures/sync
+=== RUN   TestCB0ParentJavaPublicationFailures/trie
+=== RUN   TestCB0ParentJavaPublicationFailures/manifest
+=== RUN   TestCB0ParentJavaPublicationFailures/rename
+--- PASS: TestCB0ParentJavaPublicationFailures (0.95s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/blob (0.23s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/sync (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/trie (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/manifest (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/rename (0.19s)
+=== RUN   TestCB0ParentClassBoundaryAndJavaException
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/65536
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/65537
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/exception
+--- PASS: TestCB0ParentClassBoundaryAndJavaException (1.40s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/65536 (0.69s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/65537 (0.69s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/exception (0.02s)
+=== RUN   TestCB0ParentGeneratedJavaPipeline
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0_1]
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[1_0]
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0]
+--- PASS: TestCB0ParentGeneratedJavaPipeline (0.20s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[0_1] (0.08s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[1_0] (0.08s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[0] (0.04s)
+=== RUN   TestCB0ParentActualNewProcesses
+    parent_test.go:309: === RUN   TestCB0ParentChild
+            parent_test.go:295: stagestart pid533913 epoch1 state=0xcb5f276daca1adaa9569bc21064ed7beaee020c744077e39c2a4388ebf41421d
+        --- PASS: TestCB0ParentChild (0.16s)
+        PASS
+    parent_test.go:309: === RUN   TestCB0ParentChild
+            parent_test.go:295: stageresume pid533937 epoch2 state=0x2e6d292ae9a48a42063a988e59abe34f6c72e487141e6232382ed63940b67f1e
+        --- PASS: TestCB0ParentChild (0.04s)
+        PASS
+    parent_test.go:309: === RUN   TestCB0ParentChild
+            parent_test.go:295: stagefinish pid533953 epoch6 state=0x0625fd3ee65211e3fb2d873dd2300c6703b48f6633e93539551cf0cb627606cf
+        --- PASS: TestCB0ParentChild (0.09s)
+        PASS
+    parent_test.go:309: === RUN   TestCB0ParentChild
+        --- PASS: TestCB0ParentChild (0.02s)
+        PASS
+--- PASS: TestCB0ParentActualNewProcesses (0.33s)
+PASS

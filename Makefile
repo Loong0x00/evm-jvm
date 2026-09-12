@@ -257,3 +257,14 @@ java-mc-di0-test: java-mc-di0-check
 	go test -count=1 -timeout=18m ./jvmevm/artifactstore/di0/...
 java-mc-di0-demo: java-mc-di0-check
 	go test -count=1 -v -timeout=18m -run '^TestDI0ParentIndependentResourceCommitments$$' ./jvmevm/artifactstore/di0
+
+# CB0 fixed package LOCAL Java bridge; generated fixtures, not Minecraft startup.
+.PHONY: java-mc-cb0-build java-mc-cb0-check java-mc-cb0-test java-mc-cb0-demo
+java-mc-cb0-build:
+	cd jvmevm/localcontinuation/cb0/runtime && npm ci --ignore-scripts && npm run build
+java-mc-cb0-check:
+	cd jvmevm/localcontinuation/cb0/runtime && npm ci --ignore-scripts && npm run check
+java-mc-cb0-test: java-mc-cb0-check
+	go test -count=1 -timeout=18m ./jvmevm/localcontinuation/cb0/...
+java-mc-cb0-demo: java-mc-cb0-check
+	go test -v -count=1 -timeout=18m -run '^TestCB0ParentGeneratedJavaPipeline$$' ./jvmevm/localcontinuation/cb0

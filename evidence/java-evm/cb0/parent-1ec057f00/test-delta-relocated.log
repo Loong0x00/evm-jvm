@@ -1,0 +1,44 @@
+=== RUN   TestCB0ParentRealDirectorySyncFailure
+--- PASS: TestCB0ParentRealDirectorySyncFailure (0.29s)
+=== RUN   TestCB0ParentActualNewProcesses
+    parent_test.go:366: actual child pid613163 stageinput
+    parent_test.go:367: === RUN   TestCB0ParentChild
+            parent_test.go:313: stageinput pid613163 state0x6d3bfbb710749b9dbad0ebc1a3a2d364218375ac136e992836f0fdb8a3a45e7d
+        --- PASS: TestCB0ParentChild (0.05s)
+        PASS
+    parent_test.go:366: actual child pid613179 stageindex
+    parent_test.go:367: === RUN   TestCB0ParentChild
+            parent_test.go:313: stageindex pid613179 state0xfde2af5e92c0029071a2f51e7bfd326fedc665692b9c38f98bb190b056c59fb4
+        --- PASS: TestCB0ParentChild (0.05s)
+        PASS
+    parent_test.go:366: actual child pid613196 stagedecode
+    parent_test.go:367: === RUN   TestCB0ParentChild
+            parent_test.go:313: stagedecode pid613196 state0x542187eff6130b59b1db27813279b0318e218ea43ccb85d2b4f2c56691379643
+        --- PASS: TestCB0ParentChild (0.07s)
+        PASS
+    parent_test.go:366: actual child pid613212 stageready
+    parent_test.go:367: === RUN   TestCB0ParentChild
+            parent_test.go:313: stageready pid613212 state0x82e96f7d8fda51592b3f3c74079e7f51fb2bb57013ab3b3e09ba6493ba1bb313
+        --- PASS: TestCB0ParentChild (0.14s)
+        PASS
+    parent_test.go:366: actual child pid613232 stagestart
+    parent_test.go:367: === RUN   TestCB0ParentChild
+            parent_test.go:347: stagestart pid613232 epoch1 state=0xcb5f276daca1adaa9569bc21064ed7beaee020c744077e39c2a4388ebf41421d
+        --- PASS: TestCB0ParentChild (0.06s)
+        PASS
+    parent_test.go:366: actual child pid613253 stageresume
+    parent_test.go:367: === RUN   TestCB0ParentChild
+            parent_test.go:347: stageresume pid613253 epoch2 state=0x2e6d292ae9a48a42063a988e59abe34f6c72e487141e6232382ed63940b67f1e
+        --- PASS: TestCB0ParentChild (0.06s)
+        PASS
+    parent_test.go:366: actual child pid613279 stagefinish
+    parent_test.go:367: === RUN   TestCB0ParentChild
+            parent_test.go:347: stagefinish pid613279 epoch6 state=0x0625fd3ee65211e3fb2d873dd2300c6703b48f6633e93539551cf0cb627606cf
+        --- PASS: TestCB0ParentChild (0.15s)
+        PASS
+    parent_test.go:366: actual child pid613301 stagefinal
+    parent_test.go:367: === RUN   TestCB0ParentChild
+        --- PASS: TestCB0ParentChild (0.04s)
+        PASS
+--- PASS: TestCB0ParentActualNewProcesses (0.66s)
+PASS

@@ -72,3 +72,12 @@ Transient database directories, binaries and caches may use `build/` or test tem
 directories only if reconstructible. If a failure depends on irreplaceable state,
 preserve that state or a sufficient reproducible fixture before cleanup. No blanket
 migration/cleanup of all historical temporary data has been performed or claimed.
+
+## CB0 production bridge
+
+Parent accepted fixed class package bridge in JAVA_EVM_MC_CB0_REVIEW.md; evidence
+cb0/ retains interrupted candidate provenance, real parent failures and fixes,
+explicit nested engine-event amendment, complete549.346s/1202511872B final observer
+and54.842s/351748096B test-only audit delta. Eight actual input-to-terminal processes,
+exact64KiB package, high32MiB input and durable Java317/299 are generated fixtures,
+NOT original Minecraft execution or a general loader. No push follows implicitly.

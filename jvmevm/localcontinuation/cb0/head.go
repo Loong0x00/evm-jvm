@@ -324,6 +324,9 @@ func (s *Session) cb0IndexHead(gas uint64) (zi0.IndexHead, error) {
 }
 
 func cb0CanonicalPackedRecord(p [32]byte) bool {
+	if p == ([32]byte{}) {
+		return false
+	}
 	for _, b := range p[:7] {
 		if b != 0 {
 			return false

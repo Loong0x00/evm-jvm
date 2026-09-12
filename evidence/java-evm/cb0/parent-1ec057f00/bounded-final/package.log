@@ -1,0 +1,137 @@
+=== RUN   TestCB0ArtifactValidationPinsComputedRuntimeKeccak
+--- PASS: TestCB0ArtifactValidationPinsComputedRuntimeKeccak (0.00s)
+=== RUN   TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange
+=== RUN   TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/binding_output_name
+=== RUN   TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/start_output_type
+--- PASS: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange (0.00s)
+    --- PASS: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/binding_output_name (0.00s)
+    --- PASS: TestCB0ArtifactValidationRejectsOutputShapeWithoutSelectorChange/start_output_type (0.00s)
+=== RUN   TestCB0HeadValidationInitialWorld
+--- PASS: TestCB0HeadValidationInitialWorld (0.01s)
+=== RUN   TestCB0HeadValidationBoundaryGas
+--- PASS: TestCB0HeadValidationBoundaryGas (0.00s)
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape/AS0_controller_code_pin
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape/ordinary_creator_nonce
+=== RUN   TestCB0HeadValidationRejectsCopiedStateShape/fixed_engine_code_pin
+--- PASS: TestCB0HeadValidationRejectsCopiedStateShape (0.01s)
+    --- PASS: TestCB0HeadValidationRejectsCopiedStateShape/AS0_controller_code_pin (0.00s)
+    --- PASS: TestCB0HeadValidationRejectsCopiedStateShape/ordinary_creator_nonce (0.00s)
+    --- PASS: TestCB0HeadValidationRejectsCopiedStateShape/fixed_engine_code_pin (0.00s)
+=== RUN   TestCB0ParentJavaPublicationFailures
+=== RUN   TestCB0ParentJavaPublicationFailures/blob
+=== RUN   TestCB0ParentJavaPublicationFailures/sync
+=== RUN   TestCB0ParentJavaPublicationFailures/trie
+=== RUN   TestCB0ParentJavaPublicationFailures/manifest
+=== RUN   TestCB0ParentJavaPublicationFailures/rename
+--- PASS: TestCB0ParentJavaPublicationFailures (0.97s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/blob (0.25s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/sync (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/trie (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/manifest (0.18s)
+    --- PASS: TestCB0ParentJavaPublicationFailures/rename (0.18s)
+=== RUN   TestCB0ParentActualSyncAndEventCounts
+=== RUN   TestCB0ParentActualSyncAndEventCounts/false
+    parent_acceptance_test.go:187: disk=false actual post-initial syncs=21, Java events/slices=6
+=== RUN   TestCB0ParentActualSyncAndEventCounts/true
+    parent_acceptance_test.go:187: disk=true actual post-initial syncs=21, Java events/slices=6
+--- PASS: TestCB0ParentActualSyncAndEventCounts (0.32s)
+    --- PASS: TestCB0ParentActualSyncAndEventCounts/false (0.08s)
+    --- PASS: TestCB0ParentActualSyncAndEventCounts/true (0.23s)
+=== RUN   TestCB0ParentClassBoundaryAndJavaException
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/65536
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/65537
+=== RUN   TestCB0ParentClassBoundaryAndJavaException/exception
+--- PASS: TestCB0ParentClassBoundaryAndJavaException (1.38s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/65536 (0.69s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/65537 (0.68s)
+    --- PASS: TestCB0ParentClassBoundaryAndJavaException/exception (0.02s)
+=== RUN   TestCB0ParentQuantumAndConcurrentCAS
+--- PASS: TestCB0ParentQuantumAndConcurrentCAS (0.49s)
+=== RUN   TestCB0ParentMetadataMatrix
+=== RUN   TestCB0ParentMetadataMatrix/format
+=== RUN   TestCB0ParentMetadataMatrix/owner
+=== RUN   TestCB0ParentMetadataMatrix/length
+=== RUN   TestCB0ParentMetadataMatrix/engine
+=== RUN   TestCB0ParentMetadataMatrix/engine-code
+=== RUN   TestCB0ParentMetadataMatrix/coordinator-code
+=== RUN   TestCB0ParentMetadataMatrix/index-route
+=== RUN   TestCB0ParentMetadataMatrix/decoder-route
+=== RUN   TestCB0ParentMetadataMatrix/AS0-route
+=== RUN   TestCB0ParentMetadataMatrix/no-coordinator
+=== RUN   TestCB0ParentMetadataMatrix/zero-package
+=== RUN   TestCB0ParentMetadataMatrix/empty-root
+=== RUN   TestCB0ParentMetadataMatrix/zero-root
+--- PASS: TestCB0ParentMetadataMatrix (0.17s)
+    --- PASS: TestCB0ParentMetadataMatrix/format (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/owner (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/length (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/engine (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/engine-code (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/coordinator-code (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/index-route (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/decoder-route (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/AS0-route (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/no-coordinator (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/zero-package (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/empty-root (0.00s)
+    --- PASS: TestCB0ParentMetadataMatrix/zero-root (0.00s)
+=== RUN   TestCB0ParentFullArchiveHighOffset
+    parent_acceptance_test.go:445: full32MiB/4096inputpages/8192EVMreads, classdata=33553780, result317, trie=0x42a1418157a7a412a7ecef3ce6e92309e4a3b461de15869e1c5f4651f639db41
+--- PASS: TestCB0ParentFullArchiveHighOffset (30.58s)
+=== RUN   TestCB0ParentRealFilesystemPublicationErrors
+=== RUN   TestCB0ParentRealFilesystemPublicationErrors/blob-dir
+=== RUN   TestCB0ParentRealFilesystemPublicationErrors/temp-create
+=== RUN   TestCB0ParentRealFilesystemPublicationErrors/manifest-rename
+--- PASS: TestCB0ParentRealFilesystemPublicationErrors (0.78s)
+    --- PASS: TestCB0ParentRealFilesystemPublicationErrors/blob-dir (0.26s)
+    --- PASS: TestCB0ParentRealFilesystemPublicationErrors/temp-create (0.28s)
+    --- PASS: TestCB0ParentRealFilesystemPublicationErrors/manifest-rename (0.24s)
+=== RUN   TestCB0ParentGeneratedJavaPipeline
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0_1]
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[1_0]
+=== RUN   TestCB0ParentGeneratedJavaPipeline/[0]
+--- PASS: TestCB0ParentGeneratedJavaPipeline (0.45s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[0_1] (0.15s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[1_0] (0.20s)
+    --- PASS: TestCB0ParentGeneratedJavaPipeline/[0] (0.09s)
+=== RUN   TestCB0ParentMetadataBeforeDB
+--- PASS: TestCB0ParentMetadataBeforeDB (0.04s)
+=== RUN   TestCB0ParentMarkerAndNestedLinks
+=== RUN   TestCB0ParentMarkerAndNestedLinks/marker
+=== RUN   TestCB0ParentMarkerAndNestedLinks/link
+--- PASS: TestCB0ParentMarkerAndNestedLinks (0.07s)
+    --- PASS: TestCB0ParentMarkerAndNestedLinks/marker (0.03s)
+    --- PASS: TestCB0ParentMarkerAndNestedLinks/link (0.03s)
+=== RUN   TestCB0ParentChild
+    parent_test.go:245: child entry
+--- SKIP: TestCB0ParentChild (0.00s)
+=== RUN   TestCB0ParentActualNewProcesses
+    parent_test.go:309: === RUN   TestCB0ParentChild
+            parent_test.go:295: stagestart pid491462 epoch1 state=0xcb5f276daca1adaa9569bc21064ed7beaee020c744077e39c2a4388ebf41421d
+        --- PASS: TestCB0ParentChild (0.29s)
+        PASS
+    parent_test.go:309: === RUN   TestCB0ParentChild
+            parent_test.go:295: stageresume pid491503 epoch2 state=0x2e6d292ae9a48a42063a988e59abe34f6c72e487141e6232382ed63940b67f1e
+        --- PASS: TestCB0ParentChild (0.07s)
+        PASS
+    parent_test.go:309: === RUN   TestCB0ParentChild
+            parent_test.go:295: stagefinish pid491520 epoch6 state=0x0625fd3ee65211e3fb2d873dd2300c6703b48f6633e93539551cf0cb627606cf
+        --- PASS: TestCB0ParentChild (0.13s)
+        PASS
+    parent_test.go:309: === RUN   TestCB0ParentChild
+        --- PASS: TestCB0ParentChild (0.04s)
+        PASS
+--- PASS: TestCB0ParentActualNewProcesses (0.56s)
+=== RUN   TestCB0AtomicInitialRootAndReopen
+--- PASS: TestCB0AtomicInitialRootAndReopen (0.00s)
+=== RUN   TestCB0DiskInitialRootReopensWithoutCreate
+--- PASS: TestCB0DiskInitialRootReopensWithoutCreate (0.07s)
+=== RUN   TestCB0ArtifactAndFrozenRanges
+--- PASS: TestCB0ArtifactAndFrozenRanges (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0	35.885s
+=== RUN   TestCB0EmbeddedArtifactPinsSchemaCapsABIAndDefensiveCopy
+--- PASS: TestCB0EmbeddedArtifactPinsSchemaCapsABIAndDefensiveCopy (0.00s)
+PASS
+ok  	github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0/runtime	0.002s
