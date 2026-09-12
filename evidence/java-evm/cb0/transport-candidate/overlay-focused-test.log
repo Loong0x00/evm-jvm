@@ -1,0 +1,14 @@
+runtime artifact commit: 4c8199db4
+runtime evidence head: 5c378f934
+command: cd build/java-diff-mc-cb0-harness-overlay && go test ./jvmevm/localcontinuation/cb0 -count=1 -v && go vet ./jvmevm/localcontinuation/cb0
+
+=== RUN   TestCB0AtomicInitialRootAndReopen
+--- PASS: TestCB0AtomicInitialRootAndReopen (0.01s)
+=== RUN   TestCB0DiskInitialRootReopensWithoutCreate
+--- PASS: TestCB0DiskInitialRootReopensWithoutCreate (0.01s)
+=== RUN   TestCB0ArtifactAndFrozenRanges
+--- PASS: TestCB0ArtifactAndFrozenRanges (0.00s)
+PASS
+ok  github.com/ethereum/go-ethereum/jvmevm/localcontinuation/cb0  0.014s
+
+go vet exited 0 with no output.
