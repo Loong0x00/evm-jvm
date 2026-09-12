@@ -172,5 +172,14 @@
       }
     ]
   },
-  "caveat": "The ignored adapter reuses only the retained generated-fixture EVM driver with CB0 artifact-schema, production-domain, and CB0Error adaptations. It is not the production cb0 transport implementation or its memory/disk/IO acceptance gate."
+  "caveat": "The ignored adapter reuses only the retained generated-fixture EVM driver with CB0 artifact-schema, production-domain, and CB0Error adaptations. It is not the production cb0 transport implementation or its memory/disk/IO acceptance gate.",
+  "lowGasGuardRefusal": {
+    "selector": "0xf15d7343",
+    "code": 7,
+    "gas": 155483,
+    "nestedOOG": false,
+    "completedChangedSstores": 1,
+    "before": "0x900f61ece4096cbc43a9074579ef199ed25f5b56e5bf11baaaea54466737b637",
+    "afterBeforeHostRestore": "0x900f61ece4096cbc43a9074579ef199ed25f5b56e5bf11baaaea54466737b637"
+  }
 }

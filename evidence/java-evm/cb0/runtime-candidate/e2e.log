@@ -3,4 +3,6 @@ Artifact: jvmevm/localcontinuation/cb0/runtime/combinedartifacts/CB0ClassCoordin
 Generated Java 8 oracle: SharedEntry.run(7)=317; SharedEntry.run(9)=299.
 EVM direct/q1/q7 and input-9 worlds verified; q1 negative resume probes,
 memory q1/q7 setup paths, and 1..4/exact-65536 boundary constructor/paging probes passed.
+The 500,000-gas post-CHANGED-guard probe returned LC0ControlError(7), selector
+0xf15d7343, with one completed changed SSTORE and no nested OOG; it was not relabeled as OOG.
 See e2e-summary.json and reproduce-e2e.sh. This is not CB0 transport acceptance.
