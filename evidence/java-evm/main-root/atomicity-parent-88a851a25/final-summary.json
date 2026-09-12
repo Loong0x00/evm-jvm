@@ -1,0 +1,30 @@
+{
+  "faultWorldsComparedToControl": 13,
+  "strictReceiptResult": {
+    "ok": true,
+    "worlds": 12,
+    "abiAndEventReceipts": 427,
+    "scope": "evidence consistency only; raw state-root chain and DI0 return fragments absent in this producer, no transport acceptance"
+  },
+  "syscallChecks": {
+    "manifest-after-rename": {
+      "actualDirectorySyncsAfterRename": 0
+    },
+    "manifest-after-dirsync": {
+      "actualDirectorySyncsAfterRename": 1
+    }
+  },
+  "lateCreateCancellation": {
+    "address": "0x0000000000000000000000000000000000000000",
+    "afterRoot": "0x3a9c072a82663760c5978163fda84a5324cd1595399539d14cf9f302258557eb",
+    "createdCodeBytes": 0,
+    "error": "MR0 Session: public EVM CREATE cancelled by owned deadline",
+    "gas": 218,
+    "headBytesEqual": true,
+    "oldRoot": "0x3a9c072a82663760c5978163fda84a5324cd1595399539d14cf9f302258557eb",
+    "outputBytes": 0,
+    "retryError": "<nil>",
+    "retryRoot": "0xe72ede170736976722206f96114a4b4a65afc65fa866b5f5c9cb53b9695375d3"
+  },
+  "scope": "narrow COPY atomicity only; no full Session/promotion/original Java"
+}

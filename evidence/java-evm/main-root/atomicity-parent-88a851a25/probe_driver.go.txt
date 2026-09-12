@@ -1,0 +1,42 @@
+// TEST-ONLY modes in the owned COPY driver. No accepted/private Session access.
+func parentProbe(dir, artPath, which string) {
+ e,x:=openEnv(dir);must(x);defer e.close()
+ _,ca,_,_:=loadArtifact(artPath)
+ beforeBytes,x:=os.ReadFile(filepath.Join(dir,"durable-head.json"));must(x)
+ old:=e.root;cp:=readCheckpoint(e);args:=[]interface{}{[32]byte(e.m.PackageRoot),e.m.Epoch,[32]byte(e.m.CheckpointRoot),cp,e.m.Quantum,uint32(4096)}
+ if which=="parent-late-cancel" {
+  must(os.Setenv("MR0_ATOMICITY_TESTING","1"));must(os.Setenv("MR0_ATOMICITY_TEST_TIMEOUT_MS","1000"));must(os.Setenv("MR0_PARENT_PAUSE_AFTER_CALL","1"))
+ } else if which=="parent-prior-read" {must(os.Setenv("MR0_PARENT_UNREADABLE_PRIOR","1"))
+ } else if which=="parent-poison" {e.fault="manifest-after-rename"}
+ failed,decodedFailure:=coordinatorCall(e,ca,engineABI,"resumeMain",args...)
+ must(os.Unsetenv("MR0_PARENT_PAUSE_AFTER_CALL"));must(os.Unsetenv("MR0_ATOMICITY_TEST_TIMEOUT_MS"));must(os.Unsetenv("MR0_PARENT_UNREADABLE_PRIOR"))
+ if which=="parent-prior-read" {must(os.Chmod(filepath.Join(dir,"durable-head.json"),0600))}
+ afterBytes,x:=os.ReadFile(filepath.Join(dir,"durable-head.json"));must(x)
+ info:=map[string]interface{}{"mode":which,"error":fmt.Sprint(failed.Err),"gas":failed.Gas,"failedOutputHex":"0x"+hex.EncodeToString(failed.Out),"failedDecodedEpoch":decodedFailure.Slice.Epoch,"logs":len(failed.Logs),"oldRoot":old,"afterRoot":e.root,"priorHeadBytes":beforeBytes,"afterHeadBytes":afterBytes,"poisoned":e.poison!=nil}
+ // Clearing only the test fault never clears poison or supplies execution state.
+ e.fault=""
+ retry,_:=coordinatorCall(e,ca,engineABI,"resumeMain",args...)
+ info["retryError"]=fmt.Sprint(retry.Err);info["retryGas"]=retry.Gas;info["retryOutputBytes"]=len(retry.Out)
+ if e.poison!=nil {
+  _,_,creation:=e.create(owner,[]byte{0x60,0,0x60,0,0xf3},ordinaryGas)
+  info["poisonCreateError"]=fmt.Sprint(creation.Err);info["poisonCreateGas"]=creation.Gas
+  info["poisonPublishError"]=fmt.Sprint(e.writeManifest())
+  last,x:=os.ReadFile(filepath.Join(dir,"durable-head.json"));must(x);info["postProbeHeadUnchanged"]=bytes.Equal(last,afterBytes)
+ }
+ writeJSON(reportPath(dir,"parent-probe.json"),info)
+}
+
+func parentCreateProbe(dir, artPath string) {
+ e,x:=openEnv(dir);must(x);defer e.close();_,ca,_,_:=loadArtifact(artPath)
+ before,x:=os.ReadFile(filepath.Join(dir,"durable-head.json"));must(x);old:=e.root
+ must(os.Setenv("MR0_ATOMICITY_TESTING","1"));must(os.Setenv("MR0_ATOMICITY_TEST_TIMEOUT_MS","1000"));must(os.Setenv("MR0_PARENT_PAUSE_AFTER_CREATE","1"))
+ // Ordinary EVM CREATE returns one byte of runtime. This is not a class/page
+ // input, oversized-engine install, or a host Java execution path.
+ at,code,failed:=e.create(owner,[]byte{0x60,1,0x60,0,0x53,0x60,1,0x60,0,0xf3},ordinaryGas)
+ must(os.Unsetenv("MR0_PARENT_PAUSE_AFTER_CREATE"));must(os.Unsetenv("MR0_ATOMICITY_TEST_TIMEOUT_MS"))
+ after,x:=os.ReadFile(filepath.Join(dir,"durable-head.json"));must(x)
+ info:=map[string]interface{}{"error":fmt.Sprint(failed.Err),"gas":failed.Gas,"address":at,"createdCodeBytes":len(code),"outputBytes":len(failed.Out),"oldRoot":old,"afterRoot":e.root,"headBytesEqual":bytes.Equal(before,after)}
+ cp:=readCheckpoint(e);retry,_:=coordinatorCall(e,ca,engineABI,"resumeMain",[32]byte(e.m.PackageRoot),e.m.Epoch,[32]byte(e.m.CheckpointRoot),cp,e.m.Quantum,uint32(4096))
+ info["retryError"]=fmt.Sprint(retry.Err);info["retryRoot"]=e.root
+ writeJSON(reportPath(dir,"parent-create-probe.json"),info)
+}

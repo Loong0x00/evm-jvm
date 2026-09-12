@@ -1,5 +1,13 @@
 # Java-inside-EVM agent guide
 
+LATEST MR0 ATOMICITY: parent verified narrow Go COPY after88a851a25 plus3parent
+fixes: lateCALL/CREATEcancel outputs cleared, unreadablepriorHead poisons/restores,
+no speculative directoryfsync credit. Final73.404590s/368906240B;13faultworlds vs
+normalcontrol,12positives427strictABI/event/CP receipts,realEACCES,Go-race/strace,
+poisonedoperations+freshreopen,acceptedCB0regression. See
+JAVA_EVM_MC_MR0_ATOMICITY_PARENT_PREFLIGHT.md. NOT fullSession/profileacceptance;
+pre-Java phaseOpen and atomicinitialengine+AS0 remain. NoSolidity/cap/MC/push.
+
 LATEST MR0 SESSION REVIEW: worker2cf366518 is NOT accepted. Parent source-only
 12-world replay197.469617s/877002752B succeeds, but actual OS checkpoint-write
 failure publishes child epoch2 Head atold epoch1EVMroot withabsentchildblob;
