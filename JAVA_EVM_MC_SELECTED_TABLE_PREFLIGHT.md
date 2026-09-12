@@ -41,21 +41,52 @@ only this source patch.  It installs each copied lockfile locally (the repositor
 has no checked-in `node_modules`), retaining the initial missing-local-solc failure
 in the evidence directory rather than treating a global compiler as a pin.
 
-## First build evidence (not an EVM gate)
+## Fresh EVM gate
 
-A fresh reconstructed copy compiled with solc
-`0.8.30+commit.73712a01.Emscripten.clang`, optimizer 200, viaIR, Cancun and metadata
-off. The build script reported runtime 292605 B, SHA-256
+The fresh `run-20260912T110538Z` archive records a complete reconstruction,
+re-pin and public-transport gate: **407.515 s**, sampled process-group peak
+**878391296 B**, 1991 samples, exit 0, under its 1200 s/4 GiB limits. It compiled
+with solc `0.8.30+commit.73712a01.Emscripten.clang`, optimizer 200, viaIR, Cancun
+and metadata off. The engine is 292605 B, SHA-256
 `b8013a6592938b8ba58129fbb4d3db6d6ee87a15856515e4f3aafa0e5cab6ed7`, below the
-320 KiB LOCAL experiment cap. This differs from the capacity reference engine and
-therefore requires different code/config/package/instance/machine roots; no
-cross-engine literal-root equality is claimed.
+320 KiB LOCAL cap. Its Keccak is
+`fdd73425c5c82ac344b72130aa3ac6db98ba5c6341df0982a9c039ea24844c0f`;
+the separately re-pinned coordinator artifact is
+`44a1d0685a7b6e9907d98f689ffaf025ae90f0d4826a9cb444356d6448dd6687`.
+The coordinator package/resource/VM domain is `MC-SELECTED-TABLE-PREFLIGHT`.
+This intentionally differs from the capacity reference engine/config/package/
+instance/machine roots; no cross-engine literal-root or payload-byte equality is
+claimed.
 
-The initial draft contains the narrow source patch and public-transport driver
-recipe only. Real opaque ZIP -> AS0 -> ZI0 -> DI0 FINAL -> coordinator EVM gates,
-allocation/peak-memory measurements, selection regressions, and watchdog results
-must be archived before this can be assessed. Ordinary 100M/30s remains first;
-1B/120s is reference/boundary-only and never a rescue.
+The verifier checked 24 worlds/94 distinct process receipts, 52 published
+checkpoint files and 566 actual DI0 fragments. It exercised cold, memory warm,
+disk/new-process reopen, q7, publication failure/old-root retry and size/count
+refusals, using only opaque ZIP -> AS0 -> ZI0 -> DI0 FINAL -> coordinator reads
+of at most 4096 bytes. It retained CP4096/Code65535, 8/262144 input limits,
+1 MiB checkpoints, 38 bootstraps and the original ordinary budgets/reserve.
+
+For the three-image 181969 B `BigPair` input (result 23), ordinary 100M direct
+now finishes at **63660316 gas**; q7 finishes in 3 slices and q1 in 20. Every
+dense call has 47 actual <=4096-byte DI0 reads and direct/q1/q7 agree on final
+same-engine machine/VFS roots, counters and result. The old parent capacity
+reference had an ordinary `LC0ControlError7` at 74874471 gas and required its
+explicit 1B-only 124505990-gas direct run. This is a measured comparison of
+separately pinned engines, not a false equal-root claim. The one-class BigEntry
+run is 31474005 gas (parent reference 48451006); padded262144 is 7911658
+(parent reference 7879725), so the improvement is method-density-specific, not
+claimed as a universal reduction. No 1B optimized rescue was used.
+
+## Remaining mandatory work
+
+This worker did not add a dedicated loaded/unloaded alias fixture spanning every
+requested clinit/constructor/virtual/interface/default/caught-and-uncaught case,
+nor a new peak-EVM-memory/free-pointer observer that can report optimized
+allocation counts/bytes. It therefore does **not** claim the exact number of
+`new Selected[](1)` allocations, an exact memory-expansion reduction, opaque
+checkpoint payload byte equality across changed envelope bindings, or production
+acceptance. The existing matrix gives regression coverage but is not a substitute
+for those dedicated negatives. Ordinary 100M remains first; 1B/120s stays
+reference/boundary-only and never a rescue.
 
 ## Reproduction
 
@@ -65,6 +96,8 @@ From the repository root, with a nonexistent fresh output directory:
 python3 evidence/java-evm/selected-table/preflight/prepare_selected_copy.py \
   build/java-diff-mc-owncapacity-selected-<run>
 python3 evidence/java-evm/selected-table/preflight/repair_selected_copy.py \
+  build/java-diff-mc-owncapacity-selected-<run>
+python3 evidence/java-evm/selected-table/preflight/finalize_selected_pins.py \
   build/java-diff-mc-owncapacity-selected-<run>
 python3 evidence/java-evm/selected-table/preflight/build_selected_drivers.py \
   build/java-diff-mc-owncapacity-selected-<run>
