@@ -1,6 +1,8 @@
 # Generated Java8 `main(String[])` launch / link-frontier preflight
 
-Status: **measured generated-only preflight; not accepted production work.** Base
+Status: **parent-verified generated-only preflight, not new production work**;
+JAVA_EVM_MC_MAIN_ENTRY_PARENT_PREFLIGHT.md corrects verifier gaps and adds actual
+UTF-16 content/receipt controls. Original worker captures remain unchanged. Base
 `0fdb9dcf7` CB0 remains unchanged and accepted. This document and
 `evidence/java-evm/main-entry/preflight/` are the only changes in this task.
 

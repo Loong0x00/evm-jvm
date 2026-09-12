@@ -17,8 +17,12 @@ CB0 production now parent ACCEPTED: JAVA_EVM_MC_CB0_REVIEW.md. Final complete
 reopen flags, strict Head/ABI and nested engine checkpoint events (explicit amendment).
 Actual opaque pipeline, Java exceptions/terminal blobs, publication errors/CAS,
 full32MiB/8192 EVM reads/high offset and exact64KiB package pass. No original Java/MC
-execution. Next generated main(String[]) guest-launch/link-frontier preflight; first
-measure whether a real Java launcher avoids any new engine ABI. No quota changes.
+execution. Generated guest main(String[]) launch is now parent-verified WITHOUT
+new engine ABI: JAVA_EVM_MC_MAIN_ENTRY_PARENT_PREFLIGHT.md,17.197s/335765504B.
+Parent fixed verifier gaps, checked119 process receipts across two suites, real
+UTF16 code units incl NUL/surrogates, typed NPE/terminal blob and root/CAS integrity.
+Next link-frontier candidate9047772b2 needs independent parent review/replay; demand
+resolution is only a proposal, not implemented. No quota changes.
 
 CURRENT BRIDGE FRONTIER: worker e3f45ec22 integrated5ce5ffe37; parent independently
 replayed generated EVMZIP->DI0->VFS0a->Javabytecode results76/203. NOT production

@@ -1,0 +1,32 @@
+[
+  {
+    "case": "valid",
+    "exit": 0,
+    "expected": "accept"
+  },
+  {
+    "case": "overgas",
+    "exit": 1,
+    "expected": "refuse"
+  },
+  {
+    "case": "q7-is-direct",
+    "exit": 1,
+    "expected": "refuse"
+  },
+  {
+    "case": "cp-byte",
+    "exit": 1,
+    "expected": "refuse"
+  },
+  {
+    "case": "recreate",
+    "exit": 1,
+    "expected": "refuse"
+  },
+  {
+    "case": "wrong-open-root",
+    "exit": 1,
+    "expected": "refuse"
+  }
+]

@@ -12,8 +12,11 @@ process continuation. CB0 production bridge is now parent ACCEPTED: JAVA_EVM_MC_
 checkpoints, full32MiB/high-offset and exact64KiB package. Parent corrected legal
 subset/order, pre-DB metadata/links, no-reinstall receipt and exact nested engine
 event handling. Still fixed<=4 classes/65536B, not a lazy loader or original Java.
-Next generated guest-main launch/link-frontier investigation; defaultTerra/high,
-independent parent gates and no silent entry/loader/quota expansion.
+Generated guest-main launch now independently verified with existing root ABI:
+JAVA_EVM_MC_MAIN_ENTRY_PARENT_PREFLIGHT.md,17.197s/335765504B; real UTF16 contents,
+119 process receipts, terminal return/NPE and corrected strict verification. Next
+link-frontier candidate9047772b2 awaits parent replay; demand loading not implemented.
+DefaultTerra/high, independent gates, no silent entry/loader/quota expansion.
 Latest user cancelled the pause: continue after dependency gates, no implicit push. DI0-only256KiB
 is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.
 
