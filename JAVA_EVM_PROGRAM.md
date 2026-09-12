@@ -1,5 +1,13 @@
 # Continuous JVM-in-EVM program
 
+LATEST MR0 SESSION REVIEW: worker2cf366518 is NOT accepted. Parent source-only
+12-world replay197.469617s/877002752B succeeds, but actual OS checkpoint-write
+failure publishes child epoch2 Head atold epoch1EVMroot withabsentchildblob;
+retry fails. GNUtimeout escaped workerwatchdog group;6.49MB wasnotwholeRSS.
+Four corrupt evidence mutants pass workerstrictverifier. See
+JAVA_EVM_MC_MR0_SESSION_PARENT_FINDINGS.md and session-parent-2cf366518 evidence.
+Go-only atomicity/strict-receipt completion next; unchanged Solidity/acceptedcaps.
+
 LATEST MR0 BASIC: parent independently rebuilt repaired a2efa63fa candidate and
 replayed12 generated q1/q7/direct worlds,197.311341s/882098176B. Canonical empty
 String[] entry, overload and legal null/new-array rebind now agree; VOID/typed Java
