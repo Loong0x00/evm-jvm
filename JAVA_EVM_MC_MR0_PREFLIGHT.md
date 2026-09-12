@@ -54,3 +54,28 @@ claimed. Parent reconstruction/replay must supply such a driver and independentl
 validate the copy before any profile promotion or acceptance.
 
 No official archive/class was handled; no Minecraft/EULA/listener/world/Done claim.
+
+## Parent source review before execution (not runtime findings yet)
+
+Integrated as0acc0c72d/fa33e828e/b24d5ff40. Compilation is not an execution gate.
+Parent found source/document mismatches that MUST receive actual EVM controls:
+
+- `_prepare` still selects by method NAME only, despite the above exact-descriptor
+  overload claim. `_loadRoot` checks the descriptor only after name selection;
+  an otherwise valid main overload may therefore be rejected as duplicate.
+- `_validateMainRootLocal` requires local0 to remain a non-null empty String[] at
+  every pending checkpoint. Java may legally rebind its args parameter or reuse
+  its local slot. A direct return can bypass that depth!=0 check while a small
+  quantum exposes it. Input shape is not permission to freeze a mutable local.
+- The actual ABI component remains named `result`; documentation calls it
+  `legacyIntResult`. Transport must use the actual ABI, expose explicit outcome
+  tags and never report reserved zero as a Java int return.
+- ROOT_ABI.md's statement that publication errors are reverts is not a Go IO rule:
+  production-style publication failures must expose gas only, no EVM revert or
+  usable slice/checkpoint/root/log. Do not fabricate a revert for filesystem failure.
+
+A scoped Go-only transport worker now builds real EVM tests against the EXACT
+compiled candidate, preserving these potential refusals without Solidity edits.
+Selected-table optimization has a different sole Solidity writer/worktree; no
+concurrent MR0 semantic patch is authorized. Parent will independently replay
+before deciding repairs. Accepted source/quotas and original JAR remain untouched.
