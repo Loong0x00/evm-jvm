@@ -4,8 +4,8 @@ pragma solidity 0.8.30;
 /// @notice Fixed, constructor-bound generated-class package coordinator.
 /// It reads the selected FINAL DI0 resources entirely inside the EVM and delegates
 /// execution to the fixed LOCAL VFS0a interpreter. It is not a ClassLoader.
-contract CB0ClassCoordinator {
-    error CB0Error(uint256 code);
+contract MR0MainCoordinator {
+    error MR0Error(uint256 code);
 
     struct SeedFile {
         bytes path;
@@ -13,14 +13,14 @@ contract CB0ClassCoordinator {
         bool readOnly;
     }
 
-    address private constant ENGINE = 0x4a564D45564D564653304152554e54494D450001;
-    bytes32 private constant ENGINE_CODEHASH = hex"e7f4de699588a3d58624e8ab717a00809759d112952ca1fac8bbc74637118c84";
+    address private constant ENGINE = 0x4d52304D41494e454E47494E4500000000000001;
+    bytes32 private constant ENGINE_CODEHASH = hex"463dd2419b296aa39f766bdae06d11b49b9cffa935d052a38fe82921757e29de";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-CB0/package/v1");
-    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-CB0/resource/v1");
-    bytes32 private constant VM_DOMAIN = keccak256("MC-CB0/vm/v1");
+    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-MR0/package/v1");
+    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-MR0/resource/v1");
+    bytes32 private constant VM_DOMAIN = keccak256("MC-MR0/vm/v1");
 
     address public owner;
     address public finalIndex;
@@ -44,13 +44,13 @@ contract CB0ClassCoordinator {
         bytes32[] memory assertedResourceRoots,
         bytes32 assertedPackageRoot
     ) {
-        if (fixedOwner == address(0) || fixedOwner != msg.sender) revert CB0Error(1);
+        if (fixedOwner == address(0) || fixedOwner != msg.sender) revert MR0Error(1);
         uint256 n = fixedDecoders.length;
         if (
             n == 0 || n > 4 || fixedRawNames.length != n ||
             assertedIndexRoots.length != n || assertedResourceRoots.length != n
-        ) revert CB0Error(2);
-        if (ENGINE.codehash != ENGINE_CODEHASH) revert CB0Error(3);
+        ) revert MR0Error(2);
+        if (ENGINE.codehash != ENGINE_CODEHASH) revert MR0Error(3);
 
         owner = fixedOwner;
         classCount = uint8(n);
@@ -63,23 +63,23 @@ contract CB0ClassCoordinator {
         ));
         for (uint256 i; i < n; ++i) {
             address decoder = fixedDecoders[i];
-            if (decoder.codehash != DI0_CODEHASH) revert CB0Error(4);
+            if (decoder.codehash != DI0_CODEHASH) revert MR0Error(4);
             bytes memory name = fixedRawNames[i];
             bytes32 nameHash = keccak256(name);
             for (uint256 j; j < i; ++j) {
-                if (fixedDecoders[j] == decoder || keccak256(fixedRawNames[j]) == nameHash) revert CB0Error(5);
+                if (fixedDecoders[j] == decoder || keccak256(fixedRawNames[j]) == nameHash) revert MR0Error(5);
             }
-            if (!_validRawName(name)) revert CB0Error(6);
-            if (_u8(decoder, bytes4(keccak256("phase()"))) != 4) revert CB0Error(7);
-            if (_b32(decoder, bytes4(keccak256("nameHash()"))) != nameHash) revert CB0Error(8);
+            if (!_validRawName(name)) revert MR0Error(6);
+            if (_u8(decoder, bytes4(keccak256("phase()"))) != 4) revert MR0Error(7);
+            if (_b32(decoder, bytes4(keccak256("nameHash()"))) != nameHash) revert MR0Error(8);
 
             bytes32 indexRoot = assertedIndexRoots[i];
-            if (indexRoot == bytes32(0) || _b32(decoder, bytes4(keccak256("indexRoot()"))) != indexRoot) revert CB0Error(9);
+            if (indexRoot == bytes32(0) || _b32(decoder, bytes4(keccak256("indexRoot()"))) != indexRoot) revert MR0Error(9);
             bytes32 resourceRoot = assertedResourceRoots[i];
-            if (resourceRoot == bytes32(0) || _b32(decoder, bytes4(keccak256("finalRoot()"))) != resourceRoot) revert CB0Error(10);
+            if (resourceRoot == bytes32(0) || _b32(decoder, bytes4(keccak256("finalRoot()"))) != resourceRoot) revert MR0Error(10);
             uint32 size = _u32(decoder, bytes4(keccak256("plainSize()")));
-            if (size == 0 || size > 65536) revert CB0Error(11);
-            if (uint256(total) + size > 65536) revert CB0Error(12);
+            if (size == 0 || size > 65536) revert MR0Error(11);
+            if (uint256(total) + size > 65536) revert MR0Error(12);
             total += size;
 
             address index = _address(decoder, bytes4(keccak256("index()")));
@@ -87,9 +87,9 @@ contract CB0ClassCoordinator {
                 commonIndex = index;
                 commonIndexRoot = indexRoot;
             } else if (index != commonIndex || indexRoot != commonIndexRoot) {
-                revert CB0Error(13);
+                revert MR0Error(13);
             }
-            if (_address(decoder, bytes4(keccak256("owner()"))) != fixedOwner) revert CB0Error(14);
+            if (_address(decoder, bytes4(keccak256("owner()"))) != fixedOwner) revert MR0Error(14);
 
             decoders[i] = decoder;
             rawNames[i] = name;
@@ -105,75 +105,61 @@ contract CB0ClassCoordinator {
             _u8(commonIndex, bytes4(keccak256("phase()"))) != 2 ||
             _b32(commonIndex, bytes4(keccak256("finalRoot()"))) != commonIndexRoot ||
             _address(commonIndex, bytes4(keccak256("owner()"))) != fixedOwner
-        ) revert CB0Error(15);
+        ) revert MR0Error(15);
 
         finalIndex = commonIndex;
         finalIndexRoot = commonIndexRoot;
         totalClassBytes = total;
         bytes32 root = keccak256(abi.encode(PACKAGE_DOMAIN, rolling, total, commonIndex, commonIndexRoot));
-        if (root == bytes32(0) || root != assertedPackageRoot) revert CB0Error(16);
+        if (root == bytes32(0) || root != assertedPackageRoot) revert MR0Error(16);
         packageRoot = root;
         instanceId = keccak256(abi.encode(VM_DOMAIN, address(this), root, fixedInstanceSalt));
     }
 
     modifier onlyOwner() {
-        if (msg.sender != owner) revert CB0Error(17);
+        if (msg.sender != owner) revert MR0Error(17);
         _;
     }
 
     function classBinding(uint8 at) external view returns (
         address decoder, bytes memory rawName, bytes32 resourceRoot, uint32 classSize
     ) {
-        if (at >= classCount) revert CB0Error(19);
+        if (at >= classCount) revert MR0Error(19);
         return (decoders[at], rawNames[at], resourceRoots[at], classSizes[at]);
     }
 
-    function start(
-        bytes32 assertedPackageRoot,
-        uint8 entryAt,
-        string calldata entry,
-        int32[] calldata args,
-        uint64 maxJvmSteps,
-        uint32 maxInternalSteps
-    ) external onlyOwner returns (bytes memory engineReturn) {
-        if (assertedPackageRoot != packageRoot) revert CB0Error(18);
-        if (entryAt >= classCount) revert CB0Error(19);
+    /// @notice Fixed direct `main(String[])` selection; no host argument vector exists.
+    function startMain(bytes32 assertedPackageRoot, uint8 entryAt, uint64 maxJvmSteps, uint32 maxInternalSteps)
+        external onlyOwner returns (bytes memory engineReturn)
+    {
+        if (assertedPackageRoot != packageRoot) revert MR0Error(18);
+        if (entryAt >= classCount) revert MR0Error(19);
         bytes[] memory classes = _loadAll();
         SeedFile[] memory seeds = new SeedFile[](0);
-        bytes memory data = abi.encodeWithSignature(
-            "start(bytes32,bytes[],string,string,int32[],(bytes,bytes,bool)[],uint64,uint32)",
-            instanceId, classes, _internalName(rawNames[entryAt]), entry, args,
-            seeds, maxJvmSteps, maxInternalSteps
-        );
-        return _engineCall(data);
+        return _engineCall(abi.encodeWithSignature(
+            "startMain(bytes32,bytes[],string,(bytes,bytes,bool)[],uint64,uint32)",
+            instanceId, classes, _internalName(rawNames[entryAt]), seeds, maxJvmSteps, maxInternalSteps));
     }
 
-    function resume(
-        bytes32 assertedPackageRoot,
-        uint64 expectedEpoch,
-        bytes32 expectedCheckpointRoot,
-        bytes calldata checkpoint,
-        uint64 maxJvmSteps,
-        uint32 maxInternalSteps
-    ) external onlyOwner returns (bytes memory engineReturn) {
-        if (assertedPackageRoot != packageRoot) revert CB0Error(18);
+    function resumeMain(bytes32 assertedPackageRoot, uint64 expectedEpoch, bytes32 expectedCheckpointRoot,
+        bytes calldata checkpoint, uint64 maxJvmSteps, uint32 maxInternalSteps)
+        external onlyOwner returns (bytes memory engineReturn)
+    {
+        if (assertedPackageRoot != packageRoot) revert MR0Error(18);
         bytes[] memory classes = _loadAll();
-        bytes memory data = abi.encodeWithSignature(
-            "resume(bytes32,uint64,bytes32,bytes[],bytes,uint64,uint32)",
-            instanceId, expectedEpoch, expectedCheckpointRoot, classes, checkpoint,
-            maxJvmSteps, maxInternalSteps
-        );
-        return _engineCall(data);
+        return _engineCall(abi.encodeWithSignature(
+            "resumeMain(bytes32,uint64,bytes32,bytes[],bytes,uint64,uint32)", instanceId,
+            expectedEpoch, expectedCheckpointRoot, classes, checkpoint, maxJvmSteps, maxInternalSteps));
     }
 
     function _loadAll() private view returns (bytes[] memory classes) {
-        if (ENGINE.codehash != ENGINE_CODEHASH) revert CB0Error(3);
+        if (ENGINE.codehash != ENGINE_CODEHASH) revert MR0Error(3);
         if (
             finalIndex.codehash != ZI0_CODEHASH ||
             _u8(finalIndex, bytes4(keccak256("phase()"))) != 2 ||
             _b32(finalIndex, bytes4(keccak256("finalRoot()"))) != finalIndexRoot ||
             _address(finalIndex, bytes4(keccak256("owner()"))) != owner
-        ) revert CB0Error(15);
+        ) revert MR0Error(15);
         uint256 n = classCount;
         classes = new bytes[](n);
         for (uint256 i; i < n; ++i) {
@@ -188,7 +174,7 @@ contract CB0ClassCoordinator {
                 _address(decoder, bytes4(keccak256("index()"))) != finalIndex ||
                 _address(decoder, bytes4(keccak256("owner()"))) != owner ||
                 _u32(decoder, bytes4(keccak256("plainSize()"))) != classSizes[i]
-            ) revert CB0Error(20);
+            ) revert MR0Error(20);
 
             uint32 size = classSizes[i];
             bytes memory klass = new bytes(size);
@@ -200,7 +186,7 @@ contract CB0ClassCoordinator {
                 );
                 if (!ok) _bubble(returned);
                 bytes memory fragment = abi.decode(returned, (bytes));
-                if (fragment.length != length) revert CB0Error(21);
+                if (fragment.length != length) revert MR0Error(21);
                 assembly ("memory-safe") {
                     mcopy(add(add(klass, 32), offset), add(fragment, 32), length)
                 }

@@ -4,7 +4,7 @@ pragma solidity 0.8.30;
 /// @notice A deliberately small JVM classfile interpreter which runs entirely in EVM bytecode.
 /// It accepts either one ordinary class or an unordered raw-class bundle, selects an
 /// unambiguous static (int...)int root, and supports direct class-aware static I/V calls.
-contract VFS0aInterpreter {
+contract MR0MainInterpreter {
     error ClassError(uint256 code, uint256 offset);
     error MethodError(uint256 code);
     error BytecodeError(uint256 code, uint256 pc);
@@ -293,11 +293,13 @@ contract VFS0aInterpreter {
         uint256 rootClass;
         uint256 rootMethod;
         uint256 throwableBootstrapAt;
+        bool mainRoot;
     }
 
-    struct VFS0aSliceResult {
+    struct MR0MainSliceResult {
         uint32 schema;
         uint8 lifecycle;
+        uint8 outcome; // 1=RUNNING,2=VOID_TERMINAL,3=JAVA_EXCEPTION
         uint64 epoch;
         bytes32 checkpointRoot;
         bytes32 machineStateRoot;
@@ -348,6 +350,8 @@ contract VFS0aInterpreter {
         uint32 javaRef;
         uint64 totalJvmSteps;
         uint64 totalInternalSteps;
+        uint8 rootKind;
+        bytes32 argsCommitment;
         bytes entryClass;
         bytes entry;
         int32[] args;
@@ -361,7 +365,10 @@ contract VFS0aInterpreter {
         uint64 totalJvmSteps, uint64 totalInternalSteps
     );
 
-    uint32 private constant VFS0A_SCHEMA = 1;
+    uint32 private constant MR0_SCHEMA = 1;
+    uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
+    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MR0:MAIN:EMPTY-STRING-ARRAY:1");
+    bytes32 private constant DROOT = keccak256("JVMEVM:MR0:ROOT:1");
     uint256 private constant MAX_RAW_CLASSES = 4;
     uint256 private constant MAX_RAW_BYTES = 65536;
     uint256 private constant MAX_CHECKPOINT_BYTES = 1048576;
@@ -377,11 +384,11 @@ contract VFS0aInterpreter {
     uint32 private constant MAX_PATH_DEPTH = 16;
     uint32 private constant MAX_PATH_BYTES = 256;
     uint32 private constant MAX_TRANSFER = 4096;
-    bytes32 private constant DART = keccak256("JVMEVM:MC:VFS0A:ARTIFACT:1");
-    bytes32 private constant DBOOT = keccak256("JVMEVM:MC:VFS0A:BOOTSTRAP:1");
-    bytes32 private constant DCFG = keccak256("JVMEVM:MC:VFS0A:CONFIG:1");
-    bytes32 private constant DMACH = keccak256("JVMEVM:MC:VFS0A:MACHINE:1");
-    bytes32 private constant DSEED = keccak256("JVMEVM:MC:VFS0A:SEED:1");
+    bytes32 private constant DART = keccak256("JVMEVM:MR0:ARTIFACT:1");
+    bytes32 private constant DBOOT = keccak256("JVMEVM:MR0:BOOTSTRAP:1");
+    bytes32 private constant DCFG = keccak256("JVMEVM:MR0:CONFIG:1");
+    bytes32 private constant DMACH = keccak256("JVMEVM:MR0:MACHINE:1");
+    bytes32 private constant DSEED = keccak256("JVMEVM:MR0:SEED:1");
     bytes32 private constant DVFS = keccak256("JVMEVM:MC:VFS0A:VFS:1");
     bytes32 private constant DFILE = keccak256("JVMEVM:MC:VFS0A:FILE:1");
 
@@ -408,11 +415,11 @@ contract VFS0aInterpreter {
         uint256 javaFault;
     }
 
-    function start(
+    /// @notice Direct generated `main(String[])` root. No host arguments are accepted.
+    function startMain(
         bytes32 instanceId, bytes[] calldata rawClasses, string calldata entryClass,
-        string calldata entry, int32[] calldata args, SeedFile[] calldata seeds,
-        uint64 maxJvmSteps, uint32 maxInternalSteps
-    ) external returns (VFS0aSliceResult memory result, bytes memory checkpoint) {
+        SeedFile[] calldata seeds, uint64 maxJvmSteps, uint32 maxInternalSteps
+    ) external returns (MR0MainSliceResult memory result, bytes memory checkpoint) {
         if (enteredVFS0A) revert LC0ControlError(8);
         enteredVFS0A = true;
         if (instanceId == bytes32(0) || anchors[instanceId].epoch != 0) revert LC0ControlError(1);
@@ -421,68 +428,56 @@ contract VFS0aInterpreter {
         bytes32 runtimeHash = address(this).codehash;
         bytes32 artifact = _artifactRoot(rawClasses);
         bytes memory ec = bytes(entryClass);
-        bytes memory en = bytes(entry);
-        if (ec.length == 0 || ec.length > 256 || en.length == 0 || en.length > 256
-            || !_ascii(ec) || !_ascii(en) || args.length > 8) revert LC0ControlError(6);
-        int32[] memory initialArgs = args;
+        bytes memory en = bytes("main");
+        if (ec.length == 0 || ec.length > 256 || !_ascii(ec)) revert LC0ControlError(6);
+        int32[] memory noArgs = new int32[](0);
         bytes32 seedRoot = keccak256(abi.encode(DSEED, seeds));
-        bytes32 config = _configRoot(runtimeHash, artifact, ec, en, initialArgs, seedRoot);
-        Program memory p = _prepare(rawClasses, ec, en, initialArgs);
-        RuntimeState memory st = _freshState(p, initialArgs);
+        bytes32 config = _configRoot(runtimeHash, artifact, ec, en, noArgs, seedRoot);
+        Program memory p = _prepare(rawClasses, ec, en, noArgs);
+        RuntimeState memory st = _freshState(p, noArgs, true);
         st.vfs = _initialVFS(seeds, seedRoot);
-        (uint64 ej, uint32 ei) = _execute(
-            p.classes, p.selected, p.referenceCaches, p.fieldCaches, p.rootClass,
-            p.rootMethod, true, p.throwableBootstrapAt, st, maxJvmSteps, maxInternalSteps
-        );
-        (result, checkpoint) = _commit(
-            instanceId, 1, bytes32(0), runtimeHash, artifact, config, ec, en,
-            initialArgs, p, st, ej, ei
-        );
+        (uint64 ej, uint32 ei) = _execute(p.classes, p.selected, p.referenceCaches, p.fieldCaches,
+            p.rootClass, p.rootMethod, true, p.throwableBootstrapAt, st, maxJvmSteps, maxInternalSteps);
+        (result, checkpoint) = _commit(instanceId, 1, bytes32(0), runtimeHash, artifact, config,
+            ec, en, noArgs, p, st, ej, ei);
         enteredVFS0A = false;
     }
 
-    function resume(
+    /// @notice Resumes only the EVM-issued opaque direct-main checkpoint.
+    function resumeMain(
         bytes32 instanceId, uint64 expectedEpoch, bytes32 expectedCheckpointRoot,
         bytes[] calldata rawClasses, bytes calldata checkpoint, uint64 maxJvmSteps,
         uint32 maxInternalSteps
-    ) external returns (VFS0aSliceResult memory result, bytes memory childCheckpoint) {
+    ) external returns (MR0MainSliceResult memory result, bytes memory childCheckpoint) {
         if (enteredVFS0A) revert LC0ControlError(8);
         enteredVFS0A = true;
         Anchor memory a = anchors[instanceId];
         if (a.epoch == 0 || a.lifecycle != 1) revert LC0ControlError(1);
         if (msg.sender == address(0) || msg.sender != a.owner) revert LC0ControlError(2);
         if (expectedEpoch != a.epoch) revert LC0ControlError(3);
-        if (expectedCheckpointRoot != a.checkpointRoot || keccak256(checkpoint) != a.checkpointRoot) {
-            revert LC0ControlError(4);
-        }
+        if (expectedCheckpointRoot != a.checkpointRoot || keccak256(checkpoint) != a.checkpointRoot) revert LC0ControlError(4);
         _checkBudgets(maxJvmSteps, maxInternalSteps);
         Envelope memory env = _decodeEnvelope(checkpoint);
         if (env.instanceId != instanceId || env.epoch != a.epoch) revert LC0ControlError(5);
         bytes32 runtimeHash = address(this).codehash;
         bytes32 artifact = _artifactRoot(rawClasses);
-        if (runtimeHash != a.runtimeCodeHash || env.runtimeCodeHash != runtimeHash
-            || artifact != a.artifactRoot || env.artifactRoot != artifact
+        if (runtimeHash != a.runtimeCodeHash || env.runtimeCodeHash != runtimeHash || artifact != a.artifactRoot
             || env.configRoot != a.configRoot || env.machineStateRoot != a.machineStateRoot
-            || env.seedRoot != a.seedRoot || env.vfsStateRoot != a.vfsStateRoot) {
-            revert LC0ControlError(5);
-        }
+            || env.seedRoot != a.seedRoot || env.vfsStateRoot != a.vfsStateRoot) revert LC0ControlError(5);
         Prelude memory pre = _decodePrelude(env.machineBytes, CHECKPOINT_HEADER_BYTES);
-        if (pre.lifecycle != 1) revert LC0ControlError(1);
-        if (_configRoot(runtimeHash, artifact, pre.entryClass, pre.entry, pre.args, env.seedRoot)
-            != a.configRoot) revert LC0ControlError(5);
+        if (pre.lifecycle != 1 || pre.rootKind != ROOT_KIND_MAIN_EMPTY_STRING_ARRAY
+            || pre.argsCommitment != EMPTY_ARGS_COMMITMENT || !_equalsLiteral(pre.entry, 0, pre.entry.length, bytes("main"))
+            || pre.args.length != 0) revert LC0ControlError(5);
+        if (_configRoot(runtimeHash, artifact, pre.entryClass, pre.entry, pre.args, env.seedRoot) != a.configRoot) revert LC0ControlError(5);
         Program memory p = _prepare(rawClasses, pre.entryClass, pre.entry, pre.args);
         RuntimeState memory st = _decodeMachine(env.machineBytes, p, pre, CHECKPOINT_HEADER_BYTES);
         st.vfs.seedRoot = env.seedRoot;
         if (_vfsRoot(st.vfs) != env.vfsStateRoot) revert VFS0aStateError(6, 244);
-        (uint64 ej, uint32 ei) = _execute(
-            p.classes, p.selected, p.referenceCaches, p.fieldCaches, p.rootClass,
-            p.rootMethod, true, p.throwableBootstrapAt, st, maxJvmSteps, maxInternalSteps
-        );
+        (uint64 ej, uint32 ei) = _execute(p.classes, p.selected, p.referenceCaches, p.fieldCaches,
+            p.rootClass, p.rootMethod, true, p.throwableBootstrapAt, st, maxJvmSteps, maxInternalSteps);
         if (a.epoch == type(uint64).max) revert LC0ControlError(6);
-        (result, childCheckpoint) = _commit(
-            instanceId, a.epoch + 1, a.checkpointRoot, runtimeHash, artifact,
-            a.configRoot, pre.entryClass, pre.entry, pre.args, p, st, ej, ei
-        );
+        (result, childCheckpoint) = _commit(instanceId, a.epoch + 1, a.checkpointRoot, runtimeHash,
+            artifact, a.configRoot, pre.entryClass, pre.entry, pre.args, p, st, ej, ei);
         enteredVFS0A = false;
     }
 
@@ -587,8 +582,9 @@ contract VFS0aInterpreter {
         ];
         bytes32 limitsHash = keccak256(abi.encode(limits));
         return keccak256(abi.encode(
-            DCFG, VFS0A_SCHEMA, runtimeHash, _bootstrapRoot(), artifact,
-            string(entryClass), string(entry), args, seedRoot, limitsHash
+            DCFG, MR0_SCHEMA, runtimeHash, _bootstrapRoot(), artifact,
+            DROOT, ROOT_KIND_MAIN_EMPTY_STRING_ARRAY, string(entryClass), string(entry),
+            EMPTY_ARGS_COMMITMENT, args, seedRoot, limitsHash
         ));
     }
 
@@ -697,7 +693,7 @@ contract VFS0aInterpreter {
         p.rootMethod = rootPlusOne - 1;
         uint256 rootMeta = p.classes[p.rootClass].methods[p.rootMethod];
         uint16 access = uint16(rootMeta);
-        if ((access & 0x0008) == 0) revert MethodError(6);
+        if ((access & (0x0001 | 0x0008)) != (0x0001 | 0x0008)) revert MethodError(6);
         if ((access & (0x0020 | 0x0100 | 0x0400)) != 0) revert MethodError(7);
         if (_methodCodeCount(rootMeta) != 1) revert MethodError(_methodCodeCount(rootMeta) == 0 ? 4 : 3);
         p.selected = new Selected[][](count);
@@ -710,12 +706,13 @@ contract VFS0aInterpreter {
             p.classes[p.rootClass], rootMeta, p.rootClass, p.rootMethod
         );
         Selected memory rs = p.selected[p.rootClass][p.rootMethod];
-        if (args.length != rs.argumentCount) revert MethodError(9);
-        if (rs.maxLocals < rs.argumentWords) revert MethodError(10);
+        if (args.length != 0 || !_isMainEmptyStringArrayRoot(p.classes[p.rootClass], rs)) revert MethodError(9);
+        if (rs.maxLocals < 1) revert MethodError(10);
+        p.mainRoot = true;
         _predecode(p.classes[p.rootClass], rs);
     }
 
-    function _freshState(Program memory p, int32[] memory args)
+    function _freshState(Program memory p, int32[] memory args, bool installMainRoot)
         private pure returns (RuntimeState memory s)
     {
         uint256 n = p.classes.length;
@@ -750,6 +747,24 @@ contract VFS0aInterpreter {
         s.arena.stringRefs = new uint256[][](n);
         _configureExceptionClasses(s.arena, p.throwableBootstrapAt);
         s.arena.stringClass = p.throwableBootstrapAt + 21;
+        if (installMainRoot) _installEmptyMainStringArray(p, s);
+    }
+
+    function _installEmptyMainStringArray(Program memory p, RuntimeState memory s) private pure {
+        _ensureExceptionRegistry(s.arena, p.classes, s.parentLinks, s.hierarchyState);
+        if (s.arena.ordinaryArrayCount >= MAX_ARRAYS || s.nextHandle >= MAX_HANDLES) revert ObjectError(2, ROOT_FAULT_SENTINEL);
+        if (s.arena.heap.arrayHeap.length == 0) {
+            s.arena.heap.arrayHeap = new uint64[][](MAX_HANDLES + 1);
+            s.arena.heap.ranks = new uint8[](MAX_HANDLES + 1);
+        }
+        uint256 h = s.arena.nextHandle + 1;
+        s.arena.nextHandle = h; s.nextHandle = h;
+        ++s.arena.ordinaryArrayCount;
+        s.arena.heap.ranks[h] = 1;
+        s.arena.heap.metadata[h] = ARRAY_CLASS_BASE + s.arena.stringClass;
+        s.arena.heap.arrayHeap[h] = new uint64[](0);
+        s.frames[0].locals[0] = _packRef(uint32(h));
+        s.frames[0].initialized[0] = true;
     }
 
     function _commit(
@@ -757,7 +772,7 @@ contract VFS0aInterpreter {
         bytes32 artifact, bytes32 config, bytes memory entryClass, bytes memory entry,
         int32[] memory args, Program memory p, RuntimeState memory s,
         uint64 executedJvm, uint32 executedInternal
-    ) private returns (VFS0aSliceResult memory out, bytes memory checkpoint) {
+    ) private returns (MR0MainSliceResult memory out, bytes memory checkpoint) {
         if (gasleft() <= COMMIT_RESERVE) revert LC0ControlError(7);
         _validateRestoredReferences(p, s);
         _validateInitAndFrames(p, s, false);
@@ -765,7 +780,7 @@ contract VFS0aInterpreter {
         bytes memory machine = _encodeMachine(p, s, entryClass, entry, args);
         bytes32 vfsRoot = _vfsRoot(s.vfs);
         bytes32 machineRoot = keccak256(abi.encode(
-            DMACH, VFS0A_SCHEMA, artifact, config, keccak256(machine), vfsRoot
+            DMACH, MR0_SCHEMA, artifact, config, keccak256(machine), vfsRoot
         ));
         checkpoint = _encodeEnvelope(
             instanceId, epoch, parentRoot, runtimeHash, artifact, config, machineRoot,
@@ -779,8 +794,9 @@ contract VFS0aInterpreter {
         if (s.lifecycle == 3 && javaKind == 0) {
             javaClass = _classNameBytes(p.classes[s.arena.heap.classes[javaRef]]);
         }
-        out = VFS0aSliceResult(
-            VFS0A_SCHEMA, s.lifecycle, epoch, checkpointRoot, machineRoot,
+        uint8 outcome = s.lifecycle == 1 ? 1 : (s.lifecycle == 2 ? 2 : 3);
+        out = MR0MainSliceResult(
+            MR0_SCHEMA, s.lifecycle, outcome, epoch, checkpointRoot, machineRoot,
             s.totalJvmSteps, s.totalInternalSteps, executedJvm, executedInternal,
             s.lifecycle == 2 ? s.result : int32(0), javaKind, javaRef, javaClass,
             vfsRoot, uint32(s.vfs.inodes.length), uint32(s.vfs.descriptors.length),
@@ -804,7 +820,7 @@ contract VFS0aInterpreter {
         out = new bytes(CHECKPOINT_HEADER_BYTES + machine.length);
         uint256 at;
         at = _put(out, at, uint64(bytes8("JVMVF0A1")), 8);
-        at = _put(out, at, VFS0A_SCHEMA, 4);
+        at = _put(out, at, MR0_SCHEMA, 4);
         at = _put(out, at, uint256(instanceId), 32);
         at = _put(out, at, epoch, 8);
         at = _put(out, at, uint256(parentRoot), 32);
@@ -831,7 +847,7 @@ contract VFS0aInterpreter {
         (uint256 v, uint256 n) = _get(b, at, 8, 0); at = n;
         if (v != uint64(bytes8("JVMVF0A1"))) revert LC0StateError(3, 0);
         (v, at) = _get(b, at, 4, 0);
-        if (v != VFS0A_SCHEMA) revert LC0StateError(3, 8);
+        if (v != MR0_SCHEMA) revert LC0StateError(3, 8);
         (v, at) = _get(b, at, 32, 0); e.instanceId = bytes32(v);
         (v, at) = _get(b, at, 8, 0); e.epoch = uint64(v);
         (v, at) = _get(b, at, 32, 0); e.parentCheckpointRoot = bytes32(v);
@@ -847,7 +863,7 @@ contract VFS0aInterpreter {
         bytes memory machine = e.machineBytes;
         assembly ("memory-safe") { mcopy(add(machine, 32), add(add(b, 32), at), v) }
         bytes32 computed = keccak256(abi.encode(
-            DMACH, VFS0A_SCHEMA, e.artifactRoot, e.configRoot,
+            DMACH, MR0_SCHEMA, e.artifactRoot, e.configRoot,
             keccak256(e.machineBytes), e.vfsStateRoot
         ));
         if (computed != e.machineStateRoot) revert LC0StateError(3, 180);
@@ -857,7 +873,7 @@ contract VFS0aInterpreter {
         Program memory p, RuntimeState memory s, bytes memory ec, bytes memory en,
         int32[] memory args
     ) private pure returns (uint256 z) {
-        z = 30 + 2 + ec.length + 2 + en.length + 1 + 4 * args.length + 2;
+        z = 63 + 2 + ec.length + 2 + en.length + 1 + 4 * args.length + 2;
         for (uint256 i; i < p.classes.length; ++i) {
             uint256 statics;
             for (uint256 j; j < p.classes[i].fields.length; ++j) {
@@ -891,13 +907,15 @@ contract VFS0aInterpreter {
         if (size + CHECKPOINT_HEADER_BYTES > MAX_CHECKPOINT_BYTES) revert LC0StateError(1, 0);
         out = new bytes(size);
         uint256 at;
-        at = _put(out, at, uint32(bytes4("VFA1")), 4);
+        at = _put(out, at, uint32(bytes4("MR01")), 4);
         at = _put(out, at, s.lifecycle, 1);
         at = _put(out, at, uint32(s.lifecycle == 2 ? s.result : int32(0)), 4);
         at = _put(out, at, s.lifecycle == 3 ? s.arena.pending.kind : 0, 1);
         at = _put(out, at, s.lifecycle == 3 ? s.arena.pending.ref : 0, 4);
         at = _put(out, at, s.totalJvmSteps, 8);
         at = _put(out, at, s.totalInternalSteps, 8);
+        at = _put(out, at, ROOT_KIND_MAIN_EMPTY_STRING_ARRAY, 1);
+        at = _put(out, at, uint256(EMPTY_ARGS_COMMITMENT), 32);
         at = _putBytes16(out, at, ec);
         at = _putBytes16(out, at, en);
         at = _put(out, at, args.length, 1);
@@ -1599,7 +1617,7 @@ contract VFS0aInterpreter {
     {
         uint256 at;
         (uint256 v, uint256 n) = _get(data, at, 4, base); at = n;
-        if (v != uint32(bytes4("VFA1"))) revert LC0StateError(3, base);
+        if (v != uint32(bytes4("MR01"))) revert LC0StateError(3, base);
         (v, at) = _get(data, at, 1, base); p.lifecycle = uint8(v);
         if (p.lifecycle < 1 || p.lifecycle > 3) revert LC0StateError(4, base + 4);
         (v, at) = _get(data, at, 4, base); p.result = int32(uint32(v));
@@ -1607,6 +1625,9 @@ contract VFS0aInterpreter {
         (v, at) = _get(data, at, 4, base); p.javaRef = uint32(v);
         (v, at) = _get(data, at, 8, base); p.totalJvmSteps = uint64(v);
         (v, at) = _get(data, at, 8, base); p.totalInternalSteps = uint64(v);
+        (v, at) = _get(data, at, 1, base); p.rootKind = uint8(v);
+        (v, at) = _get(data, at, 32, base); p.argsCommitment = bytes32(v);
+        if (p.rootKind != ROOT_KIND_MAIN_EMPTY_STRING_ARRAY || p.argsCommitment != EMPTY_ARGS_COMMITMENT) revert LC0StateError(7, base + 30);
         (p.entryClass, at) = _getBytes16(data, at, base);
         (p.entry, at) = _getBytes16(data, at, base);
         if (p.entryClass.length == 0 || p.entryClass.length > 256 || p.entry.length == 0
@@ -1629,7 +1650,7 @@ contract VFS0aInterpreter {
     function _decodeMachine(
         bytes memory data, Program memory p, Prelude memory pre, uint256 base
     ) private pure returns (RuntimeState memory s) {
-        s = _freshState(p, pre.args);
+        s = _freshState(p, pre.args, false);
         s.lifecycle = pre.lifecycle;
         s.result = pre.result;
         s.totalJvmSteps = pre.totalJvmSteps;
@@ -2610,6 +2631,7 @@ contract VFS0aInterpreter {
     function _validateInitAndFrames(
         Program memory p, RuntimeState memory s, bool restoredCheckpoint
     ) private pure {
+        if (p.mainRoot && s.depth != 0) _validateMainRootLocal(p, s);
         bool[] memory hasContinuation = new bool[](p.classes.length);
         bool[] memory hasInitializer = new bool[](p.classes.length);
         for (uint256 i; i < s.depth; ++i) {
@@ -2689,6 +2711,15 @@ contract VFS0aInterpreter {
         }
     }
 
+    function _validateMainRootLocal(Program memory p, RuntimeState memory s) private pure {
+        Frame memory root = s.frames[0];
+        if (root.locals.length == 0 || !root.initialized[0] || _valueKind(root.locals[0]) != KIND_REF) revert LC0StateError(7, 0);
+        uint256 h = _payload(root.locals[0]);
+        if (h == 0 || h > s.nextHandle || _heapKindAt(s.arena.heap.metadata[h]) != HEAP_ARRAY
+            || s.arena.heap.ranks[h] != 1 || s.arena.heap.metadata[h] != ARRAY_CLASS_BASE + s.arena.stringClass
+            || s.arena.heap.arrayHeap[h].length != 0) revert LC0StateError(7, 0);
+    }
+
     function _validateAthrowBoundary(
         Program memory p, RuntimeState memory s, Frame memory f, bool restoredCheckpoint
     ) private pure {
@@ -2762,7 +2793,7 @@ contract VFS0aInterpreter {
     }
 
     function _preludeEnd(bytes memory data, uint256 base) private pure returns (uint256 at) {
-        at = 30;
+        at = 63;
         (, at) = _getBytes16(data, at, base);
         (, at) = _getBytes16(data, at, base);
         (uint256 argc, uint256 n) = _get(data, at, 1, base); at = n;
@@ -2988,7 +3019,7 @@ contract VFS0aInterpreter {
         uint256 descriptorIndex = (meta >> 32) & 0xffff;
         (s.descriptorOffset, s.descriptorLength) = _utf(c.cp[descriptorIndex]);
         if (!_descriptor(c.data, s.descriptorOffset, s.descriptorLength, s)
-            || !_isExactIntRoot(c, s)) revert MethodError(11);
+            || !_isMainEmptyStringArrayRoot(c, s)) revert MethodError(11);
         s.argumentCount = s.argumentKinds.length;
         uint256 start = (meta >> 48) & 0xffffffffffffffff;
         uint256 length = (meta >> 112) & 0xffffffff;
@@ -5086,8 +5117,9 @@ contract VFS0aInterpreter {
                         : f.stack[0];
                 }
                 if (depth == 1) {
-                    // The externally selected root can only return int.
-                    state.result = int32(uint32(_payload(value)));
+                    // MR0's only externally selected root returns actual Java void.
+                    if (actualKind != 0) revert MethodError(11);
+                    state.result = 0;
                     state.lifecycle = 2;
                     depth = 0;
                     continue;
@@ -7858,15 +7890,13 @@ contract VFS0aInterpreter {
         return true;
     }
 
-    function _isExactIntRoot(ClassInfo memory c, Selected memory s)
+
+    function _isMainEmptyStringArrayRoot(ClassInfo memory c, Selected memory s)
         private pure returns (bool)
     {
-        if (s.returnKind != 1 || s.returnSubtype != PRIMITIVE_INT) return false;
-        for (uint256 i = 0; i < s.argumentKinds.length; ++i) {
-            if (s.argumentKinds[i] != KIND_INT || s.argumentTypeLengths[i] != 1
-                || uint8(c.data[s.argumentTypeOffsets[i]]) != PRIMITIVE_INT) return false;
-        }
-        return true;
+        return s.returnKind == 2 && s.argumentKinds.length == 1 && s.argumentWords == 1
+            && s.argumentKinds[0] == KIND_REF
+            && _equalsLiteral(c.data, s.descriptorOffset, s.descriptorLength, bytes("([Ljava/lang/String;)V"));
     }
 
     function _isIntLike(uint8 descriptor) private pure returns (bool) {
