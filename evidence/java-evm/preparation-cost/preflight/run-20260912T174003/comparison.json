@@ -1,0 +1,10 @@
+{
+  "purpose": "traced COPY ordinary calls compared against parent untraced/DI0-read observer receipts",
+  "allEqualFields": ["gas", "error", "beforeRoot", "afterRoot", "rawRevert", "receiptRoot", "logs", "checkpointBytes", "head", "slice"],
+  "cases": {
+    "padded262144": {"parent": "evidence/java-evm/capacity-baseline/parent-97a926123/final/matrix/aggregate262144/java-1.json", "gas": 7879725, "result": 17, "equal": true},
+    "bigMethodRich": {"parent": "evidence/java-evm/capacity-baseline/parent-97a926123/final/matrix/big/java-1.json", "gas": 48451006, "result": 15, "equal": true},
+    "density181969": {"parent": "evidence/java-evm/capacity-baseline/parent-97a926123/final/density/ordinary.json", "gas": 74874471, "error": "LC0ControlError(7) selector 0xf15d7343, not OOG", "equal": true}
+  },
+  "note": "Wall time is deliberately excluded: hooks add observer overhead."
+}

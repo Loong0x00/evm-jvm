@@ -1,0 +1,5495 @@
+{
+  "schema": 1,
+  "inputDirectory": "java-diff-mc-capacity-cost-20260912T174003",
+  "rawSummarySHA256": "12521d808a3cc6d47d2fc2fea1da7128f37a5ef3ee48762ff027f7e71757c489",
+  "compiler": {
+    "vfs": {
+      "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+      "settings": {
+        "optimizer": {
+          "enabled": true,
+          "runs": 200
+        },
+        "viaIR": true,
+        "evmVersion": "cancun",
+        "metadata": {
+          "appendCBOR": false,
+          "bytecodeHash": "none"
+        },
+        "outputSelection": {
+          "*": {
+            "": [
+              "ast"
+            ],
+            "*": [
+              "abi",
+              "evm.bytecode.object",
+              "evm.deployedBytecode.object",
+              "evm.deployedBytecode.sourceMap",
+              "evm.deployedBytecode.generatedSources",
+              "evm.bytecode.sourceMap",
+              "metadata"
+            ]
+          }
+        }
+      },
+      "sourceSHA256": "dedcc9d8c4dbac108391ac4a073e52ec40a63b5517bbd4fe2e29cfb17f74b013",
+      "runtimeBytes": 292968,
+      "runtimeSHA256": "4a7f61989c5ec68edbee96d34cd97c7f0f54f26ffc30d8b351247bd26839f86f",
+      "instructionCount": 162662
+    },
+    "coordinator": {
+      "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+      "settings": {
+        "optimizer": {
+          "enabled": true,
+          "runs": 200
+        },
+        "viaIR": true,
+        "evmVersion": "cancun",
+        "metadata": {
+          "appendCBOR": false,
+          "bytecodeHash": "none"
+        },
+        "outputSelection": {
+          "*": {
+            "": [
+              "ast"
+            ],
+            "*": [
+              "abi",
+              "evm.bytecode.object",
+              "evm.deployedBytecode.object",
+              "evm.deployedBytecode.sourceMap",
+              "evm.deployedBytecode.generatedSources",
+              "evm.bytecode.sourceMap",
+              "metadata"
+            ]
+          }
+        }
+      },
+      "sourceSHA256": "8ddb98692c1ce2159ae33d0f1c5c8512b438ec3fbff5121f4842510465344dea",
+      "runtimeBytes": 3792,
+      "runtimeSHA256": "1fc9cc6be252cc9256e280fb2a5669fbdd6a92a03955639d83ddc5173f365363",
+      "instructionCount": 2573
+    }
+  },
+  "cases": {
+    "padded262144": {
+      "gas": 7879725,
+      "error": null,
+      "beforeRoot": "0x0dcccadcac3152091f51f2f326372f73bbc765f595a326517ca37fe09806b741",
+      "afterRoot": "0x516bb11e7eca4b98ed4ad2e2d8dccb023761c8d9acb58aca73d4f174aa803110",
+      "result": 17,
+      "tracePCEntries": 33062,
+      "exclusivePCSum": 7879725,
+      "exclusiveMinusReceipt": 0,
+      "costWithForwarded": 8104846281,
+      "forwardedCallGas": 8096966556,
+      "frameCount": 84,
+      "frameGasInclusiveSum": 13204470,
+      "rootFrame": {
+        "depth": 0,
+        "type": 241,
+        "from": "0x4341504143495459000000000000000000000001",
+        "to": "0x4223Bd51c43631575a543343cC862C42A8289F69",
+        "enterGas": 100000000,
+        "used": 7879725,
+        "reverted": false
+      },
+      "functionGroups": [
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "exclusiveCost": 3288393,
+          "costWithForwarded": 3288393,
+          "forwarded": 0,
+          "count": 427445,
+          "pcEntries": 12474
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "exclusiveCost": 2476942,
+          "costWithForwarded": 2476942,
+          "forwarded": 0,
+          "count": 18280,
+          "pcEntries": 1117
+        },
+        {
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "exclusiveCost": 581705,
+          "costWithForwarded": 581705,
+          "forwarded": 0,
+          "count": 43386,
+          "pcEntries": 1792
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u2",
+          "exclusiveCost": 346296,
+          "costWithForwarded": 346296,
+          "forwarded": 0,
+          "count": 101310,
+          "pcEntries": 55
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readConstantPool",
+          "exclusiveCost": 230555,
+          "costWithForwarded": 230555,
+          "forwarded": 0,
+          "count": 62996,
+          "pcEntries": 276
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_parseBundleClass",
+          "exclusiveCost": 91001,
+          "costWithForwarded": 91001,
+          "forwarded": 0,
+          "count": 26599,
+          "pcEntries": 395
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_skip",
+          "exclusiveCost": 75720,
+          "costWithForwarded": 75720,
+          "forwarded": 0,
+          "count": 21159,
+          "pcEntries": 67
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "unmapped",
+          "exclusiveCost": 73300,
+          "costWithForwarded": 73300,
+          "forwarded": 0,
+          "count": 26104,
+          "pcEntries": 1813
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_descriptorType",
+          "exclusiveCost": 70104,
+          "costWithForwarded": 70104,
+          "forwarded": 0,
+          "count": 19029,
+          "pcEntries": 273
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_loadAll",
+          "exclusiveCost": 63253,
+          "costWithForwarded": 6329305718,
+          "forwarded": 6329242465,
+          "count": 5088,
+          "pcEntries": 307
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validUtf8",
+          "exclusiveCost": 59976,
+          "costWithForwarded": 59976,
+          "forwarded": 0,
+          "count": 16856,
+          "pcEntries": 43
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equals",
+          "exclusiveCost": 55348,
+          "costWithForwarded": 55348,
+          "forwarded": 0,
+          "count": 14747,
+          "pcEntries": 52
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u1",
+          "exclusiveCost": 53276,
+          "costWithForwarded": 53276,
+          "forwarded": 0,
+          "count": 14721,
+          "pcEntries": 21
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "inspectFile",
+          "exclusiveCost": 49455,
+          "costWithForwarded": 49455,
+          "forwarded": 0,
+          "count": 15,
+          "pcEntries": 5
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_execute",
+          "exclusiveCost": 27789,
+          "costWithForwarded": 27789,
+          "forwarded": 0,
+          "count": 7878,
+          "pcEntries": 2474
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_put",
+          "exclusiveCost": 25145,
+          "costWithForwarded": 25145,
+          "forwarded": 0,
+          "count": 6832,
+          "pcEntries": 237
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateVFS",
+          "exclusiveCost": 22152,
+          "costWithForwarded": 22152,
+          "forwarded": 0,
+          "count": 6280,
+          "pcEntries": 755
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u4",
+          "exclusiveCost": 22040,
+          "costWithForwarded": 22040,
+          "forwarded": 0,
+          "count": 6380,
+          "pcEntries": 44
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_className",
+          "exclusiveCost": 18012,
+          "costWithForwarded": 18012,
+          "forwarded": 0,
+          "count": 5214,
+          "pcEntries": 66
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateInitAndFrames",
+          "exclusiveCost": 17019,
+          "costWithForwarded": 17019,
+          "forwarded": 0,
+          "count": 4694,
+          "pcEntries": 242
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_freshState",
+          "exclusiveCost": 16518,
+          "costWithForwarded": 16518,
+          "forwarded": 0,
+          "count": 4936,
+          "pcEntries": 362
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_unsigned32",
+          "exclusiveCost": 15330,
+          "costWithForwarded": 15330,
+          "forwarded": 0,
+          "count": 4526,
+          "pcEntries": 31
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_encodeMachine",
+          "exclusiveCost": 15083,
+          "costWithForwarded": 15083,
+          "forwarded": 0,
+          "count": 4471,
+          "pcEntries": 548
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_machineSize",
+          "exclusiveCost": 11484,
+          "costWithForwarded": 11484,
+          "forwarded": 0,
+          "count": 3496,
+          "pcEntries": 230
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_predecode",
+          "exclusiveCost": 9498,
+          "costWithForwarded": 9498,
+          "forwarded": 0,
+          "count": 2590,
+          "pcEntries": 338
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_inodePath",
+          "exclusiveCost": 9426,
+          "costWithForwarded": 9426,
+          "forwarded": 0,
+          "count": 2754,
+          "pcEntries": 246
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "unmapped",
+          "exclusiveCost": 8897,
+          "costWithForwarded": 8897,
+          "forwarded": 0,
+          "count": 3066,
+          "pcEntries": 139
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_utf",
+          "exclusiveCost": 8450,
+          "costWithForwarded": 8450,
+          "forwarded": 0,
+          "count": 2275,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateHierarchy",
+          "exclusiveCost": 7842,
+          "costWithForwarded": 7842,
+          "forwarded": 0,
+          "count": 2021,
+          "pcEntries": 215
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readFields",
+          "exclusiveCost": 6584,
+          "costWithForwarded": 6584,
+          "forwarded": 0,
+          "count": 1992,
+          "pcEntries": 179
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_instructionWidth",
+          "exclusiveCost": 6070,
+          "costWithForwarded": 6070,
+          "forwarded": 0,
+          "count": 1660,
+          "pcEntries": 476
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_fieldKind",
+          "exclusiveCost": 5970,
+          "costWithForwarded": 5970,
+          "forwarded": 0,
+          "count": 1688,
+          "pcEntries": 92
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsCross",
+          "exclusiveCost": 5763,
+          "costWithForwarded": 5763,
+          "forwarded": 0,
+          "count": 1532,
+          "pcEntries": 44
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateRestoredReferences",
+          "exclusiveCost": 5248,
+          "costWithForwarded": 5248,
+          "forwarded": 0,
+          "count": 1476,
+          "pcEntries": 114
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsLiteral",
+          "exclusiveCost": 4991,
+          "costWithForwarded": 4991,
+          "forwarded": 0,
+          "count": 1398,
+          "pcEntries": 182
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isIntLike",
+          "exclusiveCost": 4809,
+          "costWithForwarded": 4809,
+          "forwarded": 0,
+          "count": 1279,
+          "pcEntries": 50
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStringConstant",
+          "exclusiveCost": 4788,
+          "costWithForwarded": 4788,
+          "forwarded": 0,
+          "count": 1197,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_sameClassName",
+          "exclusiveCost": 4508,
+          "costWithForwarded": 4508,
+          "forwarded": 0,
+          "count": 1574,
+          "pcEntries": 31
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_encodeVFS",
+          "exclusiveCost": 4468,
+          "costWithForwarded": 4468,
+          "forwarded": 0,
+          "count": 1340,
+          "pcEntries": 255
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_nextDefaultInterface",
+          "exclusiveCost": 4252,
+          "costWithForwarded": 4252,
+          "forwarded": 0,
+          "count": 1102,
+          "pcEntries": 52
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_prepare",
+          "exclusiveCost": 4187,
+          "costWithForwarded": 4187,
+          "forwarded": 0,
+          "count": 1210,
+          "pcEntries": 778
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_commit",
+          "exclusiveCost": 4146,
+          "costWithForwarded": 4146,
+          "forwarded": 0,
+          "count": 262,
+          "pcEntries": 226
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_bootstrapRoot",
+          "exclusiveCost": 3957,
+          "costWithForwarded": 3957,
+          "forwarded": 0,
+          "count": 86,
+          "pcEntries": 86
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_bytesEqual",
+          "exclusiveCost": 3276,
+          "costWithForwarded": 3276,
+          "forwarded": 0,
+          "count": 824,
+          "pcEntries": 28
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_view",
+          "exclusiveCost": 3275,
+          "costWithForwarded": 1672365531,
+          "forwarded": 1672362256,
+          "count": 470,
+          "pcEntries": 53
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validInternalName",
+          "exclusiveCost": 2989,
+          "costWithForwarded": 2989,
+          "forwarded": 0,
+          "count": 819,
+          "pcEntries": 133
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_decodeMachine",
+          "exclusiveCost": 2808,
+          "costWithForwarded": 2808,
+          "forwarded": 0,
+          "count": 775,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_resolveCall",
+          "exclusiveCost": 2656,
+          "costWithForwarded": 2656,
+          "forwarded": 0,
+          "count": 749,
+          "pcEntries": 688
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_descriptor",
+          "exclusiveCost": 2578,
+          "costWithForwarded": 2578,
+          "forwarded": 0,
+          "count": 722,
+          "pcEntries": 326
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_unsigned16",
+          "exclusiveCost": 2490,
+          "costWithForwarded": 2490,
+          "forwarded": 0,
+          "count": 669,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_skipAttributes",
+          "exclusiveCost": 2430,
+          "costWithForwarded": 2430,
+          "forwarded": 0,
+          "count": 750,
+          "pcEntries": 32
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_ascii",
+          "exclusiveCost": 2304,
+          "costWithForwarded": 2304,
+          "forwarded": 0,
+          "count": 627,
+          "pcEntries": 39
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateInterfaceClosure",
+          "exclusiveCost": 2084,
+          "costWithForwarded": 2084,
+          "forwarded": 0,
+          "count": 604,
+          "pcEntries": 107
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initializeClass",
+          "exclusiveCost": 2082,
+          "costWithForwarded": 2082,
+          "forwarded": 0,
+          "count": 595,
+          "pcEntries": 460
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_findClass",
+          "exclusiveCost": 1875,
+          "costWithForwarded": 1875,
+          "forwarded": 0,
+          "count": 517,
+          "pcEntries": 71
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_vfsEncodedSize",
+          "exclusiveCost": 1752,
+          "costWithForwarded": 1752,
+          "forwarded": 0,
+          "count": 528,
+          "pcEntries": 67
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validOrdinaryMethodName",
+          "exclusiveCost": 1692,
+          "costWithForwarded": 1692,
+          "forwarded": 0,
+          "count": 457,
+          "pcEntries": 99
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedThrowableClass",
+          "exclusiveCost": 1480,
+          "costWithForwarded": 1480,
+          "forwarded": 0,
+          "count": 354,
+          "pcEntries": 177
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canonicalVFSFieldOffset",
+          "exclusiveCost": 1338,
+          "costWithForwarded": 1338,
+          "forwarded": 0,
+          "count": 388,
+          "pcEntries": 178
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isNamedClass",
+          "exclusiveCost": 1122,
+          "costWithForwarded": 1122,
+          "forwarded": 0,
+          "count": 396,
+          "pcEntries": 12
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_internalName",
+          "exclusiveCost": 1048,
+          "costWithForwarded": 1048,
+          "forwarded": 0,
+          "count": 278,
+          "pcEntries": 32
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "start",
+          "exclusiveCost": 1012,
+          "costWithForwarded": 1012,
+          "forwarded": 0,
+          "count": 254,
+          "pcEntries": 254
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_push",
+          "exclusiveCost": 1005,
+          "costWithForwarded": 1005,
+          "forwarded": 0,
+          "count": 290,
+          "pcEntries": 58
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_configRoot",
+          "exclusiveCost": 999,
+          "costWithForwarded": 999,
+          "forwarded": 0,
+          "count": 301,
+          "pcEntries": 243
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendThrowableBootstraps",
+          "exclusiveCost": 918,
+          "costWithForwarded": 918,
+          "forwarded": 0,
+          "count": 265,
+          "pcEntries": 182
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canonicalPath",
+          "exclusiveCost": 900,
+          "costWithForwarded": 900,
+          "forwarded": 0,
+          "count": 248,
+          "pcEntries": 6
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_getBytes16",
+          "exclusiveCost": 870,
+          "costWithForwarded": 870,
+          "forwarded": 0,
+          "count": 232,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readHandlers",
+          "exclusiveCost": 864,
+          "costWithForwarded": 864,
+          "forwarded": 0,
+          "count": 260,
+          "pcEntries": 130
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedVFSClass",
+          "exclusiveCost": 830,
+          "costWithForwarded": 830,
+          "forwarded": 0,
+          "count": 208,
+          "pcEntries": 92
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_engineCall",
+          "exclusiveCost": 639,
+          "costWithForwarded": 95362474,
+          "forwarded": 95361835,
+          "count": 127,
+          "pcEntries": 22
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readCallCode",
+          "exclusiveCost": 636,
+          "costWithForwarded": 636,
+          "forwarded": 0,
+          "count": 181,
+          "pcEntries": 181
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initialVFS",
+          "exclusiveCost": 627,
+          "costWithForwarded": 627,
+          "forwarded": 0,
+          "count": 186,
+          "pcEntries": 161
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_instanceFieldOffset",
+          "exclusiveCost": 596,
+          "costWithForwarded": 596,
+          "forwarded": 0,
+          "count": 178,
+          "pcEntries": 89
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u2Bounded",
+          "exclusiveCost": 520,
+          "costWithForwarded": 520,
+          "forwarded": 0,
+          "count": 152,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isCategory2Kind",
+          "exclusiveCost": 515,
+          "costWithForwarded": 515,
+          "forwarded": 0,
+          "count": 145,
+          "pcEntries": 57
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readCode",
+          "exclusiveCost": 494,
+          "costWithForwarded": 494,
+          "forwarded": 0,
+          "count": 134,
+          "pcEntries": 134
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_stackWords",
+          "exclusiveCost": 431,
+          "costWithForwarded": 431,
+          "forwarded": 0,
+          "count": 124,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadCallee",
+          "exclusiveCost": 428,
+          "costWithForwarded": 428,
+          "forwarded": 0,
+          "count": 123,
+          "pcEntries": 123
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_classNameBytes",
+          "exclusiveCost": 405,
+          "costWithForwarded": 405,
+          "forwarded": 0,
+          "count": 108,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_encodeEnvelope",
+          "exclusiveCost": 402,
+          "costWithForwarded": 402,
+          "forwarded": 0,
+          "count": 109,
+          "pcEntries": 74
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendVFSBootstraps",
+          "exclusiveCost": 380,
+          "costWithForwarded": 380,
+          "forwarded": 0,
+          "count": 111,
+          "pcEntries": 111
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isExactIntRoot",
+          "exclusiveCost": 375,
+          "costWithForwarded": 375,
+          "forwarded": 0,
+          "count": 105,
+          "pcEntries": 95
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isInterface",
+          "exclusiveCost": 357,
+          "costWithForwarded": 357,
+          "forwarded": 0,
+          "count": 119,
+          "pcEntries": 70
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireVFSObjectProfile",
+          "exclusiveCost": 355,
+          "costWithForwarded": 355,
+          "forwarded": 0,
+          "count": 333,
+          "pcEntries": 5
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateVFSHeap",
+          "exclusiveCost": 354,
+          "costWithForwarded": 354,
+          "forwarded": 0,
+          "count": 116,
+          "pcEntries": 112
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_artifactRoot",
+          "exclusiveCost": 352,
+          "costWithForwarded": 352,
+          "forwarded": 0,
+          "count": 101,
+          "pcEntries": 68
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_copyArguments",
+          "exclusiveCost": 324,
+          "costWithForwarded": 324,
+          "forwarded": 0,
+          "count": 98,
+          "pcEntries": 89
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "start",
+          "exclusiveCost": 313,
+          "costWithForwarded": 313,
+          "forwarded": 0,
+          "count": 30,
+          "pcEntries": 30
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadRoot",
+          "exclusiveCost": 292,
+          "costWithForwarded": 292,
+          "forwarded": 0,
+          "count": 86,
+          "pcEntries": 86
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_newFrame",
+          "exclusiveCost": 291,
+          "costWithForwarded": 291,
+          "forwarded": 0,
+          "count": 90,
+          "pcEntries": 90
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_configureExceptionClasses",
+          "exclusiveCost": 264,
+          "costWithForwarded": 264,
+          "forwarded": 0,
+          "count": 84,
+          "pcEntries": 66
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_b32",
+          "exclusiveCost": 243,
+          "costWithForwarded": 243,
+          "forwarded": 0,
+          "count": 71,
+          "pcEntries": 29
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireKind",
+          "exclusiveCost": 233,
+          "costWithForwarded": 233,
+          "forwarded": 0,
+          "count": 52,
+          "pcEntries": 16
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedStringProfileClass",
+          "exclusiveCost": 210,
+          "costWithForwarded": 210,
+          "forwarded": 0,
+          "count": 63,
+          "pcEntries": 21
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadKind",
+          "exclusiveCost": 202,
+          "costWithForwarded": 202,
+          "forwarded": 0,
+          "count": 54,
+          "pcEntries": 27
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_address",
+          "exclusiveCost": 189,
+          "costWithForwarded": 189,
+          "forwarded": 0,
+          "count": 55,
+          "pcEntries": 21
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_putBytes16",
+          "exclusiveCost": 180,
+          "costWithForwarded": 180,
+          "forwarded": 0,
+          "count": 54,
+          "pcEntries": 27
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_checkBudgets",
+          "exclusiveCost": 177,
+          "costWithForwarded": 177,
+          "forwarded": 0,
+          "count": 47,
+          "pcEntries": 47
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_normalizeInt",
+          "exclusiveCost": 176,
+          "costWithForwarded": 176,
+          "forwarded": 0,
+          "count": 38,
+          "pcEntries": 19
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStaticCalleeMetadata",
+          "exclusiveCost": 171,
+          "costWithForwarded": 171,
+          "forwarded": 0,
+          "count": 43,
+          "pcEntries": 43
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_objectIsClass",
+          "exclusiveCost": 168,
+          "costWithForwarded": 168,
+          "forwarded": 0,
+          "count": 56,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_lexicalPath",
+          "exclusiveCost": 158,
+          "costWithForwarded": 158,
+          "forwarded": 0,
+          "count": 158,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isObjectClass",
+          "exclusiveCost": 140,
+          "costWithForwarded": 140,
+          "forwarded": 0,
+          "count": 50,
+          "pcEntries": 10
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_vfsRoot",
+          "exclusiveCost": 139,
+          "costWithForwarded": 139,
+          "forwarded": 0,
+          "count": 27,
+          "pcEntries": 27
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_u8",
+          "exclusiveCost": 135,
+          "costWithForwarded": 135,
+          "forwarded": 0,
+          "count": 39,
+          "pcEntries": 13
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStringGraph",
+          "exclusiveCost": 133,
+          "costWithForwarded": 133,
+          "forwarded": 0,
+          "count": 41,
+          "pcEntries": 41
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u4Bounded",
+          "exclusiveCost": 130,
+          "costWithForwarded": 130,
+          "forwarded": 0,
+          "count": 38,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireSupportedClass",
+          "exclusiveCost": 120,
+          "costWithForwarded": 120,
+          "forwarded": 0,
+          "count": 28,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireIntPair",
+          "exclusiveCost": 120,
+          "costWithForwarded": 120,
+          "forwarded": 0,
+          "count": 36,
+          "pcEntries": 18
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendStringBootstraps",
+          "exclusiveCost": 111,
+          "costWithForwarded": 111,
+          "forwarded": 0,
+          "count": 32,
+          "pcEntries": 27
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_runVFSNative",
+          "exclusiveCost": 90,
+          "costWithForwarded": 90,
+          "forwarded": 0,
+          "count": 24,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendIOBootstraps",
+          "exclusiveCost": 81,
+          "costWithForwarded": 81,
+          "forwarded": 0,
+          "count": 24,
+          "pcEntries": 24
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canAccessMember",
+          "exclusiveCost": 79,
+          "costWithForwarded": 79,
+          "forwarded": 0,
+          "count": 20,
+          "pcEntries": 20
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_classAccessible",
+          "exclusiveCost": 62,
+          "costWithForwarded": 62,
+          "forwarded": 0,
+          "count": 18,
+          "pcEntries": 18
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_nativeBinding",
+          "exclusiveCost": 59,
+          "costWithForwarded": 59,
+          "forwarded": 0,
+          "count": 17,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateThrowableGraph",
+          "exclusiveCost": 56,
+          "costWithForwarded": 56,
+          "forwarded": 0,
+          "count": 17,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadDouble",
+          "exclusiveCost": 54,
+          "costWithForwarded": 54,
+          "forwarded": 0,
+          "count": 16,
+          "pcEntries": 8
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadInitializer",
+          "exclusiveCost": 45,
+          "costWithForwarded": 45,
+          "forwarded": 0,
+          "count": 14,
+          "pcEntries": 14
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_effectiveReadOnly",
+          "exclusiveCost": 38,
+          "costWithForwarded": 38,
+          "forwarded": 0,
+          "count": 12,
+          "pcEntries": 6
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_resolveField",
+          "exclusiveCost": 30,
+          "costWithForwarded": 30,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_normalizePackedInt",
+          "exclusiveCost": 30,
+          "costWithForwarded": 30,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsSlice",
+          "exclusiveCost": 29,
+          "costWithForwarded": 29,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 8
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_stringNativeBinding",
+          "exclusiveCost": 27,
+          "costWithForwarded": 27,
+          "forwarded": 0,
+          "count": 10,
+          "pcEntries": 10
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadVirtualCallee",
+          "exclusiveCost": 25,
+          "costWithForwarded": 25,
+          "forwarded": 0,
+          "count": 5,
+          "pcEntries": 5
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_u32",
+          "exclusiveCost": 22,
+          "costWithForwarded": 22,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_packInt",
+          "exclusiveCost": 21,
+          "costWithForwarded": 21,
+          "forwarded": 0,
+          "count": 7,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_signed16",
+          "exclusiveCost": 14,
+          "costWithForwarded": 14,
+          "forwarded": 0,
+          "count": 3,
+          "pcEntries": 3
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "classBinding",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 4,
+          "pcEntries": 1
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "resume",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 3,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_arrayImplementsClass",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 3,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_ensureExceptionRegistry",
+          "exclusiveCost": 8,
+          "costWithForwarded": 8,
+          "forwarded": 0,
+          "count": 1,
+          "pcEntries": 1
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_methodCodeCount",
+          "exclusiveCost": 6,
+          "costWithForwarded": 6,
+          "forwarded": 0,
+          "count": 2,
+          "pcEntries": 2
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initializeVMThrowableFields",
+          "exclusiveCost": 1,
+          "costWithForwarded": 1,
+          "forwarded": 0,
+          "count": 1,
+          "pcEntries": 1
+        }
+      ],
+      "topPCs": [
+        {
+          "address": "0x4223Bd51c43631575a543343cC862C42A8289F69",
+          "pc": 1700,
+          "opcode": 94,
+          "count": 4,
+          "cost": 992278,
+          "forwarded": 0,
+          "exclusiveCost": 992278,
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 296,
+            "length": 11147,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4223Bd51c43631575a543343cC862C42A8289F69",
+          "pc": 2263,
+          "opcode": 62,
+          "count": 83,
+          "cost": 593564,
+          "forwarded": 0,
+          "exclusiveCost": 593564,
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 928,
+            "length": 69,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4223Bd51c43631575a543343cC862C42A8289F69",
+          "pc": 2899,
+          "opcode": 94,
+          "count": 65,
+          "cost": 582902,
+          "forwarded": 0,
+          "exclusiveCost": 582902,
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 296,
+            "length": 11147,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 115977,
+          "opcode": 55,
+          "count": 4,
+          "cost": 480419,
+          "forwarded": 0,
+          "exclusiveCost": 480419,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116216,
+          "opcode": 55,
+          "count": 229,
+          "cost": 207491,
+          "forwarded": 0,
+          "exclusiveCost": 207491,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 127888,
+          "opcode": 55,
+          "count": 2,
+          "cost": 194605,
+          "forwarded": 0,
+          "exclusiveCost": 194605,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4223Bd51c43631575a543343cC862C42A8289F69",
+          "pc": 2221,
+          "opcode": 55,
+          "count": 3,
+          "cost": 191583,
+          "forwarded": 0,
+          "exclusiveCost": 191583,
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 928,
+            "length": 69,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x440a0A4bB0bc3A9786B762b6cdeeE448010dDFE4",
+          "pc": 3330,
+          "opcode": 63,
+          "count": 63,
+          "cost": 86300,
+          "forwarded": 0,
+          "exclusiveCost": 86300,
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "sourceSpan": null
+        },
+        {
+          "address": "0x440a0A4bB0bc3A9786B762b6cdeeE448010dDFE4",
+          "pc": 2758,
+          "opcode": 84,
+          "count": 63,
+          "cost": 70300,
+          "forwarded": 0,
+          "exclusiveCost": 70300,
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "sourceSpan": null
+        },
+        {
+          "address": "0x440a0A4bB0bc3A9786B762b6cdeeE448010dDFE4",
+          "pc": 2798,
+          "opcode": 84,
+          "count": 63,
+          "cost": 70300,
+          "forwarded": 0,
+          "exclusiveCost": 70300,
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "sourceSpan": null
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116379,
+          "opcode": 87,
+          "count": 6547,
+          "cost": 65470,
+          "forwarded": 0,
+          "exclusiveCost": 65470,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x440a0A4bB0bc3A9786B762b6cdeeE448010dDFE4",
+          "pc": 3127,
+          "opcode": 94,
+          "count": 63,
+          "cost": 54873,
+          "forwarded": 0,
+          "exclusiveCost": 54873,
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "sourceSpan": null
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116385,
+          "opcode": 86,
+          "count": 6547,
+          "cost": 52376,
+          "forwarded": 0,
+          "exclusiveCost": 52376,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x440a0A4bB0bc3A9786B762b6cdeeE448010dDFE4",
+          "pc": 4619,
+          "opcode": 55,
+          "count": 63,
+          "cost": 50715,
+          "forwarded": 0,
+          "exclusiveCost": 50715,
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "sourceSpan": null
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 120041,
+          "opcode": 32,
+          "count": 3,
+          "cost": 49410,
+          "forwarded": 0,
+          "exclusiveCost": 49410,
+          "contract": "VFS0aInterpreter",
+          "function": "inspectFile",
+          "sourceSpan": {
+            "start": 23003,
+            "length": 122,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167629,
+          "opcode": 82,
+          "count": 259,
+          "cost": 47503,
+          "forwarded": 0,
+          "exclusiveCost": 47503,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146361,
+          "opcode": 82,
+          "count": 408,
+          "cost": 39177,
+          "forwarded": 0,
+          "exclusiveCost": 39177,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116120,
+          "opcode": 87,
+          "count": 3214,
+          "cost": 32140,
+          "forwarded": 0,
+          "exclusiveCost": 32140,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x440a0A4bB0bc3A9786B762b6cdeeE448010dDFE4",
+          "pc": 3396,
+          "opcode": 60,
+          "count": 63,
+          "cost": 30492,
+          "forwarded": 0,
+          "exclusiveCost": 30492,
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "sourceSpan": null
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116158,
+          "opcode": 87,
+          "count": 2741,
+          "cost": 27410,
+          "forwarded": 0,
+          "exclusiveCost": 27410,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116130,
+          "opcode": 86,
+          "count": 3214,
+          "cost": 25712,
+          "forwarded": 0,
+          "exclusiveCost": 25712,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167711,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24811,
+          "forwarded": 0,
+          "exclusiveCost": 24811,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167702,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24810,
+          "forwarded": 0,
+          "exclusiveCost": 24810,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167688,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24807,
+          "forwarded": 0,
+          "exclusiveCost": 24807,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167674,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24805,
+          "forwarded": 0,
+          "exclusiveCost": 24805,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167660,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24804,
+          "forwarded": 0,
+          "exclusiveCost": 24804,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167647,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24801,
+          "forwarded": 0,
+          "exclusiveCost": 24801,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167635,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24798,
+          "forwarded": 0,
+          "exclusiveCost": 24798,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4223Bd51c43631575a543343cC862C42A8289F69",
+          "pc": 2915,
+          "opcode": 94,
+          "count": 65,
+          "cost": 24774,
+          "forwarded": 0,
+          "exclusiveCost": 24774,
+          "contract": "CB0ClassCoordinator",
+          "function": "_loadAll",
+          "sourceSpan": {
+            "start": 9254,
+            "length": 126,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167709,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24755,
+          "forwarded": 0,
+          "exclusiveCost": 24755,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167695,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24753,
+          "forwarded": 0,
+          "exclusiveCost": 24753,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167681,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24751,
+          "forwarded": 0,
+          "exclusiveCost": 24751,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167667,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24749,
+          "forwarded": 0,
+          "exclusiveCost": 24749,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167653,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24747,
+          "forwarded": 0,
+          "exclusiveCost": 24747,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 167641,
+          "opcode": 82,
+          "count": 259,
+          "cost": 24745,
+          "forwarded": 0,
+          "exclusiveCost": 24745,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 2011,
+            "length": 3,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 60335,
+          "opcode": 85,
+          "count": 1,
+          "cost": 22100,
+          "forwarded": 0,
+          "exclusiveCost": 22100,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 60341,
+          "opcode": 85,
+          "count": 1,
+          "cost": 22100,
+          "forwarded": 0,
+          "exclusiveCost": 22100,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 60347,
+          "opcode": 85,
+          "count": 1,
+          "cost": 22100,
+          "forwarded": 0,
+          "exclusiveCost": 22100,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 60353,
+          "opcode": 85,
+          "count": 1,
+          "cost": 22100,
+          "forwarded": 0,
+          "exclusiveCost": 22100,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 60359,
+          "opcode": 85,
+          "count": 1,
+          "cost": 22100,
+          "forwarded": 0,
+          "exclusiveCost": 22100,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        }
+      ]
+    },
+    "bigMethodRich": {
+      "gas": 48451006,
+      "error": null,
+      "beforeRoot": "0x3c5712a080787aa442e60ce7de52d9d7b0c6f5e5c87c8d08636ed5536345197f",
+      "afterRoot": "0x735adef6abd7429d2356c468267ebcd0f759c777c6bb517a7bc63d6dd1f836b5",
+      "result": 15,
+      "tracePCEntries": 33200,
+      "exclusivePCSum": 48451006,
+      "exclusiveMinusReceipt": 0,
+      "costWithForwarded": 4173708651,
+      "forwardedCallGas": 4125257645,
+      "frameCount": 43,
+      "frameGasInclusiveSum": 96463072,
+      "rootFrame": {
+        "depth": 0,
+        "type": 241,
+        "from": "0x4341504143495459000000000000000000000001",
+        "to": "0x4223Bd51c43631575a543343cC862C42A8289F69",
+        "enterGas": 100000000,
+        "used": 48451006,
+        "reverted": false
+      },
+      "functionGroups": [
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "exclusiveCost": 34208571,
+          "costWithForwarded": 34208571,
+          "forwarded": 0,
+          "count": 4233756,
+          "pcEntries": 12497
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u2",
+          "exclusiveCost": 3223260,
+          "costWithForwarded": 3223260,
+          "forwarded": 0,
+          "count": 942975,
+          "pcEntries": 55
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_parseBundleClass",
+          "exclusiveCost": 1580129,
+          "costWithForwarded": 1580129,
+          "forwarded": 0,
+          "count": 454975,
+          "pcEntries": 395
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equals",
+          "exclusiveCost": 1523513,
+          "costWithForwarded": 1523513,
+          "forwarded": 0,
+          "count": 412117,
+          "pcEntries": 52
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validUtf8",
+          "exclusiveCost": 1230426,
+          "costWithForwarded": 1230426,
+          "forwarded": 0,
+          "count": 345806,
+          "pcEntries": 43
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_resolveCall",
+          "exclusiveCost": 1040397,
+          "costWithForwarded": 1040397,
+          "forwarded": 0,
+          "count": 302345,
+          "pcEntries": 695
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "unmapped",
+          "exclusiveCost": 982191,
+          "costWithForwarded": 982191,
+          "forwarded": 0,
+          "count": 337594,
+          "pcEntries": 1830
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_skip",
+          "exclusiveCost": 796768,
+          "costWithForwarded": 796768,
+          "forwarded": 0,
+          "count": 224988,
+          "pcEntries": 67
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readConstantPool",
+          "exclusiveCost": 652474,
+          "costWithForwarded": 652474,
+          "forwarded": 0,
+          "count": 180616,
+          "pcEntries": 276
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsCross",
+          "exclusiveCost": 542433,
+          "costWithForwarded": 542433,
+          "forwarded": 0,
+          "count": 148060,
+          "pcEntries": 44
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u4",
+          "exclusiveCost": 409336,
+          "costWithForwarded": 409336,
+          "forwarded": 0,
+          "count": 118492,
+          "pcEntries": 44
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "exclusiveCost": 399780,
+          "costWithForwarded": 399780,
+          "forwarded": 0,
+          "count": 9088,
+          "pcEntries": 1117
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_unsigned32",
+          "exclusiveCost": 282975,
+          "costWithForwarded": 282975,
+          "forwarded": 0,
+          "count": 83545,
+          "pcEntries": 31
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_utf",
+          "exclusiveCost": 273832,
+          "costWithForwarded": 273832,
+          "forwarded": 0,
+          "count": 73724,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u1",
+          "exclusiveCost": 247152,
+          "costWithForwarded": 247152,
+          "forwarded": 0,
+          "count": 68292,
+          "pcEntries": 21
+        },
+        {
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "exclusiveCost": 244941,
+          "costWithForwarded": 244941,
+          "forwarded": 0,
+          "count": 17269,
+          "pcEntries": 1792
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsLiteral",
+          "exclusiveCost": 89213,
+          "costWithForwarded": 89213,
+          "forwarded": 0,
+          "count": 24370,
+          "pcEntries": 182
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_descriptorType",
+          "exclusiveCost": 70224,
+          "costWithForwarded": 70224,
+          "forwarded": 0,
+          "count": 19061,
+          "pcEntries": 273
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canonicalPath",
+          "exclusiveCost": 57870,
+          "costWithForwarded": 57870,
+          "forwarded": 0,
+          "count": 15440,
+          "pcEntries": 6
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_getBytes16",
+          "exclusiveCost": 57870,
+          "costWithForwarded": 57870,
+          "forwarded": 0,
+          "count": 15432,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_sameClassName",
+          "exclusiveCost": 55608,
+          "costWithForwarded": 55608,
+          "forwarded": 0,
+          "count": 19459,
+          "pcEntries": 31
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_unsigned16",
+          "exclusiveCost": 41025,
+          "costWithForwarded": 41025,
+          "forwarded": 0,
+          "count": 10950,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_findChild",
+          "exclusiveCost": 39336,
+          "costWithForwarded": 39336,
+          "forwarded": 0,
+          "count": 14751,
+          "pcEntries": 9
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_execute",
+          "exclusiveCost": 37771,
+          "costWithForwarded": 37771,
+          "forwarded": 0,
+          "count": 10707,
+          "pcEntries": 2511
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStringConstant",
+          "exclusiveCost": 35376,
+          "costWithForwarded": 35376,
+          "forwarded": 0,
+          "count": 8844,
+          "pcEntries": 3
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_loadAll",
+          "exclusiveCost": 29336,
+          "costWithForwarded": 2355092586,
+          "forwarded": 2355063250,
+          "count": 2136,
+          "pcEntries": 307
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_put",
+          "exclusiveCost": 25145,
+          "costWithForwarded": 25145,
+          "forwarded": 0,
+          "count": 6832,
+          "pcEntries": 237
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateVFS",
+          "exclusiveCost": 22152,
+          "costWithForwarded": 22152,
+          "forwarded": 0,
+          "count": 6280,
+          "pcEntries": 755
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_className",
+          "exclusiveCost": 18012,
+          "costWithForwarded": 18012,
+          "forwarded": 0,
+          "count": 5214,
+          "pcEntries": 66
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "inspectFile",
+          "exclusiveCost": 17379,
+          "costWithForwarded": 17379,
+          "forwarded": 0,
+          "count": 15,
+          "pcEntries": 5
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateInitAndFrames",
+          "exclusiveCost": 17019,
+          "costWithForwarded": 17019,
+          "forwarded": 0,
+          "count": 4694,
+          "pcEntries": 242
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_freshState",
+          "exclusiveCost": 16518,
+          "costWithForwarded": 16518,
+          "forwarded": 0,
+          "count": 4936,
+          "pcEntries": 362
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_encodeMachine",
+          "exclusiveCost": 15083,
+          "costWithForwarded": 15083,
+          "forwarded": 0,
+          "count": 4471,
+          "pcEntries": 548
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_predecode",
+          "exclusiveCost": 11999,
+          "costWithForwarded": 11999,
+          "forwarded": 0,
+          "count": 3273,
+          "pcEntries": 338
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_machineSize",
+          "exclusiveCost": 11484,
+          "costWithForwarded": 11484,
+          "forwarded": 0,
+          "count": 3496,
+          "pcEntries": 230
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireVFSObjectProfile",
+          "exclusiveCost": 10562,
+          "costWithForwarded": 10562,
+          "forwarded": 0,
+          "count": 10540,
+          "pcEntries": 5
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_inodePath",
+          "exclusiveCost": 9426,
+          "costWithForwarded": 9426,
+          "forwarded": 0,
+          "count": 2754,
+          "pcEntries": 246
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_instructionWidth",
+          "exclusiveCost": 8887,
+          "costWithForwarded": 8887,
+          "forwarded": 0,
+          "count": 2439,
+          "pcEntries": 480
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateHierarchy",
+          "exclusiveCost": 7949,
+          "costWithForwarded": 7949,
+          "forwarded": 0,
+          "count": 2050,
+          "pcEntries": 215
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readFields",
+          "exclusiveCost": 6584,
+          "costWithForwarded": 6584,
+          "forwarded": 0,
+          "count": 1992,
+          "pcEntries": 179
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_fieldKind",
+          "exclusiveCost": 5970,
+          "costWithForwarded": 5970,
+          "forwarded": 0,
+          "count": 1688,
+          "pcEntries": 92
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateRestoredReferences",
+          "exclusiveCost": 5248,
+          "costWithForwarded": 5248,
+          "forwarded": 0,
+          "count": 1476,
+          "pcEntries": 114
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isIntLike",
+          "exclusiveCost": 4911,
+          "costWithForwarded": 4911,
+          "forwarded": 0,
+          "count": 1305,
+          "pcEntries": 50
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validInternalName",
+          "exclusiveCost": 4502,
+          "costWithForwarded": 4502,
+          "forwarded": 0,
+          "count": 1234,
+          "pcEntries": 133
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_encodeVFS",
+          "exclusiveCost": 4468,
+          "costWithForwarded": 4468,
+          "forwarded": 0,
+          "count": 1340,
+          "pcEntries": 255
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "unmapped",
+          "exclusiveCost": 4387,
+          "costWithForwarded": 4387,
+          "forwarded": 0,
+          "count": 1508,
+          "pcEntries": 139
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_nextDefaultInterface",
+          "exclusiveCost": 4276,
+          "costWithForwarded": 4276,
+          "forwarded": 0,
+          "count": 1108,
+          "pcEntries": 52
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_prepare",
+          "exclusiveCost": 4216,
+          "costWithForwarded": 4216,
+          "forwarded": 0,
+          "count": 1217,
+          "pcEntries": 778
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_commit",
+          "exclusiveCost": 4146,
+          "costWithForwarded": 4146,
+          "forwarded": 0,
+          "count": 262,
+          "pcEntries": 226
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_bootstrapRoot",
+          "exclusiveCost": 3957,
+          "costWithForwarded": 3957,
+          "forwarded": 0,
+          "count": 86,
+          "pcEntries": 86
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_descriptor",
+          "exclusiveCost": 3325,
+          "costWithForwarded": 3325,
+          "forwarded": 0,
+          "count": 933,
+          "pcEntries": 326
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_bytesEqual",
+          "exclusiveCost": 3276,
+          "costWithForwarded": 3276,
+          "forwarded": 0,
+          "count": 824,
+          "pcEntries": 28
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_view",
+          "exclusiveCost": 3256,
+          "costWithForwarded": 1672428517,
+          "forwarded": 1672425261,
+          "count": 470,
+          "pcEntries": 53
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_decodeMachine",
+          "exclusiveCost": 2874,
+          "costWithForwarded": 2874,
+          "forwarded": 0,
+          "count": 793,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validOrdinaryMethodName",
+          "exclusiveCost": 2732,
+          "costWithForwarded": 2732,
+          "forwarded": 0,
+          "count": 738,
+          "pcEntries": 99
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateInterfaceClosure",
+          "exclusiveCost": 2605,
+          "costWithForwarded": 2605,
+          "forwarded": 0,
+          "count": 755,
+          "pcEntries": 107
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_skipAttributes",
+          "exclusiveCost": 2274,
+          "costWithForwarded": 2274,
+          "forwarded": 0,
+          "count": 706,
+          "pcEntries": 32
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initializeClass",
+          "exclusiveCost": 2082,
+          "costWithForwarded": 2082,
+          "forwarded": 0,
+          "count": 595,
+          "pcEntries": 460
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_findClass",
+          "exclusiveCost": 1875,
+          "costWithForwarded": 1875,
+          "forwarded": 0,
+          "count": 517,
+          "pcEntries": 71
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_ascii",
+          "exclusiveCost": 1824,
+          "costWithForwarded": 1824,
+          "forwarded": 0,
+          "count": 500,
+          "pcEntries": 39
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_vfsEncodedSize",
+          "exclusiveCost": 1752,
+          "costWithForwarded": 1752,
+          "forwarded": 0,
+          "count": 528,
+          "pcEntries": 67
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedThrowableClass",
+          "exclusiveCost": 1480,
+          "costWithForwarded": 1480,
+          "forwarded": 0,
+          "count": 354,
+          "pcEntries": 177
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canonicalVFSFieldOffset",
+          "exclusiveCost": 1338,
+          "costWithForwarded": 1338,
+          "forwarded": 0,
+          "count": 388,
+          "pcEntries": 178
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readHandlers",
+          "exclusiveCost": 1296,
+          "costWithForwarded": 1296,
+          "forwarded": 0,
+          "count": 390,
+          "pcEntries": 130
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readCallCode",
+          "exclusiveCost": 1272,
+          "costWithForwarded": 1272,
+          "forwarded": 0,
+          "count": 362,
+          "pcEntries": 181
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isNamedClass",
+          "exclusiveCost": 1224,
+          "costWithForwarded": 1224,
+          "forwarded": 0,
+          "count": 432,
+          "pcEntries": 12
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_push",
+          "exclusiveCost": 1206,
+          "costWithForwarded": 1206,
+          "forwarded": 0,
+          "count": 348,
+          "pcEntries": 58
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "start",
+          "exclusiveCost": 1012,
+          "costWithForwarded": 1012,
+          "forwarded": 0,
+          "count": 254,
+          "pcEntries": 254
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_configRoot",
+          "exclusiveCost": 999,
+          "costWithForwarded": 999,
+          "forwarded": 0,
+          "count": 301,
+          "pcEntries": 243
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendThrowableBootstraps",
+          "exclusiveCost": 918,
+          "costWithForwarded": 918,
+          "forwarded": 0,
+          "count": 265,
+          "pcEntries": 182
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsSlice",
+          "exclusiveCost": 894,
+          "costWithForwarded": 894,
+          "forwarded": 0,
+          "count": 237,
+          "pcEntries": 41
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedVFSClass",
+          "exclusiveCost": 858,
+          "costWithForwarded": 858,
+          "forwarded": 0,
+          "count": 214,
+          "pcEntries": 92
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadCallee",
+          "exclusiveCost": 856,
+          "costWithForwarded": 856,
+          "forwarded": 0,
+          "count": 246,
+          "pcEntries": 123
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_internalName",
+          "exclusiveCost": 744,
+          "costWithForwarded": 744,
+          "forwarded": 0,
+          "count": 198,
+          "pcEntries": 32
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initialVFS",
+          "exclusiveCost": 654,
+          "costWithForwarded": 654,
+          "forwarded": 0,
+          "count": 195,
+          "pcEntries": 162
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_engineCall",
+          "exclusiveCost": 639,
+          "costWithForwarded": 97769773,
+          "forwarded": 97769134,
+          "count": 127,
+          "pcEntries": 22
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_instanceFieldOffset",
+          "exclusiveCost": 596,
+          "costWithForwarded": 596,
+          "forwarded": 0,
+          "count": 178,
+          "pcEntries": 89
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isCategory2Kind",
+          "exclusiveCost": 568,
+          "costWithForwarded": 568,
+          "forwarded": 0,
+          "count": 160,
+          "pcEntries": 57
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u2Bounded",
+          "exclusiveCost": 520,
+          "costWithForwarded": 520,
+          "forwarded": 0,
+          "count": 152,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_classNameBytes",
+          "exclusiveCost": 510,
+          "costWithForwarded": 510,
+          "forwarded": 0,
+          "count": 136,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readCode",
+          "exclusiveCost": 494,
+          "costWithForwarded": 494,
+          "forwarded": 0,
+          "count": 134,
+          "pcEntries": 134
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_stackWords",
+          "exclusiveCost": 472,
+          "costWithForwarded": 472,
+          "forwarded": 0,
+          "count": 136,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_newFrame",
+          "exclusiveCost": 441,
+          "costWithForwarded": 441,
+          "forwarded": 0,
+          "count": 136,
+          "pcEntries": 90
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isInterface",
+          "exclusiveCost": 420,
+          "costWithForwarded": 420,
+          "forwarded": 0,
+          "count": 140,
+          "pcEntries": 72
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_encodeEnvelope",
+          "exclusiveCost": 402,
+          "costWithForwarded": 402,
+          "forwarded": 0,
+          "count": 109,
+          "pcEntries": 74
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_copyArguments",
+          "exclusiveCost": 396,
+          "costWithForwarded": 396,
+          "forwarded": 0,
+          "count": 122,
+          "pcEntries": 89
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendVFSBootstraps",
+          "exclusiveCost": 380,
+          "costWithForwarded": 380,
+          "forwarded": 0,
+          "count": 111,
+          "pcEntries": 111
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isExactIntRoot",
+          "exclusiveCost": 375,
+          "costWithForwarded": 375,
+          "forwarded": 0,
+          "count": 105,
+          "pcEntries": 95
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateVFSHeap",
+          "exclusiveCost": 354,
+          "costWithForwarded": 354,
+          "forwarded": 0,
+          "count": 116,
+          "pcEntries": 112
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_artifactRoot",
+          "exclusiveCost": 352,
+          "costWithForwarded": 352,
+          "forwarded": 0,
+          "count": 101,
+          "pcEntries": 68
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStaticCalleeMetadata",
+          "exclusiveCost": 342,
+          "costWithForwarded": 342,
+          "forwarded": 0,
+          "count": 86,
+          "pcEntries": 43
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadRoot",
+          "exclusiveCost": 292,
+          "costWithForwarded": 292,
+          "forwarded": 0,
+          "count": 86,
+          "pcEntries": 86
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedStringProfileClass",
+          "exclusiveCost": 280,
+          "costWithForwarded": 280,
+          "forwarded": 0,
+          "count": 84,
+          "pcEntries": 21
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_lexicalPath",
+          "exclusiveCost": 278,
+          "costWithForwarded": 278,
+          "forwarded": 0,
+          "count": 190,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_configureExceptionClasses",
+          "exclusiveCost": 264,
+          "costWithForwarded": 264,
+          "forwarded": 0,
+          "count": 84,
+          "pcEntries": 66
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_normalizeInt",
+          "exclusiveCost": 264,
+          "costWithForwarded": 264,
+          "forwarded": 0,
+          "count": 57,
+          "pcEntries": 19
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireKind",
+          "exclusiveCost": 260,
+          "costWithForwarded": 260,
+          "forwarded": 0,
+          "count": 58,
+          "pcEntries": 16
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_b32",
+          "exclusiveCost": 243,
+          "costWithForwarded": 243,
+          "forwarded": 0,
+          "count": 71,
+          "pcEntries": 29
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadKind",
+          "exclusiveCost": 202,
+          "costWithForwarded": 202,
+          "forwarded": 0,
+          "count": 54,
+          "pcEntries": 27
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_address",
+          "exclusiveCost": 189,
+          "costWithForwarded": 189,
+          "forwarded": 0,
+          "count": 55,
+          "pcEntries": 21
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "start",
+          "exclusiveCost": 185,
+          "costWithForwarded": 185,
+          "forwarded": 0,
+          "count": 30,
+          "pcEntries": 30
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_putBytes16",
+          "exclusiveCost": 180,
+          "costWithForwarded": 180,
+          "forwarded": 0,
+          "count": 54,
+          "pcEntries": 27
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_checkBudgets",
+          "exclusiveCost": 177,
+          "costWithForwarded": 177,
+          "forwarded": 0,
+          "count": 47,
+          "pcEntries": 47
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_objectIsClass",
+          "exclusiveCost": 168,
+          "costWithForwarded": 168,
+          "forwarded": 0,
+          "count": 56,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isObjectClass",
+          "exclusiveCost": 140,
+          "costWithForwarded": 140,
+          "forwarded": 0,
+          "count": 50,
+          "pcEntries": 10
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_vfsRoot",
+          "exclusiveCost": 139,
+          "costWithForwarded": 139,
+          "forwarded": 0,
+          "count": 27,
+          "pcEntries": 27
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_u8",
+          "exclusiveCost": 135,
+          "costWithForwarded": 135,
+          "forwarded": 0,
+          "count": 39,
+          "pcEntries": 13
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStringGraph",
+          "exclusiveCost": 133,
+          "costWithForwarded": 133,
+          "forwarded": 0,
+          "count": 41,
+          "pcEntries": 41
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u4Bounded",
+          "exclusiveCost": 130,
+          "costWithForwarded": 130,
+          "forwarded": 0,
+          "count": 38,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireSupportedClass",
+          "exclusiveCost": 120,
+          "costWithForwarded": 120,
+          "forwarded": 0,
+          "count": 28,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireIntPair",
+          "exclusiveCost": 120,
+          "costWithForwarded": 120,
+          "forwarded": 0,
+          "count": 36,
+          "pcEntries": 18
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_nativeBinding",
+          "exclusiveCost": 118,
+          "costWithForwarded": 118,
+          "forwarded": 0,
+          "count": 34,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canAccessMember",
+          "exclusiveCost": 114,
+          "costWithForwarded": 114,
+          "forwarded": 0,
+          "count": 30,
+          "pcEntries": 20
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendStringBootstraps",
+          "exclusiveCost": 111,
+          "costWithForwarded": 111,
+          "forwarded": 0,
+          "count": 32,
+          "pcEntries": 27
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadInitializer",
+          "exclusiveCost": 90,
+          "costWithForwarded": 90,
+          "forwarded": 0,
+          "count": 28,
+          "pcEntries": 14
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_runVFSNative",
+          "exclusiveCost": 90,
+          "costWithForwarded": 90,
+          "forwarded": 0,
+          "count": 24,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendIOBootstraps",
+          "exclusiveCost": 81,
+          "costWithForwarded": 81,
+          "forwarded": 0,
+          "count": 24,
+          "pcEntries": 24
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_classAccessible",
+          "exclusiveCost": 62,
+          "costWithForwarded": 62,
+          "forwarded": 0,
+          "count": 18,
+          "pcEntries": 18
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateThrowableGraph",
+          "exclusiveCost": 56,
+          "costWithForwarded": 56,
+          "forwarded": 0,
+          "count": 17,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadDouble",
+          "exclusiveCost": 54,
+          "costWithForwarded": 54,
+          "forwarded": 0,
+          "count": 16,
+          "pcEntries": 8
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_stringNativeBinding",
+          "exclusiveCost": 54,
+          "costWithForwarded": 54,
+          "forwarded": 0,
+          "count": 20,
+          "pcEntries": 10
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadVirtualCallee",
+          "exclusiveCost": 50,
+          "costWithForwarded": 50,
+          "forwarded": 0,
+          "count": 10,
+          "pcEntries": 5
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_normalizePackedInt",
+          "exclusiveCost": 45,
+          "costWithForwarded": 45,
+          "forwarded": 0,
+          "count": 12,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_effectiveReadOnly",
+          "exclusiveCost": 38,
+          "costWithForwarded": 38,
+          "forwarded": 0,
+          "count": 12,
+          "pcEntries": 6
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_resolveField",
+          "exclusiveCost": 30,
+          "costWithForwarded": 30,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_signed16",
+          "exclusiveCost": 28,
+          "costWithForwarded": 28,
+          "forwarded": 0,
+          "count": 6,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_packInt",
+          "exclusiveCost": 24,
+          "costWithForwarded": 24,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 5
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_u32",
+          "exclusiveCost": 22,
+          "costWithForwarded": 22,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_ensureExceptionRegistry",
+          "exclusiveCost": 16,
+          "costWithForwarded": 16,
+          "forwarded": 0,
+          "count": 2,
+          "pcEntries": 1
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "classBinding",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 4,
+          "pcEntries": 1
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "resume",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 3,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_arrayImplementsClass",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 3,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_methodCodeCount",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 4,
+          "pcEntries": 2
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initializeVMThrowableFields",
+          "exclusiveCost": 2,
+          "costWithForwarded": 2,
+          "forwarded": 0,
+          "count": 2,
+          "pcEntries": 1
+        }
+      ],
+      "topPCs": [
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116216,
+          "opcode": 55,
+          "count": 243,
+          "cost": 2468509,
+          "forwarded": 0,
+          "exclusiveCost": 2468509,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146470,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 931061,
+          "forwarded": 0,
+          "exclusiveCost": 931061,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116379,
+          "opcode": 87,
+          "count": 77932,
+          "cost": 779320,
+          "forwarded": 0,
+          "exclusiveCost": 779320,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116385,
+          "opcode": 86,
+          "count": 77932,
+          "cost": 623456,
+          "forwarded": 0,
+          "exclusiveCost": 623456,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146620,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622594,
+          "forwarded": 0,
+          "exclusiveCost": 622594,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146618,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622586,
+          "forwarded": 0,
+          "exclusiveCost": 622586,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146611,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622575,
+          "forwarded": 0,
+          "exclusiveCost": 622575,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146603,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622564,
+          "forwarded": 0,
+          "exclusiveCost": 622564,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146595,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622557,
+          "forwarded": 0,
+          "exclusiveCost": 622557,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146587,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622545,
+          "forwarded": 0,
+          "exclusiveCost": 622545,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146579,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622535,
+          "forwarded": 0,
+          "exclusiveCost": 622535,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146571,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622527,
+          "forwarded": 0,
+          "exclusiveCost": 622527,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146564,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622513,
+          "forwarded": 0,
+          "exclusiveCost": 622513,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146557,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622506,
+          "forwarded": 0,
+          "exclusiveCost": 622506,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146550,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622496,
+          "forwarded": 0,
+          "exclusiveCost": 622496,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146543,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622486,
+          "forwarded": 0,
+          "exclusiveCost": 622486,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146535,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622474,
+          "forwarded": 0,
+          "exclusiveCost": 622474,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146527,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622466,
+          "forwarded": 0,
+          "exclusiveCost": 622466,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146519,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622457,
+          "forwarded": 0,
+          "exclusiveCost": 622457,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146512,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622444,
+          "forwarded": 0,
+          "exclusiveCost": 622444,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146506,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622435,
+          "forwarded": 0,
+          "exclusiveCost": 622435,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146500,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622425,
+          "forwarded": 0,
+          "exclusiveCost": 622425,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146494,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622419,
+          "forwarded": 0,
+          "exclusiveCost": 622419,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146488,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622404,
+          "forwarded": 0,
+          "exclusiveCost": 622404,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146482,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622394,
+          "forwarded": 0,
+          "exclusiveCost": 622394,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146476,
+          "opcode": 82,
+          "count": 2557,
+          "cost": 622386,
+          "forwarded": 0,
+          "exclusiveCost": 622386,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116120,
+          "opcode": 87,
+          "count": 31337,
+          "cost": 313370,
+          "forwarded": 0,
+          "exclusiveCost": 313370,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116158,
+          "opcode": 87,
+          "count": 25699,
+          "cost": 256990,
+          "forwarded": 0,
+          "exclusiveCost": 256990,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116130,
+          "opcode": 86,
+          "count": 31337,
+          "cost": 250696,
+          "forwarded": 0,
+          "exclusiveCost": 250696,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116366,
+          "opcode": 87,
+          "count": 24169,
+          "cost": 241690,
+          "forwarded": 0,
+          "exclusiveCost": 241690,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116369,
+          "opcode": 144,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116370,
+          "opcode": 129,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116371,
+          "opcode": 81,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116372,
+          "opcode": 129,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116373,
+          "opcode": 16,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116374,
+          "opcode": 21,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116375,
+          "opcode": 98,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116380,
+          "opcode": 1,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116381,
+          "opcode": 96,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116383,
+          "opcode": 1,
+          "count": 77932,
+          "cost": 233796,
+          "forwarded": 0,
+          "exclusiveCost": 233796,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        }
+      ]
+    },
+    "density181969": {
+      "gas": 74874471,
+      "error": "cb0: EVM coordinator start failed: execution reverted (revert_data=0xf15d73430000000000000000000000000000000000000000000000000000000000000007)",
+      "beforeRoot": "0x569d62aab274908fa724a2076adcfeab380bf87a650cebc740711f572db26c7a",
+      "afterRoot": "0x569d62aab274908fa724a2076adcfeab380bf87a650cebc740711f572db26c7a",
+      "result": 0,
+      "tracePCEntries": 29290,
+      "exclusivePCSum": 74874471,
+      "exclusiveMinusReceipt": 0,
+      "costWithForwarded": 7125909910,
+      "forwardedCallGas": 7051035439,
+      "frameCount": 73,
+      "frameGasInclusiveSum": 148402622,
+      "rootFrame": {
+        "depth": 0,
+        "type": 241,
+        "from": "0x4341504143495459000000000000000000000001",
+        "to": "0xDC6C01Caba75FBCAb45C6db8A74c042054D2Cc84",
+        "enterGas": 100000000,
+        "used": 74874471,
+        "reverted": true,
+        "error": "execution reverted"
+      },
+      "functionGroups": [
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "exclusiveCost": 51143120,
+          "costWithForwarded": 51143120,
+          "forwarded": 0,
+          "count": 6830797,
+          "pcEntries": 11035
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u2",
+          "exclusiveCost": 6107556,
+          "costWithForwarded": 6107556,
+          "forwarded": 0,
+          "count": 1786785,
+          "pcEntries": 55
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_parseBundleClass",
+          "exclusiveCost": 3071292,
+          "costWithForwarded": 3071292,
+          "forwarded": 0,
+          "count": 883950,
+          "pcEntries": 395
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equals",
+          "exclusiveCost": 2894278,
+          "costWithForwarded": 2894278,
+          "forwarded": 0,
+          "count": 774003,
+          "pcEntries": 52
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validUtf8",
+          "exclusiveCost": 2402100,
+          "costWithForwarded": 2402100,
+          "forwarded": 0,
+          "count": 675100,
+          "pcEntries": 43
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_skip",
+          "exclusiveCost": 1520078,
+          "costWithForwarded": 1520078,
+          "forwarded": 0,
+          "count": 429451,
+          "pcEntries": 67
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "unmapped",
+          "exclusiveCost": 1427965,
+          "costWithForwarded": 1427965,
+          "forwarded": 0,
+          "count": 493594,
+          "pcEntries": 1675
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "exclusiveCost": 1280815,
+          "costWithForwarded": 1280815,
+          "forwarded": 0,
+          "count": 15121,
+          "pcEntries": 1099
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readConstantPool",
+          "exclusiveCost": 1079215,
+          "costWithForwarded": 1079215,
+          "forwarded": 0,
+          "count": 299553,
+          "pcEntries": 276
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u4",
+          "exclusiveCost": 797392,
+          "costWithForwarded": 797392,
+          "forwarded": 0,
+          "count": 230824,
+          "pcEntries": 44
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_unsigned32",
+          "exclusiveCost": 550935,
+          "costWithForwarded": 550935,
+          "forwarded": 0,
+          "count": 162657,
+          "pcEntries": 31
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_resolveCall",
+          "exclusiveCost": 520306,
+          "costWithForwarded": 520306,
+          "forwarded": 0,
+          "count": 151199,
+          "pcEntries": 688
+        },
+        {
+          "contract": "dependency/other",
+          "function": "<no requested source map>",
+          "exclusiveCost": 454588,
+          "costWithForwarded": 454588,
+          "forwarded": 0,
+          "count": 32780,
+          "pcEntries": 2607
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u1",
+          "exclusiveCost": 442244,
+          "costWithForwarded": 442244,
+          "forwarded": 0,
+          "count": 122199,
+          "pcEntries": 21
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_utf",
+          "exclusiveCost": 339742,
+          "costWithForwarded": 339742,
+          "forwarded": 0,
+          "count": 91469,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsLiteral",
+          "exclusiveCost": 173973,
+          "costWithForwarded": 173973,
+          "forwarded": 0,
+          "count": 47495,
+          "pcEntries": 178
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_sameClassName",
+          "exclusiveCost": 107869,
+          "costWithForwarded": 107869,
+          "forwarded": 0,
+          "count": 37709,
+          "pcEntries": 66
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsCross",
+          "exclusiveCost": 102508,
+          "costWithForwarded": 102508,
+          "forwarded": 0,
+          "count": 29082,
+          "pcEntries": 44
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_unsigned16",
+          "exclusiveCost": 79005,
+          "costWithForwarded": 79005,
+          "forwarded": 0,
+          "count": 21073,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStringConstant",
+          "exclusiveCost": 66084,
+          "costWithForwarded": 66084,
+          "forwarded": 0,
+          "count": 16521,
+          "pcEntries": 3
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_loadAll",
+          "exclusiveCost": 50426,
+          "costWithForwarded": 4596787907,
+          "forwarded": 4596737481,
+          "count": 3957,
+          "pcEntries": 307
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_descriptorType",
+          "exclusiveCost": 46736,
+          "costWithForwarded": 46736,
+          "forwarded": 0,
+          "count": 12686,
+          "pcEntries": 273
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "inspectFile",
+          "exclusiveCost": 34362,
+          "costWithForwarded": 34362,
+          "forwarded": 0,
+          "count": 10,
+          "pcEntries": 5
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_className",
+          "exclusiveCost": 18468,
+          "costWithForwarded": 18468,
+          "forwarded": 0,
+          "count": 5346,
+          "pcEntries": 66
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_freshState",
+          "exclusiveCost": 16622,
+          "costWithForwarded": 16622,
+          "forwarded": 0,
+          "count": 4970,
+          "pcEntries": 362
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireVFSObjectProfile",
+          "exclusiveCost": 13112,
+          "costWithForwarded": 13112,
+          "forwarded": 0,
+          "count": 13079,
+          "pcEntries": 5
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_predecode",
+          "exclusiveCost": 12907,
+          "costWithForwarded": 12907,
+          "forwarded": 0,
+          "count": 3508,
+          "pcEntries": 338
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_execute",
+          "exclusiveCost": 11037,
+          "costWithForwarded": 11037,
+          "forwarded": 0,
+          "count": 3133,
+          "pcEntries": 2055
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_instructionWidth",
+          "exclusiveCost": 10483,
+          "costWithForwarded": 10483,
+          "forwarded": 0,
+          "count": 2877,
+          "pcEntries": 480
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateHierarchy",
+          "exclusiveCost": 7992,
+          "costWithForwarded": 7992,
+          "forwarded": 0,
+          "count": 2059,
+          "pcEntries": 215
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "unmapped",
+          "exclusiveCost": 7486,
+          "costWithForwarded": 7486,
+          "forwarded": 0,
+          "count": 2576,
+          "pcEntries": 139
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readFields",
+          "exclusiveCost": 6635,
+          "costWithForwarded": 6635,
+          "forwarded": 0,
+          "count": 2008,
+          "pcEntries": 179
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateVFS",
+          "exclusiveCost": 5538,
+          "costWithForwarded": 5538,
+          "forwarded": 0,
+          "count": 1570,
+          "pcEntries": 755
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_prepare",
+          "exclusiveCost": 5238,
+          "costWithForwarded": 5238,
+          "forwarded": 0,
+          "count": 1519,
+          "pcEntries": 778
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_view",
+          "exclusiveCost": 5077,
+          "costWithForwarded": 2357637718,
+          "forwarded": 2357632641,
+          "count": 664,
+          "pcEntries": 54
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_nextDefaultInterface",
+          "exclusiveCost": 4372,
+          "costWithForwarded": 4372,
+          "forwarded": 0,
+          "count": 1132,
+          "pcEntries": 52
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_bootstrapRoot",
+          "exclusiveCost": 3957,
+          "costWithForwarded": 3957,
+          "forwarded": 0,
+          "count": 86,
+          "pcEntries": 86
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isIntLike",
+          "exclusiveCost": 3274,
+          "costWithForwarded": 3274,
+          "forwarded": 0,
+          "count": 870,
+          "pcEntries": 50
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_fieldKind",
+          "exclusiveCost": 2720,
+          "costWithForwarded": 2720,
+          "forwarded": 0,
+          "count": 768,
+          "pcEntries": 92
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_descriptor",
+          "exclusiveCost": 2578,
+          "costWithForwarded": 2578,
+          "forwarded": 0,
+          "count": 722,
+          "pcEntries": 326
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_inodePath",
+          "exclusiveCost": 2353,
+          "costWithForwarded": 2353,
+          "forwarded": 0,
+          "count": 685,
+          "pcEntries": 246
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_findClass",
+          "exclusiveCost": 2331,
+          "costWithForwarded": 2331,
+          "forwarded": 0,
+          "count": 641,
+          "pcEntries": 71
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_skipAttributes",
+          "exclusiveCost": 2325,
+          "costWithForwarded": 2325,
+          "forwarded": 0,
+          "count": 722,
+          "pcEntries": 32
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validInternalName",
+          "exclusiveCost": 2236,
+          "costWithForwarded": 2236,
+          "forwarded": 0,
+          "count": 613,
+          "pcEntries": 133
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedThrowableClass",
+          "exclusiveCost": 2220,
+          "costWithForwarded": 2220,
+          "forwarded": 0,
+          "count": 531,
+          "pcEntries": 177
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_findChild",
+          "exclusiveCost": 2160,
+          "costWithForwarded": 2160,
+          "forwarded": 0,
+          "count": 810,
+          "pcEntries": 9
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_getBytes16",
+          "exclusiveCost": 2145,
+          "costWithForwarded": 2145,
+          "forwarded": 0,
+          "count": 572,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canonicalPath",
+          "exclusiveCost": 2085,
+          "costWithForwarded": 2085,
+          "forwarded": 0,
+          "count": 558,
+          "pcEntries": 6
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateInterfaceClosure",
+          "exclusiveCost": 2084,
+          "costWithForwarded": 2084,
+          "forwarded": 0,
+          "count": 604,
+          "pcEntries": 107
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initializeClass",
+          "exclusiveCost": 2082,
+          "costWithForwarded": 2082,
+          "forwarded": 0,
+          "count": 595,
+          "pcEntries": 460
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_decodeMachine",
+          "exclusiveCost": 1821,
+          "costWithForwarded": 1821,
+          "forwarded": 0,
+          "count": 494,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isNamedClass",
+          "exclusiveCost": 1632,
+          "costWithForwarded": 1632,
+          "forwarded": 0,
+          "count": 576,
+          "pcEntries": 12
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_ascii",
+          "exclusiveCost": 1368,
+          "costWithForwarded": 1368,
+          "forwarded": 0,
+          "count": 369,
+          "pcEntries": 39
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedVFSClass",
+          "exclusiveCost": 1231,
+          "costWithForwarded": 1231,
+          "forwarded": 0,
+          "count": 309,
+          "pcEntries": 92
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validOrdinaryMethodName",
+          "exclusiveCost": 1040,
+          "costWithForwarded": 1040,
+          "forwarded": 0,
+          "count": 281,
+          "pcEntries": 99
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_configRoot",
+          "exclusiveCost": 999,
+          "costWithForwarded": 999,
+          "forwarded": 0,
+          "count": 301,
+          "pcEntries": 243
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "start",
+          "exclusiveCost": 960,
+          "costWithForwarded": 960,
+          "forwarded": 0,
+          "count": 236,
+          "pcEntries": 236
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendThrowableBootstraps",
+          "exclusiveCost": 918,
+          "costWithForwarded": 918,
+          "forwarded": 0,
+          "count": 265,
+          "pcEntries": 182
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readHandlers",
+          "exclusiveCost": 864,
+          "costWithForwarded": 864,
+          "forwarded": 0,
+          "count": 260,
+          "pcEntries": 130
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_bytesEqual",
+          "exclusiveCost": 819,
+          "costWithForwarded": 819,
+          "forwarded": 0,
+          "count": 206,
+          "pcEntries": 28
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_engineCall",
+          "exclusiveCost": 814,
+          "costWithForwarded": 96666131,
+          "forwarded": 96665317,
+          "count": 167,
+          "pcEntries": 22
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readCallCode",
+          "exclusiveCost": 636,
+          "costWithForwarded": 636,
+          "forwarded": 0,
+          "count": 181,
+          "pcEntries": 181
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_internalName",
+          "exclusiveCost": 592,
+          "costWithForwarded": 592,
+          "forwarded": 0,
+          "count": 158,
+          "pcEntries": 32
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u2Bounded",
+          "exclusiveCost": 520,
+          "costWithForwarded": 520,
+          "forwarded": 0,
+          "count": 152,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_classNameBytes",
+          "exclusiveCost": 510,
+          "costWithForwarded": 510,
+          "forwarded": 0,
+          "count": 136,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_readCode",
+          "exclusiveCost": 494,
+          "costWithForwarded": 494,
+          "forwarded": 0,
+          "count": 134,
+          "pcEntries": 134
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initialVFS",
+          "exclusiveCost": 454,
+          "costWithForwarded": 454,
+          "forwarded": 0,
+          "count": 140,
+          "pcEntries": 135
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_artifactRoot",
+          "exclusiveCost": 446,
+          "costWithForwarded": 446,
+          "forwarded": 0,
+          "count": 128,
+          "pcEntries": 68
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadCallee",
+          "exclusiveCost": 428,
+          "costWithForwarded": 428,
+          "forwarded": 0,
+          "count": 123,
+          "pcEntries": 123
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendVFSBootstraps",
+          "exclusiveCost": 380,
+          "costWithForwarded": 380,
+          "forwarded": 0,
+          "count": 111,
+          "pcEntries": 111
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isExactIntRoot",
+          "exclusiveCost": 375,
+          "costWithForwarded": 375,
+          "forwarded": 0,
+          "count": 105,
+          "pcEntries": 95
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isInterface",
+          "exclusiveCost": 357,
+          "costWithForwarded": 357,
+          "forwarded": 0,
+          "count": 119,
+          "pcEntries": 70
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_b32",
+          "exclusiveCost": 342,
+          "costWithForwarded": 342,
+          "forwarded": 0,
+          "count": 100,
+          "pcEntries": 29
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_copyArguments",
+          "exclusiveCost": 324,
+          "costWithForwarded": 324,
+          "forwarded": 0,
+          "count": 98,
+          "pcEntries": 89
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadRoot",
+          "exclusiveCost": 292,
+          "costWithForwarded": 292,
+          "forwarded": 0,
+          "count": 86,
+          "pcEntries": 86
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_newFrame",
+          "exclusiveCost": 291,
+          "costWithForwarded": 291,
+          "forwarded": 0,
+          "count": 90,
+          "pcEntries": 90
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isReservedStringProfileClass",
+          "exclusiveCost": 280,
+          "costWithForwarded": 280,
+          "forwarded": 0,
+          "count": 84,
+          "pcEntries": 21
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_address",
+          "exclusiveCost": 261,
+          "costWithForwarded": 261,
+          "forwarded": 0,
+          "count": 76,
+          "pcEntries": 21
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "start",
+          "exclusiveCost": 252,
+          "costWithForwarded": 252,
+          "forwarded": 0,
+          "count": 29,
+          "pcEntries": 29
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_configureExceptionClasses",
+          "exclusiveCost": 228,
+          "costWithForwarded": 228,
+          "forwarded": 0,
+          "count": 72,
+          "pcEntries": 66
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isCategory2Kind",
+          "exclusiveCost": 203,
+          "costWithForwarded": 203,
+          "forwarded": 0,
+          "count": 57,
+          "pcEntries": 43
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_push",
+          "exclusiveCost": 201,
+          "costWithForwarded": 201,
+          "forwarded": 0,
+          "count": 58,
+          "pcEntries": 58
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_u8",
+          "exclusiveCost": 180,
+          "costWithForwarded": 180,
+          "forwarded": 0,
+          "count": 52,
+          "pcEntries": 13
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_checkBudgets",
+          "exclusiveCost": 177,
+          "costWithForwarded": 177,
+          "forwarded": 0,
+          "count": 47,
+          "pcEntries": 47
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_validateStaticCalleeMetadata",
+          "exclusiveCost": 171,
+          "costWithForwarded": 171,
+          "forwarded": 0,
+          "count": 43,
+          "pcEntries": 43
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_isObjectClass",
+          "exclusiveCost": 168,
+          "costWithForwarded": 168,
+          "forwarded": 0,
+          "count": 60,
+          "pcEntries": 10
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_u4Bounded",
+          "exclusiveCost": 130,
+          "costWithForwarded": 130,
+          "forwarded": 0,
+          "count": 38,
+          "pcEntries": 38
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireSupportedClass",
+          "exclusiveCost": 120,
+          "costWithForwarded": 120,
+          "forwarded": 0,
+          "count": 28,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendStringBootstraps",
+          "exclusiveCost": 111,
+          "costWithForwarded": 111,
+          "forwarded": 0,
+          "count": 32,
+          "pcEntries": 27
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadKind",
+          "exclusiveCost": 101,
+          "costWithForwarded": 101,
+          "forwarded": 0,
+          "count": 27,
+          "pcEntries": 27
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_appendIOBootstraps",
+          "exclusiveCost": 81,
+          "costWithForwarded": 81,
+          "forwarded": 0,
+          "count": 24,
+          "pcEntries": 24
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_canAccessMember",
+          "exclusiveCost": 79,
+          "costWithForwarded": 79,
+          "forwarded": 0,
+          "count": 20,
+          "pcEntries": 20
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_machineSize",
+          "exclusiveCost": 75,
+          "costWithForwarded": 75,
+          "forwarded": 0,
+          "count": 20,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_classAccessible",
+          "exclusiveCost": 62,
+          "costWithForwarded": 62,
+          "forwarded": 0,
+          "count": 18,
+          "pcEntries": 18
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_runVFSNative",
+          "exclusiveCost": 60,
+          "costWithForwarded": 60,
+          "forwarded": 0,
+          "count": 16,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_nativeBinding",
+          "exclusiveCost": 59,
+          "costWithForwarded": 59,
+          "forwarded": 0,
+          "count": 17,
+          "pcEntries": 17
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadInitializer",
+          "exclusiveCost": 45,
+          "costWithForwarded": 45,
+          "forwarded": 0,
+          "count": 14,
+          "pcEntries": 14
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_requireKind",
+          "exclusiveCost": 43,
+          "costWithForwarded": 43,
+          "forwarded": 0,
+          "count": 9,
+          "pcEntries": 9
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_objectIsClass",
+          "exclusiveCost": 42,
+          "costWithForwarded": 42,
+          "forwarded": 0,
+          "count": 14,
+          "pcEntries": 7
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_stackWords",
+          "exclusiveCost": 41,
+          "costWithForwarded": 41,
+          "forwarded": 0,
+          "count": 12,
+          "pcEntries": 12
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_effectiveReadOnly",
+          "exclusiveCost": 38,
+          "costWithForwarded": 38,
+          "forwarded": 0,
+          "count": 12,
+          "pcEntries": 6
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_lexicalPath",
+          "exclusiveCost": 35,
+          "costWithForwarded": 35,
+          "forwarded": 0,
+          "count": 35,
+          "pcEntries": 3
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_u32",
+          "exclusiveCost": 33,
+          "costWithForwarded": 33,
+          "forwarded": 0,
+          "count": 12,
+          "pcEntries": 4
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_equalsSlice",
+          "exclusiveCost": 29,
+          "costWithForwarded": 29,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 8
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadDouble",
+          "exclusiveCost": 27,
+          "costWithForwarded": 27,
+          "forwarded": 0,
+          "count": 8,
+          "pcEntries": 8
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_stringNativeBinding",
+          "exclusiveCost": 27,
+          "costWithForwarded": 27,
+          "forwarded": 0,
+          "count": 10,
+          "pcEntries": 10
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_loadVirtualCallee",
+          "exclusiveCost": 25,
+          "costWithForwarded": 25,
+          "forwarded": 0,
+          "count": 5,
+          "pcEntries": 5
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "classBinding",
+          "exclusiveCost": 18,
+          "costWithForwarded": 18,
+          "forwarded": 0,
+          "count": 6,
+          "pcEntries": 1
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_signed16",
+          "exclusiveCost": 14,
+          "costWithForwarded": 14,
+          "forwarded": 0,
+          "count": 3,
+          "pcEntries": 3
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "_bubble",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 5,
+          "pcEntries": 5
+        },
+        {
+          "contract": "CB0ClassCoordinator",
+          "function": "resume",
+          "exclusiveCost": 12,
+          "costWithForwarded": 12,
+          "forwarded": 0,
+          "count": 3,
+          "pcEntries": 3
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_ensureExceptionRegistry",
+          "exclusiveCost": 8,
+          "costWithForwarded": 8,
+          "forwarded": 0,
+          "count": 1,
+          "pcEntries": 1
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_methodCodeCount",
+          "exclusiveCost": 6,
+          "costWithForwarded": 6,
+          "forwarded": 0,
+          "count": 2,
+          "pcEntries": 2
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_packInt",
+          "exclusiveCost": 3,
+          "costWithForwarded": 3,
+          "forwarded": 0,
+          "count": 1,
+          "pcEntries": 1
+        },
+        {
+          "contract": "VFS0aInterpreter",
+          "function": "_initializeVMThrowableFields",
+          "exclusiveCost": 1,
+          "costWithForwarded": 1,
+          "forwarded": 0,
+          "count": 1,
+          "pcEntries": 1
+        }
+      ],
+      "topPCs": [
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116216,
+          "opcode": 55,
+          "count": 221,
+          "cost": 3684738,
+          "forwarded": 0,
+          "exclusiveCost": 3684738,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146470,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 1353491,
+          "forwarded": 0,
+          "exclusiveCost": 1353491,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116379,
+          "opcode": 87,
+          "count": 134032,
+          "cost": 1340320,
+          "forwarded": 0,
+          "exclusiveCost": 1340320,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116385,
+          "opcode": 86,
+          "count": 134032,
+          "cost": 1072256,
+          "forwarded": 0,
+          "exclusiveCost": 1072256,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146620,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833704,
+          "forwarded": 0,
+          "exclusiveCost": 833704,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146618,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833694,
+          "forwarded": 0,
+          "exclusiveCost": 833694,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146611,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833685,
+          "forwarded": 0,
+          "exclusiveCost": 833685,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146603,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833674,
+          "forwarded": 0,
+          "exclusiveCost": 833674,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146595,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833665,
+          "forwarded": 0,
+          "exclusiveCost": 833665,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146587,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833653,
+          "forwarded": 0,
+          "exclusiveCost": 833653,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146579,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833645,
+          "forwarded": 0,
+          "exclusiveCost": 833645,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146571,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833635,
+          "forwarded": 0,
+          "exclusiveCost": 833635,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146564,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833623,
+          "forwarded": 0,
+          "exclusiveCost": 833623,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146557,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833613,
+          "forwarded": 0,
+          "exclusiveCost": 833613,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146550,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833608,
+          "forwarded": 0,
+          "exclusiveCost": 833608,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146543,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833592,
+          "forwarded": 0,
+          "exclusiveCost": 833592,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146535,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833585,
+          "forwarded": 0,
+          "exclusiveCost": 833585,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146527,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833575,
+          "forwarded": 0,
+          "exclusiveCost": 833575,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146519,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833564,
+          "forwarded": 0,
+          "exclusiveCost": 833564,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146512,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833554,
+          "forwarded": 0,
+          "exclusiveCost": 833554,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146506,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833545,
+          "forwarded": 0,
+          "exclusiveCost": 833545,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146500,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833536,
+          "forwarded": 0,
+          "exclusiveCost": 833536,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146494,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833523,
+          "forwarded": 0,
+          "exclusiveCost": 833523,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146488,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833514,
+          "forwarded": 0,
+          "exclusiveCost": 833514,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146482,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833505,
+          "forwarded": 0,
+          "exclusiveCost": 833505,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 146476,
+          "opcode": 82,
+          "count": 2556,
+          "cost": 833496,
+          "forwarded": 0,
+          "exclusiveCost": 833496,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 177312,
+          "opcode": 81,
+          "count": 20776,
+          "cost": 672558,
+          "forwarded": 0,
+          "exclusiveCost": 672558,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 176579,
+          "opcode": 82,
+          "count": 5210,
+          "cost": 631231,
+          "forwarded": 0,
+          "exclusiveCost": 631231,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 289931,
+          "opcode": 82,
+          "count": 5201,
+          "cost": 629611,
+          "forwarded": 0,
+          "exclusiveCost": 629611,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 289918,
+          "opcode": 82,
+          "count": 5201,
+          "cost": 625463,
+          "forwarded": 0,
+          "exclusiveCost": 625463,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0xDC6C01Caba75FBCAb45C6db8A74c042054D2Cc84",
+          "pc": 1700,
+          "opcode": 94,
+          "count": 4,
+          "cost": 487475,
+          "forwarded": 0,
+          "exclusiveCost": 487475,
+          "contract": "CB0ClassCoordinator",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 296,
+            "length": 11147,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116158,
+          "opcode": 87,
+          "count": 48488,
+          "cost": 484880,
+          "forwarded": 0,
+          "exclusiveCost": 484880,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116120,
+          "opcode": 87,
+          "count": 43360,
+          "cost": 433600,
+          "forwarded": 0,
+          "exclusiveCost": 433600,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 115977,
+          "opcode": 55,
+          "count": 5,
+          "cost": 421587,
+          "forwarded": 0,
+          "exclusiveCost": 421587,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116369,
+          "opcode": 144,
+          "count": 134032,
+          "cost": 402096,
+          "forwarded": 0,
+          "exclusiveCost": 402096,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116370,
+          "opcode": 129,
+          "count": 134032,
+          "cost": 402096,
+          "forwarded": 0,
+          "exclusiveCost": 402096,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116371,
+          "opcode": 81,
+          "count": 134032,
+          "cost": 402096,
+          "forwarded": 0,
+          "exclusiveCost": 402096,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 344,
+            "length": 508316,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116372,
+          "opcode": 129,
+          "count": 134032,
+          "cost": 402096,
+          "forwarded": 0,
+          "exclusiveCost": 402096,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116373,
+          "opcode": 16,
+          "count": 134032,
+          "cost": 402096,
+          "forwarded": 0,
+          "exclusiveCost": 402096,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        },
+        {
+          "address": "0x4A564D45564D564653304152554e5449ca000001",
+          "pc": 116374,
+          "opcode": 21,
+          "count": 134032,
+          "cost": 402096,
+          "forwarded": 0,
+          "exclusiveCost": 402096,
+          "contract": "VFS0aInterpreter",
+          "function": "<contract/ambiguous>",
+          "sourceSpan": {
+            "start": 13640,
+            "length": 4,
+            "source": 0
+          }
+        }
+      ]
+    }
+  }
+}
