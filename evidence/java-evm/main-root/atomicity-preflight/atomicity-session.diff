@@ -1,0 +1,687 @@
+--- evidence/java-evm/main-root/session-preflight/transport/session.go.txt	2026-09-12 21:09:38.882226952 +0800
++++ evidence/java-evm/main-root/atomicity-preflight/transport/atomicity_session.go.txt	2026-09-12 21:22:00.497422235 +0800
+@@ -17,6 +17,7 @@
+ 	"runtime"
+ 	"strconv"
+ 	"strings"
++	"sync/atomic"
+ 	"time"
+ 
+ 	"github.com/ethereum/go-ethereum/accounts/abi"
+@@ -151,6 +152,7 @@
+ 	initialRoot       common.Hash
+ 	poison            error
+ 	pendingCheckpoint []byte // EVM-issued opaque blob staged until atomic publication.
++	fault             string // TEST-ONLY self-owned storage-boundary fault name.
+ }
+ type callTrace struct {
+ 	Nested        uint64
+@@ -304,6 +306,17 @@
+ 	}
+ 	return &evmrun.Config{ChainConfig: params.AllDevChainProtocolChanges, Difficulty: new(big.Int), Origin: from, Coinbase: common.Address{}, BlockNumber: big.NewInt(1), Time: 1, GasLimit: gas, GasPrice: new(big.Int), Value: new(big.Int), BaseFee: new(big.Int).SetUint64(params.InitialBaseFee), BlobBaseFee: new(big.Int).SetUint64(params.BlobTxMinBlobGasprice), Random: &z, State: st, GetHashFn: func(uint64) common.Hash { return common.Hash{} }, EVMConfig: vm.Config{Tracer: hooks}}
+ }
++func ownedFault() string {
++	if os.Getenv("MR0_ATOMICITY_TESTING") != "1" {
++		return ""
++	}
++	switch f := os.Getenv("MR0_ATOMICITY_FAULT"); f {
++	case "", "checkpoint-before-create", "checkpoint-after-write", "checkpoint-after-sync", "checkpoint-after-rename", "checkpoint-after-dirsync", "trie-after-sync", "manifest-before-create", "manifest-after-write", "manifest-after-sync", "manifest-after-rename", "manifest-after-dirsync":
++		return f
++	default:
++		panic("MR0 Session: unknown TEST storage fault")
++	}
++}
+ func newEnv(dir string) (*env, error) {
+ 	if err := os.MkdirAll(filepath.Join(dir, "state"), 0700); err != nil {
+ 		return nil, err
+@@ -339,7 +352,14 @@
+ 	if e != nil {
+ 		return nil, e
+ 	}
+-	x := &env{disk: d, trie: t, st: st, root: types.EmptyRootHash, dir: dir, m: manifest{Format: format, Context: context, Root: types.EmptyRootHash, Owner: owner, Engine: engine, StartedUTC: time.Now().UTC().Format(time.RFC3339)}, initialCounters: counters{}, initialRoot: types.EmptyRootHash}
++	x := &env{disk: d, trie: t, st: st, root: types.EmptyRootHash, dir: dir, m: manifest{Format: format, Context: context, Root: types.EmptyRootHash, Owner: owner, Engine: engine, StartedUTC: time.Now().UTC().Format(time.RFC3339)}, initialCounters: counters{}, initialRoot: types.EmptyRootHash, fault: ownedFault()}
++	// Establish an explicit empty authority before any EVM mutation. Thereafter
++	// persist always has a byte-for-byte prior Head to preserve on failure.
++	if err := x.writeManifest(); err != nil {
++		x.trie.Close()
++		x.disk.Close()
++		return nil, err
++	}
+ 	return x, nil
+ }
+ func readRegular(path string, limit int64) ([]byte, error) {
+@@ -455,7 +475,7 @@
+ 	}
+ 	// Readability does NOT prove a directory fsync. Count only actual operations
+ 	// within each process, never synthesize increments while reopening.
+-	x := &env{disk: d, trie: t, st: st, root: m.Root, dir: dir, m: m, initialCounters: m.Counters, initialRoot: m.Root}
++	x := &env{disk: d, trie: t, st: st, root: m.Root, dir: dir, m: m, initialCounters: m.Counters, initialRoot: m.Root, fault: ownedFault()}
+ 	if st.GetCodeHash(engine) != m.EngineCode || st.GetNonce(engine) != m.EngineNonce {
+ 		return nil, errors.New("engine anchor mismatch")
+ 	}
+@@ -509,10 +529,34 @@
+ 
+ var errRenamed = errors.New("manifest renamed; reopen required")
+ 
++// faultAt is deliberately a storage-boundary switch, never an execution input.
++// It is enabled only by the public atomicity driver in a newly-created owned world.
++func (e *env) faultAt(point string) error {
++	if e.fault == point {
++		return fmt.Errorf("MR0 Session TEST fault at %s", point)
++	}
++	return nil
++}
++
++// writeManifest publishes exactly one already-staged head. Before Rename, no
++// authoritative byte is touched. After Rename its byte is authoritative even if
++// directory durability is ambiguous; callers must poison and require reopen.
+ func (e *env) writeManifest() error {
+-	e.m.Root = e.root
+-	e.m.UpdatedUTC = time.Now().UTC().Format(time.RFC3339)
+-	b, x := json.MarshalIndent(e.m, "", "  ")
++	if e.poison != nil {
++		return e.poison
++	}
++	if err := e.faultAt("manifest-before-create"); err != nil {
++		return err
++	}
++	candidate := e.m
++	candidate.Root = e.root
++	candidate.UpdatedUTC = time.Now().UTC().Format(time.RFC3339Nano)
++	// These are actual operations which the candidate Head describes. Keeping
++	// them staged also means a pre-Rename failure cannot alter the old Head.
++	candidate.Counters.ManifestFileSyncs++
++	candidate.Counters.ManifestRenames++
++	candidate.Counters.DirectorySyncs++
++	b, x := json.MarshalIndent(candidate, "", "  ")
+ 	if x != nil {
+ 		return x
+ 	}
+@@ -521,14 +565,22 @@
+ 		return x
+ 	}
+ 	name := f.Name()
++	removeTemp := true
++	defer func() {
++		if removeTemp {
++			_ = os.Remove(name)
++		}
++	}()
+ 	if _, x = f.Write(append(b, '\n')); x == nil {
+-		x = f.Sync()
++		if x = e.faultAt("manifest-after-write"); x == nil {
++			x = f.Sync()
++		}
+ 		if x == nil {
+-			e.m.Counters.ManifestFileSyncs++
++			x = e.faultAt("manifest-after-sync")
+ 		}
+ 	}
+-	if ce := f.Close(); x == nil {
+-		x = ce
++	if closeErr := f.Close(); x == nil {
++		x = closeErr
+ 	}
+ 	if x != nil {
+ 		return x
+@@ -536,40 +588,73 @@
+ 	if x = os.Rename(name, filepath.Join(e.dir, "durable-head.json")); x != nil {
+ 		return x
+ 	}
+-	e.m.Counters.ManifestRenames++
++	removeTemp = false
++	// Rename is the publication point. Never overwrite it from an error path.
++	e.m = candidate
++	if x = e.faultAt("manifest-after-rename"); x != nil {
++		e.poison = fmt.Errorf("%w: %v", errRenamed, x)
++		return e.poison
++	}
+ 	if x = syncDir(e.dir); x != nil {
+-		return fmt.Errorf("%w: %v", errRenamed, x)
++		e.poison = fmt.Errorf("%w: %v", errRenamed, x)
++		return e.poison
++	}
++	if x = e.faultAt("manifest-after-dirsync"); x != nil {
++		e.poison = fmt.Errorf("%w: %v", errRenamed, x)
++		return e.poison
+ 	}
+-	e.m.Counters.DirectorySyncs++
+ 	return nil
+ }
+-func (e *env) persist(old common.Hash, fail bool) error {
++
++// discardCheckpoint removes only a newly-created, still-unreferenced child.
++// Failure to clean it is harmless to Open: the Head remains the authority.
++func discardCheckpoint(path string, created bool) {
++	if created {
++		_ = os.Remove(path)
++	}
++}
++
++// persist is a two-phase publication. The old manifest bytes remain untouched
++// until the last Rename. Every earlier failure restores both live StateDB and
++// in-memory metadata to the old authority; no observer may publish a refusal.
++func (e *env) persist(old common.Hash) error {
++	if e.poison != nil {
++		return e.poison
++	}
+ 	start := time.Now()
+ 	previous, previousErr := readManifest(e.dir)
+-	// The opaque child checkpoint is written and synced before its matching
+-	// state can become CURRENT. It is only an unreachable orphan on a later
+-	// failure; no returned result exposes it before manifest publication.
++	if previousErr != nil {
++		return fmt.Errorf("MR0 Session: read prior Head: %w", previousErr)
++	}
++	if previous.Root != old {
++		return errors.New("MR0 Session: prior Head/root differs")
++	}
++	checkpointFinal := ""
++	checkpointCreated := false
++	restore := func() error {
++		discardCheckpoint(checkpointFinal, checkpointCreated)
++		e.pendingCheckpoint = nil
++		e.m = previous
++		if x := e.reload(old); x != nil {
++			e.poison = fmt.Errorf("MR0 Session: rollback reload: %w", x)
++			return e.poison
++		}
++		return nil
++	}
+ 	if len(e.pendingCheckpoint) != 0 {
+-		digest, err := writeCheckpoint(e, e.pendingCheckpoint)
++		digest, created, err := writeCheckpoint(e, e.pendingCheckpoint)
++		checkpointFinal = checkpointPath(e.dir, sha(e.pendingCheckpoint))
++		checkpointCreated = created
+ 		if err != nil || digest != e.m.CheckpointSHA {
+ 			if err == nil {
+ 				err = errors.New("MR0 Session: staged checkpoint digest differs")
+ 			}
++			if rollback := restore(); rollback != nil {
++				return rollback
++			}
+ 			return err
+ 		}
+ 	}
+-	restore := func() {
+-		stats, pids := e.m.Counters, e.m.ProcessPIDs
+-		if previousErr == nil {
+-			e.m = previous
+-			e.m.Counters = stats
+-			e.m.ProcessPIDs = pids
+-		}
+-		e.pendingCheckpoint = nil
+-		if x := e.reload(old); x != nil {
+-			e.poison = x
+-		}
+-	}
+ 	r, x := e.st.Commit(1, true, true)
+ 	if x == nil {
+ 		x = e.trie.Commit(r, false)
+@@ -580,28 +665,32 @@
+ 			e.m.Counters.TrieCodeSyncs++
+ 		}
+ 	}
++	if x == nil {
++		x = e.faultAt("trie-after-sync")
++	}
+ 	if x != nil {
+-		restore()
++		if rollback := restore(); rollback != nil {
++			return rollback
++		}
+ 		return x
+ 	}
+-	if fail {
+-		restore()
+-		return errors.New("injected after actual trie+code sync before manifest publication")
+-	}
+ 	e.root = r
+ 	if x = e.writeManifest(); x != nil {
+ 		if errors.Is(x, errRenamed) {
+-			e.poison = x
+ 			e.pendingCheckpoint = nil
+-		} else {
+-			restore()
++			e.poison = x
++			return x
++		}
++		if rollback := restore(); rollback != nil {
++			return rollback
+ 		}
+ 		return x
+ 	}
+ 	if x = e.reload(r); x != nil {
+-		e.poison = x
++		// A valid renamed Head exists but this process cannot safely continue.
+ 		e.pendingCheckpoint = nil
+-		return x
++		e.poison = fmt.Errorf("MR0 Session: post-publication reload: %w", x)
++		return e.poison
+ 	}
+ 	e.pendingCheckpoint = nil
+ 	e.m.Counters.Commits++
+@@ -641,27 +730,41 @@
+ // boundedCall/boundedCreate deliberately use the public EVM Cancel mechanism,
+ // rather than treating post-hoc elapsed-time counters as a watchdog.  The timer
+ // only limits this owned COPY Session call; it never changes EVM gas or semantics.
++func callTimeout() time.Duration {
++	// A shorter timeout is only for this disposable driver and needs an explicit
++	// test marker; production invocations retain the ordinary 30 second bound.
++	if os.Getenv("MR0_ATOMICITY_TESTING") == "1" {
++		if ms, err := strconv.ParseInt(os.Getenv("MR0_ATOMICITY_TEST_TIMEOUT_MS"), 10, 64); err == nil && ms > 0 && ms <= 30000 {
++			return time.Duration(ms) * time.Millisecond
++		}
++	}
++	return 30 * time.Second
++}
+ func boundedCall(to common.Address, data []byte, c *evmrun.Config) ([]byte, uint64, error, bool) {
+ 	v := evmrun.NewEnv(c)
+ 	rules := c.ChainConfig.Rules(v.Context.BlockNumber, v.Context.Random != nil, v.Context.Time)
+ 	c.State.Prepare(rules, c.Origin, c.Coinbase, &to, vm.ActivePrecompiles(rules), nil)
+-	timedOut := false
+-	timer := time.AfterFunc(30*time.Second, func() { timedOut = true; v.Cancel() })
++	var cancelled atomic.Bool
++	fired := make(chan struct{})
++	timer := time.AfterFunc(callTimeout(), func() { cancelled.Store(true); v.Cancel(); close(fired) })
+ 	out, left, err := v.Call(c.Origin, to, data, c.GasLimit, uint256.MustFromBig(c.Value))
+-	if !timer.Stop() && timedOut { /* Cancel is intentional and reflected below. */
+-	}
+-	return out, left, err, timedOut
++	if !timer.Stop() {
++		<-fired
++	} // Join callback: no unsynchronised bool/Stop race.
++	return out, left, err, cancelled.Load()
+ }
+ func boundedCreate(code []byte, c *evmrun.Config) ([]byte, common.Address, uint64, error, bool) {
+ 	v := evmrun.NewEnv(c)
+ 	rules := c.ChainConfig.Rules(v.Context.BlockNumber, v.Context.Random != nil, v.Context.Time)
+ 	c.State.Prepare(rules, c.Origin, c.Coinbase, nil, vm.ActivePrecompiles(rules), nil)
+-	timedOut := false
+-	timer := time.AfterFunc(30*time.Second, func() { timedOut = true; v.Cancel() })
++	var cancelled atomic.Bool
++	fired := make(chan struct{})
++	timer := time.AfterFunc(callTimeout(), func() { cancelled.Store(true); v.Cancel(); close(fired) })
+ 	out, addr, left, err := v.Create(c.Origin, code, c.GasLimit, uint256.MustFromBig(c.Value))
+-	if !timer.Stop() && timedOut {
++	if !timer.Stop() {
++		<-fired
+ 	}
+-	return out, addr, left, err, timedOut
++	return out, addr, left, err, cancelled.Load()
+ }
+ func (e *env) call(from, to common.Address, data []byte, gas uint64) callResult {
+ 	if e.poison != nil {
+@@ -670,6 +773,7 @@
+ 	if gas == 0 || gas > ordinaryGas {
+ 		return callResult{Err: errors.New("MR0 Session: gas outside ordinary 1..100000000")}
+ 	}
++	old := e.root
+ 	tr := callTrace{Reader: e.m.Coordinator}
+ 	started := time.Now()
+ 	out, left, x, timedOut := boundedCall(to, data, cfg(e.st, from, gas, &tr))
+@@ -678,17 +782,27 @@
+ 		e.m.Counters.MaxCallMS = ms
+ 	}
+ 	if timedOut {
++		// Cancel may return nil from the EVM. Restore the Session state anyway.
++		if restoreErr := e.reload(old); restoreErr != nil {
++			e.poison = restoreErr
++			x = restoreErr
++		} else {
++			x = errors.Join(x, errors.New("MR0 Session: public EVM call cancelled after 30s"))
++		}
+ 		e.m.Counters.TimeoutCancels++
+-		x = errors.Join(x, errors.New("MR0 Session: public EVM call cancelled after 30s"))
+ 	}
+ 	r := callResult{Out: append([]byte(nil), out...), Gas: gas - left, Err: x, Trace: tr, ElapsedMS: ms}
+ 	e.observeCall(r)
+ 	return r
+ }
+ func (e *env) create(from common.Address, code []byte, gas uint64) (common.Address, []byte, callResult) {
++	if e.poison != nil {
++		return common.Address{}, nil, callResult{Err: e.poison}
++	}
+ 	if gas == 0 || gas > ordinaryGas {
+ 		return common.Address{}, nil, callResult{Err: errors.New("MR0 Session: gas outside ordinary 1..100000000")}
+ 	}
++	old := e.root
+ 	var tr callTrace
+ 	started := time.Now()
+ 	out, a, left, x, timedOut := boundedCreate(code, cfg(e.st, from, gas, &tr))
+@@ -697,8 +811,13 @@
+ 		e.m.Counters.MaxCallMS = ms
+ 	}
+ 	if timedOut {
++		if restoreErr := e.reload(old); restoreErr != nil {
++			e.poison = restoreErr
++			x = restoreErr
++		} else {
++			x = errors.Join(x, errors.New("MR0 Session: public EVM CREATE cancelled after 30s"))
++		}
+ 		e.m.Counters.TimeoutCancels++
+-		x = errors.Join(x, errors.New("MR0 Session: public EVM CREATE cancelled after 30s"))
+ 	}
+ 	r := callResult{Out: append([]byte(nil), out...), Gas: gas - left, Err: x, Trace: tr, ElapsedMS: ms}
+ 	e.observeCall(r)
+@@ -710,7 +829,7 @@
+ 		return r.Err
+ 	}
+ 	old := e.root
+-	return e.persist(old, false)
++	return e.persist(old)
+ }
+ func view(e *env, a abi.ABI, to common.Address, name string, args ...interface{}) []interface{} {
+ 	d, x := a.Pack(name, args...)
+@@ -781,7 +900,7 @@
+ 	e.m.EngineNonce = e.st.GetNonce(engine)
+ 	e.m.Stage = "local-engine-install"
+ 	old := e.root
+-	must(e.persist(old, false))
++	must(e.persist(old))
+ 	if e.m.EngineNonce != 0 {
+ 		panic("unexpected engine nonce")
+ 	}
+@@ -966,7 +1085,7 @@
+ 		e.m.Counters.Creates++
+ 		e.recordCall(r, true)
+ 		old := e.root
+-		must(e.persist(old, false))
++		must(e.persist(old))
+ 	}
+ 	return at, p, r
+ }
+@@ -1097,53 +1216,72 @@
+ func checkpointPath(dir, digest string) string {
+ 	return filepath.Join(dir, "checkpoints", digest+".bin")
+ }
+-func writeCheckpoint(e *env, b []byte) (string, error) {
++func writeCheckpoint(e *env, b []byte) (string, bool, error) {
+ 	if len(b) == 0 || len(b) > 1<<20 {
+-		return "", errors.New("MR0 Session: checkpoint cap")
++		return "", false, errors.New("MR0 Session: checkpoint cap")
+ 	}
+ 	digest := sha(b)
+ 	base := filepath.Join(e.dir, "checkpoints")
+ 	if err := os.MkdirAll(base, 0700); err != nil {
+-		return "", err
++		return "", false, err
+ 	}
+ 	final := checkpointPath(e.dir, digest)
+ 	if old, err := os.ReadFile(final); err == nil {
+ 		if !bytes.Equal(old, b) {
+-			return "", errors.New("MR0 Session: checkpoint digest collision")
++			return "", false, errors.New("MR0 Session: checkpoint digest collision")
+ 		}
+-		return digest, nil
++		return digest, false, nil
+ 	} else if !errors.Is(err, os.ErrNotExist) {
+-		return "", err
++		return "", false, err
++	}
++	if err := e.faultAt("checkpoint-before-create"); err != nil {
++		return "", false, err
+ 	}
+ 	tmp, err := os.CreateTemp(base, ".checkpoint-")
+ 	if err != nil {
+-		return "", err
++		return "", false, err
+ 	}
+ 	name := tmp.Name()
++	removeTemp := true
++	defer func() {
++		if removeTemp {
++			_ = os.Remove(name)
++		}
++	}()
+ 	if _, err = tmp.Write(b); err == nil {
+-		err = tmp.Sync()
++		if err = e.faultAt("checkpoint-after-write"); err == nil {
++			err = tmp.Sync()
++		}
+ 		if err == nil {
+ 			e.m.Counters.CheckpointFileSyncs++
++			err = e.faultAt("checkpoint-after-sync")
+ 		}
+ 	}
+ 	if closeErr := tmp.Close(); err == nil {
+ 		err = closeErr
+ 	}
+ 	if err != nil {
+-		return "", err
++		return "", false, err
+ 	}
+ 	if err = os.Rename(name, final); err != nil {
+-		return "", err
++		return "", false, err
+ 	}
++	removeTemp = false
+ 	e.m.Counters.CheckpointRenames++
++	if err = e.faultAt("checkpoint-after-rename"); err != nil {
++		return "", true, err
++	}
+ 	if err = syncDir(base); err != nil {
+-		return "", err
++		return "", true, err
+ 	}
+ 	if err = syncDir(e.dir); err != nil {
+-		return "", err
++		return "", true, err
+ 	}
+ 	e.m.Counters.CheckpointDirectorySyncs += 2
+-	return digest, nil
++	if err = e.faultAt("checkpoint-after-dirsync"); err != nil {
++		return "", true, err
++	}
++	return digest, true, nil
+ }
+ func readCheckpoint(e *env) []byte {
+ 	b, x := os.ReadFile(checkpointPath(e.dir, e.m.CheckpointSHA))
+@@ -1260,7 +1398,7 @@
+ 	applyDecoded(e, d)
+ 	e.m.SeedRoot, e.m.ArtifactRoot, e.m.ConfigRoot, e.m.RuntimeCode = head.SeedRoot, head.ArtifactRoot, head.ConfigRoot, head.RuntimeCode
+ 	e.recordCall(r, true)
+-	if x = e.persist(old, false); x != nil {
++	if x = e.persist(old); x != nil {
+ 		r.Err = x
+ 		r.Out = nil
+ 		r.Logs = nil
+@@ -1295,6 +1433,17 @@
+ 	}
+ 	return "unknown"
+ }
++func writeFailureReceipt(dir, name string, r callResult, before, after common.Hash) {
++	words := []string{}
++	for at := 4; at+32 <= len(r.Out); at += 32 {
++		words = append(words, new(big.Int).SetBytes(r.Out[at:at+32]).String())
++	}
++	writeJSON(reportPath(dir, name), map[string]interface{}{
++		"error": fmt.Sprint(r.Err), "selector": selector(r.Out), "revertHex": "0x" + hex.EncodeToString(r.Out), "uint256Words": words, "gas": r.Gas,
++		"rootBefore": before, "rootAfter": after, "rootUnchanged": before == after,
++		"checkpointBytes": 0, "candidateHead": "", "candidateCheckpoint": "", "candidateRoot": "", "actualDI0ReadSizes": r.Trace.Reads,
++	})
++}
+ func writeJSON(path string, v interface{}) {
+ 	b, e := json.MarshalIndent(v, "", "  ")
+ 	must(e)
+@@ -1329,29 +1478,11 @@
+ 	e.m.Stage = "coordinator-created"
+ 	must(e.writeManifest())
+ 	vabi := engineABI
+-	// MR0 has a distinct startMain ABI. Do not issue the accepted CB0 int-root
+-	// selector or synthesize a post-write refusal; actual MR0 receipts follow.
+ 	before := e.root
+ 	r, d := coordinatorCall(e, ca, vabi, "startMain", [32]byte(p), uint8(0), q, uint32(4096))
+ 	if r.Err != nil {
+-		// A current-engine refusal is evidence, not a reason to alter the copied
+-		// engine or substitute the legacy int-root route. Keep all raw bytes.
+-		writeJSON(reportPath(dir, "start-refusal.json"), map[string]interface{}{
+-			"error": fmt.Sprint(r.Err), "selector": selector(r.Out),
+-			"revertHex": "0x" + hex.EncodeToString(r.Out),
+-			"uint256Words": func() []string {
+-				out := []string{}
+-				for at := 4; at+32 <= len(r.Out); at += 32 {
+-					out = append(out, new(big.Int).SetBytes(r.Out[at:at+32]).String())
+-				}
+-				return out
+-			}(),
+-			"gas": r.Gas, "rootBefore": before, "rootAfter": e.root,
+-			"rootUnchanged": before == e.root, "actualDI0ReadSizes": r.Trace.Reads,
+-			"nestedFrames": r.Trace.Nested, "checkpointBytes": 0, "outcome": "EVM_REVERT",
+-		})
+-		e.m.Stage = "start-refused"
+-		must(e.writeManifest())
++		// A refusal is observer evidence only: no host error path may rewrite the Head.
++		writeFailureReceipt(dir, "start-refusal.json", r, before, e.root)
+ 		return
+ 	}
+ 	e.m.Stage = "started"
+@@ -1371,7 +1502,7 @@
+ 	must(x)
+ 	return len(b)
+ }
+-func doResume(dir, artPath string, one bool, publicationProbe bool) {
++func doResume(dir, artPath string, one bool) {
+ 	e, x := openEnv(dir)
+ 	must(x)
+ 	defer e.close()
+@@ -1380,69 +1511,69 @@
+ 	for e.m.Lifecycle == 1 {
+ 		cp := readCheckpoint(e)
+ 		args := []interface{}{[32]byte(e.m.PackageRoot), e.m.Epoch, [32]byte(e.m.CheckpointRoot), cp, e.m.Quantum, uint32(4096)}
+-		if publicationProbe {
+-			publicationProbe = false
+-			data, _ := ca.Pack("resumeMain", args...)
+-			old := e.root
+-			r := e.call(owner, e.m.Coordinator, data, ordinaryGas)
+-			if r.Err != nil {
+-				panic(r.Err)
+-			}
+-			d, x := decodeCoordinator(vabi, ca, "resumeMain", r.Out)
+-			must(x)
+-			newCandidate := e.st.Copy().IntermediateRoot(true)
+-			e.recordCall(r, false)
+-			perr := e.persist(old, true)
+-			if perr == nil || e.root != old {
+-				panic("publication probe did not restore")
+-			}
+-			restored := e.root
+-			retry := e.call(owner, e.m.Coordinator, data, ordinaryGas)
+-			if retry.Err != nil || !bytes.Equal(retry.Out, r.Out) {
+-				panic("publication retry mismatch")
+-			}
+-			d2, x := decodeCoordinator(vabi, ca, "resumeMain", retry.Out)
+-			must(x)
+-			if d2.Slice.CheckpointRoot != d.Slice.CheckpointRoot {
+-				panic("retry decoded mismatch")
+-			}
+-			applyDecoded(e, d2)
+-			e.recordCall(retry, true)
+-			must(e.persist(old, false))
+-			writeJSON(reportPath(dir, "publication-failure.json"), map[string]interface{}{"injectedAfterTrieCodeSync": true, "oldRoot": old, "unpublishedCandidateRoot": newCandidate, "restoredRoot": restored, "failedOutputConsumed": false, "retryOutputIdentical": true, "retryPublishedRoot": e.root, "gas": r.Gas, "pid": os.Getpid()})
+-		} else {
+-			before := e.root
+-			r, _ := coordinatorCall(e, ca, vabi, "resumeMain", args...)
+-			if r.Err != nil {
+-				writeJSON(reportPath(dir, "resume-refusal.json"), map[string]interface{}{
+-					"error": fmt.Sprint(r.Err), "selector": selector(r.Out),
+-					"revertHex": "0x" + hex.EncodeToString(r.Out),
+-					"uint256Words": func() []string {
+-						out := []string{}
+-						for at := 4; at+32 <= len(r.Out); at += 32 {
+-							out = append(out, new(big.Int).SetBytes(r.Out[at:at+32]).String())
+-						}
+-						return out
+-					}(),
+-					"gas": r.Gas, "rootBefore": before, "rootAfter": e.root, "rootUnchanged": before == e.root,
+-					"epoch": e.m.Epoch, "checkpointRoot": e.m.CheckpointRoot, "actualDI0ReadSizes": r.Trace.Reads,
+-				})
+-				e.m.Stage = "resume-refused"
+-				must(e.writeManifest())
+-				return
+-			}
++		before := e.root
++		// This is the only resume route, including fault-matrix invocations.
++		r, _ := coordinatorCall(e, ca, vabi, "resumeMain", args...)
++		if r.Err != nil {
++			// No stage/counter/PID publication after an EVM or host failure.
++			writeFailureReceipt(dir, "resume-refusal.json", r, before, e.root)
++			return
+ 		}
+ 		e.m.Stage = "resumed"
+-		must(e.writeManifest())
++		if err := e.writeManifest(); err != nil {
++			panic(err)
++		}
+ 		if one {
+ 			break
+ 		}
+ 	}
+ 	if e.m.Lifecycle == 2 {
+ 		e.m.Stage = "final"
+-		must(e.writeManifest())
++		if err := e.writeManifest(); err != nil {
++			panic(err)
++		}
++	}
++}
++
++// atomicityRetry is a public driver operation used only by the owned fault
++// suite. Both attempts take coordinatorCall's normal Start/Resume validation,
++// EVM, checkpoint, trie and Head path; it supplies no state/result authority.
++func atomicityRetry(dir, artPath string) {
++	e, x := openEnv(dir)
++	must(x)
++	defer e.close()
++	if e.m.Lifecycle != 1 {
++		panic("atomicity retry requires running Head")
+ 	}
++	_, ca, _, _ := loadArtifact(artPath)
++	cp := readCheckpoint(e)
++	args := []interface{}{[32]byte(e.m.PackageRoot), e.m.Epoch, [32]byte(e.m.CheckpointRoot), cp, e.m.Quantum, uint32(4096)}
++	beforeBytes, x := os.ReadFile(filepath.Join(dir, "durable-head.json"))
++	must(x)
++	beforeRoot := e.root
++	failed, _ := coordinatorCall(e, ca, engineABI, "resumeMain", args...)
++	if failed.Err == nil {
++		panic("atomicity retry expected test storage fault")
++	}
++	afterBytes, x := os.ReadFile(filepath.Join(dir, "durable-head.json"))
++	must(x)
++	if !bytes.Equal(beforeBytes, afterBytes) || e.root != beforeRoot || e.poison != nil {
++		panic("prepublication fault changed authority")
++	}
++	writeFailureReceipt(dir, "atomicity-failure.json", failed, beforeRoot, e.root)
++	e.fault = "" // observer disables only its own test storage fault; state is unchanged.
++	retry, d := coordinatorCall(e, ca, engineABI, "resumeMain", args...)
++	if retry.Err != nil {
++		panic(fmt.Sprintf("atomicity normal retry: %v", retry.Err))
++	}
++	e.m.Stage = "resumed"
++	must(e.writeManifest())
++	writeJSON(reportPath(dir, "atomicity-retry.json"), map[string]interface{}{
++		"sameSession": true, "failedOutputEmpty": len(failed.Out) == 0, "failedLogsEmpty": len(failed.Logs) == 0,
++		"priorHeadBytesIdentical": bytes.Equal(beforeBytes, afterBytes), "retryEpoch": d.Slice.Epoch, "retryGas": retry.Gas,
++	})
+ }
++
+ func verifyWorld(dir, artPath string) {
+ 	e, x := openEnv(dir)
+ 	must(x)
+@@ -1500,10 +1631,13 @@
+ 	switch os.Args[1] {
+ 	case "setup-chain":
+ 		setupChain(os.Args[2], os.Args[3], os.Args[5], q, 0)
+-	case "resume-one":
+-		doResume(os.Args[2], os.Args[3], true, false)
++	case "resume-one", "atomicity-resume":
++		// Both use normal ResumeMain; atomicity-resume merely names the public probe route.
++		doResume(os.Args[2], os.Args[3], true)
+ 	case "finish":
+-		doResume(os.Args[2], os.Args[3], false, false)
++		doResume(os.Args[2], os.Args[3], false)
++	case "atomicity-retry":
++		atomicityRetry(os.Args[2], os.Args[3])
+ 	case "verify":
+ 		verifyWorld(os.Args[2], os.Args[3])
+ 	default:
