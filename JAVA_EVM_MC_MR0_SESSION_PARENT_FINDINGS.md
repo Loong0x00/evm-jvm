@@ -82,3 +82,25 @@ Evidence: `evidence/java-evm/main-root/session-parent-2cf366518/`: foreground
 source-only reproducer, canonical watchdogs, calibration, actual OS failure,
 negative verifier copies/reproducers, full captured heads/checkpoints/logs. Accepted
 CB0 remains4/65536. Still no original Minecraft Java, EULA, listener, world or Done.
+
+## Parent receipt verifier follow-up (still not transport acceptance)
+
+A separate Go evidence verifier now checks actual runtime/init bytes and hashes,
+immutable source/compiler/ABI; recomputes constructor package and instance
+commitments; canonically decodes all427 outer/engine ABI packets, compares typed
+recorded slices, exact epoch/prior+executed counter chains and reserved VOID/Java
+exception semantics; verifies every published opaque blob's SHA/Keccak/size/bytes,
+all exact nested event emitters/topics/data, Head-vs-ABI terminal identity and
+same-code machine/VFS/opaque payload equality for the12 worlds. It does not parse
+ZIP/classes or evaluate Java. It explicitly labels recorded DI0 sizes as REQUESTS:
+return fragments and per-slice StateDB root chains are absent from this producer,
+so no new observation or full transport proof is fabricated.
+
+Fresh verifier build/vet + original positive +9 deliberate negative controls:
+**1.059866s,193449984B group peak, exit0**. The4 prior false positives now reject;
+so do zero gas, wrong epoch/schema/counter and a modified checkpoint byte. Full
+genuine pending blobs are supplied to negative copies so each rejection targets
+the intended corruption rather than unrelated missing files. These mutations
+never enter EVM execution. `verify-reproduce.sh`, `verify_receipts.go.txt`, tests,
+raw rejection logs and copies are retained. Actual publication-corruption repair
+is a separate active Go-only worker scope, not fixed by an evidence verifier.

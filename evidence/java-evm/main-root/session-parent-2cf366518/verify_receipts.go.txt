@@ -1,0 +1,289 @@
+// Parent evidence verifier only. Decodes EVM ABI/opaque checkpoints, never ZIP/classes/Java.
+package main
+
+import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
+	"math/big"
+	"os"
+	"path/filepath"
+	"reflect"
+	"sort"
+)
+
+var engine = common.HexToAddress("0x4d52304d41494e454e47494e4500000000000001")
+var owner = common.HexToAddress("0x4d52304d41494e454e47494e4500000000000002")
+var engineHash = common.HexToHash("0x2c841e15e382f6433adfbce3fddc225a5efeed5d0d87727c1eac4a0106f9d79f")
+var coordHash = common.HexToHash("0x06f642301333b90429e749951c7855cf954a379848d4643ef758f7853ff39a8c")
+
+func must(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+func check(b bool, s string) {
+	if !b {
+		panic(s)
+	}
+}
+func read(p string) []byte         { b, e := os.ReadFile(p); must(e); return b }
+func load(p string, v interface{}) { must(json.Unmarshal(read(p), v)) }
+func sha(b []byte) string          { h := sha256.Sum256(b); return hex.EncodeToString(h[:]) }
+func pack(ts []string, v ...interface{}) []byte {
+	var a abi.Arguments
+	for _, s := range ts {
+		t, e := abi.NewType(s, "", nil)
+		must(e)
+		a = append(a, abi.Argument{Type: t})
+	}
+	b, e := a.Pack(v...)
+	must(e)
+	return b
+}
+func kh(s string) common.Hash { return crypto.Keccak256Hash([]byte(s)) }
+
+type artifact struct {
+	ABI      json.RawMessage   `json:"abi"`
+	Runtime  string            `json:"deployedBytecode"`
+	Init     string            `json:"bytecode"`
+	Compiler json.RawMessage   `json:"compiler"`
+	Sources  map[string]string `json:"sourceHashes"`
+	Hashes   map[string]string `json:"codeHashes"`
+}
+
+func art(out, ref, kind, name string, want common.Hash) abi.ABI {
+	var a, r artifact
+	load(filepath.Join(out, "artifacts", kind, name+".json"), &a)
+	load(filepath.Join(ref, "artifacts", kind, name+".json"), &r)
+	runtime, e := hex.DecodeString(a.Runtime)
+	must(e)
+	init, e := hex.DecodeString(a.Init)
+	must(e)
+	check(crypto.Keccak256Hash(runtime) == want, "actual runtime hash")
+	check(a.Runtime == r.Runtime && a.Init == r.Init, "immutable compiled bytes")
+	var aj, rj interface{}
+	must(json.Unmarshal(a.ABI, &aj))
+	must(json.Unmarshal(r.ABI, &rj))
+	check(reflect.DeepEqual(aj, rj), "immutable ABI")
+	must(json.Unmarshal(a.Compiler, &aj))
+	must(json.Unmarshal(r.Compiler, &rj))
+	check(reflect.DeepEqual(aj, rj), "compiler profile")
+	source := read(filepath.Join(out, "artifacts", kind, name+".sol"))
+	check(bytes.Equal(source, read(filepath.Join(ref, "artifacts", kind, name+".sol"))), "source bytes")
+	check(a.Sources[name+".sol"] == sha(source) && a.Hashes["runtimeSHA256"] == sha(runtime) && a.Hashes["initSHA256"] == sha(init) && a.Hashes["runtimeKeccak256"] == want.Hex()[2:], "self-declared hashes")
+	x, e := abi.JSON(bytes.NewReader(a.ABI))
+	must(e)
+	return x
+}
+
+type slice struct {
+	Schema                uint32
+	Lifecycle             uint8
+	Outcome               uint8
+	Epoch                 uint64
+	CheckpointRoot        common.Hash
+	MachineStateRoot      common.Hash
+	TotalJvmSteps         uint64
+	TotalInternalSteps    uint64
+	ExecutedJvmSteps      uint64
+	ExecutedInternalSteps uint32
+	Result                int32
+	JavaKind              uint8
+	JavaRef               uint32
+	JavaClass             []byte
+	VFSStateRoot          common.Hash
+	InodeCount            uint32
+	DescriptorCount       uint32
+	LogicalFileBytes      uint64
+}
+type manifest struct {
+	Engine          common.Address
+	Owner           common.Address
+	Store           common.Address
+	Index           common.Address
+	Coordinator     common.Address
+	EngineCode      common.Hash `json:"engineCodeHash"`
+	CoordinatorCode common.Hash `json:"coordinatorCodeHash"`
+	EngineNonce     uint64
+	IndexRoot       common.Hash
+	Decoders        []common.Address
+	Names           [][]byte      `json:"rawNames"`
+	Roots           []common.Hash `json:"resourceRoots"`
+	Sizes           []uint32      `json:"classSizes"`
+	PackageRoot     common.Hash
+	Instance        common.Hash `json:"instanceId"`
+	Total           uint32      `json:"totalClassBytes"`
+	Stage           string
+	Quantum         uint64
+	Slices          uint64
+	Epoch           uint64
+	CheckpointRoot  common.Hash
+	CheckpointSHA   string `json:"checkpointSHA256"`
+	Lifecycle       uint8
+	Outcome         uint8
+	Result          int32
+	MachineRoot     common.Hash
+	VFSRoot         common.Hash
+	JVM             uint64 `json:"jvmSteps"`
+	Internal        uint64 `json:"internalSteps"`
+	JavaKind        uint8
+	JavaRef         uint32
+	JavaClass       []byte
+}
+type receipt struct {
+	Method  string
+	Epoch   uint64
+	Gas     uint64 `json:"gasUsed"`
+	Elapsed int64  `json:"elapsedMS"`
+	Outer   string `json:"outerABI"`
+	SHA     string `json:"checkpointSHA256"`
+	Size    int    `json:"checkpointBytes"`
+	Slice   slice
+	Logs    []*types.Log `json:"nestedLogs"`
+	Reads   []uint32     `json:"actualDI0ReadSizes"`
+}
+
+func binding(m manifest) {
+	n := len(m.Decoders)
+	check(n > 0 && n <= 4 && len(m.Names) == n && len(m.Roots) == n && len(m.Sizes) == n, "binding shape")
+	check(m.Engine == engine && m.Owner == owner && m.EngineNonce == 0 && m.EngineCode == engineHash && m.CoordinatorCode == coordHash, "profile identity")
+	check(m.Store == crypto.CreateAddress(owner, 0) && m.Index == crypto.CreateAddress(owner, 1) && m.Coordinator == crypto.CreateAddress(owner, uint64(2+n)), "CREATE routes")
+	di := common.HexToHash("0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37")
+	zi := common.HexToHash("0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77")
+	roll := crypto.Keccak256Hash(pack([]string{"bytes32", "address", "address", "address", "bytes32", "bytes32", "bytes32", "uint8"}, kh("MC-MR0/package/v1"), m.Coordinator, owner, engine, engineHash, di, zi, uint8(n)))
+	var total uint32
+	seen := map[string]bool{}
+	for i, d := range m.Decoders {
+		check(d == crypto.CreateAddress(owner, uint64(2+i)) && m.Roots[i] != (common.Hash{}) && m.IndexRoot != (common.Hash{}), "resource identity")
+		name := string(m.Names[i])
+		check(!seen[name] && len(name) > 6 && len(name) <= 256 && bytes.HasSuffix(m.Names[i], []byte(".class")), "name binding")
+		seen[name] = true
+		check(m.Sizes[i] > 0 && m.Sizes[i] <= 65536, "class size")
+		total += m.Sizes[i]
+		roll = crypto.Keccak256Hash(pack([]string{"bytes32", "bytes32", "uint8", "address", "bytes32", "bytes32", "bytes32", "uint32"}, kh("MC-MR0/resource/v1"), roll, uint8(i), d, crypto.Keccak256Hash(m.Names[i]), m.IndexRoot, m.Roots[i], m.Sizes[i]))
+	}
+	check(total == m.Total && total <= 65536, "aggregate")
+	pkg := crypto.Keccak256Hash(pack([]string{"bytes32", "bytes32", "uint32", "address", "bytes32"}, kh("MC-MR0/package/v1"), roll, total, m.Index, m.IndexRoot))
+	check(pkg == m.PackageRoot && pkg != (common.Hash{}), "package commitment")
+	id := crypto.Keccak256Hash(pack([]string{"bytes32", "address", "bytes32", "bytes32"}, kh("MC-MR0/vm/v1"), m.Coordinator, pkg, kh("MC-MR0/fixture-instance/v1")))
+	check(id == m.Instance && id != (common.Hash{}), "instance commitment")
+}
+func world(out, name string, q uint64, eabi, cabi abi.ABI, steps, internal uint64, epochs uint64) (manifest, []byte, int) {
+	d := filepath.Join(out, fmt.Sprintf("%s-q%d", name, q))
+	reports := filepath.Join(out, "reports", filepath.Base(d))
+	var m manifest
+	load(filepath.Join(d, "durable-head.json"), &m)
+	binding(m)
+	check(m.Stage == "final-reopened" && m.Quantum == q && m.Epoch == epochs && m.Slices == epochs, "terminal metadata/quantum/epochs")
+	check(bytes.Equal(read(filepath.Join(d, "STORE-FORMAT")), []byte("MR0-SESSION-COPY-1\n")), "store format")
+	paths, err := filepath.Glob(filepath.Join(reports, "slice-*.json"))
+	must(err)
+	sort.Strings(paths)
+	check(len(paths) == int(epochs), "all slice receipts")
+	var j, i uint64
+	var last slice
+	var cp []byte
+	for at, p := range paths {
+		var r receipt
+		load(p, &r)
+		method := "resumeMain"
+		if at == 0 {
+			method = "startMain"
+		}
+		check(r.Method == method && r.Epoch == uint64(at+1) && r.Gas > 0 && r.Gas <= 100000000 && r.Elapsed >= 0 && r.Elapsed <= 30000, "receipt envelope")
+		raw, err := hexutil.Decode(r.Outer)
+		must(err)
+		vals, err := cabi.Unpack(method, raw)
+		must(err)
+		check(len(vals) == 1, "outer shape")
+		canon, err := cabi.Methods[method].Outputs.Pack(vals...)
+		must(err)
+		check(bytes.Equal(raw, canon), "outer canonical ABI")
+		inner := vals[0].([]byte)
+		v, err := eabi.Unpack(method, inner)
+		must(err)
+		check(len(v) == 2, "inner shape")
+		canon, err = eabi.Methods[method].Outputs.Pack(v...)
+		must(err)
+		check(bytes.Equal(inner, canon), "engine canonical ABI")
+		s := *abi.ConvertType(v[0], new(slice)).(*slice)
+		cp = v[1].([]byte)
+		check(reflect.DeepEqual(s, r.Slice), "ABI vs recorded slice")
+		check(s.Schema == 1 && s.Epoch == r.Epoch && s.Result == 0 && s.ExecutedJvmSteps <= q && s.ExecutedInternalSteps <= 4096 && s.TotalJvmSteps == j+s.ExecutedJvmSteps && s.TotalInternalSteps == i+uint64(s.ExecutedInternalSteps), "slice counter chain")
+		check(s.TotalJvmSteps > j || s.TotalInternalSteps > i, "finite progress")
+		j = s.TotalJvmSteps
+		i = s.TotalInternalSteps
+		lc := uint8(1)
+		if at == len(paths)-1 {
+			lc = 2
+			if name == "exception" {
+				lc = 3
+			}
+		}
+		check(s.Lifecycle == lc && s.Outcome == lc, "typed main outcome")
+		if lc == 3 {
+			check(s.JavaKind == 0 && s.JavaRef > 0 && bytes.Equal(s.JavaClass, []byte("java/lang/RuntimeException")), "exact Java exception")
+		} else {
+			check(s.JavaKind == 0 && s.JavaRef == 0 && len(s.JavaClass) == 0, "not an exception")
+		}
+		check(s.MachineStateRoot != (common.Hash{}) && s.VFSStateRoot != (common.Hash{}) && s.InodeCount >= 3 && s.InodeCount <= 64 && s.DescriptorCount <= 32 && s.LogicalFileBytes <= 65536, "slice roots/VFS caps")
+		check(len(cp) > 280 && len(cp) <= 1048576 && len(cp) == r.Size && sha(cp) == r.SHA && crypto.Keccak256Hash(cp) == s.CheckpointRoot, "checkpoint hash/size")
+		check(bytes.Equal(cp, read(filepath.Join(d, "checkpoints", r.SHA+".bin"))), "published opaque checkpoint bytes")
+		event := eabi.Events["CheckpointCommitted"]
+		data, err := event.Inputs.NonIndexed().Pack(s.CheckpointRoot, s.MachineStateRoot, s.VFSStateRoot, s.Lifecycle, s.TotalJvmSteps, s.TotalInternalSteps)
+		must(err)
+		check(len(r.Logs) == 1 && r.Logs[0] != nil, "one event")
+		l := r.Logs[0]
+		check(l.Address == engine && len(l.Topics) == 3 && l.Topics[0] == event.ID && l.Topics[1] == m.Instance && l.Topics[2] == common.BigToHash(new(big.Int).SetUint64(s.Epoch)) && bytes.Equal(l.Data, data), "exact nested event")
+		var requests []uint32
+		for _, n := range m.Sizes {
+			for n > 0 {
+				k := n
+				if k > 4096 {
+					k = 4096
+				}
+				requests = append(requests, k)
+				n -= k
+			}
+		}
+		check(reflect.DeepEqual(r.Reads, requests), "observed read REQUESTS (returns not captured)")
+		last = s
+	}
+	check(j == steps && i == internal && m.JVM == j && m.Internal == i, "expected Java counts")
+	check(m.CheckpointRoot == last.CheckpointRoot && m.CheckpointSHA == sha(cp) && m.MachineRoot == last.MachineStateRoot && m.VFSRoot == last.VFSStateRoot && m.Lifecycle == last.Lifecycle && m.Outcome == last.Outcome && m.Result == 0 && m.JavaKind == last.JavaKind && m.JavaRef == last.JavaRef && bytes.Equal(m.JavaClass, last.JavaClass), "terminal Head vs actual ABI")
+	return m, cp[280:], len(paths)
+}
+func main() {
+	check(len(os.Args) == 3, "usage: verify OUT IMMUTABLE-SESSION-EVIDENCE")
+	out, ref := os.Args[1], os.Args[2]
+	eabi := art(out, ref, "engine", "MR0MainInterpreter", engineHash)
+	cabi := art(out, ref, "coordinator", "MR0MainCoordinator", coordHash)
+	cases := []struct {
+		name   string
+		j, i   uint64
+		epochs [3]uint64
+	}{{"positive", 319, 3, [3]uint64{319, 46, 1}}, {"rebind", 7, 2, [3]uint64{7, 1, 1}}, {"rebind-new", 24, 2, [3]uint64{24, 4, 1}}, {"exception", 18, 5, [3]uint64{19, 3, 1}}}
+	calls := 0
+	for _, c := range cases {
+		var prior []byte
+		var ref manifest
+		for k, q := range []uint64{1, 7, 4096} {
+			m, p, n := world(out, c.name, q, eabi, cabi, c.j, c.i, c.epochs[k])
+			calls += n
+			if k > 0 {
+				check(bytes.Equal(prior, p) && ref.MachineRoot == m.MachineRoot && ref.VFSRoot == m.VFSRoot, "same-code terminal quantum state")
+			}
+			prior = p
+			ref = m
+		}
+	}
+	fmt.Printf("{\"ok\":true,\"worlds\":12,\"abiAndEventReceipts\":%d,\"scope\":\"evidence consistency only; raw state-root chain and DI0 return fragments absent in this producer, no transport acceptance\"}\n", calls)
+}
