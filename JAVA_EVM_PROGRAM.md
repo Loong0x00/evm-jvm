@@ -6,8 +6,10 @@ Parent final253.599s/491962368B combined16-group gate passed. Genuine EVM ZIP
 method0/raw-DEFLATE, CRC and output pages; no host decoder. Parent then genuinely decoded the original MinecraftServer.class33457B in EVM
 and AbstractLogger.class90309B (official-entry-56848a1b1 evidence), without executing
 Java or raising its quotas. Generated-class bridge now independently replayed; parent
-fixed paged reads up to64KiB. Next: self-owned shared-world coordinator with fixed
-class package and real durable JVM continuation, then lazy loading/link/initialization. DI0-only256KiB
+fixed paged reads up to64KiB. Self-owned shared-world preflight now passes with real cross-class Java and durable
+process continuation. CB0 production implementation is frozen (NOT accepted) in
+JAVA_EVM_MC_CB0_PLAN.md; defaultTerra workers and independent parent quality gates.
+Latest user cancelled the pause: continue after dependency gates, no implicit push. DI0-only256KiB
 is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.
 
 ## Latest authorization

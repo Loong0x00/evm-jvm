@@ -1,5 +1,20 @@
 # Java-inside-EVM agent guide
 
+LATEST USER MODEL/AUTOMATION: continue (pause cancelled); agent calls use the user's
+DEFAULT5.6Terra model, high reasoning, no explicitSol override. Quality is independent
+parent rebuild/replay/acceptance, not worker completion. Max2 disjoint workers,
+one Solidity writer; noFast/priority/settings/push. PreviousSol descriptions below
+are historical scopes, not permission to override the current default.
+
+CURRENT SHARED WORLD: parent salvaged interrupted uncommitted drafts (not credited
+worker result) and independently completed generated two-class shared-world proof,
+NOreflection/privateSession. Actual cross-class init/call results317/299,36Java/5
+internal;direct/q1/q7 slices1/36/6,memory/disk roots equal,15actualprocesses,terminal
+checkpoint retained,4class/exact64KiB paging and+1 refusals,actualIOdelta counters.
+7.456s325885952Bfinalfreshgate. See JAVA_EVM_MC_SHARED_WORLD_PARENT_PREFLIGHT.md.
+CB0 production implementation NOW FROZEN: JAVA_EVM_MC_CB0_PLAN.md, NOT ACCEPTED.
+Two defaultTerra runtime/transport workers next; no original Java/MC execution.
+
 CURRENT BRIDGE FRONTIER: worker e3f45ec22 integrated5ce5ffe37; parent independently
 replayed generated EVMZIP->DI0->VFS0a->Javabytecode results76/203. NOT production
 bridge/ClassLoader acceptance. Parent found legal4097..65536B images failed because

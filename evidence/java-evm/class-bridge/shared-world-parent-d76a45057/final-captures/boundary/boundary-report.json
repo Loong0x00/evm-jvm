@@ -1,0 +1,301 @@
+{
+  "baseCommit": "d76a4505700fb135e4394bb2736544123d802c28",
+  "counts": {
+    "DI0MaxOutputUnchanged": 262144,
+    "VFSAggregateUnchanged": 65536,
+    "VFSClassCountUnchanged": 4,
+    "completeInitLimit": 49152,
+    "coordinatorRuntimeLimit": 24576,
+    "exactAggregate": 65536,
+    "plusOneRejected": 65537,
+    "reorderingChangesRoot": true,
+    "sameControllerOrderedPackageRoot": "0x06ede3bdfeb148fc3d3503464858251c4b722d022c6cd0cf390f51ef1e1eec13",
+    "sameControllerReorderedPackageRoot": "0x7cf2312884979987720813b49161289c0c8e3955b79a087a47252b3d4d2de643",
+    "successfulCounts": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "constructors": [
+    {
+      "address": "0xcc961e2630b6490e0a04730bf4ebcd6e5fae1bfa",
+      "completeInitBytes": 8823,
+      "count": 1,
+      "gas": 1114337,
+      "packageRoot": "0x839b2b3bb91411ad4184f86633fc62f5a1a833e8d666491badec6bd31cf71d43",
+      "total": 4097
+    },
+    {
+      "address": "0xfaed992363b49df57f33d6b3a31e422415f7bfec",
+      "completeInitBytes": 9015,
+      "count": 2,
+      "gas": 1215125,
+      "packageRoot": "0xfb8bca5911a67d9891073013521cc3724a83476d72fef0749bb8a3f3b5a698bf",
+      "total": 12290
+    },
+    {
+      "address": "0x426e3d2981badaf305b79237cbf1296b3e3b8878",
+      "completeInitBytes": 9207,
+      "count": 3,
+      "gas": 1316437,
+      "packageRoot": "0xf9bba9869b6c197b14bc516db8293b35ae61a4914a6e7149e624f3e40e9b1fc8",
+      "total": 28674
+    },
+    {
+      "address": "0x917a1a0d5d357c1421768d9b71441653bc01599c",
+      "completeInitBytes": 9399,
+      "count": 4,
+      "gas": 1418273,
+      "packageRoot": "0x3e7d4dcce1bcac5851bb62c19d8abce3ec7a922b109bafaba65a1a05d1a601b5",
+      "total": 65536
+    }
+  ],
+  "failures": [
+    {
+      "label": "empty-package",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 2,
+      "gas": 2347,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false
+    },
+    {
+      "label": "empty-class-name",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 6,
+      "gas": 53837,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 2
+    },
+    {
+      "label": "aggregate-65537",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 12,
+      "gas": 401571,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 14
+    },
+    {
+      "label": "wrong-decoder-ref",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 4,
+      "gas": 53593,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 2
+    },
+    {
+      "label": "wrong-raw-name",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 8,
+      "gas": 67353,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 2
+    },
+    {
+      "label": "wrong-resource-F",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 10,
+      "gas": 68729,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 2
+    },
+    {
+      "label": "non-final",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 7,
+      "gas": 64934,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 2
+    },
+    {
+      "label": "decoder-owner-mismatch",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 14,
+      "gas": 82119,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0xd09a7b1c02032d62994f9f6523fb51704a9f96e0f8c7171e1716bececcb9dd9d",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 2
+    },
+    {
+      "label": "wrong-package-assertion",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 16,
+      "gas": 229464,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 9
+    },
+    {
+      "label": "five-class-count",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 2,
+      "gas": 6182,
+      "rootBefore": "0x01368412e2f6524948ece7ab2021c810cdcdafe8096e3a927441cd48502cd6a1",
+      "rootBeforeHostRestore": "0x4f651a279cbe6ae2646bbacc9b3fe307ca7804074d2fac0db32edf20bcffb575",
+      "rootEqualBeforeHostRestore": false
+    },
+    {
+      "label": "duplicate-name-distinct-decoder",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 5,
+      "gas": 176138,
+      "rootBefore": "0x126149d00cef6a704cb11b049caaac107666e3a18cea73857ad9db7fbe502e27",
+      "rootBeforeHostRestore": "0x984628ee08af2d90d9c6ce1d83e0ef1827b17a12fb7fd24314812e0f88a946b9",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 6
+    },
+    {
+      "label": "duplicate-decoder",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 5,
+      "gas": 173352,
+      "rootBefore": "0x126149d00cef6a704cb11b049caaac107666e3a18cea73857ad9db7fbe502e27",
+      "rootBeforeHostRestore": "0x984628ee08af2d90d9c6ce1d83e0ef1827b17a12fb7fd24314812e0f88a946b9",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 6
+    },
+    {
+      "label": "wrong-index-root",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 9,
+      "gas": 68605,
+      "rootBefore": "0x126149d00cef6a704cb11b049caaac107666e3a18cea73857ad9db7fbe502e27",
+      "rootBeforeHostRestore": "0x984628ee08af2d90d9c6ce1d83e0ef1827b17a12fb7fd24314812e0f88a946b9",
+      "rootEqualBeforeHostRestore": false,
+      "sstoreOpcodes": 2
+    },
+    {
+      "label": "declared-class-name-mismatch",
+      "selector": "0x427cfac5",
+      "name": "LinkError",
+      "gas": 208333,
+      "rootBefore": "0xdb2d94508de7253e956d06df8edd5af0dd8ce63890ee60bec30b33cbeae920b1",
+      "rootBeforeHostRestore": "0xdb2d94508de7253e956d06df8edd5af0dd8ce63890ee60bec30b33cbeae920b1",
+      "rootEqualBeforeHostRestore": true,
+      "sstoreOpcodes": 1
+    }
+  ],
+  "paging": {
+    "actualReadCount": 18,
+    "actualReadSizes": [
+      4096,
+      1,
+      4096,
+      4096,
+      1,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4094
+    ],
+    "aggregate": 65536,
+    "allAtMost4096": true,
+    "gas": 4189802,
+    "includesCrossPage8193": true,
+    "lifecycle": 2,
+    "machineRoot": "0x4719b5241317e427096fd2452f1df0efd96ca040245de6cbe045ea0d203385ac",
+    "result": 9,
+    "vfsRoot": "0xd199cc42ef4c5097ef394ae79e0d8e7d6765d9cf144ff4b63afb19edadfc8396"
+  },
+  "pins": {
+    "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+    "initBytes": 8279,
+    "initSHA256": "af9e15e1bb678575c7db0e83eec20c077ce55d0bb32919cc7a20bfec04498fac",
+    "maximumCompleteInitBytes": 10295,
+    "maximumConstructorArgsBytes": 2016,
+    "runtimeBytes": 4197,
+    "runtimeSHA256": "f505c798082f338b20adf32ff4785ce846fd04e89fa9ba0f50c0adc306653a39",
+    "settings": {
+      "appendCBOR": false,
+      "bytecodeHash": "none",
+      "evmVersion": "cancun",
+      "optimizer": 200,
+      "viaIR": true
+    },
+    "sourceSHA256": "bdb3b2f717e1e782f65d9985046d65aef7624d2cae022d1362725a5d46e5eff4"
+  },
+  "counters": {
+    "evmCalls": 293,
+    "ordinaryCreates": 15,
+    "successfulEvmMutations": 84,
+    "commitReloads": 85,
+    "trieCodeSyncs": 85,
+    "manifestFileSyncs": 85,
+    "manifestRenames": 85,
+    "directorySyncs": 85,
+    "checkpointFileSyncs": 0,
+    "checkpointRenames": 0,
+    "checkpointDirectorySyncs": 0,
+    "actualNestedFrames": 649,
+    "actualNestedCreateOpcodes": 19,
+    "actualSstoreOpcodes": 456738,
+    "gas": 658239217,
+    "maxGas": 14771377,
+    "actualDI0ReadSizes": [
+      4096,
+      1,
+      4096,
+      4096,
+      1,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4096,
+      4094,
+      4096,
+      1
+    ],
+    "maxCallMs": 36,
+    "commitMs": 403
+  },
+  "trieRoot": "0xdb2d94508de7253e956d06df8edd5af0dd8ce63890ee60bec30b33cbeae920b1",
+  "diskBytes": 783866,
+  "pid": 50823
+}

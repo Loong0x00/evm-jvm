@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+import hashlib,json,os,sys
+from pathlib import Path
+b=Path(sys.argv[1]); repo=Path(sys.argv[2])
+def load(p): return json.loads(Path(p).read_text())
+def digest(p): return hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def hexdigest(p):
+ s=''.join(Path(p).read_text().split()); return hashlib.sha256(bytes.fromhex(s)).hexdigest()
+worlds={n:load(b/n/'world-report.json') for n in ('direct','q1','q7','input9')}
+m={n:x['manifest'] for n,x in worlds.items()}
+for n in worlds:
+ assert m[n]['stage']=='final-reopened' and m[n]['lifecycle']==2 and m[n]['javaKind']==0
+for n in ('direct','q1','q7'):
+ assert m[n]['result']==317 and m[n]['jvmSteps']==36 and m[n]['internalSteps']==5
+assert m['input9']['result']==299 and m['input9']['result']!=m['direct']['result']
+for key in ('packageRoot','indexRoot','resourceRoots','classSizes','machineRoot','vfsRoot','jvmSteps','internalSteps'):
+ assert m['direct'][key]==m['q1'][key]==m['q7'][key],key
+assert [m[x]['slices'] for x in ('direct','q1','q7')]==[1,36,6]
+assert m['direct']['counters']['actualDI0ReadSizes']==[299,303]
+assert len(m['q1']['counters']['actualDI0ReadSizes'])==72 and set(m['q1']['counters']['actualDI0ReadSizes'])=={299,303}
+assert len(m['q7']['counters']['actualDI0ReadSizes'])==12 and set(m['q7']['counters']['actualDI0ReadSizes'])=={299,303}
+assert len(set(m['q1']['processPids']))>=4
+assert worlds['direct']['engineHeadOwner']==m['direct']['coordinator']
+assert worlds['q1']['engineHeadOwner']==m['q1']['coordinator']
+neg=load(b/'q1'/'negative-report.json'); pub=load(b/'q1'/'publication-failure.json'); directfail=load(b/'q1'/'direct-evm-failure.json'); boundary=load(b/'boundary'/'boundary-report.json')
+assert [x['name'] for x in neg['failures']]==['CoordinatorError','CoordinatorError','LC0ControlError']
+assert [x.get('code') for x in neg['failures'][:2]]==[17,18]
+assert all(x['rootEqualBeforeHostRestore'] for x in neg['failures'])
+assert pub['oldRoot']==pub['restoredRoot'] and pub['retryOutputIdentical'] and not pub['failedOutputConsumed']
+assert directfail['code']==8 and directfail['createOpcodes']>=1 and directfail['rootEqualBeforeHostRestore']
+assert boundary['paging']['aggregate']==65536 and boundary['paging']['actualReadCount']==18 and boundary['paging']['allAtMost4096'] and boundary['paging']['includesCrossPage8193']
+assert boundary['counts']['plusOneRejected']==65537 and boundary['counts']['reorderingChangesRoot']
+assert boundary['pins']['runtimeBytes']<=24576 and boundary['pins']['maximumCompleteInitBytes']<=49152
+want={'empty-package':2,'empty-class-name':6,'aggregate-65537':12,'wrong-decoder-ref':4,'wrong-raw-name':8,'wrong-resource-F':10,'non-final':7,'decoder-owner-mismatch':14,'wrong-package-assertion':16,'duplicate-decoder':5,'wrong-index-root':9}
+got={x['label']:x.get('code') for x in boundary['failures'] if x['name']=='CoordinatorError'}
+assert all(got.get(k)==v for k,v in want.items()),(got,want)
+assert any(x['label']=='declared-class-name-mismatch' and x['name']=='LinkError' for x in boundary['failures'])
+oracle=(b/'oracle.log').read_text().strip().splitlines(); assert oracle==['7=317','9=299'],oracle
+pins={
+ 'as0RuntimeSHA256':hexdigest(repo/'jvmevm/artifactstore/as0/runtime/AS0ArtifactStore.runtime.hex'),
+ 'zi0RuntimeSHA256':hexdigest(repo/'jvmevm/artifactstore/zi0/runtime/ZI0ZipIndex.runtime.hex'),
+ 'di0RuntimeSHA256':hexdigest(repo/'jvmevm/artifactstore/di0/runtime/DI0Resource.runtime.hex'),
+ 'vfs0aRuntimeSHA256':hexdigest(repo/'jvmevm/runtime/local/vfs0a/VFS0aInterpreter.runtime.hex'),
+ 'coordinatorArtifactSHA256':digest(b/'coordinator.json'),
+ 'driverSHA256':digest(repo/'evidence/java-evm/class-bridge/shared-world-preflight/driver.go'),
+ 'fixtureBuilderSHA256':digest(repo/'evidence/java-evm/class-bridge/shared-world-preflight/make_fixtures.py'),
+ 'twoClassZipSHA256':load(b/'direct'/'start.json')['zipSHA256'],
+ 'boundaryZipSHA256':digest(b/'fixtures'/'boundary-seven.zip')}
+totals={k:sum(x['counters'][k] for x in m.values())+boundary['counters'][k] for k in ('evmCalls','ordinaryCreates','successfulEvmMutations','commitReloads','trieCodeSyncs','manifestFileSyncs','manifestRenames','directorySyncs','checkpointFileSyncs','checkpointRenames','checkpointDirectorySyncs','actualNestedFrames','actualNestedCreateOpcodes','actualSstoreOpcodes','gas')}
+report={'status':'PREFLIGHT ONLY; NOT ACCEPTED OR PRODUCTION','baseCommit':'d76a4505700fb135e4394bb2736544123d802c28','generatedAtUTC':__import__('datetime').datetime.now(__import__('datetime').timezone.utc).isoformat(),'compiler':boundary['pins'],'pins':pins,'java8Oracle':oracle,'sharedPackage':{'packageRoot':m['direct']['packageRoot'],'indexRoot':m['direct']['indexRoot'],'resourceRoots':m['direct']['resourceRoots'],'classSizes':m['direct']['classSizes'],'totalClassBytes':m['direct']['totalClassBytes'],'coordinator':m['direct']['coordinator'],'engine':m['direct']['engine'],'engineNonce':m['direct']['engineNonce']},'grouping':{n:{k:m[n][k] for k in ('quantum','result','slices','epoch','checkpointRoot','machineRoot','vfsRoot','jvmSteps','internalSteps','trieRoot','counters','processPids')} for n in ('direct','q1','q7')},'inputSensitive':{'input7':m['direct']['result'],'input9':m['input9']['result'],'oracleMatched':True},'newProcess':{'pids':m['q1']['processPids'],'distinct':len(set(m['q1']['processPids'])),'startPid':load(b/'q1'/'start.json')['pid'],'resumePid':pub['pid'],'finalReopenPid':worlds['q1']['finalReopenPID'],'noResumeZipOrClassArguments':True},'publicationFailure':pub,'directEvmRollback':directfail,'negativeCalls':neg,'boundary':boundary,'actualTotals':totals,'diskBytes':{n:worlds[n]['diskBytes'] for n in worlds}|{'boundary':boundary['diskBytes']},'scope':{'generatedJava8FixturesOnly':True,'hostZIPParserInDriver':False,'hostClassParserInDriver':False,'hostInflaterInDriver':False,'rawClassStartResumeInputs':False,'privateSessionFields':False,'reflectionUnsafe':False,'officialJarOrServer':False,'javaExecution':'generated fixtures inside exact VFS0a only','minecraftExecution':False,'acceptedChange':False}}
+assert pins['as0RuntimeSHA256']=='e7f8e95b0af80bf15e89a01ceb635d8ae858560c606cc86ac3877d8f0de69b13'
+assert pins['zi0RuntimeSHA256']=='74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3'
+assert pins['di0RuntimeSHA256']=='8c309455d3b0817725cd775f909abc2477b39fed6e18235114737480b05e17b0'
+assert pins['vfs0aRuntimeSHA256']=='717683f8ba67141bb7b5640a7079d396cda661dd53cd2afb7ab4eb6032ac3e86'
+(b/'final-report.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({'result':'PASS','packageRoot':m['direct']['packageRoot'],'results':[m['direct']['result'],m['input9']['result']],'slices':[m[x]['slices'] for x in ('direct','q1','q7')],'actualTotals':totals}))

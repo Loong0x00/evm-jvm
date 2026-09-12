@@ -1,0 +1,38 @@
+{
+  "checkpointSHA256": "ae33a9f53b4b17b9e362ab57082d410c35e5b57271793d49328d63e5b0d83d24",
+  "checkpointWasPrecedingSuccessfulEVMBlob": true,
+  "failures": [
+    {
+      "label": "unauthorized-owner",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 17,
+      "gas": 2815,
+      "rootBefore": "0xe9e2f44cb1d8acdedcefcd4cd804b12d470a950f43b411d6a4f715dfcf3931df",
+      "rootBeforeHostRestore": "0xe9e2f44cb1d8acdedcefcd4cd804b12d470a950f43b411d6a4f715dfcf3931df",
+      "rootEqualBeforeHostRestore": true
+    },
+    {
+      "label": "wrong-package-root",
+      "selector": "0x11497b83",
+      "name": "CoordinatorError",
+      "code": 18,
+      "gas": 4934,
+      "rootBefore": "0xe9e2f44cb1d8acdedcefcd4cd804b12d470a950f43b411d6a4f715dfcf3931df",
+      "rootBeforeHostRestore": "0xe9e2f44cb1d8acdedcefcd4cd804b12d470a950f43b411d6a4f715dfcf3931df",
+      "rootEqualBeforeHostRestore": true
+    },
+    {
+      "label": "wrong-engine-CAS",
+      "selector": "0xf15d7343",
+      "name": "LC0ControlError",
+      "code": 3,
+      "gas": 166101,
+      "rootBefore": "0xe9e2f44cb1d8acdedcefcd4cd804b12d470a950f43b411d6a4f715dfcf3931df",
+      "rootBeforeHostRestore": "0xe9e2f44cb1d8acdedcefcd4cd804b12d470a950f43b411d6a4f715dfcf3931df",
+      "rootEqualBeforeHostRestore": true,
+      "sstoreOpcodes": 1
+    }
+  ],
+  "pid": 50555
+}

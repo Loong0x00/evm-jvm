@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+set -euo pipefail
+B=$(readlink -f "$1")
+ROOT=$(git rev-parse --show-toplevel)
+E="$ROOT/evidence/java-evm/class-bridge/shared-world-preflight"
+[[ ! -e "$B" ]] || { echo "refuse overwrite: $B" >&2; exit 2; }
+mkdir -p "$B/classes" "$B/gensrc" "$B/fixtures"
+printf 'base=%s\n' "$(git rev-parse HEAD)"
+printf 'go=%s\n' "$(go version)"
+printf 'java=%s\n' "$(/usr/lib/jvm/java-8-openjdk/bin/java -version 2>&1 | head -1)"
+cp "$E"/{SharedEntry.java,SharedHelper.java,Oracle.java} "$B/gensrc/"
+for n in P1 P2 P3 P4 P4B; do printf 'public class %s { public static int run(int x) { return x + %s; } }\n' "$n" "${#n}" > "$B/gensrc/$n.java"; done
+printf 'public class Unfinal { public static int run(int x) { return x; } }\n' > "$B/gensrc/Unfinal.java"
+/usr/lib/jvm/java-8-openjdk/bin/javac -source 8 -target 8 -g:none -d "$B/classes" "$B"/gensrc/*.java
+/usr/lib/jvm/java-8-openjdk/bin/java -cp "$B/classes" Oracle 7 9 > "$B/oracle.log"
+/usr/lib/jvm/java-8-openjdk/bin/javap -classpath "$B/classes" -c -p SharedEntry SharedHelper > "$B/javap.log"
+python3 "$E/make_fixtures.py" "$B/classes" "$B/fixtures" > "$B/fixtures.log"
+(cd "$E" && npm ci --ignore-scripts >/dev/null && node compile.js "$B/coordinator.json")
+if [[ -f "$E/SharedWorldCoordinator.artifact.json" ]]; then cmp "$B/coordinator.json" "$E/SharedWorldCoordinator.artifact.json"; fi
+(cd "$ROOT" && go build -o "$B/driver" ./evidence/java-evm/class-bridge/shared-world-preflight/driver.go)
+"$B/driver" setup-chain "$B/direct" "$B/coordinator.json" "$B/fixtures/shared-two.zip" 4096 7
+"$B/driver" verify "$B/direct" "$B/coordinator.json"
+"$B/driver" setup-chain "$B/q7" "$B/coordinator.json" "$B/fixtures/shared-two.zip" 7 7
+"$B/driver" finish "$B/q7" "$B/coordinator.json"
+"$B/driver" verify "$B/q7" "$B/coordinator.json"
+"$B/driver" setup-chain "$B/q1" "$B/coordinator.json" "$B/fixtures/shared-two.zip" 1 7
+"$B/driver" negatives "$B/q1" "$B/coordinator.json"
+"$B/driver" resume-one "$B/q1" "$B/coordinator.json" publication-probe
+"$B/driver" finish "$B/q1" "$B/coordinator.json"
+"$B/driver" verify "$B/q1" "$B/coordinator.json"
+"$B/driver" setup-chain "$B/input9" "$B/coordinator.json" "$B/fixtures/shared-two.zip" 4096 9
+"$B/driver" verify "$B/input9" "$B/coordinator.json"
+"$B/driver" boundary "$B/boundary" "$B/coordinator.json" "$B/fixtures/boundary-seven.zip"
+python3 "$E/verify_report.py" "$B" "$ROOT"
