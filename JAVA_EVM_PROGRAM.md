@@ -15,7 +15,10 @@ event handling. Still fixed<=4 classes/65536B, not a lazy loader or original Jav
 Generated guest-main launch now independently verified with existing root ABI:
 JAVA_EVM_MC_MAIN_ENTRY_PARENT_PREFLIGHT.md,17.197s/335765504B; real UTF16 contents,
 119 process receipts, terminal return/NPE and corrected strict verification. Next
-link-frontier candidate9047772b2 awaits parent replay; demand loading not implemented.
+link-frontier parent15.961s/336994304B verifies actual missing-reference/cast
+semantics and eager-preloaded controls. Next DISPOSABLE8-image/256KiB capacity
+baseline comparison, NOT accepted quota changes; see
+JAVA_EVM_MC_CAPACITY_COMPARISON_PREPARATION.md. Demand loading not implemented.
 DefaultTerra/high, independent gates, no silent entry/loader/quota expansion.
 Latest user cancelled the pause: continue after dependency gates, no implicit push. DI0-only256KiB
 is not a Java/VFS quota increase. No Minecraft execution/Done at acceptance.

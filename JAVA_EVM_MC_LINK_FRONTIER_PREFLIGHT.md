@@ -1,6 +1,9 @@
 # MC link-frontier preflight
 
-Status: **generated Java-8 measurement only; no production implementation or acceptance.**
+Status: **parent-verified generated preflight WITH ATTRIBUTION CORRECTION**.
+JAVA_EVM_MC_LINK_FRONTIER_PARENT_PREFLIGHT.md supersedes the original worker
+checkcast-at38 interpretation and qualifies the next-design inference below.
+No production implementation or new profile acceptance.
 This work is based on accepted CB0 `0fdb9dcf7` and the generated-main evidence at
 `a70ca4acf`.  It changes neither CB0, VFS0a, AS0/ZI0/DI0, engine/root ABI, artifact,
 profile nor any quota.  No original class/JAR was supplied to Java execution, and

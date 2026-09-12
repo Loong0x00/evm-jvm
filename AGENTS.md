@@ -21,8 +21,12 @@ execution. Generated guest main(String[]) launch is now parent-verified WITHOUT
 new engine ABI: JAVA_EVM_MC_MAIN_ENTRY_PARENT_PREFLIGHT.md,17.197s/335765504B.
 Parent fixed verifier gaps, checked119 process receipts across two suites, real
 UTF16 code units incl NUL/surrogates, typed NPE/terminal blob and root/CAS integrity.
-Next link-frontier candidate9047772b2 needs independent parent review/replay; demand
-resolution is only a proposal, not implemented. No quota changes.
+Link frontier now parent-verified with corrections: JAVA_EVM_MC_LINK_FRONTIER_PARENT_PREFLIGHT.md,
+15.961s/336994304B. PC38 was invokevirtual, NOT null-checkcast35; independentnonnull
+cast17 and eager-preloaded controls verified. Demand loading is NOT implemented or
+proven uniquely necessary. Next DISPOSABLE capacity baseline comparison (8/256KiB
+COPY ONLY) per JAVA_EVM_MC_CAPACITY_COMPARISON_PREPARATION.md; all ACCEPTED quotas
+and engine/CB0/core remain unchanged, no original Java/MC execution.
 
 CURRENT BRIDGE FRONTIER: worker e3f45ec22 integrated5ce5ffe37; parent independently
 replayed generated EVMZIP->DI0->VFS0a->Javabytecode results76/203. NOT production

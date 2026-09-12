@@ -1,0 +1,66 @@
+Classfile /home/user/evm-jvm/geth/build/java-diff-mc-link-frontier-parent-final-9047772b2-replay/fixture/classes/CastEntry.class
+  Last modified 2026-9-12; size 261 bytes
+  MD5 checksum f7b071f580a6a88726773013ef16b87e
+public final class CastEntry
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_FINAL, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #2.#13         // java/lang/Object."<init>":()V
+   #2 = Class              #14            // java/lang/Object
+   #3 = Class              #15            // MissingTarget
+   #4 = Class              #16            // CastEntry
+   #5 = Utf8               <init>
+   #6 = Utf8               ()V
+   #7 = Utf8               Code
+   #8 = Utf8               run
+   #9 = Utf8               (I)I
+  #10 = Utf8               StackMapTable
+  #11 = Class              #14            // java/lang/Object
+  #12 = Class              #15            // MissingTarget
+  #13 = NameAndType        #5:#6          // "<init>":()V
+  #14 = Utf8               java/lang/Object
+  #15 = Utf8               MissingTarget
+  #16 = Utf8               CastEntry
+{
+  public CastEntry();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static int run(int);
+    descriptor: (I)I
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=3, args_size=1
+         0: iload_0
+         1: ifne          8
+         4: aconst_null
+         5: goto          15
+         8: new           #2                  // class java/lang/Object
+        11: dup
+        12: invokespecial #1                  // Method java/lang/Object."<init>":()V
+        15: astore_1
+        16: aload_1
+        17: checkcast     #3                  // class MissingTarget
+        20: astore_2
+        21: aload_2
+        22: ifnonnull     30
+        25: bipush        61
+        27: goto          32
+        30: bipush        62
+        32: ireturn
+      StackMapTable: number_of_entries = 4
+        frame_type = 8 /* same */
+        frame_type = 70 /* same_locals_1_stack_item */
+          stack = [ class java/lang/Object ]
+        frame_type = 253 /* append */
+          offset_delta = 14
+          locals = [ class java/lang/Object, class MissingTarget ]
+        frame_type = 65 /* same_locals_1_stack_item */
+          stack = [ int ]
+}

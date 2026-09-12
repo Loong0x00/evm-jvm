@@ -1,0 +1,75 @@
+Classfile /home/user/evm-jvm/geth/build/java-diff-mc-link-frontier-parent-final-9047772b2-replay/fixture/classes/DemandEntry.class
+  Last modified 2026-9-12; size 341 bytes
+  MD5 checksum 74f97aafcf57183554bcded4dbc5880c
+public final class DemandEntry
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_FINAL, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #7.#16         // java/lang/Object."<init>":()V
+   #2 = Methodref          #3.#17         // MissingTarget.staticValue:()I
+   #3 = Class              #18            // MissingTarget
+   #4 = Methodref          #3.#16         // MissingTarget."<init>":()V
+   #5 = Methodref          #3.#19         // MissingTarget.value:()I
+   #6 = Class              #20            // DemandEntry
+   #7 = Class              #21            // java/lang/Object
+   #8 = Utf8               unused
+   #9 = Utf8               LMissingTarget;
+  #10 = Utf8               <init>
+  #11 = Utf8               ()V
+  #12 = Utf8               Code
+  #13 = Utf8               run
+  #14 = Utf8               (I)I
+  #15 = Utf8               StackMapTable
+  #16 = NameAndType        #10:#11        // "<init>":()V
+  #17 = NameAndType        #22:#23        // staticValue:()I
+  #18 = Utf8               MissingTarget
+  #19 = NameAndType        #24:#23        // value:()I
+  #20 = Utf8               DemandEntry
+  #21 = Utf8               java/lang/Object
+  #22 = Utf8               staticValue
+  #23 = Utf8               ()I
+  #24 = Utf8               value
+{
+  public DemandEntry();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+
+  public static int run(int);
+    descriptor: (I)I
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=2, args_size=1
+         0: iload_0
+         1: ifne          7
+         4: bipush        41
+         6: ireturn
+         7: iload_0
+         8: iconst_1
+         9: if_icmpne     16
+        12: invokestatic  #2                  // Method MissingTarget.staticValue:()I
+        15: ireturn
+        16: iload_0
+        17: iconst_2
+        18: if_icmpne     32
+        21: new           #3                  // class MissingTarget
+        24: dup
+        25: invokespecial #4                  // Method MissingTarget."<init>":()V
+        28: invokevirtual #5                  // Method MissingTarget.value:()I
+        31: ireturn
+        32: aconst_null
+        33: astore_1
+        34: aload_1
+        35: checkcast     #3                  // class MissingTarget
+        38: invokevirtual #5                  // Method MissingTarget.value:()I
+        41: ireturn
+      StackMapTable: number_of_entries = 3
+        frame_type = 7 /* same */
+        frame_type = 8 /* same */
+        frame_type = 15 /* same */
+}
