@@ -1,5 +1,13 @@
 # Continuous JVM-in-EVM program
 
+LATEST MR0 BASIC: parent independently rebuilt repaired a2efa63fa candidate and
+replayed12 generated q1/q7/direct worlds,197.311341s/882098176B. Canonical empty
+String[] entry, overload and legal null/new-array rebind now agree; VOID/typed Java
+exception terminal machine/VFS roots and opaque payloads equal across quanta.
+See JAVA_EVM_MC_MR0_PARENT_BASIC_PREFLIGHT.md: NOT full Session/profile acceptance;
+parent found per-slice/event/read-return/transport-publication/verifier gaps.
+Go-only exact-pin transport completion next; no Selected/MR0 merge or officialJava.
+
 LATEST SELECTED COPY: parent independently verified JAVA_EVM_MC_SELECTED_TABLE_PARENT_PREFLIGHT.md.
 Restored actual root refusal precedence and removed compiler-discarded736B getter
 allocations. Fresh331.597450s/874287104B gate; dense181969B now63485032 ordinary gas,
