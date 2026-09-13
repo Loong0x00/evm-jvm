@@ -46,11 +46,63 @@
   "fixture": {
     "javac": "/usr/lib/jvm/java-8-openjdk/bin/javac",
     "release": 8,
-    "name": "PropertiesProbe.class",
-    "bytes": 1799,
-    "sha256": "264a1d61c77c91a8b02f46a736b71ab0f610639ceff276712cf8aceec9a36af4"
+    "images": [
+      {
+        "name": "PropertiesConstructionProbe.class",
+        "bytes": 763,
+        "sha256": "6f476b1f3c4b2dfc29c777c8c4639714536c096dbd9866acc11139c004ef223b"
+      },
+      {
+        "name": "PropertiesProbe.class",
+        "bytes": 1799,
+        "sha256": "264a1d61c77c91a8b02f46a736b71ab0f610639ceff276712cf8aceec9a36af4"
+      }
+    ]
   },
   "driverSourceSHA256": "e6872959e00249d9114ee9bb21cece65f8788b393249f68cc87f637993636266",
+  "runRecipeSHA256": "a856c5dd506e8e69c50724c2159369d03e45166981c06f8e4c76d696bca50c6e",
+  "runs": {
+    "construction-direct": {
+      "sourceIgnoredRun": "build/java-diff-mc-properties-1789301415-construction-direct-tail",
+      "sliceReceiptCount": 1,
+      "processReceiptCount": 2,
+      "sliceReceiptSequenceSHA256": "3fa62e75d7d28d36143f6719e4239d8f5afe0504331e84d9f84e945ebc5ab184",
+      "processReceiptSequenceSHA256": "dcccd4c61a9fe0bb7b84bfd74cf58151cdd5f237d75b776a55b9ab3b99684d96",
+      "finalSliceSHA256": "44a8eaa1d9d1c1ed3179934aa744163a0573ad74cebb6714b344c5c303c6a2a7"
+    },
+    "properties-direct-refusal": {
+      "sourceIgnoredRun": "build/java-diff-mc-properties-1789300872-direct",
+      "sliceReceiptCount": 0,
+      "processReceiptCount": 1,
+      "sliceReceiptSequenceSHA256": null,
+      "processReceiptSequenceSHA256": "dce14ae5112dc4a9c8150b0016502d504e2eb59824443a4f49168aabdbb10c54",
+      "finalSliceSHA256": null
+    },
+    "properties-q1": {
+      "sourceIgnoredRun": "build/java-diff-mc-properties-1789301073-probe-q1",
+      "sliceReceiptCount": 2859,
+      "processReceiptCount": 2860,
+      "sliceReceiptSequenceSHA256": "f45c15b9a3eb5743dd101a582f90735b78c9153071316d8be64fb0798cade713",
+      "processReceiptSequenceSHA256": "a12af62f4ac73c5a72c814cbff1d0def4f636ac598021194d9560ced53e532c8",
+      "finalSliceSHA256": "3c6cd614627b54dcf177993a2772048d1caa3b29284997889438e40779efb44d"
+    },
+    "properties-q7": {
+      "sourceIgnoredRun": "build/java-diff-mc-properties-1789300984-probe-q7",
+      "sliceReceiptCount": 409,
+      "processReceiptCount": 410,
+      "sliceReceiptSequenceSHA256": "0de832582fa945c0489fe79f968d684dca3c646cf1e47cf6572d93312190deea",
+      "processReceiptSequenceSHA256": "d82e3bd25bcb804f3a10e5c7a02a153539f90bc854a8f160ecf20a69544f0b7f",
+      "finalSliceSHA256": "6ced4b0d9320610647586e3885fa3c756b6cb028e72ffa584475f8df0f65aef7"
+    },
+    "reserved-override": {
+      "sourceIgnoredRun": "build/java-diff-mc-properties-1789301361-reserved",
+      "sliceReceiptCount": 0,
+      "processReceiptCount": 1,
+      "sliceReceiptSequenceSHA256": null,
+      "processReceiptSequenceSHA256": "fa45a6dfdee292b2e7c35082db1577a6f0558ea2f743aa988670e585362a1369",
+      "finalSliceSHA256": null
+    }
+  },
   "compiler": {
     "version": "0.8.30+commit.73712a01.Emscripten.clang",
     "optimizerRuns": 200,

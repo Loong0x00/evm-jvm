@@ -41,14 +41,19 @@ def main():
         sources = [str(BOOT / x) for x in ("Dictionary.java", "Hashtable.java", "Properties.java")]
         subprocess.run([str(JAVAC), "-source", "8", "-target", "8", "-g:none",
                         "-bootclasspath", str(api_jar) + ":" + str(RT), "-d", str(bootout), *sources], check=True)
+        probes = sorted(HERE.glob("*Probe.java"))
         subprocess.run([str(JAVAC), "-source", "8", "-target", "8", "-g:none",
                         "-bootclasspath", str(bootout) + ":" + str(api_jar) + ":" + str(RT),
-                        "-d", str(fixtureout), str(HERE / "PropertiesProbe.java")], check=True)
-        data = (fixtureout / "PropertiesProbe.class").read_bytes()
-    (HERE / "PropertiesProbe.class.hex").write_text(data.hex() + "\n")
+                        "-d", str(fixtureout), *map(str, probes)], check=True)
+        images = []
+        for probe in probes:
+            name = probe.with_suffix(".class").name
+            data = (fixtureout / name).read_bytes()
+            (HERE / (name + ".hex")).write_text(data.hex() + "\n")
+            images.append({"name": name, "bytes": len(data),
+                           "sha256": hashlib.sha256(data).hexdigest()})
     (HERE / "pins.json").write_text(json.dumps({
-        "javac": str(JAVAC), "release": 8, "name": "PropertiesProbe.class",
-        "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
+        "javac": str(JAVAC), "release": 8, "images": images,
     }, indent=2) + "\n")
 
 
