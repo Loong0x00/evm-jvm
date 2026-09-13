@@ -1,0 +1,83 @@
+{
+  "basis": {
+    "commit": "67fe03fd1",
+    "engineBytes": 326052,
+    "engineKeccak": "ca811ec4bf1be44d6a8a6469d38543cb8ba89b21c93589ba07338c1ed5b7f0df",
+    "bootstrapCount": 51
+  },
+  "domain": "MC-CLASS-DEFINING-LOADER-PREFLIGHT1",
+  "engine": {
+    "bytes": 327658,
+    "initSHA256": "cfec8519e28f02fdbf5ce801d6bdead593f3217fdf28871adae7403a51b150f7",
+    "runtimeSHA256": "8ce10b67476572a0db39e076e48ac631fd29b97de409d40cd73ddaece9734db6",
+    "runtimeKeccak256": "d611ea952478718292318848a363cbe828f3fb2f91da54241bc9c7885a8e8a94"
+  },
+  "coordinator": {
+    "bytes": 3547,
+    "initSHA256": "0bf4900532972a94a7418fe29f21f15a9f806cffdf619016b1387f94e3225a06",
+    "runtimeSHA256": "3699a8474e8aa7262c0f340332940c27329c6dc971dc026174657a752414305e",
+    "runtimeKeccak256": "eee6036f3c73ab4019406c33f780b14e1b0759483380614ec2558803e5ce8bc3"
+  },
+  "cap320KiB": {
+    "limit": 327680,
+    "result": "pass",
+    "headroom": 22,
+    "local384CopyUsed": false
+  },
+  "limits": {
+    "externalGas": 1000000000,
+    "reserve": 25000000,
+    "callSeconds": 30,
+    "wholeGroupSeconds": 1200,
+    "wholeGroupRSSKiB": 4194304,
+    "classes": 24,
+    "classBytes": 262144,
+    "frames": 128,
+    "constantPool": 4096,
+    "code": 65535,
+    "checkpoint": 1048576,
+    "head": 32768
+  },
+  "generatedOnly": true,
+  "terminal": [
+    {
+      "quantum": "q1",
+      "epoch": 88,
+      "java": 88,
+      "internal": 2,
+      "machineRoot": "0x4f35772432dc5b4bb361cf62bc78fca35592b06a9f53543354f2be539baabb4d",
+      "checkpointSHA256": "91e0ffb4104c20db53b47467b968bc75b1d67bf06ff9d0e58924b3ff92fd26b8",
+      "opaqueSHA256": "5cecf60d88cf330ad855af3e0c14b69025063e90f3e91b56e165d0a8ac164237",
+      "maxGas": 25805488
+    },
+    {
+      "quantum": "q7",
+      "epoch": 13,
+      "java": 88,
+      "internal": 2,
+      "machineRoot": "0x4f35772432dc5b4bb361cf62bc78fca35592b06a9f53543354f2be539baabb4d",
+      "checkpointSHA256": "cd05ece41398c7fa5298bfa3e1394f6055e2a6dba93888e9a432f85adfc56d54",
+      "opaqueSHA256": "5cecf60d88cf330ad855af3e0c14b69025063e90f3e91b56e165d0a8ac164237",
+      "maxGas": 26361376
+    },
+    {
+      "quantum": "q4096",
+      "epoch": 1,
+      "java": 88,
+      "internal": 2,
+      "machineRoot": "0x4f35772432dc5b4bb361cf62bc78fca35592b06a9f53543354f2be539baabb4d",
+      "checkpointSHA256": "f3e372808b63e66612859e34496487d6a3c664d0acb9af7991d437a0b06057b7",
+      "opaqueSHA256": "5cecf60d88cf330ad855af3e0c14b69025063e90f3e91b56e165d0a8ac164237",
+      "maxGas": 19815758
+    }
+  ],
+  "unsupportedGetSystemClassLoader": {
+    "selector": "0xd631c3a4",
+    "words": [
+      "3",
+      "0"
+    ],
+    "rootUnchanged": true
+  },
+  "restoreTamperExecution": "not-run; runtime source contains strict scan validation but this worker did not create a second direct-EVM tamper harness"
+}
