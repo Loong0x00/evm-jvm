@@ -1,5 +1,15 @@
 # System.arraycopy COPY preflight
 
+**PARENT CORRECTION (independently reproduced):** the recorded q1/q7 states below
+are **RUNNING, not VOID**. Both next resumes panic `0x32` at the first arraycopy;
+175 versus 176 is merely the last committed slice boundary, not evidence of
+terminal quantum divergence. `_loadNativeCallee` lost its `argumentCount`
+assignment. The candidate driver also still appends read/PID histories despite
+the bounded-driver claim below. Parent uses the actual bounded predecessor and
+new repair identities. See `JAVA_EVM_MC_ARRAYCOPY_PARENT_PREFLIGHT.md` and
+`minecraft-entry/parent-f780f1a13/`. Original worker statements below are retained
+as historical, unaccepted claims, not validation results.
+
 **Unaccepted generated-fixture candidate only.** This is the isolated derivative of
 parent-verified marker-map `25b1f35a0`, at base `1e4027b9b`; it does not select,
 read, parse, package, or execute an original JAR. Parent alone retries original13.
