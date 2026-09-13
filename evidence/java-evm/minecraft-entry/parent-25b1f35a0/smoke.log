@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-25b1f35a0/smoke.py", line 20, in <module>
+    call('q%d-finish'%q,[build/'driver','finish']+args);call('q%d-verify'%q,[build/'driver','verify']+args)
+                                                        ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-25b1f35a0/smoke.py", line 9, in call
+    (out/(label+'-process.json')).write_text(json.dumps({'pid':p.pid,'exit':code,'command':list(map(str,args))})+'\n');assert code==0,(label,code)
+                                                                                                                              ^^^^^^^
+AssertionError: ('q1-verify', 2)

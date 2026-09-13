@@ -1,5 +1,17 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST MAP: parentindependentlyrebuilt25b1f35a0,310375BengineSHA
+ df1418.../Keccakedc205.../co213d900...,44bootstraps16/262144COPY. Sourcebuild
+201.581895s887308288B. FoundrealGoHeadtelemetryoverflow atq1epoch1291 (32780B
+publishedHeadvs32768readcap); preservedfailure, boundedobservationmetadata
+withoutraisingcap,fullreceiptsoutsideHead. Freshq1/q7Map1397J9Iequivalencepasses;
+directretainsreserveError7. Original10now54J, addedoriginalLog4jMarker+Marker12
+thenStringBuilderFormattable13. Original13=184522B/54DI0fragments,commits364J8I,
+CP6431B/SHA1744ef6... root e6e65f69...;111.652983s155336704B. Nextactualmissing
+java/lang/System staticPC29/gas43618173 inoriginalLog4jMarker.setParents:
+System.arraycopy(Object,int,Object,int,int)V. See MARKER_MAP_PARENT_PREFLIGHT
+and ARRAYCOPY_PREPARATION. Mainbody/EULA/world/DoneNO,acceptedcapsunchanged,nopush.
+
 LATEST MC-FIRST: WebSocket-stopped classliteralworker hadcommitted4cf97854e;
 parentrecoveredandindependentlybuilt303045BengineSHAa35a22.../Keccak838a37...,
 co62b80...,40bootstraps16/262144COPY. Build189.487740s/891617280B;
