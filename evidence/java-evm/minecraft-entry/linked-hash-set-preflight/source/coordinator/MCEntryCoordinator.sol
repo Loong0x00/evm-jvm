@@ -13,15 +13,15 @@ contract MCEntryCoordinator {
         bool readOnly;
     }
 
-    address private constant ENGINE = address(bytes20(hex"4d432d5359534c4f414445522d504152454e5401"));
+    address private constant ENGINE = address(bytes20(hex"4d432d4c48532d505245464c4947485431000001"));
     // COPY-only repair engine pin; this coordinator remains otherwise ABI-identical.
-    bytes32 private constant ENGINE_CODEHASH = hex"90f8b0d4b4c3a0d3a968c50d190674c6e537df4256f5363e4b01e0fddc99459c";
+    bytes32 private constant ENGINE_CODEHASH = hex"1e3d315ea44034ff73f64e27d639839ebfe426cdfb0a88a0535301762d063ff7";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-SYSTEM-CLASSLOADER-PARENT1/package/v1");
-    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-SYSTEM-CLASSLOADER-PARENT1/resource/v1");
-    bytes32 private constant VM_DOMAIN = keccak256("MC-SYSTEM-CLASSLOADER-PARENT1/vm/v1");
+    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-LINKED-HASH-SET-PREFLIGHT1/package/v1");
+    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-LINKED-HASH-SET-PREFLIGHT1/resource/v1");
+    bytes32 private constant VM_DOMAIN = keccak256("MC-LINKED-HASH-SET-PREFLIGHT1/vm/v1");
 
     address public owner;
     address public finalIndex;

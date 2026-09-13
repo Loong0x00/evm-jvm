@@ -1,0 +1,257 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "fixedOwner",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "fixedInstanceSalt",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "address[]",
+        "name": "fixedDecoders",
+        "type": "address[]"
+      },
+      {
+        "internalType": "bytes[]",
+        "name": "fixedRawNames",
+        "type": "bytes[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "assertedIndexRoots",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "bytes32[]",
+        "name": "assertedResourceRoots",
+        "type": "bytes32[]"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "assertedPackageRoot",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "code",
+        "type": "uint256"
+      }
+    ],
+    "name": "MR0Error",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "at",
+        "type": "uint8"
+      }
+    ],
+    "name": "classBinding",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "decoder",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes",
+        "name": "rawName",
+        "type": "bytes"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "resourceRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "classSize",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "classCount",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "finalIndex",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "finalIndexRoot",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "instanceId",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "packageRoot",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "assertedPackageRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint64",
+        "name": "expectedEpoch",
+        "type": "uint64"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "expectedCheckpointRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes",
+        "name": "checkpoint",
+        "type": "bytes"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxJvmSteps",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxInternalSteps",
+        "type": "uint32"
+      }
+    ],
+    "name": "resumeMain",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "engineReturn",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "assertedPackageRoot",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "entryAt",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxJvmSteps",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxInternalSteps",
+        "type": "uint32"
+      }
+    ],
+    "name": "startMain",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "engineReturn",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalClassBytes",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
