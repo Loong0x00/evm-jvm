@@ -15,7 +15,7 @@ import time
 import zipfile
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 DEADLINE_SECONDS = 20 * 60
 
