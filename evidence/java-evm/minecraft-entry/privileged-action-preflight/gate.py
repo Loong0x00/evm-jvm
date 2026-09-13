@@ -83,7 +83,8 @@ def archive(out, rows, refusals, pins):
         if not world.exists(): continue
         for name in ("durable-head.json",):
             if (world / name).exists(): copy_file(world / name, archive_root / "receipts" / world.name / name)
-        if (world / "reports").exists(): shutil.copytree(world / "reports", archive_root / "receipts" / world.name / "reports")
+        report_dir = out / "reports" / world.name
+        if report_dir.exists(): shutil.copytree(report_dir, archive_root / "receipts" / world.name / "reports")
         if (world / "checkpoints").exists(): shutil.copytree(world / "checkpoints", archive_root / "receipts" / world.name / "checkpoints")
     (archive_root / "pins.json").write_text(json.dumps(pins, indent=2) + "\n")
     (archive_root / "results.json").write_text(json.dumps({"generatedOnly": True, "normal": rows, "refusals": refusals}, indent=2) + "\n")
@@ -180,7 +181,7 @@ def main():
         if head["lifecycle"] != 2 or head["outcome"] != 2 or head["javaKind"] != 0: raise RuntimeError(label + " did not reach genuine VOID")
         cp = (out / label / "checkpoints" / (head["checkpointSHA256"] + ".bin")).read_bytes()
         if sha(cp) != head["checkpointSHA256"]: raise RuntimeError(label + " checkpoint digest")
-        receipts = sorted((out / label / "reports").glob("slice-*.json"))
+        receipts = sorted((out / "reports" / label).glob("slice-*.json"))
         if not receipts or any(json.loads(p.read_text())["executionBudget"] != "LOCAL1B-USER-AUTHORIZED" for p in receipts): raise RuntimeError(label + " receipts")
         row = {"quantum": quantum, "epoch": head["epoch"], "java": head["jvmSteps"], "internal": head["internalSteps"], "machineRoot": head["machineRoot"], "checkpointSHA256": head["checkpointSHA256"], "opaqueSHA256": sha(cp[280:]), "maxGas": head["counters"]["maxGas"], "receiptCount": len(receipts)}
         current = (row["java"], row["internal"], row["machineRoot"], cp[280:])
@@ -193,7 +194,7 @@ def main():
         e = dict(env, MC_ENTRY_BINDINGS=bindings)
         args = [out / label, out / "coordinator/MCEntryCoordinator.json", out / "engine/MCEntryInterpreter.json", out / fixture, 4096]
         run(out, label + "-start", [out / "driver", "setup-chain", *args], e)
-        refusal = json.loads((out / label / "reports/start-refusal.json").read_text())
+        refusal = json.loads((out / "reports" / label / "start-refusal.json").read_text())
         if refusal.get("errorName") != expected or refusal["rootUnchanged"] is not True:
             raise RuntimeError(label + " did not preserve the canonical honest refusal")
         # The raw receipt is the authority for the deliberately missing class.
