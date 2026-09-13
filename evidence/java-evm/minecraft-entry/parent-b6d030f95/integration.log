@@ -1,0 +1,79 @@
+[java-on-evm f078a3580] java-evm: stage System property preflight inputs
+ Date: Mon Sep 14 05:38:43 2026 +0800
+ 17 files changed, 12845 insertions(+)
+ create mode 100644 JAVA_EVM_MC_SYSTEM_PROPERTY_PREFLIGHT.md
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/README.md
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/lang/ClassLoader.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/lang/System.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/lang/VMResourceEnumeration.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/net/URL.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/util/Dictionary.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/util/Enumeration.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/util/Hashtable.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/bootstrap/java/util/Properties.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/coordinator/MCEntryCoordinator.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/coordinator/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/engine/MCEntryInterpreter.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/engine/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/tools/checkpoint_frames.py
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/tools/driver.go.txt
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/tools/verify_receipts.js
+[java-on-evm 347621970] java-evm: implement bounded guest System property
+ Date: Mon Sep 14 06:06:20 2026 +0800
+ 54 files changed, 14704 insertions(+), 6 deletions(-)
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/SHA256SUMS
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryCoordinator.abi.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryCoordinator.init.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryCoordinator.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryCoordinator.runtime.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryCoordinator.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryInterpreter.abi.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryInterpreter.init.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryInterpreter.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryInterpreter.runtime.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/MCEntryInterpreter.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/bootstrap-classes/java/lang/System.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/coordinator-build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/coordinator/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/engine-build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/engine/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/fixture-classes/RawSystemReplacementMain.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/fixture-classes/SystemPropertyProbe.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/fixture-classes/UnsupportedClearPropertyProbe.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/fixture-classes/UnsupportedGetPropertiesProbe.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/fixture-classes/UnsupportedSetPropertyProbe.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/fixture-classes/java/lang/IllegalArgumentException.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/go-build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/go-vet.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/gofmt.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/pins.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/raw-system-classes/java/lang/System.class
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/system-java8-build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/system-javap.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/artifacts/system-property-java8-oracle.log
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/build_fixture.py
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/IllegalArgumentException.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/ParentResourceEnumerationHostOracle.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/ParentResourceEnumerationProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/RawSystemReplacementMain.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/ResourceEnumerationProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/SystemPropertyProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/UnsupportedClearPropertyProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/UnsupportedGetPropertiesProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/UnsupportedOpenStreamProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/UnsupportedSetPropertyProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/fixtures/raw/java/lang/System.java
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/rebuild.py
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/results/process-tree-peak.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/results/resource-control-receipts-checkpoints.tar.gz
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/results/resource-control-summary.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/results/system-property-receipts-checkpoints.tar.gz
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/results/system-property-summary.json
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/run_resource_controls.py
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/run_system_property.py
+ create mode 100644 evidence/java-evm/minecraft-entry/system-property-preflight/tools/monitor_process_tree.py
+[java-on-evm 935464158] java-evm: name System property Go evidence
+ Date: Mon Sep 14 06:06:53 2026 +0800
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename evidence/java-evm/minecraft-entry/system-property-preflight/tools/{driver.go.txt => evidence.go.txt} (100%)

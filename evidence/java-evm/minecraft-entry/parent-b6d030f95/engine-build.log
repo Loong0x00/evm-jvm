@@ -1,0 +1,423 @@
+Warning: This declaration has the same name as another declaration.
+    --> MCEntryInterpreter.sol:2589:14:
+     |
+2589 |         for (uint256 head; head < tail; ++head) {
+     |              ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> MCEntryInterpreter.sol:500:5:
+    |
+500 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:2735:18:
+     |
+2735 |                 (bool found, uint256 target) = _findClass(p.classes, data, nameOff, nameLen);
+     |                  ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:2744:10:
+     |
+2744 |         (bool found, uint256 target) = _findClass(p.classes, data, off + 1, n - 2);
+     |          ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:2735:30:
+     |
+2735 |                 (bool found, uint256 target) = _findClass(p.classes, data, nameOff, nameLen);
+     |                              ^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:2744:22:
+     |
+2744 |         (bool found, uint256 target) = _findClass(p.classes, data, off + 1, n - 2);
+     |                      ^^^^^^^^^^^^^^
+
+
+Warning: This declaration has the same name as another declaration.
+    --> MCEntryInterpreter.sol:2906:17:
+     |
+2906 |                 uint256 head = k == KIND_LONG_TAIL ? KIND_LONG : KIND_DOUBLE;
+     |                 ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> MCEntryInterpreter.sol:500:5:
+    |
+500 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> MCEntryInterpreter.sol:6015:9:
+     |
+6015 |         uint256 head;
+     |         ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> MCEntryInterpreter.sol:500:5:
+    |
+500 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration has the same name as another declaration.
+    --> MCEntryInterpreter.sol:6312:9:
+     |
+6312 |         uint256 head;
+     |         ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> MCEntryInterpreter.sol:500:5:
+    |
+500 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:6671:13:
+     |
+6671 |             ClassInfo memory referenceClass = classes[resolved.referenceClass];
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:6690:9:
+     |
+6690 |         ClassInfo memory referenceClass = classes[resolved.referenceClass];
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration has the same name as another declaration.
+    --> MCEntryInterpreter.sol:7719:9:
+     |
+7719 |         uint256 head;
+     |         ^^^^^^^^^^^^
+Note: The other declaration is here:
+   --> MCEntryInterpreter.sol:500:5:
+    |
+500 |     function head(bytes32 instanceId) external view returns (
+    |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:7854:18:
+     |
+7854 |                 (bool found, uint256 wantedLeafClass) = _findClass(
+     |                  ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:7875:10:
+     |
+7875 |         (bool found, uint256 wantedClass) = _findClass(classes, descriptorData, nameOffset, nameLength);
+     |          ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:8004:13:
+     |
+8004 |             uint256 payloadRemaining = remaining - header - fixedSize;
+     |             ^^^^^^^^^^^^^^^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:8020:9:
+     |
+8020 |         uint256 payloadRemaining = remaining - header - fixedSize;
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9280:14:
+     |
+9280 |         for (uint256 h = 1; h <= arena.nextHandle; ++h) if (_classMirrorMatches(arena, h, name)) {
+     |              ^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9302:9:
+     |
+9302 |         uint256 h = arena.nextHandle + 1; arena.nextHandle = h;
+     |         ^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9876:13:
+     |
+9876 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9959:9:
+     |
+9959 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9892:13:
+     |
+9892 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9959:9:
+     |
+9959 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9900:13:
+     |
+9900 |             uint256 v3 = stack[sp - 3];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9962:9:
+     |
+9962 |         uint256 v3 = stack[sp - 3];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9914:13:
+     |
+9914 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9959:9:
+     |
+9959 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9923:17:
+     |
+9923 |                 uint256 v2 = stack[sp - 2];
+     |                 ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9930:13:
+     |
+9930 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9930:13:
+     |
+9930 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9959:9:
+     |
+9959 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9933:13:
+     |
+9933 |             uint256 v3 = stack[sp - 3];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9962:9:
+     |
+9962 |         uint256 v3 = stack[sp - 3];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9943:13:
+     |
+9943 |             uint256 v2 = stack[sp - 2];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9959:9:
+     |
+9959 |         uint256 v2 = stack[sp - 2];
+     |         ^^^^^^^^^^
+
+
+Warning: This declaration shadows an existing declaration.
+    --> MCEntryInterpreter.sol:9951:13:
+     |
+9951 |             uint256 v3 = stack[sp - 3];
+     |             ^^^^^^^^^^
+Note: The shadowed declaration is here:
+    --> MCEntryInterpreter.sol:9962:9:
+     |
+9962 |         uint256 v3 = stack[sp - 3];
+     |         ^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8745:24:
+     |
+8745 |         uint64 mask = (uint64(1) << shift) - 1;
+     |                        ^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8747:23:
+     |
+8747 |         uint64 half = uint64(1) << (shift - 1);
+     |                       ^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8767:27:
+     |
+8767 |             significand = magnitude << (precision - exponent - 1);
+     |                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8769:29:
+     |
+8769 |         if (significand == (uint64(1) << precision)) {
+     |                             ^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8773:32:
+     |
+8773 |         uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+     |                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8774:34:
+     |
+8774 |         uint64 sign = negative ? uint64(1) << (fractionBits + (fractionBits == 23 ? 8 : 11)) : 0;
+     |                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8775:24:
+     |
+8775 |         return sign | (uint64(exponent + bias) << fractionBits) | (significand & fractionMask);
+     |                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8783:32:
+     |
+8783 |         uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+     |                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8787:26:
+     |
+8787 |         uint64 minimum = uint64(1) << (targetBits - 1);
+     |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8799:28:
+     |
+8799 |             ? fraction : ((uint64(1) << fractionBits) | fraction);
+     |                            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8801:15:
+     |
+8801 |             ? significand << (uint256(exponent) - fractionBits)
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8819:33:
+     |
+8819 |             uint64 normalized = fraction << (52 - top);
+     |                                 ^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8853:19:
+     |
+8853 |                 : significand << (23 - top);
+     |                   ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8864:15:
+     |
+8864 |             ? significand << uint256(subnormalShift)
+     |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8873:32:
+     |
+8873 |         uint64 fractionMask = (uint64(1) << fractionBits) - 1;
+     |                                ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: The result type of the shift operation is equal to the type of the first operand (uint64) ignoring the (larger) type of the second operand (uint256) which might be unexpected. Silence this warning by either converting the first or the second operand to the type of the other.
+    --> MCEntryInterpreter.sol:8880:26:
+     |
+8880 |         uint64 signBit = uint64(1) << (exponentBits + fractionBits);
+     |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> MCEntryInterpreter.sol:3476:90:
+     |
+3476 |     function _vfsNativeBinding(ClassInfo memory c, uint256 method) private pure returns (uint8) {
+     |                                                                                          ^^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> MCEntryInterpreter.sol:5840:29:
+     |
+5840 |     ) private pure returns (uint256) {
+     |                             ^^^^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> MCEntryInterpreter.sol:7704:29:
+     |
+7704 |     ) private pure returns (bool) {
+     |                             ^^^^
+
+
+Warning: Unnamed return variable can remain unassigned. Add an explicit return with value to all non-reverting code paths or name the variable.
+    --> MCEntryInterpreter.sol:7740:29:
+     |
+7740 |     ) private pure returns (bool) {
+     |                             ^^^^
+
+
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    --> MCEntryInterpreter.sol:2833:39:
+     |
+2833 |     function _validateInitialMainRoot(Program memory p, RuntimeState memory s) private pure {
+     |                                       ^^^^^^^^^^^^^^^^
+
+
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    --> MCEntryInterpreter.sol:3899:9:
+     |
+3899 |         uint256 root,
+     |         ^^^^^^^^^^^^
+
+
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    --> MCEntryInterpreter.sol:3901:9:
+     |
+3901 |         uint256 throwableBootstrapAt,
+     |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Unused function parameter. Remove or comment out the variable name to silence this warning.
+    --> MCEntryInterpreter.sol:7561:38:
+     |
+7561 |         uint64[][] memory arrayHeap, uint256[] memory heapKinds,
+     |                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+Warning: Contract code size is 348423 bytes and exceeds 24576 bytes (a limit introduced in Spurious Dragon). This contract may not be deployable on Mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+ --> MCEntryInterpreter.sol:7:1:
+  |
+7 | contract MCEntryInterpreter {
+  | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Warning: Contract initcode size is 348451 bytes and exceeds 49152 bytes (a limit introduced in Shanghai). This contract may not be deployable on Mainnet. Consider enabling the optimizer (with a low "runs" value!), turning off revert strings, or using libraries.
+ --> MCEntryInterpreter.sol:7:1:
+  |
+7 | contract MCEntryInterpreter {
+  | ^ (Relevant source part starts here and spans across multiple lines).
+
+
+{"compiler":"0.8.30+commit.73712a01.Emscripten.clang","sourceSHA256":"d474ed002a7b6273113ff6a8b1adeec01533a6f36a87b0918bd3fa2a75f74f4e","initBytes":348451,"runtimeBytes":348423,"runtimeSHA256":"03914b83a8c060ac78a97417f1fbee5ee173538c694e374678e32aa6bc9683fb","runtimeKeccak256":"0d7f266fba7395a3c251125826d6eee3a76ae740dddddc0e163929b6cbdfbe82","abiEntries":33}

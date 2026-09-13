@@ -1,5 +1,22 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST SYSTEM PROPERTY: workerSystem704B correct real private static
+newProperties+getProperty, but empty-keyIAE proof injectedrawIAE absentfromoriginal.
+Parent appendedreserved159B IAEbootstrap65,self-contained. LOCAL384engine348423B
+SHA03914b83.../Keccak0d7f266f...,co4146B9f5a910a...,domainMC-SYSTEM-PROPERTY-PARENT1.
+Generatedmissing/repeat/nullNPE/emptyIAE withoutrawIAE+actualZI0resource/URL/set/
+loader/prior controls3156J18I q1/q7/direct3156/451/1 VOIDequal,3608canonical;
+unsupportedget/set/clear/openStream+System/IAEreplacement honest. Parent firstdriver
+source-basisassertfailure215.644610s951451648Bpreserved; finalwhole812.172270s
+957775872B.
+Original22fresh realemptytable returnsnull log4j.ignoreTCL,defaultfalse; q7head315/
+2205J22I CP14992B SHA119bebc8... root8a4a1745... machine489bef23...,
+last147115920/max150774184. q7/q1 exact MissingClasssite4107context37
+java/lang/Boolean gas101395992,noq1CP. Frame rawLoaderUtil.isIgnoreTcclPC37
+Boolean.valueOf(false),then expectedcache/booleanValue. SeeSYSTEM_PROPERTY_PARENT+
+BOOLEAN_PREPARATION: next one genuineBoolean canonicalwrapper image. LOCAL384/1B
+othercapsfixed,accepted320unchanged.NoMCbody/world/Done.
+
 LATEST MC-FIRST RESOURCE ENUMERATION: workerprototype q4096 LC0StateError7,0
 wascorrectbecausegetSystemClassLoadercalledbeforeanyrawmirrorcreatedcanonicalVMloader;
 parentreproduced,diagnostic rawmirror-first VOID266J6I static253. Worker also removed

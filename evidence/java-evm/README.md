@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest System-property parent: `minecraft-entry/parent-b6d030f95/`; real empty
+guest Properties and self-contained bootstrap IAE. Original takes null default for
+log4j.ignoreTCL and next requires Boolean.valueOf(false) at LoaderUtil PC37.
+
 Latest resource-enumeration parent: `minecraft-entry/parent-fdc55a341/`;
 real EVM ZI0 positive/absent lookup with empty/single Enumeration and URL identity.
 Original has no matching Log4j resource and next reaches System.getProperty PC3.

@@ -1,5 +1,11 @@
 # System.getProperty preflight
 
+**PARENT CORRECTION:** empty-key IAE depended on a raw test-only class absent
+from original worlds. Parent appends/reserves the159B dependency as bootstrap65,
+rebuilds without raw IAE, and reaches java/lang/Boolean in original22. See
+JAVA_EVM_MC_SYSTEM_PROPERTY_PARENT_PREFLIGHT.md.
+
+
 This unaccepted LOCAL384 preflight follows the genuine EVM-ZI0 resource lookup
 frontier. It replaces only fixed bootstrap slot 44 (`java/lang/System`) from
 `parent-fdc55a341`, preserving all 63 other bytes/order and the 64-image root.
