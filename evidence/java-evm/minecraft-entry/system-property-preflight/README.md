@@ -15,3 +15,8 @@ The empty-key branch references Java 8 `IllegalArgumentException`, which is not
 one of the fixed 64 bootstrap images.  The generated fixture provides its own
 ordinary raw Java 8 definition solely to exercise that branch; this does not
 change bootstrap count/order and its name is not a reserved bootstrap name.
+
+`artifacts/` contains the reproducibly built engine/coordinator/ABI and generated
+classes (never a Go executable). `results/` contains compressed generated-only
+full receipts and checkpoints, with no LevelDB state, plus `SHA256SUMS`. The
+process-tree monitor records the bounded property-control gate separately.
