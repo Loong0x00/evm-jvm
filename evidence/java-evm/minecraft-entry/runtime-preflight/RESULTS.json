@@ -1,0 +1,19 @@
+{
+  "status": "COPY-only candidate; unaccepted",
+  "compiler": "solc 0.8.30+commit.73712a01, optimizer=200, viaIR, Cancun, metadata off",
+  "engine": {"runtimeBytes": 296529, "runtimeKeccak256": "9d4fdaec87e8e21f243f4cc994da134646311f02cc0141da649085e2c5ada61c"},
+  "coordinator": {"runtimeBytes": 3547, "runtimeKeccak256": "1d08028ae55a3a43471cdc417ba48ba7900ba70b29398d2e15ef58d6044df694"},
+  "opaqueZipSmoke": {
+    "q1Positive": {"epochs":319,"outcome":"VOID","gas":1926898801,"maxPublicGas":6372927,"di0Reads":638},
+    "q7Positive": {"epochs":46,"outcome":"VOID","gas":304090803,"maxPublicGas":6492252,"di0Reads":92},
+    "q1ArgsNullRebind": {"epochs":7,"outcome":"VOID","gas":51217087,"maxPublicGas":5768251},
+    "q7ArgsNullRebind": {"epochs":1,"outcome":"VOID","gas":18051658,"maxPublicGas":5002417},
+    "q1ArgsNewArrayRebind": {"epochs":24,"outcome":"VOID","gas":154601487,"maxPublicGas":6060730},
+    "q7ArgsNewArrayRebind": {"epochs":4,"outcome":"VOID","gas":39471021,"maxPublicGas":6451679},
+    "q1TypedRuntimeException": {"epochs":19,"outcome":"JAVA_EXCEPTION","class":"java/lang/RuntimeException","gas":125880365,"maxPublicGas":6390098},
+    "q7TypedRuntimeException": {"epochs":3,"outcome":"JAVA_EXCEPTION","class":"java/lang/RuntimeException","gas":30954993,"maxPublicGas":6530996},
+    "q1RunnableInvokeinterface": {"epochs":14,"outcome":"VOID","gas":103505700,"maxPublicGas":6049980,"di0Reads":28},
+    "q7RunnableInvokeinterface": {"epochs":2,"outcome":"VOID","gas":32868912,"maxPublicGas":6372612,"di0Reads":4}
+  },
+  "missingInterface": {"selector":"0x555db429","site":4098,"context":0,"name":"missing/Nope","gas":2697925,"rootUnchanged":true,"di0ReadBytes":[243]}
+}

@@ -1,0 +1,1156 @@
+// Disposable MC-ENTRY transport preflight. It owns a normal StateDB/trie/LevelDB world and only public EVM execution APIs; it never accesses a private session or injects pages.
+package main
+
+import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/binary"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io/fs"
+	"math/big"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/tracing"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/core/vm"
+	evmrun "github.com/ethereum/go-ethereum/core/vm/runtime"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethdb"
+	"github.com/ethereum/go-ethereum/ethdb/leveldb"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/di0"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/triedb"
+)
+
+const ordinaryGas = uint64(100_000_000)
+const format = "MC-ENTRY-PREFLIGHT-1"
+const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
+
+// The constructor owner is deliberately separate from the required fixed LOCAL
+// engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
+var owner = common.HexToAddress("0x4d43454e545259454e47494e4500000000000002")
+var other = common.HexToAddress("0x4d43454e545259454e47494e4500000000000003")
+var engine = common.HexToAddress("0x4d43454e545259454e47494e4500000000000001")
+var packageDomain = crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/package/v1"))
+var resourceDomain = crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/resource/v1"))
+var readSelector = crypto.Keccak256([]byte("read(uint32,uint32)"))[:4]
+
+type artifact struct {
+	ABI          json.RawMessage        `json:"abi"`
+	Bytecode     string                 `json:"bytecode"`
+	Deployed     string                 `json:"deployedBytecode"`
+	Compiler     interface{}            `json:"compiler"`
+	Settings     map[string]interface{} `json:"settings"`
+	SourceSHA    string                 `json:"sourceSHA256"`
+	InitBytes    int                    `json:"initBytes"`
+	RuntimeBytes int                    `json:"runtimeBytes"`
+	InitSHA      string                 `json:"initSHA256"`
+	RuntimeSHA   string                 `json:"runtimeSHA256"`
+}
+type durable interface {
+	ethdb.Database
+	SyncKeyValue() error
+}
+type counters struct {
+	EVMCalls                 uint64   `json:"evmCalls"`
+	Creates                  uint64   `json:"ordinaryCreates"`
+	Mutations                uint64   `json:"successfulEvmMutations"`
+	Commits                  uint64   `json:"commitReloads"`
+	TrieCodeSyncs            uint64   `json:"trieCodeSyncs"`
+	ManifestFileSyncs        uint64   `json:"manifestFileSyncs"`
+	ManifestRenames          uint64   `json:"manifestRenames"`
+	DirectorySyncs           uint64   `json:"directorySyncs"`
+	CheckpointFileSyncs      uint64   `json:"checkpointFileSyncs"`
+	CheckpointRenames        uint64   `json:"checkpointRenames"`
+	CheckpointDirectorySyncs uint64   `json:"checkpointDirectorySyncs"`
+	NestedFrames             uint64   `json:"actualNestedFrames"`
+	NestedCreateOpcodes      uint64   `json:"actualNestedCreateOpcodes"`
+	SstoreOpcodes            uint64   `json:"actualSstoreOpcodes"`
+	Gas                      uint64   `json:"gas"`
+	MaxGas                   uint64   `json:"maxGas"`
+	ReadSizes                []uint32 `json:"actualDI0ReadSizes"`
+	MaxCallMS                int64    `json:"maxCallMs"`
+	CommitMS                 int64    `json:"commitMs"`
+}
+type manifest struct {
+	Format          string           `json:"format"`
+	Context         string           `json:"context"`
+	Root            common.Hash      `json:"trieRoot"`
+	Owner           common.Address   `json:"owner"`
+	Engine          common.Address   `json:"engine"`
+	EngineCode      common.Hash      `json:"engineCodeHash"`
+	EngineNonce     uint64           `json:"engineNonce"`
+	Store           common.Address   `json:"store"`
+	Index           common.Address   `json:"index"`
+	IndexRoot       common.Hash      `json:"indexRoot"`
+	Decoders        []common.Address `json:"decoders"`
+	Names           [][]byte         `json:"rawNames"`
+	ResourceRoots   []common.Hash    `json:"resourceRoots"`
+	Sizes           []uint32         `json:"classSizes"`
+	Coordinator     common.Address   `json:"coordinator"`
+	CoordinatorCode common.Hash      `json:"coordinatorCodeHash"`
+	PackageRoot     common.Hash      `json:"packageRoot"`
+	Instance        common.Hash      `json:"instanceId"`
+	Total           uint32           `json:"totalClassBytes"`
+	Stage           string           `json:"stage"`
+	Quantum         uint64           `json:"quantum"`
+	Slices          uint32           `json:"slices"`
+	Epoch           uint64           `json:"epoch"`
+	CheckpointRoot  common.Hash      `json:"checkpointRoot"`
+	CheckpointSHA   string           `json:"checkpointSHA256,omitempty"`
+	Lifecycle       uint8            `json:"lifecycle"`
+	Result          int32            `json:"result"`
+	MachineRoot     common.Hash      `json:"machineRoot"`
+	VFSRoot         common.Hash      `json:"vfsRoot"`
+	JVM             uint64           `json:"jvmSteps"`
+	Internal        uint64           `json:"internalSteps"`
+	Outcome         uint8            `json:"outcome"`
+	JavaKind        uint8            `json:"javaKind"`
+	JavaClass       []byte           `json:"javaClass"`
+	Counters        counters         `json:"counters"`
+	ProcessPIDs     []int            `json:"processPids"`
+	StartedUTC      string           `json:"startedUTC"`
+	UpdatedUTC      string           `json:"updatedUTC"`
+}
+
+var memoryMode bool
+
+type env struct {
+	disk            durable
+	trie            *triedb.Database
+	st              *state.StateDB
+	root            common.Hash
+	dir             string
+	m               manifest
+	initialCounters counters
+	initialRoot     common.Hash
+	poison          error
+}
+type callTrace struct {
+	Nested        uint64
+	Reads         []uint32
+	SSTORE        uint64
+	CREATE        uint64
+	Reader        common.Address
+	ChangedWrites uint64
+	NestedOOG     bool
+}
+type callResult struct {
+	Out   []byte
+	Gas   uint64
+	Err   error
+	Trace callTrace
+}
+type slice struct {
+	Schema                uint32      `json:"schema"`
+	Lifecycle             uint8       `json:"lifecycle"`
+	Outcome               uint8       `json:"outcome"`
+	Epoch                 uint64      `json:"epoch"`
+	CheckpointRoot        common.Hash `json:"checkpointRoot"`
+	MachineStateRoot      common.Hash `json:"machineStateRoot"`
+	TotalJvmSteps         uint64      `json:"totalJvmSteps"`
+	TotalInternalSteps    uint64      `json:"totalInternalSteps"`
+	ExecutedJvmSteps      uint64      `json:"executedJvmSteps"`
+	ExecutedInternalSteps uint32      `json:"executedInternalSteps"`
+	Result                int32       `json:"result"`
+	JavaKind              uint8       `json:"javaKind"`
+	JavaRef               uint32      `json:"javaRef"`
+	JavaClass             []byte      `json:"javaClass"`
+	VFSStateRoot          common.Hash `json:"vfsStateRoot"`
+	InodeCount            uint32      `json:"inodeCount"`
+	DescriptorCount       uint32      `json:"descriptorCount"`
+	LogicalFileBytes      uint64      `json:"logicalFileBytes"`
+}
+type decoded struct {
+	Slice      slice
+	Checkpoint []byte
+}
+type failure struct {
+	Label                      string      `json:"label"`
+	Selector                   string      `json:"selector"`
+	Name                       string      `json:"name"`
+	Code                       uint64      `json:"code,omitempty"`
+	Gas                        uint64      `json:"gas"`
+	RootBefore                 common.Hash `json:"rootBefore"`
+	RootBeforeHostRestore      common.Hash `json:"rootBeforeHostRestore"`
+	RootEqualBeforeHostRestore bool        `json:"rootEqualBeforeHostRestore"`
+	CreateOpcodes              uint64      `json:"createOpcodes,omitempty"`
+	SstoreOpcodes              uint64      `json:"sstoreOpcodes,omitempty"`
+	Detail                     string      `json:"detail,omitempty"`
+}
+type boundaryReport struct {
+	BaseCommit   string                   `json:"baseCommit"`
+	Counts       map[string]interface{}   `json:"counts"`
+	Constructors []map[string]interface{} `json:"constructors"`
+	Failures     []failure                `json:"failures"`
+	Paging       map[string]interface{}   `json:"paging"`
+	Pins         map[string]interface{}   `json:"pins"`
+	Counters     counters                 `json:"counters"`
+	Root         common.Hash              `json:"trieRoot"`
+	DiskBytes    int64                    `json:"diskBytes"`
+	PID          int                      `json:"pid"`
+}
+
+func must(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+func sha(b []byte) string { x := sha256.Sum256(b); return hex.EncodeToString(x[:]) }
+func abiPack(ts []string, v ...interface{}) []byte {
+	var a abi.Arguments
+	for _, s := range ts {
+		t, e := abi.NewType(s, "", nil)
+		must(e)
+		a = append(a, abi.Argument{Type: t})
+	}
+	b, e := a.Pack(v...)
+	must(e)
+	return b
+}
+func cfg(st *state.StateDB, from common.Address, gas uint64, tr *callTrace) *evmrun.Config {
+	z := common.Hash{}
+	hooks := &tracing.Hooks{}
+	if tr != nil {
+		hooks.OnEnter = func(depth int, typ byte, from, to common.Address, input []byte, gas uint64, value *big.Int) {
+			if depth > 0 {
+				tr.Nested++
+			}
+			if tr.Reader != (common.Address{}) && from == tr.Reader && len(input) >= 68 && bytes.Equal(input[:4], readSelector) {
+				tr.Reads = append(tr.Reads, binary.BigEndian.Uint32(input[64:68]))
+			}
+		}
+		var pending bool
+		var writeAddr common.Address
+		var writeKey, writeOld, writeNew common.Hash
+		hooks.OnExit = func(_ int, _ []byte, _ uint64, err error, _ bool) {
+			if errors.Is(err, vm.ErrOutOfGas) {
+				tr.NestedOOG = true
+			}
+		}
+		hooks.OnOpcode = func(pc uint64, op byte, gas, cost uint64, scope tracing.OpContext, rdata []byte, depth int, err error) {
+			if pending {
+				if writeOld != writeNew && st.GetState(writeAddr, writeKey) == writeNew {
+					tr.ChangedWrites++
+				}
+				pending = false
+			}
+			if op == byte(vm.SSTORE) {
+				tr.SSTORE++
+				stack := scope.StackData()
+				if err == nil && len(stack) >= 2 {
+					writeAddr = scope.Address()
+					writeKey = common.Hash(stack[len(stack)-1].Bytes32())
+					writeOld = st.GetState(writeAddr, writeKey)
+					writeNew = common.Hash(stack[len(stack)-2].Bytes32())
+					pending = true
+				}
+			}
+			if op == byte(vm.CREATE) || op == byte(vm.CREATE2) {
+				tr.CREATE++
+			}
+		}
+	}
+	return &evmrun.Config{ChainConfig: params.AllDevChainProtocolChanges, Difficulty: new(big.Int), Origin: from, Coinbase: common.Address{}, BlockNumber: big.NewInt(1), Time: 1, GasLimit: gas, GasPrice: new(big.Int), Value: new(big.Int), BaseFee: new(big.Int).SetUint64(params.InitialBaseFee), BlobBaseFee: new(big.Int).SetUint64(params.BlobTxMinBlobGasprice), Random: &z, State: st, GetHashFn: func(uint64) common.Hash { return common.Hash{} }, EVMConfig: vm.Config{Tracer: hooks}}
+}
+func newEnv(dir string) (*env, error) {
+	if err := os.MkdirAll(filepath.Join(dir, "state"), 0700); err != nil {
+		return nil, err
+	}
+	marker, err := os.OpenFile(filepath.Join(dir, "STORE-FORMAT"), os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	if err != nil {
+		return nil, err
+	}
+	if _, err = marker.Write([]byte(format + "\n")); err == nil {
+		err = marker.Sync()
+	}
+	if closeErr := marker.Close(); err == nil {
+		err = closeErr
+	}
+	if err != nil {
+		return nil, err
+	}
+	if err = syncDir(dir); err != nil {
+		return nil, err
+	}
+	var d durable
+	if memoryMode {
+		d = rawdb.NewMemoryDatabase()
+	} else {
+		kv, err := leveldb.New(filepath.Join(dir, "state"), 16, 16, "mr0-repair-preflight", false)
+		if err != nil {
+			return nil, err
+		}
+		d = rawdb.NewDatabase(kv)
+	}
+	t := triedb.NewDatabase(d, triedb.HashDefaults)
+	st, e := state.New(types.EmptyRootHash, state.NewDatabase(t, nil))
+	if e != nil {
+		return nil, e
+	}
+	x := &env{d, t, st, types.EmptyRootHash, dir, manifest{Format: format, Context: context, Root: types.EmptyRootHash, Owner: owner, Engine: engine, StartedUTC: time.Now().UTC().Format(time.RFC3339)}, counters{}, types.EmptyRootHash, nil}
+	return x, nil
+}
+func readManifest(dir string) (manifest, error) {
+	var m manifest
+	b, e := os.ReadFile(filepath.Join(dir, "durable-head.json"))
+	if e != nil {
+		return m, e
+	}
+	e = json.Unmarshal(b, &m)
+	return m, e
+}
+func openEnv(dir string) (*env, error) {
+	m, e := readManifest(dir)
+	if e != nil {
+		return nil, e
+	}
+	marker, me := os.ReadFile(filepath.Join(dir, "STORE-FORMAT"))
+	if me != nil || string(marker) != format+"\n" || m.Format != format || m.Context != context || m.Owner != owner || m.Engine != engine || m.Root == (common.Hash{}) || m.Root == types.EmptyRootHash || m.EngineNonce != 0 || m.EngineCode != engineHash || len(m.Decoders) != len(m.Names) || len(m.Decoders) != len(m.ResourceRoots) || len(m.Decoders) != len(m.Sizes) {
+		return nil, errors.New("manifest binding")
+	}
+	kv, e := leveldb.New(filepath.Join(dir, "state"), 16, 16, "mr0-repair-preflight", false)
+	if e != nil {
+		return nil, e
+	}
+	d := rawdb.NewDatabase(kv)
+	t := triedb.NewDatabase(d, triedb.HashDefaults)
+	st, e := state.New(m.Root, state.NewDatabase(t, nil))
+	if e != nil {
+		return nil, e
+	}
+	// Readability does NOT prove a directory fsync. Count only actual operations
+	// within each process, never synthesize increments while reopening.
+	x := &env{d, t, st, m.Root, dir, m, m.Counters, m.Root, nil}
+	if st.GetCodeHash(engine) != m.EngineCode || st.GetNonce(engine) != m.EngineNonce {
+		return nil, errors.New("engine anchor mismatch")
+	}
+	if m.Store != (common.Address{}) && st.GetCodeHash(m.Store) != common.HexToHash("0xc8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896") {
+		return nil, errors.New("AS0 anchor mismatch")
+	}
+	if m.Index != (common.Address{}) && st.GetCodeHash(m.Index) != common.HexToHash("0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77") {
+		return nil, errors.New("ZI0 anchor mismatch")
+	}
+	if m.Coordinator != (common.Address{}) && st.GetCodeHash(m.Coordinator) != m.CoordinatorCode {
+		return nil, errors.New("coordinator anchor mismatch")
+	}
+	for i, d := range m.Decoders {
+		if st.GetCodeHash(d) != common.HexToHash("0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37") || len(m.Names[i]) == 0 {
+			return nil, errors.New("decoder anchor mismatch")
+		}
+	}
+	m.ProcessPIDs = append(m.ProcessPIDs, os.Getpid())
+	x.m = m
+	return x, nil
+}
+func (e *env) close() {
+	writeJSON(filepath.Join(e.dir, fmt.Sprintf("process-%d.json", os.Getpid())), map[string]interface{}{"pid": os.Getpid(), "initialRoot": e.initialRoot, "finalRoot": e.root, "initialCounters": e.initialCounters, "finalCounters": e.m.Counters, "poisoned": e.poison != nil, "memoryDB": memoryMode})
+	e.trie.Close()
+	e.disk.Close()
+}
+func syncDir(dir string) error {
+	d, x := os.Open(dir)
+	if x != nil {
+		return x
+	}
+	defer d.Close()
+	return d.Sync()
+}
+func (e *env) reload(r common.Hash) error {
+	st, x := state.New(r, state.NewDatabase(e.trie, nil))
+	if x == nil {
+		e.st = st
+		e.root = r
+	}
+	return x
+}
+
+var errRenamed = errors.New("manifest renamed; reopen required")
+
+func (e *env) writeManifest() error {
+	e.m.Root = e.root
+	e.m.UpdatedUTC = time.Now().UTC().Format(time.RFC3339)
+	b, x := json.MarshalIndent(e.m, "", "  ")
+	if x != nil {
+		return x
+	}
+	f, x := os.CreateTemp(e.dir, ".head-")
+	if x != nil {
+		return x
+	}
+	name := f.Name()
+	if _, x = f.Write(append(b, '\n')); x == nil {
+		x = f.Sync()
+		if x == nil {
+			e.m.Counters.ManifestFileSyncs++
+		}
+	}
+	if ce := f.Close(); x == nil {
+		x = ce
+	}
+	if x != nil {
+		return x
+	}
+	if x = os.Rename(name, filepath.Join(e.dir, "durable-head.json")); x != nil {
+		return x
+	}
+	e.m.Counters.ManifestRenames++
+	if x = syncDir(e.dir); x != nil {
+		return fmt.Errorf("%w: %v", errRenamed, x)
+	}
+	e.m.Counters.DirectorySyncs++
+	return nil
+}
+func (e *env) persist(old common.Hash, fail bool) error {
+	start := time.Now()
+	previous, previousErr := readManifest(e.dir)
+	restore := func() {
+		stats, pids := e.m.Counters, e.m.ProcessPIDs
+		if previousErr == nil {
+			e.m = previous
+			e.m.Counters = stats
+			e.m.ProcessPIDs = pids
+		}
+		if x := e.reload(old); x != nil {
+			e.poison = x
+		}
+	}
+	r, x := e.st.Commit(1, true, true)
+	if x == nil {
+		x = e.trie.Commit(r, false)
+	}
+	if x == nil {
+		x = e.disk.SyncKeyValue()
+		if x == nil {
+			e.m.Counters.TrieCodeSyncs++
+		}
+	}
+	if x != nil {
+		restore()
+		return x
+	}
+	if fail {
+		restore()
+		return errors.New("injected after actual trie+code sync before manifest publication")
+	}
+	e.root = r
+	if x = e.writeManifest(); x != nil {
+		if errors.Is(x, errRenamed) {
+			e.poison = x
+		} else {
+			restore()
+		}
+		return x
+	}
+	if x = e.reload(r); x != nil {
+		e.poison = x
+		return x
+	}
+	e.m.Counters.Commits++
+	e.m.Counters.CommitMS += time.Since(start).Milliseconds()
+	return nil
+}
+func diskSize(dir string) int64 {
+	var n int64
+	filepath.WalkDir(dir, func(p string, d fs.DirEntry, e error) error {
+		if e == nil && !d.IsDir() {
+			if q, x := d.Info(); x == nil {
+				n += q.Size()
+			}
+		}
+		return nil
+	})
+	return n
+}
+func (e *env) observeCall(r callResult) {
+	e.m.Counters.EVMCalls++
+	e.m.Counters.NestedCreateOpcodes += r.Trace.CREATE
+	e.m.Counters.SstoreOpcodes += r.Trace.SSTORE
+	e.m.Counters.Gas += r.Gas
+	if r.Gas > e.m.Counters.MaxGas {
+		e.m.Counters.MaxGas = r.Gas
+	}
+	e.m.Counters.NestedFrames += r.Trace.Nested
+	e.m.Counters.ReadSizes = append(e.m.Counters.ReadSizes, r.Trace.Reads...)
+
+}
+func (e *env) recordCall(r callResult, mutation bool) {
+	if mutation && r.Err == nil {
+		e.m.Counters.Mutations++
+	}
+}
+func (e *env) call(from, to common.Address, data []byte, gas uint64) callResult {
+	if e.poison != nil {
+		return callResult{Err: e.poison}
+	}
+	tr := callTrace{Reader: e.m.Coordinator}
+	s := time.Now()
+	out, left, x := evmrun.Call(to, data, cfg(e.st, from, gas, &tr))
+	ms := time.Since(s).Milliseconds()
+	if ms > e.m.Counters.MaxCallMS {
+		e.m.Counters.MaxCallMS = ms
+	}
+	r := callResult{append([]byte(nil), out...), gas - left, x, tr}
+	e.observeCall(r)
+	return r
+}
+func (e *env) create(from common.Address, code []byte, gas uint64) (common.Address, []byte, callResult) {
+	var tr callTrace
+	s := time.Now()
+	out, a, left, x := evmrun.Create(code, cfg(e.st, from, gas, &tr))
+	ms := time.Since(s).Milliseconds()
+	if ms > e.m.Counters.MaxCallMS {
+		e.m.Counters.MaxCallMS = ms
+	}
+	r := callResult{append([]byte(nil), out...), gas - left, x, tr}
+	e.observeCall(r)
+	return a, out, r
+}
+func commitCall(e *env, r callResult) error {
+	e.recordCall(r, true)
+	if r.Err != nil {
+		return r.Err
+	}
+	old := e.root
+	return e.persist(old, false)
+}
+func view(e *env, a abi.ABI, to common.Address, name string, args ...interface{}) []interface{} {
+	d, x := a.Pack(name, args...)
+	must(x)
+	r := e.call(owner, to, d, ordinaryGas)
+	e.recordCall(r, false)
+	if r.Err != nil {
+		panic(fmt.Sprintf("view %s %v 0x%x", name, r.Err, r.Out))
+	}
+	v, x := a.Unpack(name, r.Out)
+	must(x)
+	return v
+}
+func mutate(e *env, a abi.ABI, to common.Address, name string, args ...interface{}) callResult {
+	d, x := a.Pack(name, args...)
+	must(x)
+	r := e.call(owner, to, d, ordinaryGas)
+	if r.Err == nil {
+		x = commitCall(e, r)
+	} else {
+		e.recordCall(r, false)
+	}
+	if x != nil {
+		r.Err = x
+		r.Out = nil
+	}
+	return r
+}
+func pageCommit(at common.Address, i uint32, raw []byte) common.Hash {
+	return crypto.Keccak256Hash(abiPack([]string{"bytes32", "address", "uint32", "uint32", "bytes32"}, crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), at, i, uint32(len(raw)), crypto.Keccak256Hash(raw)))
+}
+func loadCoord(path string) (artifact, abi.ABI, []byte, []byte) {
+	b, e := os.ReadFile(path)
+	must(e)
+	var raw struct {
+		ABI          json.RawMessage   `json:"abi"`
+		Bytecode     string            `json:"bytecode"`
+		Deployed     string            `json:"deployedBytecode"`
+		Compiler     interface{}       `json:"compiler"`
+		SourceHashes map[string]string `json:"sourceHashes"`
+		CodeHashes   struct {
+			InitSHA    string `json:"initSHA256"`
+			RuntimeSHA string `json:"runtimeSHA256"`
+		} `json:"codeHashes"`
+	}
+	must(json.Unmarshal(b, &raw))
+	ca, e := abi.JSON(bytes.NewReader(raw.ABI))
+	must(e)
+	init, e := hex.DecodeString(strings.TrimPrefix(raw.Bytecode, "0x"))
+	must(e)
+	run, e := hex.DecodeString(strings.TrimPrefix(raw.Deployed, "0x"))
+	must(e)
+	a := artifact{ABI: raw.ABI, Bytecode: raw.Bytecode, Deployed: raw.Deployed, Compiler: raw.Compiler, SourceSHA: raw.SourceHashes[filepath.Base(path[:len(path)-len(filepath.Ext(path))]+".sol")], InitBytes: len(init), RuntimeBytes: len(run), InitSHA: raw.CodeHashes.InitSHA, RuntimeSHA: raw.CodeHashes.RuntimeSHA}
+	return a, ca, init, run
+}
+
+var engineABI abi.ABI
+var engineRun []byte
+var engineHash common.Hash
+
+func installEngine(e *env) {
+	if len(engineRun) == 0 || len(engineRun) > 320*1024 || crypto.Keccak256Hash(engineRun) != engineHash {
+		panic("MC-ENTRY engine pin")
+	}
+	e.st.CreateAccount(engine)
+	e.st.SetCode(engine, engineRun, tracing.CodeChangeUnspecified)
+	e.m.EngineCode = crypto.Keccak256Hash(engineRun)
+	e.m.EngineNonce = e.st.GetNonce(engine)
+	e.m.Stage = "local-engine-install"
+	old := e.root
+	must(e.persist(old, false))
+	if e.m.EngineNonce != 0 {
+		panic("unexpected engine nonce")
+	}
+}
+
+func deployArchive(e *env, raw []byte) (common.Address, abi.ABI) {
+	a, x := as0.ABI()
+	must(x)
+	init, x := as0.InitCode()
+	must(x)
+	run, x := as0.Runtime()
+	must(x)
+	args, x := a.Pack("", uint32(len(raw)))
+	must(x)
+	at, out, r := e.create(owner, append(init, args...), ordinaryGas)
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	if !bytes.Equal(out, run) || !bytes.Equal(e.st.GetCode(at), run) {
+		panic("AS0 runtime")
+	}
+	e.m.Store = at
+	e.m.Counters.Creates++
+	must(commitCall(e, r))
+	for off, i := 0, uint32(0); off < len(raw); i++ {
+		n := 8192
+		if len(raw)-off < n {
+			n = len(raw) - off
+		}
+		p := raw[off : off+n]
+		if off == 0 {
+			d, _ := a.Pack("append", uint32(off), p, common.Hash{})
+			before := e.st.Copy().IntermediateRoot(true)
+			bad := e.call(owner, at, d, ordinaryGas)
+			after := e.st.Copy().IntermediateRoot(true)
+			e.recordCall(bad, false)
+			f := failureFrom("as0-post-create-wrong-pi", a, bad, before, after)
+			f.Detail = "CREATE observed before AS0Error(8); comparison is before any host restore"
+			writeJSON(filepath.Join(e.dir, "direct-evm-failure.json"), f)
+			if bad.Err == nil || bad.Trace.CREATE == 0 || before != after {
+				panic("direct rollback probe")
+			}
+		}
+		r := mutate(e, a, at, "append", uint32(off), p, pageCommit(at, i, p))
+		if r.Err != nil {
+			panic(fmt.Sprintf("append: %v 0x%x", r.Err, r.Out))
+		}
+		off += n
+	}
+	chain := view(e, a, at, "chainCommitment")[0].([32]byte)
+	r = mutate(e, a, at, "seal", uint32(len(raw)), chain)
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	return at, a
+}
+func deployIndex(e *env, store common.Address, content common.Hash) (common.Address, abi.ABI, common.Hash) {
+	a, x := zi0.ABI()
+	must(x)
+	init, x := zi0.InitCode()
+	must(x)
+	run, x := zi0.Runtime()
+	must(x)
+	args, x := a.Pack("", store, [32]byte(content))
+	must(x)
+	at, out, r := e.create(owner, append(init, args...), ordinaryGas)
+	if r.Err != nil {
+		panic(fmt.Sprintf("index create %v 0x%x", r.Err, r.Out))
+	}
+	if !bytes.Equal(out, run) {
+		panic("ZI runtime")
+	}
+	e.m.Index = at
+	e.m.Counters.Creates++
+	must(commitCall(e, r))
+	r = mutate(e, a, at, "discover")
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	for {
+		next := view(e, a, at, "nextEntry")[0].(uint32)
+		count := view(e, a, at, "count")[0].(uint32)
+		if next == count {
+			break
+		}
+		cursor := view(e, a, at, "cdCursor")[0].(uint32)
+		rolling := view(e, a, at, "rolling")[0].([32]byte)
+		units := uint16(64)
+		if count-next < uint32(units) {
+			units = uint16(count - next)
+		}
+		r = mutate(e, a, at, "scan", next, cursor, rolling, units)
+		if r.Err != nil {
+			panic(r.Err)
+		}
+	}
+	count := view(e, a, at, "count")[0].(uint32)
+	cursor := view(e, a, at, "cdCursor")[0].(uint32)
+	rolling := view(e, a, at, "rolling")[0].([32]byte)
+	r = mutate(e, a, at, "finish", count, cursor, rolling)
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	root := common.Hash(view(e, a, at, "finalRoot")[0].([32]byte))
+	e.m.IndexRoot = root
+	return at, a, root
+}
+func createDecoder(e *env, index common.Address, indexRoot common.Hash, name []byte, finish bool) (common.Address, common.Hash, uint32) {
+	a, x := di0.ABI()
+	must(x)
+	init, x := di0.InitCode()
+	must(x)
+	run, x := di0.Runtime()
+	must(x)
+	args, x := a.Pack("", index, [32]byte(indexRoot), name)
+	must(x)
+	at, out, r := e.create(owner, append(init, args...), ordinaryGas)
+	if r.Err != nil {
+		panic(fmt.Sprintf("DI create %s %v 0x%x", name, r.Err, r.Out))
+	}
+	if !bytes.Equal(out, run) {
+		panic("DI runtime")
+	}
+	e.m.Counters.Creates++
+	must(commitCall(e, r))
+	size := view(e, a, at, "plainSize")[0].(uint32)
+	if !finish {
+		return at, common.Hash{}, size
+	}
+	for view(e, a, at, "phase")[0].(uint8) == 1 {
+		work := view(e, a, at, "work")[0].(uint32)
+		r = mutate(e, a, at, "step", work, uint16(128))
+		if r.Err != nil {
+			panic(fmt.Sprintf("step %s %v 0x%x", name, r.Err, r.Out))
+		}
+	}
+	for view(e, a, at, "phase")[0].(uint8) != 4 {
+		page := view(e, a, at, "publishedPages")[0].(uint8)
+		roll := view(e, a, at, "publicationRolling")[0].([32]byte)
+		r = mutate(e, a, at, "publish", page, roll, uint8(1))
+		if r.Err != nil {
+			panic(fmt.Sprintf("publish %s %v 0x%x", name, r.Err, r.Out))
+		}
+	}
+	root := common.Hash(view(e, a, at, "finalRoot")[0].([32]byte))
+	return at, root, size
+}
+func packageRoot(coord common.Address, decs []common.Address, names [][]byte, index common.Address, indexRoot common.Hash, roots []common.Hash, sizes []uint32) common.Hash {
+	diHash := common.HexToHash("0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37")
+	ziHash := common.HexToHash("0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77")
+	enginePin := engineHash
+	rolling := crypto.Keccak256Hash(abiPack([]string{"bytes32", "address", "address", "address", "bytes32", "bytes32", "bytes32", "uint8"}, packageDomain, coord, owner, engine, enginePin, diHash, ziHash, uint8(len(decs))))
+	var total uint32
+	for i := range decs {
+		total += sizes[i]
+		rolling = crypto.Keccak256Hash(abiPack([]string{"bytes32", "bytes32", "uint8", "address", "bytes32", "bytes32", "bytes32", "uint32"}, resourceDomain, rolling, uint8(i), decs[i], crypto.Keccak256Hash(names[i]), indexRoot, roots[i], sizes[i]))
+	}
+	return crypto.Keccak256Hash(abiPack([]string{"bytes32", "bytes32", "uint32", "address", "bytes32"}, packageDomain, rolling, total, index, indexRoot))
+}
+func deployCoordinator(e *env, art artifact, a abi.ABI, init, run []byte, decs []common.Address, names [][]byte, roots []common.Hash, sizes []uint32, assertOverride *common.Hash, from common.Address) (common.Address, common.Hash, callResult) {
+	pred := crypto.CreateAddress(from, e.st.GetNonce(from))
+	p := packageRoot(pred, decs, names, e.m.Index, e.m.IndexRoot, roots, sizes)
+	assert := p
+	if assertOverride != nil {
+		assert = *assertOverride
+	}
+	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
+	must(x)
+	if len(init)+len(args) > 49152 {
+		panic(fmt.Sprintf("complete init %d", len(init)+len(args)))
+	}
+	at, out, r := e.create(from, append(init, args...), ordinaryGas)
+	if r.Err == nil {
+		if at != pred || !bytes.Equal(out, run) {
+			panic("coordinator runtime")
+		}
+		e.m.Coordinator = at
+		e.m.CoordinatorCode = crypto.Keccak256Hash(run)
+		e.m.PackageRoot = p
+		e.m.Instance = common.Hash(view(e, a, at, "instanceId")[0].([32]byte))
+		e.m.Total = view(e, a, at, "totalClassBytes")[0].(uint32)
+		e.m.Counters.Creates++
+		e.recordCall(r, true)
+		old := e.root
+		must(e.persist(old, false))
+	}
+	return at, p, r
+}
+func repeatHash(h common.Hash, n int) []common.Hash {
+	x := make([]common.Hash, n)
+	for i := range x {
+		x[i] = h
+	}
+	return x
+}
+func setupResources(e *env, raw []byte, names [][]byte, finishLast bool) (artifact, abi.ABI, []byte, []byte) {
+	store, aa := deployArchive(e, raw)
+	content := common.Hash(view(e, aa, store, "contentCommitment")[0].([32]byte))
+	index, _, ir := deployIndex(e, store, content)
+	var ds []common.Address
+	var roots []common.Hash
+	var sizes []uint32
+	for i, n := range names {
+		finish := true
+		if !finishLast && i == len(names)-1 {
+			finish = false
+		}
+		d, r, s := createDecoder(e, index, ir, n, finish)
+		ds = append(ds, d)
+		roots = append(roots, r)
+		sizes = append(sizes, s)
+	}
+	e.m.Decoders = ds
+	e.m.Names = names
+	e.m.ResourceRoots = roots
+	e.m.Sizes = sizes
+	return artifact{}, abi.ABI{}, nil, nil
+}
+func loadArtifact(path string) (artifact, abi.ABI, []byte, []byte) { return loadCoord(path) }
+func decodeCoordinator(vabi abi.ABI, ca abi.ABI, method string, out []byte) (decoded, error) {
+	vals, x := ca.Unpack(method, out)
+	if x != nil || len(vals) != 1 {
+		return decoded{}, fmt.Errorf("coordinator unpack: %v", x)
+	}
+	engineOut := vals[0].([]byte)
+	var d decoded
+	if method == "startMain" {
+		var q struct {
+			Result     slice
+			Checkpoint []byte
+		}
+		x = vabi.UnpackIntoInterface(&q, "startMain", engineOut)
+		d = decoded{q.Result, q.Checkpoint}
+	} else {
+		var q struct {
+			Result          slice
+			ChildCheckpoint []byte
+		}
+		x = vabi.UnpackIntoInterface(&q, "resumeMain", engineOut)
+		d = decoded{q.Result, q.ChildCheckpoint}
+	}
+	return d, x
+}
+func checkpointPath(dir, digest string) string {
+	return filepath.Join(dir, "checkpoints", digest+".bin")
+}
+func writeCheckpoint(e *env, b []byte) string {
+	if len(b) > 1<<20 {
+		panic("checkpoint cap")
+	}
+	digest := sha(b)
+	base := filepath.Join(e.dir, "checkpoints")
+	must(os.MkdirAll(base, 0700))
+	final := checkpointPath(e.dir, digest)
+	if old, err := os.ReadFile(final); err == nil {
+		if !bytes.Equal(old, b) {
+			panic("checkpoint digest collision")
+		}
+		return digest
+	}
+	tmp := filepath.Join(base, ".checkpoint-"+strconv.Itoa(os.Getpid()))
+	f, err := os.OpenFile(tmp, os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	must(err)
+	_, err = f.Write(b)
+	must(err)
+	must(f.Sync())
+	e.m.Counters.CheckpointFileSyncs++
+	must(f.Close())
+	must(os.Rename(tmp, final))
+	e.m.Counters.CheckpointRenames++
+	must(syncDir(base))
+	must(syncDir(e.dir))
+	e.m.Counters.CheckpointDirectorySyncs += 2
+	return digest
+}
+func readCheckpoint(e *env) []byte {
+	b, x := os.ReadFile(checkpointPath(e.dir, e.m.CheckpointSHA))
+	must(x)
+	if sha(b) != e.m.CheckpointSHA {
+		panic("checkpoint hash")
+	}
+	return b
+}
+func applyDecoded(e *env, d decoded) {
+	e.m.Slices++
+	e.m.Epoch = d.Slice.Epoch
+	e.m.CheckpointRoot = d.Slice.CheckpointRoot
+	e.m.Lifecycle = d.Slice.Lifecycle
+	e.m.Result = d.Slice.Result
+	e.m.MachineRoot = d.Slice.MachineStateRoot
+	e.m.VFSRoot = d.Slice.VFSStateRoot
+	e.m.JVM = d.Slice.TotalJvmSteps
+	e.m.Internal = d.Slice.TotalInternalSteps
+	e.m.Outcome = d.Slice.Outcome
+	e.m.JavaKind = d.Slice.JavaKind
+	e.m.JavaClass = d.Slice.JavaClass
+	if len(d.Checkpoint) == 0 || len(d.Checkpoint) > 1<<20 || crypto.Keccak256Hash(d.Checkpoint) != d.Slice.CheckpointRoot {
+		panic("invalid EVM checkpoint bytes")
+	}
+	e.m.CheckpointSHA = writeCheckpoint(e, d.Checkpoint) // terminal blobs remain readable too
+
+}
+func coordinatorCall(e *env, ca, vabi abi.ABI, method string, args ...interface{}) (callResult, decoded) {
+	data, x := ca.Pack(method, args...)
+	must(x)
+	old := e.root
+	r := e.call(owner, e.m.Coordinator, data, ordinaryGas)
+	if r.Err != nil {
+		e.recordCall(r, false)
+		return r, decoded{}
+	}
+	d, x := decodeCoordinator(vabi, ca, method, r.Out)
+	if x != nil {
+		panic(x)
+	}
+	applyDecoded(e, d)
+	e.recordCall(r, true)
+	must(e.persist(old, false))
+	return r, d
+}
+func failureFrom(label string, a abi.ABI, r callResult, before, after common.Hash) failure {
+	f := failure{Label: label, Selector: selector(r.Out), Name: errorName(a, r.Out), Gas: r.Gas, RootBefore: before, RootBeforeHostRestore: after, RootEqualBeforeHostRestore: before == after, CreateOpcodes: r.Trace.CREATE, SstoreOpcodes: r.Trace.SSTORE}
+	if len(r.Out) == 36 {
+		f.Code = new(big.Int).SetBytes(r.Out[4:]).Uint64()
+	}
+	return f
+}
+func selector(b []byte) string {
+	if len(b) < 4 {
+		return "0x"
+	}
+	return "0x" + hex.EncodeToString(b[:4])
+}
+func errorName(a abi.ABI, b []byte) string {
+	if len(b) < 4 {
+		return "non-selector"
+	}
+	for n, e := range a.Errors {
+		if bytes.Equal(b[:4], e.ID[:4]) {
+			return n
+		}
+	}
+	return "unknown"
+}
+func writeJSON(path string, v interface{}) {
+	b, e := json.MarshalIndent(v, "", "  ")
+	must(e)
+	must(os.WriteFile(path, append(b, '\n'), 0600))
+}
+func coordGetter(e *env, a abi.ABI, name string) interface{} {
+	return view(e, a, e.m.Coordinator, name)[0]
+}
+
+func setupChain(dir, artPath, zipPath string, q uint64, input int32) {
+	_ = input
+	e, x := newEnv(dir)
+	must(x)
+	defer e.close()
+	e.m.Quantum = q
+	e.m.ProcessPIDs = []int{os.Getpid()}
+	installEngine(e)
+	raw, x := os.ReadFile(zipPath)
+	must(x)
+	names := fixtureNames(zipPath)
+	setupResources(e, raw, names, true)
+	art, ca, init, run := loadArtifact(artPath)
+	at, p, r := deployCoordinator(e, art, ca, init, run, e.m.Decoders, names, e.m.ResourceRoots, e.m.Sizes, nil, owner)
+	if r.Err != nil {
+		panic(fmt.Sprintf("coord create %v 0x%x", r.Err, r.Out))
+	}
+	e.m.Coordinator = at
+	e.m.CoordinatorCode = crypto.Keccak256Hash(run)
+	e.m.PackageRoot = p
+	e.m.Instance = common.Hash(coordGetter(e, ca, "instanceId").([32]byte))
+	e.m.Total = coordGetter(e, ca, "totalClassBytes").(uint32)
+	e.m.Stage = "coordinator-created"
+	must(e.writeManifest())
+	vabi := engineABI
+	// MR0 has a distinct startMain ABI. Do not issue the accepted CB0 int-root
+	// selector or synthesize a post-write refusal; actual MR0 receipts follow.
+	before := e.root
+	r, d := coordinatorCall(e, ca, vabi, "startMain", [32]byte(p), uint8(0), q, uint32(4096))
+	if r.Err != nil {
+		// A current-engine refusal is evidence, not a reason to alter the copied
+		// engine or substitute the legacy int-root route. Keep all raw bytes.
+		writeJSON(filepath.Join(dir, "start-refusal.json"), map[string]interface{}{
+			"error": fmt.Sprint(r.Err), "selector": selector(r.Out),
+			"revertHex": "0x" + hex.EncodeToString(r.Out),
+			"uint256Words": func() []string {
+				out := []string{}
+				for at := 4; at+32 <= len(r.Out); at += 32 {
+					out = append(out, new(big.Int).SetBytes(r.Out[at:at+32]).String())
+				}
+				return out
+			}(),
+			"gas": r.Gas, "rootBefore": before, "rootAfter": e.root,
+			"rootUnchanged": before == e.root, "actualDI0ReadSizes": r.Trace.Reads,
+			"nestedFrames": r.Trace.Nested, "checkpointBytes": 0, "outcome": "EVM_REVERT",
+		})
+		e.m.Stage = "start-refused"
+		must(e.writeManifest())
+		return
+	}
+	e.m.Stage = "started"
+	if memoryMode {
+		for e.m.Lifecycle == 1 {
+			cp := readCheckpoint(e)
+			rr, _ := coordinatorCall(e, ca, vabi, "resumeMain", [32]byte(e.m.PackageRoot), e.m.Epoch, [32]byte(e.m.CheckpointRoot), cp, e.m.Quantum, uint32(4096))
+			must(rr.Err)
+		}
+		e.m.Stage = "memory-final"
+	}
+	must(e.writeManifest())
+	writeJSON(filepath.Join(dir, "start.json"), map[string]interface{}{"gas": r.Gas, "slice": d.Slice, "checkpointBytes": len(d.Checkpoint), "package": p, "resourceRoots": e.m.ResourceRoots, "actualReadSizes": r.Trace.Reads, "actualNestedFrames": r.Trace.Nested, "zipSHA256": sha(raw), "zipBytes": len(raw), "pid": os.Getpid(), "completeInitBytes": len(init) + constructorArgLen(ca, owner, e.m.Decoders, names, e.m.IndexRoot, e.m.ResourceRoots, p)})
+}
+func constructorArgLen(ca abi.ABI, from common.Address, decs []common.Address, names [][]byte, ir common.Hash, roots []common.Hash, p common.Hash) int {
+	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
+	must(x)
+	return len(b)
+}
+func doResume(dir, artPath string, one bool, publicationProbe bool) {
+	e, x := openEnv(dir)
+	must(x)
+	defer e.close()
+	_, ca, _, _ := loadArtifact(artPath)
+	vabi := engineABI
+	for e.m.Lifecycle == 1 {
+		cp := readCheckpoint(e)
+		args := []interface{}{[32]byte(e.m.PackageRoot), e.m.Epoch, [32]byte(e.m.CheckpointRoot), cp, e.m.Quantum, uint32(4096)}
+		if publicationProbe {
+			publicationProbe = false
+			data, _ := ca.Pack("resumeMain", args...)
+			old := e.root
+			r := e.call(owner, e.m.Coordinator, data, ordinaryGas)
+			if r.Err != nil {
+				panic(r.Err)
+			}
+			d, x := decodeCoordinator(vabi, ca, "resumeMain", r.Out)
+			must(x)
+			newCandidate := e.st.Copy().IntermediateRoot(true)
+			e.recordCall(r, false)
+			perr := e.persist(old, true)
+			if perr == nil || e.root != old {
+				panic("publication probe did not restore")
+			}
+			restored := e.root
+			retry := e.call(owner, e.m.Coordinator, data, ordinaryGas)
+			if retry.Err != nil || !bytes.Equal(retry.Out, r.Out) {
+				panic("publication retry mismatch")
+			}
+			d2, x := decodeCoordinator(vabi, ca, "resumeMain", retry.Out)
+			must(x)
+			if d2.Slice.CheckpointRoot != d.Slice.CheckpointRoot {
+				panic("retry decoded mismatch")
+			}
+			applyDecoded(e, d2)
+			e.recordCall(retry, true)
+			must(e.persist(old, false))
+			writeJSON(filepath.Join(dir, "publication-failure.json"), map[string]interface{}{"injectedAfterTrieCodeSync": true, "oldRoot": old, "unpublishedCandidateRoot": newCandidate, "restoredRoot": restored, "failedOutputConsumed": false, "retryOutputIdentical": true, "retryPublishedRoot": e.root, "gas": r.Gas, "pid": os.Getpid()})
+		} else {
+			before := e.root
+			r, _ := coordinatorCall(e, ca, vabi, "resumeMain", args...)
+			if r.Err != nil {
+				writeJSON(filepath.Join(dir, "resume-refusal.json"), map[string]interface{}{
+					"error": fmt.Sprint(r.Err), "selector": selector(r.Out),
+					"revertHex": "0x" + hex.EncodeToString(r.Out),
+					"uint256Words": func() []string {
+						out := []string{}
+						for at := 4; at+32 <= len(r.Out); at += 32 {
+							out = append(out, new(big.Int).SetBytes(r.Out[at:at+32]).String())
+						}
+						return out
+					}(),
+					"gas": r.Gas, "rootBefore": before, "rootAfter": e.root, "rootUnchanged": before == e.root,
+					"epoch": e.m.Epoch, "checkpointRoot": e.m.CheckpointRoot, "actualDI0ReadSizes": r.Trace.Reads,
+				})
+				e.m.Stage = "resume-refused"
+				must(e.writeManifest())
+				return
+			}
+		}
+		e.m.Stage = "resumed"
+		must(e.writeManifest())
+		if one {
+			break
+		}
+	}
+	if e.m.Lifecycle == 2 {
+		e.m.Stage = "final"
+		must(e.writeManifest())
+	}
+}
+func verifyWorld(dir, artPath string) {
+	e, x := openEnv(dir)
+	must(x)
+	defer e.close()
+	_, ca, _, _ := loadArtifact(artPath)
+	vabi := engineABI
+	vals := view(e, vabi, engine, "head", [32]byte(e.m.Instance))
+	if vals[0].(common.Address) != e.m.Coordinator || vals[1].(uint64) != e.m.Epoch || common.Hash(vals[2].([32]byte)) != e.m.CheckpointRoot || common.Hash(vals[3].([32]byte)) != e.m.MachineRoot || common.Hash(vals[4].([32]byte)) != e.m.VFSRoot || vals[9].(uint8) != e.m.Lifecycle {
+		panic("engine head mismatch")
+	}
+	if common.Hash(coordGetter(e, ca, "packageRoot").([32]byte)) != e.m.PackageRoot {
+		panic("package getter")
+	}
+	cp := readCheckpoint(e)
+	if crypto.Keccak256Hash(cp) != e.m.CheckpointRoot {
+		panic("reopened terminal checkpoint differs from EVM head")
+	}
+	e.m.Stage = "final-reopened"
+
+	must(e.writeManifest())
+	writeJSON(filepath.Join(dir, "world-report.json"), map[string]interface{}{"manifest": e.m, "engineHeadOwner": vals[0], "engineHeadEpoch": vals[1], "engineHeadLifecycle": vals[9], "diskBytes": diskSize(dir), "finalReopenPID": os.Getpid(), "go": runtime.Version()})
+}
+
+func fixtureNames(zipPath string) [][]byte {
+	switch filepath.Base(zipPath) {
+	case "positive.zip":
+		return [][]byte{[]byte("MainPositive.class"), []byte("MainHelper.class")}
+	case "exception.zip":
+		return [][]byte{[]byte("MainException.class")}
+	case "rebind.zip":
+		return [][]byte{[]byte("MainRebind.class")}
+	case "rebind-new.zip":
+		return [][]byte{[]byte("MainRebindNew.class")}
+	case "runnable.zip":
+		return [][]byte{[]byte("MainRunnable.class"), []byte("RunImpl.class")}
+	case "missing-interface.zip":
+		return [][]byte{[]byte("MissingInterface.class")}
+	default:
+		panic("fixture ZIP name is an assertion")
+	}
+}
+func main() {
+	if len(os.Args) < 7 {
+		panic("MODE DIR COORDINATOR.json ENGINE.json FIXTURE.zip QUANTUM")
+	}
+	_, engineABI0, _, run := loadCoord(os.Args[4])
+	engineABI = engineABI0
+	engineRun = run
+	engineHash = crypto.Keccak256Hash(run)
+	q, err := strconv.ParseUint(os.Args[6], 10, 64)
+	must(err)
+	switch os.Args[1] {
+	case "setup-chain":
+		setupChain(os.Args[2], os.Args[3], os.Args[5], q, 0)
+	case "resume-one":
+		doResume(os.Args[2], os.Args[3], true, false)
+	case "finish":
+		doResume(os.Args[2], os.Args[3], false, false)
+	case "verify":
+		verifyWorld(os.Args[2], os.Args[3])
+	default:
+		panic("unknown mode")
+	}
+}
