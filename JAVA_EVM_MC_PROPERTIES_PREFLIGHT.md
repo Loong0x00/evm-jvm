@@ -1,5 +1,11 @@
 # Properties construction/storage COPY preflight
 
+**PARENT CORRECTION:** recovered after WebSocket stop; independent subclass
+probe found virtual-get interception in getProperty. Parent fixed only that to
+super.get, retained virtual put/defaults, and independently verified new pins.
+Original20 now hits the unchanged reserve even at q1. See
+JAVA_EVM_MC_PROPERTIES_PARENT_PREFLIGHT.md; worker claims below remain historical.
+
 **Status: worker implementation evidence only; not parent-reviewed or accepted.**
 This is an isolated continuation of
 `evidence/java-evm/minecraft-entry/parent-6748eb593/`, based only on that

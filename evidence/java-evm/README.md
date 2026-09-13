@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest Properties parent: `minecraft-entry/parent-c24d374bc/`, recovered worker,
+Java8 dispatch repair, source-only proof and original minimum-slice gas refusal.
+See `JAVA_EVM_MC_PROPERTIES_PARENT_PREFLIGHT.md`; no startup/accepted-cap claim.
+
 Latest class-count parent: `minecraft-entry/parent-6748eb593/`, whole source-only
 build, count controls and original20 actual next Properties allocation blocker.
 See `JAVA_EVM_MC_CLASSCOUNT_PARENT_PREFLIGHT.md`; accepted baseline unchanged.

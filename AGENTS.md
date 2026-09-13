@@ -1,5 +1,21 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST PROPERTIES: recovered cleanWebSocket-stoppedworker5998b3d81/
+35433e305/bfc989092/c24d374bc. ParentfoundgetProperty wronglydispatches overridden
+get; Java8super.get confirmed. Candidate181J/6I guestArithmeticException with
+gets1, correctedparentkind1(assertionfailurepreserved). Repaired321590B engine
+SHA877f35.../Keccakeb4c95...,co4ac62a...,MC-PROPERTIES-PARENT1 address
+0x4d4350524f50455254494553504152454e540001;48bootstraps24/262144,allothercapsfixed.
+Override323J5I +construction73J4I q1q7/direct andstorage2859J9I q1q7 agree;
+3724canonicalreceipts,all3reservedfamilyoverridesrefuse.491.176291s896630784B.
+Original20q7 refusesreserve7 at1673J. Existingpublicbudget1 (notgasincrease)
+permits10samecodeCPs->epoch249/1683J10I;nextq1ALSOreserve7gas73494750,Headbytes/
+rootunchanged. CP11359B SHAaffcf10a... root16a6be32...,lastgas97536685;toporiginal
+PropertiesUtilctorPC4,14physicalframes. NOcommittedPropertiesallocation/ctor.
+See PROPERTIES_PARENT_PREFLIGHT and PROPERTIES_COST_PREPARATION: nextREADONLY
+source-mappedgas/allocprofiling, nosemanticoptimizationuntilactualmeasurement.
+NoMCmainbody/world/Done. Latestauthorizedpublic1e4027b9b;laterLOCALONLY.
+
 LATEST MC-FIRST CLASSCOUNT24: parentindependentlyverified6748eb593 withwhole
 sourcebuild/generated/original18gate332.872694s905601024B. Exact314365Bengine
 SHA9f272f.../Keccakb840a1...,co16b9c3...,MC-CLASSCOUNT24-PREFLIGHT1 engine

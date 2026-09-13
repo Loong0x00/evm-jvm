@@ -1,0 +1,76 @@
+[java-on-evm aa07cffe3] java-evm: archive Properties preflight parent basis
+ Date: Sun Sep 13 19:48:52 2026 +0800
+ 8 files changed, 12454 insertions(+)
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/coordinator/MCEntryCoordinator.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/coordinator/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/driver/properties_bounded_driver.go.txt
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/engine/MCEntryInterpreter.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/engine/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/parent-inputs/README.md
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/parent-inputs/TEST-only-PropertiesUtil-constructor.txt
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/parent-inputs/pins.json
+[java-on-evm 6ec5def48] java-evm: add bounded Properties bootstrap COPY
+ Date: Sun Sep 13 20:00:58 2026 +0800
+ 26 files changed, 3232 insertions(+), 30 deletions(-)
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/build_bootstraps.py
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/java/util/Dictionary.class.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/java/util/Dictionary.java
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/java/util/Hashtable.class.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/java/util/Hashtable.java
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/java/util/Properties.class.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/java/util/Properties.java
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/bootstrap/pins.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/coordinator/MCEntryCoordinator.abi.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/coordinator/MCEntryCoordinator.init.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/coordinator/MCEntryCoordinator.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/coordinator/MCEntryCoordinator.runtime.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/coordinator/build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/engine/MCEntryInterpreter.abi.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/engine/MCEntryInterpreter.init.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/engine/MCEntryInterpreter.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/engine/MCEntryInterpreter.runtime.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/engine/build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/fixtures/PropertiesProbe.class.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/fixtures/PropertiesProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/fixtures/build_fixture.py
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/fixtures/pins.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/pins.json
+[java-on-evm 3d6584cd7] java-evm: record Properties generated EVM preflight
+ Date: Sun Sep 13 20:13:08 2026 +0800
+ 36 files changed, 1418 insertions(+), 11 deletions(-)
+ create mode 100644 JAVA_EVM_MC_PROPERTIES_PREFLIGHT.md
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/fixtures/PropertiesConstructionProbe.class.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/fixtures/PropertiesConstructionProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/run_generated.py
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/construction-direct/direct-evm-failure.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/construction-direct/durable-head.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/construction-direct/final-checkpoint.bin
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/construction-direct/final-slice.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/construction-direct/receipt-hashes.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/construction-direct/start.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/construction-direct/world-report.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-direct-refusal/direct-evm-failure.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-direct-refusal/durable-head.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-direct-refusal/receipt-hashes.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-direct-refusal/start-refusal.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q1/direct-evm-failure.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q1/durable-head.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q1/final-checkpoint.bin
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q1/final-slice.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q1/receipt-hashes.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q1/start.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q1/world-report.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q7/direct-evm-failure.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q7/durable-head.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q7/final-checkpoint.bin
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q7/final-slice.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q7/receipt-hashes.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q7/start.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/properties-q7/world-report.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/reserved-override/direct-evm-failure.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/reserved-override/durable-head.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/reserved-override/receipt-hashes.json
+ create mode 100644 evidence/java-evm/minecraft-entry/properties-preflight/runs/reserved-override/start-refusal.json
+[java-on-evm b035397d0] java-evm: fix Properties generated replay root
+ Date: Sun Sep 13 20:17:11 2026 +0800
+ 2 files changed, 2 insertions(+), 2 deletions(-)

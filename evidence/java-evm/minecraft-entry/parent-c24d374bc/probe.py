@@ -31,7 +31,7 @@ for name,entries,quanta in probes:
    f=failures[0];assert f['selector']=='0xf15d7343' and f['uint256Words']==['7'] and f['rootBefore']==f['rootAfter'] and h['epoch']==0
   else:
    cp=(w/'checkpoints'/(h['checkpointSHA256']+'.bin')).read_bytes();assert hashlib.sha256(cp).hexdigest()==h['checkpointSHA256'];d=diag.inspect(cp);row['diagnostic']=d;row['opaqueSHA256']=hashlib.sha256(cp[280:]).hexdigest()
-   if mode=='candidate':assert h['lifecycle']==h['outcome']==3 and h['javaKind']==3 # genuine guest ArithmeticException from failed counter assertion
+   if mode=='candidate':assert h['lifecycle']==h['outcome']==3 and h['javaKind']==1 # genuine guest ArithmeticException from failed counter assertion
    else:
     assert h['lifecycle']==h['outcome']==2
     if name=='OverrideProbe':
