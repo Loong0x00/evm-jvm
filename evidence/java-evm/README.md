@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest system-ClassLoader parent: `minecraft-entry/parent-bc4aa5f31/`; LOCAL384
+after measured320 failure. Original loader array is committed; next exact class is
+LinkedHashSet, before any ClassLoader.getResources or fake empty resource result.
+
 Latest defining-loader parent: `minecraft-entry/parent-102911980/`; repaired
 pool-hit quota and VM loader override guards. Raw mirrors now commit one nonnull
 loader; next exact method is ClassLoader.getSystemClassLoader, not resources yet.

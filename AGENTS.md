@@ -1,5 +1,20 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST SYSTEM LOADER: exactpublicstaticnativezeroarg binding6 returns
+existingcanonicalVMloader;320KiB genuinelyfails, parentLOCAL384 engine328695B
+SHAec2a0c.../Keccak90f8b0...,co744ed7...,MC-SYSTEM-CLASSLOADER-PARENT1.
+ClassLoader195B,priornative1..5/mirrorquota/reservationspreserved,unrelatedformat
+restored; workerGo evidence renamed.go.txt. Generated332J8I q1q7direct332/48/1
+VOIDequal,381canonical,VMoverride/getResourcesunsupported. Parentwhole542.262533s
+951513088B. Firstparentassertwronglycountedunrelatedreturn6,0.213718sfailurepreserved.
+Original22q7head257/1799J16I,thenLinkedHashSetmissing;3q1CPs->260/1802J,
+CP13613B SHA8ca95d5d... root7dc5fea5...,last119782735/max121029535. Frames
+findUrlResourcesPC36: systemgetterreturnscanonical,thirdloaderarrayentrycommitted;
+noemptyresources. Nextq1 missingjava/util/LinkedHashSet newPC36gas85634932.
+See SYSTEM_CLASSLOADER_PARENT andLINKED_HASH_SET_PREPARATION: nextgenuinebounded
+Java8orderedSet/Collection/Iterator hierarchy only,no getResourcesyet. LOCAL384+
+LOCAL1Bothercapsfixed,accepted320unchanged. NoMCbody/world/Done.
+
 LATEST MC-FIRST DEFINING LOADER: worker320candidate327658B/22Bheadroom had
 first-raw-mirrorINTERN-HIT quota hole(check1 butcreate loader+mirror2) and failed
 toreserveVMClassLoader override; nowholeRSS/dynamictamper. ParentfixedreserveObjects

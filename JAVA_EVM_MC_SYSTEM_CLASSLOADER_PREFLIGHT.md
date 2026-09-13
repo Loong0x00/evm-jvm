@@ -1,5 +1,10 @@
 # System ClassLoader getter preflight
 
+**PARENT RESULT:** exact320 cap failure and LOCAL384 source build/replay verified.
+Original22 commits all three canonical loader-array entries and next requires
+LinkedHashSet at PC36. See JAVA_EVM_MC_SYSTEM_CLASSLOADER_PARENT_PREFLIGHT.md.
+
+
 Scoped LOCAL Minecraft startup COPY from parent basis `6d6b8ea0e` /
 `MC-CLASS-DEFINING-LOADER-PARENT1`. The sole proposed semantic addition is
 `java.lang.ClassLoader.getSystemClassLoader()Ljava/lang/ClassLoader;`, a public
