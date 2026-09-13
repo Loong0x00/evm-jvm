@@ -100,7 +100,7 @@ def main():
     for part in ("engine", "coordinator", "pins.json", "executed_driver.go.txt"):
         if not (BASIS / part).exists(): raise SystemExit("missing allowed parent basis " + part)
     out.mkdir(); (out / "tmp").mkdir()
-    env = dict(os.environ, TMPDIR=str((out / "tmp").resolve()), NODE_PATH=str(ROOT / "jvmevm/runtime/node_modules"), PYTHONDONTWRITEBYTECODE="1")
+    env = dict(os.environ, TMPDIR=str((out / "tmp").resolve()), NODE_PATH="/home/user/evm-jvm/geth/jvmevm/runtime/node_modules", PYTHONDONTWRITEBYTECODE="1")
     if not Path(env["TMPDIR"]).is_absolute(): raise RuntimeError("TMPDIR must be absolute")
 
     shutil.copytree(BASIS / "engine", out / "engine"); shutil.copytree(BASIS / "coordinator", out / "coordinator")
