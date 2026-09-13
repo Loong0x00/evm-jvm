@@ -1,5 +1,20 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST PRIVILEGEDACTION: workerengineunderisolated(onlyDBOOTchanged;
+other8domainsold). Parent reversedfullsemanticdelta->exactbasis,reappliedone198B
+genuineinterface andfixedALL9domains/newaddresses. Parentengine323700B SHA64f46d...
+Keccak327a60...,co cf6c79...,MC-PRIVILEGED-ACTION-PARENT1,49bootstraps,
+LOCAL1B24/262144actualframes128allcapsfixed. Generatedbridgeq1q7direct226J4I
+226/33/1VOIDequalmachine/opaque; callerreplace+AccessController honestrefusals.
+Whole304.800714s881500160B. Original22 q7 commits248/1736J13I, thenClassLoader
+site4105 context1. Preservedfailure;4samecodeq1CPs commit->252/1740J14I,
+PropertiesUtilPC16,LoaderUtil.findResourcesPC4/findUrlResourcesPC1; LoaderUtilclinit
+anddefault-nullsecurity/innerPrivilegedAction nowSUCCESSFULLYcommitted. CP122??
+SHA9212d072... rootbcba7567...,last106783049/max107417109gas. Nextq1 actualmissing
+java/lang/ClassLoader anewarrayPC1gas78832045. See PRIVILEGED_ACTION_PARENT and
+CLASSLOADER_TYPE_PREPARATION: nextminimalabstracttype/protectedctorONLY, nofake
+emptyresources/loaderAPIs. NoMCmainbody/world/Done. Publiclatest1e4027b9b.
+
 LATEST MC-FIRST SECURITY GETTER: parentindependentlySOURCEONLYrebuilt exact
 322301BengineSHA4a8aaf.../Keccak746092...,co113bcb...,48bootstraps,System338B
 privateguestnullsecurity+getter,arraycopyunchanged. Generated169J4I q1/q7/direct

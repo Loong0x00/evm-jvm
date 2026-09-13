@@ -1,5 +1,11 @@
 # PrivilegedAction preflight
 
+**PARENT CORRECTION:** worker changed only DBOOT while eight engine domains retained
+the prior profile. Parent repaired full domain isolation, rebuilt and replayed.
+Original22 now has successful q1 checkpoints through LoaderUtil initialization
+and next requires java/lang/ClassLoader at anewarray PC1. See
+JAVA_EVM_MC_PRIVILEGED_ACTION_PARENT_PREFLIGHT.md. Worker pins below are not promoted.
+
 This is a LOCAL, generated-fixture-only derivative of the exact
 `parent-2293e298e` security-getter basis. It is not acceptance, a general JVM,
 or a Minecraft main-body/world/Done claim. Parent alone must source-only

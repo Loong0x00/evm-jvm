@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest PrivilegedAction parent: `minecraft-entry/parent-a30955bb0/`; repaired
+full domain isolation and committed original LoaderUtil init under q1. Next exact
+platform type is ClassLoader at findUrlResources anewarray; no fake empty search.
+
 Latest security-getter parent: `minecraft-entry/parent-2293e298e/`; exact source
 build passes and original22 now requires PrivilegedAction. Successful checkpoint
 remains before LoaderUtil initializer; no failed-call Java progress is credited.
