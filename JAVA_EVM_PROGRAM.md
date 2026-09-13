@@ -1,5 +1,16 @@
 # Continuous JVM-in-EVM program
 
+LATEST ORIGINAL MC EXECUTION: parent independently rebuilt224c23b23MC-ENTRYCOPY,
+260.465295s/899870720B, six generatedsmokes+official4/9worlds. Official4nowdiagnoses
+missingLogManager. Official9(174979B/49actualDI0fragments) commits epoch1/Java1/
+internal3 at28049151gas: originalMinecraftServer.<clinit> PC0 active-usedispatch
+schedulesLogManagerinit; mainBODYNOTentered. CP2939B/SHA b68ba2...; actualhash/event/
+freshHeadverified. NextResumeBytecodeError13,6/29272391gas: LogManager<clinit>
+PREDECODE rejectsldc_w CONSTANT_Class atPC6, notexecutedthroughPC6. See
+JAVA_EVM_MC_ORIGINAL_ENTRY_PARENT_PREFLIGHT.md. NextonlyreferenceClassliteral+
+Class.getName perCLASS_LITERAL_PREPARATION; nofullreflection/loader/Session.
+Accepted4/65536unchanged; experiment16/262144/39bootstraps; noEULA/world/Done/push.
+
 CURRENT USER PRIORITY: unchanged Minecraft1.12.2 insideLOCAL EVM to genuineDone,
 superflatfirst; NOTcompleteJVM/generaltransport. Deferbroadstageaudit. Actual
 untouched-JAR mainentryattempt now recorded:4officialclasses34977B/12canonicalEVM

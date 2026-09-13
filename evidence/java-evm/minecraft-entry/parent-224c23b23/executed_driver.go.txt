@@ -1,0 +1,1747 @@
+// Disposable MR0 transport preflight. It owns a normal StateDB/trie/LevelDB world and only public EVM execution APIs; it never accesses a private session or injects pages.
+package main
+
+import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/binary"
+	"encoding/hex"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"hash"
+	"io"
+	"io/fs"
+	"math/big"
+	"os"
+	"path/filepath"
+	"runtime"
+	"strconv"
+	"strings"
+	"sync/atomic"
+	"time"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/rawdb"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/tracing"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/core/vm"
+	evmrun "github.com/ethereum/go-ethereum/core/vm/runtime"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethdb"
+	"github.com/ethereum/go-ethereum/ethdb/leveldb"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/as0"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/di0"
+	"github.com/ethereum/go-ethereum/jvmevm/artifactstore/zi0"
+	"github.com/ethereum/go-ethereum/params"
+	"github.com/ethereum/go-ethereum/triedb"
+	"github.com/holiman/uint256"
+)
+
+const ordinaryGas = uint64(100_000_000)
+const format = "MC-ENTRY-PARENT-COPY-1"
+const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
+const immutableEngineSHA256 = "b1c9d04ad9ef7f4eb0183a92fb944c9a87dcbd748e0f70bf17d19c4a9fe5cabb"
+const immutableEngineKeccak = "0x9d4fdaec87e8e21f243f4cc994da134646311f02cc0141da649085e2c5ada61c"
+const immutableCoordinatorKeccak = "0x1d08028ae55a3a43471cdc417ba48ba7900ba70b29398d2e15ef58d6044df694"
+
+// The constructor owner is deliberately separate from the required fixed LOCAL
+// engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
+var owner = common.HexToAddress("0x4d52304d41494e454e47494e4500000000000002")
+var other = common.HexToAddress("0x4d52304d41494e454e47494e4500000000000003")
+var engine = common.HexToAddress("0x4d43454e545259454e47494e4500000000000001")
+var packageDomain = crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/package/v1"))
+var resourceDomain = crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/resource/v1"))
+var readSelector = crypto.Keccak256([]byte("read(uint32,uint32)"))[:4]
+
+type artifact struct {
+	ABI          json.RawMessage        `json:"abi"`
+	Bytecode     string                 `json:"bytecode"`
+	Deployed     string                 `json:"deployedBytecode"`
+	Compiler     interface{}            `json:"compiler"`
+	Settings     map[string]interface{} `json:"settings"`
+	SourceSHA    string                 `json:"sourceSHA256"`
+	InitBytes    int                    `json:"initBytes"`
+	RuntimeBytes int                    `json:"runtimeBytes"`
+	InitSHA      string                 `json:"initSHA256"`
+	RuntimeSHA   string                 `json:"runtimeSHA256"`
+}
+type durable interface {
+	ethdb.Database
+	SyncKeyValue() error
+}
+type counters struct {
+	EVMCalls                 uint64   `json:"evmCalls"`
+	Creates                  uint64   `json:"ordinaryCreates"`
+	Mutations                uint64   `json:"successfulEvmMutations"`
+	Commits                  uint64   `json:"commitReloads"`
+	TrieCodeSyncs            uint64   `json:"trieCodeSyncs"`
+	ManifestFileSyncs        uint64   `json:"manifestFileSyncs"`
+	ManifestRenames          uint64   `json:"manifestRenames"`
+	DirectorySyncs           uint64   `json:"directorySyncs"`
+	CheckpointFileSyncs      uint64   `json:"checkpointFileSyncs"`
+	CheckpointRenames        uint64   `json:"checkpointRenames"`
+	CheckpointDirectorySyncs uint64   `json:"checkpointDirectorySyncs"`
+	TimeoutCancels           uint64   `json:"timeoutCancels"`
+	NestedFrames             uint64   `json:"actualNestedFrames"`
+	NestedCreateOpcodes      uint64   `json:"actualNestedCreateOpcodes"`
+	SstoreOpcodes            uint64   `json:"actualSstoreOpcodes"`
+	Gas                      uint64   `json:"gas"`
+	MaxGas                   uint64   `json:"maxGas"`
+	ReadSizes                []uint32 `json:"actualDI0ReadSizes"`
+	MaxCallMS                int64    `json:"maxCallMs"`
+	CommitMS                 int64    `json:"commitMs"`
+}
+type manifest struct {
+	Format          string           `json:"format"`
+	Context         string           `json:"context"`
+	Root            common.Hash      `json:"trieRoot"`
+	Owner           common.Address   `json:"owner"`
+	Engine          common.Address   `json:"engine"`
+	EngineCode      common.Hash      `json:"engineCodeHash"`
+	EngineNonce     uint64           `json:"engineNonce"`
+	Store           common.Address   `json:"store"`
+	Index           common.Address   `json:"index"`
+	IndexRoot       common.Hash      `json:"indexRoot"`
+	Decoders        []common.Address `json:"decoders"`
+	Names           [][]byte         `json:"rawNames"`
+	ResourceRoots   []common.Hash    `json:"resourceRoots"`
+	Sizes           []uint32         `json:"classSizes"`
+	Coordinator     common.Address   `json:"coordinator"`
+	CoordinatorCode common.Hash      `json:"coordinatorCodeHash"`
+	PackageRoot     common.Hash      `json:"packageRoot"`
+	Instance        common.Hash      `json:"instanceId"`
+	Total           uint32           `json:"totalClassBytes"`
+	Stage           string           `json:"stage"`
+	Quantum         uint64           `json:"quantum"`
+	Slices          uint32           `json:"slices"`
+	Epoch           uint64           `json:"epoch"`
+	CheckpointRoot  common.Hash      `json:"checkpointRoot"`
+	CheckpointSHA   string           `json:"checkpointSHA256,omitempty"`
+	Lifecycle       uint8            `json:"lifecycle"`
+	Result          int32            `json:"result"`
+	MachineRoot     common.Hash      `json:"machineRoot"`
+	VFSRoot         common.Hash      `json:"vfsRoot"`
+	JVM             uint64           `json:"jvmSteps"`
+	Internal        uint64           `json:"internalSteps"`
+	Outcome         uint8            `json:"outcome"`
+	JavaKind        uint8            `json:"javaKind"`
+	JavaRef         uint32           `json:"javaRef"`
+	JavaClass       []byte           `json:"javaClass"`
+	SeedRoot        common.Hash      `json:"seedRoot"`
+	ArtifactRoot    common.Hash      `json:"artifactRoot"`
+	ConfigRoot      common.Hash      `json:"configRoot"`
+	RuntimeCode     common.Hash      `json:"runtimeCodeHash"`
+	Counters        counters         `json:"counters"`
+	ProcessPIDs     []int            `json:"processPids"`
+	StartedUTC      string           `json:"startedUTC"`
+	UpdatedUTC      string           `json:"updatedUTC"`
+}
+
+var memoryMode bool
+
+type env struct {
+	disk              durable
+	trie              *triedb.Database
+	st                *state.StateDB
+	root              common.Hash
+	dir               string
+	m                 manifest
+	initialCounters   counters
+	initialRoot       common.Hash
+	poison            error
+	pendingCheckpoint []byte // EVM-issued opaque blob staged until atomic publication.
+	fault             string // TEST-ONLY self-owned storage-boundary fault name.
+}
+type resourceRead struct {
+	To        common.Address
+	Offset    uint32
+	Requested uint32
+	Returned  uint32
+	Success   bool
+	SHA256    string
+}
+type callTrace struct {
+	ResourceReads  []resourceRead
+	ResourceHashes map[string]string
+	Nested         uint64
+	Reads          []uint32
+	SSTORE         uint64
+	CREATE         uint64
+	Reader         common.Address
+	ChangedWrites  uint64
+	NestedOOG      bool
+}
+type callResult struct {
+	Out       []byte
+	Gas       uint64
+	Err       error
+	Trace     callTrace
+	Logs      []*types.Log // defensive copies, set only after exact nested-event validation
+	ElapsedMS int64
+}
+type slice struct {
+	Schema                uint32      `json:"schema"`
+	Lifecycle             uint8       `json:"lifecycle"`
+	Outcome               uint8       `json:"outcome"`
+	Epoch                 uint64      `json:"epoch"`
+	CheckpointRoot        common.Hash `json:"checkpointRoot"`
+	MachineStateRoot      common.Hash `json:"machineStateRoot"`
+	TotalJvmSteps         uint64      `json:"totalJvmSteps"`
+	TotalInternalSteps    uint64      `json:"totalInternalSteps"`
+	ExecutedJvmSteps      uint64      `json:"executedJvmSteps"`
+	ExecutedInternalSteps uint32      `json:"executedInternalSteps"`
+	Result                int32       `json:"result"`
+	JavaKind              uint8       `json:"javaKind"`
+	JavaRef               uint32      `json:"javaRef"`
+	JavaClass             []byte      `json:"javaClass"`
+	VFSStateRoot          common.Hash `json:"vfsStateRoot"`
+	InodeCount            uint32      `json:"inodeCount"`
+	DescriptorCount       uint32      `json:"descriptorCount"`
+	LogicalFileBytes      uint64      `json:"logicalFileBytes"`
+}
+type decoded struct {
+	Slice      slice
+	Checkpoint []byte
+}
+
+// wireSlice follows go-ethereum ABI's title-casing for the Solidity field
+// vfsStateRoot (Vfs, not VFS); it is used only for canonical re-encoding.
+type wireSlice struct {
+	Schema                uint32
+	Lifecycle             uint8
+	Outcome               uint8
+	Epoch                 uint64
+	CheckpointRoot        common.Hash
+	MachineStateRoot      common.Hash
+	TotalJvmSteps         uint64
+	TotalInternalSteps    uint64
+	ExecutedJvmSteps      uint64
+	ExecutedInternalSteps uint32
+	Result                int32
+	JavaKind              uint8
+	JavaRef               uint32
+	JavaClass             []byte
+	VfsStateRoot          common.Hash
+	InodeCount            uint32
+	DescriptorCount       uint32
+	LogicalFileBytes      uint64
+}
+type failure struct {
+	Label                      string      `json:"label"`
+	Selector                   string      `json:"selector"`
+	Name                       string      `json:"name"`
+	Code                       uint64      `json:"code,omitempty"`
+	Gas                        uint64      `json:"gas"`
+	RootBefore                 common.Hash `json:"rootBefore"`
+	RootBeforeHostRestore      common.Hash `json:"rootBeforeHostRestore"`
+	RootEqualBeforeHostRestore bool        `json:"rootEqualBeforeHostRestore"`
+	CreateOpcodes              uint64      `json:"createOpcodes,omitempty"`
+	SstoreOpcodes              uint64      `json:"sstoreOpcodes,omitempty"`
+	Detail                     string      `json:"detail,omitempty"`
+}
+type boundaryReport struct {
+	BaseCommit   string                   `json:"baseCommit"`
+	Counts       map[string]interface{}   `json:"counts"`
+	Constructors []map[string]interface{} `json:"constructors"`
+	Failures     []failure                `json:"failures"`
+	Paging       map[string]interface{}   `json:"paging"`
+	Pins         map[string]interface{}   `json:"pins"`
+	Counters     counters                 `json:"counters"`
+	Root         common.Hash              `json:"trieRoot"`
+	DiskBytes    int64                    `json:"diskBytes"`
+	PID          int                      `json:"pid"`
+}
+
+func must(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+func sha(b []byte) string { x := sha256.Sum256(b); return hex.EncodeToString(x[:]) }
+func abiPack(ts []string, v ...interface{}) []byte {
+	var a abi.Arguments
+	for _, s := range ts {
+		t, e := abi.NewType(s, "", nil)
+		must(e)
+		a = append(a, abi.Argument{Type: t})
+	}
+	b, e := a.Pack(v...)
+	must(e)
+	return b
+}
+func cfg(st *state.StateDB, from common.Address, gas uint64, tr *callTrace) *evmrun.Config {
+	z := common.Hash{}
+	hooks := &tracing.Hooks{}
+	if tr != nil {
+		pendingReads := map[int]int{}
+		resourceHashers := map[common.Address]hash.Hash{}
+		tr.ResourceHashes = map[string]string{}
+		hooks.OnEnter = func(depth int, typ byte, from, to common.Address, input []byte, gas uint64, value *big.Int) {
+			if depth > 0 {
+				tr.Nested++
+			}
+			if tr.Reader != (common.Address{}) && from == tr.Reader && len(input) >= 68 && bytes.Equal(input[:4], readSelector) {
+				tr.Reads = append(tr.Reads, binary.BigEndian.Uint32(input[64:68]))
+				if len(input) != 68 || new(big.Int).SetBytes(input[4:36]).BitLen() > 32 || new(big.Int).SetBytes(input[36:68]).BitLen() > 32 {
+					panic("noncanonical read input")
+				}
+				pendingReads[depth] = len(tr.ResourceReads)
+				tr.ResourceReads = append(tr.ResourceReads, resourceRead{To: to, Offset: binary.BigEndian.Uint32(input[32:36]), Requested: binary.BigEndian.Uint32(input[64:68])})
+			}
+		}
+		var pending bool
+		var writeAddr common.Address
+		var writeKey, writeOld, writeNew common.Hash
+		hooks.OnExit = func(depth int, output []byte, _ uint64, err error, reverted bool) {
+			if index, ok := pendingReads[depth]; ok {
+				delete(pendingReads, depth)
+				r := &tr.ResourceReads[index]
+				if err == nil && !reverted {
+					if len(output) < 64 || new(big.Int).SetBytes(output[:32]).Uint64() != 32 || new(big.Int).SetBytes(output[32:64]).BitLen() > 32 {
+						panic("noncanonical read output")
+					}
+					n := uint32(new(big.Int).SetBytes(output[32:64]).Uint64())
+					if n != r.Requested || n > 4096 || len(output) != 64+int((n+31)/32)*32 {
+						panic("read fragment shape")
+					}
+					for _, b := range output[64+int(n):] {
+						if b != 0 {
+							panic("read padding")
+						}
+					}
+					body := output[64 : 64+int(n)]
+					r.Returned = n
+					r.Success = true
+					r.SHA256 = sha(body)
+					h := resourceHashers[r.To]
+					if h == nil {
+						if r.Offset != 0 {
+							panic("first read offset")
+						}
+						h = sha256.New()
+						resourceHashers[r.To] = h
+					}
+					h.Write(body)
+					tr.ResourceHashes[r.To.Hex()] = hex.EncodeToString(h.Sum(nil))
+				}
+			}
+
+			if errors.Is(err, vm.ErrOutOfGas) {
+				tr.NestedOOG = true
+			}
+		}
+		hooks.OnOpcode = func(pc uint64, op byte, gas, cost uint64, scope tracing.OpContext, rdata []byte, depth int, err error) {
+			if pending {
+				if writeOld != writeNew && st.GetState(writeAddr, writeKey) == writeNew {
+					tr.ChangedWrites++
+				}
+				pending = false
+			}
+			if op == byte(vm.SSTORE) {
+				tr.SSTORE++
+				stack := scope.StackData()
+				if err == nil && len(stack) >= 2 {
+					writeAddr = scope.Address()
+					writeKey = common.Hash(stack[len(stack)-1].Bytes32())
+					writeOld = st.GetState(writeAddr, writeKey)
+					writeNew = common.Hash(stack[len(stack)-2].Bytes32())
+					pending = true
+				}
+			}
+			if op == byte(vm.CREATE) || op == byte(vm.CREATE2) {
+				tr.CREATE++
+			}
+		}
+	}
+	return &evmrun.Config{ChainConfig: params.AllDevChainProtocolChanges, Difficulty: new(big.Int), Origin: from, Coinbase: common.Address{}, BlockNumber: big.NewInt(1), Time: 1, GasLimit: gas, GasPrice: new(big.Int), Value: new(big.Int), BaseFee: new(big.Int).SetUint64(params.InitialBaseFee), BlobBaseFee: new(big.Int).SetUint64(params.BlobTxMinBlobGasprice), Random: &z, State: st, GetHashFn: func(uint64) common.Hash { return common.Hash{} }, EVMConfig: vm.Config{Tracer: hooks}}
+}
+func ownedFault() string {
+	if os.Getenv("MR0_ATOMICITY_TESTING") != "1" {
+		return ""
+	}
+	switch f := os.Getenv("MR0_ATOMICITY_FAULT"); f {
+	case "", "checkpoint-before-create", "checkpoint-after-write", "checkpoint-after-sync", "checkpoint-after-rename", "checkpoint-after-dirsync", "trie-after-sync", "manifest-before-create", "manifest-after-write", "manifest-after-sync", "manifest-after-rename", "manifest-after-dirsync":
+		return f
+	default:
+		panic("MR0 Session: unknown TEST storage fault")
+	}
+}
+func newEnv(dir string) (*env, error) {
+	if err := os.MkdirAll(filepath.Join(dir, "state"), 0700); err != nil {
+		return nil, err
+	}
+	marker, err := os.OpenFile(filepath.Join(dir, "STORE-FORMAT"), os.O_CREATE|os.O_EXCL|os.O_WRONLY, 0600)
+	if err != nil {
+		return nil, err
+	}
+	if _, err = marker.Write([]byte(format + "\n")); err == nil {
+		err = marker.Sync()
+	}
+	if closeErr := marker.Close(); err == nil {
+		err = closeErr
+	}
+	if err != nil {
+		return nil, err
+	}
+	if err = syncDir(dir); err != nil {
+		return nil, err
+	}
+	var d durable
+	if memoryMode {
+		d = rawdb.NewMemoryDatabase()
+	} else {
+		kv, err := leveldb.New(filepath.Join(dir, "state"), 16, 16, "mr0-session-copy", false)
+		if err != nil {
+			return nil, err
+		}
+		d = rawdb.NewDatabase(kv)
+	}
+	t := triedb.NewDatabase(d, triedb.HashDefaults)
+	st, e := state.New(types.EmptyRootHash, state.NewDatabase(t, nil))
+	if e != nil {
+		return nil, e
+	}
+	x := &env{disk: d, trie: t, st: st, root: types.EmptyRootHash, dir: dir, m: manifest{Format: format, Context: context, Root: types.EmptyRootHash, Owner: owner, Engine: engine, StartedUTC: time.Now().UTC().Format(time.RFC3339)}, initialCounters: counters{}, initialRoot: types.EmptyRootHash, fault: ownedFault()}
+	// Establish an explicit empty authority before any EVM mutation. Thereafter
+	// persist always has a byte-for-byte prior Head to preserve on failure.
+	if err := x.writeManifest(); err != nil {
+		x.trie.Close()
+		x.disk.Close()
+		return nil, err
+	}
+	return x, nil
+}
+func readRegular(path string, limit int64) ([]byte, error) {
+	info, err := os.Lstat(path)
+	if err != nil {
+		return nil, err
+	}
+	if !info.Mode().IsRegular() || info.Size() < 0 || info.Size() > limit {
+		return nil, errors.New("MR0 Session: unsupported regular file")
+	}
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	opened, err := f.Stat()
+	if err != nil || !opened.Mode().IsRegular() || !os.SameFile(info, opened) {
+		return nil, errors.New("MR0 Session: file changed while opening")
+	}
+	b, err := io.ReadAll(io.LimitReader(f, limit+1))
+	if err != nil || int64(len(b)) > limit {
+		return nil, errors.New("MR0 Session: bounded file read failed")
+	}
+	return b, nil
+}
+func readManifest(dir string) (manifest, error) {
+	var m manifest
+	b, err := readRegular(filepath.Join(dir, "durable-head.json"), 32768)
+	if err != nil {
+		return m, err
+	}
+	d := json.NewDecoder(bytes.NewReader(b))
+	d.DisallowUnknownFields()
+	if err = d.Decode(&m); err != nil {
+		return m, err
+	}
+	var trailing any
+	if err = d.Decode(&trailing); err != io.EOF {
+		return m, errors.New("MR0 Session: manifest trailing data")
+	}
+	return m, nil
+}
+func validateStoreTree(dir string) error {
+	root, err := os.Lstat(dir)
+	if err != nil || !root.IsDir() || root.Mode()&os.ModeSymlink != 0 {
+		return errors.New("MR0 Session: store root is not a real directory")
+	}
+	allowed := map[string]bool{"STORE-FORMAT": true, "durable-head.json": true, "state": true, "checkpoints": true}
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+	for _, entry := range entries {
+		if !allowed[entry.Name()] || entry.Type()&os.ModeSymlink != 0 {
+			return errors.New("MR0 Session: unsupported store entry")
+		}
+		info, err := entry.Info()
+		if err != nil {
+			return err
+		}
+		dataDir := entry.Name() == "state" || entry.Name() == "checkpoints"
+		if dataDir != info.IsDir() || (!dataDir && !info.Mode().IsRegular()) {
+			return errors.New("MR0 Session: store entry shape")
+		}
+		if dataDir {
+			err = filepath.WalkDir(filepath.Join(dir, entry.Name()), func(path string, d fs.DirEntry, err error) error {
+				if err != nil {
+					return err
+				}
+				if d.Type()&os.ModeSymlink != 0 {
+					return errors.New("MR0 Session: recursive symlink")
+				}
+				i, e := d.Info()
+				if e != nil {
+					return e
+				}
+				if !i.IsDir() && !i.Mode().IsRegular() {
+					return errors.New("MR0 Session: special internal entry")
+				}
+				return nil
+			})
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+func openEnv(dir string) (*env, error) {
+	if err := validateStoreTree(dir); err != nil {
+		return nil, err
+	}
+	marker, err := readRegular(filepath.Join(dir, "STORE-FORMAT"), int64(len(format)+1))
+	if err != nil || string(marker) != format+"\n" {
+		return nil, errors.New("MR0 Session: store marker")
+	}
+	m, e := readManifest(dir)
+	if e != nil {
+		return nil, e
+	}
+	if m.Format != format || m.Context != context || m.Owner != owner || m.Engine != engine || m.Root == (common.Hash{}) || m.Root == types.EmptyRootHash || m.EngineNonce != 0 || m.EngineCode != common.HexToHash(immutableEngineKeccak) || m.CoordinatorCode != common.HexToHash(immutableCoordinatorKeccak) || m.Store != crypto.CreateAddress(owner, 0) || m.Index != crypto.CreateAddress(owner, 1) || m.Coordinator != crypto.CreateAddress(owner, uint64(2+len(m.Decoders))) || len(m.Decoders) == 0 || len(m.Decoders) > 16 || len(m.Decoders) != len(m.Names) || len(m.Decoders) != len(m.ResourceRoots) || len(m.Decoders) != len(m.Sizes) || m.PackageRoot == (common.Hash{}) || m.Instance == (common.Hash{}) || m.CheckpointRoot == (common.Hash{}) || m.CheckpointSHA == "" || m.SeedRoot == (common.Hash{}) || m.ArtifactRoot == (common.Hash{}) || m.ConfigRoot == (common.Hash{}) || m.RuntimeCode != common.HexToHash(immutableEngineKeccak) || m.Lifecycle < 1 || m.Lifecycle > 3 || m.Outcome != m.Lifecycle || m.Result != 0 || (m.Lifecycle == 3 && m.JavaRef == 0) || (m.Lifecycle != 3 && (m.JavaRef != 0 || m.JavaKind != 0 || len(m.JavaClass) != 0)) {
+		return nil, errors.New("MR0 Session: manifest binding")
+	}
+	kv, e := leveldb.New(filepath.Join(dir, "state"), 16, 16, "mr0-session-copy", false)
+	if e != nil {
+		return nil, e
+	}
+	d := rawdb.NewDatabase(kv)
+	t := triedb.NewDatabase(d, triedb.HashDefaults)
+	st, e := state.New(m.Root, state.NewDatabase(t, nil))
+	if e != nil {
+		return nil, e
+	}
+	// Readability does NOT prove a directory fsync. Count only actual operations
+	// within each process, never synthesize increments while reopening.
+	x := &env{disk: d, trie: t, st: st, root: m.Root, dir: dir, m: m, initialCounters: m.Counters, initialRoot: m.Root, fault: ownedFault()}
+	if st.GetCodeHash(engine) != m.EngineCode || st.GetNonce(engine) != m.EngineNonce {
+		return nil, errors.New("engine anchor mismatch")
+	}
+	if m.Store != (common.Address{}) && st.GetCodeHash(m.Store) != common.HexToHash("0xc8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896") {
+		return nil, errors.New("AS0 anchor mismatch")
+	}
+	if m.Index != (common.Address{}) && st.GetCodeHash(m.Index) != common.HexToHash("0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77") {
+		return nil, errors.New("ZI0 anchor mismatch")
+	}
+	if m.Coordinator != (common.Address{}) && st.GetCodeHash(m.Coordinator) != m.CoordinatorCode {
+		return nil, errors.New("coordinator anchor mismatch")
+	}
+	for i, d := range m.Decoders {
+		if st.GetCodeHash(d) != common.HexToHash("0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37") || len(m.Names[i]) == 0 {
+			return nil, errors.New("decoder anchor mismatch")
+		}
+	}
+	m.ProcessPIDs = append(m.ProcessPIDs, os.Getpid())
+	x.m = m
+	return x, nil
+}
+
+// reportPath is intentionally outside the reopened Session namespace. Receipts
+// are observer evidence, not accepted Session metadata or a reopen authority.
+func reportPath(world, name string) string {
+	p := filepath.Join(filepath.Dir(world), "reports", filepath.Base(world))
+	must(os.MkdirAll(p, 0700))
+	return filepath.Join(p, name)
+}
+func (e *env) close() {
+	writeJSON(reportPath(e.dir, fmt.Sprintf("process-%d.json", os.Getpid())), map[string]interface{}{"pid": os.Getpid(), "initialRoot": e.initialRoot, "finalRoot": e.root, "initialCounters": e.initialCounters, "finalCounters": e.m.Counters, "poisoned": e.poison != nil, "memoryDB": memoryMode})
+	e.trie.Close()
+	e.disk.Close()
+}
+func syncDir(dir string) error {
+	d, x := os.Open(dir)
+	if x != nil {
+		return x
+	}
+	defer d.Close()
+	return d.Sync()
+}
+func (e *env) reload(r common.Hash) error {
+	st, x := state.New(r, state.NewDatabase(e.trie, nil))
+	if x == nil {
+		e.st = st
+		e.root = r
+	}
+	return x
+}
+
+var errRenamed = errors.New("manifest renamed; reopen required")
+
+// faultAt is deliberately a storage-boundary switch, never an execution input.
+// It is enabled only by the public atomicity driver in a newly-created owned world.
+func (e *env) faultAt(point string) error {
+	if e.fault == point {
+		return fmt.Errorf("MR0 Session TEST fault at %s", point)
+	}
+	return nil
+}
+
+// writeManifest publishes exactly one already-staged head. Before Rename, no
+// authoritative byte is touched. After Rename its byte is authoritative even if
+// directory durability is ambiguous; callers must poison and require reopen.
+func (e *env) writeManifest() error {
+	if e.poison != nil {
+		return e.poison
+	}
+	if err := e.faultAt("manifest-before-create"); err != nil {
+		return err
+	}
+	candidate := e.m
+	candidate.Root = e.root
+	candidate.UpdatedUTC = time.Now().UTC().Format(time.RFC3339Nano)
+	// These are actual operations which the candidate Head describes. Keeping
+	// them staged also means a pre-Rename failure cannot alter the old Head.
+	candidate.Counters.ManifestFileSyncs++
+	candidate.Counters.ManifestRenames++
+	// Current directory sync happens AFTER publication and cannot truthfully
+	// appear in these bytes yet. Published counters are conservative snapshots;
+	// actual per-process IO is independently observed, not inferred on reopen.
+	b, x := json.MarshalIndent(candidate, "", "  ")
+	if x != nil {
+		return x
+	}
+	f, x := os.CreateTemp(e.dir, ".head-")
+	if x != nil {
+		return x
+	}
+	name := f.Name()
+	removeTemp := true
+	defer func() {
+		if removeTemp {
+			_ = os.Remove(name)
+		}
+	}()
+	if _, x = f.Write(append(b, '\n')); x == nil {
+		if x = e.faultAt("manifest-after-write"); x == nil {
+			x = f.Sync()
+		}
+		if x == nil {
+			x = e.faultAt("manifest-after-sync")
+		}
+	}
+	if closeErr := f.Close(); x == nil {
+		x = closeErr
+	}
+	if x != nil {
+		return x
+	}
+	if x = os.Rename(name, filepath.Join(e.dir, "durable-head.json")); x != nil {
+		return x
+	}
+	removeTemp = false
+	// Rename is the publication point. Never overwrite it from an error path.
+	e.m = candidate
+	if x = e.faultAt("manifest-after-rename"); x != nil {
+		e.poison = fmt.Errorf("%w: %v", errRenamed, x)
+		return e.poison
+	}
+	if x = syncDir(e.dir); x != nil {
+		e.poison = fmt.Errorf("%w: %v", errRenamed, x)
+		return e.poison
+	}
+	e.m.Counters.DirectorySyncs++ // Only after actual successful syncDir.
+	if x = e.faultAt("manifest-after-dirsync"); x != nil {
+		e.poison = fmt.Errorf("%w: %v", errRenamed, x)
+		return e.poison
+	}
+	return nil
+}
+
+// discardCheckpoint removes only a newly-created, still-unreferenced child.
+// Failure to clean it is harmless to Open: the Head remains the authority.
+func discardCheckpoint(path string, created bool) {
+	if created {
+		_ = os.Remove(path)
+	}
+}
+
+// persist is a two-phase publication. The old manifest bytes remain untouched
+// until the last Rename. Every earlier failure restores both live StateDB and
+// in-memory metadata to the old authority; no observer may publish a refusal.
+func (e *env) persist(old common.Hash) error {
+	if e.poison != nil {
+		return e.poison
+	}
+	start := time.Now()
+	previous, previousErr := readManifest(e.dir)
+	if previousErr != nil || previous.Root != old {
+		// Authority cannot safely be reread/reconciled. Do not leave a live
+		// candidate usable, and never overwrite the unreadable/divergent Head.
+		cause := errors.New("MR0 Session: prior Head/root differs")
+		if previousErr != nil {
+			cause = fmt.Errorf("MR0 Session: read prior Head: %w", previousErr)
+		}
+		e.pendingCheckpoint = nil
+		if restore := e.reload(old); restore != nil {
+			cause = errors.Join(cause, restore)
+		}
+		e.poison = cause
+		return cause
+	}
+	checkpointFinal := ""
+	checkpointCreated := false
+	restore := func() error {
+		discardCheckpoint(checkpointFinal, checkpointCreated)
+		e.pendingCheckpoint = nil
+		e.m = previous
+		if x := e.reload(old); x != nil {
+			e.poison = fmt.Errorf("MR0 Session: rollback reload: %w", x)
+			return e.poison
+		}
+		return nil
+	}
+	if len(e.pendingCheckpoint) != 0 {
+		digest, created, err := writeCheckpoint(e, e.pendingCheckpoint)
+		checkpointFinal = checkpointPath(e.dir, sha(e.pendingCheckpoint))
+		checkpointCreated = created
+		if err != nil || digest != e.m.CheckpointSHA {
+			if err == nil {
+				err = errors.New("MR0 Session: staged checkpoint digest differs")
+			}
+			if rollback := restore(); rollback != nil {
+				return rollback
+			}
+			return err
+		}
+	}
+	r, x := e.st.Commit(1, true, true)
+	if x == nil {
+		x = e.trie.Commit(r, false)
+	}
+	if x == nil {
+		x = e.disk.SyncKeyValue()
+		if x == nil {
+			e.m.Counters.TrieCodeSyncs++
+		}
+	}
+	if x == nil {
+		x = e.faultAt("trie-after-sync")
+	}
+	if x != nil {
+		if rollback := restore(); rollback != nil {
+			return rollback
+		}
+		return x
+	}
+	e.root = r
+	if x = e.writeManifest(); x != nil {
+		if errors.Is(x, errRenamed) {
+			e.pendingCheckpoint = nil
+			e.poison = x
+			return x
+		}
+		if rollback := restore(); rollback != nil {
+			return rollback
+		}
+		return x
+	}
+	if x = e.reload(r); x != nil {
+		// A valid renamed Head exists but this process cannot safely continue.
+		e.pendingCheckpoint = nil
+		e.poison = fmt.Errorf("MR0 Session: post-publication reload: %w", x)
+		return e.poison
+	}
+	e.pendingCheckpoint = nil
+	e.m.Counters.Commits++
+	e.m.Counters.CommitMS += time.Since(start).Milliseconds()
+	return nil
+}
+func diskSize(dir string) int64 {
+	var n int64
+	filepath.WalkDir(dir, func(p string, d fs.DirEntry, e error) error {
+		if e == nil && !d.IsDir() {
+			if q, x := d.Info(); x == nil {
+				n += q.Size()
+			}
+		}
+		return nil
+	})
+	return n
+}
+func (e *env) observeCall(r callResult) {
+	e.m.Counters.EVMCalls++
+	e.m.Counters.NestedCreateOpcodes += r.Trace.CREATE
+	e.m.Counters.SstoreOpcodes += r.Trace.SSTORE
+	e.m.Counters.Gas += r.Gas
+	if r.Gas > e.m.Counters.MaxGas {
+		e.m.Counters.MaxGas = r.Gas
+	}
+	e.m.Counters.NestedFrames += r.Trace.Nested
+	e.m.Counters.ReadSizes = append(e.m.Counters.ReadSizes, r.Trace.Reads...)
+
+}
+func (e *env) recordCall(r callResult, mutation bool) {
+	if mutation && r.Err == nil {
+		e.m.Counters.Mutations++
+	}
+}
+
+// boundedCall/boundedCreate deliberately use the public EVM Cancel mechanism,
+// rather than treating post-hoc elapsed-time counters as a watchdog.  The timer
+// only limits this owned COPY Session call; it never changes EVM gas or semantics.
+func callTimeout() time.Duration {
+	// A shorter timeout is only for this disposable driver and needs an explicit
+	// test marker; production invocations retain the ordinary 30 second bound.
+	if os.Getenv("MR0_ATOMICITY_TESTING") == "1" {
+		if ms, err := strconv.ParseInt(os.Getenv("MR0_ATOMICITY_TEST_TIMEOUT_MS"), 10, 64); err == nil && ms > 0 && ms <= 30000 {
+			return time.Duration(ms) * time.Millisecond
+		}
+	}
+	return 30 * time.Second
+}
+func boundedCall(to common.Address, data []byte, c *evmrun.Config) ([]byte, uint64, error, bool) {
+	v := evmrun.NewEnv(c)
+	rules := c.ChainConfig.Rules(v.Context.BlockNumber, v.Context.Random != nil, v.Context.Time)
+	c.State.Prepare(rules, c.Origin, c.Coinbase, &to, vm.ActivePrecompiles(rules), nil)
+	var cancelled atomic.Bool
+	fired := make(chan struct{})
+	timer := time.AfterFunc(callTimeout(), func() { cancelled.Store(true); v.Cancel(); close(fired) })
+	out, left, err := v.Call(c.Origin, to, data, c.GasLimit, uint256.MustFromBig(c.Value))
+	if !timer.Stop() {
+		<-fired
+	} // Join callback: no unsynchronised bool/Stop race.
+	return out, left, err, cancelled.Load()
+}
+func boundedCreate(code []byte, c *evmrun.Config) ([]byte, common.Address, uint64, error, bool) {
+	v := evmrun.NewEnv(c)
+	rules := c.ChainConfig.Rules(v.Context.BlockNumber, v.Context.Random != nil, v.Context.Time)
+	c.State.Prepare(rules, c.Origin, c.Coinbase, nil, vm.ActivePrecompiles(rules), nil)
+	var cancelled atomic.Bool
+	fired := make(chan struct{})
+	timer := time.AfterFunc(callTimeout(), func() { cancelled.Store(true); v.Cancel(); close(fired) })
+	out, addr, left, err := v.Create(c.Origin, code, c.GasLimit, uint256.MustFromBig(c.Value))
+	if !timer.Stop() {
+		<-fired
+	}
+	return out, addr, left, err, cancelled.Load()
+}
+func (e *env) call(from, to common.Address, data []byte, gas uint64) callResult {
+	if e.poison != nil {
+		return callResult{Err: e.poison}
+	}
+	if gas == 0 || gas > ordinaryGas {
+		return callResult{Err: errors.New("MR0 Session: gas outside ordinary 1..100000000")}
+	}
+	old := e.root
+	tr := callTrace{Reader: e.m.Coordinator}
+	started := time.Now()
+	out, left, x, timedOut := boundedCall(to, data, cfg(e.st, from, gas, &tr))
+	ms := time.Since(started).Milliseconds()
+	if ms > e.m.Counters.MaxCallMS {
+		e.m.Counters.MaxCallMS = ms
+	}
+	if timedOut {
+		// Cancel may return nil from the EVM. Restore the Session state anyway.
+		if restoreErr := e.reload(old); restoreErr != nil {
+			e.poison = restoreErr
+			x = restoreErr
+		} else {
+			x = errors.Join(x, errors.New("MR0 Session: public EVM call cancelled by owned deadline"))
+		}
+		e.m.Counters.TimeoutCancels++
+		out = nil // Host cancellation is not an EVM revert or successful result.
+	}
+	r := callResult{Out: append([]byte(nil), out...), Gas: gas - left, Err: x, Trace: tr, ElapsedMS: ms}
+	e.observeCall(r)
+	return r
+}
+func (e *env) create(from common.Address, code []byte, gas uint64) (common.Address, []byte, callResult) {
+	if e.poison != nil {
+		return common.Address{}, nil, callResult{Err: e.poison}
+	}
+	if gas == 0 || gas > ordinaryGas {
+		return common.Address{}, nil, callResult{Err: errors.New("MR0 Session: gas outside ordinary 1..100000000")}
+	}
+	old := e.root
+	var tr callTrace
+	started := time.Now()
+	out, a, left, x, timedOut := boundedCreate(code, cfg(e.st, from, gas, &tr))
+	ms := time.Since(started).Milliseconds()
+	if ms > e.m.Counters.MaxCallMS {
+		e.m.Counters.MaxCallMS = ms
+	}
+	if timedOut {
+		if restoreErr := e.reload(old); restoreErr != nil {
+			e.poison = restoreErr
+			x = restoreErr
+		} else {
+			x = errors.Join(x, errors.New("MR0 Session: public EVM CREATE cancelled by owned deadline"))
+		}
+		e.m.Counters.TimeoutCancels++
+		out = nil
+		a = common.Address{} // No cancelled CREATE output/address is published.
+	}
+	r := callResult{Out: append([]byte(nil), out...), Gas: gas - left, Err: x, Trace: tr, ElapsedMS: ms}
+	e.observeCall(r)
+	return a, out, r
+}
+func commitCall(e *env, r callResult) error {
+	e.recordCall(r, true)
+	if r.Err != nil {
+		return r.Err
+	}
+	old := e.root
+	return e.persist(old)
+}
+func view(e *env, a abi.ABI, to common.Address, name string, args ...interface{}) []interface{} {
+	d, x := a.Pack(name, args...)
+	must(x)
+	r := e.call(owner, to, d, ordinaryGas)
+	e.recordCall(r, false)
+	if r.Err != nil {
+		panic(fmt.Sprintf("view %s %v 0x%x", name, r.Err, r.Out))
+	}
+	v, x := a.Unpack(name, r.Out)
+	must(x)
+	return v
+}
+func mutate(e *env, a abi.ABI, to common.Address, name string, args ...interface{}) callResult {
+	d, x := a.Pack(name, args...)
+	must(x)
+	r := e.call(owner, to, d, ordinaryGas)
+	if r.Err == nil {
+		x = commitCall(e, r)
+	} else {
+		e.recordCall(r, false)
+	}
+	if x != nil {
+		r.Err = x
+		r.Out = nil
+	}
+	return r
+}
+func pageCommit(at common.Address, i uint32, raw []byte) common.Hash {
+	return crypto.Keccak256Hash(abiPack([]string{"bytes32", "address", "uint32", "uint32", "bytes32"}, crypto.Keccak256Hash([]byte("MC-AS0/page/v1")), at, i, uint32(len(raw)), crypto.Keccak256Hash(raw)))
+}
+func loadCoord(path string) (artifact, abi.ABI, []byte, []byte) {
+	b, e := os.ReadFile(path)
+	must(e)
+	var raw struct {
+		ABI          json.RawMessage   `json:"abi"`
+		Bytecode     string            `json:"bytecode"`
+		Deployed     string            `json:"deployedBytecode"`
+		Compiler     interface{}       `json:"compiler"`
+		SourceHashes map[string]string `json:"sourceHashes"`
+		CodeHashes   struct {
+			InitSHA    string `json:"initSHA256"`
+			RuntimeSHA string `json:"runtimeSHA256"`
+		} `json:"codeHashes"`
+	}
+	must(json.Unmarshal(b, &raw))
+	ca, e := abi.JSON(bytes.NewReader(raw.ABI))
+	must(e)
+	init, e := hex.DecodeString(strings.TrimPrefix(raw.Bytecode, "0x"))
+	must(e)
+	run, e := hex.DecodeString(strings.TrimPrefix(raw.Deployed, "0x"))
+	must(e)
+	a := artifact{ABI: raw.ABI, Bytecode: raw.Bytecode, Deployed: raw.Deployed, Compiler: raw.Compiler, SourceSHA: raw.SourceHashes[filepath.Base(path[:len(path)-len(filepath.Ext(path))]+".sol")], InitBytes: len(init), RuntimeBytes: len(run), InitSHA: raw.CodeHashes.InitSHA, RuntimeSHA: raw.CodeHashes.RuntimeSHA}
+	return a, ca, init, run
+}
+
+var engineABI abi.ABI
+var engineRun []byte
+var engineHash common.Hash
+
+func installEngine(e *env) {
+	if len(engineRun) != 296529 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
+		panic("MR0 Session immutable engine pin")
+	}
+	e.st.CreateAccount(engine)
+	e.st.SetCode(engine, engineRun, tracing.CodeChangeUnspecified)
+	e.m.EngineCode = crypto.Keccak256Hash(engineRun)
+	e.m.EngineNonce = e.st.GetNonce(engine)
+	e.m.Stage = "local-engine-install"
+	old := e.root
+	must(e.persist(old))
+	if e.m.EngineNonce != 0 {
+		panic("unexpected engine nonce")
+	}
+}
+
+func deployArchive(e *env, raw []byte) (common.Address, abi.ABI) {
+	a, x := as0.ABI()
+	must(x)
+	init, x := as0.InitCode()
+	must(x)
+	run, x := as0.Runtime()
+	must(x)
+	args, x := a.Pack("", uint32(len(raw)))
+	must(x)
+	at, out, r := e.create(owner, append(init, args...), ordinaryGas)
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	if !bytes.Equal(out, run) || !bytes.Equal(e.st.GetCode(at), run) {
+		panic("AS0 runtime")
+	}
+	e.m.Store = at
+	e.m.Counters.Creates++
+	must(commitCall(e, r))
+	for off, i := 0, uint32(0); off < len(raw); i++ {
+		n := 8192
+		if len(raw)-off < n {
+			n = len(raw) - off
+		}
+		p := raw[off : off+n]
+		if off == 0 {
+			d, _ := a.Pack("append", uint32(off), p, common.Hash{})
+			before := e.st.Copy().IntermediateRoot(true)
+			bad := e.call(owner, at, d, ordinaryGas)
+			after := e.st.Copy().IntermediateRoot(true)
+			e.recordCall(bad, false)
+			f := failureFrom("as0-post-create-wrong-pi", a, bad, before, after)
+			f.Detail = "CREATE observed before AS0Error(8); comparison is before any host restore"
+			writeJSON(reportPath(e.dir, "direct-evm-failure.json"), f)
+			if bad.Err == nil || bad.Trace.CREATE == 0 || before != after {
+				panic("direct rollback probe")
+			}
+		}
+		r := mutate(e, a, at, "append", uint32(off), p, pageCommit(at, i, p))
+		if r.Err != nil {
+			panic(fmt.Sprintf("append: %v 0x%x", r.Err, r.Out))
+		}
+		off += n
+	}
+	chain := view(e, a, at, "chainCommitment")[0].([32]byte)
+	r = mutate(e, a, at, "seal", uint32(len(raw)), chain)
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	return at, a
+}
+func deployIndex(e *env, store common.Address, content common.Hash) (common.Address, abi.ABI, common.Hash) {
+	a, x := zi0.ABI()
+	must(x)
+	init, x := zi0.InitCode()
+	must(x)
+	run, x := zi0.Runtime()
+	must(x)
+	args, x := a.Pack("", store, [32]byte(content))
+	must(x)
+	at, out, r := e.create(owner, append(init, args...), ordinaryGas)
+	if r.Err != nil {
+		panic(fmt.Sprintf("index create %v 0x%x", r.Err, r.Out))
+	}
+	if !bytes.Equal(out, run) {
+		panic("ZI runtime")
+	}
+	e.m.Index = at
+	e.m.Counters.Creates++
+	must(commitCall(e, r))
+	r = mutate(e, a, at, "discover")
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	for {
+		next := view(e, a, at, "nextEntry")[0].(uint32)
+		count := view(e, a, at, "count")[0].(uint32)
+		if next == count {
+			break
+		}
+		cursor := view(e, a, at, "cdCursor")[0].(uint32)
+		rolling := view(e, a, at, "rolling")[0].([32]byte)
+		units := uint16(64)
+		if count-next < uint32(units) {
+			units = uint16(count - next)
+		}
+		r = mutate(e, a, at, "scan", next, cursor, rolling, units)
+		if r.Err != nil {
+			panic(r.Err)
+		}
+	}
+	count := view(e, a, at, "count")[0].(uint32)
+	cursor := view(e, a, at, "cdCursor")[0].(uint32)
+	rolling := view(e, a, at, "rolling")[0].([32]byte)
+	r = mutate(e, a, at, "finish", count, cursor, rolling)
+	if r.Err != nil {
+		panic(r.Err)
+	}
+	root := common.Hash(view(e, a, at, "finalRoot")[0].([32]byte))
+	e.m.IndexRoot = root
+	return at, a, root
+}
+func createDecoder(e *env, index common.Address, indexRoot common.Hash, name []byte, finish bool) (common.Address, common.Hash, uint32) {
+	a, x := di0.ABI()
+	must(x)
+	init, x := di0.InitCode()
+	must(x)
+	run, x := di0.Runtime()
+	must(x)
+	args, x := a.Pack("", index, [32]byte(indexRoot), name)
+	must(x)
+	at, out, r := e.create(owner, append(init, args...), ordinaryGas)
+	if r.Err != nil {
+		panic(fmt.Sprintf("DI create %s %v 0x%x", name, r.Err, r.Out))
+	}
+	if !bytes.Equal(out, run) {
+		panic("DI runtime")
+	}
+	e.m.Counters.Creates++
+	must(commitCall(e, r))
+	size := view(e, a, at, "plainSize")[0].(uint32)
+	if !finish {
+		return at, common.Hash{}, size
+	}
+	for view(e, a, at, "phase")[0].(uint8) == 1 {
+		work := view(e, a, at, "work")[0].(uint32)
+		r = mutate(e, a, at, "step", work, uint16(128))
+		if r.Err != nil {
+			panic(fmt.Sprintf("step %s %v 0x%x", name, r.Err, r.Out))
+		}
+	}
+	for view(e, a, at, "phase")[0].(uint8) != 4 {
+		page := view(e, a, at, "publishedPages")[0].(uint8)
+		roll := view(e, a, at, "publicationRolling")[0].([32]byte)
+		r = mutate(e, a, at, "publish", page, roll, uint8(1))
+		if r.Err != nil {
+			panic(fmt.Sprintf("publish %s %v 0x%x", name, r.Err, r.Out))
+		}
+	}
+	root := common.Hash(view(e, a, at, "finalRoot")[0].([32]byte))
+	return at, root, size
+}
+func packageRoot(coord common.Address, decs []common.Address, names [][]byte, index common.Address, indexRoot common.Hash, roots []common.Hash, sizes []uint32) common.Hash {
+	diHash := common.HexToHash("0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37")
+	ziHash := common.HexToHash("0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77")
+	enginePin := engineHash
+	rolling := crypto.Keccak256Hash(abiPack([]string{"bytes32", "address", "address", "address", "bytes32", "bytes32", "bytes32", "uint8"}, packageDomain, coord, owner, engine, enginePin, diHash, ziHash, uint8(len(decs))))
+	var total uint32
+	for i := range decs {
+		total += sizes[i]
+		rolling = crypto.Keccak256Hash(abiPack([]string{"bytes32", "bytes32", "uint8", "address", "bytes32", "bytes32", "bytes32", "uint32"}, resourceDomain, rolling, uint8(i), decs[i], crypto.Keccak256Hash(names[i]), indexRoot, roots[i], sizes[i]))
+	}
+	return crypto.Keccak256Hash(abiPack([]string{"bytes32", "bytes32", "uint32", "address", "bytes32"}, packageDomain, rolling, total, index, indexRoot))
+}
+func deployCoordinator(e *env, art artifact, a abi.ABI, init, run []byte, decs []common.Address, names [][]byte, roots []common.Hash, sizes []uint32, assertOverride *common.Hash, from common.Address) (common.Address, common.Hash, callResult) {
+	pred := crypto.CreateAddress(from, e.st.GetNonce(from))
+	p := packageRoot(pred, decs, names, e.m.Index, e.m.IndexRoot, roots, sizes)
+	assert := p
+	if assertOverride != nil {
+		assert = *assertOverride
+	}
+	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
+	must(x)
+	if len(init)+len(args) > 49152 {
+		panic(fmt.Sprintf("complete init %d", len(init)+len(args)))
+	}
+	at, out, r := e.create(from, append(init, args...), ordinaryGas)
+	if r.Err == nil {
+		if at != pred || !bytes.Equal(out, run) {
+			panic("coordinator runtime")
+		}
+		e.m.Coordinator = at
+		e.m.CoordinatorCode = crypto.Keccak256Hash(run)
+		e.m.PackageRoot = p
+		e.m.Instance = common.Hash(view(e, a, at, "instanceId")[0].([32]byte))
+		e.m.Total = view(e, a, at, "totalClassBytes")[0].(uint32)
+		e.m.Counters.Creates++
+		e.recordCall(r, true)
+		old := e.root
+		must(e.persist(old))
+	}
+	return at, p, r
+}
+func repeatHash(h common.Hash, n int) []common.Hash {
+	x := make([]common.Hash, n)
+	for i := range x {
+		x[i] = h
+	}
+	return x
+}
+func setupResources(e *env, raw []byte, names [][]byte, finishLast bool) (artifact, abi.ABI, []byte, []byte) {
+	store, aa := deployArchive(e, raw)
+	content := common.Hash(view(e, aa, store, "contentCommitment")[0].([32]byte))
+	index, _, ir := deployIndex(e, store, content)
+	var ds []common.Address
+	var roots []common.Hash
+	var sizes []uint32
+	for i, n := range names {
+		finish := true
+		if !finishLast && i == len(names)-1 {
+			finish = false
+		}
+		d, r, s := createDecoder(e, index, ir, n, finish)
+		ds = append(ds, d)
+		roots = append(roots, r)
+		sizes = append(sizes, s)
+	}
+	e.m.Decoders = ds
+	e.m.Names = names
+	e.m.ResourceRoots = roots
+	e.m.Sizes = sizes
+	return artifact{}, abi.ABI{}, nil, nil
+}
+func loadArtifact(path string) (artifact, abi.ABI, []byte, []byte) { return loadCoord(path) }
+func decodeCoordinator(vabi abi.ABI, ca abi.ABI, method string, out []byte) (decoded, error) {
+	vals, x := ca.Unpack(method, out)
+	if x != nil || len(vals) != 1 {
+		return decoded{}, fmt.Errorf("coordinator unpack: %v", x)
+	}
+	engineOut, ok := vals[0].([]byte)
+	if !ok {
+		return decoded{}, errors.New("coordinator outer bytes type")
+	}
+	// ABI Unpack is intentionally followed by a re-pack equality check. This
+	// refuses trailing bytes, alternate offsets and non-canonical dynamic tails.
+	canonicalOuter, x := ca.Methods[method].Outputs.Pack(engineOut)
+	if x != nil || !bytes.Equal(out, canonicalOuter) {
+		return decoded{}, errors.New("noncanonical coordinator outer ABI")
+	}
+	var d decoded
+	if method == "startMain" {
+		var q struct {
+			Result     slice
+			Checkpoint []byte
+		}
+		x = vabi.UnpackIntoInterface(&q, "startMain", engineOut)
+		d = decoded{q.Result, append([]byte(nil), q.Checkpoint...)}
+	} else {
+		var q struct {
+			Result          slice
+			ChildCheckpoint []byte
+		}
+		x = vabi.UnpackIntoInterface(&q, "resumeMain", engineOut)
+		d = decoded{q.Result, append([]byte(nil), q.ChildCheckpoint...)}
+	}
+	if x != nil {
+		return decoded{}, x
+	}
+	tuple := wireSlice{d.Slice.Schema, d.Slice.Lifecycle, d.Slice.Outcome, d.Slice.Epoch, d.Slice.CheckpointRoot, d.Slice.MachineStateRoot, d.Slice.TotalJvmSteps, d.Slice.TotalInternalSteps, d.Slice.ExecutedJvmSteps, d.Slice.ExecutedInternalSteps, d.Slice.Result, d.Slice.JavaKind, d.Slice.JavaRef, d.Slice.JavaClass, d.Slice.VFSStateRoot, d.Slice.InodeCount, d.Slice.DescriptorCount, d.Slice.LogicalFileBytes}
+	canonicalInner, x := vabi.Methods[method].Outputs.Pack(tuple, d.Checkpoint)
+	if x != nil || !bytes.Equal(engineOut, canonicalInner) {
+		return decoded{}, fmt.Errorf("noncanonical engine slice ABI (pack=%v original=%d canonical=%d)", x, len(engineOut), len(canonicalInner))
+	}
+	return d, nil
+}
+func copiedLogs(in []*types.Log) []*types.Log {
+	out := make([]*types.Log, len(in))
+	for i, log := range in {
+		if log != nil {
+			x := *log
+			x.Topics = append([]common.Hash(nil), log.Topics...)
+			x.Data = append([]byte(nil), log.Data...)
+			out[i] = &x
+		}
+	}
+	return out
+}
+
+// validateDecoded makes the typed main contract a transport invariant rather
+// than trusting a manifest flag. It validates the sole nested engine event
+// against the exact ABI result before any blob/trie publication.
+func validateDecoded(e *env, vabi abi.ABI, method string, priorEpoch uint64, beforeLogs int, d decoded, r *callResult, maxJVM uint64, maxInternal uint32) error {
+	s := d.Slice
+	if s.Schema != 1 || s.Epoch == 0 || s.CheckpointRoot == (common.Hash{}) || s.MachineStateRoot == (common.Hash{}) || s.VFSStateRoot == (common.Hash{}) || s.ExecutedJvmSteps > s.TotalJvmSteps || uint64(s.ExecutedInternalSteps) > s.TotalInternalSteps || s.ExecutedJvmSteps > maxJVM || s.ExecutedInternalSteps > maxInternal || s.InodeCount < 3 || s.InodeCount > 64 || s.DescriptorCount > 32 || s.LogicalFileBytes > 65536 || len(s.JavaClass) > 65535 || s.Result != 0 || len(d.Checkpoint) == 0 || len(d.Checkpoint) > 1<<20 || crypto.Keccak256Hash(d.Checkpoint) != s.CheckpointRoot {
+		return errors.New("MR0 Session: invalid typed main slice")
+	}
+	if (method == "startMain" && s.Epoch != 1) || (method == "resumeMain" && (priorEpoch == ^uint64(0) || s.Epoch != priorEpoch+1)) {
+		return errors.New("MR0 Session: epoch progression differs")
+	}
+	switch s.Lifecycle {
+	case 1:
+		if s.Outcome != 1 || s.JavaKind != 0 || s.JavaRef != 0 || len(s.JavaClass) != 0 {
+			return errors.New("MR0 Session: running outcome differs")
+		}
+	case 2:
+		if s.Outcome != 2 || s.JavaKind != 0 || s.JavaRef != 0 || len(s.JavaClass) != 0 {
+			return errors.New("MR0 Session: VOID outcome differs")
+		}
+	case 3:
+		if s.Outcome != 3 || s.JavaRef == 0 || s.JavaKind > 12 || (s.JavaKind == 0) != (len(s.JavaClass) != 0) {
+			return errors.New("MR0 Session: typed Java exception differs")
+		}
+	default:
+		return errors.New("MR0 Session: lifecycle differs")
+	}
+	event, ok := vabi.Events["CheckpointCommitted"]
+	if !ok {
+		return errors.New("MR0 Session: engine event ABI absent")
+	}
+	data, err := event.Inputs.NonIndexed().Pack(s.CheckpointRoot, s.MachineStateRoot, s.VFSStateRoot, s.Lifecycle, s.TotalJvmSteps, s.TotalInternalSteps)
+	logs := e.st.Logs()
+	if err != nil || len(logs) != beforeLogs+1 || logs[beforeLogs] == nil || logs[beforeLogs].Address != engine || len(logs[beforeLogs].Topics) != 3 || logs[beforeLogs].Topics[0] != event.ID || logs[beforeLogs].Topics[1] != e.m.Instance || logs[beforeLogs].Topics[2] != common.BigToHash(new(big.Int).SetUint64(s.Epoch)) || !bytes.Equal(logs[beforeLogs].Data, data) {
+		return errors.New("MR0 Session: nested CheckpointCommitted differs")
+	}
+	r.Logs = copiedLogs(logs[beforeLogs:])
+	return nil
+}
+func checkpointPath(dir, digest string) string {
+	return filepath.Join(dir, "checkpoints", digest+".bin")
+}
+func writeCheckpoint(e *env, b []byte) (string, bool, error) {
+	if len(b) == 0 || len(b) > 1<<20 {
+		return "", false, errors.New("MR0 Session: checkpoint cap")
+	}
+	digest := sha(b)
+	base := filepath.Join(e.dir, "checkpoints")
+	if err := os.MkdirAll(base, 0700); err != nil {
+		return "", false, err
+	}
+	final := checkpointPath(e.dir, digest)
+	if old, err := os.ReadFile(final); err == nil {
+		if !bytes.Equal(old, b) {
+			return "", false, errors.New("MR0 Session: checkpoint digest collision")
+		}
+		return digest, false, nil
+	} else if !errors.Is(err, os.ErrNotExist) {
+		return "", false, err
+	}
+	if err := e.faultAt("checkpoint-before-create"); err != nil {
+		return "", false, err
+	}
+	tmp, err := os.CreateTemp(base, ".checkpoint-")
+	if err != nil {
+		return "", false, err
+	}
+	name := tmp.Name()
+	removeTemp := true
+	defer func() {
+		if removeTemp {
+			_ = os.Remove(name)
+		}
+	}()
+	if _, err = tmp.Write(b); err == nil {
+		if err = e.faultAt("checkpoint-after-write"); err == nil {
+			err = tmp.Sync()
+		}
+		if err == nil {
+			e.m.Counters.CheckpointFileSyncs++
+			err = e.faultAt("checkpoint-after-sync")
+		}
+	}
+	if closeErr := tmp.Close(); err == nil {
+		err = closeErr
+	}
+	if err != nil {
+		return "", false, err
+	}
+	if err = os.Rename(name, final); err != nil {
+		return "", false, err
+	}
+	removeTemp = false
+	e.m.Counters.CheckpointRenames++
+	if err = e.faultAt("checkpoint-after-rename"); err != nil {
+		return "", true, err
+	}
+	if err = syncDir(base); err != nil {
+		return "", true, err
+	}
+	if err = syncDir(e.dir); err != nil {
+		return "", true, err
+	}
+	e.m.Counters.CheckpointDirectorySyncs += 2
+	if err = e.faultAt("checkpoint-after-dirsync"); err != nil {
+		return "", true, err
+	}
+	return digest, true, nil
+}
+func readCheckpoint(e *env) []byte {
+	b, x := os.ReadFile(checkpointPath(e.dir, e.m.CheckpointSHA))
+	must(x)
+	if sha(b) != e.m.CheckpointSHA {
+		panic("checkpoint hash")
+	}
+	return b
+}
+
+type engineHead struct {
+	Owner                                                                                 common.Address
+	Epoch                                                                                 uint64
+	CheckpointRoot, MachineRoot, VFSRoot, SeedRoot, ArtifactRoot, ConfigRoot, RuntimeCode common.Hash
+	Lifecycle                                                                             uint8
+}
+
+func strictEngineHead(e *env, a abi.ABI, s slice) (engineHead, error) {
+	var h engineHead
+	data, err := a.Pack("head", [32]byte(e.m.Instance))
+	if err != nil {
+		return h, err
+	}
+	r := e.call(owner, engine, data, ordinaryGas)
+	e.recordCall(r, false)
+	if r.Err != nil {
+		return h, fmt.Errorf("MR0 Session: engine head EVM failure: %w", r.Err)
+	}
+	values, err := a.Unpack("head", r.Out)
+	if err != nil || len(values) != 10 {
+		return h, errors.New("MR0 Session: malformed engine head ABI")
+	}
+	canonical, err := a.Methods["head"].Outputs.Pack(values...)
+	if err != nil || !bytes.Equal(r.Out, canonical) {
+		return h, errors.New("MR0 Session: noncanonical engine head ABI")
+	}
+	var ok bool
+	if h.Owner, ok = values[0].(common.Address); !ok {
+		return h, errors.New("MR0 Session: engine head owner type")
+	}
+	if h.Epoch, ok = values[1].(uint64); !ok {
+		return h, errors.New("MR0 Session: engine head epoch type")
+	}
+	for i, p := range []*common.Hash{&h.CheckpointRoot, &h.MachineRoot, &h.VFSRoot, &h.SeedRoot, &h.ArtifactRoot, &h.ConfigRoot, &h.RuntimeCode} {
+		v, yes := values[i+2].([32]byte)
+		if !yes {
+			return h, errors.New("MR0 Session: engine head hash type")
+		}
+		*p = common.Hash(v)
+	}
+	if h.Lifecycle, ok = values[9].(uint8); !ok {
+		return h, errors.New("MR0 Session: engine head lifecycle type")
+	}
+	if h.Owner != e.m.Coordinator || h.Epoch != s.Epoch || h.CheckpointRoot != s.CheckpointRoot || h.MachineRoot != s.MachineStateRoot || h.VFSRoot != s.VFSStateRoot || h.Lifecycle != s.Lifecycle || h.SeedRoot == (common.Hash{}) || h.ArtifactRoot == (common.Hash{}) || h.ConfigRoot == (common.Hash{}) || h.RuntimeCode != engineHash {
+		return h, errors.New("MR0 Session: engine head binding differs")
+	}
+	return h, nil
+}
+func applyDecoded(e *env, d decoded) {
+	e.m.Slices++
+	e.m.Epoch = d.Slice.Epoch
+	e.m.CheckpointRoot = d.Slice.CheckpointRoot
+	e.m.Lifecycle = d.Slice.Lifecycle
+	e.m.Result = d.Slice.Result
+	e.m.MachineRoot = d.Slice.MachineStateRoot
+	e.m.VFSRoot = d.Slice.VFSStateRoot
+	e.m.JVM = d.Slice.TotalJvmSteps
+	e.m.Internal = d.Slice.TotalInternalSteps
+	e.m.Outcome = d.Slice.Outcome
+	e.m.JavaKind = d.Slice.JavaKind
+	e.m.JavaRef = d.Slice.JavaRef
+	e.m.JavaClass = append([]byte(nil), d.Slice.JavaClass...)
+	if len(d.Checkpoint) == 0 || len(d.Checkpoint) > 1<<20 || crypto.Keccak256Hash(d.Checkpoint) != d.Slice.CheckpointRoot {
+		panic("invalid EVM checkpoint bytes")
+	}
+	// Retain only a digest until persist has written the blob and committed the
+	// matching EVM root. A publication error must not expose this candidate.
+	e.m.CheckpointSHA = sha(d.Checkpoint)
+	e.pendingCheckpoint = append([]byte(nil), d.Checkpoint...)
+
+}
+func coordinatorCall(e *env, ca, vabi abi.ABI, method string, args ...interface{}) (callResult, decoded) {
+	data, x := ca.Pack(method, args...)
+	must(x)
+	old, priorEpoch := e.root, e.m.Epoch
+	beforeLogs := len(e.st.Logs())
+	r := e.call(owner, e.m.Coordinator, data, ordinaryGas)
+	if r.Err != nil {
+		e.recordCall(r, false)
+		return r, decoded{}
+	}
+	d, x := decodeCoordinator(vabi, ca, method, r.Out)
+	if x == nil {
+		if method == "startMain" {
+			x = validateDecoded(e, vabi, method, priorEpoch, beforeLogs, d, &r, args[2].(uint64), args[3].(uint32))
+		} else {
+			x = validateDecoded(e, vabi, method, priorEpoch, beforeLogs, d, &r, args[4].(uint64), args[5].(uint32))
+		}
+	}
+	var head engineHead
+	if x == nil {
+		head, x = strictEngineHead(e, vabi, d.Slice)
+	}
+	if x != nil {
+		// This is a host transport refusal after a successful EVM execution:
+		// restore state and expose gas only, never an EVM revert/result/blob/log.
+		must(e.reload(old))
+		r.Err = x
+		r.Out = nil
+		r.Logs = nil
+		e.recordCall(r, false)
+		return r, decoded{}
+	}
+	applyDecoded(e, d)
+	e.m.SeedRoot, e.m.ArtifactRoot, e.m.ConfigRoot, e.m.RuntimeCode = head.SeedRoot, head.ArtifactRoot, head.ConfigRoot, head.RuntimeCode
+	e.recordCall(r, true)
+	if x = e.persist(old); x != nil {
+		r.Err = x
+		r.Out = nil
+		r.Logs = nil
+		return r, decoded{}
+	}
+	// Durable observer receipt: emitted only after the matching blob/trie/manifest
+	// publication succeeded. It cannot become Session metadata or recovery input.
+	writeJSON(reportPath(e.dir, fmt.Sprintf("slice-%020d.json", d.Slice.Epoch)), map[string]interface{}{"method": method, "epoch": d.Slice.Epoch, "gasUsed": r.Gas, "elapsedMS": r.ElapsedMS, "outerABI": "0x" + hex.EncodeToString(r.Out), "checkpointSHA256": e.m.CheckpointSHA, "checkpointBytes": len(d.Checkpoint), "slice": d.Slice, "nestedLogs": r.Logs, "resourceReadReceipts": r.Trace.ResourceReads, "resourceHashes": r.Trace.ResourceHashes, "actualDI0ReadSizes": r.Trace.Reads, "nestedFrames": r.Trace.Nested, "sstoreOpcodes": r.Trace.SSTORE})
+	return r, d
+}
+func failureFrom(label string, a abi.ABI, r callResult, before, after common.Hash) failure {
+	f := failure{Label: label, Selector: selector(r.Out), Name: errorName(a, r.Out), Gas: r.Gas, RootBefore: before, RootBeforeHostRestore: after, RootEqualBeforeHostRestore: before == after, CreateOpcodes: r.Trace.CREATE, SstoreOpcodes: r.Trace.SSTORE}
+	if len(r.Out) == 36 {
+		f.Code = new(big.Int).SetBytes(r.Out[4:]).Uint64()
+	}
+	return f
+}
+func selector(b []byte) string {
+	if len(b) < 4 {
+		return "0x"
+	}
+	return "0x" + hex.EncodeToString(b[:4])
+}
+func errorName(a abi.ABI, b []byte) string {
+	if len(b) < 4 {
+		return "non-selector"
+	}
+	for n, e := range a.Errors {
+		if bytes.Equal(b[:4], e.ID[:4]) {
+			return n
+		}
+	}
+	return "unknown"
+}
+func writeFailureReceipt(dir, name string, r callResult, before, after common.Hash) {
+	words := []string{}
+	for at := 4; at+32 <= len(r.Out); at += 32 {
+		words = append(words, new(big.Int).SetBytes(r.Out[at:at+32]).String())
+	}
+	writeJSON(reportPath(dir, name), map[string]interface{}{
+		"error": fmt.Sprint(r.Err), "selector": selector(r.Out), "revertHex": "0x" + hex.EncodeToString(r.Out), "uint256Words": words, "gas": r.Gas,
+		"rootBefore": before, "rootAfter": after, "rootUnchanged": before == after,
+		"diagnostic": missingDiagnostic(r.Out), "resourceReadReceipts": r.Trace.ResourceReads, "resourceHashes": r.Trace.ResourceHashes, "checkpointBytes": 0, "candidateHead": "", "candidateCheckpoint": "", "candidateRoot": "", "actualDI0ReadSizes": r.Trace.Reads,
+	})
+}
+func writeJSON(path string, v interface{}) {
+	b, e := json.MarshalIndent(v, "", "  ")
+	must(e)
+	must(os.WriteFile(path, append(b, '\n'), 0600))
+}
+func coordGetter(e *env, a abi.ABI, name string) interface{} {
+	return view(e, a, e.m.Coordinator, name)[0]
+}
+
+func setupChain(dir, artPath, zipPath string, q uint64, input int32) {
+	_ = input
+	e, x := newEnv(dir)
+	must(x)
+	defer e.close()
+	e.m.Quantum = q
+	e.m.ProcessPIDs = []int{os.Getpid()}
+	installEngine(e)
+	raw, x := os.ReadFile(zipPath)
+	must(x)
+	if filepath.Base(zipPath) == "minecraft_server.1.12.2.jar" && (len(raw) != 30222121 || sha(raw) != "fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e") {
+		panic("official opaque artifact hash differs")
+	}
+	names := fixtureNames(zipPath)
+	setupResources(e, raw, names, true)
+	art, ca, init, run := loadArtifact(artPath)
+	at, p, r := deployCoordinator(e, art, ca, init, run, e.m.Decoders, names, e.m.ResourceRoots, e.m.Sizes, nil, owner)
+	if r.Err != nil {
+		panic(fmt.Sprintf("coord create %v 0x%x", r.Err, r.Out))
+	}
+	e.m.Coordinator = at
+	e.m.CoordinatorCode = crypto.Keccak256Hash(run)
+	e.m.PackageRoot = p
+	e.m.Instance = common.Hash(coordGetter(e, ca, "instanceId").([32]byte))
+	e.m.Total = coordGetter(e, ca, "totalClassBytes").(uint32)
+	e.m.Stage = "coordinator-created"
+	must(e.writeManifest())
+	vabi := engineABI
+	before := e.root
+	r, d := coordinatorCall(e, ca, vabi, "startMain", [32]byte(p), uint8(0), q, uint32(4096))
+	if r.Err != nil {
+		// A refusal is observer evidence only: no host error path may rewrite the Head.
+		writeFailureReceipt(dir, "start-refusal.json", r, before, e.root)
+		return
+	}
+	e.m.Stage = "started"
+	if memoryMode {
+		for e.m.Lifecycle == 1 {
+			cp := readCheckpoint(e)
+			rr, _ := coordinatorCall(e, ca, vabi, "resumeMain", [32]byte(e.m.PackageRoot), e.m.Epoch, [32]byte(e.m.CheckpointRoot), cp, e.m.Quantum, uint32(4096))
+			must(rr.Err)
+		}
+		e.m.Stage = "memory-final"
+	}
+	must(e.writeManifest())
+	writeJSON(reportPath(dir, "start.json"), map[string]interface{}{"gas": r.Gas, "slice": d.Slice, "checkpointBytes": len(d.Checkpoint), "package": p, "resourceRoots": e.m.ResourceRoots, "actualReadSizes": r.Trace.Reads, "actualNestedFrames": r.Trace.Nested, "zipSHA256": sha(raw), "zipBytes": len(raw), "pid": os.Getpid(), "completeInitBytes": len(init) + constructorArgLen(ca, owner, e.m.Decoders, names, e.m.IndexRoot, e.m.ResourceRoots, p)})
+}
+func constructorArgLen(ca abi.ABI, from common.Address, decs []common.Address, names [][]byte, ir common.Hash, roots []common.Hash, p common.Hash) int {
+	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-ENTRY-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
+	must(x)
+	return len(b)
+}
+func doResume(dir, artPath string, one bool) {
+	e, x := openEnv(dir)
+	must(x)
+	defer e.close()
+	_, ca, _, _ := loadArtifact(artPath)
+	vabi := engineABI
+	for e.m.Lifecycle == 1 {
+		cp := readCheckpoint(e)
+		args := []interface{}{[32]byte(e.m.PackageRoot), e.m.Epoch, [32]byte(e.m.CheckpointRoot), cp, e.m.Quantum, uint32(4096)}
+		before := e.root
+		// This is the only resume route, including fault-matrix invocations.
+		r, _ := coordinatorCall(e, ca, vabi, "resumeMain", args...)
+		if r.Err != nil {
+			// No stage/counter/PID publication after an EVM or host failure.
+			writeFailureReceipt(dir, "resume-refusal.json", r, before, e.root)
+			return
+		}
+		e.m.Stage = "resumed"
+		if err := e.writeManifest(); err != nil {
+			panic(err)
+		}
+		if one {
+			break
+		}
+	}
+	if e.m.Lifecycle == 2 {
+		e.m.Stage = "final"
+		if err := e.writeManifest(); err != nil {
+			panic(err)
+		}
+	}
+}
+
+// atomicityRetry is a public driver operation used only by the owned fault
+// suite. Both attempts take coordinatorCall's normal Start/Resume validation,
+// EVM, checkpoint, trie and Head path; it supplies no state/result authority.
+func atomicityRetry(dir, artPath string) {
+	e, x := openEnv(dir)
+	must(x)
+	defer e.close()
+	if e.m.Lifecycle != 1 {
+		panic("atomicity retry requires running Head")
+	}
+	_, ca, _, _ := loadArtifact(artPath)
+	cp := readCheckpoint(e)
+	args := []interface{}{[32]byte(e.m.PackageRoot), e.m.Epoch, [32]byte(e.m.CheckpointRoot), cp, e.m.Quantum, uint32(4096)}
+	beforeBytes, x := os.ReadFile(filepath.Join(dir, "durable-head.json"))
+	must(x)
+	beforeRoot := e.root
+	failed, _ := coordinatorCall(e, ca, engineABI, "resumeMain", args...)
+	if failed.Err == nil {
+		panic("atomicity retry expected test storage fault")
+	}
+	afterBytes, x := os.ReadFile(filepath.Join(dir, "durable-head.json"))
+	must(x)
+	if !bytes.Equal(beforeBytes, afterBytes) || e.root != beforeRoot || e.poison != nil {
+		panic("prepublication fault changed authority")
+	}
+	writeFailureReceipt(dir, "atomicity-failure.json", failed, beforeRoot, e.root)
+	e.fault = "" // observer disables only its own test storage fault; state is unchanged.
+	retry, d := coordinatorCall(e, ca, engineABI, "resumeMain", args...)
+	if retry.Err != nil {
+		panic(fmt.Sprintf("atomicity normal retry: %v", retry.Err))
+	}
+	e.m.Stage = "resumed"
+	must(e.writeManifest())
+	writeJSON(reportPath(dir, "atomicity-retry.json"), map[string]interface{}{
+		"sameSession": true, "failedOutputEmpty": len(failed.Out) == 0, "failedLogsEmpty": len(failed.Logs) == 0,
+		"priorHeadBytesIdentical": bytes.Equal(beforeBytes, afterBytes), "retryEpoch": d.Slice.Epoch, "retryGas": retry.Gas,
+	})
+}
+
+func verifyWorld(dir, artPath string) {
+	e, x := openEnv(dir)
+	must(x)
+	defer e.close()
+	_, ca, _, _ := loadArtifact(artPath)
+	vabi := engineABI
+	vals := view(e, vabi, engine, "head", [32]byte(e.m.Instance))
+	if vals[0].(common.Address) != e.m.Coordinator || vals[1].(uint64) != e.m.Epoch || common.Hash(vals[2].([32]byte)) != e.m.CheckpointRoot || common.Hash(vals[3].([32]byte)) != e.m.MachineRoot || common.Hash(vals[4].([32]byte)) != e.m.VFSRoot || vals[9].(uint8) != e.m.Lifecycle {
+		panic("engine head mismatch")
+	}
+	if common.Hash(coordGetter(e, ca, "packageRoot").([32]byte)) != e.m.PackageRoot {
+		panic("package getter")
+	}
+	cp := readCheckpoint(e)
+	if crypto.Keccak256Hash(cp) != e.m.CheckpointRoot {
+		panic("reopened terminal checkpoint differs from EVM head")
+	}
+	e.m.Stage = "final-reopened"
+
+	must(e.writeManifest())
+	writeJSON(reportPath(dir, "world-report.json"), map[string]interface{}{"manifest": e.m, "engineHeadOwner": vals[0], "engineHeadEpoch": vals[1], "engineHeadLifecycle": vals[9], "diskBytes": diskSize(dir), "finalReopenPID": os.Getpid(), "go": runtime.Version()})
+}
+
+func fixtureNames(zipPath string) [][]byte {
+	if names := os.Getenv("MC_ENTRY_BINDINGS"); names != "" {
+		parts := strings.Split(names, ",")
+		if len(parts) > 16 {
+			panic("binding count")
+		}
+		var out [][]byte
+		for _, p := range parts {
+			if p == "" {
+				panic("empty binding")
+			}
+			out = append(out, []byte(p))
+		}
+		return out
+	}
+	switch filepath.Base(zipPath) {
+	case "minecraft_server.1.12.2.jar":
+		return [][]byte{[]byte("net/minecraft/server/MinecraftServer.class"), []byte("bn.class"), []byte("tr.class"), []byte("um.class")}
+	case "positive.zip":
+		return [][]byte{[]byte("MainPositive.class"), []byte("MainHelper.class")}
+	case "exception.zip":
+		return [][]byte{[]byte("MainException.class")}
+	case "rebind.zip":
+		return [][]byte{[]byte("MainRebind.class")}
+	case "rebind-new.zip":
+		return [][]byte{[]byte("MainRebindNew.class")}
+	default:
+		panic("fixture ZIP name is an assertion")
+	}
+}
+func main() {
+	if len(os.Args) < 7 {
+		panic("MODE DIR COORDINATOR.json ENGINE.json FIXTURE.zip QUANTUM")
+	}
+	coordArt, _, _, coordRun := loadCoord(os.Args[3])
+	if len(coordRun) != 3547 || crypto.Keccak256Hash(coordRun) != common.HexToHash(immutableCoordinatorKeccak) || coordArt.RuntimeSHA != sha(coordRun) {
+		panic("MR0 Session immutable coordinator pin")
+	}
+	_, engineABI0, _, run := loadCoord(os.Args[4])
+	if len(run) != 296529 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
+		panic("MR0 Session immutable engine artifact")
+	}
+	engineABI = engineABI0
+	engineRun = run
+	engineHash = crypto.Keccak256Hash(run)
+	q, err := strconv.ParseUint(os.Args[6], 10, 64)
+	must(err)
+	switch os.Args[1] {
+	case "setup-chain":
+		setupChain(os.Args[2], os.Args[3], os.Args[5], q, 0)
+	case "resume-one", "atomicity-resume":
+		// Both use normal ResumeMain; atomicity-resume merely names the public probe route.
+		doResume(os.Args[2], os.Args[3], true)
+	case "finish":
+		doResume(os.Args[2], os.Args[3], false)
+	case "atomicity-retry":
+		atomicityRetry(os.Args[2], os.Args[3])
+	case "verify":
+		verifyWorld(os.Args[2], os.Args[3])
+	default:
+		panic("unknown mode")
+	}
+}
+
+// Diagnostic EVM ABI only. No symbolic Java evaluation or execution fallback.
+func missingDiagnostic(raw []byte) interface{} {
+	er, ok := engineABI.Errors["MCEntryMissingClass"]
+	if !ok || len(raw) < 4 || !bytes.Equal(raw[:4], er.ID[:4]) {
+		return nil
+	}
+	v, x := er.Inputs.Unpack(raw[4:])
+	must(x)
+	b, x := er.Inputs.Pack(v...)
+	must(x)
+	if !bytes.Equal(b, raw[4:]) {
+		panic("noncanonical diagnostic")
+	}
+	return map[string]interface{}{"site": v[0].(*big.Int).String(), "context": v[1].(*big.Int).String(), "name": string(v[2].([]byte))}
+}
