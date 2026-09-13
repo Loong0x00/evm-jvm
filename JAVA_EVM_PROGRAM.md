@@ -1,5 +1,21 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST THREAD CONTEXT: parentindependent Thread450B SHA4c7621...,
+reversefullcandidate->exactbasis,engine326052B SHA d11b37.../Keccaka811ec4...,co
+7c1621...,51boots,1628B320KiBheadroom. Removedworkertrackedpyc. Generated291J7I
+q1q7direct291/42/1equalVOID,334canonical,identity/null+unsupportedcontrols.
+Parentwhole310.262671s893448192B. Original22q7 commits253/1771J16I then
+CallError3,16;2q1CPs->255/1773J16I,CP13875B SHA059eabd4... rootcc8177d0...,
+last/max113977473. FramesinnerThreadContextGettertypedrunPC16 stackClassmirror;
+Threadclinit/currentThread/defaultnullcontext andLoaderUtil.classliteralCOMMITTED.
+Next exactClass.getClassLoader() atPC16,q1failgas85451165. Must returnrealcanonical
+nonnull definingloaderforRAWclasses,nullforbootstrap; NO null-all fakeemptysearch.
+See THREAD_CONTEXT_PARENT andCLASS_DEFINING_LOADER_PREPARATION. Implement mirror
+field/VM-ownedloaderidentity/restorevalidation; no getResourcesyet. Try320KiB;
+ifcorrectsourceexceedsremaining1628B preservefailure then separateLOCAL384KiBCOPY
+allowedbyuserLOCAL-priority; acceptedcapunchanged. LOCAL1B allothercapsfixed.
+NoMCbody/world/Done; publiclatest1e4027b9b.
+
 LATEST MC-FIRST CLASSLOADER TYPE: parentindependentlycompiled136BtypeSHA
 df3b18...,reversedcandidate->exactprior,rebuilt323026BengineSHA c0e9d6.../
 Keccak35f892...,coaf03ab...,50bootstraps. Generated264J5I q1q7direct264/38/1

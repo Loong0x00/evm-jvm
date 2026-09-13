@@ -1,5 +1,10 @@
 # Thread current/context-loader preflight
 
+**PARENT RESULT:** independent source-only build/replay passes. Original22 now
+commits the single Thread/currentThread/default-null context path and reaches
+Class.getClassLoader at PC16. Parent removed an accidentally archived `.pyc`.
+See JAVA_EVM_MC_THREAD_CONTEXT_PARENT_PREFLIGHT.md. Worker claims remain evidence.
+
 Unaccepted LOCAL generated-fixture preflight from the exact parent ClassLoader-type
 basis `parent-d19622e52`; this is neither class loading nor Minecraft execution.
 The measured original22 continuation has committed 1752 Java steps/14 internal

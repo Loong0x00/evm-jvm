@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest single-Thread parent: `minecraft-entry/parent-cc0c40e71/`; original default
+null context path commits and next exact member is Class.getClassLoader. A real
+raw-class defining-loader identity is required; null-all empty search is forbidden.
+
 Latest ClassLoader type parent: `minecraft-entry/parent-d19622e52/`; corrected
 worker RSS summary and committed original ClassLoader[] path. Next exact member is
 Thread.currentThread; no loader/resource behavior has been fabricated.
