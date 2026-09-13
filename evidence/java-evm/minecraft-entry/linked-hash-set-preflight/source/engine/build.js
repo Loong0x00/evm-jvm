@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('fs'),path=require('path'),crypto=require('crypto');
+const solc=require('solc'); const {keccak256}=require('js-sha3');
+const v='0.8.30+commit.73712a01.Emscripten.clang'; if(solc.version()!==v)throw Error('solc '+solc.version());
+const d=__dirname,n='MCEntryInterpreter.sol',source=fs.readFileSync(path.join(d,n),'utf8');
+const settings={optimizer:{enabled:true,runs:200},viaIR:true,evmVersion:'cancun',metadata:{appendCBOR:false,bytecodeHash:'none'},outputSelection:{'*':{'*':['abi','evm.bytecode.object','evm.deployedBytecode.object','storageLayout']}}};
+const o=JSON.parse(solc.compile(JSON.stringify({language:'Solidity',sources:{[n]:{content:source}},settings}))); for(const e of o.errors||[])console.error(e.formattedMessage); if((o.errors||[]).some(e=>e.severity==='error'))process.exit(1);
+const c=o.contracts[n].MCEntryInterpreter, init=c.evm.bytecode.object.toLowerCase(),runtime=c.evm.deployedBytecode.object.toLowerCase();
+if(runtime.length/2>384*1024)throw Error('runtime >320KiB');
+const sha=x=>crypto.createHash('sha256').update(x).digest('hex'); const a={contractName:'MCEntryInterpreter',abi:c.abi,bytecode:init,deployedBytecode:runtime,compiler:{version:v,optimizer:{enabled:true,runs:200},viaIR:true,evmVersion:'cancun',metadata:{appendCBOR:false,bytecodeHash:'none'}},sourceHashes:{[n]:sha(source)},codeHashes:{initSHA256:sha(Buffer.from(init,'hex')),runtimeSHA256:sha(Buffer.from(runtime,'hex')),runtimeKeccak256:keccak256(Buffer.from(runtime,'hex'))},storageLayout:c.storageLayout};
+fs.writeFileSync(path.join(d,'MCEntryInterpreter.init.hex'),init+'\n');fs.writeFileSync(path.join(d,'MCEntryInterpreter.runtime.hex'),runtime+'\n');fs.writeFileSync(path.join(d,'MCEntryInterpreter.abi.json'),JSON.stringify(c.abi,null,2)+'\n');fs.writeFileSync(path.join(d,'MCEntryInterpreter.json'),JSON.stringify(a,null,2)+'\n');console.log(JSON.stringify({compiler:v,sourceSHA256:sha(source),initBytes:init.length/2,runtimeBytes:runtime.length/2,runtimeSHA256:a.codeHashes.runtimeSHA256,runtimeKeccak256:a.codeHashes.runtimeKeccak256,abiEntries:c.abi.length}));
