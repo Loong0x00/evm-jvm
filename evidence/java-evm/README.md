@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest class-count parent: `minecraft-entry/parent-6748eb593/`, whole source-only
+build, count controls and original20 actual next Properties allocation blocker.
+See `JAVA_EVM_MC_CLASSCOUNT_PARENT_PREFLIGHT.md`; accepted baseline unchanged.
+
 Latest parent arraycopy review: `minecraft-entry/parent-f780f1a13/`; source-only
 native arity repair, canonical receipts and original16 next missing dependency.
 See `JAVA_EVM_MC_ARRAYCOPY_PARENT_PREFLIGHT.md`. Public snapshot was explicitly

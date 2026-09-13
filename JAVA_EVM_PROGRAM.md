@@ -1,5 +1,19 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST CLASSCOUNT24: parentindependentlyverified6748eb593 withwhole
+sourcebuild/generated/original18gate332.872694s905601024B. Exact314365Bengine
+SHA9f272f.../Keccakb840a1...,co16b9c3...,MC-CLASSCOUNT24-PREFLIGHT1 engine
+0x4d43434c415353434f554e543234000000000001;45bootstraps24/262144COPY,accepted
+4/65536unchanged.17/18/24 q1q7/direct208/212/236J4I,754canonicalreceipts; genuine
+25-countEVMconstructorMR0Error2. AddedoriginalParameterized+AbstractFactory18
+->missingConstants,19->missingPropertiesUtil,20=214042B66reads reaches1680J10I.
+Original20lastCP11347B SHAab3a06dd... rootd5932d4b...; lastsuccess97161371gas,
+nextmissingjava/util/Properties newPC4/site4104/gas70916604.14physicalframes.
+1472combinedstrictreceipts. See CLASSCOUNT_PARENT_PREFLIGHT and PROPERTIES_
+PREPARATION: nextminimalgenuineProperties construction/hierarchy,notfakeempty
+config/resource search. Keepframes/gas/320KiB/allothercaps unchanged; preserve
+actualpressure. Mainbody/world/DoneNO. Latestauthorizedpush1e4027b9b;laterLOCAL.
+
 LATEST MC-FIRST ARRAYCOPY: parent repaired missing native argumentCount after
 independently disproving worker VOID claim (q1/q7 were RUNNING then panic0x32).
 New COPY314365B engine7ccbbc.../0325b0...,co2936a4...,45bootstraps16/262144;
