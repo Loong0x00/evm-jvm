@@ -4,7 +4,8 @@ from pathlib import Path
 import hashlib,json,os,subprocess,sys
 root=Path(__file__).resolve().parents[4];here=Path(__file__).resolve().parent;build=Path(sys.argv[1]).resolve();out=Path(sys.argv[2]).resolve();jar=Path(sys.argv[3]).resolve();namesfile=Path(sys.argv[4]).resolve();names=json.loads(namesfile.read_text());assert 0<len(names)<=16 and len(set(names))==len(names);assert not out.exists();out.mkdir();(out/'tmp').mkdir()
 assert hashlib.sha256(jar.read_bytes()).hexdigest()=='fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e'
-env=dict(os.environ,TMPDIR=str(out/'tmp'),PYTHONDONTWRITEBYTECODE='1',MC_ENTRY_BINDINGS=','.join(names));w=out/'official';args=[build/'driver','setup-chain',w,build/'coordinator/MCEntryCoordinator.json',build/'engine/MCEntryInterpreter.json',jar,1]
+quantum=int(sys.argv[5]) if len(sys.argv)>5 else 1;assert quantum in (1,7)
+env=dict(os.environ,TMPDIR=str(out/'tmp'),PYTHONDONTWRITEBYTECODE='1',MC_ENTRY_BINDINGS=','.join(names));w=out/'official';args=[build/'driver','setup-chain',w,build/'coordinator/MCEntryCoordinator.json',build/'engine/MCEntryInterpreter.json',jar,quantum]
 (out/'declared-bindings.json').write_text(json.dumps(names,indent=2)+'\n')
 with (out/'setup.log').open('w') as f:
  p=subprocess.Popen(list(map(str,args)),cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT);code=p.wait()

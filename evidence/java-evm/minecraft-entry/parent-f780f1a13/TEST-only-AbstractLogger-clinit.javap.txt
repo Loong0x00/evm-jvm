@@ -1,0 +1,62 @@
+  static {};
+    Code:
+       0: ldc           #167                // String FLOW
+       2: invokestatic  #168                // Method org/apache/logging/log4j/MarkerManager.getMarker:(Ljava/lang/String;)Lorg/apache/logging/log4j/Marker;
+       5: putstatic     #169                // Field FLOW_MARKER:Lorg/apache/logging/log4j/Marker;
+       8: ldc           #170                // String ENTER
+      10: invokestatic  #168                // Method org/apache/logging/log4j/MarkerManager.getMarker:(Ljava/lang/String;)Lorg/apache/logging/log4j/Marker;
+      13: iconst_1
+      14: anewarray     #171                // class org/apache/logging/log4j/Marker
+      17: dup
+      18: iconst_0
+      19: getstatic     #169                // Field FLOW_MARKER:Lorg/apache/logging/log4j/Marker;
+      22: aastore
+      23: invokeinterface #172,  2          // InterfaceMethod org/apache/logging/log4j/Marker.setParents:([Lorg/apache/logging/log4j/Marker;)Lorg/apache/logging/log4j/Marker;
+      28: putstatic     #67                 // Field ENTRY_MARKER:Lorg/apache/logging/log4j/Marker;
+      31: ldc           #173                // String EXIT
+      33: invokestatic  #168                // Method org/apache/logging/log4j/MarkerManager.getMarker:(Ljava/lang/String;)Lorg/apache/logging/log4j/Marker;
+      36: iconst_1
+      37: anewarray     #171                // class org/apache/logging/log4j/Marker
+      40: dup
+      41: iconst_0
+      42: getstatic     #169                // Field FLOW_MARKER:Lorg/apache/logging/log4j/Marker;
+      45: aastore
+      46: invokeinterface #172,  2          // InterfaceMethod org/apache/logging/log4j/Marker.setParents:([Lorg/apache/logging/log4j/Marker;)Lorg/apache/logging/log4j/Marker;
+      51: putstatic     #93                 // Field EXIT_MARKER:Lorg/apache/logging/log4j/Marker;
+      54: ldc           #174                // String EXCEPTION
+      56: invokestatic  #168                // Method org/apache/logging/log4j/MarkerManager.getMarker:(Ljava/lang/String;)Lorg/apache/logging/log4j/Marker;
+      59: putstatic     #175                // Field EXCEPTION_MARKER:Lorg/apache/logging/log4j/Marker;
+      62: ldc           #176                // String THROWING
+      64: invokestatic  #168                // Method org/apache/logging/log4j/MarkerManager.getMarker:(Ljava/lang/String;)Lorg/apache/logging/log4j/Marker;
+      67: iconst_1
+      68: anewarray     #171                // class org/apache/logging/log4j/Marker
+      71: dup
+      72: iconst_0
+      73: getstatic     #175                // Field EXCEPTION_MARKER:Lorg/apache/logging/log4j/Marker;
+      76: aastore
+      77: invokeinterface #172,  2          // InterfaceMethod org/apache/logging/log4j/Marker.setParents:([Lorg/apache/logging/log4j/Marker;)Lorg/apache/logging/log4j/Marker;
+      82: putstatic     #157                // Field THROWING_MARKER:Lorg/apache/logging/log4j/Marker;
+      85: ldc           #177                // String CATCHING
+      87: invokestatic  #168                // Method org/apache/logging/log4j/MarkerManager.getMarker:(Ljava/lang/String;)Lorg/apache/logging/log4j/Marker;
+      90: iconst_1
+      91: anewarray     #171                // class org/apache/logging/log4j/Marker
+      94: dup
+      95: iconst_0
+      96: getstatic     #175                // Field EXCEPTION_MARKER:Lorg/apache/logging/log4j/Marker;
+      99: aastore
+     100: invokeinterface #172,  2          // InterfaceMethod org/apache/logging/log4j/Marker.setParents:([Lorg/apache/logging/log4j/Marker;)Lorg/apache/logging/log4j/Marker;
+     105: putstatic     #21                 // Field CATCHING_MARKER:Lorg/apache/logging/log4j/Marker;
+     108: ldc           #178                // String log4j2.messageFactory
+     110: ldc_w         #179                // class org/apache/logging/log4j/message/ReusableMessageFactory
+     113: ldc_w         #180                // class org/apache/logging/log4j/message/ParameterizedMessageFactory
+     116: invokestatic  #181                // Method createClassForProperty:(Ljava/lang/String;Ljava/lang/Class;Ljava/lang/Class;)Ljava/lang/Class;
+     119: putstatic     #17                 // Field DEFAULT_MESSAGE_FACTORY_CLASS:Ljava/lang/Class;
+     122: ldc           #182                // String log4j2.flowMessageFactory
+     124: ldc_w         #183                // class org/apache/logging/log4j/message/DefaultFlowMessageFactory
+     127: invokestatic  #184                // Method createFlowClassForProperty:(Ljava/lang/String;Ljava/lang/Class;)Ljava/lang/Class;
+     130: putstatic     #45                 // Field DEFAULT_FLOW_MESSAGE_FACTORY_CLASS:Ljava/lang/Class;
+     133: ldc_w         #185                // class org/apache/logging/log4j/spi/AbstractLogger
+     136: invokevirtual #3                  // Method java/lang/Class.getName:()Ljava/lang/String;
+     139: putstatic     #19                 // Field FQCN:Ljava/lang/String;
+     142: return
+}

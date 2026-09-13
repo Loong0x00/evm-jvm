@@ -1,5 +1,10 @@
 # Durable Java-in-EVM evidence
 
+Latest parent arraycopy review: `minecraft-entry/parent-f780f1a13/`; source-only
+native arity repair, canonical receipts and original16 next missing dependency.
+See `JAVA_EVM_MC_ARRAYCOPY_PARENT_PREFLIGHT.md`. Public snapshot was explicitly
+pushed to `1e4027b9b`; subsequent work remains local.
+
 User instruction: important plans, constraints, acceptance results and failure
 reproducers must NOT live only in `/tmp`. This directory is the Git-tracked home
 for the recent parent evidence. Canonical plans/reviews remain repository-root

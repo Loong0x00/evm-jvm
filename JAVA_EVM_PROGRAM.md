@@ -1,5 +1,20 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST ARRAYCOPY: parent repaired missing native argumentCount after
+independently disproving worker VOID claim (q1/q7 were RUNNING then panic0x32).
+New COPY314365B engine7ccbbc.../0325b0...,co2936a4...,45bootstraps16/262144;
+MC-ARRAYCOPY-PARENT1 address0x4d434152524159434f5059504152454e54000001.
+Generated q1/q7/direct650J9I and parentedges310J15I agree,1100strictreceipts.
+Original13 now1671J8I, pastSystem.arraycopy, missingReusableMessageFactoryPC110;
+q7all238alignedCPs agree withq1. Addedgenuinefactory+interfaces ->original16
+195571B59reads,epoch238/1666J8I, nextmissingParameterizedMessageFactoryPC113,
+gas57868100. Latest16CP8333B/SHA46c511...;3247combinedstrictreceipts verified.
+See ARRAYCOPY_PARENT_PREFLIGHT and CLASSCOUNT_PREPARATION: nextNEWisolated24/
+262144COPY tofitatleast18requiredoriginalimages; accepted4/65536UNCHANGED,
+allothercaps100M30s25Mreserve320KiB20min4GiBunchanged. Mainbody/world/DoneNO.
+Userauthorizedpush COMPLETED: remotejava-on-evm=1e4027b9b48fd7b63103aa27e4fe911af513b928.
+LatercommitsLOCALONLY; no standing futurepushpermission. DefaultTerra/high.
+
 LATEST MC-FIRST MAP: parentindependentlyrebuilt25b1f35a0,310375BengineSHA
  df1418.../Keccakedc205.../co213d900...,44bootstraps16/262144COPY. Sourcebuild
 201.581895s887308288B. FoundrealGoHeadtelemetryoverflow atq1epoch1291 (32780B

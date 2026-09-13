@@ -1,0 +1,657 @@
+{
+  "mode": "candidate",
+  "address": "0x4d434d41524b45524d4150000000000000000001",
+  "domain": "MC-ARRAYCOPY-PREFLIGHT",
+  "engine": {
+    "bytes": 314445,
+    "initSHA256": "bcf4b55a620c4f67490349069b50e93266ce8c2919876080f6a54a57ab9ab0ed",
+    "runtimeSHA256": "bd937b517bde7ab82e55e8cf4576a3d9bbd9f9e2997dfa253d916a7fb8d321e3",
+    "runtimeKeccak256": "e26868d0da83a19f81db91913b72f0b8e64141c660dcd9fd4ab9c1faa01ef5ba"
+  },
+  "coordinator": {
+    "bytes": 3547,
+    "initSHA256": "97d96a9cd774c6cc28647260d35b7f153bfe36a17895122a54c9d321780c027d",
+    "runtimeSHA256": "5727a1abac558e5e4d01c568949eeb0bbe6c3ad2db5bbfd960d5910e0913e5e9",
+    "runtimeKeccak256": "4f20d3f559992bb986d66e94b56286a5eae0e3c2ec8d5349e066c0f725abe2b8"
+  }
+}
+
+{
+  "1": {
+    "epoch": 176,
+    "java": 176,
+    "internal": 3,
+    "lifecycle": 1,
+    "outcome": 1,
+    "machineRoot": "0xeeb5d412503de48fb8a3c9c4dd00abdaaeb14688ba9deeb3a40852fb37e10e24",
+    "refusals": [
+      {
+        "actualDI0ReadSizes": [
+          2457,
+          184,
+          184
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "error": "execution reverted",
+        "gas": 11074155,
+        "resourceHashes": {
+          "0xB9C4936b3D91CbbeFbA5a657af75e08c2C72dFcF": "9d2307081ba31c7c7152332796487baa9e1e9c30260633a8eb317be2ff47ffe9",
+          "0xe565ebdD9B572AcA5075A5c4968d2eE3cd88b1EB": "105a9673c5f95af308922bf65c8de84954b6c08d28fe5ed872439bd498773570",
+          "0xf474f4c64a5496Fe013F9E111422697ad9bD1b97": "df7e2001414cd54ba94caa8cad3c00ccc41c620d84100977c7c154044505584a"
+        },
+        "resourceReadReceipts": [
+          {
+            "To": "0xb9c4936b3d91cbbefba5a657af75e08c2c72dfcf",
+            "Offset": 0,
+            "Requested": 2457,
+            "Returned": 2457,
+            "Success": true,
+            "SHA256": "9d2307081ba31c7c7152332796487baa9e1e9c30260633a8eb317be2ff47ffe9"
+          },
+          {
+            "To": "0xe565ebdd9b572aca5075a5c4968d2ee3cd88b1eb",
+            "Offset": 0,
+            "Requested": 184,
+            "Returned": 184,
+            "Success": true,
+            "SHA256": "105a9673c5f95af308922bf65c8de84954b6c08d28fe5ed872439bd498773570"
+          },
+          {
+            "To": "0xf474f4c64a5496fe013f9e111422697ad9bd1b97",
+            "Offset": 0,
+            "Requested": 184,
+            "Returned": 184,
+            "Success": true,
+            "SHA256": "df7e2001414cd54ba94caa8cad3c00ccc41c620d84100977c7c154044505584a"
+          }
+        ],
+        "revertHex": "0x4e487b710000000000000000000000000000000000000000000000000000000000000032",
+        "rootAfter": "0x4fcfd2e1a418fc7d6a49df76993272f6217dd237ce431eb6d4dac5c67299bf2a",
+        "rootBefore": "0x4fcfd2e1a418fc7d6a49df76993272f6217dd237ce431eb6d4dac5c67299bf2a",
+        "rootUnchanged": true,
+        "selector": "0x4e487b71",
+        "uint256Words": [
+          "50"
+        ]
+      }
+    ],
+    "diagnostic": {
+      "checkpointSHA256": "502a73dd79e50a592a0399ae0bdfb1081a586838b8bacfe19ff253a402440182",
+      "lifecycle": 1,
+      "result": 0,
+      "javaKind": 0,
+      "javaRef": 0,
+      "javaSteps": 176,
+      "internalSteps": 3,
+      "rootKind": 1,
+      "argsCommitment": "00b98a06cd05a29f4d6bd7eec757913722c7ee8ed7df307d5ccbf5b0d494e46f",
+      "entryClass": "ArraycopyMain",
+      "entryMethod": "main",
+      "classCount": 48,
+      "initialization": [
+        {
+          "classIndex": 0,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 1,
+          "staticValues": [
+            {
+              "fieldIndex": 0,
+              "packedValue": "0x10000000000000000"
+            }
+          ]
+        },
+        {
+          "classIndex": 1,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 3,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 45,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 46,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        }
+      ],
+      "frames": [
+        {
+          "classIndex": 0,
+          "methodIndex": 2,
+          "pc": 106,
+          "callPC": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "flags": 16,
+          "receiver": 0,
+          "stackSize": 5,
+          "locals": 28
+        }
+      ],
+      "scope": "diagnostic transport metadata only; no execution authority or evaluation"
+    },
+    "payloadSHA256": "d88780d5407391b1d958a6356f7e31d9ef1a47996d13da4990623942270a44a3"
+  },
+  "7": {
+    "epoch": 25,
+    "java": 175,
+    "internal": 3,
+    "lifecycle": 1,
+    "outcome": 1,
+    "machineRoot": "0xbc3b9b7541cb34a7b9a927ba93fc5f81bf9bf8356e055012285fc5d37894d8b5",
+    "refusals": [
+      {
+        "actualDI0ReadSizes": [
+          2457,
+          184,
+          184
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "error": "execution reverted",
+        "gas": 11075181,
+        "resourceHashes": {
+          "0xB9C4936b3D91CbbeFbA5a657af75e08c2C72dFcF": "9d2307081ba31c7c7152332796487baa9e1e9c30260633a8eb317be2ff47ffe9",
+          "0xe565ebdD9B572AcA5075A5c4968d2eE3cd88b1EB": "105a9673c5f95af308922bf65c8de84954b6c08d28fe5ed872439bd498773570",
+          "0xf474f4c64a5496Fe013F9E111422697ad9bD1b97": "df7e2001414cd54ba94caa8cad3c00ccc41c620d84100977c7c154044505584a"
+        },
+        "resourceReadReceipts": [
+          {
+            "To": "0xb9c4936b3d91cbbefba5a657af75e08c2c72dfcf",
+            "Offset": 0,
+            "Requested": 2457,
+            "Returned": 2457,
+            "Success": true,
+            "SHA256": "9d2307081ba31c7c7152332796487baa9e1e9c30260633a8eb317be2ff47ffe9"
+          },
+          {
+            "To": "0xe565ebdd9b572aca5075a5c4968d2ee3cd88b1eb",
+            "Offset": 0,
+            "Requested": 184,
+            "Returned": 184,
+            "Success": true,
+            "SHA256": "105a9673c5f95af308922bf65c8de84954b6c08d28fe5ed872439bd498773570"
+          },
+          {
+            "To": "0xf474f4c64a5496fe013f9e111422697ad9bd1b97",
+            "Offset": 0,
+            "Requested": 184,
+            "Returned": 184,
+            "Success": true,
+            "SHA256": "df7e2001414cd54ba94caa8cad3c00ccc41c620d84100977c7c154044505584a"
+          }
+        ],
+        "revertHex": "0x4e487b710000000000000000000000000000000000000000000000000000000000000032",
+        "rootAfter": "0x3e56c42ae408f75e90fa05998af2186422803c728e18f3ed35fbf34d91e3d2e1",
+        "rootBefore": "0x3e56c42ae408f75e90fa05998af2186422803c728e18f3ed35fbf34d91e3d2e1",
+        "rootUnchanged": true,
+        "selector": "0x4e487b71",
+        "uint256Words": [
+          "50"
+        ]
+      }
+    ],
+    "diagnostic": {
+      "checkpointSHA256": "86fd5f337cd6cdd6eb6127f4c4e021ef0231d404c921989b8308e8a27bb62fe2",
+      "lifecycle": 1,
+      "result": 0,
+      "javaKind": 0,
+      "javaRef": 0,
+      "javaSteps": 175,
+      "internalSteps": 3,
+      "rootKind": 1,
+      "argsCommitment": "00b98a06cd05a29f4d6bd7eec757913722c7ee8ed7df307d5ccbf5b0d494e46f",
+      "entryClass": "ArraycopyMain",
+      "entryMethod": "main",
+      "classCount": 48,
+      "initialization": [
+        {
+          "classIndex": 0,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 1,
+          "staticValues": [
+            {
+              "fieldIndex": 0,
+              "packedValue": "0x10000000000000000"
+            }
+          ]
+        },
+        {
+          "classIndex": 1,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 3,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 45,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 46,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        }
+      ],
+      "frames": [
+        {
+          "classIndex": 0,
+          "methodIndex": 2,
+          "pc": 105,
+          "callPC": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+          "flags": 16,
+          "receiver": 0,
+          "stackSize": 4,
+          "locals": 28
+        }
+      ],
+      "scope": "diagnostic transport metadata only; no execution authority or evaluation"
+    },
+    "payloadSHA256": "f851b5f7ca95edda547a34ff615fd7679bbb7425804f59cd8d8be9ac8e587c83"
+  },
+  "4096": {
+    "epoch": 0,
+    "java": 0,
+    "internal": 0,
+    "lifecycle": 0,
+    "outcome": 0,
+    "machineRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+    "refusals": [
+      {
+        "actualDI0ReadSizes": [
+          2457,
+          184,
+          184
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "error": "execution reverted",
+        "gas": 19313483,
+        "resourceHashes": {
+          "0xB9C4936b3D91CbbeFbA5a657af75e08c2C72dFcF": "9d2307081ba31c7c7152332796487baa9e1e9c30260633a8eb317be2ff47ffe9",
+          "0xe565ebdD9B572AcA5075A5c4968d2eE3cd88b1EB": "105a9673c5f95af308922bf65c8de84954b6c08d28fe5ed872439bd498773570",
+          "0xf474f4c64a5496Fe013F9E111422697ad9bD1b97": "df7e2001414cd54ba94caa8cad3c00ccc41c620d84100977c7c154044505584a"
+        },
+        "resourceReadReceipts": [
+          {
+            "To": "0xb9c4936b3d91cbbefba5a657af75e08c2c72dfcf",
+            "Offset": 0,
+            "Requested": 2457,
+            "Returned": 2457,
+            "Success": true,
+            "SHA256": "9d2307081ba31c7c7152332796487baa9e1e9c30260633a8eb317be2ff47ffe9"
+          },
+          {
+            "To": "0xe565ebdd9b572aca5075a5c4968d2ee3cd88b1eb",
+            "Offset": 0,
+            "Requested": 184,
+            "Returned": 184,
+            "Success": true,
+            "SHA256": "105a9673c5f95af308922bf65c8de84954b6c08d28fe5ed872439bd498773570"
+          },
+          {
+            "To": "0xf474f4c64a5496fe013f9e111422697ad9bd1b97",
+            "Offset": 0,
+            "Requested": 184,
+            "Returned": 184,
+            "Success": true,
+            "SHA256": "df7e2001414cd54ba94caa8cad3c00ccc41c620d84100977c7c154044505584a"
+          }
+        ],
+        "revertHex": "0x4e487b710000000000000000000000000000000000000000000000000000000000000032",
+        "rootAfter": "0xa6778532ba8803983bb8ba3eb41793fc35fecd1007d9c3ffd9d3d3509934d51b",
+        "rootBefore": "0xa6778532ba8803983bb8ba3eb41793fc35fecd1007d9c3ffd9d3d3509934d51b",
+        "rootUnchanged": true,
+        "selector": "0x4e487b71",
+        "uint256Words": [
+          "50"
+        ]
+      }
+    ]
+  }
+}
+{
+  "mode": "repaired",
+  "address": "0x4d434152524159434f5059504152454e54000001",
+  "domain": "MC-ARRAYCOPY-PARENT1",
+  "engine": {
+    "bytes": 314365,
+    "initSHA256": "efd0ef8b086c7ad97eca5a04682caac2c7535a603bcfb9727b0d75798c18cc9b",
+    "runtimeSHA256": "7ccbbc5da13ebc7a3eddf46fd76061e8fd4ee8f070705c387a23c884a42570f7",
+    "runtimeKeccak256": "0325b00519b2213c8baeda0b1246ac03852ae38e97ef2c4301f48224fb15d9df"
+  },
+  "coordinator": {
+    "bytes": 3547,
+    "initSHA256": "831d4009c2fe2ab5a00818a1e6a485c40541d2ae22c18831b7eba44b36c136d9",
+    "runtimeSHA256": "dbc90378cb4078fa58bae2c4a75d42f697679376852cad9b429d73c7715abb57",
+    "runtimeKeccak256": "2936a42058eca016ad73933c1485d1e4d16da13d1020b4d2aeb3cea7bf9e3a39"
+  }
+}
+
+{
+  "1": {
+    "epoch": 650,
+    "java": 650,
+    "internal": 9,
+    "lifecycle": 2,
+    "outcome": 2,
+    "machineRoot": "0x93ee5a593dbd4b4ab11abfbc561e3fc87464eaa95cb901b71c2566a28c12697e",
+    "refusals": [],
+    "diagnostic": {
+      "checkpointSHA256": "02773e7e0d42512711654d6f5b900be01d9d7151309e27db7bee0e0d1b62edb0",
+      "lifecycle": 2,
+      "result": 0,
+      "javaKind": 0,
+      "javaRef": 0,
+      "javaSteps": 650,
+      "internalSteps": 9,
+      "rootKind": 1,
+      "argsCommitment": "a305c32b0c6baa618a550597ee744deaad8fc4d48edc58ca174da9fa5cf72f4f",
+      "entryClass": "ArraycopyMain",
+      "entryMethod": "main",
+      "classCount": 48,
+      "initialization": [
+        {
+          "classIndex": 0,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 1,
+          "staticValues": [
+            {
+              "fieldIndex": 0,
+              "packedValue": "0x1000000000000100b"
+            }
+          ]
+        },
+        {
+          "classIndex": 1,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 2,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 3,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 6,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 7,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 45,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 46,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 47,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        }
+      ],
+      "frames": [],
+      "scope": "diagnostic transport metadata only; no execution authority or evaluation"
+    },
+    "payloadSHA256": "b97de0f095a58415805feafdfe46f6761f6c4f27cc8b12a3160204c0cc6a2b20"
+  },
+  "7": {
+    "epoch": 93,
+    "java": 650,
+    "internal": 9,
+    "lifecycle": 2,
+    "outcome": 2,
+    "machineRoot": "0x93ee5a593dbd4b4ab11abfbc561e3fc87464eaa95cb901b71c2566a28c12697e",
+    "refusals": [],
+    "diagnostic": {
+      "checkpointSHA256": "28c80d5a7e43894dca6fb55d78402901904db576d3b4a1afb5ecc0ea73da0916",
+      "lifecycle": 2,
+      "result": 0,
+      "javaKind": 0,
+      "javaRef": 0,
+      "javaSteps": 650,
+      "internalSteps": 9,
+      "rootKind": 1,
+      "argsCommitment": "a305c32b0c6baa618a550597ee744deaad8fc4d48edc58ca174da9fa5cf72f4f",
+      "entryClass": "ArraycopyMain",
+      "entryMethod": "main",
+      "classCount": 48,
+      "initialization": [
+        {
+          "classIndex": 0,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 1,
+          "staticValues": [
+            {
+              "fieldIndex": 0,
+              "packedValue": "0x1000000000000100b"
+            }
+          ]
+        },
+        {
+          "classIndex": 1,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 2,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 3,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 6,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 7,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 45,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 46,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 47,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        }
+      ],
+      "frames": [],
+      "scope": "diagnostic transport metadata only; no execution authority or evaluation"
+    },
+    "payloadSHA256": "b97de0f095a58415805feafdfe46f6761f6c4f27cc8b12a3160204c0cc6a2b20"
+  },
+  "4096": {
+    "epoch": 1,
+    "java": 650,
+    "internal": 9,
+    "lifecycle": 2,
+    "outcome": 2,
+    "machineRoot": "0x93ee5a593dbd4b4ab11abfbc561e3fc87464eaa95cb901b71c2566a28c12697e",
+    "refusals": [],
+    "diagnostic": {
+      "checkpointSHA256": "ad985e375d7069b0176486979dc99dcff4d473d58b1ce64ee27d82e62754dc50",
+      "lifecycle": 2,
+      "result": 0,
+      "javaKind": 0,
+      "javaRef": 0,
+      "javaSteps": 650,
+      "internalSteps": 9,
+      "rootKind": 1,
+      "argsCommitment": "a305c32b0c6baa618a550597ee744deaad8fc4d48edc58ca174da9fa5cf72f4f",
+      "entryClass": "ArraycopyMain",
+      "entryMethod": "main",
+      "classCount": 48,
+      "initialization": [
+        {
+          "classIndex": 0,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 1,
+          "staticValues": [
+            {
+              "fieldIndex": 0,
+              "packedValue": "0x1000000000000100b"
+            }
+          ]
+        },
+        {
+          "classIndex": 1,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 2,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 3,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 6,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 7,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 45,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 46,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        },
+        {
+          "classIndex": 47,
+          "state": 2,
+          "initializerStarted": 0,
+          "staticFields": 0,
+          "staticValues": []
+        }
+      ],
+      "frames": [],
+      "scope": "diagnostic transport metadata only; no execution authority or evaluation"
+    },
+    "payloadSHA256": "b97de0f095a58415805feafdfe46f6761f6c4f27cc8b12a3160204c0cc6a2b20"
+  }
+}

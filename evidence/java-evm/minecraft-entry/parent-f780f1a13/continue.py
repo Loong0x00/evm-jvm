@@ -19,7 +19,7 @@ for n in range(1,513):
   r=json.loads(failure.read_text());assert r['rootBefore']==r['rootAfter']==old['trieRoot'];assert (w/'checkpoints'/(old['checkpointSHA256']+'.bin')).is_file();shutil.copy2(failure,out/'refusal.json');print(json.dumps({k:r.get(k) for k in ('error','diagnostic','selector','uint256Words','gas')},indent=2));break
  old=observe()
  if old['lifecycle']!=1:break
-else:raise AssertionError('bounded frontier observation reached512 successful slices; inspect before extending')
+else:print('observation batch reached512 successful slices; still RUNNING, not a guest refusal')
 # Validate successful current EVM head/checkpoint in an additional fresh process.
 with (out/'reopen.log').open('w') as f:subprocess.run([str(execution/'driver'),'verify']+args,cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
 (out/'summary.json').write_text(json.dumps({'successfulStates':rows,'lastPublishedEpoch':old['epoch'],'lastPublishedJavaSteps':old['jvmSteps']},indent=2)+'\n');print('last successful Java steps',old['jvmSteps'])
