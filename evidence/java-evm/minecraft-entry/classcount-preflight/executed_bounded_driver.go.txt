@@ -43,9 +43,9 @@ import (
 const ordinaryGas = uint64(100_000_000)
 const format = "MC-CLASSCOUNT24-PREFLIGHT1-BOUNDED-1"
 const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
-const immutableEngineSHA256 = "7ccbbc5da13ebc7a3eddf46fd76061e8fd4ee8f070705c387a23c884a42570f7"
-const immutableEngineKeccak = "0x0325b00519b2213c8baeda0b1246ac03852ae38e97ef2c4301f48224fb15d9df"
-const immutableCoordinatorKeccak = "0x2936a42058eca016ad73933c1485d1e4d16da13d1020b4d2aeb3cea7bf9e3a39"
+const immutableEngineSHA256 = "9f272f78fb59ffc827a7456073cbfefa70c8b1f6c7b70731d505161194f2ee3c"
+const immutableEngineKeccak = "0xb840a1368591f665791e3a2458e311c06a6ec47a68116e26748adaf0c9e74b60"
+const immutableCoordinatorKeccak = "0x16b9c3624206cbd7a183bd270df3608f199047cb29b09dd742ac184ef4eb46ba"
 
 // The constructor owner is deliberately separate from the required fixed LOCAL
 // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
@@ -1679,7 +1679,14 @@ func verifyWorld(dir, artPath string) {
 func fixtureNames(zipPath string) [][]byte {
 	if names := os.Getenv("MC_ENTRY_BINDINGS"); names != "" {
 		parts := strings.Split(names, ",")
-		if len(parts) > 24 {
+		limit := 24
+		// Boundary-25 is a deliberate constructor precondition probe. It creates
+		// real AS0/ZI0/DI0 bindings and lets the coordinator's EVM constructor,
+		// rather than this host parser, reject the twenty-fifth image.
+		if os.Getenv("MC_ENTRY_ALLOW_BOUNDARY_25") == "1" {
+			limit = 25
+		}
+		if len(parts) > limit {
 			panic("binding count")
 		}
 		var out [][]byte
@@ -1706,6 +1713,34 @@ func fixtureNames(zipPath string) [][]byte {
 		panic("fixture ZIP name is an assertion")
 	}
 }
+func boundary25(dir, artPath, zipPath string) {
+	e, x := newEnv(dir)
+	must(x)
+	defer e.close()
+	e.m.Quantum = 4096
+	e.m.ProcessPIDs = []int{os.Getpid()}
+	installEngine(e)
+	raw, x := os.ReadFile(zipPath)
+	must(x)
+	names := fixtureNames(zipPath)
+	if len(names) != 25 {
+		panic("boundary-25 requires exactly 25 generated bindings")
+	}
+	setupResources(e, raw, names, true)
+	art, ca, init, run := loadArtifact(artPath)
+	before := e.root
+	_, _, r := deployCoordinator(e, art, ca, init, run, e.m.Decoders, names, e.m.ResourceRoots, e.m.Sizes, nil, owner)
+	if r.Err == nil || errorName(ca, r.Out) != "MR0Error" || before != e.root {
+		panic("boundary-25 must be an EVM constructor MR0Error(2) with no publication")
+	}
+	writeJSON(reportPath(dir, "boundary25-refusal.json"), map[string]interface{}{
+		"kind": "actual EVM coordinator constructor count refusal", "bindingCount": len(names),
+		"error": fmt.Sprint(r.Err), "selector": selector(r.Out), "revertHex": "0x" + hex.EncodeToString(r.Out),
+		"rootBefore": before, "rootAfter": e.root, "rootUnchanged": before == e.root,
+		"ordinaryGas": ordinaryGas, "allResourcesProvisionedThrough": "AS0->ZI0->DI0",
+	})
+}
+
 func main() {
 	if len(os.Args) < 7 {
 		panic("MODE DIR COORDINATOR.json ENGINE.json FIXTURE.zip QUANTUM")
@@ -1724,6 +1759,8 @@ func main() {
 	q, err := strconv.ParseUint(os.Args[6], 10, 64)
 	must(err)
 	switch os.Args[1] {
+	case "boundary-25":
+		boundary25(os.Args[2], os.Args[3], os.Args[5])
 	case "setup-chain":
 		setupChain(os.Args[2], os.Args[3], os.Args[5], q, 0)
 	case "resume-one", "atomicity-resume":
