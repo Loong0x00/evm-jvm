@@ -6,7 +6,7 @@ read-only evidence inputs; the candidate's System image is compiled from the
 owned Java source below this directory.
 """
 from pathlib import Path
-import hashlib, json, os, re, shutil, subprocess, sys
+import hashlib, json, os, re, shutil, subprocess, sys, time
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
@@ -17,10 +17,40 @@ ADDRESS = "4d43534543555249545947455454455200000001"
 DOMAIN = "MC-SECURITY-GETTER-PREFLIGHT1"
 
 
+SUITE_STARTED = time.monotonic()
+GROUP_LIMIT_SECONDS = 20 * 60
+RSS_LIMIT_KIB = 4 * 1024 * 1024
+
+
+def group_rss_kib(pgid):
+    total = 0
+    for proc in Path("/proc").glob("[0-9]*"):
+        try:
+            status = (proc / "status").read_text()
+            fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
+            if int(fields.get("NSpgid", "-1").split()[0]) == pgid:
+                total += int(fields.get("VmRSS", "0 kB").split()[0])
+        except (OSError, ValueError):
+            pass
+    return total
+
+
 def run(args, *, cwd, env, log):
+    started = time.monotonic(); peak = 0; reason = "completed"
     with log.open("w") as output:
-        subprocess.run([str(x) for x in args], cwd=cwd, env=env,
-                       stdout=output, stderr=subprocess.STDOUT, check=True)
+        child = subprocess.Popen([str(x) for x in args], cwd=cwd, env=env,
+                                 stdout=output, stderr=subprocess.STDOUT, start_new_session=True)
+        while child.poll() is None:
+            peak = max(peak, group_rss_kib(child.pid))
+            if time.monotonic() - SUITE_STARTED > GROUP_LIMIT_SECONDS or peak > RSS_LIMIT_KIB:
+                reason = "whole-group-timeout" if time.monotonic() - SUITE_STARTED > GROUP_LIMIT_SECONDS else "whole-group-rss"
+                os.killpg(child.pid, 9)
+                break
+            time.sleep(0.02)
+        code = child.wait()
+    log.with_suffix(".watchdog.json").write_text(json.dumps({"exit": code, "elapsedMS": int((time.monotonic()-started)*1000), "peakRSSKiB": peak, "reason": reason, "wholeGroupLimitSeconds": GROUP_LIMIT_SECONDS, "wholeGroupRSSKiB": RSS_LIMIT_KIB}) + "\n")
+    if code:
+        raise subprocess.CalledProcessError(code, [str(x) for x in args])
 
 
 def sha(data):

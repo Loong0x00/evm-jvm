@@ -1,24 +1,49 @@
 #!/usr/bin/env python3
 """Run generated Java 8 System getter controls through the public EVM driver."""
 from pathlib import Path
-import hashlib, json, os, shutil, subprocess, sys, zipfile
+import hashlib, json, os, shutil, subprocess, sys, time, zipfile
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 JAVA = "/usr/lib/jvm/java-8-openjdk/bin/java"
 JAVAC = "/usr/lib/jvm/java-8-openjdk/bin/javac"
 CALL_ERROR = "0xd631c3a4"
+GROUP_LIMIT_SECONDS = 20 * 60
+RSS_LIMIT_KIB = 4 * 1024 * 1024
+SUITE_STARTED = time.monotonic()
+
+
+def group_rss_kib(pgid):
+    total = 0
+    for proc in Path("/proc").glob("[0-9]*"):
+        try:
+            status = (proc / "status").read_text()
+            fields = dict(line.split(":", 1) for line in status.splitlines() if ":" in line)
+            if int(fields.get("NSpgid", "-1").split()[0]) == pgid:
+                total += int(fields.get("VmRSS", "0 kB").split()[0])
+        except (OSError, ValueError):
+            pass
+    return total
 
 
 def call(out, label, args, env):
-    log = out / (label + ".log")
+    log = out / (label + ".log"); started = time.monotonic(); peak = 0; reason = "completed"
     with log.open("w") as f:
-        p = subprocess.run([str(x) for x in args], cwd=ROOT, env=env,
-                           stdout=f, stderr=subprocess.STDOUT)
-    (out / (label + ".process.json")).write_text(json.dumps({
-        "exit": p.returncode, "command": [str(x) for x in args],
-    }, indent=2) + "\n")
-    if p.returncode:
+        p = subprocess.Popen([str(x) for x in args], cwd=ROOT, env=env, stdout=f,
+                             stderr=subprocess.STDOUT, start_new_session=True)
+        while p.poll() is None:
+            peak = max(peak, group_rss_kib(p.pid))
+            if time.monotonic() - SUITE_STARTED > GROUP_LIMIT_SECONDS or peak > RSS_LIMIT_KIB:
+                reason = "whole-group-timeout" if time.monotonic() - SUITE_STARTED > GROUP_LIMIT_SECONDS else "whole-group-rss"
+                os.killpg(p.pid, 9)
+                break
+            time.sleep(0.02)
+        code = p.wait()
+    watchdog = {"exit": code, "elapsedMS": int((time.monotonic()-started)*1000), "peakRSSKiB": peak,
+                "reason": reason, "wholeGroupLimitSeconds": GROUP_LIMIT_SECONDS, "wholeGroupRSSKiB": RSS_LIMIT_KIB}
+    (out / (label + ".watchdog.json")).write_text(json.dumps(watchdog, indent=2) + "\n")
+    (out / (label + ".process.json")).write_text(json.dumps({"exit": code, "command": [str(x) for x in args]}, indent=2) + "\n")
+    if code:
         raise SystemExit(label + " failed; see " + str(log))
 
 
