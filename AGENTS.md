@@ -1,5 +1,21 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST SECURITY GETTER: parentindependentlySOURCEONLYrebuilt exact
+322301BengineSHA4a8aaf.../Keccak746092...,co113bcb...,48bootstraps,System338B
+privateguestnullsecurity+getter,arraycopyunchanged. Generated169J4I q1/q7/direct
+169/25/1 exactVOID/machine/opaque,195canonicalreceipts; unsupportedsetterCallError3.
+Finalwholebuild/generated/original21gate293.716102s884891648B. Twoharnessfailures
+preserved: drivercosmeticmissing0x exactdiff; copiedrunnerwrongROOT beforeEVM.
+Original21=221382B reachesmemberdiagnosticpastgetSecurityManager to missing
+LoaderUtil$ThreadContextClassLoaderGetterPC6; original22=222822B nextactual
+missingjava/security/PrivilegedAction interfaceedge(ownerclass21),gas78387637.
+Both successfulCPheadsremain1715J12I BEFORELoaderUtilclinitPC0; failedcalls doNOT
+creditgetter/nullbranchsteps. Last22CP12251B SHA250be054... root73d1b582...,max
+105829246gas. NextONLYminimalgenuinePrivilegedAction<T>.run bootstrap, then q1
+originaltoseparatecommittedsteps. See SECURITY_GETTER_PARENT_PREFLIGHT and
+PRIVILEGED_ACTION_PREPARATION. LOCAL1Bauthorized,actualframes128/allcapsunchanged.
+NoMCmainbody/world/Done. Latestpublic1e4027b9b;laterLOCALONLY.
+
 LATEST USER LOCAL BUDGET AMENDMENT: userexplicitlyauthorizedLOCAL1Bpercall
 ("继续啊,问我干啥"); DO NOTaskagainorimposeold100Masruntimehardlimit. OnlyGoCOPY
 ceilingchangedto1B, EVMcode/accounting25Mreserve30s/call20min4GiBunchanged,

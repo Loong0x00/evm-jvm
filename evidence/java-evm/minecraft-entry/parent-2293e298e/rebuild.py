@@ -21,7 +21,10 @@ run('coordinator-build',['node',out/'coordinator/build.js']);ca=json.loads((out/
 # Start from the actually executed, explicitly authorized LOCAL1B source.
 driver=(budget/'executed_driver.go.txt').read_text()
 for a,b in [('877f35a4ac4092a7c65ab5071104413e4579ced0b69a172852db77d772aee1bb',ea['codeHashes']['runtimeSHA256']),('eb4c959c4893d83ef2a20918693f1ab499d812845a54b9377eba3615a8da1be7',ea['codeHashes']['runtimeKeccak256']),('4ac62a3ecc1612110cbc97779ebf760d101a33f1c85ddfb03c75d1b5478f2bae',ca['codeHashes']['runtimeKeccak256']),('0x4d4350524f50455254494553504152454e540001','0x4d43534543555249545947455454455200000001'),('MC-PROPERTIES-PARENT1','MC-SECURITY-GETTER-PREFLIGHT1'),('321590','322301')]:assert a in driver;driver=driver.replace(a,b)
-assert driver==(src/'candidate/executed_generated_driver.go.txt').read_text()
+# Worker omitted cosmetic 0x prefixes on two common.HexToHash string constants.
+# Keep the parent's canonical prefixed form and prove this is the only source difference.
+workerDriver=(src/'candidate/executed_generated_driver.go.txt').read_text()
+assert workerDriver==driver.replace('0x'+ea['codeHashes']['runtimeKeccak256'],ea['codeHashes']['runtimeKeccak256']).replace('0x'+ca['codeHashes']['runtimeKeccak256'],ca['codeHashes']['runtimeKeccak256'])
 (out/'main.go').write_text(driver)
 for label,args in (('gofmt',['gofmt','-w',out/'main.go']),('go-build',['go','build','-trimpath','-o',out/'driver',out/'main.go']),('go-vet',['go','vet',out/'main.go'])):run(label,args)
 pins={'address':'0x4d43534543555249545947455454455200000001','domain':'MC-SECURITY-GETTER-PREFLIGHT1','systemSHA256':hashlib.sha256(system).hexdigest(),'other47BootstrapImagesIdentical':True,'engine':{'bytes':len(ea['deployedBytecode'])//2,**ea['codeHashes']},'coordinator':{'bytes':len(ca['deployedBytecode'])//2,**ca['codeHashes']},'externalLocalGas':1000000000,'reserve':25000000,'maxFrames':128}

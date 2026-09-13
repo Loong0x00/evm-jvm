@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest security-getter parent: `minecraft-entry/parent-2293e298e/`; exact source
+build passes and original22 now requires PrivilegedAction. Successful checkpoint
+remains before LoaderUtil initializer; no failed-call Java progress is credited.
+
 User-authorized LOCAL1B budget: `minecraft-entry/local-budget-1b/`; unchanged
 EVM accounting/runtime, genuine Properties construction now passes, next missing
 System.getSecurityManager member. Existing frame cap128, diagnostic16 corrected.

@@ -1,5 +1,12 @@
 # System.getSecurityManager preflight
 
+**PARENT RESULT:** source-only build and generated proof pass. Fresh original21
+moves from missing System member to missing LoaderUtil inner class; original22
+then diagnoses missing java/security/PrivilegedAction. Successful original CPs
+remain before LoaderUtil PC0, so no failed-call branch state is credited. See
+JAVA_EVM_MC_SECURITY_GETTER_PARENT_PREFLIGHT.md. Worker claims below remain
+historical evidence, not the parent proof.
+
 This is a LOCAL-only, unaccepted derivative of the parent-c24d374bc Properties
 repair and the authorized LOCAL1B driver basis. It addresses only the next
 measured LoaderUtil linkage: `System.getSecurityManager()Ljava/lang/SecurityManager;`.
