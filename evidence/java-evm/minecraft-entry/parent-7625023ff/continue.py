@@ -3,7 +3,7 @@
 from pathlib import Path
 import hashlib,json,os,shutil,subprocess,sys
 import importlib.util
-spec=importlib.util.spec_from_file_location('checkpoint_diagnostic',Path(__file__).resolve().parents[4]/'evidence/java-evm/minecraft-entry/parent-bc4aa5f31/checkpoint_frames.py');diagmodule=importlib.util.module_from_spec(spec);spec.loader.exec_module(diagmodule);inspect=diagmodule.inspect
+spec=importlib.util.spec_from_file_location('checkpoint_diagnostic',Path(__file__).resolve().parent/'checkpoint_frames.py');diagmodule=importlib.util.module_from_spec(spec);spec.loader.exec_module(diagmodule);inspect=diagmodule.inspect
 root=Path(__file__).resolve().parents[4];build=Path(sys.argv[1]).resolve();label=sys.argv[2];out=Path(sys.argv[3]).resolve();jar=Path(sys.argv[4]).resolve();assert not out.exists();out.mkdir();(out/'tmp').mkdir();env=dict(os.environ,TMPDIR=str(out/'tmp'));w=build/label;rep=build/'reports'/label;execution=Path(sys.argv[5]).resolve() if len(sys.argv)>5 else build
 args=[str(w),str(execution/'coordinator/MCEntryCoordinator.json'),str(execution/'engine/MCEntryInterpreter.json'),str(jar),'1'];rows=[]
 def observe():
