@@ -41,7 +41,7 @@ c,n=re.subn(r'bytes32 private constant ENGINE_CODEHASH = hex"[0-9a-f]{64}";', 'b
 cp.write_text(c); run('coordinator-build',['node',co/'build.js']); ca=json.loads((co/'MCEntryCoordinator.json').read_text())
 # Driver is evidence-only public EVM transport. New fixed addresses/domains/pins
 # prohibit accidental reuse of the prior engine or coordinator.
-d=(here/'tools/driver.go.txt').read_text(); replacements={
+d=(here/'tools/evidence.go.txt').read_text(); replacements={
  'MC-RESOURCE-ENUMERATION-PARENT1':'MC-SYSTEM-PROPERTY-PREFLIGHT1',
  'a119cdb383a57e8478d5ec0780e84e70a9d5a5d7e0b9f11832dacd12c59faeba':ea['codeHashes']['runtimeSHA256'],
  '0x5183113f3979d284a00faf6cd2f3d70b5b613f716758e791fe87d485410250d6':'0x'+ea['codeHashes']['runtimeKeccak256'],
