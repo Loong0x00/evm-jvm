@@ -77,5 +77,26 @@ python3 evidence/java-evm/minecraft-entry/classloader-type-preflight/gate.py \
   "$PWD/build/java-diff-mc-classloader-type-$(date +%s)"
 ```
 
-Results are not yet recorded and no Minecraft main-body, world, EULA, listener,
-or Done claim follows from this plan.
+## Generated result
+
+The fresh successful generated-only group completed in195.178s with peak
+52572KiB. The ClassLoader image is136B SHA-256
+`df3b18c48b514343c2dcf9d025afd714027e319db03174c8f831215645f39e8b`.
+It produced a50-image profile at engine323026B (within320KiB), runtime SHA-256
+`c0e9d627b5709f9635731f6d85159b9d33079c33fd1876cbe7b6a258c5912a7b`,
+Keccak `35f8925e4f8631a9ff23cb5faec1ed6c4db2c0e3d318c9fa21c70693e69a0258`,
+and coordinator Keccak
+`af03ab895945c9308894496c6f34feb649e18bf28b6471e3d063c604cc5b3e3e`.
+
+q1/q7/direct complete genuine VOID at53 Java/3 internal steps and epochs53/8/1.
+All have machine root
+`0xc797d00b7779156b71a1aba2fe2f2afed4394b373065f9a7e87484f503cae6b2`
+and opaque SHA-256
+`a9836d2cbce737f1ffb7700fd678d1a2930ed14cdae0f5a79f9af50da5046886`;
+all reopened and their full canonical receipts/checkpoints/read ranges are
+archived. Caller replacement refused at selector`0x6a23ad80`, root unchanged;
+unsupported `getSystemClassLoader` refused at CallError selector`0xd631c3a4`,
+root unchanged. These generated results do not authorize original22 replay.
+
+No Minecraft main-body, world, EULA, listener, or Done claim follows from this
+preflight.

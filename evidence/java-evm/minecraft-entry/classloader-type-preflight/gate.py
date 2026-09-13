@@ -76,8 +76,12 @@ def archive(out, normal, refusals, pins):
     for world in ("type-q1", "type-q7", "type-direct", "caller-replacement", "unsupported-get-system"):
         if (out / world).exists():
             for p in (out / world).rglob("*"):
-                if p.is_file() and (p.name == "durable-head.json" or "reports" in p.parts or "checkpoints" in p.parts):
+                if p.is_file() and (p.name == "durable-head.json" or "checkpoints" in p.parts):
                     copy(p, target / "receipts" / world / p.relative_to(out / world))
+        reports = out / "reports" / world
+        if reports.exists():
+            for p in reports.rglob("*"):
+                if p.is_file(): copy(p, target / "receipts" / world / "reports" / p.relative_to(reports))
     (target / "pins.json").write_text(json.dumps(pins, indent=2) + "\n")
     (target / "results.json").write_text(json.dumps({"generatedOnly": True, "normal": normal, "refusals": refusals}, indent=2) + "\n")
     sums = [sha(p.read_bytes()) + "  " + str(p.relative_to(target)) for p in sorted(target.rglob("*")) if p.is_file()]
@@ -143,8 +147,12 @@ def main():
     run(out, "gofmt", ["gofmt", "-w", main_go], env); run(out, "driver-build", ["go", "build", "-trimpath", "-o", out / "driver", main_go], env); run(out, "driver-vet", ["go", "vet", main_go], env)
 
     classes = out / "classes"; classes.mkdir(); fixture = HERE / "fixtures"
-    sources = [fixture / "ClassLoaderTypeProbe.java", fixture / "ClassLoaderCallerReplacement.java", fixture / "ClassLoaderUnsupported.java", fixture / "java/lang/ClassLoader.java"]
+    # Compile normal controls against rt.jar first. The caller-replacement class is
+    # compiled separately, otherwise javac would resolve its same-package source
+    # while compiling the honest unsupported-member control.
+    sources = [fixture / "ClassLoaderTypeProbe.java", fixture / "ClassLoaderCallerReplacement.java", fixture / "ClassLoaderUnsupported.java"]
     run(out, "fixture-java8-build", [JAVAC, "-source", "8", "-target", "8", "-g:none", "-bootclasspath", RT, "-d", classes, *sources], env)
+    run(out, "fixture-caller-replacement-build", [JAVAC, "-source", "8", "-target", "8", "-g:none", "-bootclasspath", RT, "-d", classes, fixture / "java/lang/ClassLoader.java"], env)
     run(out, "fixture-java8-oracle", [JAVA, "-cp", classes, "ClassLoaderTypeProbe"], env)
     deterministic_zip(classes, out / "type.zip", ["ClassLoaderTypeProbe.class", "ClassLoaderTypeProbe$MinimalLoader.class"])
     deterministic_zip(classes, out / "caller.zip", ["ClassLoaderCallerReplacement.class", "java/lang/ClassLoader.class"])
@@ -166,11 +174,13 @@ def main():
         normal.append(row)
 
     refusals = {}
-    for label, archive_name, bindings, expected in (("caller-replacement", "caller.zip", "ClassLoaderCallerReplacement.class,java/lang/ClassLoader.class", "BootstrapProfileError"), ("unsupported-get-system", "unsupported.zip", "ClassLoaderUnsupported.class", "CallError")):
+    # These selectors are the canonical raw ABI authority: BootstrapProfileError(1,1)
+    # rejects caller replacement and CallError(3,0) reports absent static member.
+    for label, archive_name, bindings, expected_selector in (("caller-replacement", "caller.zip", "ClassLoaderCallerReplacement.class,java/lang/ClassLoader.class", "0x6a23ad80"), ("unsupported-get-system", "unsupported.zip", "ClassLoaderUnsupported.class", "0xd631c3a4")):
         args = [out / label, out / "coordinator/MCEntryCoordinator.json", out / "engine/MCEntryInterpreter.json", out / archive_name, 4096]
         run(out, label + "-start", [out / "driver", "setup-chain", *args], dict(env, MC_ENTRY_BINDINGS=bindings))
         refusal = json.loads((out / "reports" / label / "start-refusal.json").read_text())
-        if refusal.get("errorName") != expected or refusal["rootUnchanged"] is not True: raise RuntimeError(label + " refusal")
+        if refusal.get("selector") != expected_selector or refusal["rootUnchanged"] is not True: raise RuntimeError(label + " refusal")
         refusals[label] = {"selector": refusal["selector"], "diagnostic": refusal.get("diagnostic"), "rootUnchanged": refusal["rootUnchanged"], "gas": refusal["gas"]}
     pins = {"parent": "parent-a30955bb0", "address": "0x" + ADDRESS, "owner": OWNER, "domain": DOMAIN, "bootstrap": {"ClassLoader": {"bytes": len(loader), "sha256": sha(loader)}, "prior49ImagesIdentical": True, "bootstrapCount": 50}, "engine": {"bytes": len(ea["deployedBytecode"]) // 2, **ea["codeHashes"]}, "coordinator": {"bytes": len(ca["deployedBytecode"]) // 2, **ca["codeHashes"]}, "limits": {"externalLocalGas": 1000000000, "reserve": 25000000, "callSeconds": 30, "wholeGroupSeconds": LIMIT_SECONDS, "wholeGroupRSSKiB": LIMIT_RSS_KIB, "classInputs": 24, "classInputBytes": 262144, "maxFrames": 128, "constantPool": 4096, "code": 65535, "checkpointBytes": 1048576, "headBytes": 32768, "engineBytesMax": 327680}}
     archive(out, normal, refusals, pins); print(json.dumps({"pins": pins, "normal": normal, "refusals": refusals}, indent=2))
