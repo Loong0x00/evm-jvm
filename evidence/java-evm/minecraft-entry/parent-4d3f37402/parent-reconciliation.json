@@ -1,0 +1,31 @@
+{
+  "enginePCCountsReconcile": true,
+  "functionBucketsReconcile": true,
+  "terminalGuard": {
+    "pc": 5892,
+    "opcode": "REVERT",
+    "function": "_commit",
+    "sourceStart": 39204,
+    "sourceLength": 18,
+    "lineColumn": [
+      838,
+      49
+    ],
+    "sourceEndLineColumn": [
+      838,
+      67
+    ]
+  },
+  "totalCallGas": 73494750,
+  "engineExclusiveOpcodeCost": 70300373,
+  "otherCallGasDifference": 3194377,
+  "observedMemoryBytes": 2984096,
+  "memoryCostFromZero": 17264372,
+  "memoryCostScope": "derived EVM expansion schedule, not an independently classified source bucket; do not add again to opcode costs",
+  "observerCaveats": [
+    "growth bytes omit initial96B expansion",
+    "free-pointer changes/max only, no allocation-size histogram",
+    "nested caps are not gas expenditure; aggregate child ledger is not an exclusive cost sum",
+    "compiler/generated bucket includes contract-wide source spans, not one identified function"
+  ]
+}

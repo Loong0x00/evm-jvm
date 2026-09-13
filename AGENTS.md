@@ -1,5 +1,16 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST COST: parentindependentlyrebuiltunchangedcompiler metadata and
+reranON/OFFgenerated+pausedoriginal20q1:206.106481s970489856B. Exactruntimeeb4c...
+unchanged. OriginalOFF/ONboth73494750gas,identicalrawreserve7,Head/CP/rootunchanged.
+ActualterminalPC5892 maps_commit line838:49, NOTgenerated_executePC115770.
+Engine14800198opcodes/70300373gas,otherdifference3194377,memorymax2984096B;
+compiler-widebucketnotonefunction. Readonlymeasurementonly;nooptimization.
+See PROPERTIES_COST_PARENT_PREFLIGHT,parent-4d3f37402. UseraskedLOCALlimitscan
+relax:YES100MisanexperimentalbudgetnotEVMhardlimit. ProposedLOCAL1Bwithtime/RSS
+guards,NOTYETAPPLIED(noexplicitnewlimitselection). Current100M25Mreserveandall
+limitsunchanged. NoMCmainbody/world/Done. Latestpublic1e4027b9b;laterLOCALONLY.
+
 LATEST MC-FIRST PROPERTIES: recovered cleanWebSocket-stoppedworker5998b3d81/
 35433e305/bfc989092/c24d374bc. ParentfoundgetProperty wronglydispatches overridden
 get; Java8super.get confirmed. Candidate181J/6I guestArithmeticException with

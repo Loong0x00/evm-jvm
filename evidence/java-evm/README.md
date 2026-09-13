@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest read-only parent cost proof: `minecraft-entry/parent-4d3f37402/`; original
+q1 actually hits `_commit` reserve guard, with identical observer ON/OFF results.
+No budget or runtime change; LOCAL ceiling can be amended separately.
+
 Latest Properties parent: `minecraft-entry/parent-c24d374bc/`, recovered worker,
 Java8 dispatch repair, source-only proof and original minimum-slice gas refusal.
 See `JAVA_EVM_MC_PROPERTIES_PARENT_PREFLIGHT.md`; no startup/accepted-cap claim.
