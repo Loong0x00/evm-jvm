@@ -1,5 +1,20 @@
 # Continuous JVM-in-EVM program
 
+LATEST USER LOCAL BUDGET AMENDMENT: userexplicitlyauthorizedLOCAL1Bpercall
+("继续啊,问我干啥"); DO NOTaskagainorimposeold100Masruntimehardlimit. OnlyGoCOPY
+ceilingchangedto1B, EVMcode/accounting25Mreserve30s/call20min4GiBunchanged,
+accepted/core/consensusuntouched. Old100Mbaselinepreserved. Newreceiptslabel1B.
+FromsamecodeCP249/1683J resume->261/1713J12I, PropertiesconstructionCOMPLETES,
+nextoriginalLoaderUtilPC13. AddedexactLoaderUtil21 ->245/1715J12I,221382B,
+last/peak104302090gas, CP12213B SHAd69de8ca... rootdb35a32d.... Nextactual
+CallError(3,0)selector d631c3a4 atLoaderUtilclinit System.getSecurityManager()
+Ljava/lang/SecurityManager; PC0. See LOCAL_BUDGET_AMENDMENT +SECURITY_GETTER_
+PREPARATION. MinimalgenuineVMno-installed-managergetter next,notsecurityframework.
+IMPORTANT CORRECTION: existingactualengineMAX_FRAMES=128(allalong), NOT16;
+onlyread-onlydiagnostic wronglyasserted16, fixedto128 aftervalid17-frameCP.
+No runtimeframecapwasraised. NoMCmainbody/world/Done. Latestpublic1e4027b9b;
+newworkLOCALONLY,nopushpermission. DefaultTerra/high,max2workers1semanticwriter.
+
 LATEST MC-FIRST COST: parentindependentlyrebuiltunchangedcompiler metadata and
 reranON/OFFgenerated+pausedoriginal20q1:206.106481s970489856B. Exactruntimeeb4c...
 unchanged. OriginalOFF/ONboth73494750gas,identicalrawreserve7,Head/CP/rootunchanged.

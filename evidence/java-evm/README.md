@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+User-authorized LOCAL1B budget: `minecraft-entry/local-budget-1b/`; unchanged
+EVM accounting/runtime, genuine Properties construction now passes, next missing
+System.getSecurityManager member. Existing frame cap128, diagnostic16 corrected.
+
 Latest read-only parent cost proof: `minecraft-entry/parent-4d3f37402/`; original
 q1 actually hits `_commit` reserve guard, with identical observer ON/OFF results.
 No budget or runtime change; LOCAL ceiling can be amended separately.

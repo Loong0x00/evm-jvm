@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/local-budget-1b/run.py", line 29, in <module>
+    cp=(w/'checkpoints'/(h['checkpointSHA256']+'.bin')).read_bytes();v={'head':h,'gasUsed':r['gasUsed'],'diagnostic':d.inspect(cp)};rows.append(v);(out/('epoch-%d.json'%h['epoch'])).write_text(json.dumps(v,indent=2)+'\n')
+                                                                                                                     ~~~~~~~~~^^^^
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-c24d374bc/checkpoint_frames.py", line 23, in inspect
+    depth=u(2);assert depth<=16;frames=[]
+                      ^^^^^^^^^
+AssertionError
