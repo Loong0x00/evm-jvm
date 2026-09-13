@@ -44,11 +44,11 @@ caps, ABI, core, consensus, artifacts, or Makefiles.
 
 ## Generated result
 
-`evidence/java-evm/minecraft-entry/privileged-action-preflight/artifacts/`
-contains the exact copied-and-derived Solidity/Go sources, pinned compilation
-outputs, Java sources, deterministic generated fixtures, complete slice
-receipts/checkpoints, logs and SHA256SUMS—without a Go binary, LevelDB, original
-payload, resource pages, JAR, original class, or original world.
+`evidence/java-evm/minecraft-entry/privileged-action-preflight/` contains the
+Java sources and recipe; its `artifacts/` child contains the exact
+copied-and-derived Solidity/Go sources, pinned compilation outputs, complete
+slice receipts/checkpoints, logs and SHA256SUMS—without a Go binary, LevelDB,
+original payload, resource pages, JAR, original class, or original world.
 
 Pinned Java 8 fixture `PrivilegedActionProbe` genuinely implements
 `PrivilegedAction<String>`. It invokes `run` through a raw erased interface and
@@ -67,7 +67,9 @@ slice; 226/33/1 full receipts are retained. Maximum call gas was
 20,612,966 / 20,950,945 / 34,947,589.
 
 Caller-supplied `java/security/PrivilegedAction` is refused with canonical
-`BootstrapProfileError` selector `0x6a23ad80`, root unchanged. The explicit
+`BootstrapProfileError` selector `0x6a23ad80`, root unchanged. The retained
+`direct-evm-failure.json` files are the driver's existing AS0 post-create
+wrong-PI rollback control, not guest execution failures. The explicit
 unsupported `AccessController` control remains honest
 `MCEntryMissingClass(4107,0,java/security/AccessController)`, selector
 `0x555db429`, root unchanged. Neither refusal supplies progress.
