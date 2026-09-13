@@ -1,0 +1,39 @@
+{
+  "format": "MC-PROPERTIES-COST-METADATA-1",
+  "compiler": "0.8.30+commit.73712a01.Emscripten.clang",
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    },
+    "outputSelection": {
+      "*": {
+        "": [
+          "ast"
+        ],
+        "*": [
+          "evm.deployedBytecode.object",
+          "evm.deployedBytecode.sourceMap",
+          "evm.deployedBytecode.generatedSources",
+          "evm.deployedBytecode.functionDebugData",
+          "evm.deployedBytecode.opcodes",
+          "irOptimized"
+        ]
+      }
+    }
+  },
+  "sourceSHA256": "79cb94450f7e3646cb80f13af473ea5d8b27f1fb3aa771c3749cf59be33f5564",
+  "runtimeBytes": 321590,
+  "runtimeSHA256": "877f35a4ac4092a7c65ab5071104413e4579ced0b69a172852db77d772aee1bb",
+  "runtimeKeccak256": "eb4c959c4893d83ef2a20918693f1ab499d812845a54b9377eba3615a8da1be7",
+  "exactRuntimeEquality": true,
+  "sourceMapEntries": 172192,
+  "generatedSourceCount": 0,
+  "functionDebugDataCount": 456
+}
