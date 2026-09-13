@@ -1,0 +1,107 @@
+{
+  "basis": "696994208",
+  "repair": "incoming item.equals(existing), matching Java8 HashMap.putVal key.equals(k)",
+  "domain": "MC-LINKED-HASH-SET-PARENT1",
+  "address": "0x4d432d4c48532d504152454e5400000000000001",
+  "owner": "0x4d432d4c48532d4f574e45520000000000000002",
+  "runtimeCap": 393216,
+  "accepted320Unchanged": true,
+  "engine": {
+    "bytes": 340269,
+    "initSHA256": "7788be73ab5700faf33c986f21071a1114e735959578beb7506cf8af879ecb9b",
+    "runtimeSHA256": "3f47b7ee723f037ef63d595917abc53d85917dae476502a3ad799de611daa917",
+    "runtimeKeccak256": "a12d5acd97e7d1237027d4f9f3dec49a460dd6578a0cd82138fa0310cd9e18db"
+  },
+  "coordinator": {
+    "bytes": 3547,
+    "initSHA256": "e608119061acadafc94d3d4a02cd0a09236636b18d032d270e20e5b509cbb591",
+    "runtimeSHA256": "f27345ee75c0b9c8624af361d876dbbd2ffb372d114c082ba07b0040a920fe30",
+    "runtimeKeccak256": "bb7fc9ea7cae11881f2f0a7e43831709ab067824f0e18e57b550410d3c85795e"
+  },
+  "bootstrapSHA256": {
+    "Iterator": "f0ad8c19ec4ff72eaac7ac8b438c57f3733c1849258158546ecfc83596903b88",
+    "Collection": "7ec295a5a1a6b63cf559df3952af74de966b98bd40e375710b0cd57d7f857e74",
+    "Set": "ba639a4f392cbbe457f525ac69a0dd1e92647267851130ba4d52ed880fb36da1",
+    "AbstractCollection": "caba244f2dbaa7e27c45416e6c8db0af8a88251d7d42c4046e511d777f58c6cb",
+    "AbstractSet": "537763d69e30c08576cb4f5728611dd9b306aec731312b9f6841a6575f6cd196",
+    "HashSet": "0500daf6cbbb519e65f90aeda5affb794e14b2fceaa8f119239ff8d532850b4a",
+    "LinkedHashSet": "d0d0d3ae330481e566ff95159c2b3ef6ee70566d4e3eae5927cf1c86cb4af222",
+    "HashSetIterator": "f3a2910ee99fdae202dbf1c436927f9a1749e87a345f5b5308ede9bca500ea4b",
+    "NoSuchElementException": "db7f38ba448762dbaba425bddb459d90bd60984339d6d759e60768ea73579051"
+  },
+  "externalLocalGas": 1000000000,
+  "reserve": 25000000,
+  "maxFrames": 128,
+  "bootstrapCount": 61,
+  "rawLimits": [
+    24,
+    262144
+  ]
+}
+{
+  "q1": {
+    "epoch": 2768,
+    "jvmSteps": 2768,
+    "internalSteps": 13,
+    "machineRoot": "0x902bcb248914be610d58bc162e59c9382543c86f44ce5b0a2dff5f6d56faebc3",
+    "opaqueSHA256": "25b0908b3e62f28b75e778131917945baebebd11b25f82db85afc82d6c5c1e44"
+  },
+  "q7": {
+    "epoch": 396,
+    "jvmSteps": 2768,
+    "internalSteps": 13,
+    "machineRoot": "0x902bcb248914be610d58bc162e59c9382543c86f44ce5b0a2dff5f6d56faebc3",
+    "opaqueSHA256": "25b0908b3e62f28b75e778131917945baebebd11b25f82db85afc82d6c5c1e44"
+  },
+  "q4096": {
+    "epoch": 1,
+    "jvmSteps": 2768,
+    "internalSteps": 13,
+    "machineRoot": "0x902bcb248914be610d58bc162e59c9382543c86f44ce5b0a2dff5f6d56faebc3",
+    "opaqueSHA256": "25b0908b3e62f28b75e778131917945baebebd11b25f82db85afc82d6c5c1e44"
+  },
+  "unsupportedRemove": {
+    "actualDI0ReadSizes": [
+      285
+    ],
+    "candidateCheckpoint": "",
+    "candidateHead": "",
+    "candidateRoot": "",
+    "checkpointBytes": 0,
+    "diagnostic": null,
+    "error": "execution reverted",
+    "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+    "gas": 14538906,
+    "resourceHashes": {
+      "0x8a601f6B25264a52abf9957E2F8D9a89Aa6A4b93": "1074de4212ea986c81054ae7f41e5567d2e73701ddf0d6ceef13b7db26b290ca"
+    },
+    "resourceReadReceipts": [
+      {
+        "To": "0x8a601f6b25264a52abf9957e2f8d9a89aa6a4b93",
+        "Offset": 0,
+        "Requested": 285,
+        "Returned": 285,
+        "Success": true,
+        "SHA256": "1074de4212ea986c81054ae7f41e5567d2e73701ddf0d6ceef13b7db26b290ca"
+      }
+    ],
+    "revertHex": "0xd631c3a400000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000008",
+    "rootAfter": "0xb904a9013f8659ab9f1e38247e53da637d9f465a23dfd80a2c9016244d545d42",
+    "rootBefore": "0xb904a9013f8659ab9f1e38247e53da637d9f465a23dfd80a2c9016244d545d42",
+    "rootUnchanged": true,
+    "selector": "0xd631c3a4",
+    "suppliedGas": 1000000000,
+    "uint256Words": [
+      "3",
+      "8"
+    ]
+  }
+}
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-7625023ff/frontier.py", line 17, in <module>
+    with (out/'continue.log').open('w') as f:subprocess.run([sys.executable,str(here/'continue.py'),str(out),'official',str(out/'continuation'),str(jar),str(build)],env=env,cwd=root,stdout=f,stderr=subprocess.STDOUT,check=True)
+                                             ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/usr/bin/python3', '/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-7625023ff/continue.py', '/home/user/evm-jvm/geth/build/java-diff-mc-linked-hash-set-parent-official22b-7625023ff', 'official', '/home/user/evm-jvm/geth/build/java-diff-mc-linked-hash-set-parent-official22b-7625023ff/continuation', '/home/user/evm-jvm/mc-startup-inventory/build/java-diff-mc-startup-preflight/artifacts/minecraft_server.1.12.2.jar', '/home/user/evm-jvm/geth/build/java-diff-mc-linked-hash-set-parent-build2-7625023ff']' returned non-zero exit status 1.

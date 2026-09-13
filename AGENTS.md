@@ -1,5 +1,24 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST ORDERED SET: worker6c7a5a950/4735e71b4/7625023ff candidate
+old.equals(item)waswrongforJava8HashSet;parentcorrected incomingitem.equals(old),
+HashSetSHA0500daf6...,other8imagesbyteidentical,61boots. LOCAL384engine340269B
+SHA3f47b7ee.../Keccaka12d5acd...,co bb7fc9ea...,domainMC-LINKED-HASH-SET-PARENT1.
+Generatednoarg/int/growth/order/null/asymmetricduplicate/2iterators/NSEE+allprior
+controls2768J13I q1/q7/direct2768/396/1 VOID equal,3165canonical;all9reserved,
+removeCallError3,8. Worker failures missinghashCode+staleengineaddress preserved.
+Parent failures omittedcontinue,old<=76parser,staleoutputpath+operatorbashLash all
+preserved; exactbuild repeatedlysourcecompiled. Finalexec336.933069s162369536B;
+compile gates <=950116352B/477.586s.
+Original22fresh q7 head264/1848J19I,thengetResources;2q1->266/1850J,
+CP13895B SHA1ebdaac1... root62615a3c...,machine d11af7c3...,last128927814/
+max133920837. FramesLoaderUtil.findUrlResourcesPC74 stackcanonicalloader+resource
+String; next exact ClassLoader.getResources(String)Enumeration CallError3,74
+gas91705847. No resource answer/fakeempty.
+See LINKED_HASH_SET_PARENT andRESOURCE_ENUMERATION_PREPARATION: next narrow native
+EVM->coordinator->ZI0 lookup + genuine Enumeration/URL;positivegeneratedresource,
+openStreamunsupported. LOCAL384/1Bothercapsfixed,accepted320unchanged. NoMCbody/world/Done.
+
 LATEST MC-FIRST SYSTEM LOADER: exactpublicstaticnativezeroarg binding6 returns
 existingcanonicalVMloader;320KiB genuinelyfails, parentLOCAL384 engine328695B
 SHAec2a0c.../Keccak90f8b0...,co744ed7...,MC-SYSTEM-CLASSLOADER-PARENT1.

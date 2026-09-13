@@ -1,0 +1,294 @@
+Compiled from "Iterator.java"
+public interface java.util.Iterator<E> {
+  public abstract boolean hasNext();
+    descriptor: ()Z
+
+  public abstract E next();
+    descriptor: ()Ljava/lang/Object;
+
+  public void remove();
+    descriptor: ()V
+
+  public void forEachRemaining(java.util.function.Consumer<? super E>);
+    descriptor: (Ljava/util/function/Consumer;)V
+}
+Compiled from "Collection.java"
+public interface java.util.Collection<E> extends java.lang.Iterable<E> {
+  public abstract int size();
+    descriptor: ()I
+
+  public abstract boolean isEmpty();
+    descriptor: ()Z
+
+  public abstract boolean contains(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract java.util.Iterator<E> iterator();
+    descriptor: ()Ljava/util/Iterator;
+
+  public abstract java.lang.Object[] toArray();
+    descriptor: ()[Ljava/lang/Object;
+
+  public abstract <T> T[] toArray(T[]);
+    descriptor: ([Ljava/lang/Object;)[Ljava/lang/Object;
+
+  public abstract boolean add(E);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract boolean remove(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract boolean containsAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public abstract boolean addAll(java.util.Collection<? extends E>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public abstract boolean removeAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public boolean removeIf(java.util.function.Predicate<? super E>);
+    descriptor: (Ljava/util/function/Predicate;)Z
+
+  public abstract boolean retainAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public abstract void clear();
+    descriptor: ()V
+
+  public abstract boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract int hashCode();
+    descriptor: ()I
+
+  public java.util.Spliterator<E> spliterator();
+    descriptor: ()Ljava/util/Spliterator;
+
+  public java.util.stream.Stream<E> stream();
+    descriptor: ()Ljava/util/stream/Stream;
+
+  public java.util.stream.Stream<E> parallelStream();
+    descriptor: ()Ljava/util/stream/Stream;
+}
+Compiled from "Set.java"
+public interface java.util.Set<E> extends java.util.Collection<E> {
+  public abstract int size();
+    descriptor: ()I
+
+  public abstract boolean isEmpty();
+    descriptor: ()Z
+
+  public abstract boolean contains(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract java.util.Iterator<E> iterator();
+    descriptor: ()Ljava/util/Iterator;
+
+  public abstract java.lang.Object[] toArray();
+    descriptor: ()[Ljava/lang/Object;
+
+  public abstract <T> T[] toArray(T[]);
+    descriptor: ([Ljava/lang/Object;)[Ljava/lang/Object;
+
+  public abstract boolean add(E);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract boolean remove(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract boolean containsAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public abstract boolean addAll(java.util.Collection<? extends E>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public abstract boolean retainAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public abstract boolean removeAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public abstract void clear();
+    descriptor: ()V
+
+  public abstract boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public abstract int hashCode();
+    descriptor: ()I
+
+  public java.util.Spliterator<E> spliterator();
+    descriptor: ()Ljava/util/Spliterator;
+}
+Compiled from "AbstractCollection.java"
+public abstract class java.util.AbstractCollection<E> implements java.util.Collection<E> {
+  private static final int MAX_ARRAY_SIZE;
+    descriptor: I
+  protected java.util.AbstractCollection();
+    descriptor: ()V
+
+  public abstract java.util.Iterator<E> iterator();
+    descriptor: ()Ljava/util/Iterator;
+
+  public abstract int size();
+    descriptor: ()I
+
+  public boolean isEmpty();
+    descriptor: ()Z
+
+  public boolean contains(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public java.lang.Object[] toArray();
+    descriptor: ()[Ljava/lang/Object;
+
+  public <T> T[] toArray(T[]);
+    descriptor: ([Ljava/lang/Object;)[Ljava/lang/Object;
+
+  private static <T> T[] finishToArray(T[], java.util.Iterator<?>);
+    descriptor: ([Ljava/lang/Object;Ljava/util/Iterator;)[Ljava/lang/Object;
+
+  private static int hugeCapacity(int);
+    descriptor: (I)I
+
+  public boolean add(E);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public boolean remove(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public boolean containsAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public boolean addAll(java.util.Collection<? extends E>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public boolean removeAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public boolean retainAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+
+  public void clear();
+    descriptor: ()V
+
+  public java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+}
+Compiled from "AbstractSet.java"
+public abstract class java.util.AbstractSet<E> extends java.util.AbstractCollection<E> implements java.util.Set<E> {
+  protected java.util.AbstractSet();
+    descriptor: ()V
+
+  public boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public int hashCode();
+    descriptor: ()I
+
+  public boolean removeAll(java.util.Collection<?>);
+    descriptor: (Ljava/util/Collection;)Z
+}
+Compiled from "HashSet.java"
+public class java.util.HashSet<E> extends java.util.AbstractSet<E> implements java.util.Set<E>, java.lang.Cloneable, java.io.Serializable {
+  static final long serialVersionUID;
+    descriptor: J
+  private transient java.util.HashMap<E, java.lang.Object> map;
+    descriptor: Ljava/util/HashMap;
+  private static final java.lang.Object PRESENT;
+    descriptor: Ljava/lang/Object;
+  public java.util.HashSet();
+    descriptor: ()V
+
+  public java.util.HashSet(java.util.Collection<? extends E>);
+    descriptor: (Ljava/util/Collection;)V
+
+  public java.util.HashSet(int, float);
+    descriptor: (IF)V
+
+  public java.util.HashSet(int);
+    descriptor: (I)V
+
+  java.util.HashSet(int, float, boolean);
+    descriptor: (IFZ)V
+
+  public java.util.Iterator<E> iterator();
+    descriptor: ()Ljava/util/Iterator;
+
+  public int size();
+    descriptor: ()I
+
+  public boolean isEmpty();
+    descriptor: ()Z
+
+  public boolean contains(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public boolean add(E);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public boolean remove(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public void clear();
+    descriptor: ()V
+
+  public java.lang.Object clone();
+    descriptor: ()Ljava/lang/Object;
+
+  private void writeObject(java.io.ObjectOutputStream) throws java.io.IOException;
+    descriptor: (Ljava/io/ObjectOutputStream;)V
+
+  private void readObject(java.io.ObjectInputStream) throws java.io.IOException, java.lang.ClassNotFoundException;
+    descriptor: (Ljava/io/ObjectInputStream;)V
+
+  public java.util.Spliterator<E> spliterator();
+    descriptor: ()Ljava/util/Spliterator;
+
+  static {};
+    descriptor: ()V
+}
+Compiled from "LinkedHashSet.java"
+public class java.util.LinkedHashSet<E> extends java.util.HashSet<E> implements java.util.Set<E>, java.lang.Cloneable, java.io.Serializable {
+  private static final long serialVersionUID;
+    descriptor: J
+  public java.util.LinkedHashSet(int, float);
+    descriptor: (IF)V
+
+  public java.util.LinkedHashSet(int);
+    descriptor: (I)V
+
+  public java.util.LinkedHashSet();
+    descriptor: ()V
+
+  public java.util.LinkedHashSet(java.util.Collection<? extends E>);
+    descriptor: (Ljava/util/Collection;)V
+
+  public java.util.Spliterator<E> spliterator();
+    descriptor: ()Ljava/util/Spliterator;
+}
+final class java.util.HashSetIterator<E> implements java.util.Iterator<E> {
+  private java.util.HashSet<E> owner;
+    descriptor: Ljava/util/HashSet;
+  private int cursor;
+    descriptor: I
+  java.util.HashSetIterator(java.util.HashSet<E>);
+    descriptor: (Ljava/util/HashSet;)V
+
+  public boolean hasNext();
+    descriptor: ()Z
+
+  public E next();
+    descriptor: ()Ljava/lang/Object;
+}
+Compiled from "NoSuchElementException.java"
+public class java.util.NoSuchElementException extends java.lang.RuntimeException {
+  private static final long serialVersionUID;
+    descriptor: J
+  public java.util.NoSuchElementException();
+    descriptor: ()V
+
+  public java.util.NoSuchElementException(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+}

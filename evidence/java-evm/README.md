@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest ordered-set parent: `minecraft-entry/parent-7625023ff/`; corrected
+incoming-key equals semantics. Original reaches genuine getResources PC74 with no
+answer yet. Next must query EVM ZI0 and return real Enumeration/URL, never fake empty.
+
 Latest system-ClassLoader parent: `minecraft-entry/parent-bc4aa5f31/`; LOCAL384
 after measured320 failure. Original loader array is committed; next exact class is
 LinkedHashSet, before any ClassLoader.getResources or fake empty resource result.

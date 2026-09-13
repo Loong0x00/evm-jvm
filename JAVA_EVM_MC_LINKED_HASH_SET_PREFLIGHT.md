@@ -1,5 +1,11 @@
 # LinkedHashSet bounded guest collection preflight
 
+**PARENT CORRECTION:** candidate duplicate detection reversed asymmetric equals.
+Parent repaired to incoming `item.equals(old)`, independently rebuilt/replayed, and
+reached ClassLoader.getResources at original PC74. See
+JAVA_EVM_MC_LINKED_HASH_SET_PARENT_PREFLIGHT.md.
+
+
 **Worker candidate only; not parent acceptance and not Minecraft Done.**  This is a
 LOCAL384KiB engine-only candidate based exactly on `48cd1693560677cd97c9aacc6604fd414c0baace`
 (the parent system-loader result).  It does not read, package, or execute an
