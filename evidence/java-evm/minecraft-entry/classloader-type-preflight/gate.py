@@ -154,14 +154,14 @@ def main():
     run(out, "fixture-java8-build", [JAVAC, "-source", "8", "-target", "8", "-g:none", "-bootclasspath", RT, "-d", classes, *sources], env)
     run(out, "fixture-caller-replacement-build", [JAVAC, "-source", "8", "-target", "8", "-g:none", "-bootclasspath", RT, "-d", classes, fixture / "java/lang/ClassLoader.java"], env)
     run(out, "fixture-java8-oracle", [JAVA, "-cp", classes, "ClassLoaderTypeProbe"], env)
-    deterministic_zip(classes, out / "type.zip", ["ClassLoaderTypeProbe.class", "ClassLoaderTypeProbe$MinimalLoader.class"])
+    deterministic_zip(classes, out / "type.zip", ["ClassLoaderTypeProbe.class", "ClassLoaderTypeProbe$MinimalLoader.class", "ClassLoaderTypeProbe$StringAction.class"])
     deterministic_zip(classes, out / "caller.zip", ["ClassLoaderCallerReplacement.class", "java/lang/ClassLoader.class"])
     deterministic_zip(classes, out / "unsupported.zip", ["ClassLoaderUnsupported.class"])
 
     normal, baseline = [], None
     for quantum, label in ((1, "type-q1"), (7, "type-q7"), (4096, "type-direct")):
         args = [out / label, out / "coordinator/MCEntryCoordinator.json", out / "engine/MCEntryInterpreter.json", out / "type.zip", quantum]
-        env2 = dict(env, MC_ENTRY_BINDINGS="ClassLoaderTypeProbe.class,ClassLoaderTypeProbe$MinimalLoader.class")
+        env2 = dict(env, MC_ENTRY_BINDINGS="ClassLoaderTypeProbe.class,ClassLoaderTypeProbe$MinimalLoader.class,ClassLoaderTypeProbe$StringAction.class")
         run(out, label + "-start", [out / "driver", "setup-chain", *args], env2); run(out, label + "-finish", [out / "driver", "finish", *args], env2); run(out, label + "-reopen", [out / "driver", "verify", *args], env2)
         head = json.loads((out / label / "durable-head.json").read_text())
         if head["lifecycle"] != 2 or head["outcome"] != 2 or head["javaKind"] != 0: raise RuntimeError(label + " did not reach VOID")

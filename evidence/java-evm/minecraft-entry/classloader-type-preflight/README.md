@@ -14,10 +14,10 @@ one inherited process group, absolute fresh ignored build output, LOCAL1B and
 the unchanged finite timing/RSS/cap limits. `artifacts/` is created only by a
 successful gate and excludes Go binaries, LevelDB, original payloads and worlds.
 
-Fresh result: 195.178s/52572KiB; 136B ClassLoader SHA-256
+Fresh result: 206.278s/52572KiB; 136B ClassLoader SHA-256
 `df3b18c48b514343c2dcf9d025afd714027e319db03174c8f831215645f39e8b`; engine
 323026B Keccak`35f8925e4f8631a9ff23cb5faec1ed6c4db2c0e3d318c9fa21c70693e69a0258`.
-q1/q7/direct/reopen agree at53 Java/3 internal and genuine VOID. The two honest
+q1/q7/direct/reopen agree at264 Java/5 internal and genuine VOID. The two honest
 refusals are caller replacement`0x6a23ad80` and getSystemClassLoader
 CallError`0xd631c3a4`, both root-unchanged. See `artifacts/results.json` and
 `SHA256SUMS` for the full receipts and pins.
