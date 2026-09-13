@@ -1,0 +1,1 @@
+Worker reported WebSocket error after committing4cf97854e. Parent verified its clean worktree and commit; no active worktree writer remained. Candidate was independently rebuilt and replayed, not credited from stop/completion. Generic scope remains unaccepted.

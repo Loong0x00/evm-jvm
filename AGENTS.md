@@ -1,5 +1,16 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST: WebSocket-stopped classliteralworker hadcommitted4cf97854e;
+parentrecoveredandindependentlybuilt303045BengineSHAa35a22.../Keccak838a37...,
+co62b80...,40bootstraps16/262144COPY. Build189.487740s/891617280B;
+freshliteral7worlds+original9replay37.985398s/171507712B; independentJava8dotted
+identity/non-initq1q7/direct28J5Ipasses. Original9nowJava3->missingMarkerManager;
+addedEXACToriginalMarkerManager(10images177746B50reads) nowJava4 atCP4967B
+4432937... root411f5bee...,nextmissingjava/util/concurrent/ConcurrentHashMap
+site4104/PC0/gas36779158. OriginalmainBODY/EULA/world/DoneNO. Nextminimalguest
+Map/ConcurrentMap/CHM per JAVA_EVM_MC_MARKER_MAP_PREPARATION.md,notfullJVM.
+JAVA_EVM_MC_CLASS_LITERAL_PARENT_PREFLIGHT.md recordspins/caveats;acceptedunchanged.
+
 LATEST ORIGINAL MC EXECUTION: parent independently rebuilt224c23b23MC-ENTRYCOPY,
 260.465295s/899870720B, six generatedsmokes+official4/9worlds. Official4nowdiagnoses
 missingLogManager. Official9(174979B/49actualDI0fragments) commits epoch1/Java1/
