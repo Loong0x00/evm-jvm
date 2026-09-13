@@ -1,5 +1,14 @@
 # Java-inside-EVM agent guide
 
+CURRENT USER PRIORITY: unchanged Minecraft1.12.2 insideLOCAL EVM to genuineDone,
+superflatfirst; NOTcompleteJVM/generaltransport. Deferbroadstageaudit. Actual
+untouched-JAR mainentryattempt now recorded:4officialclasses34977B/12canonicalEVM
+DI0fragments,entrySHA246e...;startMainLinkError(4,0)/8709382gas,29.441760s338804736B,
+noJavaCP/instructioncredited. JAVA_EVM_MC_ENTRY_EXECUTION_PREPARATION.md scopes
+nextMC-ENTRY COPY:MR0+verifiedlazySelected+minimalRunnable,16/262144experimental,
+EVMmissing-classdiagnostics; accepted4/65536unchanged. No fake logger/main/Done,
+nohostexecutionauthority,noofficialpayloadtracked,nopush. Ledger92replacesstale54.
+
 LATEST MR0 ATOMICITY: parent verified narrow Go COPY after88a851a25 plus3parent
 fixes: lateCALL/CREATEcancel outputs cleared, unreadablepriorHead poisons/restores,
 no speculative directoryfsync credit. Final73.404590s/368906240B;13faultworlds vs
