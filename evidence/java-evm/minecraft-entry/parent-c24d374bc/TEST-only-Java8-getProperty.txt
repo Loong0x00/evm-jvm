@@ -1,0 +1,39 @@
+  public synchronized java.lang.Object setProperty(java.lang.String, java.lang.String);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: invokevirtual #4                  // Method put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       6: areturn
+
+  public java.lang.String getProperty(java.lang.String);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #62                 // Method java/util/Hashtable.get:(Ljava/lang/Object;)Ljava/lang/Object;
+       5: astore_2
+       6: aload_2
+       7: instanceof    #17                 // class java/lang/String
+      10: ifeq          20
+      13: aload_2
+      14: checkcast     #17                 // class java/lang/String
+      17: goto          21
+      20: aconst_null
+      21: astore_3
+      22: aload_3
+      23: ifnonnull     44
+      26: aload_0
+      27: getfield      #3                  // Field defaults:Ljava/util/Properties;
+      30: ifnull        44
+      33: aload_0
+      34: getfield      #3                  // Field defaults:Ljava/util/Properties;
+      37: aload_1
+      38: invokevirtual #63                 // Method getProperty:(Ljava/lang/String;)Ljava/lang/String;
+      41: goto          45
+      44: aload_3
+      45: areturn
+
+  public java.lang.String getProperty(java.lang.String, java.lang.String);
+    Code:
+       0: aload_0
+       1: aload_1
