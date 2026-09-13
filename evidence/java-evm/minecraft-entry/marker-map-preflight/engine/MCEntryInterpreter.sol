@@ -378,8 +378,8 @@ contract MCEntryInterpreter {
 
     uint32 private constant MR0_SCHEMA = 1;
     uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
-    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:MAIN:EMPTY-STRING-ARRAY:1");
-    bytes32 private constant DROOT = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:ROOT:1");
+    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:MAIN:EMPTY-STRING-ARRAY:1");
+    bytes32 private constant DROOT = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:ROOT:1");
     uint256 private constant MAX_RAW_CLASSES = 16;
     uint256 private constant MAX_RAW_BYTES = 262144;
     uint256 private constant MAX_CHECKPOINT_BYTES = 1048576;
@@ -395,13 +395,13 @@ contract MCEntryInterpreter {
     uint32 private constant MAX_PATH_DEPTH = 16;
     uint32 private constant MAX_PATH_BYTES = 256;
     uint32 private constant MAX_TRANSFER = 4096;
-    bytes32 private constant DART = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:ARTIFACT:1");
-    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:BOOTSTRAP:1");
-    bytes32 private constant DCFG = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:CONFIG:1");
-    bytes32 private constant DMACH = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:MACHINE:1");
-    bytes32 private constant DSEED = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:SEED:1");
-    bytes32 private constant DVFS = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:VFS:1");
-    bytes32 private constant DFILE = keccak256("JVMEVM:MC-CLASS-LITERAL-PREFLIGHT:FILE:1");
+    bytes32 private constant DART = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:ARTIFACT:1");
+    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:BOOTSTRAP:1");
+    bytes32 private constant DCFG = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:CONFIG:1");
+    bytes32 private constant DMACH = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:MACHINE:1");
+    bytes32 private constant DSEED = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:SEED:1");
+    bytes32 private constant DVFS = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:VFS:1");
+    bytes32 private constant DFILE = keccak256("JVMEVM:MC-MARKER-MAP-PREFLIGHT:FILE:1");
 
     mapping(bytes32 => Anchor) private anchors;
     bool private enteredVFS0A;

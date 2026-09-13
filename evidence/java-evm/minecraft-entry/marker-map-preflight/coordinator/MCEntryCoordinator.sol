@@ -13,15 +13,15 @@ contract MCEntryCoordinator {
         bool readOnly;
     }
 
-    address private constant ENGINE = 0x4D434C4153534c49544552414c00000000000001;
+    address private constant ENGINE = 0x4D434D41524B45524d4150000000000000000001;
     // COPY-only repair engine pin; this coordinator remains otherwise ABI-identical.
-    bytes32 private constant ENGINE_CODEHASH = hex"838a37b319d197fc82c8db86645726e12d38c4d55a40186f59248b2e48de928c";
+    bytes32 private constant ENGINE_CODEHASH = hex"edc205611814164dea1c67b9c62f5de9ba5ad39e6126a87720fcf1323a238c30";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-CLASS-LITERAL-PREFLIGHT/package/v1");
-    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-CLASS-LITERAL-PREFLIGHT/resource/v1");
-    bytes32 private constant VM_DOMAIN = keccak256("MC-CLASS-LITERAL-PREFLIGHT/vm/v1");
+    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-MARKER-MAP-PREFLIGHT/package/v1");
+    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-MARKER-MAP-PREFLIGHT/resource/v1");
+    bytes32 private constant VM_DOMAIN = keccak256("MC-MARKER-MAP-PREFLIGHT/vm/v1");
 
     address public owner;
     address public finalIndex;

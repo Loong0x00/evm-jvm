@@ -1,4 +1,4 @@
-// Disposable MC-CLASS-LITERAL transport preflight. It owns a normal StateDB/trie/LevelDB world and only public EVM execution APIs; it never accesses a private session or injects pages.
+// Disposable MC-MARKER-MAP transport preflight. It owns a normal StateDB/trie/LevelDB world and only public EVM execution APIs; it never accesses a private session or injects pages.
 package main
 
 import (
@@ -37,16 +37,16 @@ import (
 )
 
 const ordinaryGas = uint64(100_000_000)
-const format = "MC-CLASS-LITERAL-PREFLIGHT-1"
+const format = "MC-MARKER-MAP-PREFLIGHT-1"
 const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
 
 // The constructor owner is deliberately separate from the required fixed LOCAL
 // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
-var owner = common.HexToAddress("0x4d434c4153534c49544552414c00000000000002")
-var other = common.HexToAddress("0x4d434c4153534c49544552414c00000000000003")
-var engine = common.HexToAddress("0x4d434c4153534c49544552414c00000000000001")
-var packageDomain = crypto.Keccak256Hash([]byte("MC-CLASS-LITERAL-PREFLIGHT/package/v1"))
-var resourceDomain = crypto.Keccak256Hash([]byte("MC-CLASS-LITERAL-PREFLIGHT/resource/v1"))
+var owner = common.HexToAddress("0x4d434d41524b45524d4150000000000000000002")
+var other = common.HexToAddress("0x4d434d41524b45524d4150000000000000000003")
+var engine = common.HexToAddress("0x4d434d41524b45524d4150000000000000000001")
+var packageDomain = crypto.Keccak256Hash([]byte("MC-MARKER-MAP-PREFLIGHT/package/v1"))
+var resourceDomain = crypto.Keccak256Hash([]byte("MC-MARKER-MAP-PREFLIGHT/resource/v1"))
 var readSelector = crypto.Keccak256([]byte("read(uint32,uint32)"))[:4]
 
 type artifact struct {
@@ -764,7 +764,7 @@ func deployCoordinator(e *env, art artifact, a abi.ABI, init, run []byte, decs [
 	if assertOverride != nil {
 		assert = *assertOverride
 	}
-	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-CLASS-LITERAL-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
+	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-MARKER-MAP-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
 	must(x)
 	if len(init)+len(args) > 49152 {
 		panic(fmt.Sprintf("complete init %d", len(init)+len(args)))
@@ -1014,7 +1014,7 @@ func setupChain(dir, artPath, zipPath string, q uint64, input int32) {
 	writeJSON(filepath.Join(dir, "start.json"), map[string]interface{}{"gas": r.Gas, "slice": d.Slice, "checkpointBytes": len(d.Checkpoint), "package": p, "resourceRoots": e.m.ResourceRoots, "actualReadSizes": r.Trace.Reads, "actualNestedFrames": r.Trace.Nested, "zipSHA256": sha(raw), "zipBytes": len(raw), "pid": os.Getpid(), "completeInitBytes": len(init) + constructorArgLen(ca, owner, e.m.Decoders, names, e.m.IndexRoot, e.m.ResourceRoots, p)})
 }
 func constructorArgLen(ca abi.ABI, from common.Address, decs []common.Address, names [][]byte, ir common.Hash, roots []common.Hash, p common.Hash) int {
-	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-CLASS-LITERAL-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
+	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-MARKER-MAP-PREFLIGHT/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
 	must(x)
 	return len(b)
 }
@@ -1135,6 +1135,8 @@ func fixtureNames(zipPath string) [][]byte {
 		return [][]byte{[]byte("UntakenMissingLiteral.class")}
 	case "missing-literal.zip":
 		return [][]byte{[]byte("MissingLiteral.class")}
+	case "platform-map.zip":
+		return [][]byte{[]byte("MapMain.class"), []byte("MapMain$Key.class")}
 	default:
 		panic("fixture ZIP name is an assertion")
 	}

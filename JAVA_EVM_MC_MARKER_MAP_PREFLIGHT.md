@@ -1,10 +1,18 @@
 # MC-first MarkerManager platform-map COPY preflight
 
-**Work in progress; generated fixtures only.  This is neither accepted runtime nor
-Minecraft execution.**  The candidate is an isolated derivative of recovered
-class-literal candidate `4cf97854e`, at integration base `52d973017`.  Its complete
-write set is `evidence/java-evm/minecraft-entry/marker-map-preflight/`; accepted
-`jvmevm`, core, quotas, artifacts, ABI, Makefiles and global manifests are untouched.
+**Candidate only; generated fixtures only.  This is neither an accepted runtime nor
+Minecraft execution.**  The isolated derivative of recovered class-literal candidate
+`4cf97854e` is based at `52d973017`.  Its complete write set is
+`evidence/java-evm/minecraft-entry/marker-map-preflight/`; accepted `jvmevm`, core,
+quotas, artifacts, ABI, Makefiles and global manifests are untouched.
+
+Fresh source-build/generated evidence now exists under that owned directory.  The
+q1 and q7 worlds have equal terminal machine root after 1397 Java/9 internal steps
+and a separately reopened durable process; q1 uses 1397 epochs and q7 200.  The
+q4096/direct world deliberately records its actual ordinary-cap refusal
+`LC0ControlError(7)`, 73548878 gas, zero epoch and unchanged root, rather than a
+quota raise.  Thus direct terminal equivalence remains an explicit gap, not an
+acceptance claim.
 
 ## Measured reason and narrow target
 
@@ -47,12 +55,12 @@ actual Class bootstrap slot for both supplied/unsupplied Runnable tails rather
 than retaining the prior `+34` assumption; duplicate/reserved binding checks must
 not be weakened.
 
-Acceptance evidence must be fresh, full opaque generated Java-8 ZIP -> AS0 -> ZI0
--> DI0 metadata/DEFLATE/CRC/final <=4096-byte page reads -> coordinator/kernel
-runs.  Direct, q1, q7, durable continuation, and fresh-process reopen must agree
-for constructor, mutation, repeated equal keys, growth, clear and reference alias;
-separate Java 8 oracle output is TEST-only.  Record actual EVM reverts, roots,
-checkpoint receipts, compiler/domain/address/runtime pins and group watchdogs
-under the owned evidence path.  Compilation or a source-only design is not
-acceptance.  No original JAR, Marker/Log4j substitutes, logger fake, EULA, world,
-or Done claim belongs here.
+Fresh evidence uses full opaque generated Java-8 ZIP -> AS0 -> ZI0 -> DI0
+metadata/DEFLATE/CRC/final <=4096-byte page reads -> coordinator/kernel calls.
+The Java-8 TEST oracle covers caught null-key/null-value NPE, custom/String equal
+keys, prior return, alias, growth and clear; it has no execution authority.  Eleven
+whole-group watched commands total 251.185517s with 866557952B peak sampled RSS.
+Receipts, raw direct refusal, roots, fresh-process verification, pins and hashes
+are durable under `actual-receipts/` and `SHA256SUMS`.  Compilation or this
+narrow generated success is not profile acceptance.  No original JAR,
+Marker/Log4j substitute, logger fake, EULA, world or Done claim belongs here.

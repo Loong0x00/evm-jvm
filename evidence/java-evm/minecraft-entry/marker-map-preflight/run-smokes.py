@@ -40,7 +40,7 @@ if not env.get('NODE_PATH'): raise SystemExit('set NODE_PATH to pinned solc modu
 run('engine-build',['node',D/'engine/build.js'])
 run('coordinator-build',['node',D/'coordinator/build.js'])
 run('go-build',['go','build','-o',driver,D/'driver.go'])
-run('fixtures',[sys.executable,D/'fixtures/generate-class-literal.py',fixtures])
+run('fixtures',[sys.executable,D/'fixtures/generate-platform-map.py',fixtures])
 coord=D/'coordinator/MCEntryCoordinator.json'; engine=D/'engine/MCEntryInterpreter.json'
 def world(label,zipname,q,finish=True):
     args=[driver,'setup-chain',worlds/label,coord,engine,fixtures/zipname,str(q)]
@@ -48,10 +48,8 @@ def world(label,zipname,q,finish=True):
     if finish:
         run(label+'-finish',[driver,'finish',worlds/label,coord,engine,'x','1'])
         run(label+'-verify',[driver,'verify',worlds/label,coord,engine,'x','1'])
-for q in (4096,1,7): world('literal-q'+str(q),'class-literal.zip',q)
-for q in (4096,7): world('wide-q'+str(q),'wide-class-literal.zip',q)
-world('untaken-q4096','untaken-missing-literal.zip',4096)
-world('missing-q4096','missing-literal.zip',4096,False)
+world('platform-map-q4096','platform-map.zip',4096,False) # measured ordinary-cap direct refusal
+for q in (1,7): world('platform-map-q'+str(q),'platform-map.zip',q)
 summary={}
 for d in sorted(worlds.iterdir()):
     m=json.loads((d/'durable-head.json').read_text()); f=d/'start-refusal.json'
