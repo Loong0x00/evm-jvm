@@ -154,6 +154,8 @@ def main():
     for old, new in replacements.items():
         if old not in driver: raise RuntimeError("driver pin absent " + old)
         driver = driver.replace(old, new)
+    # Observer-only diagnostic field: preserve raw receipt bytes while recording the declared ABI error name.
+    driver = replace_once(driver, '"error": fmt.Sprint(r.Err), "selector": selector(r.Out),', '"error": fmt.Sprint(r.Err), "errorName": errorName(engineABI, r.Out), "selector": selector(r.Out),', "failure receipt name")
     (out / "executed_generated_driver.go.txt").write_text(driver)
     main_go = out / "main.go"; main_go.write_text(driver)
     run(out, "gofmt", ["gofmt", "-w", main_go], env); run(out, "driver-build", ["go", "build", "-trimpath", "-o", out / "driver", main_go], env); run(out, "driver-vet", ["go", "vet", main_go], env)
@@ -192,10 +194,9 @@ def main():
         args = [out / label, out / "coordinator/MCEntryCoordinator.json", out / "engine/MCEntryInterpreter.json", out / fixture, 4096]
         run(out, label + "-start", [out / "driver", "setup-chain", *args], e)
         refusal = json.loads((out / label / "reports/start-refusal.json").read_text())
-        if refusal["error"] == "" or refusal["rootUnchanged"] is not True or expected not in refusal["revertHex"] and refusal.get("diagnostic") is None:
-            raise RuntimeError(label + " did not preserve an honest refusal")
-        # ABI names are emitted by the pinned driver when the error is declared;
-        # the raw receipt remains the authority for the deliberately missing class.
+        if refusal.get("errorName") != expected or refusal["rootUnchanged"] is not True:
+            raise RuntimeError(label + " did not preserve the canonical honest refusal")
+        # The raw receipt is the authority for the deliberately missing class.
         refusals[label] = {"selector": refusal["selector"], "diagnostic": refusal.get("diagnostic"), "rootUnchanged": refusal["rootUnchanged"], "gas": refusal["gas"]}
     if refusals["access-controller"]["diagnostic"] is None or refusals["access-controller"]["diagnostic"].get("name") != "java/security/AccessController": raise RuntimeError("AccessController was not honestly missing")
 
