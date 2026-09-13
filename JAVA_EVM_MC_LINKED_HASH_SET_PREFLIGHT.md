@@ -76,3 +76,11 @@ Go binaries, LevelDB state, and original payloads.
 Parent must independently rebuild this exact source and only then perform a
 new original22 q7+q1 run from the recorded 1802J/16I frontier. The anticipated
 later `getResources` member is explanatory only: it is not implemented here.
+
+## Preserved development failures
+
+Two pre-gate failures are retained under `logs/development-failures/`: a host
+oracle fixture initially omitted `hashCode` (so JDK HashSet did not call its
+`equals`), and an initial coordinator still pointed at the parent engine address
+and honestly reverted `MR0Error(3)`. Both are fixed in the final whole gate;
+these logs are not counted as positive evidence.
