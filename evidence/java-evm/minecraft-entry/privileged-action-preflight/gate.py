@@ -133,7 +133,7 @@ def main():
 
     coordinator = out / "coordinator/MCEntryCoordinator.sol"; ct = coordinator.read_text()
     ct = ct.replace("MC-SECURITY-GETTER-PREFLIGHT1", DOMAIN)
-    ct = replace_once(ct, 'address private constant ENGINE = address(bytes20(hex"4d435345435552495459474ેટ54455200000001"));'.replace('ેટ',''), 'address private constant ENGINE = address(bytes20(hex"' + ADDRESS + '"));', "coordinator engine address")
+    ct = replace_once(ct, 'address private constant ENGINE = address(bytes20(hex"4d43534543555249545947455454455200000001"));', 'address private constant ENGINE = address(bytes20(hex"' + ADDRESS + '"));', "coordinator engine address")
     ct = replace_once(ct, "74609271d2d333b617e12d0c2ddeae2574b7812fc72f719453614acb3cc081ae", ea["codeHashes"]["runtimeKeccak256"], "coordinator engine hash")
     coordinator.write_text(ct)
     run(out, "coordinator-build", ["node", out / "coordinator/build.js"], env)
