@@ -161,7 +161,7 @@ def main():
     run(out, "gofmt", ["gofmt", "-w", main_go], env); run(out, "driver-build", ["go", "build", "-trimpath", "-o", out / "driver", main_go], env); run(out, "driver-vet", ["go", "vet", main_go], env)
 
     classes = out / "classes"; classes.mkdir()
-    sources = [HERE / "fixtures/PrivilegedActionProbe.java", HERE / "fixtures/CallerPrivilegedActionRefusal.java", HERE / "fixtures/AccessControllerRefusal.java", HERE / "fixtures/java.security.PrivilegedAction.java"]
+    sources = [HERE / "fixtures/PrivilegedActionProbe.java", HERE / "fixtures/CallerPrivilegedActionRefusal.java", HERE / "fixtures/AccessControllerRefusal.java", HERE / "fixtures/java/security/PrivilegedAction.java"]
     run(out, "fixture-java8-build", [JAVAC, "-source", "8", "-target", "8", "-g:none", "-bootclasspath", RT, "-d", classes, *sources], env)
     run(out, "fixture-java8-oracle", [JAVA, "-cp", classes, "PrivilegedActionProbe"], env)
     run(out, "fixture-javap-bridge", [JAVAP, "-classpath", classes, "-p", "-s", "-c", "PrivilegedActionProbe$StringAction"], env)
