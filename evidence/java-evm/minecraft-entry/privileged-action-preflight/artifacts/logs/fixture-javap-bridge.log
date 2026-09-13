@@ -1,0 +1,28 @@
+final class PrivilegedActionProbe$StringAction implements java.security.PrivilegedAction<java.lang.String> {
+  private PrivilegedActionProbe$StringAction();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #2                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public java.lang.String run();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: ldc           #3                  // String privileged-action
+       2: areturn
+
+  public java.lang.Object run();
+    descriptor: ()Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: invokevirtual #4                  // Method run:()Ljava/lang/String;
+       4: areturn
+
+  PrivilegedActionProbe$StringAction(PrivilegedActionProbe$1);
+    descriptor: (LPrivilegedActionProbe$1;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method "<init>":()V
+       4: return
+}
