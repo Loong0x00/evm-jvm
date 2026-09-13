@@ -69,4 +69,24 @@ canonical receipts. Host Java is a generated-fixture oracle only. Parent alone
 may run original22 q7, preserve that failure, and q1; failed traces are never
 state authority.
 
-No main body, world, EULA, listener, or Done claim follows from this preflight.
+## Generated-only result
+
+`thread-context-preflight/gate.py` completed from fresh generated inputs. Thread
+is 450B SHA-256 `4c76217e07b547c39ef42523e3cef55af582541265882b6998332124b3f72cb5`.
+All prior50 images remain exact. The fresh engine is 326052B (1628B headroom),
+SHA-256 `d11b3725ba5151fbfc12011a5df87741cd3c80114eaafb1e056157736b8ea86c`,
+Keccak `ca811ec4bf1be44d6a8a6469d38543cb8ba89b21c93589ba07338c1ed5b7f0df`;
+the coordinator Keccak is
+`7c16213411499ea7fd34fc4da229122e244bbf937a8d76a3e1ef96bddc01852a`.
+
+q1/q7/direct/reopen each reaches VOID at291 Java/7 internal steps with equal
+machine root `0xb366bd14d9d38d656456dbcc3a2f83b46dbab0464241e9a6aad85c4e2c3761a0`
+and opaque SHA-256
+`bd1f32bcf961edc9a224aef61d8e3d8e539639f5160f0556a22255eda0cf4db2`.
+Caller replacement rejects `0x6a23ad80`; unsupported Thread setter/start and
+ClassLoader getter reject `0xd631c3a4`, all root-unchanged. True outer-group
+peak was884120KiB; it is a high-water mark across all commands, not a
+last-child report. No failure occurred in this generated gate.
+
+No main body, world, EULA, listener, original22 replay, or Done claim follows
+from this preflight.
