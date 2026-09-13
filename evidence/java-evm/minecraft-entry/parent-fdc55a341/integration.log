@@ -1,0 +1,76 @@
+[java-on-evm 0fdc6cfaa] java-evm: begin resource enumeration preflight
+ Date: Mon Sep 14 04:56:51 2026 +0800
+ 1 file changed, 14 insertions(+)
+ create mode 100644 JAVA_EVM_MC_RESOURCE_ENUMERATION_PREFLIGHT.md
+[java-on-evm 46163601e] java-evm: prototype resource enumeration bridge
+ Date: Mon Sep 14 05:07:56 2026 +0800
+ 66 files changed, 15744 insertions(+)
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/README.md
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/SHA256SUMS
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/java/lang/ClassLoader.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/java/lang/VMResourceEnumeration.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/java/net/URL.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/java/util/Enumeration.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/AbstractCollection.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/AbstractSet.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/Collection.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/HashSet.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/HashSetIterator.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/Iterator.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/LinkedHashSet.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/NoSuchElementException.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/bootstrap/prior/java/util/Set.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/coordinator/MCEntryCoordinator.abi.json
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/coordinator/MCEntryCoordinator.init.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/coordinator/MCEntryCoordinator.json
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/coordinator/MCEntryCoordinator.runtime.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/coordinator/MCEntryCoordinator.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/coordinator/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/engine/MCEntryInterpreter.abi.json
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/engine/MCEntryInterpreter.init.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/engine/MCEntryInterpreter.json
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/engine/MCEntryInterpreter.runtime.hex
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/engine/MCEntryInterpreter.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/engine/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/ResourceEnumerationProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/generated/classes/ResourceEnumerationProbe.class
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/generated/probe-resource.txt
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/generated/resource-enumeration.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/LinkedHashSetHostOracle.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/LinkedHashSetProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/ReservedCollectionReplacementMain.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/UnsupportedRemoveProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/classes/LinkedHashSetHostOracle.class
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/classes/LinkedHashSetProbe$Equal.class
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/classes/LinkedHashSetProbe.class
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/linked-hash-set.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/remove.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-AbstractCollection.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-AbstractSet.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-Collection.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-HashSet.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-HashSetIterator.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-Iterator.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-LinkedHashSet.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-NoSuchElementException.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/generated/replacement-Set.zip
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/AbstractCollection.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/AbstractSet.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/Collection.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/HashSet.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/HashSetIterator.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/Iterator.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/LinkedHashSet.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/NoSuchElementException.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/fixtures/prior/replacements/java/util/Set.java
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/logs/coordinator-build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/logs/engine-build.log
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/logs/generated-q4096-start-refusal.json
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/logs/probe-javac.log
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/pins.json
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/tools/checkpoint_frames.py
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/tools/driver.go.txt
+ create mode 100644 evidence/java-evm/minecraft-entry/resource-enumeration-preflight/tools/verify_receipts.js
+[java-on-evm 32246cbfb] java-evm: record resource bridge refusal
+ Date: Mon Sep 14 05:08:22 2026 +0800
+ 1 file changed, 11 insertions(+), 5 deletions(-)

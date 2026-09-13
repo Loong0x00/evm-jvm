@@ -1,5 +1,25 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST RESOURCE ENUMERATION: workerprototype q4096 LC0StateError7,0
+wascorrectbecausegetSystemClassLoadercalledbeforeanyrawmirrorcreatedcanonicalVMloader;
+parentreproduced,diagnostic rawmirror-first VOID266J6I static253. Worker also removed
+ClassLoaderACC_ABSTRACT;parentrestored. Exactprivate-static-native binding7 converts
+guestStringASCII<=256,1Mgas staticcall->exactcallingcoordinator;engine-only coordinator
+revalidatesZI0code/phase/root/owner and actualfinalIndex.lookup. Empty/single guest
+Enumeration+URLidentity,NOcontent/openStream.64boots.LOCAL384engine348319B
+SHAa119cdb3.../Keccak5183113f...,co4146B4b516bdd...,domainMC-RESOURCE-ENUMERATION-PARENT1.
+Generatedrealnonclassprobe/resource.txt positive+missing,URLequals/hash/name,NSEE,
+Setdedupe/growth/asymmetric+allprior3004J14I q1/q7/direct3004/430/1 VOIDequal,
+3435canonical,replacements/missingloader/openStream3,22 honest. Whole762.351078s
+959352832B.
+Original22fresh genuineZI0 absent log4j2.component.properties twice, noURL/content;
+q7head297/2079J20I then3q1->300/2082J20I,CP14989B SHA44d43b7f... root
+0f636bff...,machine71a2ec80...,last144002518/max146501807. Next exact raw
+PropertiesUtil.getStringProperty PC3 System.getProperty(String),keylog4j.ignoreTCL,
+CallError3,3gas100463235. See RESOURCE_ENUMERATION_PARENT+SYSTEM_PROPERTY_PREPARATION:
+next real initiallyempty guestProperties state,no key-specific null. LOCAL384/1B
+othercapsfixed,accepted320unchanged.NoMCbody/world/Done.
+
 LATEST MC-FIRST ORDERED SET: worker6c7a5a950/4735e71b4/7625023ff candidate
 old.equals(item)waswrongforJava8HashSet;parentcorrected incomingitem.equals(old),
 HashSetSHA0500daf6...,other8imagesbyteidentical,61boots. LOCAL384engine340269B

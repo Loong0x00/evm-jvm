@@ -1,0 +1,454 @@
+Compiled from "ClassLoader.java"
+public abstract class java.lang.ClassLoader {
+  private final java.lang.ClassLoader parent;
+    descriptor: Ljava/lang/ClassLoader;
+  private final java.util.concurrent.ConcurrentHashMap<java.lang.String, java.lang.Object> parallelLockMap;
+    descriptor: Ljava/util/concurrent/ConcurrentHashMap;
+  private final java.util.Map<java.lang.String, java.security.cert.Certificate[]> package2certs;
+    descriptor: Ljava/util/Map;
+  private static final java.security.cert.Certificate[] nocerts;
+    descriptor: [Ljava/security/cert/Certificate;
+  private final java.util.Vector<java.lang.Class<?>> classes;
+    descriptor: Ljava/util/Vector;
+  private final java.security.ProtectionDomain defaultDomain;
+    descriptor: Ljava/security/ProtectionDomain;
+  private final java.util.HashMap<java.lang.String, java.lang.Package> packages;
+    descriptor: Ljava/util/HashMap;
+  private static java.lang.ClassLoader scl;
+    descriptor: Ljava/lang/ClassLoader;
+  private static boolean sclSet;
+    descriptor: Z
+  private static java.util.Vector<java.lang.String> loadedLibraryNames;
+    descriptor: Ljava/util/Vector;
+  private static java.util.Vector<java.lang.ClassLoader$NativeLibrary> systemNativeLibraries;
+    descriptor: Ljava/util/Vector;
+  private java.util.Vector<java.lang.ClassLoader$NativeLibrary> nativeLibraries;
+    descriptor: Ljava/util/Vector;
+  private static java.util.Stack<java.lang.ClassLoader$NativeLibrary> nativeLibraryContext;
+    descriptor: Ljava/util/Stack;
+  private static java.lang.String[] usr_paths;
+    descriptor: [Ljava/lang/String;
+  private static java.lang.String[] sys_paths;
+    descriptor: [Ljava/lang/String;
+  final java.lang.Object assertionLock;
+    descriptor: Ljava/lang/Object;
+  private boolean defaultAssertionStatus;
+    descriptor: Z
+  private java.util.Map<java.lang.String, java.lang.Boolean> packageAssertionStatus;
+    descriptor: Ljava/util/Map;
+  java.util.Map<java.lang.String, java.lang.Boolean> classAssertionStatus;
+    descriptor: Ljava/util/Map;
+  private static native void registerNatives();
+    descriptor: ()V
+
+  void addClass(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)V
+
+  private static java.lang.Void checkCreateClassLoader();
+    descriptor: ()Ljava/lang/Void;
+
+  private java.lang.ClassLoader(java.lang.Void, java.lang.ClassLoader);
+    descriptor: (Ljava/lang/Void;Ljava/lang/ClassLoader;)V
+
+  protected java.lang.ClassLoader(java.lang.ClassLoader);
+    descriptor: (Ljava/lang/ClassLoader;)V
+
+  protected java.lang.ClassLoader();
+    descriptor: ()V
+
+  public java.lang.Class<?> loadClass(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  protected java.lang.Class<?> loadClass(java.lang.String, boolean) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;Z)Ljava/lang/Class;
+
+  protected java.lang.Object getClassLoadingLock(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Object;
+
+  private java.lang.Class<?> loadClassInternal(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  private void checkPackageAccess(java.lang.Class<?>, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/Class;Ljava/security/ProtectionDomain;)V
+
+  protected java.lang.Class<?> findClass(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  protected final java.lang.Class<?> defineClass(byte[], int, int) throws java.lang.ClassFormatError;
+    descriptor: ([BII)Ljava/lang/Class;
+
+  protected final java.lang.Class<?> defineClass(java.lang.String, byte[], int, int) throws java.lang.ClassFormatError;
+    descriptor: (Ljava/lang/String;[BII)Ljava/lang/Class;
+
+  private java.security.ProtectionDomain preDefineClass(java.lang.String, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/String;Ljava/security/ProtectionDomain;)Ljava/security/ProtectionDomain;
+
+  private java.lang.String defineClassSourceLocation(java.security.ProtectionDomain);
+    descriptor: (Ljava/security/ProtectionDomain;)Ljava/lang/String;
+
+  private void postDefineClass(java.lang.Class<?>, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/Class;Ljava/security/ProtectionDomain;)V
+
+  protected final java.lang.Class<?> defineClass(java.lang.String, byte[], int, int, java.security.ProtectionDomain) throws java.lang.ClassFormatError;
+    descriptor: (Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+
+  protected final java.lang.Class<?> defineClass(java.lang.String, java.nio.ByteBuffer, java.security.ProtectionDomain) throws java.lang.ClassFormatError;
+    descriptor: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/ProtectionDomain;)Ljava/lang/Class;
+
+  private native java.lang.Class<?> defineClass0(java.lang.String, byte[], int, int, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+
+  private native java.lang.Class<?> defineClass1(java.lang.String, byte[], int, int, java.security.ProtectionDomain, java.lang.String);
+    descriptor: (Ljava/lang/String;[BIILjava/security/ProtectionDomain;Ljava/lang/String;)Ljava/lang/Class;
+
+  private native java.lang.Class<?> defineClass2(java.lang.String, java.nio.ByteBuffer, int, int, java.security.ProtectionDomain, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/nio/ByteBuffer;IILjava/security/ProtectionDomain;Ljava/lang/String;)Ljava/lang/Class;
+
+  private boolean checkName(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+
+  private void checkCerts(java.lang.String, java.security.CodeSource);
+    descriptor: (Ljava/lang/String;Ljava/security/CodeSource;)V
+
+  private boolean compareCerts(java.security.cert.Certificate[], java.security.cert.Certificate[]);
+    descriptor: ([Ljava/security/cert/Certificate;[Ljava/security/cert/Certificate;)Z
+
+  protected final void resolveClass(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)V
+
+  private native void resolveClass0(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)V
+
+  protected final java.lang.Class<?> findSystemClass(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  private java.lang.Class<?> findBootstrapClassOrNull(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  private native java.lang.Class<?> findBootstrapClass(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  protected final java.lang.Class<?> findLoadedClass(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  private final native java.lang.Class<?> findLoadedClass0(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  protected final void setSigners(java.lang.Class<?>, java.lang.Object[]);
+    descriptor: (Ljava/lang/Class;[Ljava/lang/Object;)V
+
+  public java.net.URL getResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+
+  public java.util.Enumeration<java.net.URL> getResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+
+  protected java.net.URL findResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+
+  protected java.util.Enumeration<java.net.URL> findResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+
+  protected static boolean registerAsParallelCapable();
+    descriptor: ()Z
+
+  public static java.net.URL getSystemResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+
+  public static java.util.Enumeration<java.net.URL> getSystemResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+
+  private static java.net.URL getBootstrapResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+
+  private static java.util.Enumeration<java.net.URL> getBootstrapResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+
+  static sun.misc.URLClassPath getBootstrapClassPath();
+    descriptor: ()Lsun/misc/URLClassPath;
+
+  public java.io.InputStream getResourceAsStream(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/io/InputStream;
+
+  public static java.io.InputStream getSystemResourceAsStream(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/io/InputStream;
+
+  public final java.lang.ClassLoader getParent();
+    descriptor: ()Ljava/lang/ClassLoader;
+
+  public static java.lang.ClassLoader getSystemClassLoader();
+    descriptor: ()Ljava/lang/ClassLoader;
+
+  private static synchronized void initSystemClassLoader();
+    descriptor: ()V
+
+  boolean isAncestor(java.lang.ClassLoader);
+    descriptor: (Ljava/lang/ClassLoader;)Z
+
+  private static boolean needsClassLoaderPermissionCheck(java.lang.ClassLoader, java.lang.ClassLoader);
+    descriptor: (Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z
+
+  static java.lang.ClassLoader getClassLoader(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)Ljava/lang/ClassLoader;
+
+  static void checkClassLoaderPermission(java.lang.ClassLoader, java.lang.Class<?>);
+    descriptor: (Ljava/lang/ClassLoader;Ljava/lang/Class;)V
+
+  protected java.lang.Package definePackage(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.net.URL) throws java.lang.IllegalArgumentException;
+    descriptor: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/URL;)Ljava/lang/Package;
+
+  protected java.lang.Package getPackage(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Package;
+
+  protected java.lang.Package[] getPackages();
+    descriptor: ()[Ljava/lang/Package;
+
+  protected java.lang.String findLibrary(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+
+  private static java.lang.String[] initializePath(java.lang.String);
+    descriptor: (Ljava/lang/String;)[Ljava/lang/String;
+
+  static void loadLibrary(java.lang.Class<?>, java.lang.String, boolean);
+    descriptor: (Ljava/lang/Class;Ljava/lang/String;Z)V
+
+  private static native java.lang.String findBuiltinLib(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+
+  private static boolean loadLibrary0(java.lang.Class<?>, java.io.File);
+    descriptor: (Ljava/lang/Class;Ljava/io/File;)Z
+
+  static long findNative(java.lang.ClassLoader, java.lang.String);
+    descriptor: (Ljava/lang/ClassLoader;Ljava/lang/String;)J
+
+  public void setDefaultAssertionStatus(boolean);
+    descriptor: (Z)V
+
+  public void setPackageAssertionStatus(java.lang.String, boolean);
+    descriptor: (Ljava/lang/String;Z)V
+
+  public void setClassAssertionStatus(java.lang.String, boolean);
+    descriptor: (Ljava/lang/String;Z)V
+
+  public void clearAssertionStatus();
+    descriptor: ()V
+
+  boolean desiredAssertionStatus(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+
+  private void initializeJavaAssertionMaps();
+    descriptor: ()V
+
+  private static native java.lang.AssertionStatusDirectives retrieveDirectives();
+    descriptor: ()Ljava/lang/AssertionStatusDirectives;
+
+  static java.util.Vector access$000();
+    descriptor: ()Ljava/util/Vector;
+
+  static java.util.Stack access$100();
+    descriptor: ()Ljava/util/Stack;
+
+  static {};
+    descriptor: ()V
+}
+public final class java.lang.VMResourceEnumeration implements java.util.Enumeration<java.net.URL> {
+  private final java.lang.String resourceName;
+    descriptor: Ljava/lang/String;
+  private final boolean available;
+    descriptor: Z
+  private boolean consumed;
+    descriptor: Z
+  public java.lang.VMResourceEnumeration(java.lang.String, boolean);
+    descriptor: (Ljava/lang/String;Z)V
+
+  public boolean hasMoreElements();
+    descriptor: ()Z
+
+  public java.net.URL nextElement();
+    descriptor: ()Ljava/net/URL;
+
+  public java.lang.Object nextElement();
+    descriptor: ()Ljava/lang/Object;
+}
+Compiled from "Enumeration.java"
+public interface java.util.Enumeration<E> {
+  public abstract boolean hasMoreElements();
+    descriptor: ()Z
+
+  public abstract E nextElement();
+    descriptor: ()Ljava/lang/Object;
+}
+Compiled from "URL.java"
+public final class java.net.URL implements java.io.Serializable {
+  static final java.lang.String BUILTIN_HANDLERS_PREFIX;
+    descriptor: Ljava/lang/String;
+  static final long serialVersionUID;
+    descriptor: J
+  private static final java.lang.String protocolPathProp;
+    descriptor: Ljava/lang/String;
+  private java.lang.String protocol;
+    descriptor: Ljava/lang/String;
+  private java.lang.String host;
+    descriptor: Ljava/lang/String;
+  private int port;
+    descriptor: I
+  private java.lang.String file;
+    descriptor: Ljava/lang/String;
+  private transient java.lang.String query;
+    descriptor: Ljava/lang/String;
+  private java.lang.String authority;
+    descriptor: Ljava/lang/String;
+  private transient java.lang.String path;
+    descriptor: Ljava/lang/String;
+  private transient java.lang.String userInfo;
+    descriptor: Ljava/lang/String;
+  private java.lang.String ref;
+    descriptor: Ljava/lang/String;
+  private transient java.net.InetAddress hostAddress;
+    descriptor: Ljava/net/InetAddress;
+  transient java.net.URLStreamHandler handler;
+    descriptor: Ljava/net/URLStreamHandler;
+  private int hashCode;
+    descriptor: I
+  private transient java.net.UrlDeserializedState tempState;
+    descriptor: Ljava/net/UrlDeserializedState;
+  static java.net.URLStreamHandlerFactory factory;
+    descriptor: Ljava/net/URLStreamHandlerFactory;
+  static java.util.Hashtable<java.lang.String, java.net.URLStreamHandler> handlers;
+    descriptor: Ljava/util/Hashtable;
+  private static java.lang.Object streamHandlerLock;
+    descriptor: Ljava/lang/Object;
+  private static final java.io.ObjectStreamField[] serialPersistentFields;
+    descriptor: [Ljava/io/ObjectStreamField;
+  public java.net.URL(java.lang.String, java.lang.String, int, java.lang.String) throws java.net.MalformedURLException;
+    descriptor: (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;)V
+
+  public java.net.URL(java.lang.String, java.lang.String, java.lang.String) throws java.net.MalformedURLException;
+    descriptor: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+
+  public java.net.URL(java.lang.String, java.lang.String, int, java.lang.String, java.net.URLStreamHandler) throws java.net.MalformedURLException;
+    descriptor: (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/net/URLStreamHandler;)V
+
+  public java.net.URL(java.lang.String) throws java.net.MalformedURLException;
+    descriptor: (Ljava/lang/String;)V
+
+  public java.net.URL(java.net.URL, java.lang.String) throws java.net.MalformedURLException;
+    descriptor: (Ljava/net/URL;Ljava/lang/String;)V
+
+  public java.net.URL(java.net.URL, java.lang.String, java.net.URLStreamHandler) throws java.net.MalformedURLException;
+    descriptor: (Ljava/net/URL;Ljava/lang/String;Ljava/net/URLStreamHandler;)V
+
+  private boolean isValidProtocol(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+
+  private void checkSpecifyHandler(java.lang.SecurityManager);
+    descriptor: (Ljava/lang/SecurityManager;)V
+
+  void set(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;)V
+
+  void set(java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+
+  synchronized java.net.InetAddress getHostAddress();
+    descriptor: ()Ljava/net/InetAddress;
+
+  public java.lang.String getQuery();
+    descriptor: ()Ljava/lang/String;
+
+  public java.lang.String getPath();
+    descriptor: ()Ljava/lang/String;
+
+  public java.lang.String getUserInfo();
+    descriptor: ()Ljava/lang/String;
+
+  public java.lang.String getAuthority();
+    descriptor: ()Ljava/lang/String;
+
+  public int getPort();
+    descriptor: ()I
+
+  public int getDefaultPort();
+    descriptor: ()I
+
+  public java.lang.String getProtocol();
+    descriptor: ()Ljava/lang/String;
+
+  public java.lang.String getHost();
+    descriptor: ()Ljava/lang/String;
+
+  public java.lang.String getFile();
+    descriptor: ()Ljava/lang/String;
+
+  public java.lang.String getRef();
+    descriptor: ()Ljava/lang/String;
+
+  public boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public synchronized int hashCode();
+    descriptor: ()I
+
+  public boolean sameFile(java.net.URL);
+    descriptor: (Ljava/net/URL;)Z
+
+  public java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+
+  public java.lang.String toExternalForm();
+    descriptor: ()Ljava/lang/String;
+
+  public java.net.URI toURI() throws java.net.URISyntaxException;
+    descriptor: ()Ljava/net/URI;
+
+  public java.net.URLConnection openConnection() throws java.io.IOException;
+    descriptor: ()Ljava/net/URLConnection;
+
+  public java.net.URLConnection openConnection(java.net.Proxy) throws java.io.IOException;
+    descriptor: (Ljava/net/Proxy;)Ljava/net/URLConnection;
+
+  public final java.io.InputStream openStream() throws java.io.IOException;
+    descriptor: ()Ljava/io/InputStream;
+
+  public final java.lang.Object getContent() throws java.io.IOException;
+    descriptor: ()Ljava/lang/Object;
+
+  public final java.lang.Object getContent(java.lang.Class[]) throws java.io.IOException;
+    descriptor: ([Ljava/lang/Class;)Ljava/lang/Object;
+
+  public static void setURLStreamHandlerFactory(java.net.URLStreamHandlerFactory);
+    descriptor: (Ljava/net/URLStreamHandlerFactory;)V
+
+  static java.net.URLStreamHandler getURLStreamHandler(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URLStreamHandler;
+
+  private synchronized void writeObject(java.io.ObjectOutputStream) throws java.io.IOException;
+    descriptor: (Ljava/io/ObjectOutputStream;)V
+
+  private synchronized void readObject(java.io.ObjectInputStream) throws java.io.IOException, java.lang.ClassNotFoundException;
+    descriptor: (Ljava/io/ObjectInputStream;)V
+
+  private java.lang.Object readResolve() throws java.io.ObjectStreamException;
+    descriptor: ()Ljava/lang/Object;
+
+  private java.net.URL setDeserializedFields(java.net.URLStreamHandler);
+    descriptor: (Ljava/net/URLStreamHandler;)Ljava/net/URL;
+
+  private java.net.URL fabricateNewURL() throws java.io.InvalidObjectException;
+    descriptor: ()Ljava/net/URL;
+
+  boolean isBuiltinStreamHandler(java.net.URLStreamHandler);
+    descriptor: (Ljava/net/URLStreamHandler;)Z
+
+  private boolean isBuiltinStreamHandler(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+
+  private void resetState();
+    descriptor: ()V
+
+  private void setSerializedHashCode(int);
+    descriptor: (I)V
+
+  static {};
+    descriptor: ()V
+}

@@ -1,0 +1,168 @@
+{
+  "basis": "32246cbfb",
+  "workerFailure": "getSystemClassLoader invoked before any raw mirror materialized canonical loader",
+  "parentRepair": "restore ClassLoader ACC_ABSTRACT and materialize via raw Class.getClassLoader in positive fixture",
+  "domain": "MC-RESOURCE-ENUMERATION-PARENT1",
+  "address": "0x4d432d524553454e554d2d504152454e54000001",
+  "owner": "0x4d432d524553454e554d2d4f574e455200000002",
+  "runtimeCap": 393216,
+  "accepted320Unchanged": true,
+  "engine": {
+    "bytes": 348319,
+    "initSHA256": "ce4ead0428f3ae945e914fa0bc4c298ab58e2ccd1323352e21a89080ba7ba938",
+    "runtimeSHA256": "a119cdb383a57e8478d5ec0780e84e70a9d5a5d7e0b9f11832dacd12c59faeba",
+    "runtimeKeccak256": "5183113f3979d284a00faf6cd2f3d70b5b613f716758e791fe87d485410250d6"
+  },
+  "coordinator": {
+    "bytes": 4146,
+    "initSHA256": "7959226579642d01a13e73f09ac6d12a1bc471662031589463a1a780022bb686",
+    "runtimeSHA256": "db7d1e9fafda8d4c8824f9f34552bc6ba57e341ee09eef3da7677577517db926",
+    "runtimeKeccak256": "4b516bdd37573efe8eecd65eaafe7401abdeb963c300645e39c57545e7f6caa4"
+  },
+  "bootstrapSHA256": {
+    "ClassLoader": "5df84572f2811ee34985319bfd1ad277277ec8f9958846534168e375370ae260",
+    "Enumeration": "2f40664fea8fdcc8105d92928ff21aa265b0b33193cbb1048f1636e457345adb",
+    "URL": "7ec786e74cb371710ea60693c37d8d1d65bcac270d00a728a121209e56929dfb",
+    "VMResourceEnumeration": "ed77d813a3f649ea2ced1beb9cccf798f689a03cdcc6f5f6071e04bd329165f6"
+  },
+  "bootstrapCount": 64,
+  "externalLocalGas": 1000000000,
+  "resourceLookupGas": 1000000,
+  "reserve": 25000000,
+  "maxFrames": 128,
+  "rawLimits": [
+    24,
+    262144
+  ]
+}
+{
+  "q1": {
+    "epoch": 3004,
+    "jvmSteps": 3004,
+    "internalSteps": 14,
+    "machineRoot": "0xac491309a15d44a07e28a1369f721e2d268f6a2f1d2cf4bbf6005ee16578ee83",
+    "opaqueSHA256": "a7842775db8c84c8fbeb2c19a776fdb2a8a7bc54e7b781d560d2d93a0adedba6"
+  },
+  "q7": {
+    "epoch": 430,
+    "jvmSteps": 3004,
+    "internalSteps": 14,
+    "machineRoot": "0xac491309a15d44a07e28a1369f721e2d268f6a2f1d2cf4bbf6005ee16578ee83",
+    "opaqueSHA256": "a7842775db8c84c8fbeb2c19a776fdb2a8a7bc54e7b781d560d2d93a0adedba6"
+  },
+  "q4096": {
+    "epoch": 1,
+    "jvmSteps": 3004,
+    "internalSteps": 14,
+    "machineRoot": "0xac491309a15d44a07e28a1369f721e2d268f6a2f1d2cf4bbf6005ee16578ee83",
+    "opaqueSHA256": "a7842775db8c84c8fbeb2c19a776fdb2a8a7bc54e7b781d560d2d93a0adedba6"
+  },
+  "missingLoader": {
+    "actualDI0ReadSizes": [
+      1052
+    ],
+    "candidateCheckpoint": "",
+    "candidateHead": "",
+    "candidateRoot": "",
+    "checkpointBytes": 0,
+    "diagnostic": null,
+    "error": "execution reverted",
+    "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+    "gas": 7272966,
+    "resourceHashes": {
+      "0xaBC7987284b32000ef06c0E6FdEA213eED716973": "a01aac9695df81b42263c4c9eabc087fa239d363a6d76f954c205bc83711f87d"
+    },
+    "resourceReadReceipts": [
+      {
+        "To": "0xabc7987284b32000ef06c0e6fdea213eed716973",
+        "Offset": 0,
+        "Requested": 1052,
+        "Returned": 1052,
+        "Success": true,
+        "SHA256": "a01aac9695df81b42263c4c9eabc087fa239d363a6d76f954c205bc83711f87d"
+      }
+    ],
+    "revertHex": "0x71540d2000000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000",
+    "rootAfter": "0xaecb546c5397e90a21516c43b3111e8315f4ec2ae0199350df1b90483f9e2059",
+    "rootBefore": "0xaecb546c5397e90a21516c43b3111e8315f4ec2ae0199350df1b90483f9e2059",
+    "rootUnchanged": true,
+    "selector": "0x71540d20",
+    "suppliedGas": 1000000000,
+    "uint256Words": [
+      "7",
+      "0"
+    ]
+  },
+  "unsupportedOpenStream": {
+    "actualDI0ReadSizes": [
+      613
+    ],
+    "candidateCheckpoint": "",
+    "candidateHead": "",
+    "candidateRoot": "",
+    "checkpointBytes": 0,
+    "diagnostic": null,
+    "error": "execution reverted",
+    "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+    "gas": 14820480,
+    "resourceHashes": {
+      "0xaBC7987284b32000ef06c0E6FdEA213eED716973": "bae8874cd9491b5a1d88ac8fc8671f5bbd989014d13c7b1e9e0c7e868731040e"
+    },
+    "resourceReadReceipts": [
+      {
+        "To": "0xabc7987284b32000ef06c0e6fdea213eed716973",
+        "Offset": 0,
+        "Requested": 613,
+        "Returned": 613,
+        "Success": true,
+        "SHA256": "bae8874cd9491b5a1d88ac8fc8671f5bbd989014d13c7b1e9e0c7e868731040e"
+      }
+    ],
+    "revertHex": "0xd631c3a400000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000016",
+    "rootAfter": "0x3d84568143cf02519b30d625f842a3f57c3a2679816e46e2e46fef7ec40549ee",
+    "rootBefore": "0x3d84568143cf02519b30d625f842a3f57c3a2679816e46e2e46fef7ec40549ee",
+    "rootUnchanged": true,
+    "selector": "0xd631c3a4",
+    "suppliedGas": 1000000000,
+    "uint256Words": [
+      "3",
+      "22"
+    ]
+  }
+}
+{
+  "error": "execution reverted",
+  "diagnostic": null,
+  "selector": "0xd631c3a4",
+  "uint256Words": [
+    "3",
+    "3"
+  ],
+  "gas": 100465705
+}
+last successful Java steps 2079
+
+{
+  "error": "execution reverted",
+  "diagnostic": null,
+  "selector": "0xd631c3a4",
+  "uint256Words": [
+    "3",
+    "3"
+  ],
+  "gas": 100463235
+}
+successful q1 3 last Java 2082
+{
+  "verifiedReceipts": 300,
+  "summary": {
+    "official": {
+      "receipts": 300,
+      "java": 2082,
+      "internal": 20,
+      "peakGas": 146501807,
+      "lifecycle": 1
+    }
+  },
+  "scope": "canonical nested ABI/events/CP hashes/counter chains/read ranges, not full Session acceptance"
+}

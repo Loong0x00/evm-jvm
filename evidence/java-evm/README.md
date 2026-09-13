@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest resource-enumeration parent: `minecraft-entry/parent-fdc55a341/`;
+real EVM ZI0 positive/absent lookup with empty/single Enumeration and URL identity.
+Original has no matching Log4j resource and next reaches System.getProperty PC3.
+
 Latest ordered-set parent: `minecraft-entry/parent-7625023ff/`; corrected
 incoming-key equals semantics. Original reaches genuine getResources PC74 with no
 answer yet. Next must query EVM ZI0 and return real Enumeration/URL, never fake empty.

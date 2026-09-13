@@ -1,5 +1,11 @@
 # Resource enumeration preflight (worker scaffold)
 
+**PARENT RESULT:** refusal was the intentional missing-canonical-loader invariant,
+not resource failure. Parent restored accidentally removed ClassLoader ACC_ABSTRACT,
+materialized the raw loader first, verified genuine EVM ZI0 positive/absent paths,
+and reached System.getProperty in original22. See RESOURCE_ENUMERATION_PARENT.
+
+
 This bounded LOCAL-only preflight starts from `3ca6e4322` and owns only
 `evidence/java-evm/minecraft-entry/resource-enumeration-preflight/`. It must not
 execute original Minecraft inputs. The intended bridge is a single immutable
