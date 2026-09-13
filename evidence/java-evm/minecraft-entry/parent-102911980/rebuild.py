@@ -8,7 +8,7 @@ def run(label,args,check=True):
  if check:assert p.returncode==0,(label,p.returncode)
  return p.returncode
 # Rebuild all changed/new Java images from source.
-classes=out/'bootstrap-classes';classes.mkdir();boot=src/'bootstrap/java/lang';run('bootstrap-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','--release','8','-g:none','-d',classes,boot/'Class.java',boot/'ClassLoader.java',boot/'VMClassLoader.java'])
+classes=out/'bootstrap-classes';classes.mkdir();boot=src/'bootstrap/java/lang';run('bootstrap-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','-source','8','-target','8','-g:none','-bootclasspath','/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar','-d',classes,boot/'Class.java',boot/'ClassLoader.java',boot/'VMClassLoader.java'])
 for n,want,size in [('Class','4e13134b8f82af8fb51b268f92fea91ccf3ed731b1adcb24eddc66b1889913bd',440),('ClassLoader','df3b18c48b514343c2dcf9d025afd714027e319db03174c8f831215645f39e8b',136),('VMClassLoader','936fc65d33d3b2f7d9c2267b8e62c42e58c8135b35d6e4d08f65daec831cf944',143)]:
  raw=(classes/('java/lang/'+n+'.class')).read_bytes();assert len(raw)==size and hashlib.sha256(raw).hexdigest()==want and raw==(src/('artifacts/bootstrap/java/lang/'+n+'.class')).read_bytes()
 # Independently source-build exact worker candidate under original320 cap.

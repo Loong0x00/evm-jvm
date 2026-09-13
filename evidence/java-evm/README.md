@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest defining-loader parent: `minecraft-entry/parent-102911980/`; repaired
+pool-hit quota and VM loader override guards. Raw mirrors now commit one nonnull
+loader; next exact method is ClassLoader.getSystemClassLoader, not resources yet.
+
 Latest single-Thread parent: `minecraft-entry/parent-cc0c40e71/`; original default
 null context path commits and next exact member is Class.getClassLoader. A real
 raw-class defining-loader identity is required; null-all empty search is forbidden.

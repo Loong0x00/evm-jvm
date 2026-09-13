@@ -6,7 +6,7 @@ here=Path(__file__).resolve().parent;root=here.parents[3];src=here.parent/'class
 def call(label,args,e=None):
  with (out/(label+'.log')).open('w') as f:p=subprocess.Popen(list(map(str,args)),cwd=root,env=e or env,stdout=f,stderr=subprocess.STDOUT);rc=p.wait()
  (out/(label+'-process.json')).write_text(json.dumps({'pid':p.pid,'exit':rc,'command':list(map(str,args))})+'\n');assert rc==0,(label,rc)
-call('java8-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','--release','8','-g:none','-d',classes,here/'ParentDefiningLoaderProbe.java',here/'ParentDefiningLoaderHostOracle.java',here/'VMClassLoaderReplacementMain.java',src/'fixtures/LoaderUnsupported.java']);call('vm-replacement-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','--release','8','-g:none','-d',classes,here/'java/lang/VMClassLoader.java']);call('java8-oracle',['/usr/lib/jvm/java-8-openjdk/bin/java','-cp',classes,'ParentDefiningLoaderHostOracle'])
+call('java8-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','-source','8','-target','8','-g:none','-bootclasspath','/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar','-d',classes,here/'ParentDefiningLoaderProbe.java',here/'ParentDefiningLoaderHostOracle.java',here/'VMClassLoaderReplacementMain.java',src/'fixtures/LoaderUnsupported.java']);call('vm-replacement-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','-source','8','-target','8','-g:none','-bootclasspath','/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar','-d',classes,here/'java/lang/VMClassLoader.java']);call('java8-oracle',['/usr/lib/jvm/java-8-openjdk/bin/java','-cp',classes,'ParentDefiningLoaderHostOracle'])
 def jar(name,names):
  p=out/name
  with zipfile.ZipFile(p,'w',zipfile.ZIP_DEFLATED) as z:

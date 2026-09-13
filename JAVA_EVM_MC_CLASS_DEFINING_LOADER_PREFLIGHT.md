@@ -1,5 +1,11 @@
 # Class defining-loader preflight
 
+**PARENT CORRECTION:** worker omitted whole RSS/dynamic negatives and had a
+pool-hit loader+mirror quota hole plus unreserved VMClassLoader name. Parent fixed
+both; repaired source remains320KiB at327266B and original reaches
+ClassLoader.getSystemClassLoader PC31. See CLASS_DEFINING_LOADER_PARENT_PREFLIGHT.
+
+
 ## Scope
 
 LOCAL-only continuation from `parent-cc0c40e71` / `67fe03fd1`: implement only

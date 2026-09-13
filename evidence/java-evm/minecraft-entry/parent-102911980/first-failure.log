@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-102911980/rebuild.py", line 11, in <module>
+    classes=out/'bootstrap-classes';classes.mkdir();boot=src/'bootstrap/java/lang';run('bootstrap-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','--release','8','-g:none','-d',classes,boot/'Class.java',boot/'ClassLoader.java',boot/'VMClassLoader.java'])
+                                                                                   ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-102911980/rebuild.py", line 8, in run
+    if check:assert p.returncode==0,(label,p.returncode)
+                    ^^^^^^^^^^^^^^^
+AssertionError: ('bootstrap-build', 2)

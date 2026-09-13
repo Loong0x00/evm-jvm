@@ -1,5 +1,23 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST DEFINING LOADER: worker320candidate327658B/22Bheadroom had
+first-raw-mirrorINTERN-HIT quota hole(check1 butcreate loader+mirror2) and failed
+toreserveVMClassLoader override; nowholeRSS/dynamictamper. ParentfixedreserveObjects
+2+reservedbothnames,restoredunrelatedformat. Repaired surprisingly327266B/414B
+headroom still320PASS,no384. EngineSHA34150d.../Keccaka34de6...,co e308d1...,
+MC-CLASS-DEFINING-LOADER-PARENT1,Class440B+VMloader143B,52boots. Generated3raw
+mirrorssharednonnull loader/bootstrapmirrorsnull+priorcontrols331J8I q1q7direct
+331/48/1 equalVOID,380canonical,VMoverride/getSystemhonestrefusal. DynamicCPbyte
+tamperNOTrun(explicitcaveat); source/publicpath startup proof only. Parentwhole
+candidate+repair+generated+original521rekt? exact521.778868s956329984B; initial
+Java8--release scriptfailure0.106147spreserved. Original22q7 commits257/1799J16I,
+CP13709B SHA8117c42c... rootcaa63b53...,last120443236/max121020901. Frames
+LoaderUtilfindUrlResourcesPC31; rawClass.getClassLoader returnscanonicalnonnull,
+committed. Nextq7/q1 exactClassLoader.getSystemClassLoader CallError3,31 gas85647013.
+See DEFINING_LOADER_PARENT andSYSTEM_CLASSLOADER_PREPARATION. Nextnativegetter
+returns samecanonicalobject,no resources yet. Try320 then measuredLOCAL384 ifneeded;
+accepted320unchanged. LOCAL1Bothercapsfixed. NoMCbody/world/Done.
+
 LATEST MC-FIRST THREAD CONTEXT: parentindependent Thread450B SHA4c7621...,
 reversefullcandidate->exactbasis,engine326052B SHA d11b37.../Keccaka811ec4...,co
 7c1621...,51boots,1628B320KiBheadroom. Removedworkertrackedpyc. Generated291J7I
