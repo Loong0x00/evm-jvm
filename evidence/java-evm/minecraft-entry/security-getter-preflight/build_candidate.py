@@ -9,7 +9,7 @@ from pathlib import Path
 import hashlib, json, os, re, shutil, subprocess, sys
 
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[4]
+ROOT = HERE.parents[3]
 PARENT = HERE.parent / "parent-c24d374bc"
 JAVAC = Path("/usr/lib/jvm/java-8-openjdk/bin/javac")
 RT = Path("/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar")
@@ -39,7 +39,7 @@ def main():
         raise SystemExit("missing pinned parent-c24d374bc evidence")
     out.mkdir(); (out / "tmp").mkdir()
     env = dict(os.environ, TMPDIR=str(out / "tmp"), PYTHONDONTWRITEBYTECODE="1",
-               NODE_PATH=str(ROOT / "jvmevm/runtime/node_modules"))
+               NODE_PATH="/home/user/evm-jvm/geth/jvmevm/runtime/node_modules")
     if not Path(env["TMPDIR"]).is_absolute():
         raise SystemExit("TMPDIR must be absolute")
 

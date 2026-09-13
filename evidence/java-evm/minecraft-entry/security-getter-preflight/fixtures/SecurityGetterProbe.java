@@ -15,10 +15,13 @@ public final class SecurityGetterProbe {
             System.setSecurityManager(null);
             fail();
         }
+        Properties properties = new Properties();
+        properties.setProperty("security.getter", "default-null");
         Object[] source = new Object[] { Properties.class.getName() };
         Object[] target = new Object[1];
         System.arraycopy(source, 0, target, 0, 1);
-        if (!"java.util.Properties".equals(target[0])) {
+        if (!"default-null".equals(properties.getProperty("security.getter"))
+                || !"java.util.Properties".equals(target[0])) {
             fail();
         }
     }
