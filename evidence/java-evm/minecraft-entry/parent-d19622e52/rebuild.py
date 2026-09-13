@@ -7,7 +7,9 @@ def run(label,args):
  with (out/(label+'.log')).open('w') as f:subprocess.run(list(map(str,args)),cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
 classes=out/'bootstrap-classes';classes.mkdir();source=src/'bootstrap/java/lang/ClassLoader.java';run('bootstrap-build',['/usr/lib/jvm/java-8-openjdk/bin/javac','-source','8','-target','8','-g:none','-bootclasspath','/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar','-d',classes,source]);image=(classes/'java/lang/ClassLoader.class').read_bytes();assert len(image)==136 and hashlib.sha256(image).hexdigest()=='df3b18c48b514343c2dcf9d025afd714027e319db03174c8f831215645f39e8b'
 candidate=(src/'artifacts/engine/MCEntryInterpreter.sol').read_text();r=candidate
-pairs=[('MC-CLASSLOADER-TYPE-PREFLIGHT1','MC-PRIVILEGED-ACTION-PARENT1'),('bytes32[] memory h = new bytes32[](50);','bytes32[] memory h = new bytes32[](49);'),('        h[49] = keccak256(_bootstrapClassLoader());\n',''),('\n                || _isReservedClassLoaderClass(users[i])) {',') {'),('uint256 count = inputCount + 44 + (suppliedObject ? 0 : 1)','uint256 count = inputCount + 43 + (suppliedObject ? 0 : 1)'),('        p.classes[classSlot + 10].data = _bootstrapClassLoader();\n',''),('''    function _isReservedClassLoaderClass(ClassInfo memory c) private pure returns (bool) {
+assert r.count('MC-CLASSLOADER-TYPE-PREFLIGHT1')==9
+r=r.replace('MC-CLASSLOADER-TYPE-PREFLIGHT1','MC-PRIVILEGED-ACTION-PARENT1')
+pairs=[('bytes32[] memory h = new bytes32[](50);','bytes32[] memory h = new bytes32[](49);'),('        h[49] = keccak256(_bootstrapClassLoader());\n',''),('\n                || _isReservedClassLoaderClass(users[i])) {',') {'),('uint256 count = inputCount + 44 + (suppliedObject ? 0 : 1)','uint256 count = inputCount + 43 + (suppliedObject ? 0 : 1)'),('        p.classes[classSlot + 10].data = _bootstrapClassLoader();\n',''),('''    function _isReservedClassLoaderClass(ClassInfo memory c) private pure returns (bool) {
         return _isNamedClass(c, bytes("java/lang/ClassLoader"));
     }
 

@@ -1,5 +1,10 @@
 # ClassLoader type-only preflight
 
+**PARENT CORRECTION:** independent exact rebuild/replay passes, but the worker's
+52,572KiB whole-group peak is false; its own engine child record is877,660KiB.
+Parent outer gate measured888,336,384B. Original22 now commits ClassLoader[] and
+requires Thread.currentThread. See JAVA_EVM_MC_CLASSLOADER_TYPE_PARENT_PREFLIGHT.md.
+
 This is an unaccepted LOCAL, generated-fixture-only derivative of the exact
 PrivilegedAction parent basis `parent-a30955bb0`, whose engine is 323700 bytes,
 SHA-256 `64f46d45d924e272ca74c0d73f652c68d00cc4709e36ff231483bdf62615c3c9`,

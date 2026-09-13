@@ -1,5 +1,19 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST CLASSLOADER TYPE: parentindependentlycompiled136BtypeSHA
+df3b18...,reversedcandidate->exactprior,rebuilt323026BengineSHA c0e9d6.../
+Keccak35f892...,coaf03ab...,50bootstraps. Generated264J5I q1q7direct264/38/1
+VOIDequalmachine/opaque,303canonical,override+getSystemhonestrefusal. Worker
+headline52MBFALSE; ownenginechild877660KiB. Parentwhole309.420284s888336384B.
+Parentreversecheckerfirstwronglyexpected1domaininstead9,0.211988sfailurepreserved.
+Original22q7commits250/1750J14I thenmissingThread;preservedfailure+2q1CPs ->
+252/1752J14I,CP SHA81b79be7... root15491fb0...,last108663318/max109020835.
+FramesLoaderUtilfindUrlResourcesPC9/getThreadContextPC27/innerbridgePC4/typedrunPC0;
+ClassLoader[]+PrivilegedActioncommitted. Nextq1missingjava/lang/Thread currentThread
+PC0gas80139329. See CLASSLOADER_TYPE_PARENT andTHREAD_CONTEXT_PREPARATION:
+nextcanonicalsingleguestThread+currentThread/getContextClassLoader pair only,
+no scheduler/fakeresources. LOCAL1B24/262144frames128allcapsfixed. NoMCbody/Done.
+
 LATEST MC-FIRST PRIVILEGEDACTION: workerengineunderisolated(onlyDBOOTchanged;
 other8domainsold). Parent reversedfullsemanticdelta->exactbasis,reappliedone198B
 genuineinterface andfixedALL9domains/newaddresses. Parentengine323700B SHA64f46d...

@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest ClassLoader type parent: `minecraft-entry/parent-d19622e52/`; corrected
+worker RSS summary and committed original ClassLoader[] path. Next exact member is
+Thread.currentThread; no loader/resource behavior has been fabricated.
+
 Latest PrivilegedAction parent: `minecraft-entry/parent-a30955bb0/`; repaired
 full domain isolation and committed original LoaderUtil init under q1. Next exact
 platform type is ClassLoader at findUrlResources anewarray; no fake empty search.
