@@ -1,0 +1,33 @@
+public class java.util.concurrent.locks.ReentrantLock implements java.util.concurrent.locks.Lock,java.io.Serializable {
+  private int holds;
+    descriptor: I
+
+  public java.util.concurrent.locks.ReentrantLock();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public void lock();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #2                  // Field holds:I
+       5: iconst_1
+       6: iadd
+       7: putfield      #2                  // Field holds:I
+      10: return
+
+  public void unlock();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: dup
+       2: getfield      #2                  // Field holds:I
+       5: iconst_1
+       6: isub
+       7: putfield      #2                  // Field holds:I
+      10: return
+}

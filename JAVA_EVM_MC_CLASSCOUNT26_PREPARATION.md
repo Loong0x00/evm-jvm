@@ -1,4 +1,4 @@
-# Measured raw-class-count26 preparation
+# Measured raw-class-count26 preparation — completed
 
 Accepted bounded lock execution exhausts all25 raw slots and reaches
 `StatusLogger.<init>` PC29, where unchanged bytecode genuinely requires same-JAR
@@ -25,7 +25,10 @@ mislabel, any exact262144/parser or direct retained fixed-1B infeasibility. Reta
 COW/OOM, Class.newInstance, Class/asSubclass, Integer/split/CNFE/resource/loader/VFS
 controls.
 
-Parent independently source-builds/replays and starts a fresh unchanged original26 q7
+Parent acceptance and the next measured frontier are recorded in
+`JAVA_EVM_MC_CLASSCOUNT26_PARENT_PREFLIGHT.md`.
+
+The accepted stage was independently source-built/replayed and used a fresh unchanged original26 q7
 then q1. Keep bootstrap79, raw bytes262144, exception14, global native11, String-local10,
 frames128, CP4096, Code65535, heap/VFS/checkpoint1MiB, Head32768, LOCAL1B/25M reserve/
 30s per call and whole20min/4GiB fixed. Worker must not access original Minecraft
