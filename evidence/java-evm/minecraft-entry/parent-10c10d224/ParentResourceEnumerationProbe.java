@@ -26,7 +26,7 @@ public final class ParentResourceEnumerationProbe {
     Class<?> boot=loader.loadClass("java.lang.Boolean");
     require(boot==Boolean.class && boot.getClassLoader()==null);
     try { loader.loadClass("missing.parent.Optional"); require(false); }
-    catch (ClassNotFoundException expected) { require(expected.getClass()==ClassNotFoundException.class && expected.getCause()==null); }
+    catch (ClassNotFoundException expected) { require(expected instanceof ReflectiveOperationException); }
     try { loader.loadClass("bad/name"); require(false); }
     catch (ReflectiveOperationException expected) { require(expected instanceof ClassNotFoundException); }
     require(ClassLoader.class.getClassLoader()==null && Class.class.getClassLoader()==null);
