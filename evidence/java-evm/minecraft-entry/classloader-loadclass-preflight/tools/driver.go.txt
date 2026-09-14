@@ -42,19 +42,19 @@ import (
 
 // Explicit user-authorized LOCAL-only external call ceiling; EVM gas accounting unchanged.
 const ordinaryGas = uint64(1_000_000_000)
-const format = "MC-BOOLEAN-PARENT1-BOUNDED-1"
+const format = "MC-CLASSLOADER-LOADCLASS1-BOUNDED-1"
 const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
-const immutableEngineSHA256 = "c8aeaa0488d1070ed013604deb001af5a3c11dcd2b691f3fee2765ac2fc4a794"
-const immutableEngineKeccak = "0x40066aaa8ccea81a758e8a2008747196ea5cdbaa3bea918596b4d683dcda1742"
-const immutableCoordinatorKeccak = "0xc991a4cd93750d59c20710c54c3e7e496a7f0806f1d4580bddb3a540b1a4ba51"
+const immutableEngineSHA256 = "aae886a60a2bdbdf717f3e8155355b3f2b5c10bcf8fe89231f24ce90d5570862"
+const immutableEngineKeccak = "0x1b9cde8fe2b4576bdb5f86ff887473ce787151413b7d172e53f56617bb6a0a85"
+const immutableCoordinatorKeccak = "0x3da30fdfd36be176c99947454bff71ed493464922cee557c4cf41268f62691ac"
 
 // The constructor owner is deliberately separate from the required fixed LOCAL
 // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
-var owner = common.HexToAddress("0x4d432d424f4f4c45414e2d4f574e455200000002")
-var other = common.HexToAddress("0x4d432d424f4f4c45414e2d4f5448455200000003")
-var engine = common.HexToAddress("0x4d432d424f4f4c45414e2d504152454e54000001")
-var packageDomain = crypto.Keccak256Hash([]byte("MC-BOOLEAN-PARENT1/package/v1"))
-var resourceDomain = crypto.Keccak256Hash([]byte("MC-BOOLEAN-PARENT1/resource/v1"))
+var owner = common.HexToAddress("0x4d432d434f4144434c4153534f574e4552000002")
+var other = common.HexToAddress("0x4d432d434f4144434c4153534f54484552000003")
+var engine = common.HexToAddress("0x4d432d434c4f4144434c415353504152454e5401")
+var packageDomain = crypto.Keccak256Hash([]byte("MC-CLASSLOADER-LOADCLASS1/package/v1"))
+var resourceDomain = crypto.Keccak256Hash([]byte("MC-CLASSLOADER-LOADCLASS1/resource/v1"))
 var readSelector = crypto.Keccak256([]byte("read(uint32,uint32)"))[:4]
 
 type artifact struct {
@@ -845,7 +845,7 @@ func (e *env) call(from, to common.Address, data []byte, gas uint64) callResult 
 		return callResult{Err: e.poison}
 	}
 	if gas == 0 || gas > ordinaryGas {
-		return callResult{Err: errors.New("MR0 Session: gas outside ordinary 1..100000000")}
+		return callResult{Err: errors.New("MR0 Session: gas outside LOCAL1B ordinary 1..1000000000")}
 	}
 	old := e.root
 	tr := callTrace{Reader: e.m.Coordinator}
@@ -875,7 +875,7 @@ func (e *env) create(from common.Address, code []byte, gas uint64) (common.Addre
 		return common.Address{}, nil, callResult{Err: e.poison}
 	}
 	if gas == 0 || gas > ordinaryGas {
-		return common.Address{}, nil, callResult{Err: errors.New("MR0 Session: gas outside ordinary 1..100000000")}
+		return common.Address{}, nil, callResult{Err: errors.New("MR0 Session: gas outside LOCAL1B ordinary 1..1000000000")}
 	}
 	old := e.root
 	var tr callTrace
@@ -968,7 +968,7 @@ var engineRun []byte
 var engineHash common.Hash
 
 func installEngine(e *env) {
-	if len(engineRun) != 352122 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
+	if len(engineRun) != 354483 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
 		panic("MR0 Session immutable engine pin")
 	}
 	e.st.CreateAccount(engine)
@@ -1144,7 +1144,7 @@ func deployCoordinator(e *env, art artifact, a abi.ABI, init, run []byte, decs [
 	if assertOverride != nil {
 		assert = *assertOverride
 	}
-	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-BOOLEAN-PARENT1/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
+	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-CLASSLOADER-LOADCLASS1/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
 	must(x)
 	if len(init)+len(args) > 49152 {
 		panic(fmt.Sprintf("complete init %d", len(init)+len(args)))
@@ -1578,7 +1578,7 @@ func setupChain(dir, artPath, zipPath string, q uint64, input int32) {
 	writeJSON(reportPath(dir, "start.json"), map[string]interface{}{"gas": r.Gas, "slice": d.Slice, "checkpointBytes": len(d.Checkpoint), "package": p, "resourceRoots": e.m.ResourceRoots, "actualReadSizes": r.Trace.Reads, "actualNestedFrames": r.Trace.Nested, "zipSHA256": sha(raw), "zipBytes": len(raw), "pid": os.Getpid(), "completeInitBytes": len(init) + constructorArgLen(ca, owner, e.m.Decoders, names, e.m.IndexRoot, e.m.ResourceRoots, p)})
 }
 func constructorArgLen(ca abi.ABI, from common.Address, decs []common.Address, names [][]byte, ir common.Hash, roots []common.Hash, p common.Hash) int {
-	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-BOOLEAN-PARENT1/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
+	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-CLASSLOADER-LOADCLASS1/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
 	must(x)
 	return len(b)
 }
@@ -1724,7 +1724,7 @@ func main() {
 		panic("MR0 Session immutable coordinator pin")
 	}
 	_, engineABI0, _, run := loadCoord(os.Args[4])
-	if len(run) != 352122 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
+	if len(run) != 354483 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
 		panic("MR0 Session immutable engine artifact")
 	}
 	engineABI = engineABI0
