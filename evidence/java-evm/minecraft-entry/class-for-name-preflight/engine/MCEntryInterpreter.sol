@@ -381,8 +381,8 @@ contract MCEntryInterpreter {
 
     uint32 private constant MR0_SCHEMA = 1;
     uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
-    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:MAIN:EMPTY-STRING-ARRAY:1");
-    bytes32 private constant DROOT = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:ROOT:1");
+    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:MAIN:EMPTY-STRING-ARRAY:1");
+    bytes32 private constant DROOT = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:ROOT:1");
     uint256 private constant MAX_RAW_CLASSES = 24;
     uint256 private constant MAX_RAW_BYTES = 262144;
     uint256 private constant MAX_CHECKPOINT_BYTES = 1048576;
@@ -398,13 +398,13 @@ contract MCEntryInterpreter {
     uint32 private constant MAX_PATH_DEPTH = 16;
     uint32 private constant MAX_PATH_BYTES = 256;
     uint32 private constant MAX_TRANSFER = 4096;
-    bytes32 private constant DART = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:ARTIFACT:1");
-    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:BOOTSTRAP:1");
-    bytes32 private constant DCFG = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:CONFIG:1");
-    bytes32 private constant DMACH = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:MACHINE:1");
-    bytes32 private constant DSEED = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:SEED:1");
-    bytes32 private constant DVFS = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:VFS:1");
-    bytes32 private constant DFILE = keccak256("JVMEVM:MC-CLASS-NOT-FOUND-PARENT1:FILE:1");
+    bytes32 private constant DART = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:ARTIFACT:1");
+    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:BOOTSTRAP:1");
+    bytes32 private constant DCFG = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:CONFIG:1");
+    bytes32 private constant DMACH = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:MACHINE:1");
+    bytes32 private constant DSEED = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:SEED:1");
+    bytes32 private constant DVFS = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:VFS:1");
+    bytes32 private constant DFILE = keccak256("JVMEVM:MC-CLASS-FOR-NAME-PREFLIGHT1:FILE:1");
 
     mapping(bytes32 => Anchor) private anchors;
     bool private enteredVFS0A;
@@ -3710,6 +3710,12 @@ contract MCEntryInterpreter {
             if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("arraycopy"))
                 && _equalsLiteral(c.data, descriptorOffset, descriptorLength,
                     bytes("(Ljava/lang/Object;ILjava/lang/Object;II)V"))) return 5;
+        } else if (_isNamedClass(c, bytes("java/lang/Class"))) {
+            // Binding9 is deliberately the only Class.forName surface.  The
+            // public Java wrapper retains normal active-use/stack semantics.
+            if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("forName0"))
+                && _equalsLiteral(c.data, descriptorOffset, descriptorLength,
+                    bytes("(Ljava/lang/String;)Ljava/lang/Class;"))) return 9;
         } else if (_isNamedClass(c, bytes("java/lang/ClassLoader"))) {
             if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("getSystemClassLoader"))
                 && _equalsLiteral(c.data, descriptorOffset, descriptorLength,
@@ -3786,9 +3792,9 @@ contract MCEntryInterpreter {
         uint256 meta = c.methods[method];
         uint16 access = uint16(meta);
         uint8 binding = _nativeBinding(c, method);
-        // Bindings7/8 are exactly owned private static native primitives.
+        // Bindings7/8/9 are exactly owned private static native primitives.
         // All prior bindings retain public-static validation.
-        if (binding == 7 || binding == 8) {
+        if (binding == 7 || binding == 8 || binding == 9) {
             if (access != 0x010a || _methodCodeCount(meta) != 0) revert CallError(4, callPC);
             return;
         }
@@ -3805,7 +3811,7 @@ contract MCEntryInterpreter {
         if (!_descriptor(c.data, s.descriptorOffset, s.descriptorLength, s)
             || s.argumentWords > MAX_LOCALS) revert CallError(4, callPC);
         uint8 binding = _nativeBinding(c, method);
-        if ((binding != 5 && binding != 6 && binding != 7 && binding != 8
+        if ((binding != 5 && binding != 6 && binding != 7 && binding != 8 && binding != 9
                 && s.argumentKinds.length != 1)
             || (binding == 5 && (s.argumentKinds.length != 5 || s.returnKind != 2))
             || (binding == 6 && (uint16(meta) != 0x0109 || s.argumentKinds.length != 0
@@ -3813,6 +3819,8 @@ contract MCEntryInterpreter {
             || (binding == 7 && (s.argumentKinds.length != 1 || s.argumentKinds[0] != KIND_REF
                 || s.returnKind != 1 || s.returnSubtype != uint8(bytes1("Z"))))
             || (binding == 8 && (s.argumentKinds.length != 1 || s.argumentKinds[0] != KIND_REF
+                || s.returnKind != 3))
+            || (binding == 9 && (s.argumentKinds.length != 1 || s.argumentKinds[0] != KIND_REF
                 || s.returnKind != 3))) {
             revert CallError(4, callPC);
         }
@@ -5304,10 +5312,11 @@ contract MCEntryInterpreter {
                         f.sp = base + 1;
                         continue;
                     }
-                    if (nativeBinding == 8) {
-                        (uint256 mirror, bool oom, bool missing) = _loadClassByBinaryName(
+                    if (nativeBinding == 8 || nativeBinding == 9) {
+                        (uint256 mirror, bool oom, bool missing, uint256 target) = _loadClassByBinaryName(
                             arena, classes, _payload(f.stack[base]), rawClassCount,
-                            loaderClass, parentLinks, hierarchyState, opPC
+                            loaderClass, parentLinks, hierarchyState, initializationState,
+                            nativeBinding == 9, opPC
                         );
                         // A Java-facing absent or lexically invalid binary name is
                         // a real checked CNFE at this native call site. The argument
@@ -5329,6 +5338,12 @@ contract MCEntryInterpreter {
                                 hierarchyState, nextHandle
                             );
                             continue;
+                        }
+                        // Class.forName is an active-use API.  This narrow profile
+                        // never pretends to initialize a target; `_load...` did not
+                        // allocate a mirror when this precise refusal is selected.
+                        if (nativeBinding == 9 && initializationState[target] != 2) {
+                            revert ClassForNameInitializationError(target, opPC);
                         }
                         // Lookup can intern the binary name and create the first
                         // canonical raw loader/mirror, so publish the arena's
@@ -9315,6 +9330,7 @@ contract MCEntryInterpreter {
     }
 
     error ClassLoaderLoadError(uint256 code, uint256 pc);
+    error ClassForNameInitializationError(uint256 target, uint256 pc);
 
     // Binary names are guest UTF-16 units, not host strings.  Keep the lookup
     // finite and reject descriptors, internal names and empty binary segments.
@@ -9393,12 +9409,12 @@ contract MCEntryInterpreter {
     function _loadClassByBinaryName(
         ExceptionArena memory arena, ClassInfo[] memory classes, uint256 stringRef,
         uint256 rawClassCount, uint256 loaderClass, uint256[] memory parentLinks,
-        uint8[] memory hierarchyState, uint256 pc
-    ) private pure returns (uint256 mirror, bool oom, bool missing) {
+        uint8[] memory hierarchyState, uint8[] memory initializationState,
+        bool requireInitialized, uint256 pc
+    ) private pure returns (uint256 mirror, bool oom, bool missing, uint256 target) {
         uint64[] memory wanted = _stringUnits(arena, stringRef, pc);
-        if (!_validBinaryName(wanted)) return (0, false, true);
+        if (!_validBinaryName(wanted)) return (0, false, true, 0);
         bool found;
-        uint256 target;
         for (uint256 i; i < classes.length; ++i) {
             if (classes[i].cp.length == 0 && classes[i].data.length != 0) {
                 classes[i] = _parseBundleClass(classes[i].data);
@@ -9409,7 +9425,13 @@ contract MCEntryInterpreter {
             found = true;
             target = i;
         }
-        if (!found) return (0, false, true);
+        if (!found) return (0, false, true, 0);
+        // Do not publish a name/mirror allocation when forName must refuse an
+        // uninitialized target.  Binding8 remains byte-for-byte behaviorally
+        // identical because it passes requireInitialized=false.
+        if (requireInitialized && initializationState[target] != 2) {
+            return (0, false, false, target);
+        }
         (mirror, oom) = _classMirrorForTarget(
             arena, classes, target, rawClassCount, loaderClass, parentLinks, hierarchyState, pc
         );
@@ -10461,7 +10483,7 @@ contract MCEntryInterpreter {
 
     /// @dev Java 8 minimal owned Class mirror shell; build_class.py pins this exact image.
     function _bootstrapClass() private pure returns (bytes memory) {
-        return hex"cafebabe0000003400180a00050013090004001409000400150700160700170100046e616d650100124c6a6176612f6c616e672f537472696e673b01000e646566696e696e674c6f616465720100174c6a6176612f6c616e672f436c6173734c6f616465723b0100063c696e69743e010003282956010004436f64650100076765744e616d6501001428294c6a6176612f6c616e672f537472696e673b01000e676574436c6173734c6f6164657201001928294c6a6176612f6c616e672f436c6173734c6f616465723b0100095369676e61747572650100283c543a4c6a6176612f6c616e672f4f626a6563743b3e4c6a6176612f6c616e672f4f626a6563743b0c000a000b0c000600070c0008000901000f6a6176612f6c616e672f436c6173730100106a6176612f6c616e672f4f626a656374003100040005000000020002000600070000000200080009000000030002000a000b0001000c0000001100010001000000052ab70001b1000000000001000d000e0001000c0000001100010001000000052ab40002b0000000000001000f00100001000c0000001100010001000000052ab40003b00000000000010011000000020012";
+        return hex"cafebabe0000003400240a000200030700040c000500060100106a6176612f6c616e672f4f626a6563740100063c696e69743e010003282956090008000907000a0c000b000c01000f6a6176612f6c616e672f436c6173730100046e616d650100124c6a6176612f6c616e672f537472696e673b090008000e0c000f001001000e646566696e696e674c6f616465720100174c6a6176612f6c616e672f436c6173734c6f616465723b0a000800120c00130014010008666f724e616d6530010025284c6a6176612f6c616e672f537472696e673b294c6a6176612f6c616e672f436c6173733b010004436f646501000f4c696e654e756d6265725461626c650100076765744e616d6501001428294c6a6176612f6c616e672f537472696e673b01000e676574436c6173734c6f6164657201001928294c6a6176612f6c616e672f436c6173734c6f616465723b010007666f724e616d6501000a457863657074696f6e7307001e0100206a6176612f6c616e672f436c6173734e6f74466f756e64457863657074696f6e0100095369676e6174757265010028284c6a6176612f6c616e672f537472696e673b294c6a6176612f6c616e672f436c6173733c2a3e3b0100283c543a4c6a6176612f6c616e672f4f626a6563743b3e4c6a6176612f6c616e672f4f626a6563743b01000a536f7572636546696c6501000a436c6173732e6a617661003100080002000000020002000b000c00000002000f001000000005000200050006000100150000001d00010001000000052ab70001b100000001001600000006000100000005000100170018000100150000001d00010001000000052ab40007b00000000100160000000600010000000600010019001a000100150000001d00010001000000052ab4000db0000000010016000000060001000000070009001b0014000300150000001d00010001000000052ab80011b000000001001600000006000100000009001c000000040001001d001f000000020020010a001300140001001f0000000200200002001f0000000200210022000000020023";
     }
 
     /// @dev Java 8 owned platform map hierarchy; build_platform_map.py pins all five images.

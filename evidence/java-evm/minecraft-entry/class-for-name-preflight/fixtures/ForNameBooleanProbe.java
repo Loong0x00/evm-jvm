@@ -1,0 +1,1 @@
+public final class ForNameBooleanProbe { public static void main(String[] a) throws Exception { Boolean.valueOf(true); Class<?> first = Class.forName("java.lang.Boolean"); Class<?> second = Class.forName("java.lang.Boolean"); if (first != second || first.getClassLoader() != null) throw new AssertionError(); } }

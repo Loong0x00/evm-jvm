@@ -1,0 +1,1 @@
+public final class ForNameUninitializedProbe { static final class Target { static int state; } public static void main(String[] a) throws Exception { Class.forName("ForNameUninitializedProbe$Target"); } }
