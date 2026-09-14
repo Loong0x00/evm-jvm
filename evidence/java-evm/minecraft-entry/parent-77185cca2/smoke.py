@@ -17,7 +17,7 @@ names=['ParentResourceEnumerationProbe.class','ParentResourceEnumerationProbe$Ta
 for q in (1,7,4096):
  label='q'+str(q);w=out/label;e=dict(env,MC_ENTRY_BINDINGS=','.join(names));args=[w,build/'coordinator/MCEntryCoordinator.json',build/'engine/MCEntryInterpreter.json',z,q]
  for suffix,mode in (('start','setup-chain'),('finish','finish'),('reopen','verify')):call(label+'-'+suffix,[build/'driver',mode,*args],e)
- h=json.loads((w/'durable-head.json').read_text());assert h['lifecycle']==h['outcome']==2;cp=(w/'checkpoints'/(h['checkpointSHA256']+'.bin')).read_bytes();diag=d.inspect(cp);(w/'checkpoint-diagnostic.json').write_text(json.dumps(diag,indent=2)+'\n');vals=next(x['staticValues'] for x in diag['initialization'] if x['classIndex']==0);assert (int(vals[-1]['packedValue'],16)&((1<<64)-1))==991
+ h=json.loads((w/'durable-head.json').read_text());assert h['lifecycle']==h['outcome']==2;cp=(w/'checkpoints'/(h['checkpointSHA256']+'.bin')).read_bytes();diag=d.inspect(cp);(w/'checkpoint-diagnostic.json').write_text(json.dumps(diag,indent=2)+'\n');vals=next(x['staticValues'] for x in diag['initialization'] if x['classIndex']==0);assert len(vals)==2 and vals[0]['fieldIndex']==0 and vals[1]['fieldIndex']==1 and (int(vals[0]['packedValue'],16)&((1<<64)-1))==991 and (int(vals[1]['packedValue'],16)&((1<<64)-1))==1
  current=(h['machineRoot'],cp[280:]);
  if baseline is None:baseline=current
  else:assert current==baseline
