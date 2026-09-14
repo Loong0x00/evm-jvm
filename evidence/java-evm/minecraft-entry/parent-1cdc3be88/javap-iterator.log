@@ -1,0 +1,53 @@
+class java.util.concurrent.CopyOnWriteArrayListIterator<E> implements java.util.Iterator<E> {
+  private java.lang.Object[] snapshot;
+    descriptor: [Ljava/lang/Object;
+
+  private int cursor;
+    descriptor: I
+
+  java.util.concurrent.CopyOnWriteArrayListIterator(java.lang.Object[]);
+    descriptor: ([Ljava/lang/Object;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field snapshot:[Ljava/lang/Object;
+       9: return
+
+  public boolean hasNext();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field cursor:I
+       4: aload_0
+       5: getfield      #2                  // Field snapshot:[Ljava/lang/Object;
+       8: arraylength
+       9: if_icmpge     16
+      12: iconst_1
+      13: goto          17
+      16: iconst_0
+      17: ireturn
+
+  public E next();
+    descriptor: ()Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: invokevirtual #4                  // Method hasNext:()Z
+       4: ifne          15
+       7: new           #5                  // class java/util/NoSuchElementException
+      10: dup
+      11: invokespecial #6                  // Method java/util/NoSuchElementException."<init>":()V
+      14: athrow
+      15: aload_0
+      16: getfield      #2                  // Field snapshot:[Ljava/lang/Object;
+      19: aload_0
+      20: dup
+      21: getfield      #3                  // Field cursor:I
+      24: dup_x1
+      25: iconst_1
+      26: iadd
+      27: putfield      #3                  // Field cursor:I
+      30: aaload
+      31: areturn
+}

@@ -1,4 +1,4 @@
-# Measured `CopyOnWriteArrayList` preparation
+# Measured `CopyOnWriteArrayList` preparation — completed
 
 Accepted bounded `Class.newInstance()` original25 reaches epoch552/3840 Java steps.
 `DefaultFlowMessageFactory` is genuinely initialized/constructed and
@@ -36,7 +36,10 @@ checks, iterator snapshot isolation/order/exhaustion, field/array quota OOM, and
 replacement refusal. Retain Class.newInstance failure/init/OOM controls and all prior
 Class/asSubclass/Integer/split/CNFE/resource/loader/VFS controls.
 
-Use a fresh LOCAL384 engine/coordinator/domain/address/world. Keep raw25/262144,
+Parent acceptance and the next measured frontier are recorded in
+`JAVA_EVM_MC_COPY_ON_WRITE_ARRAY_LIST_PARENT_PREFLIGHT.md`.
+
+The accepted stage uses a fresh LOCAL384 engine/coordinator/domain/address/world and keeps raw25/262144,
 exception kinds14, global native11, String-local10, frames128, CP4096, Code65535,
 heap/VFS/checkpoint1MiB, Head32768, LOCAL1B/25M reserve/30s per call and whole
 20min/4GiB fixed. Parent independently source-builds/replays and then starts a fresh
