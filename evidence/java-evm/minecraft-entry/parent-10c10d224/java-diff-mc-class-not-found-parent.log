@@ -1,0 +1,40 @@
+{
+  "basis": "7328b2588",
+  "domain": "MC-CLASS-NOT-FOUND-PARENT1",
+  "address": "0x4d432d434e46452d504152454e54000000000001",
+  "owner": "0x4d432d434e46452d4f574e455200000000000002",
+  "runtimeCap": 393216,
+  "accepted320Unchanged": true,
+  "engine": {
+    "bytes": 357178,
+    "initSHA256": "421346eb258835b43ba59adbd7bfbfe8e54b31f61c691ba2e62c0fdee40dc808",
+    "runtimeSHA256": "2be4190b19396daab9a83ddd7435526d4b1fc8c8da9f9859cac748daa70ca87e",
+    "runtimeKeccak256": "d5feac58d5e617c8e5dbeab019a03691266b968a053d85d721be0b98189ef30d"
+  },
+  "coordinator": {
+    "bytes": 4146,
+    "initSHA256": "52ad82c567dd527641eb6c443c0fdb2a74e39673e3458dbd9b0787a9312ab0fd",
+    "runtimeSHA256": "dc6848661a8108d62eba57b52735e13e83c8d0f34ee547b450fae3ccac6febae",
+    "runtimeKeccak256": "2a0c1641f7056732bdd08c655881b0f48cae1e46fb4a8163587c0667fca485de"
+  },
+  "bootstrapSHA256": {
+    "ReflectiveOperationException": "3760596609ce01d864acfa7ab9740f751a80471a8818406bf14bd5a2122d0e14",
+    "ClassNotFoundException": "8bddff8a7bf6ffd746c72b8d8993b0625b29a91ffa34bd49e042ad28ef8d0ce7"
+  },
+  "bootstrapCount": 68,
+  "nativeBindings": 8,
+  "exceptionKinds": 14,
+  "externalLocalGas": 1000000000,
+  "resourceLookupGas": 1000000,
+  "reserve": 25000000,
+  "maxFrames": 128,
+  "rawLimits": [
+    24,
+    262144
+  ]
+}
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-10c10d224/smoke.py", line 20, in <module>
+    h=json.loads((w/'durable-head.json').read_text());assert h['lifecycle']==h['outcome']==2;cp=(w/'checkpoints'/(h['checkpointSHA256']+'.bin')).read_bytes();diag=d.inspect(cp);(w/'checkpoint-diagnostic.json').write_text(json.dumps(diag,indent=2)+'\n');vals=next(x['staticValues'] for x in diag['initialization'] if x['classIndex']==0);assert len(vals)==2 and vals[0]['fieldIndex']==0 and vals[1]['fieldIndex']==1 and (int(vals[0]['packedValue'],16)&((1<<64)-1))==997 and (int(vals[1]['packedValue'],16)&((1<<64)-1))==1
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

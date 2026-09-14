@@ -1,5 +1,10 @@
 # Catchable `ClassNotFoundException` preflight
 
+**PARENT RESULT:** kind13 catch/terminal and retained controls independently pass.
+Original catches absent Servlet CNFE and reaches Class.forName PC21. See
+JAVA_EVM_MC_CLASS_NOT_FOUND_PARENT_PREFLIGHT.md.
+
+
 This active LOCAL384/LOCAL1B preflight is restricted to an immutable-Program
 `ClassLoader.loadClass(String)` miss.  It is not `Class.forName`, archive/JAR
 loading, general reflection, a broad loader API, Minecraft main-body execution,

@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest CNFE parent: `minecraft-entry/parent-10c10d224/`; loadClass misses
+are catchable guest kind13. Original catches absent Servlet and reaches static
+Class.forName(String) at LoaderUtil PC21; no fake init/host loading is allowed.
+
 Latest loadClass parent: `minecraft-entry/parent-77185cca2/`; immutable
 Program lookup returns canonical mirrors. Original asks for absent javax.servlet.Servlet;
 next must raise catchable guest ClassNotFoundException, not fake null/host loading.

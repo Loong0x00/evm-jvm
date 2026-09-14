@@ -1,5 +1,22 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST CNFE: append ReflectiveOperationException156B+CNFE169B at66/67,
+reserve,total68;exceptionregistry14kind13,all envelope/heap/pending/exactkind bounds13.
+Binding8 missing/malformed consumesarg+guest_raiseJava13;presentmirror/noinit/OOM exact.
+LOCAL384engine357178B SHA2be4190b.../Keccakd5feac58...,co4146B2a0c1641...,
+domainMC-CLASS-NOT-FOUND-PARENT1. Generated exact/super/malformed catches+allprior
+3580J24I q1/q7/direct3580/512/1VOIDequal;uncaught9J3I lifecycle3 kind13 q1/q7/
+direct10/2/1equal;4106canonical. Worker transport ended after focused commit.
+Parent source gates failed only unsupportedfixtureinspection221.49s971255808B and
+missingnegative-source875.189s975110144B,preserved;final all-exec798.931s158773248B.
+Original22fresh catches CNFE for absentjavax.servlet.Servlet, entersfallback; q7head326/
+2282J25I then1q1->327/2283J25I CP15247B SHA471502b3... root3b64b316...
+machine48033a77...,last153908358/max160366677. Next exact LoaderUtil.loadClass PC21
+Class.forName(String)Class CallError3,21gas105702690. SeeCNFE_PARENT+
+CLASS_FOR_NAME_PREPARATION: missing/malformed guestCNFE binding9;present only already
+initialized,no fake init/Class.forName overload. LOCAL384/1Bcapsfixed,accepted320
+unchanged.NoMCbody/world/Done.
+
 LATEST MC-FIRST LOADCLASS: abstractClassLoader777B loadClass ordinary wrapper+
 private-static-native binding8 exact immutableProgram dottedname lookup/shared canonical
 mirror(noinit,rawcanonicalLoader/bootstrapnull). Worker first missed heapfrontier and
