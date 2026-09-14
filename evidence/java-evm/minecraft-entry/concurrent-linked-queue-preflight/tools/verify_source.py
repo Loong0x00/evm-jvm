@@ -93,7 +93,7 @@ reversed_engine=reversed_engine.replace(added_root,'').replace(added_prepare,'')
 assert reversed_engine==old_engine
 reversed_coord=coord.replace(new,old).replace(new_address,old_address).replace(pins['engine']['runtimeKeccak256'],'9517f8a6b65f0942bb73b35322075baa36a819799c2c632639f584d1894e8009')
 assert reversed_coord==old_coord
-reversed_driver=(driver.replace(new,old).replace(new_address,old_address).replace(new_owner,old_owner)
+reversed_driver=(driver.replace(new,old).replace(new_address,old_address).replace(new_owner,old_owner).replace('388963','385212')
  .replace(pins['engine']['runtimeSHA256'],'fd1a480ba34474a519d38909f098cddaa7374f7754fac18c25cdd9bdc96b39af')
  .replace(pins['engine']['runtimeKeccak256'],'9517f8a6b65f0942bb73b35322075baa36a819799c2c632639f584d1894e8009')
  .replace(pins['coordinator']['runtimeKeccak256'],'d706f2ebc5e6a0fc87ac78e64c516872e72a1115f3deab872f69ced2697a4b6e'))

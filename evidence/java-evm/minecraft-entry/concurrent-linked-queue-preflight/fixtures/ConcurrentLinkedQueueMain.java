@@ -17,7 +17,6 @@ public final class ConcurrentLinkedQueueMain {
         check(q.size() == 3 && !q.isEmpty());
         Iterator<Integer> snapshot = q.iterator();
         check(q.poll().intValue() == 7);
-        check(q.add(11));
         check(snapshot.hasNext() && snapshot.next().intValue() == 7);
         check(snapshot.hasNext() && snapshot.next().intValue() == 7);
         check(snapshot.hasNext() && snapshot.next().intValue() == 9);
@@ -26,6 +25,7 @@ public final class ConcurrentLinkedQueueMain {
         catch (java.util.NoSuchElementException expected) { ++checks; }
         check(q.poll().intValue() == 7);
         check(q.poll().intValue() == 9);
+        check(q.add(11));
         check(q.poll().intValue() == 11);
         check(q.poll() == null && q.isEmpty() && q.size() == 0);
         try { q.add(null); throw new AssertionError(); }

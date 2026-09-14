@@ -968,7 +968,7 @@ var engineRun []byte
 var engineHash common.Hash
 
 func installEngine(e *env) {
-	if len(engineRun) != 385212 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
+	if len(engineRun) != 388963 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
 		panic("MR0 Session immutable engine pin")
 	}
 	e.st.CreateAccount(engine)
@@ -1733,7 +1733,7 @@ func main() {
 		panic("MR0 Session immutable coordinator pin")
 	}
 	_, engineABI0, _, run := loadCoord(os.Args[4])
-	if len(run) != 385212 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
+	if len(run) != 388963 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
 		panic("MR0 Session immutable engine artifact")
 	}
 	engineABI = engineABI0
