@@ -1,4 +1,4 @@
-# Measured `ConcurrentLinkedQueue` preparation
+# Measured `ConcurrentLinkedQueue` preparation — completed
 
 Accepted original26 includes genuine same-JAR `StatusLogger$BoundedQueue`, but at
 `StatusLogger` PC29 hierarchy validation returns `HierarchyError(1,25)`. Independent
@@ -29,7 +29,10 @@ catchable null-add NPE, size/isEmpty transitions, snapshot isolation/exhaustion,
 array-quota OOM and raw
 replacement refusal. Retain lock/COW/Class.newInstance and prior controls.
 
-Use fresh LOCAL384 engine/coordinator/domain/address/world; keep raw26/262144,
+Parent acceptance and the next measured frontier are recorded in
+`JAVA_EVM_MC_CONCURRENT_LINKED_QUEUE_PARENT_PREFLIGHT.md`.
+
+The accepted stage uses fresh LOCAL384 engine/coordinator/domain/address/world and keeps raw26/262144,
 exception14, global native11, String-local10, frames128, CP4096, Code65535,
 heap/VFS/checkpoint1MiB, Head32768, LOCAL1B/25M reserve/30s and whole20min/4GiB fixed.
 Parent independently rebuilds/replays and starts fresh unchanged original26 q7→q1.
