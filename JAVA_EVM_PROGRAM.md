@@ -1,5 +1,22 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST BOOLEAN: genuine publicfinal Serializable/Comparable Boolean
+bootstrap66(index65),TRUE/FALSE canonical,valueOf/ctor/value/equals/hash/string/compare+
+bridge;image1241B SHA6f0938b4... LOCAL384engine352122B SHAc8aeaa04.../Keccak
+40066aaa...,co4146Bc991a4cd...,domainMC-BOOLEAN-PARENT1. Worker's109244416B
+monitor omittedcompiler;parentwhole881.371601s961515520B. Two parent sourceform/
+cohashassertfailures preserved.
+GeneratedcombinedBoolean+System/IAE+actualZI0resource/URL/set/loaderprior3470J20I
+q1/q7/direct3470/496/1 VOIDequal,3967canonical;raw/parse/getBoolean honest.
+Original22fresh Boolean.FALSE cached +booleanValuefalse; q7head325/2275J24I then
+3q1->328/2278J24I CP15164B SHA78b0be3a... root0a811a18... machine d38cebc...,
+last150589507/max153678363. Next exact rawLoaderUtil.loadClass method3 PC15
+ClassLoader.loadClass(String)Class CallError3,15gas104041812; contextloader currently
+null, so after member resolves JVM NPE should be caught then Class.forName (not yet).
+SeeBOOLEAN_PARENT+CLASSLOADER_LOADCLASS_PREPARATION: next real immutableProgram
+lookup/canonicalClassmirror binding8,no Threadchange/forName. LOCAL384/1Bcapsfixed,
+accepted320unchanged.NoMCbody/world/Done.
+
 LATEST MC-FIRST SYSTEM PROPERTY: workerSystem704B correct real private static
 newProperties+getProperty, but empty-keyIAE proof injectedrawIAE absentfromoriginal.
 Parent appendedreserved159B IAEbootstrap65,self-contained. LOCAL384engine348423B

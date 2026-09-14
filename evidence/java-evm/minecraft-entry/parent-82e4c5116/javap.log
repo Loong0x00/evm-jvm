@@ -1,0 +1,187 @@
+public final class java.lang.Boolean implements java.io.Serializable, java.lang.Comparable<java.lang.Boolean> {
+  private final boolean value;
+    descriptor: Z
+
+  public static final java.lang.Boolean TRUE;
+    descriptor: Ljava/lang/Boolean;
+
+  public static final java.lang.Boolean FALSE;
+    descriptor: Ljava/lang/Boolean;
+
+  public java.lang.Boolean(boolean);
+    descriptor: (Z)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iload_1
+       6: putfield      #2                  // Field value:Z
+       9: return
+
+  public static java.lang.Boolean valueOf(boolean);
+    descriptor: (Z)Ljava/lang/Boolean;
+    Code:
+       0: iload_0
+       1: ifeq          10
+       4: getstatic     #3                  // Field TRUE:Ljava/lang/Boolean;
+       7: goto          13
+      10: getstatic     #4                  // Field FALSE:Ljava/lang/Boolean;
+      13: areturn
+
+  public boolean booleanValue();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field value:Z
+       4: ireturn
+
+  public boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+    Code:
+       0: aload_1
+       1: instanceof    #5                  // class java/lang/Boolean
+       4: ifeq          25
+       7: aload_0
+       8: getfield      #2                  // Field value:Z
+      11: aload_1
+      12: checkcast     #5                  // class java/lang/Boolean
+      15: invokevirtual #6                  // Method booleanValue:()Z
+      18: if_icmpne     25
+      21: iconst_1
+      22: goto          26
+      25: iconst_0
+      26: ireturn
+
+  public int hashCode();
+    descriptor: ()I
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field value:Z
+       4: ifeq          13
+       7: sipush        1231
+      10: goto          16
+      13: sipush        1237
+      16: ireturn
+
+  public static java.lang.String toString(boolean);
+    descriptor: (Z)Ljava/lang/String;
+    Code:
+       0: iload_0
+       1: ifeq          9
+       4: ldc           #7                  // String true
+       6: goto          11
+       9: ldc           #8                  // String false
+      11: areturn
+
+  public java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field value:Z
+       4: invokestatic  #9                  // Method toString:(Z)Ljava/lang/String;
+       7: areturn
+
+  public static int compare(boolean, boolean);
+    descriptor: (ZZ)I
+    Code:
+       0: iload_0
+       1: iload_1
+       2: if_icmpne     9
+       5: iconst_0
+       6: goto          18
+       9: iload_0
+      10: ifeq          17
+      13: iconst_1
+      14: goto          18
+      17: iconst_m1
+      18: ireturn
+
+  public int compareTo(java.lang.Boolean);
+    descriptor: (Ljava/lang/Boolean;)I
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field value:Z
+       4: aload_1
+       5: getfield      #2                  // Field value:Z
+       8: invokestatic  #10                 // Method compare:(ZZ)I
+      11: ireturn
+
+  public int compareTo(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)I
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #5                  // class java/lang/Boolean
+       5: invokevirtual #11                 // Method compareTo:(Ljava/lang/Boolean;)I
+       8: ireturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: new           #5                  // class java/lang/Boolean
+       3: dup
+       4: iconst_1
+       5: invokespecial #12                 // Method "<init>":(Z)V
+       8: putstatic     #3                  // Field TRUE:Ljava/lang/Boolean;
+      11: new           #5                  // class java/lang/Boolean
+      14: dup
+      15: iconst_0
+      16: invokespecial #12                 // Method "<init>":(Z)V
+      19: putstatic     #4                  // Field FALSE:Ljava/lang/Boolean;
+      22: return
+}
+public final class java.lang.System {
+  private static java.lang.SecurityManager security;
+    descriptor: Ljava/lang/SecurityManager;
+
+  private static java.util.Properties properties;
+    descriptor: Ljava/util/Properties;
+
+  private java.lang.System();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static native void arraycopy(java.lang.Object, int, java.lang.Object, int, int);
+    descriptor: (Ljava/lang/Object;ILjava/lang/Object;II)V
+
+  public static java.lang.SecurityManager getSecurityManager();
+    descriptor: ()Ljava/lang/SecurityManager;
+    Code:
+       0: getstatic     #2                  // Field security:Ljava/lang/SecurityManager;
+       3: areturn
+
+  public static java.lang.String getProperty(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: invokevirtual #3                  // Method java/lang/String.length:()I
+       4: ifne          15
+       7: new           #4                  // class java/lang/IllegalArgumentException
+      10: dup
+      11: invokespecial #5                  // Method java/lang/IllegalArgumentException."<init>":()V
+      14: athrow
+      15: getstatic     #6                  // Field properties:Ljava/util/Properties;
+      18: aload_0
+      19: invokevirtual #7                  // Method java/util/Properties.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+      22: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: new           #8                  // class java/util/Properties
+       3: dup
+       4: invokespecial #9                  // Method java/util/Properties."<init>":()V
+       7: putstatic     #6                  // Field properties:Ljava/util/Properties;
+      10: return
+}
+public class java.lang.IllegalArgumentException extends java.lang.RuntimeException {
+  public java.lang.IllegalArgumentException();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/RuntimeException."<init>":()V
+       4: return
+}

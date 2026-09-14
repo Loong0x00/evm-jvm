@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest Boolean parent: `minecraft-entry/parent-82e4c5116/`; canonical
+TRUE/FALSE/valueOf wrapper. Original reaches ClassLoader.loadClass(String) PC15;
+next must use immutable Program names and canonical Class mirrors, not host loading.
+
 Latest System-property parent: `minecraft-entry/parent-b6d030f95/`; real empty
 guest Properties and self-contained bootstrap IAE. Original takes null default for
 log4j.ignoreTCL and next requires Boolean.valueOf(false) at LoaderUtil PC37.

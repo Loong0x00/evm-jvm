@@ -1,5 +1,10 @@
 # Bounded `java.lang.Boolean` preflight
 
+**PARENT RESULT:** semantic image accepted after independent build. Worker109MB
+monitor covered smoke only, not compilation; parent whole peak is961515520B. Original
+advances to ClassLoader.loadClass PC15. See BOOLEAN_PARENT_PREFLIGHT.
+
+
 ## Scope
 
 Append exactly one self-contained Java 8 `java/lang/Boolean` bootstrap at index 65

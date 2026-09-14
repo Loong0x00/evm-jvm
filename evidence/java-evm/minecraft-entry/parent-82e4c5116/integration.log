@@ -1,0 +1,39 @@
+[java-on-evm 0c1d983ef] java-evm: begin bounded Boolean preflight
+ Date: Mon Sep 14 06:37:48 2026 +0800
+ 1 file changed, 23 insertions(+)
+ create mode 100644 JAVA_EVM_MC_BOOLEAN_PREFLIGHT.md
+[java-on-evm 001677d16] java-evm: append bounded Boolean bootstrap
+ Date: Mon Sep 14 07:24:40 2026 +0800
+ 33 files changed, 53339 insertions(+)
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/Boolean.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/BooleanHostOracle.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/BooleanProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/IllegalArgumentException.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/ParentResourceEnumerationHostOracle.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/ParentResourceEnumerationProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/RawBooleanReplacementMain.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/System.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/SystemPropertyHostOracle.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/UnsupportedBooleanGetBooleanProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/UnsupportedBooleanParseProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/UnsupportedClearPropertyProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/UnsupportedGetPropertiesProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/UnsupportedOpenStreamProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/UnsupportedSetPropertyProbe.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/archive.py
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/coordinator/MCEntryCoordinator.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/coordinator/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/engine/MCEntryInterpreter.sol
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/engine/build.js
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/rebuild.py
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/replacement/System.java
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/run-final-20260913T231151Z/README.md
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/run-final-20260913T231151Z/SHA256SUMS
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/run-final-20260913T231151Z/archive-files.json
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/run-final-20260913T231151Z/generated-artifacts-receipts-checkpoints.tar.gz
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/run.sh
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/smoke.py
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/tools/checkpoint_frames.py
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/tools/driver.go.txt
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/tools/monitor_process_tree.py
+ create mode 100644 evidence/java-evm/minecraft-entry/boolean-preflight/tools/verify_receipts.js

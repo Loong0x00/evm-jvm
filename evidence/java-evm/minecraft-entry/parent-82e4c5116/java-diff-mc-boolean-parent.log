@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-82e4c5116/rebuild.py", line 11, in <module>
+    s=(cand/'engine/MCEntryInterpreter.sol').read_text();assert s.count('MC-SYSTEM-PROPERTY-PARENT1')==9 and 'new bytes32[](66)' in s and 'h[65] = keccak256(_bootstrapBoolean());' in s and 'classSlot + 26' in s and 'java/lang/Boolean' in s;bm=re.search(r'function _bootstrapBoolean\(\).*?hex"([0-9a-f]+)";',s);assert bm and hashlib.sha256(bytes.fromhex(bm.group(1))).hexdigest()==hashlib.sha256(imgs['Boolean']).hexdigest();s=s.replace('MC-SYSTEM-PROPERTY-PARENT1','MC-BOOLEAN-PARENT1')
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
