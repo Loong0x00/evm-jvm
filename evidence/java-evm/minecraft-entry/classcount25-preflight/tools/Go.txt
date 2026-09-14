@@ -44,9 +44,9 @@ import (
 const ordinaryGas = uint64(1_000_000_000)
 const format = "MC-CLASSCOUNT25-PREFLIGHT1-BOUNDED-1"
 const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
-const immutableEngineSHA256 = "575d889e860e0743386c3abe19659b9061a65d487ed65076f5f10d485e29157d"
-const immutableEngineKeccak = "0xadb3eee77f938193982453c060a44ada01d10eb7c29f7874e4813d2a5046c600"
-const immutableCoordinatorKeccak = "0x65c34d2702a85e9da394bfa4a884c4d5876f39cbd49239be3de1544a5b6dac74"
+const immutableEngineSHA256 = "7a1a6f4dbf4071527b50d56731d639f8152067537b942d21b71498f40c9e071a"
+const immutableEngineKeccak = "0x71a5619c9a3fcf55bef33d3bf8ca215025076bd1736aacf2f2b46818595004e6"
+const immutableCoordinatorKeccak = "0x20a2a24456848382b82e16e0bb0b96e6ff75c367d2178b8608b7962b458043a5"
 
 // The constructor owner is deliberately separate from the required fixed LOCAL
 // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
@@ -1532,6 +1532,8 @@ func coordGetter(e *env, a abi.ABI, name string) interface{} {
 
 func setupChain(dir, artPath, zipPath string, q uint64, input int32) {
 	_ = input
+	// Reject an over-cap input before constructing a world or mutating any EVM state.
+	names := fixtureNames(zipPath)
 	e, x := newEnv(dir)
 	must(x)
 	defer e.close()
@@ -1543,7 +1545,6 @@ func setupChain(dir, artPath, zipPath string, q uint64, input int32) {
 	if filepath.Base(zipPath) == "minecraft_server.1.12.2.jar" && (len(raw) != 30222121 || sha(raw) != "fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e") {
 		panic("official opaque artifact hash differs")
 	}
-	names := fixtureNames(zipPath)
 	setupResources(e, raw, names, true)
 	art, ca, init, run := loadArtifact(artPath)
 	at, p, r := deployCoordinator(e, art, ca, init, run, e.m.Decoders, names, e.m.ResourceRoots, e.m.Sizes, nil, owner)
@@ -1577,6 +1578,28 @@ func setupChain(dir, artPath, zipPath string, q uint64, input int32) {
 	must(e.writeManifest())
 	writeJSON(reportPath(dir, "start.json"), map[string]interface{}{"gas": r.Gas, "slice": d.Slice, "checkpointBytes": len(d.Checkpoint), "package": p, "resourceRoots": e.m.ResourceRoots, "actualReadSizes": r.Trace.Reads, "actualNestedFrames": r.Trace.Nested, "zipSHA256": sha(raw), "zipBytes": len(raw), "pid": os.Getpid(), "completeInitBytes": len(init) + constructorArgLen(ca, owner, e.m.Decoders, names, e.m.IndexRoot, e.m.ResourceRoots, p)})
 }
+
+// boundaryCreate records a coordinator-constructor refusal after the normal EVM
+// resource setup. The failed CREATE itself must not mutate the preceding root.
+func boundaryCreate(dir, artPath, zipPath string, q uint64) {
+	names := fixtureNames(zipPath)
+	e, x := newEnv(dir)
+	must(x)
+	defer e.close()
+	e.m.Quantum = q
+	installEngine(e)
+	raw, x := os.ReadFile(zipPath)
+	must(x)
+	setupResources(e, raw, names, true)
+	art, ca, init, run := loadArtifact(artPath)
+	before := e.root
+	_, _, r := deployCoordinator(e, art, ca, init, run, e.m.Decoders, names, e.m.ResourceRoots, e.m.Sizes, nil, owner)
+	if r.Err == nil {
+		panic("expected coordinator constructor refusal")
+	}
+	writeFailureReceipt(dir, "boundary-refusal.json", r, before, e.root)
+}
+
 func constructorArgLen(ca abi.ABI, from common.Address, decs []common.Address, names [][]byte, ir common.Hash, roots []common.Hash, p common.Hash) int {
 	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-CLASSCOUNT25-PREFLIGHT1/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
 	must(x)
@@ -1742,6 +1765,8 @@ func main() {
 		doResume(os.Args[2], os.Args[3], true)
 	case "finish":
 		doResume(os.Args[2], os.Args[3], false)
+	case "boundary-create":
+		boundaryCreate(os.Args[2], os.Args[3], os.Args[5], q)
 	case "atomicity-retry":
 		atomicityRetry(os.Args[2], os.Args[3])
 	case "verify":

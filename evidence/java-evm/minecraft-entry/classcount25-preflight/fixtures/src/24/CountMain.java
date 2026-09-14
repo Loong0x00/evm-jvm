@@ -1,0 +1,7 @@
+public final class CountMain {
+  static int sentinel;
+  public static void main(String[] ignored) {
+    sentinel = Tail01.touch() + Tail02.touch() + Tail03.touch() + Tail04.touch() + Tail05.touch() + Tail06.touch() + Tail07.touch() + Tail08.touch() + Tail09.touch() + Tail10.touch() + Tail11.touch() + Tail12.touch() + Tail13.touch() + Tail14.touch() + Tail15.touch() + Tail16.touch() + Tail17.touch() + Tail18.touch() + Tail19.touch() + Tail20.touch() + Tail21.touch() + Tail22.touch() + Tail23.touch();
+    if (sentinel != 276) throw new Error();
+  }
+}
