@@ -1,3 +1,7 @@
+# Bounded guest Number/NumberFormatException/Integer preflight
+
+**PARENT RESULT:** accepted unchanged after independent source/generated/original gates.
+Original reaches3002J at Class.asSubclass. See JAVA_EVM_MC_INTEGER_PARENT_PREFLIGHT.md.
 
 ## Worker implementation record
 

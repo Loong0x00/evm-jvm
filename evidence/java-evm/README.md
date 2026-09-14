@@ -1,5 +1,8 @@
 # Durable Java-in-EVM evidence
 
+Latest Integer parent: `minecraft-entry/parent-661331e3d/`. Number/NFE/Integer
+ordinary Java bootstraps pass; original22 reaches Class.asSubclass at3002J.
+
 Latest version/split parent: `minecraft-entry/parent-6e7185d9c/`. Guest
 java.version=1.8 and bounded split pass after restoring String constructors;
 original22 reaches missing java/lang/Integer at2663J.

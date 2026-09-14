@@ -1,5 +1,25 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST INTEGER: append Java8-g:none Number376B SHAfe77f74e... index68,
+NFE164B a627a164... index69 extendsIAE,Integer1667B bc07a956... index70,total71,
+all reserved. Ordinary negative-accumulation parseInt decimal exact null/empty/sign/
+nondigit/overflow guestNFE;wrapper values/equals/hash/compare/bridge;no native/host/
+radix/valueOf/cache/toString. Globalnative9,Stringlocal10,kinds14. LOCAL384 parent
+engine367680B SHA004015f5.../Keccak4a588cff...,co4146Bf899c1ee...,domain
+MC-INTEGER-PARENT1. Focused q1/q7/direct2676J14I epochs2676/383/1 equal machine
+7bbc1d1e... opaque6ffe5e1c...;uncaughtNFE372J8I lifecycle3/javaKind0 dynamicNFE
+epochs373/54/1 equal;3488canonical;raw3/omitted refuse. Retained allprior q7/direct
+4951J32I epochs708/2 equal machine9e970910... opaque93bf284e...,717canonical.
+First original decoder bound92 failed at actual93 after successful ep1;harness bound95,
+final NEW world. Whole source+focused+retained+original757.521853s/968769536Bexit0.
+Original22 completes version parse+Constants,default factory selection; q7head428/
+2996J28I then6q1->434/3002J28I CP17152B SHAd45ebd71... rootcd133acc...
+machine271799b7.... Next exact AbstractLogger.createClassForProperty PC36
+Class.asSubclass(Class) CallError3,36 selector d631c3a4 gas117590931,Head unchanged.
+NextCLASS_AS_SUBCLASS_PREPARATION replaces Class only,global native10 maps canonical
+mirrors+full interface assignability,identity success/guestCCE8 failure;no init/
+newInstance yet. NoMCmainbody/world/Done.
+
 LATEST MC-FIRST JAVA.VERSION/SPLIT: worker binding logic accepted after parent repair:
 worker String815B removed existing char[]/copy ctors; parent restored String1015B
 SHA c412caea...,System825B fd3898b3...,Class670B0e3d4ea7... genuineJava8-g:none.
