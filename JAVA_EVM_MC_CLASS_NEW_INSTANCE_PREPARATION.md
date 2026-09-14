@@ -1,4 +1,4 @@
-# Measured `Class.newInstance()` preparation
+# Measured `Class.newInstance()` preparation — completed
 
 Accepted cap25 original execution reaches epoch549/3819 Java steps, inside
 `AbstractLogger.createDefaultFlowMessageFactory()`. Its exact bytecode at PC3 is
@@ -38,7 +38,10 @@ Class.asSubclass/forName, Integer/NFE, split/CNFE and all existing controls; upd
 old intentionally omitted `Class.newInstance` control to assert the new bounded-profile
 refusal without weakening the still-omitted Class APIs.
 
-Use fresh engine/coordinator/address/domain/worlds under LOCAL384. Keep raw25/262144,
+Parent acceptance and the next measured frontier are recorded in
+`JAVA_EVM_MC_CLASS_NEW_INSTANCE_PARENT_PREFLIGHT.md`.
+
+The accepted stage uses fresh engine/coordinator/address/domain/worlds under LOCAL384 and keeps raw25/262144,
 71 bootstraps unless Java8 compilation proves otherwise, exception kinds14, frames128,
 CP4096, Code65535, heap/VFS/checkpoint1MiB, Head32768, LOCAL1B/25M reserve/30s call and
 20min/4GiB whole gate fixed. Source-build and verify exact bootstrap bytes. Then parent
