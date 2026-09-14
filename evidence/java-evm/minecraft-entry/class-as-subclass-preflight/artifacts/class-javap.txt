@@ -1,0 +1,49 @@
+public final class java.lang.Class<T> {
+  private java.lang.String name;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.ClassLoader definingLoader;
+    descriptor: Ljava/lang/ClassLoader;
+
+  private java.lang.Class();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public java.lang.String getName();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field name:Ljava/lang/String;
+       4: areturn
+
+  public java.lang.ClassLoader getClassLoader();
+    descriptor: ()Ljava/lang/ClassLoader;
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field definingLoader:Ljava/lang/ClassLoader;
+       4: areturn
+
+  public static java.lang.Class<?> forName(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: invokestatic  #4                  // Method forName0:(Ljava/lang/String;)Ljava/lang/Class;
+       4: areturn
+
+  private static native java.lang.Class<?> forName0(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  public <U> java.lang.Class<? extends U> asSubclass(java.lang.Class<U>);
+    descriptor: (Ljava/lang/Class;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokestatic  #5                  // Method asSubclass0:(Ljava/lang/Class;Ljava/lang/Class;)Ljava/lang/Class;
+       5: areturn
+
+  private static native <U> java.lang.Class<? extends U> asSubclass0(java.lang.Class<?>, java.lang.Class<U>);
+    descriptor: (Ljava/lang/Class;Ljava/lang/Class;)Ljava/lang/Class;
+}
