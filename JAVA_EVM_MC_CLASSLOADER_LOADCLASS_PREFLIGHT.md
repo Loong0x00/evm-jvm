@@ -1,5 +1,10 @@
 # ClassLoader.loadClass preflight
 
+**PARENT RESULT:** worker success path accepted after parent OOM correction and
+true whole gate. Original requested `javax.servlet.Servlet`, absent from pinned JAR;
+next must raise catchable guest CNFE. See CLASSLOADER_LOADCLASS_PARENT_PREFLIGHT.
+
+
 Bounded LOCAL candidate from `cb35a61f7`; this is not an accepted profile and does
 not execute an original Minecraft class, JAR, world, main body, or `Class.forName`.
 

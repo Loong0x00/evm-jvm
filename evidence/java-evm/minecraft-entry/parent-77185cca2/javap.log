@@ -1,0 +1,2321 @@
+Compiled from "ClassLoader.java"
+public abstract class java.lang.ClassLoader {
+  private final java.lang.ClassLoader parent;
+    descriptor: Ljava/lang/ClassLoader;
+
+  private final java.util.concurrent.ConcurrentHashMap<java.lang.String, java.lang.Object> parallelLockMap;
+    descriptor: Ljava/util/concurrent/ConcurrentHashMap;
+
+  private final java.util.Map<java.lang.String, java.security.cert.Certificate[]> package2certs;
+    descriptor: Ljava/util/Map;
+
+  private static final java.security.cert.Certificate[] nocerts;
+    descriptor: [Ljava/security/cert/Certificate;
+
+  private final java.util.Vector<java.lang.Class<?>> classes;
+    descriptor: Ljava/util/Vector;
+
+  private final java.security.ProtectionDomain defaultDomain;
+    descriptor: Ljava/security/ProtectionDomain;
+
+  private final java.util.HashMap<java.lang.String, java.lang.Package> packages;
+    descriptor: Ljava/util/HashMap;
+
+  private static java.lang.ClassLoader scl;
+    descriptor: Ljava/lang/ClassLoader;
+
+  private static boolean sclSet;
+    descriptor: Z
+
+  private static java.util.Vector<java.lang.String> loadedLibraryNames;
+    descriptor: Ljava/util/Vector;
+
+  private static java.util.Vector<java.lang.ClassLoader$NativeLibrary> systemNativeLibraries;
+    descriptor: Ljava/util/Vector;
+
+  private java.util.Vector<java.lang.ClassLoader$NativeLibrary> nativeLibraries;
+    descriptor: Ljava/util/Vector;
+
+  private static java.util.Stack<java.lang.ClassLoader$NativeLibrary> nativeLibraryContext;
+    descriptor: Ljava/util/Stack;
+
+  private static java.lang.String[] usr_paths;
+    descriptor: [Ljava/lang/String;
+
+  private static java.lang.String[] sys_paths;
+    descriptor: [Ljava/lang/String;
+
+  final java.lang.Object assertionLock;
+    descriptor: Ljava/lang/Object;
+
+  private boolean defaultAssertionStatus;
+    descriptor: Z
+
+  private java.util.Map<java.lang.String, java.lang.Boolean> packageAssertionStatus;
+    descriptor: Ljava/util/Map;
+
+  java.util.Map<java.lang.String, java.lang.Boolean> classAssertionStatus;
+    descriptor: Ljava/util/Map;
+
+  private static native void registerNatives();
+    descriptor: ()V
+
+  void addClass(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)V
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field classes:Ljava/util/Vector;
+       4: aload_1
+       5: invokevirtual #4                  // Method java/util/Vector.addElement:(Ljava/lang/Object;)V
+       8: return
+
+  private static java.lang.Void checkCreateClassLoader();
+    descriptor: ()Ljava/lang/Void;
+    Code:
+       0: invokestatic  #5                  // Method java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+       3: astore_0
+       4: aload_0
+       5: ifnull        12
+       8: aload_0
+       9: invokevirtual #6                  // Method java/lang/SecurityManager.checkCreateClassLoader:()V
+      12: aconst_null
+      13: areturn
+
+  private java.lang.ClassLoader(java.lang.Void, java.lang.ClassLoader);
+    descriptor: (Ljava/lang/Void;Ljava/lang/ClassLoader;)V
+    Code:
+       0: aload_0
+       1: invokespecial #7                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #8                  // class java/util/Vector
+       8: dup
+       9: invokespecial #9                  // Method java/util/Vector."<init>":()V
+      12: putfield      #3                  // Field classes:Ljava/util/Vector;
+      15: aload_0
+      16: new           #10                 // class java/security/ProtectionDomain
+      19: dup
+      20: new           #11                 // class java/security/CodeSource
+      23: dup
+      24: aconst_null
+      25: aconst_null
+      26: checkcast     #12                 // class "[Ljava/security/cert/Certificate;"
+      29: invokespecial #13                 // Method java/security/CodeSource."<init>":(Ljava/net/URL;[Ljava/security/cert/Certificate;)V
+      32: aconst_null
+      33: aload_0
+      34: aconst_null
+      35: invokespecial #14                 // Method java/security/ProtectionDomain."<init>":(Ljava/security/CodeSource;Ljava/security/PermissionCollection;Ljava/lang/ClassLoader;[Ljava/security/Principal;)V
+      38: putfield      #15                 // Field defaultDomain:Ljava/security/ProtectionDomain;
+      41: aload_0
+      42: new           #16                 // class java/util/HashMap
+      45: dup
+      46: invokespecial #17                 // Method java/util/HashMap."<init>":()V
+      49: putfield      #18                 // Field packages:Ljava/util/HashMap;
+      52: aload_0
+      53: new           #8                  // class java/util/Vector
+      56: dup
+      57: invokespecial #9                  // Method java/util/Vector."<init>":()V
+      60: putfield      #19                 // Field nativeLibraries:Ljava/util/Vector;
+      63: aload_0
+      64: iconst_0
+      65: putfield      #20                 // Field defaultAssertionStatus:Z
+      68: aload_0
+      69: aconst_null
+      70: putfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      73: aload_0
+      74: aconst_null
+      75: putfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      78: aload_0
+      79: aload_2
+      80: putfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      83: aload_0
+      84: invokevirtual #24                 // Method java/lang/Object.getClass:()Ljava/lang/Class;
+      87: invokestatic  #25                 // Method java/lang/ClassLoader$ParallelLoaders.isRegistered:(Ljava/lang/Class;)Z
+      90: ifeq          129
+      93: aload_0
+      94: new           #26                 // class java/util/concurrent/ConcurrentHashMap
+      97: dup
+      98: invokespecial #27                 // Method java/util/concurrent/ConcurrentHashMap."<init>":()V
+     101: putfield      #28                 // Field parallelLockMap:Ljava/util/concurrent/ConcurrentHashMap;
+     104: aload_0
+     105: new           #26                 // class java/util/concurrent/ConcurrentHashMap
+     108: dup
+     109: invokespecial #27                 // Method java/util/concurrent/ConcurrentHashMap."<init>":()V
+     112: putfield      #29                 // Field package2certs:Ljava/util/Map;
+     115: aload_0
+     116: new           #30                 // class java/lang/Object
+     119: dup
+     120: invokespecial #7                  // Method java/lang/Object."<init>":()V
+     123: putfield      #31                 // Field assertionLock:Ljava/lang/Object;
+     126: goto          150
+     129: aload_0
+     130: aconst_null
+     131: putfield      #28                 // Field parallelLockMap:Ljava/util/concurrent/ConcurrentHashMap;
+     134: aload_0
+     135: new           #32                 // class java/util/Hashtable
+     138: dup
+     139: invokespecial #33                 // Method java/util/Hashtable."<init>":()V
+     142: putfield      #29                 // Field package2certs:Ljava/util/Map;
+     145: aload_0
+     146: aload_0
+     147: putfield      #31                 // Field assertionLock:Ljava/lang/Object;
+     150: return
+
+  protected java.lang.ClassLoader(java.lang.ClassLoader);
+    descriptor: (Ljava/lang/ClassLoader;)V
+    Code:
+       0: aload_0
+       1: invokestatic  #34                 // Method checkCreateClassLoader:()Ljava/lang/Void;
+       4: aload_1
+       5: invokespecial #35                 // Method "<init>":(Ljava/lang/Void;Ljava/lang/ClassLoader;)V
+       8: return
+
+  protected java.lang.ClassLoader();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokestatic  #34                 // Method checkCreateClassLoader:()Ljava/lang/Void;
+       4: invokestatic  #36                 // Method getSystemClassLoader:()Ljava/lang/ClassLoader;
+       7: invokespecial #35                 // Method "<init>":(Ljava/lang/Void;Ljava/lang/ClassLoader;)V
+      10: return
+
+  public java.lang.Class<?> loadClass(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: iconst_0
+       3: invokevirtual #37                 // Method loadClass:(Ljava/lang/String;Z)Ljava/lang/Class;
+       6: areturn
+
+  protected java.lang.Class<?> loadClass(java.lang.String, boolean) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;Z)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #38                 // Method getClassLoadingLock:(Ljava/lang/String;)Ljava/lang/Object;
+       5: dup
+       6: astore_3
+       7: monitorenter
+       8: aload_0
+       9: aload_1
+      10: invokevirtual #39                 // Method findLoadedClass:(Ljava/lang/String;)Ljava/lang/Class;
+      13: astore        4
+      15: aload         4
+      17: ifnonnull     100
+      20: invokestatic  #40                 // Method java/lang/System.nanoTime:()J
+      23: lstore        5
+      25: aload_0
+      26: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      29: ifnull        46
+      32: aload_0
+      33: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      36: aload_1
+      37: iconst_0
+      38: invokevirtual #37                 // Method loadClass:(Ljava/lang/String;Z)Ljava/lang/Class;
+      41: astore        4
+      43: goto          53
+      46: aload_0
+      47: aload_1
+      48: invokespecial #41                 // Method findBootstrapClassOrNull:(Ljava/lang/String;)Ljava/lang/Class;
+      51: astore        4
+      53: goto          58
+      56: astore        7
+      58: aload         4
+      60: ifnonnull     100
+      63: invokestatic  #40                 // Method java/lang/System.nanoTime:()J
+      66: lstore        7
+      68: aload_0
+      69: aload_1
+      70: invokevirtual #43                 // Method findClass:(Ljava/lang/String;)Ljava/lang/Class;
+      73: astore        4
+      75: invokestatic  #44                 // Method sun/misc/PerfCounter.getParentDelegationTime:()Lsun/misc/PerfCounter;
+      78: lload         7
+      80: lload         5
+      82: lsub
+      83: invokevirtual #45                 // Method sun/misc/PerfCounter.addTime:(J)V
+      86: invokestatic  #46                 // Method sun/misc/PerfCounter.getFindClassTime:()Lsun/misc/PerfCounter;
+      89: lload         7
+      91: invokevirtual #47                 // Method sun/misc/PerfCounter.addElapsedTimeFrom:(J)V
+      94: invokestatic  #48                 // Method sun/misc/PerfCounter.getFindClasses:()Lsun/misc/PerfCounter;
+      97: invokevirtual #49                 // Method sun/misc/PerfCounter.increment:()V
+     100: iload_2
+     101: ifeq          110
+     104: aload_0
+     105: aload         4
+     107: invokevirtual #50                 // Method resolveClass:(Ljava/lang/Class;)V
+     110: aload         4
+     112: aload_3
+     113: monitorexit
+     114: areturn
+     115: astore        9
+     117: aload_3
+     118: monitorexit
+     119: aload         9
+     121: athrow
+    Exception table:
+       from    to  target type
+          25    53    56   Class java/lang/ClassNotFoundException
+           8   114   115   any
+         115   119   115   any
+
+  protected java.lang.Object getClassLoadingLock(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: astore_2
+       2: aload_0
+       3: getfield      #28                 // Field parallelLockMap:Ljava/util/concurrent/ConcurrentHashMap;
+       6: ifnull        33
+       9: new           #30                 // class java/lang/Object
+      12: dup
+      13: invokespecial #7                  // Method java/lang/Object."<init>":()V
+      16: astore_3
+      17: aload_0
+      18: getfield      #28                 // Field parallelLockMap:Ljava/util/concurrent/ConcurrentHashMap;
+      21: aload_1
+      22: aload_3
+      23: invokevirtual #51                 // Method java/util/concurrent/ConcurrentHashMap.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      26: astore_2
+      27: aload_2
+      28: ifnonnull     33
+      31: aload_3
+      32: astore_2
+      33: aload_2
+      34: areturn
+
+  private java.lang.Class<?> loadClassInternal(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: getfield      #28                 // Field parallelLockMap:Ljava/util/concurrent/ConcurrentHashMap;
+       4: ifnonnull     24
+       7: aload_0
+       8: dup
+       9: astore_2
+      10: monitorenter
+      11: aload_0
+      12: aload_1
+      13: invokevirtual #52                 // Method loadClass:(Ljava/lang/String;)Ljava/lang/Class;
+      16: aload_2
+      17: monitorexit
+      18: areturn
+      19: astore_3
+      20: aload_2
+      21: monitorexit
+      22: aload_3
+      23: athrow
+      24: aload_0
+      25: aload_1
+      26: invokevirtual #52                 // Method loadClass:(Ljava/lang/String;)Ljava/lang/Class;
+      29: areturn
+    Exception table:
+       from    to  target type
+          11    18    19   any
+          19    22    19   any
+
+  private void checkPackageAccess(java.lang.Class<?>, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/Class;Ljava/security/ProtectionDomain;)V
+    Code:
+       0: invokestatic  #5                  // Method java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+       3: astore_3
+       4: aload_3
+       5: ifnull        110
+       8: aload_1
+       9: invokestatic  #53                 // Method sun/reflect/misc/ReflectUtil.isNonPublicProxyClass:(Ljava/lang/Class;)Z
+      12: ifeq          57
+      15: aload_1
+      16: invokevirtual #54                 // Method java/lang/Class.getInterfaces:()[Ljava/lang/Class;
+      19: astore        4
+      21: aload         4
+      23: arraylength
+      24: istore        5
+      26: iconst_0
+      27: istore        6
+      29: iload         6
+      31: iload         5
+      33: if_icmpge     56
+      36: aload         4
+      38: iload         6
+      40: aaload
+      41: astore        7
+      43: aload_0
+      44: aload         7
+      46: aload_2
+      47: invokespecial #55                 // Method checkPackageAccess:(Ljava/lang/Class;Ljava/security/ProtectionDomain;)V
+      50: iinc          6, 1
+      53: goto          29
+      56: return
+      57: aload_1
+      58: invokevirtual #56                 // Method java/lang/Class.getName:()Ljava/lang/String;
+      61: astore        4
+      63: aload         4
+      65: bipush        46
+      67: invokevirtual #57                 // Method java/lang/String.lastIndexOf:(I)I
+      70: istore        5
+      72: iload         5
+      74: iconst_m1
+      75: if_icmpeq     110
+      78: new           #58                 // class java/lang/ClassLoader$1
+      81: dup
+      82: aload_0
+      83: aload_3
+      84: aload         4
+      86: iload         5
+      88: invokespecial #59                 // Method java/lang/ClassLoader$1."<init>":(Ljava/lang/ClassLoader;Ljava/lang/SecurityManager;Ljava/lang/String;I)V
+      91: new           #60                 // class java/security/AccessControlContext
+      94: dup
+      95: iconst_1
+      96: anewarray     #10                 // class java/security/ProtectionDomain
+      99: dup
+     100: iconst_0
+     101: aload_2
+     102: aastore
+     103: invokespecial #61                 // Method java/security/AccessControlContext."<init>":([Ljava/security/ProtectionDomain;)V
+     106: invokestatic  #62                 // Method java/security/AccessController.doPrivileged:(Ljava/security/PrivilegedAction;Ljava/security/AccessControlContext;)Ljava/lang/Object;
+     109: pop
+     110: return
+
+  protected java.lang.Class<?> findClass(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: new           #42                 // class java/lang/ClassNotFoundException
+       3: dup
+       4: aload_1
+       5: invokespecial #63                 // Method java/lang/ClassNotFoundException."<init>":(Ljava/lang/String;)V
+       8: athrow
+
+  protected final java.lang.Class<?> defineClass(byte[], int, int) throws java.lang.ClassFormatError;
+    descriptor: ([BII)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aconst_null
+       2: aload_1
+       3: iload_2
+       4: iload_3
+       5: aconst_null
+       6: invokevirtual #64                 // Method defineClass:(Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+       9: areturn
+
+  protected final java.lang.Class<?> defineClass(java.lang.String, byte[], int, int) throws java.lang.ClassFormatError;
+    descriptor: (Ljava/lang/String;[BII)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload_2
+       3: iload_3
+       4: iload         4
+       6: aconst_null
+       7: invokevirtual #64                 // Method defineClass:(Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+      10: areturn
+
+  private java.security.ProtectionDomain preDefineClass(java.lang.String, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/String;Ljava/security/ProtectionDomain;)Ljava/security/ProtectionDomain;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #65                 // Method checkName:(Ljava/lang/String;)Z
+       5: ifne          35
+       8: new           #66                 // class java/lang/NoClassDefFoundError
+      11: dup
+      12: new           #67                 // class java/lang/StringBuilder
+      15: dup
+      16: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+      19: ldc           #69                 // String IllegalName:
+      21: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      24: aload_1
+      25: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      28: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      31: invokespecial #72                 // Method java/lang/NoClassDefFoundError."<init>":(Ljava/lang/String;)V
+      34: athrow
+      35: aload_1
+      36: ifnull        85
+      39: aload_1
+      40: ldc           #73                 // String java.
+      42: invokevirtual #74                 // Method java/lang/String.startsWith:(Ljava/lang/String;)Z
+      45: ifeq          85
+      48: new           #75                 // class java/lang/SecurityException
+      51: dup
+      52: new           #67                 // class java/lang/StringBuilder
+      55: dup
+      56: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+      59: ldc           #76                 // String Prohibited package name:
+      61: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      64: aload_1
+      65: iconst_0
+      66: aload_1
+      67: bipush        46
+      69: invokevirtual #57                 // Method java/lang/String.lastIndexOf:(I)I
+      72: invokevirtual #77                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+      75: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      78: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      81: invokespecial #78                 // Method java/lang/SecurityException."<init>":(Ljava/lang/String;)V
+      84: athrow
+      85: aload_2
+      86: ifnonnull     94
+      89: aload_0
+      90: getfield      #15                 // Field defaultDomain:Ljava/security/ProtectionDomain;
+      93: astore_2
+      94: aload_1
+      95: ifnull        107
+      98: aload_0
+      99: aload_1
+     100: aload_2
+     101: invokevirtual #79                 // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+     104: invokespecial #80                 // Method checkCerts:(Ljava/lang/String;Ljava/security/CodeSource;)V
+     107: aload_2
+     108: areturn
+
+  private java.lang.String defineClassSourceLocation(java.security.ProtectionDomain);
+    descriptor: (Ljava/security/ProtectionDomain;)Ljava/lang/String;
+    Code:
+       0: aload_1
+       1: invokevirtual #79                 // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+       4: astore_2
+       5: aconst_null
+       6: astore_3
+       7: aload_2
+       8: ifnull        26
+      11: aload_2
+      12: invokevirtual #81                 // Method java/security/CodeSource.getLocation:()Ljava/net/URL;
+      15: ifnull        26
+      18: aload_2
+      19: invokevirtual #81                 // Method java/security/CodeSource.getLocation:()Ljava/net/URL;
+      22: invokevirtual #82                 // Method java/net/URL.toString:()Ljava/lang/String;
+      25: astore_3
+      26: aload_3
+      27: areturn
+
+  private void postDefineClass(java.lang.Class<?>, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/Class;Ljava/security/ProtectionDomain;)V
+    Code:
+       0: aload_2
+       1: invokevirtual #79                 // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+       4: ifnull        25
+       7: aload_2
+       8: invokevirtual #79                 // Method java/security/ProtectionDomain.getCodeSource:()Ljava/security/CodeSource;
+      11: invokevirtual #83                 // Method java/security/CodeSource.getCertificates:()[Ljava/security/cert/Certificate;
+      14: astore_3
+      15: aload_3
+      16: ifnull        25
+      19: aload_0
+      20: aload_1
+      21: aload_3
+      22: invokevirtual #84                 // Method setSigners:(Ljava/lang/Class;[Ljava/lang/Object;)V
+      25: return
+
+  protected final java.lang.Class<?> defineClass(java.lang.String, byte[], int, int, java.security.ProtectionDomain) throws java.lang.ClassFormatError;
+    descriptor: (Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: aload         5
+       4: invokespecial #85                 // Method preDefineClass:(Ljava/lang/String;Ljava/security/ProtectionDomain;)Ljava/security/ProtectionDomain;
+       7: astore        5
+       9: aload_0
+      10: aload         5
+      12: invokespecial #86                 // Method defineClassSourceLocation:(Ljava/security/ProtectionDomain;)Ljava/lang/String;
+      15: astore        6
+      17: aload_0
+      18: aload_1
+      19: aload_2
+      20: iload_3
+      21: iload         4
+      23: aload         5
+      25: aload         6
+      27: invokespecial #87                 // Method defineClass1:(Ljava/lang/String;[BIILjava/security/ProtectionDomain;Ljava/lang/String;)Ljava/lang/Class;
+      30: astore        7
+      32: aload_0
+      33: aload         7
+      35: aload         5
+      37: invokespecial #88                 // Method postDefineClass:(Ljava/lang/Class;Ljava/security/ProtectionDomain;)V
+      40: aload         7
+      42: areturn
+
+  protected final java.lang.Class<?> defineClass(java.lang.String, java.nio.ByteBuffer, java.security.ProtectionDomain) throws java.lang.ClassFormatError;
+    descriptor: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/ProtectionDomain;)Ljava/lang/Class;
+    Code:
+       0: aload_2
+       1: invokevirtual #89                 // Method java/nio/ByteBuffer.remaining:()I
+       4: istore        4
+       6: aload_2
+       7: invokevirtual #90                 // Method java/nio/ByteBuffer.isDirect:()Z
+      10: ifne          67
+      13: aload_2
+      14: invokevirtual #91                 // Method java/nio/ByteBuffer.hasArray:()Z
+      17: ifeq          42
+      20: aload_0
+      21: aload_1
+      22: aload_2
+      23: invokevirtual #92                 // Method java/nio/ByteBuffer.array:()[B
+      26: aload_2
+      27: invokevirtual #93                 // Method java/nio/ByteBuffer.position:()I
+      30: aload_2
+      31: invokevirtual #94                 // Method java/nio/ByteBuffer.arrayOffset:()I
+      34: iadd
+      35: iload         4
+      37: aload_3
+      38: invokevirtual #64                 // Method defineClass:(Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+      41: areturn
+      42: iload         4
+      44: newarray       byte
+      46: astore        5
+      48: aload_2
+      49: aload         5
+      51: invokevirtual #95                 // Method java/nio/ByteBuffer.get:([B)Ljava/nio/ByteBuffer;
+      54: pop
+      55: aload_0
+      56: aload_1
+      57: aload         5
+      59: iconst_0
+      60: iload         4
+      62: aload_3
+      63: invokevirtual #64                 // Method defineClass:(Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+      66: areturn
+      67: aload_0
+      68: aload_1
+      69: aload_3
+      70: invokespecial #85                 // Method preDefineClass:(Ljava/lang/String;Ljava/security/ProtectionDomain;)Ljava/security/ProtectionDomain;
+      73: astore_3
+      74: aload_0
+      75: aload_3
+      76: invokespecial #86                 // Method defineClassSourceLocation:(Ljava/security/ProtectionDomain;)Ljava/lang/String;
+      79: astore        5
+      81: aload_0
+      82: aload_1
+      83: aload_2
+      84: aload_2
+      85: invokevirtual #93                 // Method java/nio/ByteBuffer.position:()I
+      88: iload         4
+      90: aload_3
+      91: aload         5
+      93: invokespecial #96                 // Method defineClass2:(Ljava/lang/String;Ljava/nio/ByteBuffer;IILjava/security/ProtectionDomain;Ljava/lang/String;)Ljava/lang/Class;
+      96: astore        6
+      98: aload_0
+      99: aload         6
+     101: aload_3
+     102: invokespecial #88                 // Method postDefineClass:(Ljava/lang/Class;Ljava/security/ProtectionDomain;)V
+     105: aload         6
+     107: areturn
+
+  private native java.lang.Class<?> defineClass0(java.lang.String, byte[], int, int, java.security.ProtectionDomain);
+    descriptor: (Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+
+  private native java.lang.Class<?> defineClass1(java.lang.String, byte[], int, int, java.security.ProtectionDomain, java.lang.String);
+    descriptor: (Ljava/lang/String;[BIILjava/security/ProtectionDomain;Ljava/lang/String;)Ljava/lang/Class;
+
+  private native java.lang.Class<?> defineClass2(java.lang.String, java.nio.ByteBuffer, int, int, java.security.ProtectionDomain, java.lang.String);
+    descriptor: (Ljava/lang/String;Ljava/nio/ByteBuffer;IILjava/security/ProtectionDomain;Ljava/lang/String;)Ljava/lang/Class;
+
+  private boolean checkName(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+    Code:
+       0: aload_1
+       1: ifnull        11
+       4: aload_1
+       5: invokevirtual #97                 // Method java/lang/String.length:()I
+       8: ifne          13
+      11: iconst_1
+      12: ireturn
+      13: aload_1
+      14: bipush        47
+      16: invokevirtual #98                 // Method java/lang/String.indexOf:(I)I
+      19: iconst_m1
+      20: if_icmpne     39
+      23: invokestatic  #99                 // Method sun/misc/VM.allowArraySyntax:()Z
+      26: ifne          41
+      29: aload_1
+      30: iconst_0
+      31: invokevirtual #100                // Method java/lang/String.charAt:(I)C
+      34: bipush        91
+      36: if_icmpne     41
+      39: iconst_0
+      40: ireturn
+      41: iconst_1
+      42: ireturn
+
+  private void checkCerts(java.lang.String, java.security.CodeSource);
+    descriptor: (Ljava/lang/String;Ljava/security/CodeSource;)V
+    Code:
+       0: aload_1
+       1: bipush        46
+       3: invokevirtual #57                 // Method java/lang/String.lastIndexOf:(I)I
+       6: istore_3
+       7: iload_3
+       8: iconst_m1
+       9: if_icmpne     17
+      12: ldc           #101                // String
+      14: goto          23
+      17: aload_1
+      18: iconst_0
+      19: iload_3
+      20: invokevirtual #77                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+      23: astore        4
+      25: aconst_null
+      26: astore        5
+      28: aload_2
+      29: ifnull        38
+      32: aload_2
+      33: invokevirtual #83                 // Method java/security/CodeSource.getCertificates:()[Ljava/security/cert/Certificate;
+      36: astore        5
+      38: aconst_null
+      39: astore        6
+      41: aload_0
+      42: getfield      #28                 // Field parallelLockMap:Ljava/util/concurrent/ConcurrentHashMap;
+      45: ifnonnull     116
+      48: aload_0
+      49: dup
+      50: astore        7
+      52: monitorenter
+      53: aload_0
+      54: getfield      #29                 // Field package2certs:Ljava/util/Map;
+      57: aload         4
+      59: invokeinterface #102,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      64: checkcast     #12                 // class "[Ljava/security/cert/Certificate;"
+      67: astore        6
+      69: aload         6
+      71: ifnonnull     99
+      74: aload_0
+      75: getfield      #29                 // Field package2certs:Ljava/util/Map;
+      78: aload         4
+      80: aload         5
+      82: ifnonnull     91
+      85: getstatic     #103                // Field nocerts:[Ljava/security/cert/Certificate;
+      88: goto          93
+      91: aload         5
+      93: invokeinterface #104,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      98: pop
+      99: aload         7
+     101: monitorexit
+     102: goto          113
+     105: astore        8
+     107: aload         7
+     109: monitorexit
+     110: aload         8
+     112: athrow
+     113: goto          146
+     116: aload_0
+     117: getfield      #29                 // Field package2certs:Ljava/util/Map;
+     120: checkcast     #26                 // class java/util/concurrent/ConcurrentHashMap
+     123: aload         4
+     125: aload         5
+     127: ifnonnull     136
+     130: getstatic     #103                // Field nocerts:[Ljava/security/cert/Certificate;
+     133: goto          138
+     136: aload         5
+     138: invokevirtual #51                 // Method java/util/concurrent/ConcurrentHashMap.putIfAbsent:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     141: checkcast     #12                 // class "[Ljava/security/cert/Certificate;"
+     144: astore        6
+     146: aload         6
+     148: ifnull        194
+     151: aload_0
+     152: aload         6
+     154: aload         5
+     156: invokespecial #105                // Method compareCerts:([Ljava/security/cert/Certificate;[Ljava/security/cert/Certificate;)Z
+     159: ifne          194
+     162: new           #75                 // class java/lang/SecurityException
+     165: dup
+     166: new           #67                 // class java/lang/StringBuilder
+     169: dup
+     170: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+     173: ldc           #106                // String class \"
+     175: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     178: aload_1
+     179: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     182: ldc           #107                // String \"'s signer information does not match signer information of other classes in the same package
+     184: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     187: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     190: invokespecial #78                 // Method java/lang/SecurityException."<init>":(Ljava/lang/String;)V
+     193: athrow
+     194: return
+    Exception table:
+       from    to  target type
+          53   102   105   any
+         105   110   105   any
+
+  private boolean compareCerts(java.security.cert.Certificate[], java.security.cert.Certificate[]);
+    descriptor: ([Ljava/security/cert/Certificate;[Ljava/security/cert/Certificate;)Z
+    Code:
+       0: aload_2
+       1: ifnull        9
+       4: aload_2
+       5: arraylength
+       6: ifne          20
+       9: aload_1
+      10: arraylength
+      11: ifne          18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+      20: aload_2
+      21: arraylength
+      22: aload_1
+      23: arraylength
+      24: if_icmpeq     29
+      27: iconst_0
+      28: ireturn
+      29: iconst_0
+      30: istore        4
+      32: iload         4
+      34: aload_2
+      35: arraylength
+      36: if_icmpge     88
+      39: iconst_0
+      40: istore_3
+      41: iconst_0
+      42: istore        5
+      44: iload         5
+      46: aload_1
+      47: arraylength
+      48: if_icmpge     76
+      51: aload_2
+      52: iload         4
+      54: aaload
+      55: aload_1
+      56: iload         5
+      58: aaload
+      59: invokevirtual #108                // Method java/security/cert/Certificate.equals:(Ljava/lang/Object;)Z
+      62: ifeq          70
+      65: iconst_1
+      66: istore_3
+      67: goto          76
+      70: iinc          5, 1
+      73: goto          44
+      76: iload_3
+      77: ifne          82
+      80: iconst_0
+      81: ireturn
+      82: iinc          4, 1
+      85: goto          32
+      88: iconst_0
+      89: istore        4
+      91: iload         4
+      93: aload_1
+      94: arraylength
+      95: if_icmpge     147
+      98: iconst_0
+      99: istore_3
+     100: iconst_0
+     101: istore        5
+     103: iload         5
+     105: aload_2
+     106: arraylength
+     107: if_icmpge     135
+     110: aload_1
+     111: iload         4
+     113: aaload
+     114: aload_2
+     115: iload         5
+     117: aaload
+     118: invokevirtual #108                // Method java/security/cert/Certificate.equals:(Ljava/lang/Object;)Z
+     121: ifeq          129
+     124: iconst_1
+     125: istore_3
+     126: goto          135
+     129: iinc          5, 1
+     132: goto          103
+     135: iload_3
+     136: ifne          141
+     139: iconst_0
+     140: ireturn
+     141: iinc          4, 1
+     144: goto          91
+     147: iconst_1
+     148: ireturn
+
+  protected final void resolveClass(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)V
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #109                // Method resolveClass0:(Ljava/lang/Class;)V
+       5: return
+
+  private native void resolveClass0(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)V
+
+  protected final java.lang.Class<?> findSystemClass(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: invokestatic  #36                 // Method getSystemClassLoader:()Ljava/lang/ClassLoader;
+       3: astore_2
+       4: aload_2
+       5: ifnonnull     46
+       8: aload_0
+       9: aload_1
+      10: invokespecial #65                 // Method checkName:(Ljava/lang/String;)Z
+      13: ifne          25
+      16: new           #42                 // class java/lang/ClassNotFoundException
+      19: dup
+      20: aload_1
+      21: invokespecial #63                 // Method java/lang/ClassNotFoundException."<init>":(Ljava/lang/String;)V
+      24: athrow
+      25: aload_0
+      26: aload_1
+      27: invokespecial #110                // Method findBootstrapClass:(Ljava/lang/String;)Ljava/lang/Class;
+      30: astore_3
+      31: aload_3
+      32: ifnonnull     44
+      35: new           #42                 // class java/lang/ClassNotFoundException
+      38: dup
+      39: aload_1
+      40: invokespecial #63                 // Method java/lang/ClassNotFoundException."<init>":(Ljava/lang/String;)V
+      43: athrow
+      44: aload_3
+      45: areturn
+      46: aload_2
+      47: aload_1
+      48: invokevirtual #52                 // Method loadClass:(Ljava/lang/String;)Ljava/lang/Class;
+      51: areturn
+
+  private java.lang.Class<?> findBootstrapClassOrNull(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #65                 // Method checkName:(Ljava/lang/String;)Z
+       5: ifne          10
+       8: aconst_null
+       9: areturn
+      10: aload_0
+      11: aload_1
+      12: invokespecial #110                // Method findBootstrapClass:(Ljava/lang/String;)Ljava/lang/Class;
+      15: areturn
+
+  private native java.lang.Class<?> findBootstrapClass(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  protected final java.lang.Class<?> findLoadedClass(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #65                 // Method checkName:(Ljava/lang/String;)Z
+       5: ifne          10
+       8: aconst_null
+       9: areturn
+      10: aload_0
+      11: aload_1
+      12: invokespecial #111                // Method findLoadedClass0:(Ljava/lang/String;)Ljava/lang/Class;
+      15: areturn
+
+  private final native java.lang.Class<?> findLoadedClass0(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+
+  protected final void setSigners(java.lang.Class<?>, java.lang.Object[]);
+    descriptor: (Ljava/lang/Class;[Ljava/lang/Object;)V
+    Code:
+       0: aload_1
+       1: aload_2
+       2: invokevirtual #112                // Method java/lang/Class.setSigners:([Ljava/lang/Object;)V
+       5: return
+
+  public java.net.URL getResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+       4: ifnull        19
+       7: aload_0
+       8: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      11: aload_1
+      12: invokevirtual #113                // Method getResource:(Ljava/lang/String;)Ljava/net/URL;
+      15: astore_2
+      16: goto          24
+      19: aload_1
+      20: invokestatic  #114                // Method getBootstrapResource:(Ljava/lang/String;)Ljava/net/URL;
+      23: astore_2
+      24: aload_2
+      25: ifnonnull     34
+      28: aload_0
+      29: aload_1
+      30: invokevirtual #115                // Method findResource:(Ljava/lang/String;)Ljava/net/URL;
+      33: astore_2
+      34: aload_2
+      35: areturn
+
+  public java.util.Enumeration<java.net.URL> getResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+    Code:
+       0: iconst_2
+       1: anewarray     #116                // class java/util/Enumeration
+       4: checkcast     #117                // class "[Ljava/util/Enumeration;"
+       7: astore_2
+       8: aload_0
+       9: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      12: ifnull        29
+      15: aload_2
+      16: iconst_0
+      17: aload_0
+      18: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      21: aload_1
+      22: invokevirtual #118                // Method getResources:(Ljava/lang/String;)Ljava/util/Enumeration;
+      25: aastore
+      26: goto          36
+      29: aload_2
+      30: iconst_0
+      31: aload_1
+      32: invokestatic  #119                // Method getBootstrapResources:(Ljava/lang/String;)Ljava/util/Enumeration;
+      35: aastore
+      36: aload_2
+      37: iconst_1
+      38: aload_0
+      39: aload_1
+      40: invokevirtual #120                // Method findResources:(Ljava/lang/String;)Ljava/util/Enumeration;
+      43: aastore
+      44: new           #121                // class sun/misc/CompoundEnumeration
+      47: dup
+      48: aload_2
+      49: invokespecial #122                // Method sun/misc/CompoundEnumeration."<init>":([Ljava/util/Enumeration;)V
+      52: areturn
+
+  protected java.net.URL findResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+    Code:
+       0: aconst_null
+       1: areturn
+
+  protected java.util.Enumeration<java.net.URL> findResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+    Code:
+       0: invokestatic  #123                // Method java/util/Collections.emptyEnumeration:()Ljava/util/Enumeration;
+       3: areturn
+
+  protected static boolean registerAsParallelCapable();
+    descriptor: ()Z
+    Code:
+       0: invokestatic  #124                // Method sun/reflect/Reflection.getCallerClass:()Ljava/lang/Class;
+       3: ldc           #125                // class java/lang/ClassLoader
+       5: invokevirtual #126                // Method java/lang/Class.asSubclass:(Ljava/lang/Class;)Ljava/lang/Class;
+       8: astore_0
+       9: aload_0
+      10: invokestatic  #127                // Method java/lang/ClassLoader$ParallelLoaders.register:(Ljava/lang/Class;)Z
+      13: ireturn
+
+  public static java.net.URL getSystemResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+    Code:
+       0: invokestatic  #36                 // Method getSystemClassLoader:()Ljava/lang/ClassLoader;
+       3: astore_1
+       4: aload_1
+       5: ifnonnull     13
+       8: aload_0
+       9: invokestatic  #114                // Method getBootstrapResource:(Ljava/lang/String;)Ljava/net/URL;
+      12: areturn
+      13: aload_1
+      14: aload_0
+      15: invokevirtual #113                // Method getResource:(Ljava/lang/String;)Ljava/net/URL;
+      18: areturn
+
+  public static java.util.Enumeration<java.net.URL> getSystemResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+    Code:
+       0: invokestatic  #36                 // Method getSystemClassLoader:()Ljava/lang/ClassLoader;
+       3: astore_1
+       4: aload_1
+       5: ifnonnull     13
+       8: aload_0
+       9: invokestatic  #119                // Method getBootstrapResources:(Ljava/lang/String;)Ljava/util/Enumeration;
+      12: areturn
+      13: aload_1
+      14: aload_0
+      15: invokevirtual #118                // Method getResources:(Ljava/lang/String;)Ljava/util/Enumeration;
+      18: areturn
+
+  private static java.net.URL getBootstrapResource(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/net/URL;
+    Code:
+       0: invokestatic  #128                // Method getBootstrapClassPath:()Lsun/misc/URLClassPath;
+       3: astore_1
+       4: aload_1
+       5: aload_0
+       6: invokevirtual #129                // Method sun/misc/URLClassPath.getResource:(Ljava/lang/String;)Lsun/misc/Resource;
+       9: astore_2
+      10: aload_2
+      11: ifnull        21
+      14: aload_2
+      15: invokevirtual #130                // Method sun/misc/Resource.getURL:()Ljava/net/URL;
+      18: goto          22
+      21: aconst_null
+      22: areturn
+
+  private static java.util.Enumeration<java.net.URL> getBootstrapResources(java.lang.String) throws java.io.IOException;
+    descriptor: (Ljava/lang/String;)Ljava/util/Enumeration;
+    Code:
+       0: invokestatic  #128                // Method getBootstrapClassPath:()Lsun/misc/URLClassPath;
+       3: aload_0
+       4: invokevirtual #131                // Method sun/misc/URLClassPath.getResources:(Ljava/lang/String;)Ljava/util/Enumeration;
+       7: astore_1
+       8: new           #132                // class java/lang/ClassLoader$2
+      11: dup
+      12: aload_1
+      13: invokespecial #133                // Method java/lang/ClassLoader$2."<init>":(Ljava/util/Enumeration;)V
+      16: areturn
+
+  static sun.misc.URLClassPath getBootstrapClassPath();
+    descriptor: ()Lsun/misc/URLClassPath;
+    Code:
+       0: invokestatic  #134                // Method sun/misc/Launcher.getBootstrapClassPath:()Lsun/misc/URLClassPath;
+       3: areturn
+
+  public java.io.InputStream getResourceAsStream(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/io/InputStream;
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokevirtual #113                // Method getResource:(Ljava/lang/String;)Ljava/net/URL;
+       5: astore_2
+       6: aload_2
+       7: ifnull        17
+      10: aload_2
+      11: invokevirtual #135                // Method java/net/URL.openStream:()Ljava/io/InputStream;
+      14: goto          18
+      17: aconst_null
+      18: areturn
+      19: astore_3
+      20: aconst_null
+      21: areturn
+    Exception table:
+       from    to  target type
+           6    18    19   Class java/io/IOException
+
+  public static java.io.InputStream getSystemResourceAsStream(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/io/InputStream;
+    Code:
+       0: aload_0
+       1: invokestatic  #137                // Method getSystemResource:(Ljava/lang/String;)Ljava/net/URL;
+       4: astore_1
+       5: aload_1
+       6: ifnull        16
+       9: aload_1
+      10: invokevirtual #135                // Method java/net/URL.openStream:()Ljava/io/InputStream;
+      13: goto          17
+      16: aconst_null
+      17: areturn
+      18: astore_2
+      19: aconst_null
+      20: areturn
+    Exception table:
+       from    to  target type
+           5    17    18   Class java/io/IOException
+
+  public final java.lang.ClassLoader getParent();
+    descriptor: ()Ljava/lang/ClassLoader;
+    Code:
+       0: aload_0
+       1: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+       4: ifnonnull     9
+       7: aconst_null
+       8: areturn
+       9: invokestatic  #5                  // Method java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+      12: astore_1
+      13: aload_1
+      14: ifnull        27
+      17: aload_0
+      18: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      21: invokestatic  #124                // Method sun/reflect/Reflection.getCallerClass:()Ljava/lang/Class;
+      24: invokestatic  #138                // Method checkClassLoaderPermission:(Ljava/lang/ClassLoader;Ljava/lang/Class;)V
+      27: aload_0
+      28: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      31: areturn
+
+  public static java.lang.ClassLoader getSystemClassLoader();
+    descriptor: ()Ljava/lang/ClassLoader;
+    Code:
+       0: invokestatic  #139                // Method initSystemClassLoader:()V
+       3: getstatic     #140                // Field scl:Ljava/lang/ClassLoader;
+       6: ifnonnull     11
+       9: aconst_null
+      10: areturn
+      11: invokestatic  #5                  // Method java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+      14: astore_0
+      15: aload_0
+      16: ifnull        28
+      19: getstatic     #140                // Field scl:Ljava/lang/ClassLoader;
+      22: invokestatic  #124                // Method sun/reflect/Reflection.getCallerClass:()Ljava/lang/Class;
+      25: invokestatic  #138                // Method checkClassLoaderPermission:(Ljava/lang/ClassLoader;Ljava/lang/Class;)V
+      28: getstatic     #140                // Field scl:Ljava/lang/ClassLoader;
+      31: areturn
+
+  private static synchronized void initSystemClassLoader();
+    descriptor: ()V
+    Code:
+       0: getstatic     #141                // Field sclSet:Z
+       3: ifne          108
+       6: getstatic     #140                // Field scl:Ljava/lang/ClassLoader;
+       9: ifnull        22
+      12: new           #142                // class java/lang/IllegalStateException
+      15: dup
+      16: ldc           #143                // String recursive invocation
+      18: invokespecial #144                // Method java/lang/IllegalStateException."<init>":(Ljava/lang/String;)V
+      21: athrow
+      22: invokestatic  #145                // Method sun/misc/Launcher.getLauncher:()Lsun/misc/Launcher;
+      25: astore_0
+      26: aload_0
+      27: ifnull        104
+      30: aconst_null
+      31: astore_1
+      32: aload_0
+      33: invokevirtual #146                // Method sun/misc/Launcher.getClassLoader:()Ljava/lang/ClassLoader;
+      36: putstatic     #140                // Field scl:Ljava/lang/ClassLoader;
+      39: new           #147                // class java/lang/SystemClassLoaderAction
+      42: dup
+      43: getstatic     #140                // Field scl:Ljava/lang/ClassLoader;
+      46: invokespecial #148                // Method java/lang/SystemClassLoaderAction."<init>":(Ljava/lang/ClassLoader;)V
+      49: invokestatic  #149                // Method java/security/AccessController.doPrivileged:(Ljava/security/PrivilegedExceptionAction;)Ljava/lang/Object;
+      52: checkcast     #125                // class java/lang/ClassLoader
+      55: putstatic     #140                // Field scl:Ljava/lang/ClassLoader;
+      58: goto          79
+      61: astore_2
+      62: aload_2
+      63: invokevirtual #151                // Method java/security/PrivilegedActionException.getCause:()Ljava/lang/Throwable;
+      66: astore_1
+      67: aload_1
+      68: instanceof    #152                // class java/lang/reflect/InvocationTargetException
+      71: ifeq          79
+      74: aload_1
+      75: invokevirtual #153                // Method java/lang/Throwable.getCause:()Ljava/lang/Throwable;
+      78: astore_1
+      79: aload_1
+      80: ifnull        104
+      83: aload_1
+      84: instanceof    #154                // class java/lang/Error
+      87: ifeq          95
+      90: aload_1
+      91: checkcast     #154                // class java/lang/Error
+      94: athrow
+      95: new           #154                // class java/lang/Error
+      98: dup
+      99: aload_1
+     100: invokespecial #155                // Method java/lang/Error."<init>":(Ljava/lang/Throwable;)V
+     103: athrow
+     104: iconst_1
+     105: putstatic     #141                // Field sclSet:Z
+     108: return
+    Exception table:
+       from    to  target type
+          39    58    61   Class java/security/PrivilegedActionException
+
+  boolean isAncestor(java.lang.ClassLoader);
+    descriptor: (Ljava/lang/ClassLoader;)Z
+    Code:
+       0: aload_0
+       1: astore_2
+       2: aload_2
+       3: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+       6: astore_2
+       7: aload_1
+       8: aload_2
+       9: if_acmpne     14
+      12: iconst_1
+      13: ireturn
+      14: aload_2
+      15: ifnonnull     2
+      18: iconst_0
+      19: ireturn
+
+  private static boolean needsClassLoaderPermissionCheck(java.lang.ClassLoader, java.lang.ClassLoader);
+    descriptor: (Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z
+    Code:
+       0: aload_0
+       1: aload_1
+       2: if_acmpne     7
+       5: iconst_0
+       6: ireturn
+       7: aload_0
+       8: ifnonnull     13
+      11: iconst_0
+      12: ireturn
+      13: aload_1
+      14: aload_0
+      15: invokevirtual #156                // Method isAncestor:(Ljava/lang/ClassLoader;)Z
+      18: ifne          25
+      21: iconst_1
+      22: goto          26
+      25: iconst_0
+      26: ireturn
+
+  static java.lang.ClassLoader getClassLoader(java.lang.Class<?>);
+    descriptor: (Ljava/lang/Class;)Ljava/lang/ClassLoader;
+    Code:
+       0: aload_0
+       1: ifnonnull     6
+       4: aconst_null
+       5: areturn
+       6: aload_0
+       7: invokevirtual #157                // Method java/lang/Class.getClassLoader0:()Ljava/lang/ClassLoader;
+      10: areturn
+
+  static void checkClassLoaderPermission(java.lang.ClassLoader, java.lang.Class<?>);
+    descriptor: (Ljava/lang/ClassLoader;Ljava/lang/Class;)V
+    Code:
+       0: invokestatic  #5                  // Method java/lang/System.getSecurityManager:()Ljava/lang/SecurityManager;
+       3: astore_2
+       4: aload_2
+       5: ifnull        28
+       8: aload_1
+       9: invokestatic  #158                // Method getClassLoader:(Ljava/lang/Class;)Ljava/lang/ClassLoader;
+      12: astore_3
+      13: aload_3
+      14: aload_0
+      15: invokestatic  #159                // Method needsClassLoaderPermissionCheck:(Ljava/lang/ClassLoader;Ljava/lang/ClassLoader;)Z
+      18: ifeq          28
+      21: aload_2
+      22: getstatic     #160                // Field sun/security/util/SecurityConstants.GET_CLASSLOADER_PERMISSION:Ljava/lang/RuntimePermission;
+      25: invokevirtual #161                // Method java/lang/SecurityManager.checkPermission:(Ljava/security/Permission;)V
+      28: return
+
+  protected java.lang.Package definePackage(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.net.URL) throws java.lang.IllegalArgumentException;
+    descriptor: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/URL;)Ljava/lang/Package;
+    Code:
+       0: aload_0
+       1: getfield      #18                 // Field packages:Ljava/util/HashMap;
+       4: dup
+       5: astore        9
+       7: monitorenter
+       8: aload_0
+       9: aload_1
+      10: invokevirtual #162                // Method getPackage:(Ljava/lang/String;)Ljava/lang/Package;
+      13: astore        10
+      15: aload         10
+      17: ifnull        29
+      20: new           #163                // class java/lang/IllegalArgumentException
+      23: dup
+      24: aload_1
+      25: invokespecial #164                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+      28: athrow
+      29: new           #165                // class java/lang/Package
+      32: dup
+      33: aload_1
+      34: aload_2
+      35: aload_3
+      36: aload         4
+      38: aload         5
+      40: aload         6
+      42: aload         7
+      44: aload         8
+      46: aload_0
+      47: invokespecial #166                // Method java/lang/Package."<init>":(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/URL;Ljava/lang/ClassLoader;)V
+      50: astore        10
+      52: aload_0
+      53: getfield      #18                 // Field packages:Ljava/util/HashMap;
+      56: aload_1
+      57: aload         10
+      59: invokevirtual #167                // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      62: pop
+      63: aload         10
+      65: aload         9
+      67: monitorexit
+      68: areturn
+      69: astore        11
+      71: aload         9
+      73: monitorexit
+      74: aload         11
+      76: athrow
+    Exception table:
+       from    to  target type
+           8    68    69   any
+          69    74    69   any
+
+  protected java.lang.Package getPackage(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Package;
+    Code:
+       0: aload_0
+       1: getfield      #18                 // Field packages:Ljava/util/HashMap;
+       4: dup
+       5: astore_3
+       6: monitorenter
+       7: aload_0
+       8: getfield      #18                 // Field packages:Ljava/util/HashMap;
+      11: aload_1
+      12: invokevirtual #168                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      15: checkcast     #165                // class java/lang/Package
+      18: astore_2
+      19: aload_3
+      20: monitorexit
+      21: goto          31
+      24: astore        4
+      26: aload_3
+      27: monitorexit
+      28: aload         4
+      30: athrow
+      31: aload_2
+      32: ifnonnull     116
+      35: aload_0
+      36: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      39: ifnull        54
+      42: aload_0
+      43: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      46: aload_1
+      47: invokevirtual #162                // Method getPackage:(Ljava/lang/String;)Ljava/lang/Package;
+      50: astore_2
+      51: goto          59
+      54: aload_1
+      55: invokestatic  #169                // Method java/lang/Package.getSystemPackage:(Ljava/lang/String;)Ljava/lang/Package;
+      58: astore_2
+      59: aload_2
+      60: ifnull        116
+      63: aload_0
+      64: getfield      #18                 // Field packages:Ljava/util/HashMap;
+      67: dup
+      68: astore_3
+      69: monitorenter
+      70: aload_0
+      71: getfield      #18                 // Field packages:Ljava/util/HashMap;
+      74: aload_1
+      75: invokevirtual #168                // Method java/util/HashMap.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      78: checkcast     #165                // class java/lang/Package
+      81: astore        4
+      83: aload         4
+      85: ifnonnull     101
+      88: aload_0
+      89: getfield      #18                 // Field packages:Ljava/util/HashMap;
+      92: aload_1
+      93: aload_2
+      94: invokevirtual #167                // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      97: pop
+      98: goto          104
+     101: aload         4
+     103: astore_2
+     104: aload_3
+     105: monitorexit
+     106: goto          116
+     109: astore        5
+     111: aload_3
+     112: monitorexit
+     113: aload         5
+     115: athrow
+     116: aload_2
+     117: areturn
+    Exception table:
+       from    to  target type
+           7    21    24   any
+          24    28    24   any
+          70   106   109   any
+         109   113   109   any
+
+  protected java.lang.Package[] getPackages();
+    descriptor: ()[Ljava/lang/Package;
+    Code:
+       0: aload_0
+       1: getfield      #18                 // Field packages:Ljava/util/HashMap;
+       4: dup
+       5: astore_2
+       6: monitorenter
+       7: new           #16                 // class java/util/HashMap
+      10: dup
+      11: aload_0
+      12: getfield      #18                 // Field packages:Ljava/util/HashMap;
+      15: invokespecial #170                // Method java/util/HashMap."<init>":(Ljava/util/Map;)V
+      18: astore_1
+      19: aload_2
+      20: monitorexit
+      21: goto          29
+      24: astore_3
+      25: aload_2
+      26: monitorexit
+      27: aload_3
+      28: athrow
+      29: aload_0
+      30: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      33: ifnull        47
+      36: aload_0
+      37: getfield      #23                 // Field parent:Ljava/lang/ClassLoader;
+      40: invokevirtual #171                // Method getPackages:()[Ljava/lang/Package;
+      43: astore_2
+      44: goto          51
+      47: invokestatic  #172                // Method java/lang/Package.getSystemPackages:()[Ljava/lang/Package;
+      50: astore_2
+      51: aload_2
+      52: ifnull        100
+      55: iconst_0
+      56: istore_3
+      57: iload_3
+      58: aload_2
+      59: arraylength
+      60: if_icmpge     100
+      63: aload_2
+      64: iload_3
+      65: aaload
+      66: invokevirtual #173                // Method java/lang/Package.getName:()Ljava/lang/String;
+      69: astore        4
+      71: aload_1
+      72: aload         4
+      74: invokeinterface #102,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      79: ifnonnull     94
+      82: aload_1
+      83: aload         4
+      85: aload_2
+      86: iload_3
+      87: aaload
+      88: invokeinterface #104,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      93: pop
+      94: iinc          3, 1
+      97: goto          57
+     100: aload_1
+     101: invokeinterface #174,  1          // InterfaceMethod java/util/Map.values:()Ljava/util/Collection;
+     106: aload_1
+     107: invokeinterface #175,  1          // InterfaceMethod java/util/Map.size:()I
+     112: anewarray     #165                // class java/lang/Package
+     115: invokeinterface #176,  2          // InterfaceMethod java/util/Collection.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     120: checkcast     #177                // class "[Ljava/lang/Package;"
+     123: areturn
+    Exception table:
+       from    to  target type
+           7    21    24   any
+          24    27    24   any
+
+  protected java.lang.String findLibrary(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+    Code:
+       0: aconst_null
+       1: areturn
+
+  private static java.lang.String[] initializePath(java.lang.String);
+    descriptor: (Ljava/lang/String;)[Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: ldc           #101                // String
+       3: invokestatic  #178                // Method java/lang/System.getProperty:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+       6: astore_1
+       7: getstatic     #179                // Field java/io/File.pathSeparator:Ljava/lang/String;
+      10: astore_2
+      11: aload_1
+      12: invokevirtual #97                 // Method java/lang/String.length:()I
+      15: istore_3
+      16: aload_1
+      17: aload_2
+      18: invokevirtual #180                // Method java/lang/String.indexOf:(Ljava/lang/String;)I
+      21: istore        4
+      23: iconst_0
+      24: istore        6
+      26: iload         4
+      28: iflt          48
+      31: iinc          6, 1
+      34: aload_1
+      35: aload_2
+      36: iload         4
+      38: iconst_1
+      39: iadd
+      40: invokevirtual #181                // Method java/lang/String.indexOf:(Ljava/lang/String;I)I
+      43: istore        4
+      45: goto          26
+      48: iload         6
+      50: iconst_1
+      51: iadd
+      52: anewarray     #182                // class java/lang/String
+      55: astore        7
+      57: iconst_0
+      58: dup
+      59: istore        4
+      61: istore        6
+      63: aload_1
+      64: aload_2
+      65: invokevirtual #180                // Method java/lang/String.indexOf:(Ljava/lang/String;)I
+      68: istore        5
+      70: iload         5
+      72: iflt          138
+      75: iload         5
+      77: iload         4
+      79: isub
+      80: ifle          102
+      83: aload         7
+      85: iload         6
+      87: iinc          6, 1
+      90: aload_1
+      91: iload         4
+      93: iload         5
+      95: invokevirtual #77                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+      98: aastore
+      99: goto          120
+     102: iload         5
+     104: iload         4
+     106: isub
+     107: ifne          120
+     110: aload         7
+     112: iload         6
+     114: iinc          6, 1
+     117: ldc           #183                // String .
+     119: aastore
+     120: iload         5
+     122: iconst_1
+     123: iadd
+     124: istore        4
+     126: aload_1
+     127: aload_2
+     128: iload         4
+     130: invokevirtual #181                // Method java/lang/String.indexOf:(Ljava/lang/String;I)I
+     133: istore        5
+     135: goto          70
+     138: aload         7
+     140: iload         6
+     142: aload_1
+     143: iload         4
+     145: iload_3
+     146: invokevirtual #77                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+     149: aastore
+     150: aload         7
+     152: areturn
+
+  static void loadLibrary(java.lang.Class<?>, java.lang.String, boolean);
+    descriptor: (Ljava/lang/Class;Ljava/lang/String;Z)V
+    Code:
+       0: aload_0
+       1: ifnonnull     8
+       4: aconst_null
+       5: goto          12
+       8: aload_0
+       9: invokevirtual #184                // Method java/lang/Class.getClassLoader:()Ljava/lang/ClassLoader;
+      12: astore_3
+      13: getstatic     #185                // Field sys_paths:[Ljava/lang/String;
+      16: ifnonnull     35
+      19: ldc           #186                // String java.library.path
+      21: invokestatic  #187                // Method initializePath:(Ljava/lang/String;)[Ljava/lang/String;
+      24: putstatic     #188                // Field usr_paths:[Ljava/lang/String;
+      27: ldc           #189                // String sun.boot.library.path
+      29: invokestatic  #187                // Method initializePath:(Ljava/lang/String;)[Ljava/lang/String;
+      32: putstatic     #185                // Field sys_paths:[Ljava/lang/String;
+      35: iload_2
+      36: ifeq          82
+      39: aload_0
+      40: new           #190                // class java/io/File
+      43: dup
+      44: aload_1
+      45: invokespecial #191                // Method java/io/File."<init>":(Ljava/lang/String;)V
+      48: invokestatic  #192                // Method loadLibrary0:(Ljava/lang/Class;Ljava/io/File;)Z
+      51: ifeq          55
+      54: return
+      55: new           #193                // class java/lang/UnsatisfiedLinkError
+      58: dup
+      59: new           #67                 // class java/lang/StringBuilder
+      62: dup
+      63: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+      66: ldc           #194                // String Can't load library:
+      68: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      71: aload_1
+      72: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      75: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      78: invokespecial #195                // Method java/lang/UnsatisfiedLinkError."<init>":(Ljava/lang/String;)V
+      81: athrow
+      82: aload_3
+      83: ifnull        183
+      86: aload_3
+      87: aload_1
+      88: invokevirtual #196                // Method findLibrary:(Ljava/lang/String;)Ljava/lang/String;
+      91: astore        4
+      93: aload         4
+      95: ifnull        183
+      98: new           #190                // class java/io/File
+     101: dup
+     102: aload         4
+     104: invokespecial #191                // Method java/io/File."<init>":(Ljava/lang/String;)V
+     107: astore        5
+     109: aload         5
+     111: invokevirtual #197                // Method java/io/File.isAbsolute:()Z
+     114: ifne          145
+     117: new           #193                // class java/lang/UnsatisfiedLinkError
+     120: dup
+     121: new           #67                 // class java/lang/StringBuilder
+     124: dup
+     125: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+     128: ldc           #198                // String ClassLoader.findLibrary failed to return an absolute path:
+     130: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     133: aload         4
+     135: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     138: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     141: invokespecial #195                // Method java/lang/UnsatisfiedLinkError."<init>":(Ljava/lang/String;)V
+     144: athrow
+     145: aload_0
+     146: aload         5
+     148: invokestatic  #192                // Method loadLibrary0:(Ljava/lang/Class;Ljava/io/File;)Z
+     151: ifeq          155
+     154: return
+     155: new           #193                // class java/lang/UnsatisfiedLinkError
+     158: dup
+     159: new           #67                 // class java/lang/StringBuilder
+     162: dup
+     163: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+     166: ldc           #199                // String Can't load
+     168: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     171: aload         4
+     173: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     176: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     179: invokespecial #195                // Method java/lang/UnsatisfiedLinkError."<init>":(Ljava/lang/String;)V
+     182: athrow
+     183: iconst_0
+     184: istore        4
+     186: iload         4
+     188: getstatic     #185                // Field sys_paths:[Ljava/lang/String;
+     191: arraylength
+     192: if_icmpge     252
+     195: new           #190                // class java/io/File
+     198: dup
+     199: getstatic     #185                // Field sys_paths:[Ljava/lang/String;
+     202: iload         4
+     204: aaload
+     205: aload_1
+     206: invokestatic  #200                // Method java/lang/System.mapLibraryName:(Ljava/lang/String;)Ljava/lang/String;
+     209: invokespecial #201                // Method java/io/File."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+     212: astore        5
+     214: aload_0
+     215: aload         5
+     217: invokestatic  #192                // Method loadLibrary0:(Ljava/lang/Class;Ljava/io/File;)Z
+     220: ifeq          224
+     223: return
+     224: aload         5
+     226: invokestatic  #202                // Method java/lang/ClassLoaderHelper.mapAlternativeName:(Ljava/io/File;)Ljava/io/File;
+     229: astore        5
+     231: aload         5
+     233: ifnull        246
+     236: aload_0
+     237: aload         5
+     239: invokestatic  #192                // Method loadLibrary0:(Ljava/lang/Class;Ljava/io/File;)Z
+     242: ifeq          246
+     245: return
+     246: iinc          4, 1
+     249: goto          186
+     252: aload_3
+     253: ifnull        325
+     256: iconst_0
+     257: istore        4
+     259: iload         4
+     261: getstatic     #188                // Field usr_paths:[Ljava/lang/String;
+     264: arraylength
+     265: if_icmpge     325
+     268: new           #190                // class java/io/File
+     271: dup
+     272: getstatic     #188                // Field usr_paths:[Ljava/lang/String;
+     275: iload         4
+     277: aaload
+     278: aload_1
+     279: invokestatic  #200                // Method java/lang/System.mapLibraryName:(Ljava/lang/String;)Ljava/lang/String;
+     282: invokespecial #201                // Method java/io/File."<init>":(Ljava/lang/String;Ljava/lang/String;)V
+     285: astore        5
+     287: aload_0
+     288: aload         5
+     290: invokestatic  #192                // Method loadLibrary0:(Ljava/lang/Class;Ljava/io/File;)Z
+     293: ifeq          297
+     296: return
+     297: aload         5
+     299: invokestatic  #202                // Method java/lang/ClassLoaderHelper.mapAlternativeName:(Ljava/io/File;)Ljava/io/File;
+     302: astore        5
+     304: aload         5
+     306: ifnull        319
+     309: aload_0
+     310: aload         5
+     312: invokestatic  #192                // Method loadLibrary0:(Ljava/lang/Class;Ljava/io/File;)Z
+     315: ifeq          319
+     318: return
+     319: iinc          4, 1
+     322: goto          259
+     325: new           #193                // class java/lang/UnsatisfiedLinkError
+     328: dup
+     329: new           #67                 // class java/lang/StringBuilder
+     332: dup
+     333: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+     336: ldc           #203                // String no
+     338: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     341: aload_1
+     342: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     345: ldc           #204                // String  in java.library.path
+     347: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     350: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     353: invokespecial #195                // Method java/lang/UnsatisfiedLinkError."<init>":(Ljava/lang/String;)V
+     356: athrow
+
+  private static native java.lang.String findBuiltinLib(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+
+  private static boolean loadLibrary0(java.lang.Class<?>, java.io.File);
+    descriptor: (Ljava/lang/Class;Ljava/io/File;)Z
+    Code:
+       0: aload_1
+       1: invokevirtual #205                // Method java/io/File.getName:()Ljava/lang/String;
+       4: invokestatic  #206                // Method findBuiltinLib:(Ljava/lang/String;)Ljava/lang/String;
+       7: astore_2
+       8: aload_2
+       9: ifnull        16
+      12: iconst_1
+      13: goto          17
+      16: iconst_0
+      17: istore_3
+      18: iload_3
+      19: ifne          62
+      22: new           #207                // class java/lang/ClassLoader$3
+      25: dup
+      26: aload_1
+      27: invokespecial #208                // Method java/lang/ClassLoader$3."<init>":(Ljava/io/File;)V
+      30: invokestatic  #209                // Method java/security/AccessController.doPrivileged:(Ljava/security/PrivilegedAction;)Ljava/lang/Object;
+      33: ifnull        40
+      36: iconst_1
+      37: goto          41
+      40: iconst_0
+      41: istore        4
+      43: iload         4
+      45: ifne          50
+      48: iconst_0
+      49: ireturn
+      50: aload_1
+      51: invokevirtual #210                // Method java/io/File.getCanonicalPath:()Ljava/lang/String;
+      54: astore_2
+      55: goto          62
+      58: astore        5
+      60: iconst_0
+      61: ireturn
+      62: aload_0
+      63: ifnonnull     70
+      66: aconst_null
+      67: goto          74
+      70: aload_0
+      71: invokevirtual #184                // Method java/lang/Class.getClassLoader:()Ljava/lang/ClassLoader;
+      74: astore        4
+      76: aload         4
+      78: ifnull        89
+      81: aload         4
+      83: getfield      #19                 // Field nativeLibraries:Ljava/util/Vector;
+      86: goto          92
+      89: getstatic     #211                // Field systemNativeLibraries:Ljava/util/Vector;
+      92: astore        5
+      94: aload         5
+      96: dup
+      97: astore        6
+      99: monitorenter
+     100: aload         5
+     102: invokevirtual #212                // Method java/util/Vector.size:()I
+     105: istore        7
+     107: iconst_0
+     108: istore        8
+     110: iload         8
+     112: iload         7
+     114: if_icmpge     152
+     117: aload         5
+     119: iload         8
+     121: invokevirtual #213                // Method java/util/Vector.elementAt:(I)Ljava/lang/Object;
+     124: checkcast     #214                // class java/lang/ClassLoader$NativeLibrary
+     127: astore        9
+     129: aload_2
+     130: aload         9
+     132: getfield      #215                // Field java/lang/ClassLoader$NativeLibrary.name:Ljava/lang/String;
+     135: invokevirtual #216                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     138: ifeq          146
+     141: iconst_1
+     142: aload         6
+     144: monitorexit
+     145: ireturn
+     146: iinc          8, 1
+     149: goto          110
+     152: getstatic     #2                  // Field loadedLibraryNames:Ljava/util/Vector;
+     155: dup
+     156: astore        8
+     158: monitorenter
+     159: getstatic     #2                  // Field loadedLibraryNames:Ljava/util/Vector;
+     162: aload_2
+     163: invokevirtual #217                // Method java/util/Vector.contains:(Ljava/lang/Object;)Z
+     166: ifeq          201
+     169: new           #193                // class java/lang/UnsatisfiedLinkError
+     172: dup
+     173: new           #67                 // class java/lang/StringBuilder
+     176: dup
+     177: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+     180: ldc           #218                // String Native Library
+     182: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     185: aload_2
+     186: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     189: ldc           #219                // String  already loaded in another classloader
+     191: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     194: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     197: invokespecial #195                // Method java/lang/UnsatisfiedLinkError."<init>":(Ljava/lang/String;)V
+     200: athrow
+     201: getstatic     #1                  // Field nativeLibraryContext:Ljava/util/Stack;
+     204: invokevirtual #220                // Method java/util/Stack.size:()I
+     207: istore        9
+     209: iconst_0
+     210: istore        10
+     212: iload         10
+     214: iload         9
+     216: if_icmpge     303
+     219: getstatic     #1                  // Field nativeLibraryContext:Ljava/util/Stack;
+     222: iload         10
+     224: invokevirtual #221                // Method java/util/Stack.elementAt:(I)Ljava/lang/Object;
+     227: checkcast     #214                // class java/lang/ClassLoader$NativeLibrary
+     230: astore        11
+     232: aload_2
+     233: aload         11
+     235: getfield      #215                // Field java/lang/ClassLoader$NativeLibrary.name:Ljava/lang/String;
+     238: invokevirtual #216                // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     241: ifeq          297
+     244: aload         4
+     246: aload         11
+     248: invokestatic  #222                // Method java/lang/ClassLoader$NativeLibrary.access$200:(Ljava/lang/ClassLoader$NativeLibrary;)Ljava/lang/Class;
+     251: invokevirtual #184                // Method java/lang/Class.getClassLoader:()Ljava/lang/ClassLoader;
+     254: if_acmpne     265
+     257: iconst_1
+     258: aload         8
+     260: monitorexit
+     261: aload         6
+     263: monitorexit
+     264: ireturn
+     265: new           #193                // class java/lang/UnsatisfiedLinkError
+     268: dup
+     269: new           #67                 // class java/lang/StringBuilder
+     272: dup
+     273: invokespecial #68                 // Method java/lang/StringBuilder."<init>":()V
+     276: ldc           #218                // String Native Library
+     278: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     281: aload_2
+     282: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     285: ldc           #223                // String  is being loaded in another classloader
+     287: invokevirtual #70                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     290: invokevirtual #71                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     293: invokespecial #195                // Method java/lang/UnsatisfiedLinkError."<init>":(Ljava/lang/String;)V
+     296: athrow
+     297: iinc          10, 1
+     300: goto          212
+     303: new           #214                // class java/lang/ClassLoader$NativeLibrary
+     306: dup
+     307: aload_0
+     308: aload_2
+     309: iload_3
+     310: invokespecial #224                // Method java/lang/ClassLoader$NativeLibrary."<init>":(Ljava/lang/Class;Ljava/lang/String;Z)V
+     313: astore        10
+     315: getstatic     #1                  // Field nativeLibraryContext:Ljava/util/Stack;
+     318: aload         10
+     320: invokevirtual #225                // Method java/util/Stack.push:(Ljava/lang/Object;)Ljava/lang/Object;
+     323: pop
+     324: aload         10
+     326: aload_2
+     327: iload_3
+     328: invokevirtual #226                // Method java/lang/ClassLoader$NativeLibrary.load:(Ljava/lang/String;Z)V
+     331: getstatic     #1                  // Field nativeLibraryContext:Ljava/util/Stack;
+     334: invokevirtual #227                // Method java/util/Stack.pop:()Ljava/lang/Object;
+     337: pop
+     338: goto          353
+     341: astore        12
+     343: getstatic     #1                  // Field nativeLibraryContext:Ljava/util/Stack;
+     346: invokevirtual #227                // Method java/util/Stack.pop:()Ljava/lang/Object;
+     349: pop
+     350: aload         12
+     352: athrow
+     353: aload         10
+     355: getfield      #228                // Field java/lang/ClassLoader$NativeLibrary.loaded:Z
+     358: ifeq          383
+     361: getstatic     #2                  // Field loadedLibraryNames:Ljava/util/Vector;
+     364: aload_2
+     365: invokevirtual #4                  // Method java/util/Vector.addElement:(Ljava/lang/Object;)V
+     368: aload         5
+     370: aload         10
+     372: invokevirtual #4                  // Method java/util/Vector.addElement:(Ljava/lang/Object;)V
+     375: iconst_1
+     376: aload         8
+     378: monitorexit
+     379: aload         6
+     381: monitorexit
+     382: ireturn
+     383: iconst_0
+     384: aload         8
+     386: monitorexit
+     387: aload         6
+     389: monitorexit
+     390: ireturn
+     391: astore        13
+     393: aload         8
+     395: monitorexit
+     396: aload         13
+     398: athrow
+     399: astore        14
+     401: aload         6
+     403: monitorexit
+     404: aload         14
+     406: athrow
+    Exception table:
+       from    to  target type
+          50    55    58   Class java/io/IOException
+         324   331   341   any
+         341   343   341   any
+         159   261   391   any
+         265   379   391   any
+         383   387   391   any
+         391   396   391   any
+         100   145   399   any
+         146   264   399   any
+         265   382   399   any
+         383   390   399   any
+         391   404   399   any
+
+  static long findNative(java.lang.ClassLoader, java.lang.String);
+    descriptor: (Ljava/lang/ClassLoader;Ljava/lang/String;)J
+    Code:
+       0: aload_0
+       1: ifnull        11
+       4: aload_0
+       5: getfield      #19                 // Field nativeLibraries:Ljava/util/Vector;
+       8: goto          14
+      11: getstatic     #211                // Field systemNativeLibraries:Ljava/util/Vector;
+      14: astore_2
+      15: aload_2
+      16: dup
+      17: astore_3
+      18: monitorenter
+      19: aload_2
+      20: invokevirtual #212                // Method java/util/Vector.size:()I
+      23: istore        4
+      25: iconst_0
+      26: istore        5
+      28: iload         5
+      30: iload         4
+      32: if_icmpge     72
+      35: aload_2
+      36: iload         5
+      38: invokevirtual #213                // Method java/util/Vector.elementAt:(I)Ljava/lang/Object;
+      41: checkcast     #214                // class java/lang/ClassLoader$NativeLibrary
+      44: astore        6
+      46: aload         6
+      48: aload_1
+      49: invokevirtual #229                // Method java/lang/ClassLoader$NativeLibrary.find:(Ljava/lang/String;)J
+      52: lstore        7
+      54: lload         7
+      56: lconst_0
+      57: lcmp
+      58: ifeq          66
+      61: lload         7
+      63: aload_3
+      64: monitorexit
+      65: lreturn
+      66: iinc          5, 1
+      69: goto          28
+      72: aload_3
+      73: monitorexit
+      74: goto          84
+      77: astore        9
+      79: aload_3
+      80: monitorexit
+      81: aload         9
+      83: athrow
+      84: lconst_0
+      85: lreturn
+    Exception table:
+       from    to  target type
+          19    65    77   any
+          66    74    77   any
+          77    81    77   any
+
+  public void setDefaultAssertionStatus(boolean);
+    descriptor: (Z)V
+    Code:
+       0: aload_0
+       1: getfield      #31                 // Field assertionLock:Ljava/lang/Object;
+       4: dup
+       5: astore_2
+       6: monitorenter
+       7: aload_0
+       8: getfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      11: ifnonnull     18
+      14: aload_0
+      15: invokespecial #230                // Method initializeJavaAssertionMaps:()V
+      18: aload_0
+      19: iload_1
+      20: putfield      #20                 // Field defaultAssertionStatus:Z
+      23: aload_2
+      24: monitorexit
+      25: goto          33
+      28: astore_3
+      29: aload_2
+      30: monitorexit
+      31: aload_3
+      32: athrow
+      33: return
+    Exception table:
+       from    to  target type
+           7    25    28   any
+          28    31    28   any
+
+  public void setPackageAssertionStatus(java.lang.String, boolean);
+    descriptor: (Ljava/lang/String;Z)V
+    Code:
+       0: aload_0
+       1: getfield      #31                 // Field assertionLock:Ljava/lang/Object;
+       4: dup
+       5: astore_3
+       6: monitorenter
+       7: aload_0
+       8: getfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      11: ifnonnull     18
+      14: aload_0
+      15: invokespecial #230                // Method initializeJavaAssertionMaps:()V
+      18: aload_0
+      19: getfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      22: aload_1
+      23: iload_2
+      24: invokestatic  #231                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      27: invokeinterface #104,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      32: pop
+      33: aload_3
+      34: monitorexit
+      35: goto          45
+      38: astore        4
+      40: aload_3
+      41: monitorexit
+      42: aload         4
+      44: athrow
+      45: return
+    Exception table:
+       from    to  target type
+           7    35    38   any
+          38    42    38   any
+
+  public void setClassAssertionStatus(java.lang.String, boolean);
+    descriptor: (Ljava/lang/String;Z)V
+    Code:
+       0: aload_0
+       1: getfield      #31                 // Field assertionLock:Ljava/lang/Object;
+       4: dup
+       5: astore_3
+       6: monitorenter
+       7: aload_0
+       8: getfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      11: ifnonnull     18
+      14: aload_0
+      15: invokespecial #230                // Method initializeJavaAssertionMaps:()V
+      18: aload_0
+      19: getfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      22: aload_1
+      23: iload_2
+      24: invokestatic  #231                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      27: invokeinterface #104,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      32: pop
+      33: aload_3
+      34: monitorexit
+      35: goto          45
+      38: astore        4
+      40: aload_3
+      41: monitorexit
+      42: aload         4
+      44: athrow
+      45: return
+    Exception table:
+       from    to  target type
+           7    35    38   any
+          38    42    38   any
+
+  public void clearAssertionStatus();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: getfield      #31                 // Field assertionLock:Ljava/lang/Object;
+       4: dup
+       5: astore_1
+       6: monitorenter
+       7: aload_0
+       8: new           #16                 // class java/util/HashMap
+      11: dup
+      12: invokespecial #17                 // Method java/util/HashMap."<init>":()V
+      15: putfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      18: aload_0
+      19: new           #16                 // class java/util/HashMap
+      22: dup
+      23: invokespecial #17                 // Method java/util/HashMap."<init>":()V
+      26: putfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      29: aload_0
+      30: iconst_0
+      31: putfield      #20                 // Field defaultAssertionStatus:Z
+      34: aload_1
+      35: monitorexit
+      36: goto          44
+      39: astore_2
+      40: aload_1
+      41: monitorexit
+      42: aload_2
+      43: athrow
+      44: return
+    Exception table:
+       from    to  target type
+           7    36    39   any
+          39    42    39   any
+
+  boolean desiredAssertionStatus(java.lang.String);
+    descriptor: (Ljava/lang/String;)Z
+    Code:
+       0: aload_0
+       1: getfield      #31                 // Field assertionLock:Ljava/lang/Object;
+       4: dup
+       5: astore_2
+       6: monitorenter
+       7: aload_0
+       8: getfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      11: aload_1
+      12: invokeinterface #102,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      17: checkcast     #232                // class java/lang/Boolean
+      20: astore_3
+      21: aload_3
+      22: ifnull        32
+      25: aload_3
+      26: invokevirtual #233                // Method java/lang/Boolean.booleanValue:()Z
+      29: aload_2
+      30: monitorexit
+      31: ireturn
+      32: aload_1
+      33: ldc           #183                // String .
+      35: invokevirtual #234                // Method java/lang/String.lastIndexOf:(Ljava/lang/String;)I
+      38: istore        4
+      40: iload         4
+      42: ifge          70
+      45: aload_0
+      46: getfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      49: aconst_null
+      50: invokeinterface #102,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      55: checkcast     #232                // class java/lang/Boolean
+      58: astore_3
+      59: aload_3
+      60: ifnull        70
+      63: aload_3
+      64: invokevirtual #233                // Method java/lang/Boolean.booleanValue:()Z
+      67: aload_2
+      68: monitorexit
+      69: ireturn
+      70: iload         4
+      72: ifle          123
+      75: aload_1
+      76: iconst_0
+      77: iload         4
+      79: invokevirtual #77                 // Method java/lang/String.substring:(II)Ljava/lang/String;
+      82: astore_1
+      83: aload_0
+      84: getfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      87: aload_1
+      88: invokeinterface #102,  2          // InterfaceMethod java/util/Map.get:(Ljava/lang/Object;)Ljava/lang/Object;
+      93: checkcast     #232                // class java/lang/Boolean
+      96: astore_3
+      97: aload_3
+      98: ifnull        108
+     101: aload_3
+     102: invokevirtual #233                // Method java/lang/Boolean.booleanValue:()Z
+     105: aload_2
+     106: monitorexit
+     107: ireturn
+     108: aload_1
+     109: ldc           #183                // String .
+     111: iload         4
+     113: iconst_1
+     114: isub
+     115: invokevirtual #235                // Method java/lang/String.lastIndexOf:(Ljava/lang/String;I)I
+     118: istore        4
+     120: goto          70
+     123: aload_0
+     124: getfield      #20                 // Field defaultAssertionStatus:Z
+     127: aload_2
+     128: monitorexit
+     129: ireturn
+     130: astore        5
+     132: aload_2
+     133: monitorexit
+     134: aload         5
+     136: athrow
+    Exception table:
+       from    to  target type
+           7    31   130   any
+          32    69   130   any
+          70   107   130   any
+         108   129   130   any
+         130   134   130   any
+
+  private void initializeJavaAssertionMaps();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: new           #16                 // class java/util/HashMap
+       4: dup
+       5: invokespecial #17                 // Method java/util/HashMap."<init>":()V
+       8: putfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      11: aload_0
+      12: new           #16                 // class java/util/HashMap
+      15: dup
+      16: invokespecial #17                 // Method java/util/HashMap."<init>":()V
+      19: putfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      22: invokestatic  #236                // Method retrieveDirectives:()Ljava/lang/AssertionStatusDirectives;
+      25: astore_1
+      26: iconst_0
+      27: istore_2
+      28: iload_2
+      29: aload_1
+      30: getfield      #237                // Field java/lang/AssertionStatusDirectives.classes:[Ljava/lang/String;
+      33: arraylength
+      34: if_icmpge     68
+      37: aload_0
+      38: getfield      #22                 // Field classAssertionStatus:Ljava/util/Map;
+      41: aload_1
+      42: getfield      #237                // Field java/lang/AssertionStatusDirectives.classes:[Ljava/lang/String;
+      45: iload_2
+      46: aaload
+      47: aload_1
+      48: getfield      #238                // Field java/lang/AssertionStatusDirectives.classEnabled:[Z
+      51: iload_2
+      52: baload
+      53: invokestatic  #231                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      56: invokeinterface #104,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      61: pop
+      62: iinc          2, 1
+      65: goto          28
+      68: iconst_0
+      69: istore_2
+      70: iload_2
+      71: aload_1
+      72: getfield      #239                // Field java/lang/AssertionStatusDirectives.packages:[Ljava/lang/String;
+      75: arraylength
+      76: if_icmpge     110
+      79: aload_0
+      80: getfield      #21                 // Field packageAssertionStatus:Ljava/util/Map;
+      83: aload_1
+      84: getfield      #239                // Field java/lang/AssertionStatusDirectives.packages:[Ljava/lang/String;
+      87: iload_2
+      88: aaload
+      89: aload_1
+      90: getfield      #240                // Field java/lang/AssertionStatusDirectives.packageEnabled:[Z
+      93: iload_2
+      94: baload
+      95: invokestatic  #231                // Method java/lang/Boolean.valueOf:(Z)Ljava/lang/Boolean;
+      98: invokeinterface #104,  3          // InterfaceMethod java/util/Map.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     103: pop
+     104: iinc          2, 1
+     107: goto          70
+     110: aload_0
+     111: aload_1
+     112: getfield      #241                // Field java/lang/AssertionStatusDirectives.deflt:Z
+     115: putfield      #20                 // Field defaultAssertionStatus:Z
+     118: return
+
+  private static native java.lang.AssertionStatusDirectives retrieveDirectives();
+    descriptor: ()Ljava/lang/AssertionStatusDirectives;
+
+  static java.util.Vector access$000();
+    descriptor: ()Ljava/util/Vector;
+    Code:
+       0: getstatic     #2                  // Field loadedLibraryNames:Ljava/util/Vector;
+       3: areturn
+
+  static java.util.Stack access$100();
+    descriptor: ()Ljava/util/Stack;
+    Code:
+       0: getstatic     #1                  // Field nativeLibraryContext:Ljava/util/Stack;
+       3: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: invokestatic  #242                // Method registerNatives:()V
+       3: iconst_0
+       4: anewarray     #243                // class java/security/cert/Certificate
+       7: putstatic     #103                // Field nocerts:[Ljava/security/cert/Certificate;
+      10: new           #8                  // class java/util/Vector
+      13: dup
+      14: invokespecial #9                  // Method java/util/Vector."<init>":()V
+      17: putstatic     #2                  // Field loadedLibraryNames:Ljava/util/Vector;
+      20: new           #8                  // class java/util/Vector
+      23: dup
+      24: invokespecial #9                  // Method java/util/Vector."<init>":()V
+      27: putstatic     #211                // Field systemNativeLibraries:Ljava/util/Vector;
+      30: new           #244                // class java/util/Stack
+      33: dup
+      34: invokespecial #245                // Method java/util/Stack."<init>":()V
+      37: putstatic     #1                  // Field nativeLibraryContext:Ljava/util/Stack;
+      40: return
+}

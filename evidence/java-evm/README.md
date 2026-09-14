@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest loadClass parent: `minecraft-entry/parent-77185cca2/`; immutable
+Program lookup returns canonical mirrors. Original asks for absent javax.servlet.Servlet;
+next must raise catchable guest ClassNotFoundException, not fake null/host loading.
+
 Latest Boolean parent: `minecraft-entry/parent-82e4c5116/`; canonical
 TRUE/FALSE/valueOf wrapper. Original reaches ClassLoader.loadClass(String) PC15;
 next must use immutable Program names and canonical Class mirrors, not host loading.

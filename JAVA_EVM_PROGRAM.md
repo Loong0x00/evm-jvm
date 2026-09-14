@@ -1,5 +1,22 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST LOADCLASS: abstractClassLoader777B loadClass ordinary wrapper+
+private-static-native binding8 exact immutableProgram dottedname lookup/shared canonical
+mirror(noinit,rawcanonicalLoader/bootstrapnull). Worker first missed heapfrontier and
+fixed;parent additionally maps mirrorquota toguestOOM notLCState. LOCAL384engine
+354502B SHA4edb971a.../Keccake6012b35...,co4146B1535c48d...,domain
+MC-CLASSLOADER-LOADCLASS-PARENT1,66boots/native1..8. Generatedcombined raw/bootstrap
+loadidentity/noinit+allprior3556J22I q1/q7/direct3556/508/1 VOIDequal4065canonical.
+Finalwhole995.980424s978673664B; four harness failures javacdependency/sentinel/
+replacement/verifier preserved.
+Original22fresh q7head325/2275J24I then5q1->330/2280J24I CP15246B
+SHAe8868956... root5e50b588... machine d02e7b9d...,last151020773/max153731584.
+Binding8 exact missing ClassLoaderLoadError2,1gas108042085. ReadonlyCP decode proves
+binarynamejavax.servlet.Servlet; parentZIPinventory absent. Next mustguestthrow catchable
+CNFE soLoaderUtil.isClassAvailable=false; seeLOADCLASS_PARENT+CLASS_NOT_FOUND_PREP.
+AppendReflectiveOperationException/CNFE,kind13;noClass.forName/lazyJARyet.LOCAL384/1B
+capsfixed,accepted320unchanged.NoMCbody/world/Done.
+
 LATEST MC-FIRST BOOLEAN: genuine publicfinal Serializable/Comparable Boolean
 bootstrap66(index65),TRUE/FALSE canonical,valueOf/ctor/value/equals/hash/string/compare+
 bridge;image1241B SHA6f0938b4... LOCAL384engine352122B SHAc8aeaa04.../Keccak

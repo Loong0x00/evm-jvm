@@ -1,0 +1,43 @@
+{
+  "basis": "e078bb2c6",
+  "parentRepair": "map shared class-mirror quota signal to existing guest OOM kind7; retain worker frontier/heap publication",
+  "domain": "MC-CLASSLOADER-LOADCLASS-PARENT1",
+  "address": "0x4d432d4c4f4144434c4153532d504152454e5401",
+  "owner": "0x4d432d4c4f4144434c4153532d4f574e45520002",
+  "runtimeCap": 393216,
+  "accepted320Unchanged": true,
+  "engine": {
+    "bytes": 354502,
+    "initSHA256": "8516048b7a3ab48b1450a1824e2838f8282b3351b3f0522907819494b4d4d06e",
+    "runtimeSHA256": "4edb971a54b5b84b5f773ca0007e1f97a90c13e2f56311dd872a08114b156cbc",
+    "runtimeKeccak256": "e6012b354d1d22658aade989ba7ff7fe7700e7698e1d1654adab272d8820d7ce"
+  },
+  "coordinator": {
+    "bytes": 4146,
+    "initSHA256": "c9e4d98be3aade549032f88ebc3e03b65ce885061fea68a7c5a6b3aa389e3b5c",
+    "runtimeSHA256": "c538b4e43f150e95275c27a59d91b664e5d851f790143e3b72aa076327418f99",
+    "runtimeKeccak256": "1535c48d422b9a8e9764345e48d6e6f92f967f9840395c897e3cbaaf242b9e46"
+  },
+  "ClassLoader": {
+    "bytes": 777,
+    "sha256": "2642b16dc68706079058f50f2b08544328c495a23217740499d4bb897ae69e3d"
+  },
+  "bootstrapCount": 66,
+  "nativeBindings": 8,
+  "externalLocalGas": 1000000000,
+  "resourceLookupGas": 1000000,
+  "reserve": 25000000,
+  "maxFrames": 128,
+  "rawLimits": [
+    24,
+    262144
+  ]
+}
+Traceback (most recent call last):
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-77185cca2/smoke.py", line 30, in <module>
+    name=source.stem;cd=out/('replace-'+name);cd.mkdir();call('replace-build-'+name,['/usr/lib/jvm/java-8-openjdk/bin/javac','-source','8','-target','8','-g:none','-bootclasspath','/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar','-d',cd,here/'RawSystemReplacementMain.java',source]);rz=jar('replace-'+name+'.zip',cd,['RawSystemReplacementMain.class','java/lang/'+name+'.class'],False);e=dict(env,MC_ENTRY_BINDINGS='RawSystemReplacementMain.class,java/lang/'+name+'.class');call('replace-start-'+name,[build/'driver','setup-chain',out/('replace-world-'+name),build/'coordinator/MCEntryCoordinator.json',build/'engine/MCEntryInterpreter.json',rz,4096],e);r=json.loads((out/'reports'/('replace-world-'+name)/'start-refusal.json').read_text());assert r['selector']=='0x6a23ad80' and r['uint256Words']==['1','1'] and r['rootBefore']==r['rootAfter']
+                                                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-77185cca2/smoke.py", line 8, in call
+    (out/(label+'-process.json')).write_text(json.dumps({'pid':p.pid,'exit':rc,'command':list(map(str,args))})+'\n');assert rc==0,(label,rc)
+                                                                                                                            ^^^^^
+AssertionError: ('replace-build-System', 2)
