@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest Class.forName parent: `minecraft-entry/parent-69ea5129d/`. Parent uses a
+genuine Java8 Class image, proves binding9, and advances original22 to Log4j
+Constants String.split/java.version at2536J; no fake target initialization.
+
 Latest CNFE parent: `minecraft-entry/parent-10c10d224/`; loadClass misses
 are catchable guest kind13. Original catches absent Servlet and reaches static
 Class.forName(String) at LoaderUtil PC21; no fake init/host loading is allowed.

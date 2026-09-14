@@ -1,5 +1,23 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST CLASS.FORNAME: worker binding9 semantics accepted with parent compiler
+correction: worker770B Class SHAd637... was javac21-target8,not accepted; parent genuine
+Java8-g:none Class670B SHA0e3d4ea7.... Noappend,total68;globalnative1..9;kind14.
+Binding9 absent/malformed guestCNFE13;initialized target canonical mirror;uninitialized
+atomic ClassForNameInitializationError,no fake init/overload/hostload. LOCAL384 parent
+engine358672B SHA3679f7f8.../Keccak30321105...,co4146B Keccak88874b48...,
+domainMC-CLASS-FOR-NAME-PARENT1. Combined forName+allprior q1/q7/direct3662J26I
+epoch3662/524/1VOIDequal machine df378096... opaque b8258fbf...;uncaught forName
+4J3I lifecycle3kind13 epoch5/1/1equal;uninit/omitted/rawrefusals;canonical pass.
+Fresh source+generated+original whole gate1060.990102s/976830464B.
+Original22 catches loadClass+forName CNFE for absentServlet,webapp false,advances to
+Constants.getMajorVersion; q7head362/2534J26I then2q1->364/2536J26I CP16082B
+SHA66f1dd23... root77117a5b... mach36aadbe6.... Next StringProfileError1,9
+selector32e310eb gas107704109 at String.split("-|\\.") after absent guest
+java.version;Head unchanged. NextJAVA_VERSION_SPLIT_PREPARATION seeds exact guest
+java.version=1.8 in real Properties +String-local native split10,no host props/regex;
+globalnative stays9. Integer.parseInt explanatory only. NoMCbody/world/Done.
+
 LATEST MC-FIRST CNFE: append ReflectiveOperationException156B+CNFE169B at66/67,
 reserve,total68;exceptionregistry14kind13,all envelope/heap/pending/exactkind bounds13.
 Binding8 missing/malformed consumesarg+guest_raiseJava13;presentmirror/noinit/OOM exact.

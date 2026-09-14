@@ -1,5 +1,10 @@
 # Class.forName(String) LOCAL preflight
 
+**PARENT RESULT:** semantics accepted after replacing the worker's javac21-target8
+Class image with genuine Java8 `-g:none` output. Original reaches2536J at Log4j
+Constants String.split/java.version. See JAVA_EVM_MC_CLASS_FOR_NAME_PARENT_PREFLIGHT.md.
+
+
 Bounded generated-only LOCAL384 result from `e90909eae`; evidence is at
 `evidence/java-evm/minecraft-entry/class-for-name-preflight/`.
 
