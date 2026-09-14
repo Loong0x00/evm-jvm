@@ -1,4 +1,4 @@
-# Measured raw-class-count25 preparation — authorization required
+# Measured raw-class-count25 preparation — completed
 
 Current explicit profile cap is24 raw classes. Parent asSubclass exhausts all24 with
 226585/262144 bytes and then unchanged original22 genuinely requires same-JAR
@@ -27,6 +27,7 @@ unchanged. No lazy loading, capacity beyond25, byte-cap change or fabricated cla
 Parent then source-builds and starts a NEW original25 world q7+q1. LOCAL1B/30s/25M
 reserve/20min4GiB,128frames,CP4096Code65535,heap/VFS/CP1MiB,Head32768 remain fixed.
 
-This file is preparation only. Because24 was an explicit standing limit, do not start
-a semantic worker or modify it without user authorization. Alternative lazy archive
-Program growth is much broader and is not proposed yet. No main-body/world/Done.
+The user subsequently authorized this measured increment and future genuinely
+measured incremental class-count increases under the unchanged byte and safety caps.
+Parent acceptance is recorded in `JAVA_EVM_MC_CLASSCOUNT25_PARENT_PREFLIGHT.md`.
+No main-body/world/Done is claimed.
