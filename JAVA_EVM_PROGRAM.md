@@ -1,5 +1,25 @@
 # Continuous JVM-in-EVM program
 
+LATEST MC-FIRST JAVA.VERSION/SPLIT: worker binding logic accepted after parent repair:
+worker String815B removed existing char[]/copy ctors; parent restored String1015B
+SHA c412caea...,System825B fd3898b3...,Class670B0e3d4ea7... genuineJava8-g:none.
+Guest System Properties exactly java.version=1.8,nohost/other;String-local native10
+accepts only -|\\.,literal -/. split,internal empties/trailing drop,no-match/empty
+same receiver,new noninterned pieces+owned char[],rank1 String[],quota guestOOM7;
+null receiver/regex NPE6. Globalnative1..9,total68,kind14. LOCAL384 engine361817B
+SHA6773f99a.../Keccak0c854312...,co4146B4611de5f...,domainMC-JAVA-VERSION-
+SPLIT-PARENT1. Combined allprior+constructors+split+1026piece caughtOOM q1/q7/direct
+4174J29I epochs4174/597/2 equal machine8cc9fe32... opaque996ba011...;
+uncaughtCNFE4J3I;unsupportedregex/limit/raw refusals. q1canonical4174,fresh606.
+Expectation-only overload-selector failure preserved. Serial whole hit fixed1200s after
+successful q1 (peak960294912B),no state reused; final source gate revalidates q1 and
+fresh q7/direct equivalence+NEWoriginal exit527.868048s/982192128B.
+Original22 consumes1.8/splits to1,8; q7head380/2660J26I then3q1->383/2663J26I
+CP16607B SHA20a48e53... rootc976ad87... machine7d3b8640.... Next MissingClass
+java/lang/Integer context4107/site16 selector555db429 gas110333730,Head unchanged.
+NextINTEGER_PREPARATION appends Number68,NFE69,Integer70,total71,ordinary decimal
+parseInt,no native/host parser. NoMCmainbody/world/Done.
+
 LATEST MC-FIRST CLASS.FORNAME: worker binding9 semantics accepted with parent compiler
 correction: worker770B Class SHAd637... was javac21-target8,not accepted; parent genuine
 Java8-g:none Class670B SHA0e3d4ea7.... Noappend,total68;globalnative1..9;kind14.

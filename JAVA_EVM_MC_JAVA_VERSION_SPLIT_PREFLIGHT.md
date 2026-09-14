@@ -1,5 +1,10 @@
 # Java version property and bounded String split preflight
 
+**PARENT RESULT:** accepted after restoring worker-omitted String char[]/copy
+constructors. Generated EVM controls pass; original reaches2663J at missing Integer.
+See JAVA_EVM_MC_JAVA_VERSION_SPLIT_PARENT_PREFLIGHT.md.
+
+
 Local-only continuation from `d183da5ab`, scoped to the preflight evidence at
 `evidence/java-evm/minecraft-entry/java-version-split-preflight/`.  This replaces
 only the existing guest System and String images: System constructs a real guest

@@ -1,0 +1,189 @@
+public final class java.lang.String implements java.io.Serializable, java.lang.Comparable<java.lang.String>, java.lang.CharSequence {
+  private final char[] value;
+    descriptor: [C
+
+  private int hash;
+    descriptor: I
+
+  private java.lang.String();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aconst_null
+       6: putfield      #2                  // Field value:[C
+       9: return
+
+  public java.lang.String(char[]);
+    descriptor: ([C)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_1
+       5: arraylength
+       6: newarray       char
+       8: astore_2
+       9: iconst_0
+      10: istore_3
+      11: iload_3
+      12: aload_1
+      13: arraylength
+      14: if_icmpge     29
+      17: aload_2
+      18: iload_3
+      19: aload_1
+      20: iload_3
+      21: caload
+      22: castore
+      23: iinc          3, 1
+      26: goto          11
+      29: aload_0
+      30: aload_2
+      31: putfield      #2                  // Field value:[C
+      34: return
+
+  public java.lang.String(java.lang.String);
+    descriptor: (Ljava/lang/String;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: getfield      #2                  // Field value:[C
+       9: putfield      #2                  // Field value:[C
+      12: aload_0
+      13: aload_1
+      14: getfield      #3                  // Field hash:I
+      17: putfield      #3                  // Field hash:I
+      20: return
+
+  public native int length();
+    descriptor: ()I
+
+  public native boolean isEmpty();
+    descriptor: ()Z
+
+  public native char charAt(int);
+    descriptor: (I)C
+
+  public native boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public native int hashCode();
+    descriptor: ()I
+
+  public native java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+
+  public native int compareTo(java.lang.String);
+    descriptor: (Ljava/lang/String;)I
+
+  public native java.lang.String intern();
+    descriptor: ()Ljava/lang/String;
+
+  public native java.lang.CharSequence subSequence(int, int);
+    descriptor: (II)Ljava/lang/CharSequence;
+
+  public native java.lang.String[] split(java.lang.String);
+    descriptor: (Ljava/lang/String;)[Ljava/lang/String;
+
+  public int compareTo(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)I
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #4                  // class java/lang/String
+       5: invokevirtual #5                  // Method compareTo:(Ljava/lang/String;)I
+       8: ireturn
+}
+public final class java.lang.System {
+  private static java.lang.SecurityManager security;
+    descriptor: Ljava/lang/SecurityManager;
+
+  private static java.util.Properties properties;
+    descriptor: Ljava/util/Properties;
+
+  private java.lang.System();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static native void arraycopy(java.lang.Object, int, java.lang.Object, int, int);
+    descriptor: (Ljava/lang/Object;ILjava/lang/Object;II)V
+
+  public static java.lang.SecurityManager getSecurityManager();
+    descriptor: ()Ljava/lang/SecurityManager;
+    Code:
+       0: getstatic     #2                  // Field security:Ljava/lang/SecurityManager;
+       3: areturn
+
+  public static java.lang.String getProperty(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: invokevirtual #3                  // Method java/lang/String.length:()I
+       4: ifne          15
+       7: new           #4                  // class java/lang/IllegalArgumentException
+      10: dup
+      11: invokespecial #5                  // Method java/lang/IllegalArgumentException."<init>":()V
+      14: athrow
+      15: getstatic     #6                  // Field properties:Ljava/util/Properties;
+      18: aload_0
+      19: invokevirtual #7                  // Method java/util/Properties.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+      22: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: new           #8                  // class java/util/Properties
+       3: dup
+       4: invokespecial #9                  // Method java/util/Properties."<init>":()V
+       7: putstatic     #6                  // Field properties:Ljava/util/Properties;
+      10: getstatic     #6                  // Field properties:Ljava/util/Properties;
+      13: ldc           #10                 // String java.version
+      15: ldc           #11                 // String 1.8
+      17: invokevirtual #12                 // Method java/util/Properties.setProperty:(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/Object;
+      20: pop
+      21: return
+}
+public final class java.lang.Class<T> {
+  private java.lang.String name;
+    descriptor: Ljava/lang/String;
+
+  private java.lang.ClassLoader definingLoader;
+    descriptor: Ljava/lang/ClassLoader;
+
+  private java.lang.Class();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public java.lang.String getName();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field name:Ljava/lang/String;
+       4: areturn
+
+  public java.lang.ClassLoader getClassLoader();
+    descriptor: ()Ljava/lang/ClassLoader;
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field definingLoader:Ljava/lang/ClassLoader;
+       4: areturn
+
+  public static java.lang.Class<?> forName(java.lang.String) throws java.lang.ClassNotFoundException;
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+    Code:
+       0: aload_0
+       1: invokestatic  #4                  // Method forName0:(Ljava/lang/String;)Ljava/lang/Class;
+       4: areturn
+
+  private static native java.lang.Class<?> forName0(java.lang.String);
+    descriptor: (Ljava/lang/String;)Ljava/lang/Class;
+}

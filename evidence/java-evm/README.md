@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest version/split parent: `minecraft-entry/parent-6e7185d9c/`. Guest
+java.version=1.8 and bounded split pass after restoring String constructors;
+original22 reaches missing java/lang/Integer at2663J.
+
 Latest Class.forName parent: `minecraft-entry/parent-69ea5129d/`. Parent uses a
 genuine Java8 Class image, proves binding9, and advances original22 to Log4j
 Constants String.split/java.version at2536J; no fake target initialization.
