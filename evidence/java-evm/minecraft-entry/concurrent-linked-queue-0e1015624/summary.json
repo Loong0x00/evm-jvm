@@ -1,0 +1,46 @@
+{
+  "profile": "MC-CONCURRENT-LINKED-QUEUE-PREFLIGHT1",
+  "sourceCommits": [
+    "7a20245af",
+    "84be3fb19",
+    "0e1015624"
+  ],
+  "generatedOnly": true,
+  "originalMinecraftAccess": false,
+  "runtimeCap": 393216,
+  "engine": {
+    "bytes": 388963,
+    "initSHA256": "73f15acf1e59d5290398fd9703631f7aa1c477f9f29ed4aea1a67dc941432c16",
+    "runtimeSHA256": "5780dee2f53e2ed1c652679758695add24c6386639096fd30c52434f3f5bab54",
+    "runtimeKeccak256": "7fa5d3fed7a9dc7785d630beec220fc456eccedd7624180f9a5f87225ebcc9ed"
+  },
+  "coordinator": {
+    "bytes": 4146,
+    "initSHA256": "effc87cec31972f1cea57513c0e71c41fd218ef896f0a9660da9fad0315197a3",
+    "runtimeSHA256": "227a2c893e8f82ba5cf94f511befa3ff931d6580641cb1fab5f5c30dc1068371",
+    "runtimeKeccak256": "fac603dbad983b250c5a3a46785551a7c2f1e34a2dde5fd05abe643e7555828a"
+  },
+  "buildWallSeconds": 233.478,
+  "gateWallSeconds": 61.73,
+  "queue": {
+    "q1Slices": 822,
+    "q7Slices": 118,
+    "directSlices": 1,
+    "javaSteps": 822
+  },
+  "retainedLocks": {
+    "q1Slices": 218,
+    "q7Slices": 32,
+    "directSlices": 1,
+    "javaSteps": 218
+  },
+  "rawReplacementRefusals": [
+    "java/util/Queue",
+    "java/util/concurrent/ConcurrentLinkedQueue"
+  ],
+  "caveats": [
+    "shell time has no RSS metric",
+    "no practical queue array-quota OOM",
+    "parent must replay all retained controls"
+  ]
+}
