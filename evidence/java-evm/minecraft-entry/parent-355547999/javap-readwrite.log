@@ -1,0 +1,38 @@
+public class java.util.concurrent.locks.ReentrantReadWriteLock implements java.util.concurrent.locks.ReadWriteLock,java.io.Serializable {
+  private java.util.concurrent.locks.ReentrantLock reader;
+    descriptor: Ljava/util/concurrent/locks/ReentrantLock;
+
+  private java.util.concurrent.locks.ReentrantLock writer;
+    descriptor: Ljava/util/concurrent/locks/ReentrantLock;
+
+  public java.util.concurrent.locks.ReentrantReadWriteLock();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: new           #2                  // class java/util/concurrent/locks/ReentrantLock
+       8: dup
+       9: invokespecial #3                  // Method java/util/concurrent/locks/ReentrantLock."<init>":()V
+      12: putfield      #4                  // Field reader:Ljava/util/concurrent/locks/ReentrantLock;
+      15: aload_0
+      16: new           #2                  // class java/util/concurrent/locks/ReentrantLock
+      19: dup
+      20: invokespecial #3                  // Method java/util/concurrent/locks/ReentrantLock."<init>":()V
+      23: putfield      #5                  // Field writer:Ljava/util/concurrent/locks/ReentrantLock;
+      26: return
+
+  public java.util.concurrent.locks.Lock readLock();
+    descriptor: ()Ljava/util/concurrent/locks/Lock;
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field reader:Ljava/util/concurrent/locks/ReentrantLock;
+       4: areturn
+
+  public java.util.concurrent.locks.Lock writeLock();
+    descriptor: ()Ljava/util/concurrent/locks/Lock;
+    Code:
+       0: aload_0
+       1: getfield      #5                  // Field writer:Ljava/util/concurrent/locks/ReentrantLock;
+       4: areturn
+}

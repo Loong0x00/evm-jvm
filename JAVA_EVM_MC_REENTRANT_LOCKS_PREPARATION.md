@@ -1,4 +1,4 @@
-# Measured reentrant-lock bootstrap preparation
+# Measured reentrant-lock bootstrap preparation — completed
 
 Accepted bounded `CopyOnWriteArrayList` original25 reaches epoch556/3856 Java steps.
 Its genuine constructor and backing array are stored in `StatusLogger.listeners`. At
@@ -32,7 +32,10 @@ and standalone reentrant lock operations, constructor/field effects, and raw rep
 refusal for all four names. Retain COW snapshot/OOM, Class.newInstance init/failure/OOM,
 Class/asSubclass, Integer/split/CNFE/resource/loader/VFS controls.
 
-Use a fresh LOCAL384 engine/coordinator/domain/address/world. Keep raw25/262144,
+Parent acceptance and the next measured frontier are recorded in
+`JAVA_EVM_MC_REENTRANT_LOCKS_PARENT_PREFLIGHT.md`.
+
+The accepted stage uses a fresh LOCAL384 engine/coordinator/domain/address/world and keeps raw25/262144,
 exception14, global native11, String-local10, frames128, CP4096, Code65535,
 heap/VFS/checkpoint1MiB, Head32768, LOCAL1B/25M reserve/30s and whole20min/4GiB fixed.
 Parent independently rebuilds/replays then starts a fresh unchanged original25 q7→q1
