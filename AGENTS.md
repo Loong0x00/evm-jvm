@@ -1,5 +1,26 @@
 # Java-inside-EVM agent guide
 
+LATEST MC-FIRST CLASS.ASSUBCLASS: Class1015B SHA8986691a...,ordinary generic wrapper
+->private static native globalbinding10(Stringlocal10 separate). Canonical mirror set+
+loader validation,materialize hierarchy,full interface/super _typeAssignable;success
+same mirror/noinit/noalloc,null parentNPE6,fail guestCCE8. Total71/kinds14. LOCAL384
+parent engine370032B SHA575d889e.../Keccakadb3eee7...,co4146B65c34d27...,
+domainMC-CLASS-AS-SUBCLASS-PARENT1. Focused q1/q7/direct84J5I epochs84/12/1
+equal machine54307dc6... opaque8117728d;noinit9J2I;uncaughtCCE6J3I lifecycle3
+kind8;118canonical. Integer3488canonical. Retained allprior q7/direct4997J33I ep714/2
+equal machine23b90349...opaque7dc1c34e,723canonical;direct gas954449271<975M.
+Whole source+allgenerated+NEWoriginal903.209823s/972791808B exit0.
+Original prior22 passes asSubclass then missing same-JAR DefaultFlowMessageFactory;
+FlowMessageFactory also direct dependency. Parent NEW raw24 (226585/262144B) binds both,
+passes both asSubclass paths,advances hundreds steps. q7/continuation head539/3773J30I,
+then6q1->545/3779J30I CP22184B SHAc6b880c8... root55b7c213...
+machine6076fe14.... Next MissingClass same-JAR ParameterizedNoReferenceMessageFactory
+1488B context4103/site47 StatusLogger<clinit> getstatic,selector555db429,
+gas155931738,Head unchanged. It is25th raw; package would228073B under byte cap.
+BLOCKED AUTHORIZATION: explicit raw-class cap24. SeeCLASSCOUNT25_PREPARATION;
+minimal24->25 engine config/coordinator fixed arrays/driver guards only,all other limits
+fixed. No lazy load/MCmainbody/world/Done.
+
 LATEST MC-FIRST INTEGER: append Java8-g:none Number376B SHAfe77f74e... index68,
 NFE164B a627a164... index69 extendsIAE,Integer1667B bc07a956... index70,total71,
 all reserved. Ordinary negative-accumulation parseInt decimal exact null/empty/sign/

@@ -1,5 +1,9 @@
 # Durable Java-in-EVM evidence
 
+Latest asSubclass parent: `minecraft-entry/parent-fdb8b3155/`. Canonical
+assignability passes; original raw24 reaches a measured25th same-JAR class at3779J.
+Raw-cap25 needs explicit authorization; byte cap remains sufficient.
+
 Latest Integer parent: `minecraft-entry/parent-661331e3d/`. Number/NFE/Integer
 ordinary Java bootstraps pass; original22 reaches Class.asSubclass at3002J.
 

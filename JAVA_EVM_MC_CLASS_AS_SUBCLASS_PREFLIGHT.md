@@ -1,5 +1,10 @@
 # Class.asSubclass LOCAL preflight
 
+**PARENT RESULT:** accepted unchanged. Original passes asSubclass, fills raw24 and
+requires a measured25th same-JAR class at3779J. See
+JAVA_EVM_MC_CLASS_AS_SUBCLASS_PARENT_PREFLIGHT.md.
+
+
 This is an **unaccepted**, evidence-only candidate from `73b3443c3`, based on the
 accepted Integer parent source archive
 `evidence/java-evm/minecraft-entry/parent-661331e3d/`.  It does not execute an
