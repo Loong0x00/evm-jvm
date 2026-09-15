@@ -7,7 +7,7 @@ out=Path(sys.argv[1]).resolve(); assert out.parent==root/'build' and out.name.st
 out.mkdir(); (out/'tmp').mkdir(); env=dict(os.environ,TMPDIR=str(out/'tmp'),NODE_PATH=str(root/'jvmevm/runtime/node_modules'),PYTHONDONTWRITEBYTECODE='1')
 def run(label,args):
  with (out/(label+'.log')).open('w') as f: subprocess.run(list(map(str,args)),cwd=root,env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
-pins=json.loads((stage/'pins.json').read_text()); assert pins['phase']=='source-staged'
+pins=json.loads((stage/'pins.json').read_text()); assert pins['phase'] in ('source-staged','built')
 run('source-verification',[sys.executable,here/'verify_source.py'])
 # Independently rebuild Enum against the exact stripped Java8 platform and compare the embedded input.
 api=out/'rt-without-enum.jar'; shutil.copyfile('/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar',api); run('strip-enum',['zip','-q','-d',api,'java/lang/Enum.class'])
@@ -23,7 +23,8 @@ coord=out/'coordinator'; shutil.copytree(stage/'coordinator',coord); cp=coord/'M
 d=(stage/'tools/Go.txt').read_text(); d,n=re.subn(r'const immutableEngineSHA256 = "[0-9a-f]{64}"', 'const immutableEngineSHA256 = "'+ea['codeHashes']['runtimeSHA256']+'"',d); assert n==1
 d,n=re.subn(r'const immutableEngineKeccak = "0x[0-9a-f]{64}"', 'const immutableEngineKeccak = "0x'+ea['codeHashes']['runtimeKeccak256']+'"',d); assert n==1
 d,n=re.subn(r'const immutableCoordinatorKeccak = "0x[0-9a-f]{64}"', 'const immutableCoordinatorKeccak = "0x'+ca['codeHashes']['runtimeKeccak256']+'"',d); assert n==1
-d,n=re.subn(r'len\(engineRun\) != \d+', 'len(engineRun) != '+str(len(ea['deployedBytecode'])//2),d); assert n==2
+d,n=re.subn(r'len\(engineRun\) != \d+', 'len(engineRun) != '+str(len(ea['deployedBytecode'])//2),d); assert n==1
+d,n=re.subn(r'len\(run\) != \d+', 'len(run) != '+str(len(ea['deployedBytecode'])//2),d); assert n==1
 (out/'main.go').write_text(d)
 for label,args in (('gofmt',['gofmt','-w',out/'main.go']),('go-build',['go','build','-trimpath','-o',out/'driver',out/'main.go']),('go-vet',['go','vet',out/'main.go'])): run(label,args)
 result={**pins,'phase':'built','engine':{'bytes':len(ea['deployedBytecode'])//2,**ea['codeHashes']},'coordinator':{'bytes':len(ca['deployedBytecode'])//2,**ca['codeHashes']}}

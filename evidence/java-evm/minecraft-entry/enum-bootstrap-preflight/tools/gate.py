@@ -30,6 +30,7 @@ for tag,q in (('q1',1),('q7',7),('direct',4096)):
 # Raw Enum is profile-owned and must fail atomically at raw binding index 1.
 w=out/'raw-enum'; run('raw-enum-refusal',[driver,'setup-chain',w,coord,engine,fixtures/'raw-enum-replacement.zip','4096'],'raw-enum-replacement')
 r=json.loads((report(w)/'start-refusal.json').read_text()); assert r['selector']=='0x6a23ad80' and list(map(str,r['uint256Words']))==['1','1'] and r['rootUnchanged']; rows['raw/enum-replacement']=r
-subprocess.run(['node',here/'verify_receipts.js',build,out,'1','enum-q1','enum-q7','enum-direct'],cwd=root,check=True)
+node_env=dict(os.environ,NODE_PATH=str(root/'jvmevm/runtime/node_modules'))
+subprocess.run(['node',here/'verify_receipts.js',build,out,'1','enum-q1','enum-q7','enum-direct'],cwd=root,env=node_env,check=True)
 summary={'profile':'MC-ENUM-BOOTSTRAP-PREFLIGHT1','generatedOnly':True,'hostOracle':json.loads((fixtures/'summary.json').read_text())['enum-bootstrap'],'results':rows,'commands':commands,'wholeGateSeconds':time.monotonic()-start,'scope':'Java8 enum constructor fields/name/ordinal/direct toString, Comparable bridge/cast/null guest exceptions, Serializable assignability, active superclass initialization, reserved raw replacement, and canonical q1/q7/direct/reopen only.'}
 (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n'); print(json.dumps(summary,indent=2))

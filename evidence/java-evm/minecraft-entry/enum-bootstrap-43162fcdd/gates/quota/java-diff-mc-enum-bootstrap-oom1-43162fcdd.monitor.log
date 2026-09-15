@@ -1,0 +1,60 @@
+{
+  "verifiedReceipts": 12,
+  "summary": {
+    "oom-q1": {
+      "receipts": 9,
+      "java": 9,
+      "internal": 3,
+      "peakGas": 39564171,
+      "lifecycle": 2
+    },
+    "oom-q7": {
+      "receipts": 2,
+      "java": 9,
+      "internal": 3,
+      "peakGas": 33548944,
+      "lifecycle": 2
+    },
+    "oom-direct": {
+      "receipts": 1,
+      "java": 9,
+      "internal": 3,
+      "peakGas": 31857549,
+      "lifecycle": 2
+    }
+  },
+  "scope": "canonical nested ABI/events/CP hashes/counter chains/read ranges, not full Session acceptance"
+}
+{
+  "profile": "MC-ENUM-BOOTSTRAP-PREFLIGHT1",
+  "generatedOnly": true,
+  "fieldCount": 1025,
+  "expectedGuestOutcome": "caught OutOfMemoryError; no arena quota change",
+  "results": {
+    "q1": {
+      "machineRoot": "0x799d085a24234d946a0ac3e92e6718fa65b4bfcf8e85dc0ce53870749ba792f3",
+      "opaquePayloadSHA256": "191a1b41f17889f9e103722395a8fdf62831c812bf09a6834811178882874316",
+      "epoch": 9,
+      "jvmSteps": 9,
+      "internalSteps": 3
+    },
+    "q7": {
+      "machineRoot": "0x799d085a24234d946a0ac3e92e6718fa65b4bfcf8e85dc0ce53870749ba792f3",
+      "opaquePayloadSHA256": "191a1b41f17889f9e103722395a8fdf62831c812bf09a6834811178882874316",
+      "epoch": 2,
+      "jvmSteps": 9,
+      "internalSteps": 3
+    },
+    "direct": {
+      "machineRoot": "0x799d085a24234d946a0ac3e92e6718fa65b4bfcf8e85dc0ce53870749ba792f3",
+      "opaquePayloadSHA256": "191a1b41f17889f9e103722395a8fdf62831c812bf09a6834811178882874316",
+      "epoch": 1,
+      "jvmSteps": 9,
+      "internalSteps": 3
+    }
+  }
+}
+
+real	0m3.255s
+user	0m2.710s
+sys	0m0.156s

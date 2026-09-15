@@ -4,7 +4,7 @@ from pathlib import Path
 import hashlib,json,os,subprocess,sys,time
 here=Path(__file__).resolve().parent; root=here.parents[4]
 build=Path(sys.argv[1]).resolve(); fixtures=Path(sys.argv[2]).resolve(); out=Path(sys.argv[3]).resolve()
-assert build.parent==root/'build' and fixtures.parent==root/'build' and out.parent==root/'build' and out.name.startswith('java-diff-mc-enum-') and not out.exists()
+assert build.parent==root/'build' and fixtures.parent==root/'build' and out.parent==root/'build' and out.name.startswith('java-diff-mc-enum-bootstrap-') and not out.exists()
 out.mkdir();(out/'logs').mkdir();(out/'tmp').mkdir(); rows={};commands=[];start=time.monotonic()
 driver=build/'driver';coord=build/'coordinator/MCEntryCoordinator.json';engine=build/'engine/MCEntryInterpreter.json'
 def names(label):return ','.join(json.loads((fixtures/(label+'.json')).read_text())['entries'])
@@ -41,9 +41,25 @@ for label in ('annotation','module','annotation-enum','module-enum'):failed(labe
 # Interface validation remains independent of the changed non-interface parser mask.
 success('interface-ordinary')
 for label in ('interface-enum','interface-annotation','java8-annotation'):failed(label,'0x069163bc',['1','1'])
-# A genuine javac enum is admitted past LinkError(5) but honestly fails downstream at
-# its absent java/lang/Enum superclass. It is not a success/initialization claim.
-failed('java8-enum','0xa52e829f',['1','1'])
-assert rows['java8-enum']['selector']!='0x427cfac5'
-summary={'profile':'MC-ENUM-FLAG-PARENT1','generatedOnly':True,'results':rows,'commands':commands,'wholeGateSeconds':time.monotonic()-start}
+# The genuine enum now resolves its Enum superclass. Its compiler-generated values()
+# still honestly reaches the unimplemented array clone call; do not retain the old
+# missing-superclass selector. q1/q7 resume from durable checkpoints, while direct
+# exposes the same immutable call refusal in startMain.
+def enum_after_bootstrap():
+ baseline=None
+ for tag,q in (('q1',1),('q7',7),('direct',4096)):
+  w=out/('world-java8-enum-'+tag); run('java8-enum-'+tag+'-start',[driver,'setup-chain',w,coord,engine,fixtures/'java8-enum.zip',str(q)],'java8-enum')
+  p=report(w)/'start-refusal.json'
+  if p.exists(): f=json.loads(p.read_text())
+  else:
+   run('java8-enum-'+tag+'-finish',[driver,'finish',w,coord,engine,fixtures/'java8-enum.zip',str(q)],'java8-enum')
+   f=json.loads((report(w)/'resume-refusal.json').read_text())
+  assert f['selector']=='0xd631c3a4' and list(map(str,f['uint256Words']))==['1','3'] and f['rootUnchanged'],(tag,f)
+  x={'selector':f['selector'],'words':f['uint256Words'],'revertHex':f['revertHex'],'rootUnchanged':f['rootUnchanged']}
+  if baseline is None: baseline=x
+  else: assert x==baseline,(tag,x,baseline)
+ rows['java8-enum']=baseline
+enum_after_bootstrap()
+assert rows['java8-enum']['selector']!='0xa52e829f' and rows['java8-enum']['selector']!='0x427cfac5'
+summary={'profile':'MC-ENUM-BOOTSTRAP-PREFLIGHT1','generatedOnly':True,'results':rows,'commands':commands,'wholeGateSeconds':time.monotonic()-start}
 (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,indent=2))

@@ -1,0 +1,60 @@
+public abstract class java.lang.Enum<E extends java.lang.Enum<E>> implements java.lang.Comparable<E>, java.io.Serializable {
+  private final java.lang.String name;
+    descriptor: Ljava/lang/String;
+
+  private final int ordinal;
+    descriptor: I
+
+  protected java.lang.Enum(java.lang.String, int);
+    descriptor: (Ljava/lang/String;I)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field name:Ljava/lang/String;
+       9: aload_0
+      10: iload_2
+      11: putfield      #3                  // Field ordinal:I
+      14: return
+
+  public final java.lang.String name();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field name:Ljava/lang/String;
+       4: areturn
+
+  public final int ordinal();
+    descriptor: ()I
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field ordinal:I
+       4: ireturn
+
+  public java.lang.String toString();
+    descriptor: ()Ljava/lang/String;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field name:Ljava/lang/String;
+       4: areturn
+
+  public final int compareTo(E);
+    descriptor: (Ljava/lang/Enum;)I
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field ordinal:I
+       4: aload_1
+       5: getfield      #3                  // Field ordinal:I
+       8: isub
+       9: ireturn
+
+  public int compareTo(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)I
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #4                  // class java/lang/Enum
+       5: invokevirtual #5                  // Method compareTo:(Ljava/lang/Enum;)I
+       8: ireturn
+}

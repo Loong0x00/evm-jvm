@@ -24,6 +24,7 @@ for tag,q in (('q1',1),('q7',7),('direct',4096)):
  if baseline is None: baseline=x
  else:
   for k in ('machineRoot','opaquePayloadSHA256'): assert x[k]==baseline[k],(tag,k)
-subprocess.run(['node',here/'verify_receipts.js',build,out,'1','oom-q1','oom-q7','oom-direct'],cwd=root,check=True)
+node_env=dict(os.environ,NODE_PATH=str(root/'jvmevm/runtime/node_modules'))
+subprocess.run(['node',here/'verify_receipts.js',build,out,'1','oom-q1','oom-q7','oom-direct'],cwd=root,env=node_env,check=True)
 summary={'profile':'MC-ENUM-BOOTSTRAP-PREFLIGHT1','generatedOnly':True,'fieldCount':1025,'expectedGuestOutcome':'caught OutOfMemoryError; no arena quota change','results':rows}
 (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n'); print(json.dumps(summary,indent=2))

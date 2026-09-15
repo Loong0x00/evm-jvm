@@ -44,9 +44,9 @@ import (
 const ordinaryGas = uint64(1_000_000_000)
 const format = "MC-ENUM-BOOTSTRAP-PARENT1-BOUNDED-1"
 const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
-const immutableEngineSHA256 = "50c5cd6ffefd559658b7c879bf4763b70b6336d1eaf7f6702fc13b609f5698da"
-const immutableEngineKeccak = "0xdb5607160a3e035397de19a287fef688e7c34c92d0f5e2d2ee834201815f0f1a"
-const immutableCoordinatorKeccak = "0x534671b5bbb412a8d452efcae0ab28335e1a7a3e0fca786485c0d2916b4224d0"
+const immutableEngineSHA256 = "13895e39d5bb530fb98df46a3f70a58a30bca0ddd9823b6e7300428935ee42d8"
+const immutableEngineKeccak = "0xd8d4afa829dc5e9301ac37d2fd6afbc7e9358ec3d669542c804b55acb4435e90"
+const immutableCoordinatorKeccak = "0x0f6f74e3fb63ddb37080cf44e784d57ba93f177682f3ef6904b264bf38a88ce6"
 
 // The constructor owner is deliberately separate from the required fixed LOCAL
 // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
@@ -968,7 +968,7 @@ var engineRun []byte
 var engineHash common.Hash
 
 func installEngine(e *env) {
-	if len(engineRun) != 388963 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
+	if len(engineRun) != 390633 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
 		panic("MR0 Session immutable engine pin")
 	}
 	e.st.CreateAccount(engine)
@@ -1733,7 +1733,7 @@ func main() {
 		panic("MR0 Session immutable coordinator pin")
 	}
 	_, engineABI0, _, run := loadCoord(os.Args[4])
-	if len(run) != 388963 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
+	if len(run) != 390633 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
 		panic("MR0 Session immutable engine artifact")
 	}
 	engineABI = engineABI0
