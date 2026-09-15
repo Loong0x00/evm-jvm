@@ -8,7 +8,11 @@ def digest(p): return hashlib.sha256(p.read_bytes()).hexdigest()
 def expect_one(s, old, new):
     assert s.count(old)==1,(old,s.count(old)); return s.replace(old,new)
 assert pins['basis']=='17e21d664' and pins['parentEvidence']=='parent-17e21d664'
+parent_inputs={'artifacts/engine/MCEntryInterpreter.sol':digest(parent/'artifacts/engine/MCEntryInterpreter.sol'),'artifacts/coordinator/MCEntryCoordinator.sol':digest(parent/'artifacts/coordinator/MCEntryCoordinator.sol'),'executed-driver.go.txt':digest(parent/'executed-driver.go.txt')}
+assert json.loads((stage/'parent-input.json').read_text())=={'basis':'17e21d664','parentEvidence':'parent-17e21d664','sha256':parent_inputs}
 assert pins['domain']=='MC-ENUM-FLAG-PARENT1' and pins['address']=='0x4d432d454e554d2d464c41472d504152454e5431'
+measured=json.loads((parent/'standardlevel-access-flags.json').read_text())
+assert measured['class']=='org/apache/logging/log4j/spi/StandardLevel.class' and measured['accessFlags']=='0x4031' and measured['accEnum'] and measured['annotationOrModuleMask0xa000']=='0x0000'
 # The address is an independently allocated 20-byte LOCAL384 engine address.
 old_domain='MC-CLASSCOUNT29-PARENT1'; domain=pins['domain']
 old_addr='4d432d434c41535332392d504152454e54000001'; addr=pins['address'][2:]

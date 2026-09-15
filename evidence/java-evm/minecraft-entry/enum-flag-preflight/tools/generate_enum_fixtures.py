@@ -46,7 +46,7 @@ for label,bits in [('interface-enum',0x4000),('interface-annotation',0x2000)]:
  rows[label]=compile_case(label,iface,['FlagMain.class','FlagIface.class'],[('FlagIface.class',bits)])
 enum={'EnumMain.java':'public final class EnumMain { public static void main(String[] a) { if (TestLevel.values().length != 8) throw new Error(); } }\n','TestLevel.java':'public enum TestLevel { OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL; }\n'}
 rows['java8-enum']=compile_case('java8-enum',enum,['EnumMain.class','TestLevel.class'])
-ann={'AnnotationMain.java':'public final class AnnotationMain { public static void main(String[] a) { if (Ann.class == null) throw new Error(); } }\n','Ann.java':'public @interface Ann { }\n'}
+ann={'AnnotationMain.java':'public final class AnnotationMain implements Ann { public Class annotationType() { return Ann.class; } public static void main(String[] a) { if (new AnnotationMain().annotationType() == null) throw new Error(); } }\n','Ann.java':'public @interface Ann { }\n'}
 rows['java8-annotation']=compile_case('java8-annotation',ann,['AnnotationMain.class','Ann.class'])
 assert rows['java8-enum']['classFlags']['TestLevel.class']['accessFlags']=='0x4031'
 assert rows['enum-marker']['classFlags']['Flagged.class']['accessFlags']=='0x4030'

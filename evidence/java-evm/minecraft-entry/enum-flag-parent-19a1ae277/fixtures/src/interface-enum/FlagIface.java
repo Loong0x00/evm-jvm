@@ -1,0 +1,1 @@
+interface FlagIface { int touch(); }

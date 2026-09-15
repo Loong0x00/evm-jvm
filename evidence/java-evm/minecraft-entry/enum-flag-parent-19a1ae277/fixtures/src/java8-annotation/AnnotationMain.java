@@ -1,0 +1,1 @@
+public final class AnnotationMain implements Ann { public Class annotationType() { return Ann.class; } public static void main(String[] a) { if (new AnnotationMain().annotationType() == null) throw new Error(); } }
