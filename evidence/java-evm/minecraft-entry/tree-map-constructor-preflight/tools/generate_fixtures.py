@@ -14,7 +14,7 @@ import zipfile
 
 out = Path(sys.argv[1]).resolve()
 root = Path(__file__).resolve().parents[5]
-assert out.parent == root / "build" and out.name.startswith("java-diff-mc-string-last-index-of-fixtures-")
+assert out.parent == root / "build" and out.name.startswith("java-diff-mc-tree-map-constructor-fixtures-")
 assert not out.exists()
 out.mkdir()
 source_root = out / "src"
