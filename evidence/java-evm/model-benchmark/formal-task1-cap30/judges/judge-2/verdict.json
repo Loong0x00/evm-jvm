@@ -1,0 +1,207 @@
+{
+  "task": "formal-task1-independent-blind-review",
+  "machine_gate_policy": "Treated both supplied machine-results.json files as authoritative; no heavy build or generated gate was rerun.",
+  "candidates": {
+    "A": {
+      "decision": "reject",
+      "confidence": 93,
+      "overall_score": 7.8,
+      "scores": {
+        "correctness": {
+          "score": 7.5,
+          "citations": [
+            "candidate-A/machine-results.json:2-25",
+            "candidate-A/tools/verify_source.py:45-99",
+            "candidate-A/tools/build.py:12",
+            "candidate-A/tools/gate.py:67,136"
+          ],
+          "reason": "The authoritative source/build/gate results pass and the runtime delta is mechanically correct, but the claimed isolated execution is contradicted by build and gate dependencies hard-coded to another worktree."
+        },
+        "architecture_understanding": {
+          "score": 9.0,
+          "citations": [
+            "candidate-A/tools/gate.py:52-60",
+            "candidate-A/tools/gate.py:109-158",
+            "candidate-A/candidate-report.md:91-104"
+          ],
+          "reason": "The gate understands initialized/canonical class accounting, continuation invariance, product-layer ownership, atomic refusal roots, and the parent-only original-artifact boundary."
+        },
+        "modification_minimality": {
+          "score": 9.6,
+          "citations": [
+            "candidate-A/tools/verify_source.py:45-89",
+            "candidate-A/engine.diff:1-48",
+            "candidate-A/coordinator.diff:1-47",
+            "candidate-A/driver.diff:1-66"
+          ],
+          "reason": "The supplied deltas are confined to equal-length domains, the 29-to-30 cap/config, four coordinator arrays and guard, driver guards, addresses, and derived pins."
+        },
+        "robustness": {
+          "score": 8.0,
+          "citations": [
+            "candidate-A/tools/gate.py:83-106",
+            "candidate-A/tools/gate.py:109-158",
+            "candidate-A/tools/gate.py:153",
+            "candidate-A/tools/gate.py:162-168"
+          ],
+          "reason": "All requested positive and negative paths passed with root-unchanged evidence. Deductions reflect the overly broad 262144 acceptance predicate and canonical verification that omits the reordered world."
+        },
+        "maintainability": {
+          "score": 6.5,
+          "citations": [
+            "candidate-A/tools/stage.py:59-97",
+            "candidate-A/tools/verify_source.py:34-40",
+            "candidate-A/parent-input.json:2-3",
+            "candidate-A/tools/build.py:12"
+          ],
+          "reason": "The staged transformations are clear and count-asserted, but the reverse verifier derives parent hashes rather than anchoring immutable expected values, records a basis different from the requested parent pin, and is not worktree-local."
+        },
+        "task_completion": {
+          "score": 6.0,
+          "citations": [
+            "candidate-A/machine-results.json:2-25",
+            "candidate-A/candidate-report.md:51-52,86-87",
+            "candidate-A/artifacts/SHA256SUMS:1-62",
+            "candidate-A/tools/build.py:12"
+          ],
+          "reason": "Mandatory machine gates passed, but the isolation requirement was breached and the supplied artifact directory contains only the gate summary and checksum list, leaving 61 listed evidence files unavailable for review."
+        }
+      },
+      "findings": [
+        {
+          "severity": "high",
+          "title": "Build and gate are not isolated to the assigned worktree",
+          "citations": [
+            "candidate-A/tools/build.py:12",
+            "candidate-A/tools/gate.py:67,136"
+          ],
+          "detail": "Both scripts hard-code NODE_PATH to /home/user/evm-jvm/geth/jvmevm/runtime/node_modules. Because the candidate commands were recorded from a different worktree and the machine build passed, this is an actual dependency on a prohibited sibling worktree, not merely a dead string. It also makes the isolated-worktree claim inaccurate."
+        },
+        {
+          "severity": "medium",
+          "title": "Parent pin metadata is inconsistent and weaker than a strict immutable pin",
+          "citations": [
+            "candidate-A/parent-input.json:2-3",
+            "candidate-A/tools/verify_source.py:34-40,99"
+          ],
+          "detail": "The required parent evidence is named parent-3ed302a92, but basis is recorded and asserted as 5b55d0ce6. The verifier computes expected parent digests from the live parent directory instead of comparing those inputs to hard-coded trusted digests. Full reverse equality still provides useful delta checking, but the requested pin is not represented cleanly."
+        },
+        {
+          "severity": "medium",
+          "title": "Canonical and archived evidence is incomplete in the blind bundle",
+          "citations": [
+            "candidate-A/artifacts/generated-gate-summary.json:1498",
+            "candidate-A/artifacts/SHA256SUMS:1-62",
+            "candidate-A/candidate-report.md:51-52,81,86-87"
+          ],
+          "detail": "The summary exposes only the integer 273 for canonical verification, and the canonical verifier covers six worlds rather than reordered30. The report claims a 62-file archive and manifest, but 61 checksum-listed files and the claimed manifest are absent from the supplied candidate directory."
+        },
+        {
+          "severity": "low",
+          "title": "The exact-byte-boundary assertion is broader than the reported observation",
+          "citations": [
+            "candidate-A/tools/gate.py:147-154",
+            "candidate-A/artifacts/generated-gate-summary.json:1469-1475",
+            "candidate-A/candidate-report.md:76-79,98-101"
+          ],
+          "detail": "The recorded result is the honest LC0StateError(1,0) with an unchanged root, but the gate would pass any engine-ABI error other than the coordinator selector. This weakens regression specificity even though the observed evidence is correct and cautiously worded."
+        }
+      ],
+      "critical_findings": []
+    },
+    "B": {
+      "decision": "accept",
+      "confidence": 96,
+      "overall_score": 9.3,
+      "scores": {
+        "correctness": {
+          "score": 9.6,
+          "citations": [
+            "candidate-B/machine-results.json:2-24",
+            "candidate-B/tools/verify_source.py:10-24,52-123",
+            "candidate-B/tools/gate.py:145-160"
+          ],
+          "reason": "Authoritative source/build/gate results pass; the verifier anchors exact parent hashes and exact transformed text, while boundary errors and unchanged roots are asserted precisely."
+        },
+        "architecture_understanding": {
+          "score": 9.5,
+          "citations": [
+            "candidate-B/tools/gate.py:54-64,75-100",
+            "candidate-B/tools/gate.py:103-160",
+            "candidate-B/tools/verify_source.py:71-72,113-123"
+          ],
+          "reason": "The implementation preserves parent initialization semantics and fixed limits, compares continuation outcomes across quanta, separates driver/coordinator/engine refusal ownership, and keeps original30 parent-owned."
+        },
+        "modification_minimality": {
+          "score": 9.8,
+          "citations": [
+            "candidate-B/tools/verify_source.py:52-111",
+            "candidate-B/engine.diff:1-48",
+            "candidate-B/coordinator.diff:1-47",
+            "candidate-B/driver.diff:1-66"
+          ],
+          "reason": "Exact full-text reverse comparisons permit only the requested domain, count/config, arrays/guard, driver guards, addresses, and derived hash pins; build scripts are also checked byte-for-byte against the parent."
+        },
+        "robustness": {
+          "score": 9.5,
+          "citations": [
+            "candidate-B/tools/gate.py:75-100",
+            "candidate-B/tools/gate.py:103-160",
+            "candidate-B/tools/gate.py:164-168",
+            "candidate-B/artifacts/generated-gate-summary.json:1499-1552"
+          ],
+          "reason": "q1/q7/direct machine roots, opaque payloads, JVM steps, and internal steps agree; all three 31-class layers and both byte boundaries have exact selectors/words and atomicity checks; canonical verification includes reordered30."
+        },
+        "maintainability": {
+          "score": 8.8,
+          "citations": [
+            "candidate-B/tools/build.py:13-18,37-103",
+            "candidate-B/tools/verify_source.py:10-24,35-50,110-123",
+            "candidate-B/tools/gate.py:15-27"
+          ],
+          "reason": "Scripts use worktree-local dependencies, immutable hashes and explicit invariants. The score is reduced because the blind bundle omits helper scripts and most archived evidence needed for a stand-alone audit."
+        },
+        "task_completion": {
+          "score": 8.6,
+          "citations": [
+            "candidate-B/machine-results.json:2-24",
+            "candidate-B/candidate-report.md:14-31",
+            "candidate-B/artifacts/SHA256SUMS:1-71",
+            "candidate-B/artifacts/generated-gate-summary.json:1499-1552"
+          ],
+          "reason": "All requested machine-validated implementation and gate outcomes are complete, the boundary is stated honestly, and canonical detail is supplied. The archived evidence claim cannot be fully checked because 70 checksum-listed files are absent from the blind candidate directory."
+        }
+      },
+      "findings": [
+        {
+          "severity": "medium",
+          "title": "The blind evidence bundle omits most files named by its checksum manifest",
+          "citations": [
+            "candidate-B/candidate-report.md:24-25",
+            "candidate-B/artifacts/SHA256SUMS:1-71"
+          ],
+          "detail": "Only generated-gate-summary.json and SHA256SUMS are supplied under artifacts; 70 checksum-listed build, fixture, Head, failure, command and verification files are unavailable. This limits independent evidence inspection, although the authoritative machine results and detailed gate summary remain sufficient to accept the implementation."
+        },
+        {
+          "severity": "low",
+          "title": "The supplied reproduction subset is not stand-alone",
+          "citations": [
+            "candidate-B/tools/gate.py:48-50,165",
+            "candidate-B/artifacts/generated-gate-summary.json:1499-1552"
+          ],
+          "detail": "gate.py imports checkpoint_diagnostic.py and invokes verify_receipts.js, but neither helper is present in the blind candidate directory. The embedded canonical per-world summary mitigates review uncertainty but does not replace those reproducers."
+        }
+      ],
+      "critical_findings": []
+    }
+  },
+  "preference": {
+    "candidate": "B",
+    "strength": "clear",
+    "reason": "B has the same authoritative machine success while providing a genuinely hard-pinned parent verifier, worktree-local build dependencies, exact 262144 refusal checks, stronger quantum invariance, and canonical coverage of reordered30."
+  },
+  "remaining_uncertainty": [
+    "The blind packaging omits most durable evidence for both candidates, so artifact-level inspection beyond the authoritative machine results and supplied summaries was impossible.",
+    "No original artifact or parent-only original30 execution was inspected, as required."
+  ]
+}

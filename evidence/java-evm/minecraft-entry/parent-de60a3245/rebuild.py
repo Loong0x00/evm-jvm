@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+from pathlib import Path
+import json,os,re,shutil,subprocess,sys
+h=Path(__file__).resolve().parent;r=h.parents[3];s=h.parent/'classcount30-preflight';o=Path(sys.argv[1]).resolve();assert o.parent==r/'build' and o.name.startswith('java-diff-mc-classcount30-parent-') and not o.exists();o.mkdir();(o/'tmp').mkdir();env=dict(os.environ,TMPDIR=str(o/'tmp'),NODE_PATH=str(r/'jvmevm/runtime/node_modules'),PYTHONDONTWRITEBYTECODE='1')
+def run(n,a):
+ with (o/(n+'.log')).open('w') as f:subprocess.run(list(map(str,a)),cwd=r,env=env,stdout=f,stderr=subprocess.STDOUT,check=True)
+run('source-verification',[sys.executable,s/'tools/verify_source.py']);pins=json.loads((s/'pins.json').read_text());assert pins['rawLimits']==[30,262144] and pins['bootstrapCount']==83 and pins['globalNativeBindings']==12
+e=o/'engine';shutil.copytree(s/'engine',e);p=e/'MCEntryInterpreter.sol';x=p.read_text();assert x.count('MC-CLASSCOUNT30-C30')==9;x=x.replace('MC-CLASSCOUNT30-C30','MC-ENUM-SET-PARENT4');p.write_text(x);run('engine-build',['node',e/'build.js']);ea=json.loads((e/'MCEntryInterpreter.json').read_text());size=len(ea['deployedBytecode'])//2;assert size<=393216
+c=o/'coordinator';shutil.copytree(s/'coordinator',c);p=c/'MCEntryCoordinator.sol';x=p.read_text();assert x.count('MC-CLASSCOUNT30-C30')==3;x=x.replace('MC-CLASSCOUNT30-C30','MC-ENUM-SET-PARENT4');x,n=re.subn(r'address private constant ENGINE = .*?;', 'address private constant ENGINE = address(bytes20(hex"4d432d454e554d2d5345542d5034000000000001"));',x);assert n==1;x,n=re.subn(r'bytes32 private constant ENGINE_CODEHASH = hex"[0-9a-f]{64}";', 'bytes32 private constant ENGINE_CODEHASH = hex"'+ea['codeHashes']['runtimeKeccak256']+'";',x);assert n==1;p.write_text(x);run('coordinator-build',['node',c/'build.js']);ca=json.loads((c/'MCEntryCoordinator.json').read_text())
+d=(s/'tools/Go.txt').read_text()
+for a,z in [('MC-CLASSCOUNT30-C30','MC-ENUM-SET-PARENT4'),(pins['engine']['runtimeSHA256'],ea['codeHashes']['runtimeSHA256']),('0x'+pins['engine']['runtimeKeccak256'],'0x'+ea['codeHashes']['runtimeKeccak256']),('0x'+pins['coordinator']['runtimeKeccak256'],'0x'+ca['codeHashes']['runtimeKeccak256']),(str(pins['engine']['bytes']),str(size)),(pins['address'],'0x4d432d454e554d2d5345542d5034000000000001'),(pins['owner'],'0x4d432d454e554d2d5345542d4f34000000000002')]:assert a in d,a;d=d.replace(a,z)
+(o/'main.go').write_text(d)
+for n,a in [('gofmt',['gofmt','-w',o/'main.go']),('go-build',['go','build','-trimpath','-o',o/'driver',o/'main.go']),('go-vet',['go','vet',o/'main.go'])]:run(n,a)
+res={**pins,'basis':'5b55d0ce6','worker':'de60a3245','domain':'MC-ENUM-SET-PARENT4','address':'0x4d432d454e554d2d5345542d5034000000000001','owner':'0x4d432d454e554d2d5345542d4f34000000000002','engine':{'bytes':size,**ea['codeHashes']},'coordinator':{'bytes':len(ca['deployedBytecode'])//2,**ca['codeHashes']}};(o/'pins.json').write_text(json.dumps(res,indent=2)+'\n');print(json.dumps(res,indent=2))

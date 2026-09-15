@@ -118,7 +118,7 @@ assert pins == {
     "maxFrames": 128, "externalLocalGas": 1000000000, "reserve": 25000000,
     "rawLimits": [30, 262144], "checkpointCap": 1048576, "headCap": 32768,
     "engine": expected_engine_pin, "coordinator": expected_coordinator_pin,
-    "parentAmendment": "reject initializationState==3 as guest NoClassDefFoundError; diagnostic bound112 retained",
+    "parentAmendment": "reject initializationState==3 as guest NoClassDefFoundError; cap30 diagnostic bound113",
     "diagnosticClassBound": 113, "address": "0x" + engine_address, "owner": "0x" + owner,
 }
 assert pins["engine"]["bytes"] == 393205 and pins["coordinator"]["bytes"] == 4146

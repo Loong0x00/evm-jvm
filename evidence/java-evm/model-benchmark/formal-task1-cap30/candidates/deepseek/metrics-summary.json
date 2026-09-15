@@ -1,0 +1,3799 @@
+{
+  "schema": 1,
+  "metricsFile": "/home/user/evm-jvm/bench-formal-t1-cap30-deepseek/build/model-benchmark/formal1/metrics.jsonl",
+  "requests": 80,
+  "wallSeconds": 801.910617293,
+  "usage": {
+    "input": 140259,
+    "output": 78429,
+    "cacheRead": 11410432,
+    "cacheWrite": 0,
+    "totalTokens": 11629120
+  },
+  "ttft": {
+    "ttfAnyMs": {
+      "valuesMs": [
+        1329.834225,
+        1244.106989,
+        841.945411,
+        972.519931,
+        1016.284293,
+        1063.730925,
+        964.851649,
+        1219.455365,
+        909.722207,
+        1306.351377,
+        1133.892003,
+        1038.165821,
+        1429.748214,
+        1397.104021,
+        1828.911351,
+        1270.965416,
+        1282.83336,
+        1344.542636,
+        1200.337258,
+        1337.217842,
+        1463.772102,
+        1378.924387,
+        1210.002558,
+        1325.223374,
+        1348.390124,
+        1546.957635,
+        1959.072203,
+        1266.167398,
+        1853.640001,
+        1371.248143,
+        1337.441368,
+        1518.370389,
+        1519.071508,
+        1339.41955,
+        2279.200793,
+        1400.958478,
+        1539.369031,
+        1640.966355,
+        1552.31789,
+        1720.524952,
+        1678.43648,
+        1616.065032,
+        1483.35359,
+        2064.691114,
+        1734.77417,
+        1396.724812,
+        1728.521824,
+        1494.958929,
+        1684.3039,
+        2018.340037,
+        1768.283587,
+        1814.815471,
+        1447.854773,
+        1392.49871,
+        2098.045636,
+        1629.603538,
+        2090.840546,
+        1698.014873,
+        1480.588981,
+        2551.509719,
+        1775.798227,
+        1955.997556,
+        2116.486807,
+        2002.808548,
+        2208.244261,
+        1922.84659,
+        2003.930423,
+        1895.150557,
+        1751.49488,
+        1318.813524,
+        1503.612914,
+        1389.263715,
+        1492.251079,
+        1484.556747,
+        1676.059773,
+        1437.510569,
+        1753.321885,
+        1965.621054,
+        1667.951676,
+        1623.786311
+      ],
+      "medianMs": 1499.2859214999999,
+      "maxMs": 2551.509719
+    },
+    "ttfReasoningMs": {
+      "valuesMs": [
+        1329.886514,
+        1244.163339,
+        841.999101,
+        972.567511,
+        1016.338252,
+        1063.779794,
+        964.910479,
+        1219.509735,
+        909.785416,
+        1306.407346,
+        1133.950313,
+        1038.213021,
+        1429.795803,
+        1397.16619,
+        1828.966301,
+        1271.016255,
+        1282.901729,
+        1344.586165,
+        1200.384058,
+        1337.342691,
+        1463.815232,
+        1378.976156,
+        1210.051507,
+        1325.281273,
+        1348.478543,
+        1547.029004,
+        1959.118462,
+        1266.235207,
+        1853.70388,
+        1371.295842,
+        1337.488707,
+        1519.119437,
+        2279.256292,
+        1401.017596,
+        1539.41762,
+        1641.024424,
+        1552.375889,
+        1720.585471,
+        1678.494648,
+        1616.133,
+        1483.411439,
+        2064.748913,
+        1734.832829,
+        1396.777491,
+        1728.585813,
+        1495.012247,
+        1684.346969,
+        2018.395946,
+        1768.335486,
+        1814.878789,
+        1447.912932,
+        1392.53858,
+        2098.090805,
+        1629.683127,
+        2090.897615,
+        1698.069332,
+        1480.65903,
+        2551.565669,
+        1775.861626,
+        1956.047825,
+        2116.534157,
+        2002.860087,
+        1922.997317,
+        2003.987492,
+        1895.234186,
+        1751.547809,
+        1318.864593,
+        1503.657223,
+        1389.341674,
+        1484.593357,
+        1676.113572,
+        1437.555858,
+        1753.371614,
+        1965.676953,
+        1667.994625,
+        1623.832381
+      ],
+      "medianMs": 1499.334735,
+      "maxMs": 2551.565669
+    },
+    "ttfActionMs": {
+      "valuesMs": [
+        2274.961074,
+        1476.564369,
+        1340.089581,
+        1522.472075,
+        2082.321507,
+        2536.894059,
+        2206.333078,
+        2552.268376,
+        3233.943868,
+        5163.803311,
+        3148.167936,
+        14511.17861,
+        2841.790287,
+        1780.595578,
+        4451.452432,
+        5733.818312,
+        8644.867022,
+        1768.231347,
+        6167.115967,
+        5002.561598,
+        3279.455951,
+        7069.562132,
+        5009.978889,
+        3040.951074,
+        12142.115009,
+        15390.277996,
+        2427.054414,
+        4724.205553,
+        13395.8572,
+        19087.795786,
+        5424.135667,
+        1518.416538,
+        5302.271813,
+        1339.481079,
+        3994.511671,
+        12767.95127,
+        1694.196617,
+        7712.947573,
+        1740.517373,
+        4895.169451,
+        2190.075869,
+        2478.690037,
+        6153.554597,
+        8166.175808,
+        2971.691036,
+        8897.76437,
+        3446.028102,
+        2151.135363,
+        4609.651873,
+        2702.973288,
+        2155.971224,
+        2354.209896,
+        1913.82849,
+        2012.964415,
+        2458.17335,
+        3188.756006,
+        4360.951572,
+        2491.857697,
+        2602.181465,
+        2844.745863,
+        13922.305722,
+        5224.52085,
+        2562.891881,
+        5001.650382,
+        2208.31193,
+        4451.226998,
+        4972.024751,
+        3105.889775,
+        2399.97528,
+        3717.841442,
+        3443.493385,
+        4078.578793,
+        1492.297689,
+        1997.641852,
+        2338.32406,
+        2704.89864,
+        2166.627773,
+        6209.042988,
+        7060.306212,
+        2956.578874
+      ],
+      "medianMs": 3127.0288554999997,
+      "maxMs": 19087.795786
+    },
+    "headersMs": {
+      "valuesMs": [
+        1020.066067,
+        555.605225,
+        529.697044,
+        677.022323,
+        727.551767,
+        682.812455,
+        801.390007,
+        685.518604,
+        754.471964,
+        687.697537,
+        677.942362,
+        632.125829,
+        905.010727,
+        767.346327,
+        884.610751,
+        869.733958,
+        760.020683,
+        795.056891,
+        887.301338,
+        794.596348,
+        1059.061049,
+        1104.200372,
+        929.318303,
+        934.803969,
+        988.786649,
+        974.087196,
+        1200.117849,
+        866.923721,
+        1439.861875,
+        988.956627,
+        862.178876,
+        1057.930218,
+        1170.689309,
+        749.38394,
+        1670.548796,
+        1138.852334,
+        1150.514915,
+        1113.574518,
+        1119.79781,
+        1171.083094,
+        1025.449875,
+        1111.310429,
+        1002.669436,
+        1410.851118,
+        1206.271127,
+        1163.032153,
+        1253.465265,
+        1204.738095,
+        1342.179891,
+        1626.004755,
+        1148.498183,
+        1519.268586,
+        1225.321861,
+        1087.680429,
+        1652.635686,
+        1164.944587,
+        1430.783547,
+        1262.950072,
+        1088.742371,
+        1960.933127,
+        1112.077827,
+        1720.488576,
+        1730.947073,
+        1514.83379,
+        1518.452796,
+        1366.904354,
+        1291.552194,
+        1230.813408,
+        1225.32241,
+        1203.02777,
+        1200.384898,
+        1079.802331,
+        1094.747972,
+        1045.833686,
+        1078.018488,
+        1110.704843,
+        1186.913939,
+        1451.863382,
+        1237.677022,
+        1212.082698
+      ],
+      "medianMs": 1111.007636,
+      "maxMs": 1960.933127
+    }
+  },
+  "generation": {
+    "aggregateProviderOutputTokensPerSecond": 241.9520163233038,
+    "aggregateUtf8BytesPerSecond": 825.9143398754443,
+    "streamSeconds": 324.151049418
+  },
+  "tools": {
+    "calls": 107,
+    "errors": 5,
+    "summedSeconds": 353.17720168200003
+  },
+  "requestDetails": [
+    {
+      "request": 1,
+      "start": 349489447371349,
+      "payloadBytes": 64479,
+      "payloadSHA256": "5ce1d5d7583412d4d55bca767424091a00eed40f96cf236a71499b061d7cfdd1",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349490467437416,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349490777205574,
+      "firstReasoning": 349490777257863,
+      "streamUtf8Bytes": 1234,
+      "streamChars": 1232,
+      "firstAction": 349491722332423,
+      "end": 349492035278134,
+      "usage": {
+        "input": 18118,
+        "output": 384,
+        "cacheRead": 128,
+        "cacheWrite": 0,
+        "reasoning": 259,
+        "totalTokens": 18630,
+        "cost": {
+          "input": 0.0054354,
+          "output": 0.0004608,
+          "cacheRead": 7.68e-07,
+          "cacheWrite": 0,
+          "total": 0.005896968
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1329.834225,
+      "ttfReasoningMs": 1329.886514,
+      "ttfActionMs": 2274.961074,
+      "headersMs": 1020.066067,
+      "streamSeconds": 1.25807256,
+      "providerOutputTokensPerSecond": 305.2288176446675,
+      "utf8BytesPerSecond": 980.8655233685408
+    },
+    {
+      "request": 2,
+      "start": 349492045494288,
+      "payloadBytes": 90276,
+      "payloadSHA256": "b77cb239eb975be2bf73f415be5efde2c6d1b5a2c09698c995b6271914122c7e",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349492601099513,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349493289601277,
+      "firstReasoning": 349493289657627,
+      "streamUtf8Bytes": 427,
+      "streamChars": 427,
+      "firstAction": 349493522058657,
+      "end": 349493981450553,
+      "usage": {
+        "input": 10595,
+        "output": 220,
+        "cacheRead": 18560,
+        "cacheWrite": 0,
+        "reasoning": 27,
+        "totalTokens": 29375,
+        "cost": {
+          "input": 0.0031785,
+          "output": 0.00026399999999999997,
+          "cacheRead": 0.00011136,
+          "cacheWrite": 0,
+          "total": 0.00355386
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1244.106989,
+      "ttfReasoningMs": 1244.163339,
+      "ttfActionMs": 1476.564369,
+      "headersMs": 555.605225,
+      "streamSeconds": 0.691849276,
+      "providerOutputTokensPerSecond": 317.9883359450101,
+      "utf8BytesPerSecond": 617.1864520387242
+    },
+    {
+      "request": 3,
+      "start": 349493984534427,
+      "payloadBytes": 94796,
+      "payloadSHA256": "c0bcd503e9b75995d138cf328055800fa65b8c4e828b74d21384cff7b19edca4",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349494514231471,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349494826479838,
+      "firstReasoning": 349494826533528,
+      "streamUtf8Bytes": 609,
+      "streamChars": 609,
+      "firstAction": 349495324624008,
+      "end": 349495762182349,
+      "usage": {
+        "input": 978,
+        "output": 229,
+        "cacheRead": 29312,
+        "cacheWrite": 0,
+        "reasoning": 69,
+        "totalTokens": 30519,
+        "cost": {
+          "input": 0.0002934,
+          "output": 0.0002748,
+          "cacheRead": 0.00017587199999999999,
+          "cacheWrite": 0,
+          "total": 0.000744072
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 841.945411,
+      "ttfReasoningMs": 841.999101,
+      "ttfActionMs": 1340.089581,
+      "headersMs": 529.697044,
+      "streamSeconds": 0.935702511,
+      "providerOutputTokensPerSecond": 244.73590410189675,
+      "utf8BytesPerSecond": 650.8478847076643
+    },
+    {
+      "request": 4,
+      "start": 349496386749553,
+      "payloadBytes": 100933,
+      "payloadSHA256": "ac7276a6ba607413e17593c35c3fa203406ae6ba953a9da7b74c604726338a77",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349497063771876,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349497359269484,
+      "firstReasoning": 349497359317064,
+      "streamUtf8Bytes": 710,
+      "streamChars": 710,
+      "firstAction": 349497909221628,
+      "end": 349498333156775,
+      "usage": {
+        "input": 1469,
+        "output": 258,
+        "cacheRead": 30464,
+        "cacheWrite": 0,
+        "reasoning": 103,
+        "totalTokens": 32191,
+        "cost": {
+          "input": 0.0004407,
+          "output": 0.0003096,
+          "cacheRead": 0.000182784,
+          "cacheWrite": 0,
+          "total": 0.0009330839999999999
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 972.519931,
+      "ttfReasoningMs": 972.567511,
+      "ttfActionMs": 1522.472075,
+      "headersMs": 677.022323,
+      "streamSeconds": 0.973887291,
+      "providerOutputTokensPerSecond": 264.9177193133738,
+      "utf8BytesPerSecond": 729.0371345445558
+    },
+    {
+      "request": 5,
+      "start": 349498352438882,
+      "payloadBytes": 107345,
+      "payloadSHA256": "378ea5fd13bf5bc493436bc4285a5d837597fc66d8be447bf6a71c8c8a1a58fb",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349499079990649,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349499368723175,
+      "firstReasoning": 349499368777134,
+      "streamUtf8Bytes": 1267,
+      "streamChars": 1263,
+      "firstAction": 349500434760389,
+      "end": 349500947860604,
+      "usage": {
+        "input": 1816,
+        "output": 415,
+        "cacheRead": 32128,
+        "cacheWrite": 0,
+        "reasoning": 232,
+        "totalTokens": 34359,
+        "cost": {
+          "input": 0.0005448,
+          "output": 0.000498,
+          "cacheRead": 0.000192768,
+          "cacheWrite": 0,
+          "total": 0.001235568
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1016.284293,
+      "ttfReasoningMs": 1016.338252,
+      "ttfActionMs": 2082.321507,
+      "headersMs": 727.551767,
+      "streamSeconds": 1.579137429,
+      "providerOutputTokensPerSecond": 262.8016994460081,
+      "utf8BytesPerSecond": 802.3367546941984
+    },
+    {
+      "request": 6,
+      "start": 349501062075071,
+      "payloadBytes": 112271,
+      "payloadSHA256": "781b17d521f96bcaf2daa02a1ea8b4615326419a82fc33f58e9c1bd91cb37017",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349501744887526,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349502125805996,
+      "firstReasoning": 349502125854865,
+      "streamUtf8Bytes": 1466,
+      "streamChars": 1458,
+      "firstAction": 349503598969130,
+      "end": 349504194631430,
+      "usage": {
+        "input": 1127,
+        "output": 537,
+        "cacheRead": 34304,
+        "cacheWrite": 0,
+        "reasoning": 325,
+        "totalTokens": 35968,
+        "cost": {
+          "input": 0.0003381,
+          "output": 0.0006443999999999999,
+          "cacheRead": 0.00020582399999999999,
+          "cacheWrite": 0,
+          "total": 0.001188324
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1063.730925,
+      "ttfReasoningMs": 1063.779794,
+      "ttfActionMs": 2536.894059,
+      "headersMs": 682.812455,
+      "streamSeconds": 2.068825434,
+      "providerOutputTokensPerSecond": 259.567574515811,
+      "utf8BytesPerSecond": 708.6146447675585
+    },
+    {
+      "request": 7,
+      "start": 349504539024538,
+      "payloadBytes": 116811,
+      "payloadSHA256": "951a4047939c586776d80ba1141211489d37fb8c8b993c628c0ac5075fd2f797",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349505340414545,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349505503876187,
+      "firstReasoning": 349505503935017,
+      "streamUtf8Bytes": 1337,
+      "streamChars": 1335,
+      "firstAction": 349506745357616,
+      "end": 349507207923728,
+      "usage": {
+        "input": 777,
+        "output": 403,
+        "cacheRead": 35968,
+        "cacheWrite": 0,
+        "reasoning": 209,
+        "totalTokens": 37148,
+        "cost": {
+          "input": 0.0002331,
+          "output": 0.0004836,
+          "cacheRead": 0.000215808,
+          "cacheWrite": 0,
+          "total": 0.0009325080000000001
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 964.851649,
+      "ttfReasoningMs": 964.910479,
+      "ttfActionMs": 2206.333078,
+      "headersMs": 801.390007,
+      "streamSeconds": 1.704047541,
+      "providerOutputTokensPerSecond": 236.4957492697089,
+      "utf8BytesPerSecond": 784.6025230114163
+    },
+    {
+      "request": 8,
+      "start": 349507260032059,
+      "payloadBytes": 128485,
+      "payloadSHA256": "877bf67f61fa3baec9d4e7aa70496a44e766451c44876cbf4327acb70a3db06f",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349507945550663,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349508479487424,
+      "firstReasoning": 349508479541794,
+      "streamUtf8Bytes": 1661,
+      "streamChars": 1655,
+      "firstAction": 349509812300435,
+      "end": 349510376569361,
+      "usage": {
+        "input": 3457,
+        "output": 504,
+        "cacheRead": 37120,
+        "cacheWrite": 0,
+        "reasoning": 277,
+        "totalTokens": 41081,
+        "cost": {
+          "input": 0.0010371,
+          "output": 0.0006048,
+          "cacheRead": 0.00022272,
+          "cacheWrite": 0,
+          "total": 0.00186462
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1219.455365,
+      "ttfReasoningMs": 1219.509735,
+      "ttfActionMs": 2552.268376,
+      "headersMs": 685.518604,
+      "streamSeconds": 1.897081937,
+      "providerOutputTokensPerSecond": 265.6711817081626,
+      "utf8BytesPerSecond": 875.5552238437659
+    },
+    {
+      "request": 9,
+      "start": 349510383696141,
+      "payloadBytes": 134448,
+      "payloadSHA256": "334a28d605674e1026cacadffada7a3703c7186e7dcdf78479b4fb9dbf89c82d",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349511138168105,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349511293418348,
+      "firstReasoning": 349511293481557,
+      "streamUtf8Bytes": 2489,
+      "streamChars": 2485,
+      "firstAction": 349513617640009,
+      "end": 349514320229451,
+      "usage": {
+        "input": 1674,
+        "output": 755,
+        "cacheRead": 40960,
+        "cacheWrite": 0,
+        "reasoning": 519,
+        "totalTokens": 43389,
+        "cost": {
+          "input": 0.0005022,
+          "output": 0.000906,
+          "cacheRead": 0.00024576,
+          "cacheWrite": 0,
+          "total": 0.0016539600000000001
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 909.722207,
+      "ttfReasoningMs": 909.785416,
+      "ttfActionMs": 3233.943868,
+      "headersMs": 754.471964,
+      "streamSeconds": 3.026811103,
+      "providerOutputTokensPerSecond": 249.43743573944462,
+      "utf8BytesPerSecond": 822.3175861661956
+    },
+    {
+      "request": 10,
+      "start": 349514326100802,
+      "payloadBytes": 149679,
+      "payloadSHA256": "ee22e7b31b88b9bf886d1b6878f5e24d92f59715896934f02e4c5d31b029faf7",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349515013798339,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349515632452179,
+      "firstReasoning": 349515632508148,
+      "streamUtf8Bytes": 3372,
+      "streamChars": 3364,
+      "firstAction": 349519489904113,
+      "end": 349520098732187,
+      "usage": {
+        "input": 4272,
+        "output": 1037,
+        "cacheRead": 43264,
+        "cacheWrite": 0,
+        "reasoning": 813,
+        "totalTokens": 48573,
+        "cost": {
+          "input": 0.0012816,
+          "output": 0.0012443999999999999,
+          "cacheRead": 0.000259584,
+          "cacheWrite": 0,
+          "total": 0.002785584
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1306.351377,
+      "ttfReasoningMs": 1306.407346,
+      "ttfActionMs": 5163.803311,
+      "headersMs": 687.697537,
+      "streamSeconds": 4.466280008,
+      "providerOutputTokensPerSecond": 232.18427822315792,
+      "utf8BytesPerSecond": 754.9907291885136
+    },
+    {
+      "request": 11,
+      "start": 349521719606449,
+      "payloadBytes": 159015,
+      "payloadSHA256": "d29090461c9d70c7068ed49a77bdc7d65b467bb231550660a19854357bda1532",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349522397548811,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349522853498452,
+      "firstReasoning": 349522853556762,
+      "streamUtf8Bytes": 2257,
+      "streamChars": 2253,
+      "firstAction": 349524867774385,
+      "end": 349525599715703,
+      "usage": {
+        "input": 1738,
+        "output": 641,
+        "cacheRead": 48512,
+        "cacheWrite": 0,
+        "reasoning": 388,
+        "totalTokens": 50891,
+        "cost": {
+          "input": 0.0005214,
+          "output": 0.0007691999999999999,
+          "cacheRead": 0.000291072,
+          "cacheWrite": 0,
+          "total": 0.001581672
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1133.892003,
+      "ttfReasoningMs": 1133.950313,
+      "ttfActionMs": 3148.167936,
+      "headersMs": 677.942362,
+      "streamSeconds": 2.746217251,
+      "providerOutputTokensPerSecond": 233.41197779111906,
+      "utf8BytesPerSecond": 821.8577751553131
+    },
+    {
+      "request": 12,
+      "start": 349525606920292,
+      "payloadBytes": 168807,
+      "payloadSHA256": "e644bf81ba17c63e35c673c6ac54bcbed7f16b20eaceeb7ce9237213940b3c6e",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349526239046121,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349526645086113,
+      "firstReasoning": 349526645133313,
+      "streamUtf8Bytes": 9993,
+      "streamChars": 9945,
+      "firstAction": 349540118098902,
+      "end": 349540460483082,
+      "usage": {
+        "input": 2867,
+        "output": 3220,
+        "cacheRead": 50816,
+        "cacheWrite": 0,
+        "reasoning": 3073,
+        "totalTokens": 56903,
+        "cost": {
+          "input": 0.0008600999999999999,
+          "output": 0.003864,
+          "cacheRead": 0.000304896,
+          "cacheWrite": 0,
+          "total": 0.005028996
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1038.165821,
+      "ttfReasoningMs": 1038.213021,
+      "ttfActionMs": 14511.17861,
+      "headersMs": 632.125829,
+      "streamSeconds": 13.815396969,
+      "providerOutputTokensPerSecond": 233.07328824682142,
+      "utf8BytesPerSecond": 723.3234066616418
+    },
+    {
+      "request": 13,
+      "start": 349540466566171,
+      "payloadBytes": 190927,
+      "payloadSHA256": "17c10c44a8b0c5e0e73894b8d352766d94d2f9edd13257c8a72312fac0412ced",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349541371576898,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349541896314385,
+      "firstReasoning": 349541896361974,
+      "streamUtf8Bytes": 1738,
+      "streamChars": 1726,
+      "firstAction": 349543308356458,
+      "end": 349544045779966,
+      "usage": {
+        "input": 3763,
+        "output": 525,
+        "cacheRead": 56832,
+        "cacheWrite": 0,
+        "reasoning": 285,
+        "totalTokens": 61120,
+        "cost": {
+          "input": 0.0011289,
+          "output": 0.0006299999999999999,
+          "cacheRead": 0.000340992,
+          "cacheWrite": 0,
+          "total": 0.002099892
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1429.748214,
+      "ttfReasoningMs": 1429.795803,
+      "ttfActionMs": 2841.790287,
+      "headersMs": 905.010727,
+      "streamSeconds": 2.149465581,
+      "providerOutputTokensPerSecond": 244.24675818989076,
+      "utf8BytesPerSecond": 808.5730775886288
+    },
+    {
+      "request": 14,
+      "start": 349544053863918,
+      "payloadBytes": 245829,
+      "payloadSHA256": "e0837b2ded470fa0fbc3237fc245ca68c5dbda149dd6c8dee200eb6863d164b8",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349544821210245,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349545450967939,
+      "firstReasoning": 349545451030108,
+      "streamUtf8Bytes": 866,
+      "streamChars": 866,
+      "firstAction": 349545834459496,
+      "end": 349546597116591,
+      "usage": {
+        "input": 23670,
+        "output": 322,
+        "cacheRead": 61056,
+        "cacheWrite": 0,
+        "reasoning": 69,
+        "totalTokens": 85048,
+        "cost": {
+          "input": 0.007101,
+          "output": 0.00038639999999999996,
+          "cacheRead": 0.000366336,
+          "cacheWrite": 0,
+          "total": 0.007853736
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1397.104021,
+      "ttfReasoningMs": 1397.16619,
+      "ttfActionMs": 1780.595578,
+      "headersMs": 767.346327,
+      "streamSeconds": 1.146148652,
+      "providerOutputTokensPerSecond": 280.94087048666705,
+      "utf8BytesPerSecond": 755.5738939175579
+    },
+    {
+      "request": 15,
+      "start": 349546604658378,
+      "payloadBytes": 277121,
+      "payloadSHA256": "5126f180f9c5554da6f2294db720aadafa0d605b161a8407823bfe17e08afe85",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349547489269129,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349548433569729,
+      "firstReasoning": 349548433624679,
+      "streamUtf8Bytes": 2713,
+      "streamChars": 2699,
+      "firstAction": 349551056110810,
+      "end": 349551873844145,
+      "usage": {
+        "input": 13229,
+        "output": 798,
+        "cacheRead": 84992,
+        "cacheWrite": 0,
+        "reasoning": 541,
+        "totalTokens": 99019,
+        "cost": {
+          "input": 0.0039686999999999995,
+          "output": 0.0009576,
+          "cacheRead": 0.000509952,
+          "cacheWrite": 0,
+          "total": 0.005436252
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1828.911351,
+      "ttfReasoningMs": 1828.966301,
+      "ttfActionMs": 4451.452432,
+      "headersMs": 884.610751,
+      "streamSeconds": 3.440274416,
+      "providerOutputTokensPerSecond": 231.9582403917165,
+      "utf8BytesPerSecond": 788.5998824344948
+    },
+    {
+      "request": 16,
+      "start": 349551881155803,
+      "payloadBytes": 286085,
+      "payloadSHA256": "7e605ea3cdf02dc0c512731a8a50acc2feb71e476c27467cd8ee2ce3b97a4f68",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349552750889761,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349553152121219,
+      "firstReasoning": 349553152172058,
+      "streamUtf8Bytes": 4430,
+      "streamChars": 4410,
+      "firstAction": 349557614974115,
+      "end": 349558905580669,
+      "usage": {
+        "input": 1806,
+        "output": 1295,
+        "cacheRead": 98944,
+        "cacheWrite": 0,
+        "reasoning": 995,
+        "totalTokens": 102045,
+        "cost": {
+          "input": 0.0005417999999999999,
+          "output": 0.0015539999999999998,
+          "cacheRead": 0.000593664,
+          "cacheWrite": 0,
+          "total": 0.002689464
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1270.965416,
+      "ttfReasoningMs": 1271.016255,
+      "ttfActionMs": 5733.818312,
+      "headersMs": 869.733958,
+      "streamSeconds": 5.75345945,
+      "providerOutputTokensPerSecond": 225.08197220369738,
+      "utf8BytesPerSecond": 769.9715342566636
+    },
+    {
+      "request": 17,
+      "start": 349558913325433,
+      "payloadBytes": 296728,
+      "payloadSHA256": "caf88cb572171f57d6169e25f5a92b6b5f63591868bd82124d262b0e06966146",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349559673346116,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349560196158793,
+      "firstReasoning": 349560196227162,
+      "streamUtf8Bytes": 6567,
+      "streamChars": 6527,
+      "firstAction": 349567558192455,
+      "end": 349568203101637,
+      "usage": {
+        "input": 1706,
+        "output": 1837,
+        "cacheRead": 102016,
+        "cacheWrite": 0,
+        "reasoning": 1593,
+        "totalTokens": 105559,
+        "cost": {
+          "input": 0.0005118,
+          "output": 0.0022044,
+          "cacheRead": 0.000612096,
+          "cacheWrite": 0,
+          "total": 0.003328296
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1282.83336,
+      "ttfReasoningMs": 1282.901729,
+      "ttfActionMs": 8644.867022,
+      "headersMs": 760.020683,
+      "streamSeconds": 8.006942844,
+      "providerOutputTokensPerSecond": 229.42589147823824,
+      "utf8BytesPerSecond": 820.1632168413666
+    },
+    {
+      "request": 18,
+      "start": 349568220523461,
+      "payloadBytes": 309725,
+      "payloadSHA256": "8a1dbcd84d0fa60b44f440429f7660d00bb9af641068417d0dea38b1e78d068a",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349569015580352,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349569565066097,
+      "firstReasoning": 349569565109626,
+      "streamUtf8Bytes": 783,
+      "streamChars": 783,
+      "firstAction": 349569988754808,
+      "end": 349570593215891,
+      "usage": {
+        "input": 4028,
+        "output": 264,
+        "cacheRead": 103936,
+        "cacheWrite": 0,
+        "reasoning": 68,
+        "totalTokens": 108228,
+        "cost": {
+          "input": 0.0012083999999999999,
+          "output": 0.0003168,
+          "cacheRead": 0.000623616,
+          "cacheWrite": 0,
+          "total": 0.002148816
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1344.542636,
+      "ttfReasoningMs": 1344.586165,
+      "ttfActionMs": 1768.231347,
+      "headersMs": 795.056891,
+      "streamSeconds": 1.028149794,
+      "providerOutputTokensPerSecond": 256.7719232553773,
+      "utf8BytesPerSecond": 761.562181473335
+    },
+    {
+      "request": 19,
+      "start": 349570600830256,
+      "payloadBytes": 318218,
+      "payloadSHA256": "a9c67e66b199255d42991b69a9c865a529b72de44d4171aa785b78544271d10f",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349571488131594,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349571801167514,
+      "firstReasoning": 349571801214314,
+      "streamUtf8Bytes": 4168,
+      "streamChars": 4154,
+      "firstAction": 349576767946223,
+      "end": 349577126370263,
+      "usage": {
+        "input": 2925,
+        "output": 1142,
+        "cacheRead": 108160,
+        "cacheWrite": 0,
+        "reasoning": 998,
+        "totalTokens": 112227,
+        "cost": {
+          "input": 0.0008774999999999999,
+          "output": 0.0013704,
+          "cacheRead": 0.00064896,
+          "cacheWrite": 0,
+          "total": 0.00289686
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1200.337258,
+      "ttfReasoningMs": 1200.384058,
+      "ttfActionMs": 6167.115967,
+      "headersMs": 887.301338,
+      "streamSeconds": 5.325202749,
+      "providerOutputTokensPerSecond": 214.45192865463235,
+      "utf8BytesPerSecond": 782.6932037062238
+    },
+    {
+      "request": 20,
+      "start": 349577132780319,
+      "payloadBytes": 327964,
+      "payloadSHA256": "f5d231c6c9d6bdd9022e4f7c7c16bc324ab3fec05bf80b37eda8d85bb61bf36a",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349577927376667,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349578469998161,
+      "firstReasoning": 349578470123010,
+      "streamUtf8Bytes": 3268,
+      "streamChars": 3268,
+      "firstAction": 349582135341917,
+      "end": 349582722172381,
+      "usage": {
+        "input": 1788,
+        "output": 897,
+        "cacheRead": 112128,
+        "cacheWrite": 0,
+        "reasoning": 683,
+        "totalTokens": 114813,
+        "cost": {
+          "input": 0.0005364,
+          "output": 0.0010764,
+          "cacheRead": 0.000672768,
+          "cacheWrite": 0,
+          "total": 0.002285568
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1337.217842,
+      "ttfReasoningMs": 1337.342691,
+      "ttfActionMs": 5002.561598,
+      "headersMs": 794.596348,
+      "streamSeconds": 4.25217422,
+      "providerOutputTokensPerSecond": 210.95090501724553,
+      "utf8BytesPerSecond": 768.5480017796638
+    },
+    {
+      "request": 21,
+      "start": 349582728757756,
+      "payloadBytes": 334490,
+      "payloadSHA256": "a80433ff73dc03d0cc6b6133cbbe806e2f13f4c3cfbf0b609c6b3b7beb844f1f",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349583787818805,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349584192529858,
+      "firstReasoning": 349584192572988,
+      "streamUtf8Bytes": 1788,
+      "streamChars": 1770,
+      "firstAction": 349586008213707,
+      "end": 349586729702941,
+      "usage": {
+        "input": 992,
+        "output": 570,
+        "cacheRead": 114688,
+        "cacheWrite": 0,
+        "reasoning": 345,
+        "totalTokens": 116250,
+        "cost": {
+          "input": 0.00029759999999999997,
+          "output": 0.0006839999999999999,
+          "cacheRead": 0.000688128,
+          "cacheWrite": 0,
+          "total": 0.001669728
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1463.772102,
+      "ttfReasoningMs": 1463.815232,
+      "ttfActionMs": 3279.455951,
+      "headersMs": 1059.061049,
+      "streamSeconds": 2.537173083,
+      "providerOutputTokensPerSecond": 224.65948571629238,
+      "utf8BytesPerSecond": 704.721334141633
+    },
+    {
+      "request": 22,
+      "start": 349586736661153,
+      "payloadBytes": 344025,
+      "payloadSHA256": "8f2f5f57f7a2e6a1fb2af712a0d73c88e36cf655a48042533ff94257136d9532",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349587840861525,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349588115585540,
+      "firstReasoning": 349588115637309,
+      "streamUtf8Bytes": 5278,
+      "streamChars": 5246,
+      "firstAction": 349593806223285,
+      "end": 349594731641980,
+      "usage": {
+        "input": 2307,
+        "output": 1557,
+        "cacheRead": 116224,
+        "cacheWrite": 0,
+        "reasoning": 1239,
+        "totalTokens": 120088,
+        "cost": {
+          "input": 0.0006921,
+          "output": 0.0018683999999999999,
+          "cacheRead": 0.000697344,
+          "cacheWrite": 0,
+          "total": 0.0032578439999999998
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1378.924387,
+      "ttfReasoningMs": 1378.976156,
+      "ttfActionMs": 7069.562132,
+      "headersMs": 1104.200372,
+      "streamSeconds": 6.61605644,
+      "providerOutputTokensPerSecond": 235.3365655387305,
+      "utf8BytesPerSecond": 797.7561932648808
+    },
+    {
+      "request": 23,
+      "start": 349594740088210,
+      "payloadBytes": 356874,
+      "payloadSHA256": "e5d5a82154eb91781d374f08cc8d9fedfd09319337eecbfb57e8f19ab0c6d740",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349595669406513,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349595950090768,
+      "firstReasoning": 349595950139717,
+      "streamUtf8Bytes": 3876,
+      "streamChars": 3868,
+      "firstAction": 349599750067099,
+      "end": 349600516776688,
+      "usage": {
+        "input": 2265,
+        "output": 1155,
+        "cacheRead": 120064,
+        "cacheWrite": 0,
+        "reasoning": 922,
+        "totalTokens": 123484,
+        "cost": {
+          "input": 0.0006795,
+          "output": 0.0013859999999999999,
+          "cacheRead": 0.000720384,
+          "cacheWrite": 0,
+          "total": 0.0027858839999999998
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1210.002558,
+      "ttfReasoningMs": 1210.051507,
+      "ttfActionMs": 5009.978889,
+      "headersMs": 929.318303,
+      "streamSeconds": 4.56668592,
+      "providerOutputTokensPerSecond": 252.91864170943464,
+      "utf8BytesPerSecond": 848.7555456846483
+    },
+    {
+      "request": 24,
+      "start": 349600568516704,
+      "payloadBytes": 364299,
+      "payloadSHA256": "69625c77fadc028b3c1431d1bb2ae2739e74b8b052e9607be787c14ab7fa3f06",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349601503320673,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349601893740078,
+      "firstReasoning": 349601893797977,
+      "streamUtf8Bytes": 1789,
+      "streamChars": 1789,
+      "firstAction": 349603609467778,
+      "end": 349603893993291,
+      "usage": {
+        "input": 1122,
+        "output": 514,
+        "cacheRead": 123392,
+        "cacheWrite": 0,
+        "reasoning": 395,
+        "totalTokens": 125028,
+        "cost": {
+          "input": 0.0003366,
+          "output": 0.0006167999999999999,
+          "cacheRead": 0.000740352,
+          "cacheWrite": 0,
+          "total": 0.0016937519999999998
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1325.223374,
+      "ttfReasoningMs": 1325.281273,
+      "ttfActionMs": 3040.951074,
+      "headersMs": 934.803969,
+      "streamSeconds": 2.000253213,
+      "providerOutputTokensPerSecond": 256.9674662484844,
+      "utf8BytesPerSecond": 894.3867648220595
+    },
+    {
+      "request": 25,
+      "start": 349607648298656,
+      "payloadBytes": 371144,
+      "payloadSHA256": "0e1bc06d40336d9a815a7e1bc765ebb8be2da0d5bd90b535a039ae5a95c9d45b",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349608637085305,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349608996688780,
+      "firstReasoning": 349608996777199,
+      "streamUtf8Bytes": 9328,
+      "streamChars": 9250,
+      "firstAction": 349619790413665,
+      "end": 349620537563313,
+      "usage": {
+        "input": 1771,
+        "output": 2755,
+        "cacheRead": 124928,
+        "cacheWrite": 0,
+        "reasoning": 2487,
+        "totalTokens": 129454,
+        "cost": {
+          "input": 0.0005313,
+          "output": 0.003306,
+          "cacheRead": 0.000749568,
+          "cacheWrite": 0,
+          "total": 0.004586868
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1348.390124,
+      "ttfReasoningMs": 1348.478543,
+      "ttfActionMs": 12142.115009,
+      "headersMs": 988.786649,
+      "streamSeconds": 11.540874533,
+      "providerOutputTokensPerSecond": 238.71674474255371,
+      "utf8BytesPerSecond": 808.2576388234269
+    },
+    {
+      "request": 26,
+      "start": 349620554664610,
+      "payloadBytes": 386297,
+      "payloadSHA256": "c6bbe800a56c5d78eca6c8a1f149ec9656fe6feafc87ef019d734ea3cc332535",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349621528751806,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349622101622245,
+      "firstReasoning": 349622101693614,
+      "streamUtf8Bytes": 12109,
+      "streamChars": 12047,
+      "firstAction": 349635944942606,
+      "end": 349637127703650,
+      "usage": {
+        "input": 1688,
+        "output": 3183,
+        "cacheRead": 129408,
+        "cacheWrite": 0,
+        "reasoning": 2767,
+        "totalTokens": 134279,
+        "cost": {
+          "input": 0.0005064,
+          "output": 0.0038196,
+          "cacheRead": 0.000776448,
+          "cacheWrite": 0,
+          "total": 0.005102448
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1546.957635,
+      "ttfReasoningMs": 1547.029004,
+      "ttfActionMs": 15390.277996,
+      "headersMs": 974.087196,
+      "streamSeconds": 15.026081405,
+      "providerOutputTokensPerSecond": 211.8316754853226,
+      "utf8BytesPerSecond": 805.8654597712131
+    },
+    {
+      "request": 27,
+      "start": 349637144841657,
+      "payloadBytes": 399029,
+      "payloadSHA256": "01c455387c02a7ccc0edea91cfaa7ebe113e23f9d89b9f56fdb7504d72f8ed27",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349638344959506,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349639103913860,
+      "firstReasoning": 349639103960119,
+      "streamUtf8Bytes": 972,
+      "streamChars": 972,
+      "firstAction": 349639571896071,
+      "end": 349640302893769,
+      "usage": {
+        "input": 228,
+        "output": 362,
+        "cacheRead": 134144,
+        "cacheWrite": 0,
+        "reasoning": 90,
+        "totalTokens": 134734,
+        "cost": {
+          "input": 6.84e-05,
+          "output": 0.0004344,
+          "cacheRead": 0.000804864,
+          "cacheWrite": 0,
+          "total": 0.001307664
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1959.072203,
+      "ttfReasoningMs": 1959.118462,
+      "ttfActionMs": 2427.054414,
+      "headersMs": 1200.117849,
+      "streamSeconds": 1.198979909,
+      "providerOutputTokensPerSecond": 301.9233243882488,
+      "utf8BytesPerSecond": 810.689147252425
+    },
+    {
+      "request": 28,
+      "start": 349640333454953,
+      "payloadBytes": 401588,
+      "payloadSHA256": "ae53909c8cf0c83350050a9f391fd425f9897a8571e27e3cc6428b290b01ff63",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349641200378674,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349641599622351,
+      "firstReasoning": 349641599690160,
+      "streamUtf8Bytes": 2860,
+      "streamChars": 2856,
+      "firstAction": 349645057660506,
+      "end": 349645395334109,
+      "usage": {
+        "input": 404,
+        "output": 720,
+        "cacheRead": 134656,
+        "cacheWrite": 0,
+        "reasoning": 598,
+        "totalTokens": 135780,
+        "cost": {
+          "input": 0.00012119999999999999,
+          "output": 0.000864,
+          "cacheRead": 0.000807936,
+          "cacheWrite": 0,
+          "total": 0.0017931359999999999
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1266.167398,
+      "ttfReasoningMs": 1266.235207,
+      "ttfActionMs": 4724.205553,
+      "headersMs": 866.923721,
+      "streamSeconds": 3.795711758,
+      "providerOutputTokensPerSecond": 189.6877439343222,
+      "utf8BytesPerSecond": 753.4818717391132
+    },
+    {
+      "request": 29,
+      "start": 349645402221452,
+      "payloadBytes": 408277,
+      "payloadSHA256": "c336837a8139b677772f4bd65cb79762dd338bd75e9740e6c57cf3979580f4c2",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349646842083327,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349647255861453,
+      "firstReasoning": 349647255925332,
+      "streamUtf8Bytes": 8740,
+      "streamChars": 8690,
+      "firstAction": 349658798078652,
+      "end": 349659103116827,
+      "usage": {
+        "input": 1276,
+        "output": 2434,
+        "cacheRead": 135680,
+        "cacheWrite": 0,
+        "reasoning": 2325,
+        "totalTokens": 139390,
+        "cost": {
+          "input": 0.0003828,
+          "output": 0.0029208,
+          "cacheRead": 0.00081408,
+          "cacheWrite": 0,
+          "total": 0.00411768
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1853.640001,
+      "ttfReasoningMs": 1853.70388,
+      "ttfActionMs": 13395.8572,
+      "headersMs": 1439.861875,
+      "streamSeconds": 11.847255374,
+      "providerOutputTokensPerSecond": 205.44842861593574,
+      "utf8BytesPerSecond": 737.7236097384052
+    },
+    {
+      "request": 30,
+      "start": 349659109422772,
+      "payloadBytes": 421388,
+      "payloadSHA256": "4ef77006f6d9ce12dd2534d55a8684372b70148f4f3120cc0cf73b224f528963",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349660098379399,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349660480670915,
+      "firstReasoning": 349660480718614,
+      "streamUtf8Bytes": 15391,
+      "streamChars": 15296,
+      "firstAction": 349678197218558,
+      "end": 349680065984974,
+      "usage": {
+        "input": 1383,
+        "output": 4335,
+        "cacheRead": 139264,
+        "cacheWrite": 0,
+        "reasoning": 3729,
+        "totalTokens": 144982,
+        "cost": {
+          "input": 0.0004149,
+          "output": 0.005202,
+          "cacheRead": 0.000835584,
+          "cacheWrite": 0,
+          "total": 0.0064524840000000005
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1371.248143,
+      "ttfReasoningMs": 1371.295842,
+      "ttfActionMs": 19087.795786,
+      "headersMs": 988.956627,
+      "streamSeconds": 19.585314059,
+      "providerOutputTokensPerSecond": 221.33931510829902,
+      "utf8BytesPerSecond": 785.8439212991534
+    },
+    {
+      "request": 31,
+      "start": 349680220916436,
+      "payloadBytes": 437691,
+      "payloadSHA256": "ac86d19fb1eb85baef497976be3830c81184c6d726b81bf22ae20b29ef2820eb",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349681083095312,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349681558357804,
+      "firstReasoning": 349681558405143,
+      "streamUtf8Bytes": 10205,
+      "streamChars": 10205,
+      "firstAction": 349685645052103,
+      "end": 349692206994865,
+      "usage": {
+        "input": 189,
+        "output": 3259,
+        "cacheRead": 144896,
+        "cacheWrite": 0,
+        "reasoning": 942,
+        "totalTokens": 148344,
+        "cost": {
+          "input": 5.6699999999999996e-05,
+          "output": 0.0039108,
+          "cacheRead": 0.000869376,
+          "cacheWrite": 0,
+          "total": 0.0048368759999999995
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1337.441368,
+      "ttfReasoningMs": 1337.488707,
+      "ttfActionMs": 5424.135667,
+      "headersMs": 862.178876,
+      "streamSeconds": 10.648637061,
+      "providerOutputTokensPerSecond": 306.048556386234,
+      "utf8BytesPerSecond": 958.3386062968758
+    },
+    {
+      "request": 32,
+      "start": 349692211229761,
+      "payloadBytes": 448531,
+      "payloadSHA256": "16825da2262bc83296a1d1d31c30067aab2a8d7c99e3175ae23bff73dcc8c1a1",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349693269159979,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349693729600150,
+      "firstAction": 349693729646299,
+      "streamUtf8Bytes": 213,
+      "streamChars": 213,
+      "end": 349693984055144,
+      "usage": {
+        "input": 174,
+        "output": 89,
+        "cacheRead": 148224,
+        "cacheWrite": 0,
+        "reasoning": 0,
+        "totalTokens": 148487,
+        "cost": {
+          "input": 5.2199999999999995e-05,
+          "output": 0.0001068,
+          "cacheRead": 0.000889344,
+          "cacheWrite": 0,
+          "total": 0.001048344
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1518.370389,
+      "ttfActionMs": 1518.416538,
+      "headersMs": 1057.930218,
+      "streamSeconds": 0.254454994,
+      "providerOutputTokensPerSecond": 349.7671576451748,
+      "utf8BytesPerSecond": 837.0831975103621
+    },
+    {
+      "request": 33,
+      "start": 349694016847268,
+      "payloadBytes": 450294,
+      "payloadSHA256": "e47791e9eeeef464badc7ecb4588447c9c378b6388b6b79dd8ccd01571758f75",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349695187536577,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349695535918776,
+      "firstReasoning": 349695535966705,
+      "streamUtf8Bytes": 5853,
+      "streamChars": 5835,
+      "firstAction": 349699319119081,
+      "end": 349701439915075,
+      "usage": {
+        "input": 522,
+        "output": 1682,
+        "cacheRead": 148480,
+        "cacheWrite": 0,
+        "reasoning": 915,
+        "totalTokens": 150684,
+        "cost": {
+          "input": 0.00015659999999999998,
+          "output": 0.0020184,
+          "cacheRead": 0.00089088,
+          "cacheWrite": 0,
+          "total": 0.00306588
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1519.071508,
+      "ttfReasoningMs": 1519.119437,
+      "ttfActionMs": 5302.271813,
+      "headersMs": 1170.689309,
+      "streamSeconds": 5.903996299,
+      "providerOutputTokensPerSecond": 284.8917775041444,
+      "utf8BytesPerSecond": 991.362410066443
+    },
+    {
+      "request": 34,
+      "start": 349701443861218,
+      "payloadBytes": 456663,
+      "payloadSHA256": "8e62961d22e5785e33a38da41255c244d9b819009e66c494de0bd326366a24de",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349702193245158,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349702783280768,
+      "firstAction": 349702783342297,
+      "streamUtf8Bytes": 357,
+      "streamChars": 357,
+      "end": 349703133210221,
+      "usage": {
+        "input": 209,
+        "output": 144,
+        "cacheRead": 150528,
+        "cacheWrite": 0,
+        "reasoning": 0,
+        "totalTokens": 150881,
+        "cost": {
+          "input": 6.269999999999999e-05,
+          "output": 0.0001728,
+          "cacheRead": 0.000903168,
+          "cacheWrite": 0,
+          "total": 0.001138668
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1339.41955,
+      "ttfActionMs": 1339.481079,
+      "headersMs": 749.38394,
+      "streamSeconds": 0.349929453,
+      "providerOutputTokensPerSecond": 411.51151686565805,
+      "utf8BytesPerSecond": 1020.2056355627773
+    },
+    {
+      "request": 35,
+      "start": 349708241042136,
+      "payloadBytes": 457358,
+      "payloadSHA256": "f1aea13686cc2b33ef5451c6b1235733ed2be70c00a2e3422c4a9e0abe7297ab",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349709911590932,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349710520242929,
+      "firstReasoning": 349710520298428,
+      "streamUtf8Bytes": 1503,
+      "streamChars": 1501,
+      "firstAction": 349712235553807,
+      "end": 349712689498204,
+      "usage": {
+        "input": 256,
+        "output": 497,
+        "cacheRead": 150656,
+        "cacheWrite": 0,
+        "reasoning": 312,
+        "totalTokens": 151409,
+        "cost": {
+          "input": 7.68e-05,
+          "output": 0.0005964,
+          "cacheRead": 0.000903936,
+          "cacheWrite": 0,
+          "total": 0.001577136
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2279.200793,
+      "ttfReasoningMs": 2279.256292,
+      "ttfActionMs": 3994.511671,
+      "headersMs": 1670.548796,
+      "streamSeconds": 2.169255275,
+      "providerOutputTokensPerSecond": 229.11088691486532,
+      "utf8BytesPerSecond": 692.8645131449548
+    },
+    {
+      "request": 36,
+      "start": 349712697632917,
+      "payloadBytes": 462456,
+      "payloadSHA256": "6a7c6aa709ff16e49e5bfa501ce7ee0008147a720caf49f3a66e25b494962e93",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349713836485251,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349714098591395,
+      "firstReasoning": 349714098650513,
+      "streamUtf8Bytes": 9481,
+      "streamChars": 9447,
+      "firstAction": 349725465584187,
+      "end": 349725778652472,
+      "usage": {
+        "input": 1236,
+        "output": 2801,
+        "cacheRead": 151296,
+        "cacheWrite": 0,
+        "reasoning": 2692,
+        "totalTokens": 155333,
+        "cost": {
+          "input": 0.00037079999999999996,
+          "output": 0.0033612,
+          "cacheRead": 0.000907776,
+          "cacheWrite": 0,
+          "total": 0.004639776
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1400.958478,
+      "ttfReasoningMs": 1401.017596,
+      "ttfActionMs": 12767.95127,
+      "headersMs": 1138.852334,
+      "streamSeconds": 11.680061077,
+      "providerOutputTokensPerSecond": 239.8103898202758,
+      "utf8BytesPerSecond": 811.7252073852319
+    },
+    {
+      "request": 37,
+      "start": 349725795009092,
+      "payloadBytes": 472649,
+      "payloadSHA256": "df1064591ca3066a37aa25bd8c584e7161c33054c6d2e24cf30eb8bed0e4857b",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349726945524007,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349727334378123,
+      "firstReasoning": 349727334426712,
+      "streamUtf8Bytes": 4266,
+      "streamChars": 4266,
+      "firstAction": 349727489205709,
+      "end": 349730893922705,
+      "usage": {
+        "input": 227,
+        "output": 1351,
+        "cacheRead": 155264,
+        "cacheWrite": 0,
+        "reasoning": 15,
+        "totalTokens": 156842,
+        "cost": {
+          "input": 6.81e-05,
+          "output": 0.0016212,
+          "cacheRead": 0.000931584,
+          "cacheWrite": 0,
+          "total": 0.002620884
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1539.369031,
+      "ttfReasoningMs": 1539.41762,
+      "ttfActionMs": 1694.196617,
+      "headersMs": 1150.514915,
+      "streamSeconds": 3.559544582,
+      "providerOutputTokensPerSecond": 379.5429355855726,
+      "utf8BytesPerSecond": 1198.4679224337917
+    },
+    {
+      "request": 38,
+      "start": 349730897694834,
+      "payloadBytes": 477433,
+      "payloadSHA256": "4efceb636f16c78d79c7c86128fc49619b5c51fbc22580403735e7d761d78064",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349732011269352,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349732538661189,
+      "firstReasoning": 349732538719258,
+      "streamUtf8Bytes": 5220,
+      "streamChars": 5190,
+      "firstAction": 349738610642407,
+      "end": 349739151255904,
+      "usage": {
+        "input": 227,
+        "output": 1446,
+        "cacheRead": 156672,
+        "cacheWrite": 0,
+        "reasoning": 1245,
+        "totalTokens": 158345,
+        "cost": {
+          "input": 6.81e-05,
+          "output": 0.0017352,
+          "cacheRead": 0.000940032,
+          "cacheWrite": 0,
+          "total": 0.002743332
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1640.966355,
+      "ttfReasoningMs": 1641.024424,
+      "ttfActionMs": 7712.947573,
+      "headersMs": 1113.574518,
+      "streamSeconds": 6.612594715,
+      "providerOutputTokensPerSecond": 218.6736163823704,
+      "utf8BytesPerSecond": 789.4026815463164
+    },
+    {
+      "request": 39,
+      "start": 349739177432610,
+      "payloadBytes": 483097,
+      "payloadSHA256": "efd8f6968d4a54b1dc973cbe68a2e3e1f501a5f1fbf62ee8892bd2da0df20eb2",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349740297230420,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349740729750500,
+      "firstReasoning": 349740729808499,
+      "streamUtf8Bytes": 10071,
+      "streamChars": 10071,
+      "firstAction": 349740917949983,
+      "end": 349749547440423,
+      "usage": {
+        "input": 202,
+        "output": 3056,
+        "cacheRead": 158208,
+        "cacheWrite": 0,
+        "reasoning": 9,
+        "totalTokens": 161466,
+        "cost": {
+          "input": 6.0599999999999996e-05,
+          "output": 0.0036672,
+          "cacheRead": 0.000949248,
+          "cacheWrite": 0,
+          "total": 0.004677048
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1552.31789,
+      "ttfReasoningMs": 1552.375889,
+      "ttfActionMs": 1740.517373,
+      "headersMs": 1119.79781,
+      "streamSeconds": 8.817689923,
+      "providerOutputTokensPerSecond": 346.57603371022964,
+      "utf8BytesPerSecond": 1142.135875489438
+    },
+    {
+      "request": 40,
+      "start": 349749550940560,
+      "payloadBytes": 493747,
+      "payloadSHA256": "b1d53ca3679b7de97b713533b916ba646d4b4ce738e3d0ed06f7f4eed9f7c38d",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349750722023654,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349751271465512,
+      "firstReasoning": 349751271526031,
+      "streamUtf8Bytes": 2842,
+      "streamChars": 2832,
+      "firstAction": 349754446110011,
+      "end": 349754993132308,
+      "usage": {
+        "input": 240,
+        "output": 792,
+        "cacheRead": 161280,
+        "cacheWrite": 0,
+        "reasoning": 585,
+        "totalTokens": 162312,
+        "cost": {
+          "input": 7.2e-05,
+          "output": 0.0009504,
+          "cacheRead": 0.00096768,
+          "cacheWrite": 0,
+          "total": 0.00199008
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1720.524952,
+      "ttfReasoningMs": 1720.585471,
+      "ttfActionMs": 4895.169451,
+      "headersMs": 1171.083094,
+      "streamSeconds": 3.721666796,
+      "providerOutputTokensPerSecond": 212.80787437801564,
+      "utf8BytesPerSecond": 763.6363370988895
+    },
+    {
+      "request": 41,
+      "start": 349755001612691,
+      "payloadBytes": 496914,
+      "payloadSHA256": "2b7ea2988639894f5b0d33810da47b5da76b913c3aa176c8ee249b806e220694",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349756027062566,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349756680049171,
+      "firstReasoning": 349756680107339,
+      "streamUtf8Bytes": 7975,
+      "streamChars": 7975,
+      "firstAction": 349757191688560,
+      "end": 349764560386388,
+      "usage": {
+        "input": 163,
+        "output": 2617,
+        "cacheRead": 162176,
+        "cacheWrite": 0,
+        "reasoning": 85,
+        "totalTokens": 164956,
+        "cost": {
+          "input": 4.8899999999999996e-05,
+          "output": 0.0031404,
+          "cacheRead": 0.000973056,
+          "cacheWrite": 0,
+          "total": 0.004162356
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1678.43648,
+      "ttfReasoningMs": 1678.494648,
+      "ttfActionMs": 2190.075869,
+      "headersMs": 1025.449875,
+      "streamSeconds": 7.880337217,
+      "providerOutputTokensPerSecond": 332.0923874113445,
+      "utf8BytesPerSecond": 1012.0125294633061
+    },
+    {
+      "request": 42,
+      "start": 349764564091921,
+      "payloadBytes": 505453,
+      "payloadSHA256": "3af5fc762c5bb5a245da2536aee8ad877fbf5e91f1712063e324809220da1a5e",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349765675402350,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349766180156953,
+      "firstReasoning": 349766180224921,
+      "streamUtf8Bytes": 879,
+      "streamChars": 879,
+      "firstAction": 349767042781958,
+      "end": 349767374818813,
+      "usage": {
+        "input": 147,
+        "output": 268,
+        "cacheRead": 164864,
+        "cacheWrite": 0,
+        "reasoning": 143,
+        "totalTokens": 165279,
+        "cost": {
+          "input": 4.41e-05,
+          "output": 0.0003216,
+          "cacheRead": 0.000989184,
+          "cacheWrite": 0,
+          "total": 0.001354884
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1616.065032,
+      "ttfReasoningMs": 1616.133,
+      "ttfActionMs": 2478.690037,
+      "headersMs": 1111.310429,
+      "streamSeconds": 1.19466186,
+      "providerOutputTokensPerSecond": 224.33125972565992,
+      "utf8BytesPerSecond": 735.7730496225936
+    },
+    {
+      "request": 43,
+      "start": 349767401707779,
+      "payloadBytes": 507804,
+      "payloadSHA256": "05965bcc5f65729dbf99ab61a087a3b1d4b722bc4ddeb94b5d064ab122235b11",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349768404377215,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349768885061369,
+      "firstReasoning": 349768885119218,
+      "streamUtf8Bytes": 3760,
+      "streamChars": 3742,
+      "firstAction": 349773555262376,
+      "end": 349774125228802,
+      "usage": {
+        "input": 447,
+        "output": 1132,
+        "cacheRead": 165248,
+        "cacheWrite": 0,
+        "reasoning": 920,
+        "totalTokens": 166827,
+        "cost": {
+          "input": 0.0001341,
+          "output": 0.0013583999999999998,
+          "cacheRead": 0.000991488,
+          "cacheWrite": 0,
+          "total": 0.002483988
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1483.35359,
+      "ttfReasoningMs": 1483.411439,
+      "ttfActionMs": 6153.554597,
+      "headersMs": 1002.669436,
+      "streamSeconds": 5.240167433,
+      "providerOutputTokensPerSecond": 216.02363177772148,
+      "utf8BytesPerSecond": 717.5343246327145
+    },
+    {
+      "request": 44,
+      "start": 349774149784050,
+      "payloadBytes": 513303,
+      "payloadSHA256": "7b2ce2ae62935c431e59be90f1a927729fc201aada7672111c49d5727e364476",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349775560635168,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349776214475164,
+      "firstReasoning": 349776214532963,
+      "streamUtf8Bytes": 7840,
+      "streamChars": 7832,
+      "firstAction": 349782315959858,
+      "end": 349784923161686,
+      "usage": {
+        "input": 550,
+        "output": 2217,
+        "cacheRead": 166784,
+        "cacheWrite": 0,
+        "reasoning": 1206,
+        "totalTokens": 169551,
+        "cost": {
+          "input": 0.000165,
+          "output": 0.0026604,
+          "cacheRead": 0.001000704,
+          "cacheWrite": 0,
+          "total": 0.0038261039999999994
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2064.691114,
+      "ttfReasoningMs": 2064.748913,
+      "ttfActionMs": 8166.175808,
+      "headersMs": 1410.851118,
+      "streamSeconds": 8.708686522,
+      "providerOutputTokensPerSecond": 254.5734071836648,
+      "utf8BytesPerSecond": 900.2505693820173
+    },
+    {
+      "request": 45,
+      "start": 349784930331731,
+      "payloadBytes": 521660,
+      "payloadSHA256": "14e8e02f0ffd08f121346a1e8b6bacc1596950672ebe9fcd9662d99a929d0d54",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349786136602858,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349786665105901,
+      "firstReasoning": 349786665164560,
+      "streamUtf8Bytes": 1597,
+      "streamChars": 1589,
+      "firstAction": 349787902022767,
+      "end": 349788641269286,
+      "usage": {
+        "input": 138,
+        "output": 527,
+        "cacheRead": 169472,
+        "cacheWrite": 0,
+        "reasoning": 252,
+        "totalTokens": 170137,
+        "cost": {
+          "input": 4.14e-05,
+          "output": 0.0006324,
+          "cacheRead": 0.001016832,
+          "cacheWrite": 0,
+          "total": 0.001690632
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1734.77417,
+      "ttfReasoningMs": 1734.832829,
+      "ttfActionMs": 2971.691036,
+      "headersMs": 1206.271127,
+      "streamSeconds": 1.976163385,
+      "providerOutputTokensPerSecond": 266.67835463412354,
+      "utf8BytesPerSecond": 808.131560437752
+    },
+    {
+      "request": 46,
+      "start": 349788663818670,
+      "payloadBytes": 523794,
+      "payloadSHA256": "825d0b1b9cac8c4d1289435ec84758e2d0161fb1dd2f3f281b3965bd1ba44dbc",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349789826850823,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349790060543482,
+      "firstReasoning": 349790060596161,
+      "streamUtf8Bytes": 6236,
+      "streamChars": 6212,
+      "firstAction": 349797561583040,
+      "end": 349797819970838,
+      "usage": {
+        "input": 258,
+        "output": 1714,
+        "cacheRead": 169984,
+        "cacheWrite": 0,
+        "reasoning": 1620,
+        "totalTokens": 171956,
+        "cost": {
+          "input": 7.74e-05,
+          "output": 0.0020568,
+          "cacheRead": 0.001019904,
+          "cacheWrite": 0,
+          "total": 0.0031541040000000005
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1396.724812,
+      "ttfReasoningMs": 1396.777491,
+      "ttfActionMs": 8897.76437,
+      "headersMs": 1163.032153,
+      "streamSeconds": 7.759427356,
+      "providerOutputTokensPerSecond": 220.89258928039897,
+      "utf8BytesPerSecond": 803.6675535312531
+    },
+    {
+      "request": 47,
+      "start": 349797836692054,
+      "payloadBytes": 531950,
+      "payloadSHA256": "a30c1f43432bbfc544083f6091a24fefbb23cb9c636267dcad95484bc67765e6",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349799090157319,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349799565213878,
+      "firstReasoning": 349799565277867,
+      "streamUtf8Bytes": 1939,
+      "streamChars": 1935,
+      "firstAction": 349801282720156,
+      "end": 349802096807074,
+      "usage": {
+        "input": 603,
+        "output": 606,
+        "cacheRead": 171904,
+        "cacheWrite": 0,
+        "reasoning": 314,
+        "totalTokens": 173113,
+        "cost": {
+          "input": 0.00018089999999999998,
+          "output": 0.0007272,
+          "cacheRead": 0.001031424,
+          "cacheWrite": 0,
+          "total": 0.001939524
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1728.521824,
+      "ttfReasoningMs": 1728.585813,
+      "ttfActionMs": 3446.028102,
+      "headersMs": 1253.465265,
+      "streamSeconds": 2.531593196,
+      "providerOutputTokensPerSecond": 239.3749520884713,
+      "utf8BytesPerSecond": 765.9208450487555
+    },
+    {
+      "request": 48,
+      "start": 349802117567550,
+      "payloadBytes": 534443,
+      "payloadSHA256": "1bccbae6f50e0bd72d6c15a836892d7cc840725b1a09f3e4bef92da534a967ad",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349803322305645,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349803612526479,
+      "firstReasoning": 349803612579797,
+      "streamUtf8Bytes": 1119,
+      "streamChars": 1117,
+      "firstAction": 349804268702913,
+      "end": 349805016960874,
+      "usage": {
+        "input": 195,
+        "output": 401,
+        "cacheRead": 173056,
+        "cacheWrite": 0,
+        "reasoning": 110,
+        "totalTokens": 173652,
+        "cost": {
+          "input": 5.85e-05,
+          "output": 0.0004812,
+          "cacheRead": 0.001038336,
+          "cacheWrite": 0,
+          "total": 0.001578036
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1494.958929,
+      "ttfReasoningMs": 1495.012247,
+      "ttfActionMs": 2151.135363,
+      "headersMs": 1204.738095,
+      "streamSeconds": 1.404434395,
+      "providerOutputTokensPerSecond": 285.5241949553649,
+      "utf8BytesPerSecond": 796.7620303118538
+    },
+    {
+      "request": 49,
+      "start": 349805021018113,
+      "payloadBytes": 536005,
+      "payloadSHA256": "48b18a6fd602579da3c20510e82e712d43ad7f10af32f34131381e95e125098e",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349806363198004,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349806705322013,
+      "firstReasoning": 349806705365082,
+      "streamUtf8Bytes": 2950,
+      "streamChars": 2932,
+      "firstAction": 349809630669986,
+      "end": 349809953900968,
+      "usage": {
+        "input": 144,
+        "output": 756,
+        "cacheRead": 173568,
+        "cacheWrite": 0,
+        "reasoning": 653,
+        "totalTokens": 174468,
+        "cost": {
+          "input": 4.32e-05,
+          "output": 0.0009071999999999999,
+          "cacheRead": 0.001041408,
+          "cacheWrite": 0,
+          "total": 0.001991808
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1684.3039,
+      "ttfReasoningMs": 1684.346969,
+      "ttfActionMs": 4609.651873,
+      "headersMs": 1342.179891,
+      "streamSeconds": 3.248578955,
+      "providerOutputTokensPerSecond": 232.71713893129004,
+      "utf8BytesPerSecond": 908.0893648773883
+    },
+    {
+      "request": 50,
+      "start": 349899971430219,
+      "payloadBytes": 539319,
+      "payloadSHA256": "9ec715a08363ea54d01300d03ef1ab8393ee7b542022245b77b6269b62eb6dbf",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349901597434974,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349901989770256,
+      "firstReasoning": 349901989826165,
+      "streamUtf8Bytes": 590,
+      "streamChars": 588,
+      "firstAction": 349902674403507,
+      "end": 349903001676822,
+      "usage": {
+        "input": 158,
+        "output": 206,
+        "cacheRead": 174336,
+        "cacheWrite": 0,
+        "reasoning": 105,
+        "totalTokens": 174700,
+        "cost": {
+          "input": 4.74e-05,
+          "output": 0.0002472,
+          "cacheRead": 0.001046016,
+          "cacheWrite": 0,
+          "total": 0.0013406160000000002
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2018.340037,
+      "ttfReasoningMs": 2018.395946,
+      "ttfActionMs": 2702.973288,
+      "headersMs": 1626.004755,
+      "streamSeconds": 1.011906566,
+      "providerOutputTokensPerSecond": 203.57610763838053,
+      "utf8BytesPerSecond": 583.0577840128375
+    },
+    {
+      "request": 51,
+      "start": 349903009188025,
+      "payloadBytes": 540297,
+      "payloadSHA256": "089b056f47bda03bc1bea4a002479aa655d4fb4be8f5b3bbcc8fbb3392633df8",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349904157686208,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349904777471612,
+      "firstReasoning": 349904777523511,
+      "streamUtf8Bytes": 356,
+      "streamChars": 356,
+      "firstAction": 349905165159249,
+      "end": 349905515572957,
+      "usage": {
+        "input": 172,
+        "output": 155,
+        "cacheRead": 174592,
+        "cacheWrite": 0,
+        "reasoning": 40,
+        "totalTokens": 174919,
+        "cost": {
+          "input": 5.16e-05,
+          "output": 0.000186,
+          "cacheRead": 0.001047552,
+          "cacheWrite": 0,
+          "total": 0.001285152
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1768.283587,
+      "ttfReasoningMs": 1768.335486,
+      "ttfActionMs": 2155.971224,
+      "headersMs": 1148.498183,
+      "streamSeconds": 0.738101345,
+      "providerOutputTokensPerSecond": 209.9982625014726,
+      "utf8BytesPerSecond": 482.31859000338227
+    },
+    {
+      "request": 52,
+      "start": 349980524829092,
+      "payloadBytes": 541559,
+      "payloadSHA256": "aa4ad60aa26de550cc588cb6a68bc2a638a2ddf5cd8c20066feb0766dbe1e737",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349982044097678,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349982339644563,
+      "firstReasoning": 349982339707881,
+      "streamUtf8Bytes": 619,
+      "streamChars": 619,
+      "firstAction": 349982879038988,
+      "end": 349983204587541,
+      "usage": {
+        "input": 345,
+        "output": 204,
+        "cacheRead": 174848,
+        "cacheWrite": 0,
+        "reasoning": 100,
+        "totalTokens": 175397,
+        "cost": {
+          "input": 0.0001035,
+          "output": 0.0002448,
+          "cacheRead": 0.0010490879999999999,
+          "cacheWrite": 0,
+          "total": 0.0013973879999999998
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1814.815471,
+      "ttfReasoningMs": 1814.878789,
+      "ttfActionMs": 2354.209896,
+      "headersMs": 1519.268586,
+      "streamSeconds": 0.864942978,
+      "providerOutputTokensPerSecond": 235.85369809199145,
+      "utf8BytesPerSecond": 715.6541133281505
+    },
+    {
+      "request": 53,
+      "start": 349983212824390,
+      "payloadBytes": 544993,
+      "payloadSHA256": "107703513b52627b69b1324b08e08c0a99b91588b90a5affde345767a17354fa",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349984438146251,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349984660679163,
+      "firstReasoning": 349984660737322,
+      "streamUtf8Bytes": 692,
+      "streamChars": 692,
+      "firstAction": 349985126652880,
+      "end": 349985519028291,
+      "usage": {
+        "input": 1087,
+        "output": 218,
+        "cacheRead": 175360,
+        "cacheWrite": 0,
+        "reasoning": 81,
+        "totalTokens": 176665,
+        "cost": {
+          "input": 0.0003261,
+          "output": 0.00026159999999999996,
+          "cacheRead": 0.00105216,
+          "cacheWrite": 0,
+          "total": 0.00163986
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1447.854773,
+      "ttfReasoningMs": 1447.912932,
+      "ttfActionMs": 1913.82849,
+      "headersMs": 1225.321861,
+      "streamSeconds": 0.858349128,
+      "providerOutputTokensPerSecond": 253.97590897302106,
+      "utf8BytesPerSecond": 806.1987569235348
+    },
+    {
+      "request": 54,
+      "start": 349985548916439,
+      "payloadBytes": 568081,
+      "payloadSHA256": "04a64c5999fcee21b97758a6be96813f7e44bb2aab763781f560fe29930cbe52",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 349986636596868,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 349986941415149,
+      "firstReasoning": 349986941455019,
+      "streamUtf8Bytes": 883,
+      "streamChars": 879,
+      "firstAction": 349987561880854,
+      "end": 349988098768689,
+      "usage": {
+        "input": 5888,
+        "output": 256,
+        "cacheRead": 176640,
+        "cacheWrite": 0,
+        "reasoning": 100,
+        "totalTokens": 182784,
+        "cost": {
+          "input": 0.0017664,
+          "output": 0.0003072,
+          "cacheRead": 0.00105984,
+          "cacheWrite": 0,
+          "total": 0.0031334400000000004
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1392.49871,
+      "ttfReasoningMs": 1392.53858,
+      "ttfActionMs": 2012.964415,
+      "headersMs": 1087.680429,
+      "streamSeconds": 1.15735354,
+      "providerOutputTokensPerSecond": 221.1942947009952,
+      "utf8BytesPerSecond": 762.9475086756983
+    },
+    {
+      "request": 55,
+      "start": 350008106771335,
+      "payloadBytes": 569330,
+      "payloadSHA256": "7ade208e6211e4b97a7a7b6e0ed54957ffc65997cdbedab4ea05d7cfb1a86608",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350009759407021,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350010204816971,
+      "firstReasoning": 350010204862140,
+      "streamUtf8Bytes": 445,
+      "streamChars": 443,
+      "firstAction": 350010564944685,
+      "end": 350010853662808,
+      "usage": {
+        "input": 175,
+        "output": 164,
+        "cacheRead": 182656,
+        "cacheWrite": 0,
+        "reasoning": 58,
+        "totalTokens": 182995,
+        "cost": {
+          "input": 5.2499999999999995e-05,
+          "output": 0.00019679999999999999,
+          "cacheRead": 0.001095936,
+          "cacheWrite": 0,
+          "total": 0.001345236
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2098.045636,
+      "ttfReasoningMs": 2098.090805,
+      "ttfActionMs": 2458.17335,
+      "headersMs": 1652.635686,
+      "streamSeconds": 0.648845837,
+      "providerOutputTokensPerSecond": 252.75649568512222,
+      "utf8BytesPerSecond": 685.8331742675572
+    },
+    {
+      "request": 56,
+      "start": 350010861815481,
+      "payloadBytes": 570694,
+      "payloadSHA256": "f2c108d7f8e92d461fc8401a3a9b5ce0cec226728141c8e25ce3b5cab9654fd7",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350012026760068,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350012491419019,
+      "firstReasoning": 350012491498608,
+      "streamUtf8Bytes": 1549,
+      "streamChars": 1537,
+      "firstAction": 350014050571487,
+      "end": 350014491360729,
+      "usage": {
+        "input": 312,
+        "output": 470,
+        "cacheRead": 182912,
+        "cacheWrite": 0,
+        "reasoning": 300,
+        "totalTokens": 183694,
+        "cost": {
+          "input": 9.36e-05,
+          "output": 0.0005639999999999999,
+          "cacheRead": 0.001097472,
+          "cacheWrite": 0,
+          "total": 0.0017550719999999999
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1629.603538,
+      "ttfReasoningMs": 1629.683127,
+      "ttfActionMs": 3188.756006,
+      "headersMs": 1164.944587,
+      "streamSeconds": 1.99994171,
+      "providerOutputTokensPerSecond": 235.00684927462208,
+      "utf8BytesPerSecond": 774.5225734604035
+    },
+    {
+      "request": 57,
+      "start": 350044499281428,
+      "payloadBytes": 573270,
+      "payloadSHA256": "fa477305363b55d3f410d16b0f2f262b95f718760c93644cd03ef5cbd1d54a95",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350045930064975,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350046590121974,
+      "firstReasoning": 350046590179043,
+      "streamUtf8Bytes": 1979,
+      "streamChars": 1969,
+      "firstAction": 350048860233000,
+      "end": 350049121819357,
+      "usage": {
+        "input": 245,
+        "output": 565,
+        "cacheRead": 183680,
+        "cacheWrite": 0,
+        "reasoning": 484,
+        "totalTokens": 184490,
+        "cost": {
+          "input": 7.35e-05,
+          "output": 0.000678,
+          "cacheRead": 0.00110208,
+          "cacheWrite": 0,
+          "total": 0.00185358
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2090.840546,
+      "ttfReasoningMs": 2090.897615,
+      "ttfActionMs": 4360.951572,
+      "headersMs": 1430.783547,
+      "streamSeconds": 2.531697383,
+      "providerOutputTokensPerSecond": 223.17043253032426,
+      "utf8BytesPerSecond": 781.6890017301092
+    },
+    {
+      "request": 58,
+      "start": 350049128640376,
+      "payloadBytes": 575900,
+      "payloadSHA256": "a57beda2dc639c466d9826c9950d6bbcba136549c1c4ba485f10ec912bbe6bc9",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350050391590448,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350050826655249,
+      "firstReasoning": 350050826709708,
+      "streamUtf8Bytes": 1022,
+      "streamChars": 1018,
+      "firstAction": 350051620498073,
+      "end": 350052086440646,
+      "usage": {
+        "input": 215,
+        "output": 330,
+        "cacheRead": 184448,
+        "cacheWrite": 0,
+        "reasoning": 151,
+        "totalTokens": 184993,
+        "cost": {
+          "input": 6.45e-05,
+          "output": 0.000396,
+          "cacheRead": 0.001106688,
+          "cacheWrite": 0,
+          "total": 0.001567188
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1698.014873,
+      "ttfReasoningMs": 1698.069332,
+      "ttfActionMs": 2491.857697,
+      "headersMs": 1262.950072,
+      "streamSeconds": 1.259785397,
+      "providerOutputTokensPerSecond": 261.9493770810871,
+      "utf8BytesPerSecond": 811.2492829602152
+    },
+    {
+      "request": 59,
+      "start": 350052106690926,
+      "payloadBytes": 577606,
+      "payloadSHA256": "7cde8ec70dfadb838b3e67c72c753805c8eccdf59d95cb773a9db423d3820ae4",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350053195433297,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350053587279907,
+      "firstReasoning": 350053587349956,
+      "streamUtf8Bytes": 1208,
+      "streamChars": 1204,
+      "firstAction": 350054708872391,
+      "end": 350055142905170,
+      "usage": {
+        "input": 174,
+        "output": 350,
+        "cacheRead": 184960,
+        "cacheWrite": 0,
+        "reasoning": 163,
+        "totalTokens": 185484,
+        "cost": {
+          "input": 5.2199999999999995e-05,
+          "output": 0.00041999999999999996,
+          "cacheRead": 0.00110976,
+          "cacheWrite": 0,
+          "total": 0.0015819599999999999
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1480.588981,
+      "ttfReasoningMs": 1480.65903,
+      "ttfActionMs": 2602.181465,
+      "headersMs": 1088.742371,
+      "streamSeconds": 1.555625263,
+      "providerOutputTokensPerSecond": 224.98991776787568,
+      "utf8BytesPerSecond": 776.536630467411
+    },
+    {
+      "request": 60,
+      "start": 350115151326892,
+      "payloadBytes": 579972,
+      "payloadSHA256": "fa1eb443f1e50ab464f78d3950c977e7afeffb21e8243adc9bf72beb8ae94fd8",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350117112260019,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350117702836611,
+      "firstReasoning": 350117702892561,
+      "streamUtf8Bytes": 1159,
+      "streamChars": 1159,
+      "firstAction": 350117996072755,
+      "end": 350119011765962,
+      "usage": {
+        "input": 310,
+        "output": 385,
+        "cacheRead": 185472,
+        "cacheWrite": 0,
+        "reasoning": 44,
+        "totalTokens": 186167,
+        "cost": {
+          "input": 9.3e-05,
+          "output": 0.00046199999999999995,
+          "cacheRead": 0.001112832,
+          "cacheWrite": 0,
+          "total": 0.001667832
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2551.509719,
+      "ttfReasoningMs": 2551.565669,
+      "ttfActionMs": 2844.745863,
+      "headersMs": 1960.933127,
+      "streamSeconds": 1.308929351,
+      "providerOutputTokensPerSecond": 294.13352195507457,
+      "utf8BytesPerSecond": 885.4564985608608
+    },
+    {
+      "request": 61,
+      "start": 350119030412551,
+      "payloadBytes": 584306,
+      "payloadSHA256": "0fa323d6d63611680d6717fa142f6e32b09cb99857a91a5061ecb17480becf07",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350120142490378,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350120806210778,
+      "firstReasoning": 350120806274177,
+      "streamUtf8Bytes": 10886,
+      "streamChars": 10852,
+      "firstAction": 350132952718273,
+      "end": 350133589640311,
+      "usage": {
+        "input": 1264,
+        "output": 2757,
+        "cacheRead": 186112,
+        "cacheWrite": 0,
+        "reasoning": 2553,
+        "totalTokens": 190133,
+        "cost": {
+          "input": 0.0003792,
+          "output": 0.0033084,
+          "cacheRead": 0.001116672,
+          "cacheWrite": 0,
+          "total": 0.004804272
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1775.798227,
+      "ttfReasoningMs": 1775.861626,
+      "ttfActionMs": 13922.305722,
+      "headersMs": 1112.077827,
+      "streamSeconds": 12.783429533,
+      "providerOutputTokensPerSecond": 215.66982419568205,
+      "utf8BytesPerSecond": 851.5711665557471
+    },
+    {
+      "request": 62,
+      "start": 350158701161833,
+      "payloadBytes": 595830,
+      "payloadSHA256": "8b7d1db724207091a35017f1955a7ca9a5d9421b330c8a9a84f1792801bf59df",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350160421650409,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350160657159389,
+      "firstReasoning": 350160657209658,
+      "streamUtf8Bytes": 2735,
+      "streamChars": 2729,
+      "firstAction": 350163925682683,
+      "end": 350164171678432,
+      "usage": {
+        "input": 143,
+        "output": 746,
+        "cacheRead": 190080,
+        "cacheWrite": 0,
+        "reasoning": 644,
+        "totalTokens": 190969,
+        "cost": {
+          "input": 4.29e-05,
+          "output": 0.0008952,
+          "cacheRead": 0.00114048,
+          "cacheWrite": 0,
+          "total": 0.00207858
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1955.997556,
+      "ttfReasoningMs": 1956.047825,
+      "ttfActionMs": 5224.52085,
+      "headersMs": 1720.488576,
+      "streamSeconds": 3.514519043,
+      "providerOutputTokensPerSecond": 212.26232974490102,
+      "utf8BytesPerSecond": 778.2003644132766
+    },
+    {
+      "request": 63,
+      "start": 350204181205857,
+      "payloadBytes": 600152,
+      "payloadSHA256": "8f75555c34584ad4af81b9cda86ff8f290821311425da800bd2834d31bb708d6",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350205912152930,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350206297692664,
+      "firstReasoning": 350206297740014,
+      "streamUtf8Bytes": 602,
+      "streamChars": 602,
+      "firstAction": 350206744097738,
+      "end": 350207093661416,
+      "usage": {
+        "input": 643,
+        "output": 189,
+        "cacheRead": 190848,
+        "cacheWrite": 0,
+        "reasoning": 64,
+        "totalTokens": 191680,
+        "cost": {
+          "input": 0.0001929,
+          "output": 0.00022679999999999998,
+          "cacheRead": 0.001145088,
+          "cacheWrite": 0,
+          "total": 0.0015647880000000001
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2116.486807,
+      "ttfReasoningMs": 2116.534157,
+      "ttfActionMs": 2562.891881,
+      "headersMs": 1730.947073,
+      "streamSeconds": 0.795968752,
+      "providerOutputTokensPerSecond": 237.44650719655388,
+      "utf8BytesPerSecond": 756.3110969964309
+    },
+    {
+      "request": 64,
+      "start": 350207102862580,
+      "payloadBytes": 603595,
+      "payloadSHA256": "86f67f27488753eb4f50737604d21a15c234a5e73273e86a876d6a65555cabd0",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350208617696370,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350209105671128,
+      "firstReasoning": 350209105722667,
+      "streamUtf8Bytes": 6569,
+      "streamChars": 6567,
+      "firstAction": 350212104512962,
+      "end": 350215839792747,
+      "usage": {
+        "input": 1156,
+        "output": 1866,
+        "cacheRead": 191616,
+        "cacheWrite": 0,
+        "reasoning": 606,
+        "totalTokens": 194638,
+        "cost": {
+          "input": 0.00034679999999999997,
+          "output": 0.0022392,
+          "cacheRead": 0.001149696,
+          "cacheWrite": 0,
+          "total": 0.0037356959999999997
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2002.808548,
+      "ttfReasoningMs": 2002.860087,
+      "ttfActionMs": 5001.650382,
+      "headersMs": 1514.83379,
+      "streamSeconds": 6.734121619,
+      "providerOutputTokensPerSecond": 277.096272620793,
+      "utf8BytesPerSecond": 975.4798579024595
+    },
+    {
+      "request": 65,
+      "start": 350215844739694,
+      "payloadBytes": 610697,
+      "payloadSHA256": "9e95aee5904a6255f9445efa4c0daf21f6495167c808a14204f62ee6a114bc6b",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350217363192490,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350218052983955,
+      "firstAction": 350218053051624,
+      "streamUtf8Bytes": 482,
+      "streamChars": 482,
+      "end": 350218444360532,
+      "usage": {
+        "input": 260,
+        "output": 168,
+        "cacheRead": 194432,
+        "cacheWrite": 0,
+        "reasoning": 0,
+        "totalTokens": 194860,
+        "cost": {
+          "input": 7.8e-05,
+          "output": 0.0002016,
+          "cacheRead": 0.001166592,
+          "cacheWrite": 0,
+          "total": 0.0014461919999999998
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2208.244261,
+      "ttfActionMs": 2208.31193,
+      "headersMs": 1518.452796,
+      "streamSeconds": 0.391376577,
+      "providerOutputTokensPerSecond": 429.2540991792669,
+      "utf8BytesPerSecond": 1231.5504512167063
+    },
+    {
+      "request": 66,
+      "start": 350218505058120,
+      "payloadBytes": 612790,
+      "payloadSHA256": "507b6683a1eed02ef7f543bc243c5ceb2793e60553253fb6da0af3d690893a1f",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350219871962474,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350220427904710,
+      "firstReasoning": 350220428055437,
+      "streamUtf8Bytes": 2664,
+      "streamChars": 2652,
+      "firstAction": 350222956285118,
+      "end": 350223675167989,
+      "usage": {
+        "input": 589,
+        "output": 701,
+        "cacheRead": 194816,
+        "cacheWrite": 0,
+        "reasoning": 483,
+        "totalTokens": 196106,
+        "cost": {
+          "input": 0.00017669999999999999,
+          "output": 0.0008412,
+          "cacheRead": 0.001168896,
+          "cacheWrite": 0,
+          "total": 0.002186796
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1922.84659,
+      "ttfReasoningMs": 1922.997317,
+      "ttfActionMs": 4451.226998,
+      "headersMs": 1366.904354,
+      "streamSeconds": 3.247263279,
+      "providerOutputTokensPerSecond": 215.8740883541399,
+      "utf8BytesPerSecond": 820.3831260705117
+    },
+    {
+      "request": 67,
+      "start": 350223696030624,
+      "payloadBytes": 616212,
+      "payloadSHA256": "838917348ee9d83e36419163ae25307e5aa8bd10d8e33a277f188b40839ce99b",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350224987582818,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350225699961047,
+      "firstReasoning": 350225700018116,
+      "streamUtf8Bytes": 2519,
+      "streamChars": 2513,
+      "firstAction": 350228668055375,
+      "end": 350228920178519,
+      "usage": {
+        "input": 172,
+        "output": 664,
+        "cacheRead": 196096,
+        "cacheWrite": 0,
+        "reasoning": 573,
+        "totalTokens": 196932,
+        "cost": {
+          "input": 5.16e-05,
+          "output": 0.0007968,
+          "cacheRead": 0.001176576,
+          "cacheWrite": 0,
+          "total": 0.002024976
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 2003.930423,
+      "ttfReasoningMs": 2003.987492,
+      "ttfActionMs": 4972.024751,
+      "headersMs": 1291.552194,
+      "streamSeconds": 3.220217472,
+      "providerOutputTokensPerSecond": 206.19725399713627,
+      "utf8BytesPerSecond": 782.2453054499792
+    },
+    {
+      "request": 68,
+      "start": 350228984120884,
+      "payloadBytes": 619177,
+      "payloadSHA256": "fb470fa7fa09a2c5ef14295a448ca5f003c1dcd5cac2f786ccdeebb7e0f99503",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350230214934292,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350230879271441,
+      "firstReasoning": 350230879355070,
+      "streamUtf8Bytes": 1125,
+      "streamChars": 1121,
+      "firstAction": 350232090010659,
+      "end": 350232315581719,
+      "usage": {
+        "input": 247,
+        "output": 384,
+        "cacheRead": 196736,
+        "cacheWrite": 0,
+        "reasoning": 282,
+        "totalTokens": 197367,
+        "cost": {
+          "input": 7.41e-05,
+          "output": 0.0004608,
+          "cacheRead": 0.0011804159999999999,
+          "cacheWrite": 0,
+          "total": 0.0017153159999999997
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1895.150557,
+      "ttfReasoningMs": 1895.234186,
+      "ttfActionMs": 3105.889775,
+      "headersMs": 1230.813408,
+      "streamSeconds": 1.436310278,
+      "providerOutputTokensPerSecond": 267.35170379390684,
+      "utf8BytesPerSecond": 783.2569447087114
+    },
+    {
+      "request": 69,
+      "start": 350232325640222,
+      "payloadBytes": 622971,
+      "payloadSHA256": "3c84cf85d661d9afbf1ba5505303f286c1a95e4e3859e64cce29ad05c36dba07",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350233550962632,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350234077135102,
+      "firstReasoning": 350234077188031,
+      "streamUtf8Bytes": 579,
+      "streamChars": 579,
+      "firstAction": 350234725615502,
+      "end": 350234898374915,
+      "usage": {
+        "input": 891,
+        "output": 197,
+        "cacheRead": 197248,
+        "cacheWrite": 0,
+        "reasoning": 115,
+        "totalTokens": 198336,
+        "cost": {
+          "input": 0.0002673,
+          "output": 0.0002364,
+          "cacheRead": 0.001183488,
+          "cacheWrite": 0,
+          "total": 0.0016871879999999998
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1751.49488,
+      "ttfReasoningMs": 1751.547809,
+      "ttfActionMs": 2399.97528,
+      "headersMs": 1225.32241,
+      "streamSeconds": 0.821239813,
+      "providerOutputTokensPerSecond": 239.88120994811047,
+      "utf8BytesPerSecond": 705.031576446477
+    },
+    {
+      "request": 70,
+      "start": 350234906059223,
+      "payloadBytes": 628801,
+      "payloadSHA256": "cb94b45fac44a21eea0c8b721ddb10c81513e13a1833cb1189c01a2a305c4d34",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350236109086993,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350236224872747,
+      "firstReasoning": 350236224923816,
+      "streamUtf8Bytes": 2270,
+      "streamChars": 2264,
+      "firstAction": 350238623900665,
+      "end": 350239112629730,
+      "usage": {
+        "input": 1402,
+        "output": 625,
+        "cacheRead": 198272,
+        "cacheWrite": 0,
+        "reasoning": 443,
+        "totalTokens": 200299,
+        "cost": {
+          "input": 0.0004206,
+          "output": 0.00075,
+          "cacheRead": 0.001189632,
+          "cacheWrite": 0,
+          "total": 0.002360232
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1318.813524,
+      "ttfReasoningMs": 1318.864593,
+      "ttfActionMs": 3717.841442,
+      "headersMs": 1203.02777,
+      "streamSeconds": 2.887756983,
+      "providerOutputTokensPerSecond": 216.43095443256695,
+      "utf8BytesPerSecond": 786.0772264990832
+    },
+    {
+      "request": 71,
+      "start": 350239131315338,
+      "payloadBytes": 632111,
+      "payloadSHA256": "bf535a83dce65d1578e802ea1f07443c7ec2bd0cb90fc944375519996fd3e47e",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350240331700236,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350240634928252,
+      "firstReasoning": 350240634972561,
+      "streamUtf8Bytes": 8281,
+      "streamChars": 8233,
+      "firstAction": 350242574808723,
+      "end": 350251285920001,
+      "usage": {
+        "input": 384,
+        "output": 2509,
+        "cacheRead": 200192,
+        "cacheWrite": 0,
+        "reasoning": 505,
+        "totalTokens": 203085,
+        "cost": {
+          "input": 0.0001152,
+          "output": 0.0030107999999999997,
+          "cacheRead": 0.001201152,
+          "cacheWrite": 0,
+          "total": 0.004327152
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1503.612914,
+      "ttfReasoningMs": 1503.657223,
+      "ttfActionMs": 3443.493385,
+      "headersMs": 1200.384898,
+      "streamSeconds": 10.650991749,
+      "providerOutputTokensPerSecond": 235.5649181904178,
+      "utf8BytesPerSecond": 777.4862843901354
+    },
+    {
+      "request": 72,
+      "start": 350251290911719,
+      "payloadBytes": 640877,
+      "payloadSHA256": "2847f6da6da1ad638cad53cd2e94e72ff7206e623c7e5370a5a468adfe9e8780",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350252370714050,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350252680175434,
+      "firstReasoning": 350252680253393,
+      "streamUtf8Bytes": 2862,
+      "streamChars": 2856,
+      "firstAction": 350255369490512,
+      "end": 350255763733642,
+      "usage": {
+        "input": 247,
+        "output": 734,
+        "cacheRead": 202880,
+        "cacheWrite": 0,
+        "reasoning": 578,
+        "totalTokens": 203861,
+        "cost": {
+          "input": 7.41e-05,
+          "output": 0.0008807999999999999,
+          "cacheRead": 0.00121728,
+          "cacheWrite": 0,
+          "total": 0.00217218
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1389.263715,
+      "ttfReasoningMs": 1389.341674,
+      "ttfActionMs": 4078.578793,
+      "headersMs": 1079.802331,
+      "streamSeconds": 3.083558208,
+      "providerOutputTokensPerSecond": 238.03669348472374,
+      "utf8BytesPerSecond": 928.1485241870291
+    },
+    {
+      "request": 73,
+      "start": 350255769794104,
+      "payloadBytes": 644151,
+      "payloadSHA256": "46c11794a211d115c7fa9109296102e93747b1810144160d976951b6aa91da9c",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350256864542076,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350257262045183,
+      "firstAction": 350257262091793,
+      "streamUtf8Bytes": 521,
+      "streamChars": 521,
+      "end": 350258131548159,
+      "usage": {
+        "input": 260,
+        "output": 167,
+        "cacheRead": 203648,
+        "cacheWrite": 0,
+        "reasoning": 0,
+        "totalTokens": 204075,
+        "cost": {
+          "input": 7.8e-05,
+          "output": 0.0002004,
+          "cacheRead": 0.001221888,
+          "cacheWrite": 0,
+          "total": 0.001500288
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1492.251079,
+      "ttfActionMs": 1492.297689,
+      "headersMs": 1094.747972,
+      "streamSeconds": 0.869502976,
+      "providerOutputTokensPerSecond": 192.06374746209033,
+      "utf8BytesPerSecond": 599.1928887889165
+    },
+    {
+      "request": 74,
+      "start": 350258272102407,
+      "payloadBytes": 646694,
+      "payloadSHA256": "cbbfc598db91b240b2a195ae01f39e4f33c6af21e91364e176f26481800adf36",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350259317936093,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350259756659154,
+      "firstReasoning": 350259756695764,
+      "streamUtf8Bytes": 1193,
+      "streamChars": 1191,
+      "firstAction": 350260269744259,
+      "end": 350261335761870,
+      "usage": {
+        "input": 530,
+        "output": 349,
+        "cacheRead": 204032,
+        "cacheWrite": 0,
+        "reasoning": 83,
+        "totalTokens": 204911,
+        "cost": {
+          "input": 0.000159,
+          "output": 0.0004188,
+          "cacheRead": 0.001224192,
+          "cacheWrite": 0,
+          "total": 0.001801992
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1484.556747,
+      "ttfReasoningMs": 1484.593357,
+      "ttfActionMs": 1997.641852,
+      "headersMs": 1045.833686,
+      "streamSeconds": 1.579102716,
+      "providerOutputTokensPerSecond": 221.01158871035722,
+      "utf8BytesPerSecond": 755.4923361932841
+    },
+    {
+      "request": 75,
+      "start": 350261381613422,
+      "payloadBytes": 648307,
+      "payloadSHA256": "8679f66a9670ecf20ae4b2673965c11439c8a490d1deca1e093daf4c72676301",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350262459631910,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350263057673195,
+      "firstReasoning": 350263057726994,
+      "streamUtf8Bytes": 940,
+      "streamChars": 940,
+      "firstAction": 350263719937482,
+      "end": 350264205138921,
+      "usage": {
+        "input": 162,
+        "output": 286,
+        "cacheRead": 204800,
+        "cacheWrite": 0,
+        "reasoning": 115,
+        "totalTokens": 205248,
+        "cost": {
+          "input": 4.8599999999999995e-05,
+          "output": 0.0003432,
+          "cacheRead": 0.0012288,
+          "cacheWrite": 0,
+          "total": 0.0016205999999999998
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1676.059773,
+      "ttfReasoningMs": 1676.113572,
+      "ttfActionMs": 2338.32406,
+      "headersMs": 1078.018488,
+      "streamSeconds": 1.147465726,
+      "providerOutputTokensPerSecond": 249.24491731616214,
+      "utf8BytesPerSecond": 819.1965813887847
+    },
+    {
+      "request": 76,
+      "start": 350264339751331,
+      "payloadBytes": 650403,
+      "payloadSHA256": "d8109cdc9b9e7f7f26157d9149589af4f1b700ec8116cdd704e47d7783c399e3",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350265450456174,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350265777261900,
+      "firstReasoning": 350265777307189,
+      "streamUtf8Bytes": 1322,
+      "streamChars": 1318,
+      "firstAction": 350267044649971,
+      "end": 350267533351212,
+      "usage": {
+        "input": 381,
+        "output": 379,
+        "cacheRead": 205184,
+        "cacheWrite": 0,
+        "reasoning": 211,
+        "totalTokens": 205944,
+        "cost": {
+          "input": 0.0001143,
+          "output": 0.0004548,
+          "cacheRead": 0.001231104,
+          "cacheWrite": 0,
+          "total": 0.0018002040000000001
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1437.510569,
+      "ttfReasoningMs": 1437.555858,
+      "ttfActionMs": 2704.89864,
+      "headersMs": 1110.704843,
+      "streamSeconds": 1.756089312,
+      "providerOutputTokensPerSecond": 215.82045822507686,
+      "utf8BytesPerSecond": 752.8090917507958
+    },
+    {
+      "request": 77,
+      "start": 350267557411328,
+      "payloadBytes": 652888,
+      "payloadSHA256": "e90758ed046dc337d5ecdae356775413cd7e0f2b1810fd2d8f2aafbc4010f374",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350268744325267,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350269310733213,
+      "firstReasoning": 350269310782942,
+      "streamUtf8Bytes": 1180,
+      "streamChars": 1176,
+      "firstAction": 350269724039101,
+      "end": 350270661747522,
+      "usage": {
+        "input": 379,
+        "output": 346,
+        "cacheRead": 205824,
+        "cacheWrite": 0,
+        "reasoning": 80,
+        "totalTokens": 206549,
+        "cost": {
+          "input": 0.0001137,
+          "output": 0.00041519999999999995,
+          "cacheRead": 0.001234944,
+          "cacheWrite": 0,
+          "total": 0.0017638439999999999
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1753.321885,
+      "ttfReasoningMs": 1753.371614,
+      "ttfActionMs": 2166.627773,
+      "headersMs": 1186.913939,
+      "streamSeconds": 1.351014309,
+      "providerOutputTokensPerSecond": 256.1038752106955,
+      "utf8BytesPerSecond": 873.4178403139326
+    },
+    {
+      "request": 78,
+      "start": 350270744400650,
+      "payloadBytes": 654605,
+      "payloadSHA256": "95c40ddd2955ae2ec1fc0255adffe7904fa9a06b44c5c702bb826f9881507b15",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350272196264032,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350272710021704,
+      "firstReasoning": 350272710077603,
+      "streamUtf8Bytes": 3637,
+      "streamChars": 3615,
+      "firstAction": 350276953443638,
+      "end": 350277417465927,
+      "usage": {
+        "input": 168,
+        "output": 975,
+        "cacheRead": 206464,
+        "cacheWrite": 0,
+        "reasoning": 809,
+        "totalTokens": 207607,
+        "cost": {
+          "input": 5.04e-05,
+          "output": 0.00117,
+          "cacheRead": 0.001238784,
+          "cacheWrite": 0,
+          "total": 0.0024591839999999997
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1965.621054,
+      "ttfReasoningMs": 1965.676953,
+      "ttfActionMs": 6209.042988,
+      "headersMs": 1451.863382,
+      "streamSeconds": 4.707444223,
+      "providerOutputTokensPerSecond": 207.1187578253755,
+      "utf8BytesPerSecond": 772.606074062452
+    },
+    {
+      "request": 79,
+      "start": 350277440280062,
+      "payloadBytes": 659255,
+      "payloadSHA256": "dbfe6f3de5c4d8c450e95e7fe01d9cd7f9318bdc8ca39daaf232b741c53de407",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350278677957084,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350279108231738,
+      "firstReasoning": 350279108274687,
+      "streamUtf8Bytes": 5610,
+      "streamChars": 5568,
+      "firstAction": 350284500586274,
+      "end": 350285650121210,
+      "usage": {
+        "input": 343,
+        "output": 1468,
+        "cacheRead": 207488,
+        "cacheWrite": 0,
+        "reasoning": 1062,
+        "totalTokens": 209299,
+        "cost": {
+          "input": 0.0001029,
+          "output": 0.0017615999999999999,
+          "cacheRead": 0.001244928,
+          "cacheWrite": 0,
+          "total": 0.003109428
+        }
+      },
+      "stopReason": "toolUse",
+      "ttfAnyMs": 1667.951676,
+      "ttfReasoningMs": 1667.994625,
+      "ttfActionMs": 7060.306212,
+      "headersMs": 1237.677022,
+      "streamSeconds": 6.541889472,
+      "providerOutputTokensPerSecond": 224.40000037958453,
+      "utf8BytesPerSecond": 857.5504101699381
+    },
+    {
+      "request": 80,
+      "start": 350285670636629,
+      "payloadBytes": 665322,
+      "payloadSHA256": "286e844ffa0243e112afb315242388c1eb3828f64acd6e2fc23876b95113c9e6",
+      "wireThinking": {
+        "type": "enabled"
+      },
+      "wireReasoningEffort": "max",
+      "headers": 350286882719327,
+      "httpStatuses": [
+        200
+      ],
+      "firstAny": 350287294422940,
+      "firstReasoning": 350287294469010,
+      "streamUtf8Bytes": 3450,
+      "streamChars": 3402,
+      "firstAction": 350288627215503,
+      "end": 350291349338616,
+      "usage": {
+        "input": 191,
+        "output": 993,
+        "cacheRead": 209152,
+        "cacheWrite": 0,
+        "reasoning": 300,
+        "totalTokens": 210336,
+        "cost": {
+          "input": 5.73e-05,
+          "output": 0.0011916,
+          "cacheRead": 0.001254912,
+          "cacheWrite": 0,
+          "total": 0.002503812
+        }
+      },
+      "stopReason": "stop",
+      "ttfAnyMs": 1623.786311,
+      "ttfReasoningMs": 1623.832381,
+      "ttfActionMs": 2956.578874,
+      "headersMs": 1212.082698,
+      "streamSeconds": 4.054915676,
+      "providerOutputTokensPerSecond": 244.88795312743758,
+      "utf8BytesPerSecond": 850.8191724971397
+    }
+  ]
+}

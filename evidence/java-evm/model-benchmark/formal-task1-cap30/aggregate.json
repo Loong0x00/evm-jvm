@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "taskSHA256": "c342e271fd4777450a1589306001257503445f305261648a65d0f3ae63c86938",
+  "base": "5b55d0ce6",
+  "machineEligibility": {
+    "terra": "pass",
+    "deepseek": "pass"
+  },
+  "review": {
+    "terra": {
+      "decisions": [
+        "accept",
+        "accept",
+        "accept"
+      ],
+      "dimensions": {
+        "correctness": {
+          "scores": [
+            9.3,
+            9.6,
+            9.7
+          ],
+          "median": 9.6,
+          "range": 0.3999999999999986
+        },
+        "architecture_understanding": {
+          "scores": [
+            9.5,
+            9.5,
+            9.6
+          ],
+          "median": 9.5,
+          "range": 0.09999999999999964
+        },
+        "modification_minimality": {
+          "scores": [
+            9.8,
+            9.8,
+            9.8
+          ],
+          "median": 9.8,
+          "range": 0.0
+        },
+        "robustness": {
+          "scores": [
+            9.3,
+            9.5,
+            9.5
+          ],
+          "median": 9.5,
+          "range": 0.1999999999999993
+        },
+        "maintainability": {
+          "scores": [
+            8.8,
+            8.8,
+            9.3
+          ],
+          "median": 8.8,
+          "range": 0.5
+        },
+        "task_completion": {
+          "scores": [
+            8.8,
+            8.6,
+            9.6
+          ],
+          "median": 8.8,
+          "range": 1.0
+        }
+      }
+    },
+    "deepseek": {
+      "decisions": [
+        "reject",
+        "reject",
+        "reject"
+      ],
+      "dimensions": {
+        "correctness": {
+          "scores": [
+            8.5,
+            7.5,
+            9.0
+          ],
+          "median": 8.5,
+          "range": 1.5
+        },
+        "architecture_understanding": {
+          "scores": [
+            9.4,
+            9.0,
+            9.4
+          ],
+          "median": 9.4,
+          "range": 0.40000000000000036
+        },
+        "modification_minimality": {
+          "scores": [
+            9.4,
+            9.6,
+            9.1
+          ],
+          "median": 9.4,
+          "range": 0.5
+        },
+        "robustness": {
+          "scores": [
+            8.8,
+            8.0,
+            9.0
+          ],
+          "median": 8.8,
+          "range": 1.0
+        },
+        "maintainability": {
+          "scores": [
+            6.8,
+            6.5,
+            7.2
+          ],
+          "median": 6.8,
+          "range": 0.7000000000000002
+        },
+        "task_completion": {
+          "scores": [
+            6.8,
+            6.0,
+            7.0
+          ],
+          "median": 6.8,
+          "range": 1.0
+        }
+      }
+    }
+  },
+  "winner": "terra",
+  "winnerReason": "All three blind judges accepted Terra and rejected DeepSeek; DeepSeek runnable tooling violated the explicit no-other-worktrees constraint.",
+  "selectedCandidateCommits": [
+    "d4b595f36",
+    "507f791f0"
+  ],
+  "parentIntegratedCommits": [
+    "2048f2e7c",
+    "de60a3245"
+  ],
+  "parentAmendment": "Corrected stale non-semantic diagnostic-bound wording from retained112 to cap30 bound113.",
+  "performance": {
+    "terra": {
+      "model": "openai-codex/gpt-5.6-terra",
+      "reasoning": "xhigh",
+      "outerWallSeconds": 1148.433051911008,
+      "agentWallSeconds": 1145.081555278,
+      "maxChildRSSKiB": 950740,
+      "requests": 42,
+      "usage": {
+        "input": 188282,
+        "output": 38240,
+        "cacheRead": 4607488,
+        "cacheWrite": 0,
+        "totalTokens": 4834010
+      },
+      "medianTTFAnyMs": 2376.242757,
+      "medianTTFActionMs": 7661.8105915,
+      "outputTokensPerSecond": 51.58039737425183,
+      "utf8BytesPerSecond": 97.10711212780173,
+      "toolCalls": 58,
+      "toolErrors": 4,
+      "summedToolSeconds": 297.368881795,
+      "providerReportedCostUSD": 1.7569416
+    },
+    "deepseek": {
+      "model": "deepseek/deepseek-v4.1-flash",
+      "reasoning": "max",
+      "outerWallSeconds": 802.1790217439993,
+      "agentWallSeconds": 801.910617293,
+      "maxChildRSSKiB": 301224,
+      "requests": 80,
+      "usage": {
+        "input": 140259,
+        "output": 78429,
+        "cacheRead": 11410432,
+        "cacheWrite": 0,
+        "totalTokens": 11629120
+      },
+      "medianTTFAnyMs": 1499.2859214999999,
+      "medianTTFActionMs": 3127.0288554999997,
+      "outputTokensPerSecond": 241.9520163233038,
+      "utf8BytesPerSecond": 825.9143398754443,
+      "toolCalls": 107,
+      "toolErrors": 5,
+      "summedToolSeconds": 353.17720168200003,
+      "providerReportedCostUSD": 0.20465509199999998
+    }
+  },
+  "caveats": [
+    "DeepSeek was faster and cheaper but used 2.4x total tokens, more tool calls, and an absolute sibling-worktree dependency prohibited by the task.",
+    "Blind review packets intentionally included concise summaries/diffs rather than entire candidate archives; machine gates were authoritative."
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "task": "formal-task1-independent-blind-review",
+  "machine_results_policy": "Both supplied mandatory parent builds and generated gates are treated as authoritative passes; no heavy tests were rerun.",
+  "preference": "candidate-A",
+  "tie": false,
+  "candidates": {
+    "candidate-A": {
+      "decision": "accept",
+      "confidence": 97,
+      "overall_score": 9.6,
+      "dimensions": {
+        "correctness": {
+          "score": 9.7,
+          "rationale": "The supplied machine result passes source verification, independent build, artifact hashes, and the generated gate. The exact-cap worlds converge across q1/q7/direct, and the evidence records the expected atomic failures without claiming original-server or Minecraft completion.",
+          "citations": [
+            "candidate-A/machine-results.json",
+            "candidate-A/artifacts/generated-gate-summary.json: results 29/q1..30/direct",
+            "candidate-A/artifacts/generated-gate-summary.json: results 31/* and 30/262144-infeasible, 30/262145",
+            "candidate-A/candidate-report.md: Result and Remaining Uncertainty"
+          ]
+        },
+        "architecture_understanding": {
+          "score": 9.6,
+          "rationale": "The candidate preserves domain separation, engine/coordinator code-hash anchoring, continuation/reopen behavior, canonical initialization, and the fixed EVM limits. Its layer-specific probes expose the product coordinator and product engine only by widening disposable transports.",
+          "citations": [
+            "candidate-A/engine.diff",
+            "candidate-A/coordinator.diff",
+            "candidate-A/driver.diff",
+            "candidate-A/tools/gate.py:74-100, 102-161"
+          ]
+        },
+        "modification_minimality": {
+          "score": 9.8,
+          "rationale": "The production deltas are exactly the requested equal-length domain/pin changes, raw cap/config 29 to 30, four coordinator array widths and guard, and two driver guards. The reverse verifier reconstructs all three files from the accepted parent and requires whole-file equality.",
+          "citations": [
+            "candidate-A/engine.diff",
+            "candidate-A/coordinator.diff",
+            "candidate-A/driver.diff",
+            "candidate-A/tools/verify_source.py:50-108"
+          ]
+        },
+        "robustness": {
+          "score": 9.5,
+          "rationale": "Coverage includes exact 29/30 at three quanta with durable reopen, reordered 30, all three 31-class refusal layers, and both byte boundaries. Failure evidence records unchanged roots and empty candidate publication fields; canonical verification covers 274 receipts including reordered30.",
+          "citations": [
+            "candidate-A/tools/gate.py:74-168",
+            "candidate-A/artifacts/generated-gate-summary.json: canonicalReceipts",
+            "candidate-A/artifacts/generated-gate-summary.json: results 31/coordinator and 31/engine"
+          ]
+        },
+        "maintainability": {
+          "score": 9.3,
+          "rationale": "Paths and dependency lookup are worktree-relative, parent source hashes and built pins are immutable literals, and generated fixtures are deterministic. The main blemish is stale wording in parentAmendment that says diagnostic bound112 was retained while the same pins correctly set diagnosticClassBound to 113.",
+          "citations": [
+            "candidate-A/tools/build.py:6-18",
+            "candidate-A/tools/verify_source.py:10-48",
+            "candidate-A/pins.json: parentAmendment and diagnosticClassBound",
+            "candidate-A/artifacts/SHA256SUMS"
+          ]
+        },
+        "task_completion": {
+          "score": 9.6,
+          "rationale": "All requested functional gates and deliverables are represented, the machine eligibility result passes, and the evidence index includes build artifacts, fixtures including ZIP bytes, command/failure receipts, durable heads, canonical receipts, tool versions, and checksums. Parent-only original30 work is explicitly left undone.",
+          "citations": [
+            "candidate-A/machine-results.json",
+            "candidate-A/artifacts/SHA256SUMS",
+            "candidate-A/candidate-report.md"
+          ]
+        }
+      },
+      "findings": [
+        {
+          "severity": "low",
+          "title": "Stale diagnostic wording in pins",
+          "detail": "pins.parentAmendment says diagnostic bound112 was retained, but the task and the adjacent diagnosticClassBound correctly use 113. This is an evidence-description inconsistency, not a source or machine-gate defect.",
+          "citations": [
+            "candidate-A/pins.json",
+            "candidate-A/tools/verify_source.py:121-122"
+          ]
+        },
+        {
+          "severity": "low",
+          "title": "Atomic publication fields are evidenced but not all asserted by the gate",
+          "detail": "The refusal checks assert selector/words/rootUnchanged, while the archived summary additionally shows empty candidateCheckpoint, candidateHead, and candidateRoot and zero checkpointBytes. Explicit assertions for those fields would make the gate stronger.",
+          "citations": [
+            "candidate-A/tools/gate.py:127-160",
+            "candidate-A/artifacts/generated-gate-summary.json: results 31/coordinator, 31/engine, 30/262144-infeasible, 30/262145"
+          ]
+        }
+      ],
+      "blockers": []
+    },
+    "candidate-B": {
+      "decision": "reject",
+      "confidence": 96,
+      "overall_score": 8.4,
+      "dimensions": {
+        "correctness": {
+          "score": 9.0,
+          "rationale": "The supplied machine facts establish a correct cap30 build and generated behavior. Exact 29/30 worlds, the three refusal layers, and the byte boundaries have the expected recorded outcomes. The score is reduced because the claimed isolated process is contradicted by operational hard-coded access outside the worktree.",
+          "citations": [
+            "candidate-B/machine-results.json",
+            "candidate-B/artifacts/generated-gate-summary.json",
+            "candidate-B/tools/build.py:12-13",
+            "candidate-B/tools/gate.py:67, 136"
+          ]
+        },
+        "architecture_understanding": {
+          "score": 9.4,
+          "rationale": "The report and gate correctly distinguish driver, product-coordinator, and product-engine ownership, use disposable widened transports for deeper refusal layers, preserve continuation and canonical class state, and accurately describe 262144 as an engine-side infeasibility rather than cap acceptance.",
+          "citations": [
+            "candidate-B/candidate-report.md: Verification and Remaining Uncertainty",
+            "candidate-B/tools/gate.py:83-158",
+            "candidate-B/engine.diff",
+            "candidate-B/coordinator.diff"
+          ]
+        },
+        "modification_minimality": {
+          "score": 9.1,
+          "rationale": "The engine/coordinator/driver diffs are mechanically scoped and whole-file reverse comparisons reject semantic drift. Unrequested worker metadata and removal of the explicit parentAmendment pin are avoidable evidence-layer changes, though they do not alter runtime semantics.",
+          "citations": [
+            "candidate-B/engine.diff",
+            "candidate-B/coordinator.diff",
+            "candidate-B/driver.diff",
+            "candidate-B/tools/stage.py:99-130"
+          ]
+        },
+        "robustness": {
+          "score": 9.0,
+          "rationale": "The candidate covers all requested positive and negative paths and adds an EnumSet regression replay. Weaknesses are that the 262144 gate accepts any product-engine ABI error rather than the observed exact selector/words, and nested canonical receipt verification omits the successful reordered world.",
+          "citations": [
+            "candidate-B/tools/gate.py:147-168",
+            "candidate-B/artifacts/generated-gate-summary.json: results 30/262144-infeasible and canonicalReceipts",
+            "candidate-B/artifacts/SHA256SUMS: enumset-regression.json"
+          ]
+        },
+        "maintainability": {
+          "score": 7.2,
+          "rationale": "Deterministic staging is useful, but build and gate scripts hard-code another worktree's node_modules path, making the reproducer non-portable and violating isolation. The reverse verifier also derives parent hashes from the current parent directory instead of checking immutable expected hash literals.",
+          "citations": [
+            "candidate-B/tools/build.py:6-13",
+            "candidate-B/tools/gate.py:67, 136",
+            "candidate-B/tools/verify_source.py:33-40",
+            "candidate-B/parent-input.json"
+          ]
+        },
+        "task_completion": {
+          "score": 7.0,
+          "rationale": "Functional deliverables and machine gates pass, and the report properly reserves original30 for the parent. However, the explicit current-worktree-only restriction is not met by the runnable build/gate tooling. Evidence is otherwise substantial, though fixture ZIPs are intentionally omitted and reordered canonical receipts are not included.",
+          "citations": [
+            "candidate-B/machine-results.json",
+            "candidate-B/candidate-report.md: Remaining Uncertainty",
+            "candidate-B/artifacts/SHA256SUMS",
+            "candidate-B/tools/build.py:12"
+          ]
+        }
+      },
+      "findings": [
+        {
+          "severity": "high",
+          "title": "Runnable tooling depends on a forbidden external worktree",
+          "detail": "build.py checks and exports an absolute node_modules path under a different worktree; gate.py repeats that path for selector verification and the disposable coordinator build. This directly conflicts with the task's current-worktree-only rule and makes the claimed isolated reproducer environment-dependent.",
+          "citations": [
+            "candidate-B/tools/build.py:12-13",
+            "candidate-B/tools/gate.py:67, 136"
+          ]
+        },
+        {
+          "severity": "medium",
+          "title": "Parent pin is not immutable inside the reverse verifier",
+          "detail": "verify_source.py computes hashes from whichever files currently occupy the named parent directory and only compares them with the editable parent-input.json. Unlike an embedded expected digest table, this can bless a jointly changed parent snapshot and receipt, weakening the requested strict pin to parent-3ed302a92.",
+          "citations": [
+            "candidate-B/tools/verify_source.py:33-40",
+            "candidate-B/parent-input.json"
+          ]
+        },
+        {
+          "severity": "low",
+          "title": "Canonical receipt scope omits reordered30",
+          "detail": "The gate comment says every successful world, but the verifier label list contains only the six 29/30 quantum worlds. Reordered30 is still checkpoint-inspected and accepted, so this is an evidence-scope gap rather than a functional failure.",
+          "citations": [
+            "candidate-B/tools/gate.py:160-168",
+            "candidate-B/artifacts/generated-gate-summary.json: results 30/reordered and canonicalReceipts"
+          ]
+        },
+        {
+          "severity": "low",
+          "title": "Boundary assertion is broader than the archived result",
+          "detail": "The exact-262144 assertion permits any engine ABI error other than the coordinator selector. The archive records the intended LC0StateError selector and words, but the executable gate would not require that exact observed boundary behavior.",
+          "citations": [
+            "candidate-B/tools/gate.py:147-154",
+            "candidate-B/artifacts/generated-gate-summary.json: results 30/262144-infeasible"
+          ]
+        }
+      ],
+      "blockers": [
+        "Remove all absolute external-worktree dependency paths and resolve pinned dependencies relative to the isolated worktree before acceptance."
+      ]
+    }
+  },
+  "summary": "Candidate A is accepted and preferred: it has the stronger immutable parent pin, worktree-relative reproducer, exact boundary assertions, and canonical receipts for reordered30. Candidate B is technically strong and machine-green but rejected for an explicit isolation violation in runnable tooling; its weaker parent pin and evidence-scope gaps are secondary."
+}

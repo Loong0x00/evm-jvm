@@ -91,7 +91,7 @@ pins = {
     "headCap": 32768,
     "engine": engine_pin,
     "coordinator": coordinator_pin,
-    "parentAmendment": "reject initializationState==3 as guest NoClassDefFoundError; diagnostic bound112 retained",
+    "parentAmendment": "reject initializationState==3 as guest NoClassDefFoundError; cap30 diagnostic bound113",
     "diagnosticClassBound": 113,
     "address": "0x4d432d434c415353434f554e5433302d43333001",
     "owner": "0x4d432d434c415353434f554e5433302d4f333002",
