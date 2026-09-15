@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "decision": "accept",
+  "confidence": {
+    "level": "high",
+    "score": 0.96
+  },
+  "scores": {
+    "correctness": 9.5,
+    "architectureUnderstanding": 9.5,
+    "modificationMinimality": 10.0,
+    "robustness": 9.2,
+    "maintainability": 9.0,
+    "taskCompletion": 9.5,
+    "overall": 9.45
+  },
+  "findings": [],
+  "findingCounts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "acceptanceChecks": [
+    {
+      "check": "Genuine bounded System.err initialization",
+      "status": "pass",
+      "basis": "The exact Java 8 System image declares err as PrintStream and its guest <clinit> constructs and stores a new guest PrintStream. The generated probe checks non-nullness, repeat-read identity, and typed handoff; checkpoint inspection confirms both classes initialized and the err static is nonzero.",
+      "citations": [
+        "engine.diff: _bootstrapSystem and _bootstrapPrintStream replacement/append",
+        "tools/generate_fixtures.py: system-err fixture",
+        "tools/gate.py: system_initialized and q_equivalent(system-err)",
+        "bootstrap-pins.json: Java 8 image byte/hash pins"
+      ]
+    },
+    {
+      "check": "Parent preservation and minimality",
+      "status": "pass",
+      "basis": "The reverse verifier pins all parent inputs, reconstructs the candidate by domain rotation plus the sole System replacement and PrintStream append, and proves the other 82 bootstrap images byte-identical and in the preserved order.",
+      "citations": [
+        "tools/verify_source.py: PARENT_FILES, expected_engine reconstruction, and parent_images/images assertions",
+        "engine.diff: bootstrap root length 84 and classSlot + 44 append",
+        "coordinator.diff and driver.diff: domain/address-only source changes"
+      ]
+    },
+    {
+      "check": "Fixed limits and bounded deployment",
+      "status": "pass",
+      "basis": "Raw count 30, aggregate bytes 262144, frame/checkpoint/path/transfer limits, native binding count, and exception-kind count are source-verified unchanged. The authoritative measured runtime is 392775 bytes, 441 bytes below the 393216 LOCAL cap.",
+      "citations": [
+        "tools/verify_source.py: fixed-limit assertions and limits commitment",
+        "tools/build.py: cap check and pins construction",
+        "machine-parent-result.json: engine and java8 facts"
+      ]
+    },
+    {
+      "check": "Owned-image refusal and commitment integrity",
+      "status": "pass",
+      "basis": "PrintStream joins System in reserved-class rejection. The bootstrap root derives both System and PrintStream commitments from the actual embedded image functions, while the fixed-limit commitment remains runtime-derived; no duplicate precomputed PrintStream or limits hash was introduced.",
+      "citations": [
+        "engine.diff: _bootstrapRoot and _isReservedSystemClass",
+        "tools/verify_source.py: DBOOT/limits and absence of DBOOT_PRINTSTREAM/DLIMITS assertions",
+        "tools/gate.py: raw-system and raw-printstream replacement negatives"
+      ]
+    },
+    {
+      "check": "Generated acceptance gate and claim scope",
+      "status": "pass",
+      "basis": "The authoritative gate passed 1086 canonical receipts over q1/q7/q4096 single-slice, reopen, uninitialized/failed-init, raw30/raw31, byte boundaries, retained EnumSet/ACC_ENUM/queue/OOM controls, and replacement negatives. The evidence explicitly excludes PrintStream output behavior and makes no Minecraft Done claim.",
+      "citations": [
+        "machine-parent-result.json: generatedGate and minecraftDoneClaimed",
+        "tools/gate.py: positive, negative, retained-control, and canonical receipt sections",
+        "tools/verify_receipts.js: canonical ABI/event/checkpoint/counter/read-range checks"
+      ]
+    }
+  ],
+  "limitations": [
+    "This acceptance is for the exact bounded System.err field-access frontier only; PrintStream output and println are intentionally absent and unclaimed.",
+    "No heavy test was rerun in this review; machine-parent-result.json was treated as authoritative as instructed.",
+    "The reported original30 continuation remains running and then atomically refused at java/lang/StringBuilder; it is not a Minecraft startup or Done result."
+  ],
+  "reviewScope": "Static independent review of review/task.txt, the supplied diffs, bootstrap pins, review tools, and authoritative machine-parent-result.json only."
+}

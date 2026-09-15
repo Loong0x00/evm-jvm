@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "decision": "accept",
+  "accepted": true,
+  "confidence": {
+    "level": "high",
+    "value": 0.97
+  },
+  "scope": "Parent-amended, generated-only, bounded java/lang/System.err:Ljava/io/PrintStream; support",
+  "scores": {
+    "correctness": 9.7,
+    "architectureUnderstanding": 9.7,
+    "modificationMinimality": 9.8,
+    "robustness": 9.5,
+    "maintainability": 9.3,
+    "taskCompletion": 9.8
+  },
+  "findings": {
+    "critical": [],
+    "high": [],
+    "medium": [],
+    "low": [],
+    "informational": [
+      {
+        "id": "I-001",
+        "title": "The accepted surface is intentionally object initialization and field access only",
+        "description": "PrintStream contains only its constructor. No output, println, host stream, or Minecraft completion behavior is implemented or claimed. This is consistent with the bounded task and is not an acceptance defect.",
+        "citations": [
+          "engine.diff:83-88",
+          "tools/gate.py:108-117",
+          "tools/gate.py:219-221",
+          "machine-parent-result.json:17-19"
+        ]
+      },
+      {
+        "id": "I-002",
+        "title": "The reverse verifier is deliberately parent- and text-pinned",
+        "description": "Exact source equality and literal replacement checks make unrelated drift fail closed. This is strong for this benchmark package, though an intentional future parent change will require updating the verifier pins.",
+        "citations": [
+          "tools/verify_source.py:19-25",
+          "tools/verify_source.py:226-280",
+          "tools/verify_source.py:282-305"
+        ]
+      }
+    ]
+  },
+  "acceptanceBasis": [
+    {
+      "claim": "Genuine guest initialization supports the measured field access",
+      "assessment": "pass",
+      "details": "The Java 8 System image declares public static final err and its guest <clinit> allocates a guest PrintStream. The generated probe reads System.err twice, requires non-null stable identity, carries it through a typed guest field, and completes. Checkpoint diagnostics require both System and PrintStream to be initialized and the err static slot to be nonzero.",
+      "citations": [
+        "tools/verify_source.py:118-163",
+        "engine.diff:83-88",
+        "tools/generate_fixtures.py:62-78",
+        "tools/gate.py:108-117"
+      ]
+    },
+    {
+      "claim": "The bootstrap change is exact and minimal",
+      "assessment": "pass",
+      "details": "The root grows from 83 to 84 images, System remains at bootstrap slot 44, and PrintStream is appended at image 84. The reverse verifier reconstructs the complete candidate from the pinned parent, proves all 82 unaffected images byte-identical, and permits only the System replacement, PrintStream append/reservation, count adjustment, and domain rebinding.",
+      "citations": [
+        "engine.diff:41-51",
+        "engine.diff:57-76",
+        "tools/verify_source.py:226-280",
+        "machine-parent-result.json:14"
+      ]
+    },
+    {
+      "claim": "Fixed limits and runtime-derived commitments are preserved",
+      "assessment": "pass",
+      "details": "Raw class count remains 30, raw bytes 262144, frames 128, checkpoint 1048576, reserve 25000000, and the other bounded limits remain inherited through exact parent-delta verification. Bootstrap and limit commitments remain runtime-derived. The runs=200 runtime is 392775 bytes, 441 bytes below the 393216 LOCAL cap.",
+      "citations": [
+        "engine.diff:11-12",
+        "tools/verify_source.py:224-280",
+        "tools/build.py:42-104",
+        "machine-parent-result.json:15-16"
+      ]
+    },
+    {
+      "claim": "Replacement and boundary behavior fail closed",
+      "assessment": "pass",
+      "details": "Both owned class names are reserved. The gate checks raw System and PrintStream replacement refusal, raw30 admission, raw31 refusal independently at driver/coordinator/engine layers, exact 262144-byte admission to parsing, and atomic 262145-byte refusal.",
+      "citations": [
+        "engine.diff:74-76",
+        "tools/gate.py:137-200",
+        "machine-parent-result.json:17"
+      ]
+    },
+    {
+      "claim": "Generated acceptance coverage is adequate and claims are honest",
+      "assessment": "pass",
+      "details": "The gate covers q1/q7/q4096 equivalence, reopen, canonical receipt re-encoding, uninitialized and failed-initialization controls, retained EnumSet/ACC_ENUM/queue/OOM behavior, and the class/byte boundaries. Machine-authoritative evidence reports 1086 canonical receipts. The package explicitly disclaims PrintStream output and reports no Minecraft Done claim.",
+      "citations": [
+        "tools/gate.py:82-106",
+        "tools/gate.py:117-134",
+        "tools/gate.py:202-221",
+        "tools/verify_receipts.js:8-24",
+        "machine-parent-result.json:17-19"
+      ]
+    }
+  ],
+  "independentChecks": [
+    "Reviewed only review-task.txt and every file in the referenced review package.",
+    "Performed a lightweight local extraction of the added System and PrintStream class hex from engine.diff; independently confirmed byte sizes 913/134, SHA-256 pins, and Java class major version 52 for both.",
+    "Did not rerun heavy builds or gates; machine-parent-result.json was treated as authoritative as instructed."
+  ],
+  "limitations": [
+    "Acceptance is limited to the generated-only bounded System.err field-access milestone.",
+    "No PrintStream output method or host-output behavior is accepted.",
+    "The original30 continuation and Minecraft startup/Done are outside this verdict."
+  ]
+}
