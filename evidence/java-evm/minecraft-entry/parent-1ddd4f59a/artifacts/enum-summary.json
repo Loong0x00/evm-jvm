@@ -1,0 +1,259 @@
+{
+  "profile": "MC-ENUM-BOOTSTRAP-PREFLIGHT1",
+  "generatedOnly": true,
+  "hostOracle": {
+    "entries": [
+      "EnumBootstrapMain.class",
+      "FocusLevel.class"
+    ],
+    "bindingCount": 2,
+    "zipSHA256": "eb16da003ae952ab24ede2af0889638b4cbb6c48ac06c8ae84675b8ac42f3d34",
+    "classSHA256": {
+      "EnumBootstrapMain.class": "7d37e8ea0c55bdb4fe2df49d3865a9d0598f8cfb44c3d0043be802c49431c926",
+      "FocusLevel.class": "a067a662085ff927e390e15aeabeb6984c3168bf44414ebfcd2b05ad97aa1846"
+    },
+    "classBytes": {
+      "EnumBootstrapMain.class": 900,
+      "FocusLevel.class": 716
+    },
+    "totalClassBytes": 1616,
+    "java8HostOracle": true
+  },
+  "results": {
+    "enum/q1": {
+      "machineRoot": "0xca70b6422834dcca0867a8cb25f927fe94906b2b99af7f4e6c0fa7506d538768",
+      "opaquePayloadSHA256": "087e8538bb1a4095964f702549ab85fd15697e298be283d42966e2110277a01d",
+      "checkpointSHA256": "4cf12b9eca938718174eecfd4fe2d80b4d571eeabc557cb221b066d80640b49d",
+      "epoch": 176,
+      "jvmSteps": 176,
+      "internalSteps": 6,
+      "classCount": 84,
+      "activeInitialization": [
+        0,
+        1,
+        2,
+        83
+      ]
+    },
+    "enum/q7": {
+      "machineRoot": "0xca70b6422834dcca0867a8cb25f927fe94906b2b99af7f4e6c0fa7506d538768",
+      "opaquePayloadSHA256": "087e8538bb1a4095964f702549ab85fd15697e298be283d42966e2110277a01d",
+      "checkpointSHA256": "bf2297d551810f6047ce0006bff21f637ec498af5e5a69035b277ac556ed95c7",
+      "epoch": 26,
+      "jvmSteps": 176,
+      "internalSteps": 6,
+      "classCount": 84,
+      "activeInitialization": [
+        0,
+        1,
+        2,
+        83
+      ]
+    },
+    "enum/direct": {
+      "machineRoot": "0xca70b6422834dcca0867a8cb25f927fe94906b2b99af7f4e6c0fa7506d538768",
+      "opaquePayloadSHA256": "087e8538bb1a4095964f702549ab85fd15697e298be283d42966e2110277a01d",
+      "checkpointSHA256": "f31fc9e80c6704b7118957d0911bf7adde89c89a6f674e35fe3e38955e877cc7",
+      "epoch": 1,
+      "jvmSteps": 176,
+      "internalSteps": 6,
+      "classCount": 84,
+      "activeInitialization": [
+        0,
+        1,
+        2,
+        83
+      ]
+    },
+    "raw/enum-replacement": {
+      "actualDI0ReadSizes": [
+        196,
+        195
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 382934,
+      "resourceHashes": {
+        "0x2686e5196e2ac4ccceAd9EB665c7698B737e2aa6": "5280e18250ddf67a1ad51cad10af7691aea5bd06b5ae35aa0d0fe63c1e1492e4",
+        "0x3a19F5709F42B0241F38446dff81265d2437652a": "4b5d69500879cdd7cd4c930c2a761961a2aa2b5f9698bb1d84f4730f21de2dbb"
+      },
+      "resourceReadReceipts": [
+        {
+          "To": "0x2686e5196e2ac4cccead9eb665c7698b737e2aa6",
+          "Offset": 0,
+          "Requested": 196,
+          "Returned": 196,
+          "Success": true,
+          "SHA256": "5280e18250ddf67a1ad51cad10af7691aea5bd06b5ae35aa0d0fe63c1e1492e4"
+        },
+        {
+          "To": "0x3a19f5709f42b0241f38446dff81265d2437652a",
+          "Offset": 0,
+          "Requested": 195,
+          "Returned": 195,
+          "Success": true,
+          "SHA256": "4b5d69500879cdd7cd4c930c2a761961a2aa2b5f9698bb1d84f4730f21de2dbb"
+        }
+      ],
+      "revertHex": "0x6a23ad8000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001",
+      "rootAfter": "0xd3346deb5e8af83e6e93eab20a512039856d3e30b619e85882fdaf818b865749",
+      "rootBefore": "0xd3346deb5e8af83e6e93eab20a512039856d3e30b619e85882fdaf818b865749",
+      "rootUnchanged": true,
+      "selector": "0x6a23ad80",
+      "suppliedGas": 1000000000,
+      "uint256Words": [
+        "1",
+        "1"
+      ]
+    }
+  },
+  "commands": [
+    {
+      "label": "enum-q1-start",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-q1",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "1"
+      ],
+      "exit": 0,
+      "seconds": 0.21372228098334745
+    },
+    {
+      "label": "enum-q1-finish",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "finish",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-q1",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "1"
+      ],
+      "exit": 0,
+      "seconds": 9.878702651010826
+    },
+    {
+      "label": "enum-q1-reopen",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "verify",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-q1",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "1"
+      ],
+      "exit": 0,
+      "seconds": 0.0314986229641363
+    },
+    {
+      "label": "enum-q7-start",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-q7",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "7"
+      ],
+      "exit": 0,
+      "seconds": 0.21379524102667347
+    },
+    {
+      "label": "enum-q7-finish",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "finish",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-q7",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "7"
+      ],
+      "exit": 0,
+      "seconds": 1.5157014530268498
+    },
+    {
+      "label": "enum-q7-reopen",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "verify",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-q7",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "7"
+      ],
+      "exit": 0,
+      "seconds": 0.03150981303770095
+    },
+    {
+      "label": "enum-direct-start",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-direct",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "seconds": 0.2637823450495489
+    },
+    {
+      "label": "enum-direct-finish",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "finish",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-direct",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "seconds": 0.03142850298900157
+    },
+    {
+      "label": "enum-direct-reopen",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "verify",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/enum-direct",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/enum-bootstrap.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "seconds": 0.031503573001828045
+    },
+    {
+      "label": "raw-enum-refusal",
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-gate1-1ddd4f59a/raw-enum",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-build2-1ddd4f59a/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-bootstrap-parent-fixtures-1ddd4f59a/raw-enum-replacement.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "seconds": 0.1637094979523681
+    }
+  ],
+  "wholeGateSeconds": 12.409575923054945,
+  "scope": "Java8 enum constructor fields/name/ordinal/direct toString, Comparable bridge/cast/null guest exceptions, Serializable assignability, active superclass initialization, reserved raw replacement, and canonical q1/q7/direct/reopen only."
+}
