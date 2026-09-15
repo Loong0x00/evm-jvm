@@ -1,0 +1,42 @@
+{
+  "taskSHA256": "6b578fa6ef8fc95e1177feeb841b52eac685272db44f803057715fbe7a1d15d0",
+  "purpose": "instrumentation validation only; not one of three project benchmark tasks",
+  "deepseek": {
+    "model": "deepseek/deepseek-flash",
+    "thinking": "max",
+    "requests": 7,
+    "wallSeconds": 10.731527333,
+    "input": 2661,
+    "cacheRead": 12288,
+    "cacheWrite": 0,
+    "output": 1187,
+    "totalTokens": 16136,
+    "medianAnyTTFTMs": 941.886362,
+    "medianActionTTFTMs": 1123.352722,
+    "aggregateOutputTokensPerSecond": 296.87963160049947,
+    "toolCalls": 7,
+    "toolErrors": 0
+  },
+  "terra": {
+    "model": "openai-codex/gpt-5.6-terra",
+    "thinking": "max",
+    "requests": 5,
+    "wallSeconds": 21.868149428,
+    "input": 6833,
+    "cacheRead": 0,
+    "cacheWrite": 0,
+    "output": 621,
+    "totalTokens": 7454,
+    "medianAnyTTFTMs": 1725.746902,
+    "medianActionTTFTMs": 3522.037529,
+    "aggregateOutputTokensPerSecond": 49.95325558549967,
+    "toolCalls": 4,
+    "toolErrors": 0
+  },
+  "notes": [
+    "Both runs produced and validated the requested file in isolated scratch Git repositories.",
+    "DeepSeek wire payload was observed as thinking enabled with reasoning_effort max.",
+    "OpenAI Codex websocket transport does not expose after_provider_response headers, but provider-request and first stream hooks measure TTFT.",
+    "Provider token units differ; real-task reports also include UTF-8 byte throughput."
+  ]
+}

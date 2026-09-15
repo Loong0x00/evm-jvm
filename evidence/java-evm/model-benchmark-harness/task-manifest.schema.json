@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["taskId", "baseCommit", "taskSHA256", "contextManifestSHA256", "toolAllowlist", "environment", "candidateOrder"],
+  "properties": {
+    "taskId": {"type": "string"},
+    "baseCommit": {"pattern": "^[0-9a-f]{40}$"},
+    "taskSHA256": {"pattern": "^[0-9a-f]{64}$"},
+    "contextManifestSHA256": {"pattern": "^[0-9a-f]{64}$"},
+    "toolAllowlist": {"type": "array", "items": {"type": "string"}},
+    "environment": {"type": "object"},
+    "candidateOrder": {"type": "array", "minItems": 2, "maxItems": 2},
+    "humanInterventions": {"type": "array"},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  }
+}
