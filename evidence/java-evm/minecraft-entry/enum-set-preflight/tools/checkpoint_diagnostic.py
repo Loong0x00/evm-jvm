@@ -16,7 +16,7 @@ def inspect(b):
  assert data(4)==b'MR01'
  lifecycle=u(1);result=u(4);kind=u(1);ref=u(4);jvm=u(8);internal=u(8);rootKind=u(1);assert rootKind==1;commit=data(32).hex()
  ec=data(u(2)).decode();method=data(u(2)).decode();argc=u(1);assert argc==0
- classes=u(2);assert classes<=111;states=[]
+ classes=u(2);assert classes<=112;states=[]
  for i in range(classes):
   state=u(1);started=u(1);n=u(2);values=[{'fieldIndex':u(2),'packedValue':hex(u(32))} for _ in range(n)]
   if state or started:states.append({'classIndex':i,'state':state,'initializerStarted':started,'staticFields':n,'staticValues':values})

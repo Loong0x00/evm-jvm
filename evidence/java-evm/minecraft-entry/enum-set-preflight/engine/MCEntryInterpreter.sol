@@ -5682,6 +5682,9 @@ contract MCEntryInterpreter {
                                 // A non-enum operand is an ordinary guest CCE;
                                 // no initializer is run for it.
                                 kind = 8;
+                            } else if (initializationState[enumTarget] == 3) {
+                                // Erroneous active use is the ordinary guest NCDFE kind.
+                                kind = 12;
                             } else {
                                 universe = _enumUniverse(
                                     classes, staticValues, enumTarget

@@ -176,6 +176,9 @@ one('''                    uint64 raw = uint64(_payload(f.stack[base]));
                                 // A non-enum operand is an ordinary guest CCE;
                                 // no initializer is run for it.
                                 kind = 8;
+                            } else if (initializationState[enumTarget] == 3) {
+                                // Erroneous active use is the ordinary guest NCDFE kind.
+                                kind = 12;
                             } else {
                                 universe = _enumUniverse(
                                     classes, staticValues, enumTarget
@@ -256,7 +259,7 @@ assert engine.count('function _bootstrapEnumSet()') == 1
 branch = engine.split('if (nativeBinding == 12) {', 1)[1].split('uint64 raw = uint64', 1)[0]
 for forbidden in ('_initializeClass', 'new uint64[]', 'ordinaryArrayCount', 'nextHandle = arena.nextHandle'):
     assert forbidden not in branch, forbidden
-assert '_enumUniverse(' in branch
+assert '_enumUniverse(' in branch and 'initializationState[enumTarget] == 3' in branch
 helper = engine.split('function _enumUniverse(', 1)[1].split('function _canonicalClassMirrorTarget(', 1)[0]
 assert 'bytes("$VALUES")' in helper and 'revert EnumSetProfileError(2, target);' in helper
 assert '_initializeClass' not in helper and 'new uint64[]' not in helper
