@@ -1,0 +1,22 @@
+--- evidence/java-evm/minecraft-entry/parent-31e5a573c/artifacts/coordinator/MCEntryCoordinator.sol	2026-09-16 01:34:03.775770359 +0800
++++ evidence/java-evm/minecraft-entry/string-last-index-of-preflight/coordinator/MCEntryCoordinator.sol	2026-09-16 02:38:48.918292454 +0800
+@@ -13,15 +13,15 @@
+         bool readOnly;
+     }
+ 
+-    address private constant ENGINE = address(bytes20(hex"4d432d535452494e472d4255494c4445522d5032"));
++    address private constant ENGINE = address(bytes20(hex"4d432d535452494e472d4c415354494e44455831"));
+     // COPY-only repair engine pin; this coordinator remains otherwise ABI-identical.
+     bytes32 private constant ENGINE_CODEHASH = hex"37c6ea22b2a9bc365faf68c35b20ef9f45d3639ace83e47f22e237232ca79c78";
+     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
+     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
+     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
+-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-STRING-BUILDER-P2/package/v1");
+-    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-STRING-BUILDER-P2/resource/v1");
+-    bytes32 private constant VM_DOMAIN = keccak256("MC-STRING-BUILDER-P2/vm/v1");
++    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-STRING-LAST-INDEX-P1/package/v1");
++    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-STRING-LAST-INDEX-P1/resource/v1");
++    bytes32 private constant VM_DOMAIN = keccak256("MC-STRING-LAST-INDEX-P1/vm/v1");
+ 
+     address public owner;
+     address public finalIndex;
