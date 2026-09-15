@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "sourceBuild": {
+    "status": "pass",
+    "runs": 1,
+    "sourceVerification": "source-verification.log",
+    "engineBytes": 386844,
+    "runtimeCap": 393216,
+    "note": "The one source build completed before this archive was assembled; no external wall/RSS sampler was used. Its build logs and exact artifact hashes are retained."
+  },
+  "fixtureGeneration": {
+    "status": "pass",
+    "generatedOnly": true,
+    "fixtureCount": 40,
+    "note": "Generated Java-8 fixtures only; details and hashes are retained in fixtures-summary.json."
+  },
+  "generatedGate": {
+    "status": "pass",
+    "wallSeconds": 187.99393193097785,
+    "commands": 228,
+    "exitZeroCommands": 227,
+    "expectedExitTwoCommands": 1,
+    "expectedExitTwoLabel": "raw31-driver",
+    "canonicalReceiptCount": 2606,
+    "canonicalWorldCount": 71,
+    "perCommandTimings": "generated-gate-summary.json:commands",
+    "longestCommand": {
+      "label": "enumset-q1-finish",
+      "elapsedSeconds": 41.27269679296296
+    }
+  },
+  "resourceMeasurement": {
+    "rssBytes": null,
+    "note": "No external RSS sampler was available. Per-command elapsedSeconds are preserved in generated-gate-summary.json; do not infer an RSS claim."
+  },
+  "scope": "Generated-only TreeMap constructor preflight. Original30, any Minecraft artifact/provider/output/world, and Done were neither opened nor run."
+}
