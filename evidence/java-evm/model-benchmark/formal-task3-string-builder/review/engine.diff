@@ -1,0 +1,210 @@
+--- evidence/java-evm/minecraft-entry/parent-89928ece8/artifacts/engine/MCEntryInterpreter.sol	2026-09-15 23:52:13.130018014 +0800
++++ evidence/java-evm/minecraft-entry/string-builder-preflight/engine/MCEntryInterpreter.sol	2026-09-16 01:27:55.435947225 +0800
+@@ -387,8 +387,8 @@
+ 
+     uint32 private constant MR0_SCHEMA = 1;
+     uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
+-    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:MAIN:EMPTY-STRING-ARRAY:1");
+-    bytes32 private constant DROOT = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:ROOT:1");
++    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-STRING-BUILDER-P1:MAIN:EMPTY-STRING-ARRAY:1");
++    bytes32 private constant DROOT = keccak256("JVMEVM:MC-STRING-BUILDER-P1:ROOT:1");
+     uint256 private constant MAX_RAW_CLASSES = 30;
+     uint256 private constant MAX_RAW_BYTES = 262144;
+     uint256 private constant MAX_CHECKPOINT_BYTES = 1048576;
+@@ -404,16 +404,16 @@
+     uint32 private constant MAX_PATH_DEPTH = 16;
+     uint32 private constant MAX_PATH_BYTES = 256;
+     uint32 private constant MAX_TRANSFER = 4096;
+-    bytes32 private constant DART = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:ARTIFACT:1");
+-    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:BOOTSTRAP:1");
++    bytes32 private constant DART = keccak256("JVMEVM:MC-STRING-BUILDER-P1:ARTIFACT:1");
++    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-STRING-BUILDER-P1:BOOTSTRAP:1");
+     // Append-only EnumSet image commitment; folded from the exact bytes at
+     // compile time so the runtime carries the append-only literal once.
+     bytes32 private constant DBOOT_ENUMSET = keccak256(hex"cafebabe00000034001b0a000600110a000300120700130a000300140a000300150700160100063c696e69743e010016285b4c6a6176612f6c616e672f4f626a6563743b2956010004436f646501000d537461636b4d61705461626c65070013070017010005616c6c4f66010026284c6a6176612f6c616e672f436c6173733b294c6a6176612f7574696c2f456e756d5365743b010009756e69766572736530010026284c6a6176612f6c616e672f436c6173733b295b4c6a6176612f6c616e672f4f626a6563743b0c000700180c0019001a0100116a6176612f7574696c2f456e756d5365740c000f00100c000700080100116a6176612f7574696c2f486173685365740100135b4c6a6176612f6c616e672f4f626a6563743b010003282956010003616464010015284c6a6176612f6c616e672f4f626a6563743b295a0021000300060000000000030000000700080001000900000040000300030000001b2ab70001033d1c2bbea200112a2b1c32b6000257840201a7ffefb100000001000a000000130002ff0006000307000b07000c010000fa00130009000d000e0001000900000018000300010000000cbb0003592ab80004b70005b000000000010a000f001000000000");
+-    bytes32 private constant DCFG = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:CONFIG:1");
+-    bytes32 private constant DMACH = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:MACHINE:1");
+-    bytes32 private constant DSEED = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:SEED:1");
+-    bytes32 private constant DVFS = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:VFS:1");
+-    bytes32 private constant DFILE = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT2:FILE:1");
++    bytes32 private constant DCFG = keccak256("JVMEVM:MC-STRING-BUILDER-P1:CONFIG:1");
++    bytes32 private constant DMACH = keccak256("JVMEVM:MC-STRING-BUILDER-P1:MACHINE:1");
++    bytes32 private constant DSEED = keccak256("JVMEVM:MC-STRING-BUILDER-P1:SEED:1");
++    bytes32 private constant DVFS = keccak256("JVMEVM:MC-STRING-BUILDER-P1:VFS:1");
++    bytes32 private constant DFILE = keccak256("JVMEVM:MC-STRING-BUILDER-P1:FILE:1");
+ 
+     mapping(bytes32 => Anchor) private anchors;
+     bool private enteredVFS0A;
+@@ -614,7 +614,7 @@
+     }
+ 
+     function _bootstrapRoot() private pure returns (bytes32) {
+-        bytes32[] memory h = new bytes32[](84);
++        bytes32[] memory h = new bytes32[](85);
+         h[0] = keccak256(_bootstrapObject());
+         h[1] = keccak256(_bootstrapCloneable());
+         h[2] = keccak256(_bootstrapSerializable());
+@@ -713,6 +713,8 @@
+         // append-only literal once.
+         h[82] = DBOOT_ENUMSET;
+         h[83] = keccak256(_bootstrapPrintStream());
++        // StringBuilder appends only after the complete 84-image System.err tail.
++        h[84] = keccak256(_bootstrapStringBuilder());
+         return keccak256(abi.encode(DBOOT, h));
+     }
+ 
+@@ -760,7 +762,7 @@
+         if (entryPlusOne == 0) revert LinkError(3, 0);
+         // Historical Runnable remains conditional. Class/map/System positions remain
+         // fixed, then the three Properties-family images append after all forty-five.
+-        uint256 count = inputCount + 78 + (suppliedObject ? 0 : 1)
++        uint256 count = inputCount + 79 + (suppliedObject ? 0 : 1)
+             + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
+             + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1) + (suppliedRunnable ? 0 : 1);
+         p.classes = new ClassInfo[](count);
+@@ -776,57 +778,7 @@
+         _appendStringBootstraps(p.classes, at + 19);
+         _appendIOBootstraps(p.classes, at + 22);
+         _appendVFSBootstraps(p.classes, at + 25);
+-        // Keep all historical bootstrap indexes fixed.  Runnable is conditional,
+-        // so derive Class's actual appended slot instead of assuming +34.
+-        uint256 classSlot = at + (suppliedRunnable ? 33 : 34);
+-        if (!suppliedRunnable) p.classes[at + 33].data = _bootstrapRunnable();
+-        p.classes[classSlot].data = _bootstrapClass();
+-        p.classes[classSlot + 1].data = _bootstrapMap();
+-        p.classes[classSlot + 2].data = _bootstrapConcurrentMap();
+-        p.classes[classSlot + 3].data = _bootstrapAbstractMap();
+-        p.classes[classSlot + 4].data = _bootstrapConcurrentHashMap();
+-        p.classes[classSlot + 5].data = _bootstrapSystem();
+-        // Do not interleave this new family with the pinned historical tail.
+-        p.classes[classSlot + 6].data = _bootstrapDictionary();
+-        p.classes[classSlot + 7].data = _bootstrapHashtable();
+-        p.classes[classSlot + 8].data = _bootstrapProperties();
+-        // Appended after the existing 48 pinned images; caller replacement is rejected.
+-        p.classes[classSlot + 9].data = _bootstrapPrivilegedAction();
+-        p.classes[classSlot + 10].data = _bootstrapClassLoader();
+-        p.classes[classSlot + 11].data = _bootstrapThread();
+-        p.classes[classSlot + 12].data = _bootstrapVMClassLoader();
+-        // Do not interleave collection images with the pinned prior tail.
+-        _appendCollectionBootstraps(p.classes, classSlot + 13);
+-        // Resource enumeration appends strictly after the prior 61 images.
+-        _appendResourceBootstraps(p.classes, classSlot + 22);
+-        p.classes[classSlot + 25].data = _bootstrapIllegalArgumentException();
+-        p.classes[classSlot + 26].data = _bootstrapBoolean();
+-        p.classes[classSlot + 27].data = _bootstrapReflectiveOperationException();
+-        p.classes[classSlot + 28].data = _bootstrapClassNotFoundException();
+-        // The new Number/NFE/Integer tail is append-only after every prior image.
+-        p.classes[classSlot + 29].data = _bootstrapNumber();
+-        p.classes[classSlot + 30].data = _bootstrapNumberFormatException();
+-        p.classes[classSlot + 31].data = _bootstrapInteger();
+-        // Four immutable copy-on-write subset images append after the full 71-image tail.
+-        p.classes[classSlot + 32].data = _bootstrapList();
+-        p.classes[classSlot + 33].data = _bootstrapRandomAccess();
+-        p.classes[classSlot + 34].data = _bootstrapCopyOnWriteArrayList();
+-        p.classes[classSlot + 35].data = _bootstrapCopyOnWriteArrayListIterator();
+-        // Four bounded lock images append after the complete 75-image tail.
+-        p.classes[classSlot + 36].data = _bootstrapLock();
+-        p.classes[classSlot + 37].data = _bootstrapReadWriteLock();
+-        p.classes[classSlot + 38].data = _bootstrapReentrantLock();
+-        p.classes[classSlot + 39].data = _bootstrapReentrantReadWriteLock();
+-        // Queue/ConcurrentLinkedQueue append after the complete 79-image lock tail.
+-        p.classes[classSlot + 40].data = _bootstrapQueue();
+-        p.classes[classSlot + 41].data = _bootstrapConcurrentLinkedQueue();
+-        // Enum is an immutable append-only image and never changes prior slots.
+-        p.classes[classSlot + 42].data = _bootstrapEnum();
+-        // EnumSet support appends after the complete 82-image Enum tail.
+-        p.classes[classSlot + 43].data = _bootstrapEnumSet();
+-        p.classes[classSlot + 44].data = _bootstrapPrintStream();
+-        p.classClass = classSlot;
+-        p.loaderClass = classSlot + 12;
++        _appendTailBootstraps(p, at, suppliedRunnable);
+         p.rawClassCount = inputCount;
+         p.rootClass = entryPlusOne - 1;
+         _requireSupportedClass(p.classes[p.rootClass], p.rootClass);
+@@ -3113,6 +3065,7 @@
+     function _isReservedSystemClass(ClassInfo memory c) private pure returns (bool) {
+         return _isNamedClass(c, bytes("java/lang/System"))
+             || _isNamedClass(c, bytes("java/io/PrintStream"))
++            || _isNamedClass(c, bytes("java/lang/StringBuilder"))
+             || _isNamedClass(c, bytes("java/lang/IllegalArgumentException"))
+             || _isNamedClass(c, bytes("java/lang/Boolean"));
+     }
+@@ -10975,6 +10928,68 @@
+         classes[at++].data = _bootstrapVMResourceEnumeration();
+     }
+ 
++    // Keep this separate from the tail so the 542-byte image has one
++    // materialization site in the startup assembler.
++    function _appendStringBuilderBootstrap(ClassInfo[] memory classes, uint256 at) private pure {
++        classes[at].data = _bootstrapStringBuilder();
++    }
++
++    // Keep the immutable post-VFS tail in one helper. This preserves every
++    // existing slot while keeping _prepare below the viaIR inlining cliff.
++    function _appendTailBootstraps(Program memory p, uint256 at, bool suppliedRunnable) private pure {
++        uint256 classSlot = at + (suppliedRunnable ? 33 : 34);
++        if (!suppliedRunnable) p.classes[at + 33].data = _bootstrapRunnable();
++        p.classes[classSlot].data = _bootstrapClass();
++        p.classes[classSlot + 1].data = _bootstrapMap();
++        p.classes[classSlot + 2].data = _bootstrapConcurrentMap();
++        p.classes[classSlot + 3].data = _bootstrapAbstractMap();
++        p.classes[classSlot + 4].data = _bootstrapConcurrentHashMap();
++        p.classes[classSlot + 5].data = _bootstrapSystem();
++        // Do not interleave this new family with the pinned historical tail.
++        p.classes[classSlot + 6].data = _bootstrapDictionary();
++        p.classes[classSlot + 7].data = _bootstrapHashtable();
++        p.classes[classSlot + 8].data = _bootstrapProperties();
++        // Appended after the existing 48 pinned images; caller replacement is rejected.
++        p.classes[classSlot + 9].data = _bootstrapPrivilegedAction();
++        p.classes[classSlot + 10].data = _bootstrapClassLoader();
++        p.classes[classSlot + 11].data = _bootstrapThread();
++        p.classes[classSlot + 12].data = _bootstrapVMClassLoader();
++        // Do not interleave collection images with the pinned prior tail.
++        _appendCollectionBootstraps(p.classes, classSlot + 13);
++        // Resource enumeration appends strictly after the prior 61 images.
++        _appendResourceBootstraps(p.classes, classSlot + 22);
++        p.classes[classSlot + 25].data = _bootstrapIllegalArgumentException();
++        p.classes[classSlot + 26].data = _bootstrapBoolean();
++        p.classes[classSlot + 27].data = _bootstrapReflectiveOperationException();
++        p.classes[classSlot + 28].data = _bootstrapClassNotFoundException();
++        // The new Number/NFE/Integer tail is append-only after every prior image.
++        p.classes[classSlot + 29].data = _bootstrapNumber();
++        p.classes[classSlot + 30].data = _bootstrapNumberFormatException();
++        p.classes[classSlot + 31].data = _bootstrapInteger();
++        // Four immutable copy-on-write subset images append after the full 71-image tail.
++        p.classes[classSlot + 32].data = _bootstrapList();
++        p.classes[classSlot + 33].data = _bootstrapRandomAccess();
++        p.classes[classSlot + 34].data = _bootstrapCopyOnWriteArrayList();
++        p.classes[classSlot + 35].data = _bootstrapCopyOnWriteArrayListIterator();
++        // Four bounded lock images append after the complete 75-image tail.
++        p.classes[classSlot + 36].data = _bootstrapLock();
++        p.classes[classSlot + 37].data = _bootstrapReadWriteLock();
++        p.classes[classSlot + 38].data = _bootstrapReentrantLock();
++        p.classes[classSlot + 39].data = _bootstrapReentrantReadWriteLock();
++        // Queue/ConcurrentLinkedQueue append after the complete 79-image lock tail.
++        p.classes[classSlot + 40].data = _bootstrapQueue();
++        p.classes[classSlot + 41].data = _bootstrapConcurrentLinkedQueue();
++        // Enum is an immutable append-only image and never changes prior slots.
++        p.classes[classSlot + 42].data = _bootstrapEnum();
++        // EnumSet support appends after the complete 82-image Enum tail.
++        p.classes[classSlot + 43].data = _bootstrapEnumSet();
++        p.classes[classSlot + 44].data = _bootstrapPrintStream();
++        // Bounded StringBuilder appends after every prior immutable bootstrap.
++        _appendStringBuilderBootstrap(p.classes, classSlot + 45);
++        p.classClass = classSlot;
++        p.loaderClass = classSlot + 12;
++    }
++
+     function _bootstrapReflectiveOperationException() private pure returns (bytes memory) { return hex"cafebabe00000034000a0a000300070700080700090100063c696e69743e010003282956010004436f64650c000400050100266a6176612f6c616e672f5265666c6563746976654f7065726174696f6e457863657074696f6e0100136a6176612f6c616e672f457863657074696f6e002100020003000000000001000100040005000100060000001100010001000000052ab70001b1000000000000"; }
+     function _bootstrapClassNotFoundException() private pure returns (bytes memory) { return hex"cafebabe00000034000a0a000300070700080700090100063c696e69743e010003282956010004436f64650c000400050100206a6176612f6c616e672f436c6173734e6f74466f756e64457863657074696f6e0100266a6176612f6c616e672f5265666c6563746976654f7065726174696f6e457863657074696f6e002100020003000000000001000100040005000100060000001100010001000000052ab70001b1000000000000"; }
+ 
+@@ -11073,6 +11088,9 @@
+     /// @dev Java 8 constructor-only guest PrintStream; output APIs are omitted.
+     function _bootstrapPrintStream() private pure returns (bytes memory) { return hex"cafebabe00000034000a0a000300070700080700090100063c696e69743e010003282956010004436f64650c000400050100136a6176612f696f2f5072696e7453747265616d0100106a6176612f6c616e672f4f626a656374002100020003000000000001000100040005000100060000001100010001000000052ab70001b1000000000000"; }
+ 
++    /// @dev Bounded Java 8 StringBuilder: ctor, append(String), and copy-producing toString only.
++    function _bootstrapStringBuilder() private pure returns (bytes memory) { return hex"cafebabe0000003400210a0008001409000700150a000500160a000500170700180a0005001907001a07001b01000576616c75650100025b430100063c696e69743e010003282956010004436f6465010006617070656e6401002d284c6a6176612f6c616e672f537472696e673b294c6a6176612f6c616e672f537472696e674275696c6465723b01000d537461636b4d61705461626c6507000a010008746f537472696e6701001428294c6a6176612f6c616e672f537472696e673b0c000b000c0c0009000a0c001c001d0c001e001f0100106a6176612f6c616e672f537472696e670c000b00200100176a6176612f6c616e672f537472696e674275696c6465720100106a6176612f6c616e672f4f626a6563740100066c656e67746801000328294901000663686172417401000428492943010005285b4329560031000700080000000100020009000a000000030001000b000c0001000d00000018000200010000000c2ab700012a03bc05b50002b1000000000001000e000f0001000d00000071000400040000004c2ab40002be2bb6000360bc054d033e1d2ab40002bea200122c1d2ab400021d3455840301a7ffeb033e1d2bb60003a200172c2ab40002be1d602b1db6000455840301a7ffe72a2cb500022ab0000000010010000000130004fd000f07001101fa0017fc000101fa001b0001001200130001000d00000018000300010000000cbb0005592ab40002b70006b0000000000000"; }
++
+     /// @dev Exact Java 8 java.security.PrivilegedAction<T>; this interface grants no privilege.
+     function _bootstrapPrivilegedAction() private pure returns (bytes memory) { return hex"cafebabe00000034000a07000807000901000372756e01001428294c6a6176612f6c616e672f4f626a6563743b0100095369676e6174757265010005282954543b0100283c543a4c6a6176612f6c616e672f4f626a6563743b3e4c6a6176612f6c616e672f4f626a6563743b01001e6a6176612f73656375726974792f50726976696c65676564416374696f6e0100106a6176612f6c616e672f4f626a6563740601000100020000000000010401000300040001000500000002000600010005000000020007"; }
+ 

@@ -124,11 +124,17 @@ states = {entry["classIndex"]: entry for entry in decoded["initialization"]}
 assert fixture("stringbuilder-uninitialized")["bindingCount"] + 84 not in states
 rows["stringbuilder-uninitialized"] = stringbuilder_uninitialized
 
-# This direct-sized generated fixture reaches array-element OOM through a real
-# second append and catches it in guest code; q1/q7 are intentionally reserved
-# for the bounded positive surface rather than a quadratic quota witness.
-stringbuilder_oom = finish("stringbuilder-oom", "stringbuilder-oom", 4096)
-rows["stringbuilder-oom"] = stringbuilder_oom
+# The generated quota witness allocates two 65536-char guest arrays before its
+# second append reaches array-element OOM. Those live arrays cannot fit the fixed
+# 1MiB checkpoint, so the pinned engine must refuse publication honestly and
+# atomically rather than fabricate a catchable terminal result. The retained
+# small field-arena OOM below continues to prove catchable guest OOM semantics.
+world = out / "world-stringbuilder-oom-infeasible"
+run("stringbuilder-oom-infeasible", [driver, "setup-chain", world, coordinator, engine,
+    fixtures / "stringbuilder-oom.zip", "4096"], "stringbuilder-oom")
+refusal = failure(world, "start-refusal.json")
+assert refusal["selector"] == "0x71540d20" and words(refusal) == ["1", "0"] and refusal["rootUnchanged"]
+rows["stringbuilder-oom-infeasible"] = refusal
 
 # System.err: raw field resolution triggers real System <clinit>; the generated
 # constructor handoff checks type assignment and identity without output APIs.
