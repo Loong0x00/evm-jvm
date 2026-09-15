@@ -778,59 +778,7 @@ contract MCEntryInterpreter {
         _appendStringBootstraps(p.classes, at + 19);
         _appendIOBootstraps(p.classes, at + 22);
         _appendVFSBootstraps(p.classes, at + 25);
-        // Keep all historical bootstrap indexes fixed.  Runnable is conditional,
-        // so derive Class's actual appended slot instead of assuming +34.
-        uint256 classSlot = at + (suppliedRunnable ? 33 : 34);
-        if (!suppliedRunnable) p.classes[at + 33].data = _bootstrapRunnable();
-        p.classes[classSlot].data = _bootstrapClass();
-        p.classes[classSlot + 1].data = _bootstrapMap();
-        p.classes[classSlot + 2].data = _bootstrapConcurrentMap();
-        p.classes[classSlot + 3].data = _bootstrapAbstractMap();
-        p.classes[classSlot + 4].data = _bootstrapConcurrentHashMap();
-        p.classes[classSlot + 5].data = _bootstrapSystem();
-        // Do not interleave this new family with the pinned historical tail.
-        p.classes[classSlot + 6].data = _bootstrapDictionary();
-        p.classes[classSlot + 7].data = _bootstrapHashtable();
-        p.classes[classSlot + 8].data = _bootstrapProperties();
-        // Appended after the existing 48 pinned images; caller replacement is rejected.
-        p.classes[classSlot + 9].data = _bootstrapPrivilegedAction();
-        p.classes[classSlot + 10].data = _bootstrapClassLoader();
-        p.classes[classSlot + 11].data = _bootstrapThread();
-        p.classes[classSlot + 12].data = _bootstrapVMClassLoader();
-        // Do not interleave collection images with the pinned prior tail.
-        _appendCollectionBootstraps(p.classes, classSlot + 13);
-        // Resource enumeration appends strictly after the prior 61 images.
-        _appendResourceBootstraps(p.classes, classSlot + 22);
-        p.classes[classSlot + 25].data = _bootstrapIllegalArgumentException();
-        p.classes[classSlot + 26].data = _bootstrapBoolean();
-        p.classes[classSlot + 27].data = _bootstrapReflectiveOperationException();
-        p.classes[classSlot + 28].data = _bootstrapClassNotFoundException();
-        // The new Number/NFE/Integer tail is append-only after every prior image.
-        p.classes[classSlot + 29].data = _bootstrapNumber();
-        p.classes[classSlot + 30].data = _bootstrapNumberFormatException();
-        p.classes[classSlot + 31].data = _bootstrapInteger();
-        // Four immutable copy-on-write subset images append after the full 71-image tail.
-        p.classes[classSlot + 32].data = _bootstrapList();
-        p.classes[classSlot + 33].data = _bootstrapRandomAccess();
-        p.classes[classSlot + 34].data = _bootstrapCopyOnWriteArrayList();
-        p.classes[classSlot + 35].data = _bootstrapCopyOnWriteArrayListIterator();
-        // Four bounded lock images append after the complete 75-image tail.
-        p.classes[classSlot + 36].data = _bootstrapLock();
-        p.classes[classSlot + 37].data = _bootstrapReadWriteLock();
-        p.classes[classSlot + 38].data = _bootstrapReentrantLock();
-        p.classes[classSlot + 39].data = _bootstrapReentrantReadWriteLock();
-        // Queue/ConcurrentLinkedQueue append after the complete 79-image lock tail.
-        p.classes[classSlot + 40].data = _bootstrapQueue();
-        p.classes[classSlot + 41].data = _bootstrapConcurrentLinkedQueue();
-        // Enum is an immutable append-only image and never changes prior slots.
-        p.classes[classSlot + 42].data = _bootstrapEnum();
-        // EnumSet support appends after the complete 82-image Enum tail.
-        p.classes[classSlot + 43].data = _bootstrapEnumSet();
-        p.classes[classSlot + 44].data = _bootstrapPrintStream();
-        // Bounded StringBuilder appends after every prior immutable bootstrap.
-        p.classes[classSlot + 45].data = _bootstrapStringBuilder();
-        p.classClass = classSlot;
-        p.loaderClass = classSlot + 12;
+        _appendTailBootstraps(p, at, suppliedRunnable);
         p.rawClassCount = inputCount;
         p.rootClass = entryPlusOne - 1;
         _requireSupportedClass(p.classes[p.rootClass], p.rootClass);
@@ -10978,6 +10926,68 @@ contract MCEntryInterpreter {
         classes[at++].data = _bootstrapEnumeration();
         classes[at++].data = _bootstrapURL();
         classes[at++].data = _bootstrapVMResourceEnumeration();
+    }
+
+    // Keep this separate from the tail so the 542-byte image has one
+    // materialization site in the startup assembler.
+    function _appendStringBuilderBootstrap(ClassInfo[] memory classes, uint256 at) private pure {
+        classes[at].data = _bootstrapStringBuilder();
+    }
+
+    // Keep the immutable post-VFS tail in one helper. This preserves every
+    // existing slot while keeping _prepare below the viaIR inlining cliff.
+    function _appendTailBootstraps(Program memory p, uint256 at, bool suppliedRunnable) private pure {
+        uint256 classSlot = at + (suppliedRunnable ? 33 : 34);
+        if (!suppliedRunnable) p.classes[at + 33].data = _bootstrapRunnable();
+        p.classes[classSlot].data = _bootstrapClass();
+        p.classes[classSlot + 1].data = _bootstrapMap();
+        p.classes[classSlot + 2].data = _bootstrapConcurrentMap();
+        p.classes[classSlot + 3].data = _bootstrapAbstractMap();
+        p.classes[classSlot + 4].data = _bootstrapConcurrentHashMap();
+        p.classes[classSlot + 5].data = _bootstrapSystem();
+        // Do not interleave this new family with the pinned historical tail.
+        p.classes[classSlot + 6].data = _bootstrapDictionary();
+        p.classes[classSlot + 7].data = _bootstrapHashtable();
+        p.classes[classSlot + 8].data = _bootstrapProperties();
+        // Appended after the existing 48 pinned images; caller replacement is rejected.
+        p.classes[classSlot + 9].data = _bootstrapPrivilegedAction();
+        p.classes[classSlot + 10].data = _bootstrapClassLoader();
+        p.classes[classSlot + 11].data = _bootstrapThread();
+        p.classes[classSlot + 12].data = _bootstrapVMClassLoader();
+        // Do not interleave collection images with the pinned prior tail.
+        _appendCollectionBootstraps(p.classes, classSlot + 13);
+        // Resource enumeration appends strictly after the prior 61 images.
+        _appendResourceBootstraps(p.classes, classSlot + 22);
+        p.classes[classSlot + 25].data = _bootstrapIllegalArgumentException();
+        p.classes[classSlot + 26].data = _bootstrapBoolean();
+        p.classes[classSlot + 27].data = _bootstrapReflectiveOperationException();
+        p.classes[classSlot + 28].data = _bootstrapClassNotFoundException();
+        // The new Number/NFE/Integer tail is append-only after every prior image.
+        p.classes[classSlot + 29].data = _bootstrapNumber();
+        p.classes[classSlot + 30].data = _bootstrapNumberFormatException();
+        p.classes[classSlot + 31].data = _bootstrapInteger();
+        // Four immutable copy-on-write subset images append after the full 71-image tail.
+        p.classes[classSlot + 32].data = _bootstrapList();
+        p.classes[classSlot + 33].data = _bootstrapRandomAccess();
+        p.classes[classSlot + 34].data = _bootstrapCopyOnWriteArrayList();
+        p.classes[classSlot + 35].data = _bootstrapCopyOnWriteArrayListIterator();
+        // Four bounded lock images append after the complete 75-image tail.
+        p.classes[classSlot + 36].data = _bootstrapLock();
+        p.classes[classSlot + 37].data = _bootstrapReadWriteLock();
+        p.classes[classSlot + 38].data = _bootstrapReentrantLock();
+        p.classes[classSlot + 39].data = _bootstrapReentrantReadWriteLock();
+        // Queue/ConcurrentLinkedQueue append after the complete 79-image lock tail.
+        p.classes[classSlot + 40].data = _bootstrapQueue();
+        p.classes[classSlot + 41].data = _bootstrapConcurrentLinkedQueue();
+        // Enum is an immutable append-only image and never changes prior slots.
+        p.classes[classSlot + 42].data = _bootstrapEnum();
+        // EnumSet support appends after the complete 82-image Enum tail.
+        p.classes[classSlot + 43].data = _bootstrapEnumSet();
+        p.classes[classSlot + 44].data = _bootstrapPrintStream();
+        // Bounded StringBuilder appends after every prior immutable bootstrap.
+        _appendStringBuilderBootstrap(p.classes, classSlot + 45);
+        p.classClass = classSlot;
+        p.loaderClass = classSlot + 12;
     }
 
     function _bootstrapReflectiveOperationException() private pure returns (bytes memory) { return hex"cafebabe00000034000a0a000300070700080700090100063c696e69743e010003282956010004436f64650c000400050100266a6176612f6c616e672f5265666c6563746976654f7065726174696f6e457863657074696f6e0100136a6176612f6c616e672f457863657074696f6e002100020003000000000001000100040005000100060000001100010001000000052ab70001b1000000000000"; }

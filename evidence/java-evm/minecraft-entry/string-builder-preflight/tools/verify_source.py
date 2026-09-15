@@ -151,14 +151,6 @@ expected_engine = expected_engine.replace(
 )
 expected_engine = expected_engine.replace("uint256 count = inputCount + 78 +", "uint256 count = inputCount + 79 +")
 expected_engine = expected_engine.replace(
-    """        p.classes[classSlot + 44].data = _bootstrapPrintStream();
-        p.classClass = classSlot;""",
-    """        p.classes[classSlot + 44].data = _bootstrapPrintStream();
-        // Bounded StringBuilder appends after every prior immutable bootstrap.
-        p.classes[classSlot + 45].data = _bootstrapStringBuilder();
-        p.classClass = classSlot;""",
-)
-expected_engine = expected_engine.replace(
     """        return _isNamedClass(c, bytes("java/lang/System"))
             || _isNamedClass(c, bytes("java/io/PrintStream"))
             || _isNamedClass(c, bytes("java/lang/IllegalArgumentException"))""",
@@ -174,6 +166,46 @@ builder_fn = (
     "    function _bootstrapStringBuilder() private pure returns (bytes memory) { return hex\"" + image.hex() + "\"; }\n\n"
 )
 expected_engine = expected_engine.replace(printstream_fn.group(0), printstream_fn.group(0) + builder_fn)
+
+# This is an out-of-line source-layout repair only.  It moves the existing
+# post-VFS assignments wholesale, adds the image85 assignment at the new final
+# slot, and leaves _bootstrapRoot's runtime keccak fold untouched.
+tail_prefix = """        // Keep all historical bootstrap indexes fixed.  Runnable is conditional,
+        // so derive Class's actual appended slot instead of assuming +34.
+"""
+tail_end = "        p.rawClassCount = inputCount;"
+tail_start = expected_engine.index(tail_prefix)
+tail_stop = expected_engine.index(tail_end, tail_start)
+tail_body = expected_engine[tail_start + len(tail_prefix):tail_stop]
+assert tail_body.count("p.classes[classSlot + 44].data = _bootstrapPrintStream();") == 1
+tail_body = tail_body.replace(
+    """        p.classes[classSlot + 44].data = _bootstrapPrintStream();
+        p.classClass = classSlot;""",
+    """        p.classes[classSlot + 44].data = _bootstrapPrintStream();
+        // Bounded StringBuilder appends after every prior immutable bootstrap.
+        _appendStringBuilderBootstrap(p.classes, classSlot + 45);
+        p.classClass = classSlot;""",
+)
+expected_engine = expected_engine[:tail_start] + "        _appendTailBootstraps(p, at, suppliedRunnable);\n" + expected_engine[tail_stop:]
+resource_tail = """    function _appendResourceBootstraps(ClassInfo[] memory classes, uint256 at) private pure {
+        classes[at++].data = _bootstrapEnumeration();
+        classes[at++].data = _bootstrapURL();
+        classes[at++].data = _bootstrapVMResourceEnumeration();
+    }
+
+"""
+assert expected_engine.count(resource_tail) == 1
+layout_helpers = """    // Keep this separate from the tail so the 542-byte image has one
+    // materialization site in the startup assembler.
+    function _appendStringBuilderBootstrap(ClassInfo[] memory classes, uint256 at) private pure {
+        classes[at].data = _bootstrapStringBuilder();
+    }
+
+    // Keep the immutable post-VFS tail in one helper. This preserves every
+    // existing slot while keeping _prepare below the viaIR inlining cliff.
+    function _appendTailBootstraps(Program memory p, uint256 at, bool suppliedRunnable) private pure {
+""" + tail_body + "    }\n\n"
+expected_engine = expected_engine.replace(resource_tail, resource_tail + layout_helpers)
 assert engine == expected_engine
 
 pattern = r"function (_bootstrap\w+)\(\) private pure returns \(bytes memory\) \{\s*return hex\"([0-9a-f]+)\";"
@@ -186,7 +218,11 @@ for name, old in parent_images.items():
 assert images["_bootstrapStringBuilder"] == image.hex()
 assert engine.count("new bytes32[](85)") == 1
 assert engine.count("h[84] = keccak256(_bootstrapStringBuilder());") == 1
-assert engine.count("p.classes[classSlot + 45].data = _bootstrapStringBuilder();") == 1
+assert engine.count("_appendTailBootstraps(p, at, suppliedRunnable);") == 1
+assert engine.count("function _appendTailBootstraps(Program memory p, uint256 at, bool suppliedRunnable) private pure") == 1
+assert engine.count("function _appendStringBuilderBootstrap(ClassInfo[] memory classes, uint256 at) private pure") == 1
+assert engine.count("_appendStringBuilderBootstrap(p.classes, classSlot + 45);") == 1
+assert "p.classes[classSlot + 45].data = _bootstrapStringBuilder();" not in engine
 assert engine.count('bytes("java/lang/StringBuilder")') == 1
 assert engine.count("uint256 count = inputCount + 79 +") == 1
 for fixed in (
