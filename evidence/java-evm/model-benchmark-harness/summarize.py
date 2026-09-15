@@ -34,5 +34,12 @@ for x in rows:
   if x['toolCallId'] in toolstarts:toolDur.append((ns(x)-toolstarts[x['toolCallId']])/1e9)
   toolErrors+=bool(x.get('isError'))
 def vals(k):return [q[k] for q in req.values() if q.get(k) is not None]
-summary={'schema':1,'metricsFile':str(p),'requests':len(req),'wallSeconds':(last-first)/1e9,'usage':usage,'ttft':{k:{'valuesMs':vals(k),'medianMs':statistics.median(vals(k)) if vals(k) else None,'maxMs':max(vals(k)) if vals(k) else None} for k in ('ttfAnyMs','ttfReasoningMs','ttfActionMs','headersMs')},'generation':{'aggregateProviderOutputTokensPerSecond':usage['output']/sum(vals('streamSeconds')) if sum(vals('streamSeconds'))>0 else None,'aggregateUtf8BytesPerSecond':sum(q.get('streamUtf8Bytes',0) for q in req.values())/sum(vals('streamSeconds')) if sum(vals('streamSeconds'))>0 else None,'streamSeconds':sum(vals('streamSeconds'))},'tools':{'calls':len(toolDur),'errors':toolErrors,'summedSeconds':sum(toolDur)},'requestDetails':list(req.values())}
+wall=(last-first)/1e9
+providerCounts={}
+for x in rows:
+ if x['event']=='provider_request':providerCounts[x.get('request')]=providerCounts.get(x.get('request'),0)+1
+negative={k:sum(v<0 for v in vals(k)) for k in ('ttfAnyMs','ttfReasoningMs','ttfActionMs','headersMs','streamSeconds')}
+anomalies={'agentStarts':sum(x['event']=='agent_start' for x in rows),'agentEnds':sum(x['event']=='agent_end' for x in rows),'duplicateProviderRequestIds':sorted(k for k,v in providerCounts.items() if v>1),'negativeTimingCounts':negative,'streamSecondsExceedWall':sum(vals('streamSeconds'))>wall+1e-6}
+anomalies['validForComparison']=anomalies['agentStarts']==1 and anomalies['agentEnds']==1 and not anomalies['duplicateProviderRequestIds'] and not any(negative.values()) and not anomalies['streamSecondsExceedWall']
+summary={'schema':1,'metricsFile':str(p),'requests':len(req),'wallSeconds':wall,'usage':usage,'ttft':{k:{'valuesMs':vals(k),'medianMs':statistics.median(vals(k)) if vals(k) else None,'maxMs':max(vals(k)) if vals(k) else None} for k in ('ttfAnyMs','ttfReasoningMs','ttfActionMs','headersMs')},'generation':{'aggregateProviderOutputTokensPerSecond':usage['output']/sum(vals('streamSeconds')) if sum(vals('streamSeconds'))>0 else None,'aggregateUtf8BytesPerSecond':sum(q.get('streamUtf8Bytes',0) for q in req.values())/sum(vals('streamSeconds')) if sum(vals('streamSeconds'))>0 else None,'streamSeconds':sum(vals('streamSeconds'))},'tools':{'calls':len(toolDur),'errors':toolErrors,'summedSeconds':sum(toolDur)},'anomalies':anomalies,'requestDetails':list(req.values())}
 out=Path(sys.argv[2]) if len(sys.argv)>2 else p.with_suffix('.summary.json');out.write_text(json.dumps(summary,indent=2,ensure_ascii=False)+'\n');print(json.dumps(summary,indent=2,ensure_ascii=False))
