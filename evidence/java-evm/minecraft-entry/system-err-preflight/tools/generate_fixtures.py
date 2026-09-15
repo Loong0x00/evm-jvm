@@ -13,7 +13,7 @@ import sys
 import zipfile
 
 out = Path(sys.argv[1]).resolve()
-root = Path(__file__).resolve().parents[4]
+root = Path(__file__).resolve().parents[5]
 assert out.parent == root / "build" and out.name.startswith("java-diff-mc-system-err-fixtures-")
 assert not out.exists()
 out.mkdir()
@@ -236,7 +236,7 @@ def count_fixture(label, count, target=None):
     classes = classes_root / label
     src.mkdir(); classes.mkdir()
     for i in range(1, count):
-        (src / ("Tail%02d.java" % i)).write_text("final class Tail%02d { static int touch() { return %d; } }\n" % i)
+        (src / ("Tail%02d.java" % i)).write_text("final class Tail%02d { static int touch() { return %d; } }\n" % (i, i))
     def compile(pads=()):
         (src / "CountMain.java").write_text(count_source(count, pads))
         shutil.rmtree(classes); classes.mkdir()

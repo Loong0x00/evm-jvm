@@ -224,31 +224,11 @@ assert keccak256(new_printstream_class).hex() == PRINTSTREAM_KECCAK
 assert keccak256(b"".join(x.to_bytes(32, "big") for x in LIMITS)).hex() == LIMITS_KECCAK
 
 # The only engine delta is the new domain plus the exact System replacement,
-# one append-only PrintStream image/reservation, and the byte-identical fixed-limit
-# commitment repair required to remain inside LOCAL384.
+# one append-only PrintStream image/reservation. All runtime-derived fixed-limit
+# and bootstrap-image commitments remain intact.
 expected_engine = parent_engine.replace(OLD_DOMAIN, DOMAIN)
-expected_engine = expected_engine.replace(
-    'bytes32 private constant DBOOT_ENUMSET = keccak256(hex"',
-    "// This fixed-array ABI commitment was previously materialized at runtime.\n"
-    "    // The named limit constants below retain every bound; the precomputed value is\n"
-    "    // exactly keccak256(abi.encode(uint32[11](...))) for the same ordered tuple.\n"
-    '    bytes32 private constant DLIMITS = hex"' + LIMITS_KECCAK + '";\n'
-    '    bytes32 private constant DBOOT_PRINTSTREAM = hex"' + PRINTSTREAM_KECCAK + '";\n'
-    '    bytes32 private constant DBOOT_ENUMSET = keccak256(hex"',
-)
-expected_engine = expected_engine.replace(
-    """uint32[11] memory limits = [
-            uint32(30), uint32(262144), uint32(64), uint32(32), uint32(65536),
-            uint32(65536), uint32(16), uint32(64), uint32(256), uint32(4096),
-            uint32(1048576)
-        ];
-        bytes32 limitsHash = keccak256(abi.encode(limits));""",
-    """// Byte-identical to the formerly materialized uint32[11] ABI tuple; keeping
-        // it constant removes only allocation/encoding code, not a profile check.
-        bytes32 limitsHash = DLIMITS;""",
-)
 expected_engine = expected_engine.replace("new bytes32[](83)", "new bytes32[](84)")
-expected_engine = expected_engine.replace("h[82] = DBOOT_ENUMSET;", "h[82] = DBOOT_ENUMSET;\n        h[83] = DBOOT_PRINTSTREAM;")
+expected_engine = expected_engine.replace("h[82] = DBOOT_ENUMSET;", "h[82] = DBOOT_ENUMSET;\n        h[83] = keccak256(_bootstrapPrintStream());")
 expected_engine = expected_engine.replace("uint256 count = inputCount + 77 +", "uint256 count = inputCount + 78 +")
 expected_engine = expected_engine.replace(
     "p.classes[classSlot + 43].data = _bootstrapEnumSet();",
@@ -285,7 +265,7 @@ assert images["_bootstrapPrintStream"] == new_printstream_class.hex()
 assert engine.count("new bytes32[](84)") == 1
 assert engine.count("h[44] = keccak256(_bootstrapSystem());") == 1
 assert engine.count("h[82] = DBOOT_ENUMSET;") == 1
-assert engine.count("h[83] = DBOOT_PRINTSTREAM;") == 1
+assert engine.count("h[83] = keccak256(_bootstrapPrintStream());") == 1
 assert engine.count("p.classes[classSlot + 44].data = _bootstrapPrintStream();") == 1
 assert engine.count('bytes("java/io/PrintStream")') == 1
 assert engine.count("uint256 count = inputCount + 78 +") == 1
@@ -296,8 +276,8 @@ for fixed in (
     "MAX_PATH_BYTES = 256;", "MAX_TRANSFER = 4096;", "new uint256[](14)", "return 12;",
 ):
     assert engine.count(fixed) == 1, fixed
-assert "uint32[11] memory limits" not in engine
-assert engine.count("DLIMITS") == 2
+assert engine.count("uint32[11] memory limits") == 1
+assert "DLIMITS" not in engine and "DBOOT_PRINTSTREAM" not in engine
 
 # The product coordinator and driver retain raw30 arrays/guards. They are source
 # templates: build.py replaces only the derived code hashes in its disposable output.

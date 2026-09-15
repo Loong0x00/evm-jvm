@@ -408,11 +408,6 @@ contract MCEntryInterpreter {
     bytes32 private constant DBOOT = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT1:BOOTSTRAP:1");
     // Append-only EnumSet image commitment; folded from the exact bytes at
     // compile time so the runtime carries the append-only literal once.
-    // This fixed-array ABI commitment was previously materialized at runtime.
-    // The named limit constants below retain every bound; the precomputed value is
-    // exactly keccak256(abi.encode(uint32[11](...))) for the same ordered tuple.
-    bytes32 private constant DLIMITS = hex"d97049f65bd9258f7c8ba2f1ec45e7611e26a574eee74823d95442488a39839e";
-    bytes32 private constant DBOOT_PRINTSTREAM = hex"d117732b6247b416988a155a58a837ac13689e8e4c9d6e464e1dd6584ab7482d";
     bytes32 private constant DBOOT_ENUMSET = keccak256(hex"cafebabe00000034001b0a000600110a000300120700130a000300140a000300150700160100063c696e69743e010016285b4c6a6176612f6c616e672f4f626a6563743b2956010004436f646501000d537461636b4d61705461626c65070013070017010005616c6c4f66010026284c6a6176612f6c616e672f436c6173733b294c6a6176612f7574696c2f456e756d5365743b010009756e69766572736530010026284c6a6176612f6c616e672f436c6173733b295b4c6a6176612f6c616e672f4f626a6563743b0c000700180c0019001a0100116a6176612f7574696c2f456e756d5365740c000f00100c000700080100116a6176612f7574696c2f486173685365740100135b4c6a6176612f6c616e672f4f626a6563743b010003282956010003616464010015284c6a6176612f6c616e672f4f626a6563743b295a0021000300060000000000030000000700080001000900000040000300030000001b2ab70001033d1c2bbea200112a2b1c32b6000257840201a7ffefb100000001000a000000130002ff0006000307000b07000c010000fa00130009000d000e0001000900000018000300010000000cbb0003592ab80004b70005b000000000010a000f001000000000");
     bytes32 private constant DCFG = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT1:CONFIG:1");
     bytes32 private constant DMACH = keccak256("JVMEVM:MC-SYSTEM-ERR-PRNT1:MACHINE:1");
@@ -605,9 +600,12 @@ contract MCEntryInterpreter {
         bytes32 runtimeHash, bytes32 artifact, bytes memory entryClass,
         bytes memory entry, int32[] memory args, bytes32 seedRoot
     ) private pure returns (bytes32) {
-        // Byte-identical to the formerly materialized uint32[11] ABI tuple; keeping
-        // it constant removes only allocation/encoding code, not a profile check.
-        bytes32 limitsHash = DLIMITS;
+        uint32[11] memory limits = [
+            uint32(30), uint32(262144), uint32(64), uint32(32), uint32(65536),
+            uint32(65536), uint32(16), uint32(64), uint32(256), uint32(4096),
+            uint32(1048576)
+        ];
+        bytes32 limitsHash = keccak256(abi.encode(limits));
         return keccak256(abi.encode(
             DCFG, MR0_SCHEMA, runtimeHash, _bootstrapRoot(), artifact,
             DROOT, ROOT_KIND_MAIN_EMPTY_STRING_ARRAY, string(entryClass), string(entry),
@@ -714,7 +712,7 @@ contract MCEntryInterpreter {
         // time (verify_source.py recomputes it), so the runtime carries the
         // append-only literal once.
         h[82] = DBOOT_ENUMSET;
-        h[83] = DBOOT_PRINTSTREAM;
+        h[83] = keccak256(_bootstrapPrintStream());
         return keccak256(abi.encode(DBOOT, h));
     }
 
