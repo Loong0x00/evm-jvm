@@ -1,0 +1,225 @@
+{
+  "reviewType": "independent-blind-qualitative",
+  "scopeNote": "This is an asymmetric recovery comparison, not a fair model benchmark. Candidate identities were neither inferred nor considered. Supplied machine results were treated as authoritative and heavy tests were not rerun.",
+  "machineAuthority": {
+    "candidateA": "provisional-pass: source verifier, capped build, and targeted q1/q7/direct gate pass; retained gates are not yet run",
+    "candidateB": "reject: runtime 403767 bytes exceeds the mandatory 393216-byte cap by 10551 bytes"
+  },
+  "candidates": {
+    "A": {
+      "decision": "reject",
+      "decisionScope": "reject as a completed/acceptable stage submission; preferred recovery basis if the semantic defect is fixed and retained gates are run",
+      "confidence": 88,
+      "scores": {
+        "correctness": {
+          "score": 6.5,
+          "rationale": "The measured path has strong machine evidence: the capped artifact passes q1, q7, direct execution, the host oracle, and iterator exhaustion. Null and non-enum handling also use ordinary guest NPE/CCE paths. However, the native reader never checks initializationState, so an enum whose $VALUES was published before a later <clinit> failure is accepted despite the explicit no-failed-state-recovery requirement. The report's assertion that all failed initializers are refused is therefore not established by the code.",
+          "citations": [
+            "candidate-A/machine-results.json: targetedEvmGate",
+            "candidate-A/engine.diff:154-193",
+            "candidate-A/engine.diff:202-224",
+            "candidate-A/candidate-report.md:27-29"
+          ],
+          "uncertainty": "No supplied EVM result exercises a post-publication failed enum initializer."
+        },
+        "architectureUnderstanding": {
+          "score": 8.5,
+          "rationale": "The design uses the canonical mirror resolver, a narrowly owned private-static native binding, append-only bootstrap image 83, replacement refusal, unchanged limits, and no host execution. Reusing genuinely guest-published static data is well aligned with the EVM-owned architecture, but omitting explicit class-state validation weakens the initialization model.",
+          "citations": [
+            "candidate-A/engine.diff:83-98",
+            "candidate-A/engine.diff:106-146",
+            "candidate-A/engine.diff:166-177",
+            "candidate-A/verify_source.py:247-265"
+          ],
+          "uncertainty": "Retained continuation/reopen behavior has not been machine-gated."
+        },
+        "modificationMinimality": {
+          "score": 9.0,
+          "rationale": "This is the smaller recovery: one 457-byte Java image, one binding, one compact reader, and reuse of the accepted HashSet. It stays under the fixed runtime cap with no quota increase. The price of that compactness is reliance on a javac-specific $VALUES field and inherited collection behavior.",
+          "citations": [
+            "candidate-A/candidate-report.md:39-44",
+            "candidate-A/engine.diff:202-224",
+            "candidate-A/machine-results.json: runtimeBytes/runtimeCap/headroomBytes"
+          ],
+          "uncertainty": "The 189-byte margin makes even a small correctness repair potentially material to the cap."
+        },
+        "robustness": {
+          "score": 5.5,
+          "rationale": "Canonical mirror, null, non-enum, and focused iterator exhaustion paths are handled. But _enumUniverse validates only that a static field named $VALUES contains a non-null REF; it does not validate descriptor, uniqueness, heap kind/rank/leaf, element identity, ordinals, duplicates, or failed initialization state. The inherited HashSet iterator is live over a mutable set rather than a stage-owned immutable/snapshot iterator. Requested replacement/quota/OOM/reopen/retained matrices are not supplied as passing machine evidence.",
+          "citations": [
+            "candidate-A/engine.diff:162-189",
+            "candidate-A/engine.diff:213-224",
+            "candidate-A/verify_source.py:58-65",
+            "candidate-A/machine-results.json: retainedGates"
+          ],
+          "uncertainty": "Some malformed-universe cases may be excluded by earlier class verification, but that exclusion is not demonstrated in the candidate evidence."
+        },
+        "maintainability": {
+          "score": 7.5,
+          "rationale": "The delta is small and localized, comments state the intended invariant, and the reverse verifier recompiles the Java image, reconstructs the exact parent delta, checks old bootstrap order/limits, and verifies coordinator pins. Hard-coding $VALUES without checking its shape, plus comments claiming failed-state safety that the implementation does not enforce, creates a misleading maintenance hazard.",
+          "citations": [
+            "candidate-A/verify_source.py:41-81",
+            "candidate-A/verify_source.py:247-270",
+            "candidate-A/engine.diff:202-224"
+          ],
+          "uncertainty": "Only the extracted verifier is available here; the staging and fixture sources named by the report are not part of the blind bundle."
+        },
+        "taskCompletion": {
+          "score": 6.5,
+          "rationale": "Source verification, the official capped build, and a focused EVM gate are complete. The report explicitly leaves generated/retained matrices and Go-driver execution unrun, while the task required broad generated negative, quota, continuation/reopen, and retained gates. Original-artifact execution was correctly left to the parent.",
+          "citations": [
+            "candidate-A/candidate-report.md:54-69",
+            "candidate-A/candidate-report.md:80-81",
+            "candidate-A/machine-results.json: mandatoryMachineEligibility/retainedGates"
+          ],
+          "uncertainty": "The machine result is only provisional-pass, not complete stage acceptance."
+        }
+      },
+      "overallMean": 7.25,
+      "findings": [
+        {
+          "severity": "high",
+          "title": "Post-publication failed enum initialization can be silently recovered",
+          "evidence": "The binding resolves the mirror and reads $VALUES, but neither the branch nor _enumUniverse receives or checks initializationState (candidate-A/engine.diff:154-178, 210-224). This contradicts candidate-A/candidate-report.md:27-29.",
+          "impact": "If javac publishes $VALUES and later user <clinit> code fails, a subsequent allOf can return constants instead of preserving erroneous-class/NCDFE behavior, violating an explicit prohibition."
+        },
+        {
+          "severity": "high",
+          "title": "Required retained and broad negative/quota/reopen gates are incomplete",
+          "evidence": "candidate-A/machine-results.json says retainedGates is not-yet-run; candidate-A/candidate-report.md:66-69 says generated/retained matrices and the Go driver were not run.",
+          "impact": "The submission cannot be accepted as a completed stage despite the focused machine pass."
+        },
+        {
+          "severity": "medium",
+          "title": "$VALUES authority is under-validated",
+          "evidence": "candidate-A/engine.diff:213-224 checks only static, name, non-null, and REF kind.",
+          "impact": "Malformed or mutated guest metadata can supply a wrong array or invalid/duplicate contents without an atomic profile refusal."
+        },
+        {
+          "severity": "medium",
+          "title": "Iterator immutability/snapshot contract is not explicit",
+          "evidence": "candidate-A/verify_source.py:58-65 requires inheritance from HashSet and forbids a dedicated EnumSetIterator; candidate-A/candidate-report.md:31-32 relies on the inherited iterator.",
+          "impact": "The allOf constructor copies the universe, but the resulting set remains mutable and its inherited iterator is live, leaving the requested immutable-or-snapshot behavior only partially justified."
+        },
+        {
+          "severity": "low",
+          "title": "Runtime headroom is extremely fragile",
+          "evidence": "candidate-A/machine-results.json reports 393027/393216 bytes, only 189 bytes free.",
+          "impact": "A necessary state check may require further source-size optimization and a fresh cap build."
+        }
+      ]
+    },
+    "B": {
+      "decision": "reject",
+      "decisionScope": "mandatory machine rejection",
+      "confidence": 99,
+      "scores": {
+        "correctness": {
+          "score": 6.0,
+          "rationale": "The design correctly derives constants from ACC_ENUM static fields, validates exact ordinals/uniqueness/identity, returns a snapshot-backed set, and explicitly handles active, fresh, and failed initialization states. But it initializes the target before proving it is an enum, so allOf(nonEnum.class) can run unrelated <clinit> side effects before rejection. It also requires every constant object's dynamic class to equal the enum class, rejecting legal constant-specific enum subclasses. No EVM run validates the implementation.",
+          "citations": [
+            "candidate-B/engine.diff:152-249",
+            "candidate-B/engine.diff:344-389",
+            "candidate-B/engine.diff:234-238",
+            "candidate-B/machine-results.json: targetedEvmGate"
+          ],
+          "uncertainty": "The source verifier and host oracle cannot establish Solidity execution semantics."
+        },
+        "architectureUnderstanding": {
+          "score": 8.5,
+          "rationale": "The candidate shows strong understanding of canonical class mirrors, single-stack class-initialization continuation, erroneous-class state, guest heap ownership, ordinary array quotas, guest OOM, exact private-native binding validation, and reserved bootstrap replacement. It is fully EVM-owned and generic rather than workload-special-cased.",
+          "citations": [
+            "candidate-B/engine.diff:96-145",
+            "candidate-B/engine.diff:204-318",
+            "candidate-B/engine.diff:327-412"
+          ],
+          "uncertainty": "Because the artifact is build-ineligible, none of these continuation and heap transitions have machine execution evidence."
+        },
+        "modificationMinimality": {
+          "score": 3.0,
+          "rationale": "The change remains scoped to EnumSet, but adds two bootstrap images and roughly 172 lines of metadata/layout/allocation machinery. The resulting runtime exceeds the fixed cap by 10551 bytes, which is decisive evidence that the implementation is not minimal enough for this task.",
+          "citations": [
+            "candidate-B/engine.diff:53-59",
+            "candidate-B/engine.diff:136-318",
+            "candidate-B/machine-results.json: runtimeBytes/runtimeCap/overByBytes"
+          ],
+          "uncertainty": "A substantial refactor could recover space, but no compliant artifact is supplied."
+        },
+        "robustness": {
+          "score": 6.5,
+          "rationale": "The source has unusually strong checks for enum flags/descriptors, superclass identity, valid heap objects, complete unique ordinal coverage, destination layout, quotas, and guest OOM. Failed initialization is explicitly rejected. Robustness is reduced by non-enum initialization side effects, rejection of constant-specific subclasses, and complete absence of targeted or retained EVM runs.",
+          "citations": [
+            "candidate-B/engine.diff:152-249",
+            "candidate-B/engine.diff:274-318",
+            "candidate-B/engine.diff:348-401",
+            "candidate-B/candidate-report.md:25-29"
+          ],
+          "uncertainty": "Atomicity across q1/q7/reopen and exact quota boundaries is designed but not demonstrated."
+        },
+        "maintainability": {
+          "score": 7.0,
+          "rationale": "Named helpers separate field recognition, ordinal layout, universe validation, and heap installation, and the verifier reconstructs the delta to the accepted parent while rebuilding both Java8 images. The large amount of monolithic Solidity, repeated whole-class scans, and hard-coded field/layout assumptions increase future cost and contributed directly to cap failure.",
+          "citations": [
+            "candidate-B/engine.diff:152-318",
+            "candidate-B/verify_source.py:23-72",
+            "candidate-B/verify_source.py:74-164"
+          ],
+          "uncertainty": "No compiled artifact or runtime pin was available to cross-check source-to-bytecode maintenance claims."
+        },
+        "taskCompletion": {
+          "score": 1.5,
+          "rationale": "Only source verification and a host oracle completed. The authoritative machine build is over cap and therefore ineligible, and targeted/retained EVM gates were not run. This misses the central fixed-cap deliverable and most required evidence.",
+          "citations": [
+            "candidate-B/candidate-report.md:15-29",
+            "candidate-B/machine-results.json: engineBuild/runtimeBytes/mandatoryMachineEligibility"
+          ],
+          "uncertainty": "None regarding rejection: the mandatory cap failure is authoritative."
+        }
+      },
+      "overallMean": 5.42,
+      "findings": [
+        {
+          "severity": "critical",
+          "title": "Mandatory runtime cap exceeded",
+          "evidence": "candidate-B/machine-results.json reports 403767 bytes against 393216, over by 10551, with mandatoryMachineEligibility=reject.",
+          "impact": "The candidate is machine-rejected regardless of qualitative design quality."
+        },
+        {
+          "severity": "high",
+          "title": "No EVM execution or retained regression evidence",
+          "evidence": "candidate-B/machine-results.json marks targetedEvmGate as not-run-build-ineligible; candidate-B/candidate-report.md:27-29 leaves all EVM gates to the parent.",
+          "impact": "Continuation, OOM, canonical-root, and reopen behavior remain unverified."
+        },
+        {
+          "severity": "high",
+          "title": "Non-enum operands are initialized before enum validation",
+          "evidence": "candidate-B/engine.diff:344-381 resolves and possibly initializes enumTarget; only afterward does _enumSetUniverse reject missing ACC_ENUM/direct-Enum ancestry at lines 386-389 and 204-219.",
+          "impact": "allOf(nonEnum.class) can produce forbidden guest side effects before failing, unlike the expected non-enum rejection path."
+        },
+        {
+          "severity": "medium",
+          "title": "Legal constant-specific enum subclasses are rejected",
+          "evidence": "candidate-B/engine.diff:234-238 requires arena.heap.classes[handle] == target for every enum constant.",
+          "impact": "Enums with per-constant class bodies are not supported even though their ACC_ENUM static fields and ordinals are valid."
+        },
+        {
+          "severity": "medium",
+          "title": "Correct but expansive validation is incompatible with the bounded target",
+          "evidence": "candidate-B/engine.diff:136-318 adds multiple scans and allocation helpers plus a second bootstrap iterator image at lines 421-423.",
+          "impact": "The architecture is understandable but cannot be installed under the frozen LOCAL384 limit as delivered."
+        },
+        {
+          "severity": "low",
+          "title": "Candidate report understates the authoritative cap outcome",
+          "evidence": "candidate-B/candidate-report.md:5-7 records only missing solc, whereas candidate-B/machine-results.json supplies a compiled 403767-byte result.",
+          "impact": "This is not fabricated success, but readers must rely on machine-results.json rather than the candidate narrative."
+        }
+      ]
+    }
+  },
+  "preference": {
+    "candidate": "A",
+    "strength": "clear for recovery continuation, not for unconditional acceptance",
+    "reason": "A is the only candidate with an under-cap build and passing targeted q1/q7/direct EVM evidence, and its delta is much smaller. B has a semantically richer universe validator but is mandatorily disqualified by the cap. A still needs an explicit erroneous-class guard, stronger universe justification/validation, and retained gates before acceptance."
+  }
+}

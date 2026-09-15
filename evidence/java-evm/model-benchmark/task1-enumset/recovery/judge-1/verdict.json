@@ -1,0 +1,293 @@
+{
+  "schemaVersion": 1,
+  "reviewType": "independent-blind-qualitative-review",
+  "comparisonContext": {
+    "asymmetricRecoveryComparison": true,
+    "fairModelBenchmark": false,
+    "candidateIdentityInferenceUsed": false,
+    "machineResultsAuthoritative": true,
+    "heavyTestsRerun": false
+  },
+  "candidates": {
+    "candidate-A": {
+      "decision": "reject",
+      "decisionScope": "Reject as a completed task submission; it remains the preferred recovery basis because it is provisionally machine-eligible and passes the focused measured-path gate.",
+      "machineEligibility": "provisional-pass",
+      "confidence": 92,
+      "scores": {
+        "correctness": {
+          "score": 5.5,
+          "rationale": "The focused machine gate passes q1, q7, direct execution, host comparison, and guest-caught iterator exhaustion. Null and ordinary non-enum operands are mapped to guest NPE/CCE. However, the primitive never checks target initialization state and trusts any non-null static field named $VALUES. A class that failed after publishing $VALUES can therefore be consumed despite the explicit no-failed-state-recovery rule. State-0 allOf is deliberately refused instead of genuinely initializing the enum, and the inherited HashSet iterator is not intrinsically immutable or snapshot-based.",
+          "citations": [
+            "build/blind/candidate-A/machine-results.json:1",
+            "build/blind/candidate-A/engine.diff:154-193",
+            "build/blind/candidate-A/engine.diff:210-224",
+            "build/blind/candidate-A/candidate-report.md:25-32",
+            "build/blind/candidate-A/candidate-report.md:75-79",
+            "build/blind/original-task.txt:3-5"
+          ],
+          "uncertainty": "The supplied focused-gate summary does not enumerate every fixture, and retained gates are explicitly absent."
+        },
+        "architectureUnderstanding": {
+          "score": 7.5,
+          "rationale": "The design is EVM-owned, resolves a canonical Class mirror, uses guest static state, reserves the bootstrap class against replacement, preserves prior bootstrap order and fixed limits, and avoids host reflection/loading. The main architectural weakness is treating publication of $VALUES as a substitute for explicit initialization-state and enum-universe validation.",
+          "citations": [
+            "build/blind/candidate-A/engine.diff:92-111",
+            "build/blind/candidate-A/engine.diff:154-178",
+            "build/blind/candidate-A/engine.diff:202-224",
+            "build/blind/candidate-A/verify_source.py:247-262"
+          ],
+          "uncertainty": "No reopen or retained regression evidence was supplied to validate checkpoint interactions beyond the focused q1/q7/direct result."
+        },
+        "modificationMinimality": {
+          "score": 9.0,
+          "rationale": "One 457-byte bootstrap image and one narrow private native binding reuse the accepted HashSet storage/iterator path. The engine fits the unchanged 393216-byte cap at 393027 bytes without quota growth, and the verifier proves append-only bootstrap order. This is highly economical, although inheriting all HashSet behavior broadens the actual surface and hierarchy beyond the requested narrow abstraction.",
+          "citations": [
+            "build/blind/candidate-A/bootstrap/java/util/EnumSet.java:23-34",
+            "build/blind/candidate-A/candidate-report.md:39-44",
+            "build/blind/candidate-A/machine-results.json:1",
+            "build/blind/candidate-A/verify_source.py:247-258"
+          ],
+          "uncertainty": "The 189-byte runtime headroom makes even small corrective changes risky."
+        },
+        "robustness": {
+          "score": 4.5,
+          "rationale": "Positive evidence covers cross-quantum equality and catchable exhaustion, and the native branch itself does not allocate. Robustness is materially limited by absent retained/quota/replacement/reopen gates, no initialization-state check, shallow $VALUES validation, and a live mutable inherited iterator path.",
+          "citations": [
+            "build/blind/candidate-A/machine-results.json:1",
+            "build/blind/candidate-A/candidate-report.md:66-80",
+            "build/blind/candidate-A/engine.diff:154-193",
+            "build/blind/candidate-A/engine.diff:213-224",
+            "evidence/java-evm/minecraft-entry/linked-hash-set-preflight/source/bootstrap/java/util/HashSet.java:23-30",
+            "evidence/java-evm/minecraft-entry/linked-hash-set-preflight/source/bootstrap/java/util/HashSetIterator.java:3-10"
+          ],
+          "uncertainty": "The missing mandated negative and retained gates may expose additional failures."
+        },
+        "maintainability": {
+          "score": 7.5,
+          "rationale": "The implementation is small and the reverse verifier checks parent hashes, Java8 reproducibility, exact delta reconstruction, fixed limits, bootstrap order, binding ownership, and coordinator pinning. Maintainability is reduced by comments that overstate the guarantee: the implementation says it reads ACC_ENUM constants and refuses failed initialization, while it actually recognizes only a static field name and non-null reference.",
+          "citations": [
+            "build/blind/candidate-A/verify_source.py:25-65",
+            "build/blind/candidate-A/verify_source.py:80-110",
+            "build/blind/candidate-A/verify_source.py:247-268",
+            "build/blind/candidate-A/bootstrap/java/util/EnumSet.java:9-18",
+            "build/blind/candidate-A/engine.diff:202-224"
+          ],
+          "uncertainty": "The candidate package omits the focused fixture source, so test intent cannot be audited from the anonymized artifact alone."
+        },
+        "taskCompletion": {
+          "score": 5.0,
+          "rationale": "Source verification, the capped build, and a focused EVM/host gate completed successfully. The task nevertheless required generated negative, quota/OOM, replacement, reopen/canonical, and retained Enum/ACC_ENUM/cap/queue gates; the report explicitly says those matrices and the Go driver were not run, and machine results label retained gates not-yet-run.",
+          "citations": [
+            "build/blind/original-task.txt:5-7",
+            "build/blind/candidate-A/candidate-report.md:54-69",
+            "build/blind/candidate-A/candidate-report.md:80-81",
+            "build/blind/candidate-A/machine-results.json:1"
+          ],
+          "uncertainty": "Original-artifact execution was correctly parent-owned and is not counted against the candidate; the missing generated/retained work is."
+        }
+      },
+      "averageScore": 6.5,
+      "findings": {
+        "critical": [],
+        "high": [
+          {
+            "title": "Failed enum initialization can be silently recovered",
+            "detail": "The report claims failed initialization is refused, but binding 12 never reads initializationState. It accepts any non-null $VALUES reference. If guest <clinit> publishes $VALUES and later fails, staticValues remains populated and a later allOf call can return a set, violating the explicit no-failed-state-recovery constraint.",
+            "citations": [
+              "build/blind/original-task.txt:3",
+              "build/blind/candidate-A/candidate-report.md:27-29",
+              "build/blind/candidate-A/engine.diff:154-178",
+              "build/blind/candidate-A/engine.diff:210-224"
+            ]
+          },
+          {
+            "title": "Iterator is neither immutable nor a snapshot",
+            "detail": "EnumSet publicly extends the accepted HashSet and does not override add or iterator. HashSet exposes add, and HashSetIterator reads owner.used and owner.elements on every call. A raw/wrong-type addition after iterator creation can become visible, contrary to the mandatory immutable-or-snapshot iterator coverage.",
+            "citations": [
+              "build/blind/original-task.txt:5",
+              "build/blind/candidate-A/bootstrap/java/util/EnumSet.java:14-31",
+              "evidence/java-evm/minecraft-entry/linked-hash-set-preflight/source/bootstrap/java/util/HashSet.java:23-30",
+              "evidence/java-evm/minecraft-entry/linked-hash-set-preflight/source/bootstrap/java/util/HashSetIterator.java:3-10"
+            ]
+          },
+          {
+            "title": "Mandatory generated and retained gate matrix is incomplete",
+            "detail": "Only the focused gate is authoritative-pass. The candidate explicitly did not run generated/retained matrices or the driver, and retainedGates is not-yet-run.",
+            "citations": [
+              "build/blind/original-task.txt:5",
+              "build/blind/candidate-A/candidate-report.md:66-69",
+              "build/blind/candidate-A/candidate-report.md:80-81",
+              "build/blind/candidate-A/machine-results.json:1"
+            ]
+          }
+        ],
+        "medium": [
+          {
+            "title": "State-0 allOf does not perform genuine active initialization",
+            "detail": "The primitive is intentionally initializer-free, and an unpublished table produces a hard profile error. This supports the measured mid-<clinit> case but not allOf from an otherwise uninitialized enum class literal.",
+            "citations": [
+              "build/blind/candidate-A/candidate-report.md:21-29",
+              "build/blind/candidate-A/candidate-report.md:75-79",
+              "build/blind/candidate-A/verify_source.py:255-262"
+            ]
+          },
+          {
+            "title": "$VALUES authority validation is too shallow",
+            "detail": "The helper checks only ACC_STATIC, the literal field name $VALUES, and a non-null REF. It does not validate synthetic/final flags, array descriptor/type, array handle/rank/component, constant identities, ordinals, or duplicates before returning the handle.",
+            "citations": [
+              "build/blind/candidate-A/engine.diff:210-224"
+            ]
+          }
+        ],
+        "low": [
+          {
+            "title": "Runtime headroom is fragile",
+            "detail": "The build passes but leaves only 189 bytes, so fixing semantic gaps may exceed the immutable cap.",
+            "citations": [
+              "build/blind/candidate-A/machine-results.json:1",
+              "build/blind/candidate-A/candidate-report.md:71-74"
+            ]
+          }
+        ]
+      }
+    },
+    "candidate-B": {
+      "decision": "reject",
+      "decisionScope": "Mandatory machine rejection and incomplete task execution.",
+      "machineEligibility": "reject",
+      "confidence": 99,
+      "scores": {
+        "correctness": {
+          "score": 6.5,
+          "rationale": "The source design genuinely derives constants from ACC_ENUM static fields, validates object class and ordinal permutation, handles state-0 continuation and state-3 failure, and returns a private snapshot. A material semantic defect remains: a canonical non-enum Class reaches EnumSetProfileError(5) rather than the ordinary guest ClassCastException required by Java EnumSet behavior. There is no EVM execution evidence because the build is ineligible.",
+          "citations": [
+            "build/blind/candidate-B/engine.diff:152-166",
+            "build/blind/candidate-B/engine.diff:204-249",
+            "build/blind/candidate-B/engine.diff:327-412",
+            "build/blind/candidate-B/bootstrap/java/util/EnumSetIterator.java:3-18",
+            "build/blind/candidate-B/machine-results.json:1"
+          ],
+          "uncertainty": "Without a compiled targeted EVM gate, continuation, heap-layout, and quota behavior remain source-level judgments only."
+        },
+        "architectureUnderstanding": {
+          "score": 8.5,
+          "rationale": "The candidate demonstrates strong understanding of canonical mirrors, class initialization continuation, erroneous state handling, guest heap ownership, inherited ordinal layout, object/array quotas, native binding ownership, and reserved bootstrap replacement. It stays generic and EVM-owned with no workload special case or host authority.",
+          "citations": [
+            "build/blind/candidate-B/engine.diff:96-114",
+            "build/blind/candidate-B/engine.diff:152-202",
+            "build/blind/candidate-B/engine.diff:204-249",
+            "build/blind/candidate-B/engine.diff:274-318",
+            "build/blind/candidate-B/engine.diff:342-389"
+          ],
+          "uncertainty": "Architectural intent is clear, but no EVM result validates the implementation against actual continuation serialization."
+        },
+        "modificationMinimality": {
+          "score": 2.5,
+          "rationale": "The candidate adds two bootstrap classes and a large collection of engine helpers, scans all classes for Enum and Object, and materializes a new array. The resulting runtime is 403767 bytes, 10551 bytes above the fixed cap. Although the behavior is bounded, it is not the smallest cap-compatible recovery.",
+          "citations": [
+            "build/blind/candidate-B/bootstrap/java/util/EnumSet.java:7-24",
+            "build/blind/candidate-B/bootstrap/java/util/EnumSetIterator.java:4-18",
+            "build/blind/candidate-B/engine.diff:168-318",
+            "build/blind/candidate-B/machine-results.json:1"
+          ],
+          "uncertainty": "No compiled optimization attempt is supplied, so the amount of removable bytecode is unknown; the authoritative final size is still disqualifying."
+        },
+        "robustness": {
+          "score": 6.5,
+          "rationale": "Source-level checks cover canonical references, failed and uninitialized classes, exact constant objects, duplicate/out-of-range ordinals, array/object quotas, guest OOM, replacement refusal, immutable backing, and iterator exhaustion. Robustness is reduced by hard-profile non-enum handling, allocation of the EnumSet before operand validation, and the total absence of EVM/retained/reopen tests.",
+          "citations": [
+            "build/blind/candidate-B/bootstrap/java/util/EnumSet.java:8-23",
+            "build/blind/candidate-B/bootstrap/java/util/EnumSetIterator.java:5-18",
+            "build/blind/candidate-B/engine.diff:216-249",
+            "build/blind/candidate-B/engine.diff:274-317",
+            "build/blind/candidate-B/engine.diff:327-401",
+            "build/blind/candidate-B/candidate-report.md:25-29"
+          ],
+          "uncertainty": "The source verifier checks construction of the delta, not runtime fault precedence or checkpoint atomicity."
+        },
+        "maintainability": {
+          "score": 7.0,
+          "rationale": "The Java classes are clear, helper responsibilities are separated, error codes are localized, and the reverse verifier rebuilds both Java8 images and proves exact reversibility/fixed limits. The 170-plus-line native support block, repeated whole-class scans, and lack of executable EVM evidence make this more expensive to maintain and optimize.",
+          "citations": [
+            "build/blind/candidate-B/bootstrap/java/util/EnumSet.java:3-24",
+            "build/blind/candidate-B/bootstrap/java/util/EnumSetIterator.java:3-18",
+            "build/blind/candidate-B/verify_source.py:23-72",
+            "build/blind/candidate-B/verify_source.py:74-173",
+            "build/blind/candidate-B/engine.diff:152-318"
+          ],
+          "uncertainty": "The actual staged engine is represented only by a diff in the blind package, so compiler-driven maintainability issues cannot be inspected beyond machine results."
+        },
+        "taskCompletion": {
+          "score": 2.0,
+          "rationale": "The source verifier and focused host oracle passed, but the candidate itself reports that compilation never started. Authoritative machine results show a cap failure, no targeted EVM gate, and mandatory rejection. Generated EVM, quota, replacement, reopen/canonical, retained, and original-parent gates are all absent.",
+          "citations": [
+            "build/blind/candidate-B/candidate-report.md:5-7",
+            "build/blind/candidate-B/candidate-report.md:15-29",
+            "build/blind/candidate-B/machine-results.json:1",
+            "build/blind/original-task.txt:5-7"
+          ],
+          "uncertainty": "None regarding machine rejection; only the unexecuted semantic behavior is uncertain."
+        }
+      },
+      "averageScore": 5.5,
+      "findings": {
+        "critical": [
+          {
+            "title": "Mandatory runtime cap failure",
+            "detail": "Authoritative machine results measure 403767 runtime bytes against a fixed 393216-byte cap, exceeding it by 10551 bytes. The engine build is failed/ineligible and no targeted EVM gate ran. The rubric makes this disqualifying.",
+            "citations": [
+              "build/blind/candidate-B/machine-results.json:1",
+              "build/blind/judge-rubric.md:4",
+              "build/blind/judge-rubric.md:15-17"
+            ]
+          }
+        ],
+        "high": [
+          {
+            "title": "Non-enum Class produces a hard profile error instead of guest CCE",
+            "detail": "After canonical mirror resolution, the target check reverts EnumSetProfileError(5) when ACC_ENUM/direct Enum parent validation fails. This bypasses catchable Java ClassCastException behavior and misses an explicitly requested negative case.",
+            "citations": [
+              "build/blind/original-task.txt:5",
+              "build/blind/candidate-B/engine.diff:204-219",
+              "build/blind/candidate-B/engine.diff:342-389"
+            ]
+          },
+          {
+            "title": "No EVM or retained execution evidence",
+            "detail": "Only source verification and a host oracle completed. The candidate reports no Solidity artifact and no EVM gate; the authoritative result confirms targeted execution was not run because the build was ineligible.",
+            "citations": [
+              "build/blind/candidate-B/candidate-report.md:15-29",
+              "build/blind/candidate-B/machine-results.json:1"
+            ]
+          }
+        ],
+        "medium": [
+          {
+            "title": "Operand failures allocate the set before validation",
+            "detail": "The Java wrapper constructs EnumSet before entering allOf0, while null/non-enum validation happens inside the native. Caught invalid-operand paths therefore consume an ordinary object and can alter quota/OOM precedence compared with validating the enum universe first.",
+            "citations": [
+              "build/blind/candidate-B/bootstrap/java/util/EnumSet.java:10-16",
+              "build/blind/candidate-B/engine.diff:327-347"
+            ]
+          },
+          {
+            "title": "Correct but oversized metadata scans impede recovery",
+            "detail": "The implementation scans every class to rediscover java/lang/Enum and java/lang/Object even though hierarchy/bootstrap ownership already constrains them. This contributes complexity and runtime size under an immutable cap.",
+            "citations": [
+              "build/blind/candidate-B/engine.diff:168-179",
+              "build/blind/candidate-B/engine.diff:298-306",
+              "build/blind/candidate-B/machine-results.json:1"
+            ]
+          }
+        ],
+        "low": []
+      }
+    }
+  },
+  "preference": {
+    "preferred": "candidate-A",
+    "tie": false,
+    "rationale": "Both are rejected as complete submissions, but A is the preferable recovery base: it fits the immutable runtime cap and has authoritative focused q1/q7/direct EVM success. B has stronger explicit initialization/ordinal/snapshot architecture, but its 10551-byte cap overrun is mandatory-disqualifying and it has no EVM execution evidence. Preference does not erase A's failed-state, snapshot, and gate-completion blockers."
+  }
+}
