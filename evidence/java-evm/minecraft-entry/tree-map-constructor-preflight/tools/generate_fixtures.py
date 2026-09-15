@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create only trusted generated Java-8 fixtures for the String.lastIndexOf gate.
+"""Create only trusted generated Java-8 fixtures for the TreeMap constructor gate.
 
 No original artifact, class, resource, or world is read. Host execution is limited
 strictly to generated positive/control sources and is not an EVM execution path.
