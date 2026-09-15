@@ -133,7 +133,8 @@ assert image[:8] == bytes.fromhex("cafebabe00000034")
 assert b"java/lang/AbstractStringBuilder" not in image and b"java/io/Serializable" not in image
 for literal in (b"append", b"toString", b"java/lang/String", b"java/lang/Object", b"[C"):
     assert literal in image
-assert image.count(b"java/lang/StringBuilder") == 1
+# One Class entry and append's return descriptor are the only two occurrences.
+assert image.count(b"java/lang/StringBuilder") == 2
 
 parent_engine = (parent / "artifacts/engine/MCEntryInterpreter.sol").read_text()
 engine = (stage / "engine/MCEntryInterpreter.sol").read_text()
