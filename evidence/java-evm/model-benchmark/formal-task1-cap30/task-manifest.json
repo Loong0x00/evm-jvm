@@ -1,0 +1,39 @@
+{
+  "taskId": "formal-cap30-1",
+  "baseCommit": "5b55d0ce61951e5a8f609724ef3dd08b13a173b1",
+  "taskSHA256": "c342e271fd4777450a1589306001257503445f305261648a65d0f3ae63c86938",
+  "contextManifestSHA256": "c863b5f73a0477191c75ac3350348d658ca4dabff0738854cf8a7ac6ff4b7557",
+  "toolAllowlist": [
+    "read",
+    "bash",
+    "edit",
+    "write"
+  ],
+  "candidateOrder": [
+    "terra",
+    "deepseek"
+  ],
+  "models": {
+    "terra": {
+      "id": "openai-codex/gpt-5.6-terra",
+      "thinking": "xhigh"
+    },
+    "deepseek": {
+      "id": "deepseek/deepseek-flash",
+      "thinking": "max"
+    }
+  },
+  "timeoutSeconds": 1200,
+  "parallel": true,
+  "cpuSets": {
+    "slotA": "0-3,8-11,16-19,24-27",
+    "slotB": "4-7,12-15,20-23,28-31"
+  },
+  "judges": {
+    "count": 3,
+    "id": "openai-codex/gpt-5.6-sol",
+    "thinking": "xhigh",
+    "timeoutSeconds": 600
+  },
+  "humanInterventions": []
+}

@@ -7,7 +7,7 @@ assert (cwd/'.git').exists() and task.is_file() and out.resolve().is_relative_to
 root=Path(__file__).resolve().parent;metrics=out/'metrics.jsonl';events=out/'pi-events.jsonl';stderr=out/'pi-stderr.log';prompt=task.read_text();thinking=os.environ.get('PI_BENCH_THINKING','max')
 worker='''You are an isolated benchmark candidate working on one bounded task. Stay inside the current working directory; do not inspect sibling or parent worktrees. Do not delegate. Preserve unrelated changes. Obey the task's original-artifact restrictions. Work autonomously, run proportionate verification, and leave a concise BENCHMARK_RESULT.md with Result, Files Changed, Verification, and Remaining Uncertainty. Do not identify or discuss your model.'''
 cmd=['pi','--mode','json','--no-session','--approve','--model',model,'--thinking',thinking,'--tools','read,bash,edit,write','--extension',str(root/'metrics.ts'),'--append-system-prompt',worker,'-p',prompt]
-env=dict(os.environ,PI_BENCH_METRICS_FILE=str(metrics),PYTHONDONTWRITEBYTECODE='1');limit=int(os.environ.get('PI_BENCH_TIMEOUT_SECONDS','1200'));start=time.monotonic();timedOut=False
+env=dict(os.environ,PI_BENCH_METRICS_FILE=str(metrics),PYTHONDONTWRITEBYTECODE='1',NODE_PATH=str(root.parents[2]/'jvmevm/runtime/node_modules'));limit=int(os.environ.get('PI_BENCH_TIMEOUT_SECONDS','1200'));start=time.monotonic();timedOut=False
 def descendants(pid):
  rows=subprocess.run(['ps','-eo','pid=,ppid='],text=True,capture_output=True,check=True).stdout.splitlines();children={}
  for row in rows:
