@@ -1,0 +1,28 @@
+{
+  "base": "e4bfbe836",
+  "round": 1,
+  "mapping": {
+    "A": "deepseek",
+    "B": "terra"
+  },
+  "models": {
+    "terra": "openai-codex/gpt-5.6-terra",
+    "deepseek": "deepseek/deepseek-flash"
+  },
+  "wallSeconds": {
+    "terra": 197.024550137,
+    "deepseek": 174.736952334
+  },
+  "blindJudge": "openai-codex/gpt-5.6-luna",
+  "verdict": {
+    "winner": "B",
+    "mappedWinner": "terra",
+    "scores": {
+      "A": 92,
+      "B": 95
+    },
+    "confidence": 0.84
+  },
+  "decision": "retain-terra-after-round1",
+  "threshold": "DS must win both quality and be >=25% faster in both rounds"
+}
