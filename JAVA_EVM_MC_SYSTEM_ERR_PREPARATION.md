@@ -18,7 +18,7 @@ Implement only a bounded Java 8 guest bootstrap sufficient for the measured acti
 
 1. `java/lang/System` exposes the exact public static final `err:Ljava/io/PrintStream;` field.
 2. Genuine guest `<clinit>` execution constructs a non-null, canonical guest object for `System.err`; no preinitialized/fabricated handle and no host Java execution path.
-3. Append one immutable Java-8-produced `java/io/PrintStream` bootstrap image after all 83 accepted images. Preserve every prior image byte/order and EnumSet behavior exactly.
+3. Replace only the measured `java/lang/System` image at its fixed slot44, append one immutable Java-8-produced `java/io/PrintStream` image after all 83 accepted slots, and preserve the other82 prior image bytes/order plus EnumSet behavior exactly.
 4. Reserve both `java/lang/System` and `java/io/PrintStream` against raw replacement.
 5. Claim only field resolution, genuine initialization, non-nullness, stable identity, descriptor/type assignability, checkpoint persistence and the constructor surface actually needed by `System.<clinit>`. Do not silently claim print/println/output semantics. Any omitted API must fail explicitly/honestly when measured.
 6. Preserve raw30/262144, CP4096, Code65535, frames128, heap/VFS/checkpoint1MiB, Head32768B, LOCAL1B gas with25M reserve,12 existing native bindings,14 exception kinds, and all other accepted limits.
