@@ -1,0 +1,623 @@
+{
+  "generatedOnly": true,
+  "fixtures": {
+    "system-err": {
+      "entries": [
+        "SystemErrProbe.class",
+        "SystemErrProbe$Handoff.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 834,
+      "classBytes": {
+        "SystemErrProbe.class": 554,
+        "SystemErrProbe$Handoff.class": 280
+      },
+      "classSHA256": {
+        "SystemErrProbe.class": "1cd8232c8451e96a3cf57f3d69ef3bf71917964e1b233dc9d3cb06a603da981c",
+        "SystemErrProbe$Handoff.class": "35e504a80156584c733e22c3ed27da76ca56f4f43943eb351508db7e81f397b9"
+      },
+      "zipSHA256": "7f12536a5612862681bab9e8414ad39e57453763c06e5076b1491813fa76c9b7",
+      "java8HostOracle": true
+    },
+    "stringbuilder": {
+      "entries": [
+        "StringBuilderMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 724,
+      "classBytes": {
+        "StringBuilderMain.class": 724
+      },
+      "classSHA256": {
+        "StringBuilderMain.class": "0b8f97bf37ad8e6c19e9230930702f38a1a9ea7027ec16f525f56f78ea9c79a9"
+      },
+      "zipSHA256": "a740b7ac5afe966705ae7a47df9ea23cfe69272435715ef45afd2276ef531cd2",
+      "java8HostOracle": true
+    },
+    "stringbuilder-null": {
+      "entries": [
+        "StringBuilderNullMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 479,
+      "classBytes": {
+        "StringBuilderNullMain.class": 479
+      },
+      "classSHA256": {
+        "StringBuilderNullMain.class": "61b2bb777a56c88a70a8599653c728d44bac6867f3b48bb8924e099e52e29dce"
+      },
+      "zipSHA256": "af1a07f3b4da4fe186f8e05f9de071faa68be0806c0054ee749a3179624fa8c5",
+      "java8HostOracle": false
+    },
+    "stringbuilder-uninitialized": {
+      "entries": [
+        "StringBuilderUninitializedMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 240,
+      "classBytes": {
+        "StringBuilderUninitializedMain.class": 240
+      },
+      "classSHA256": {
+        "StringBuilderUninitializedMain.class": "64fd9c305254c1e89bac1aae6152c53025936b1a766c994e126c496810321809"
+      },
+      "zipSHA256": "21c7f1263631eaad65594c3acdac595a7f90553f3911ce30cf076baa6cb83ad6",
+      "java8HostOracle": true
+    },
+    "stringbuilder-oom": {
+      "entries": [
+        "StringBuilderOOMMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 560,
+      "classBytes": {
+        "StringBuilderOOMMain.class": 560
+      },
+      "classSHA256": {
+        "StringBuilderOOMMain.class": "d956cee388a0e3a737f402c0b0b4a8d150dd475af71ae91c0b5c287e6aee1f1f"
+      },
+      "zipSHA256": "3bc897e6bc7f51bbab538775930604010082d200ce84c21a198fb65d5d68633e",
+      "java8HostOracle": false
+    },
+    "raw-stringbuilder": {
+      "entries": [
+        "RawStringBuilderReplacementMain.class",
+        "java/lang/StringBuilder.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 343,
+      "classBytes": {
+        "RawStringBuilderReplacementMain.class": 205,
+        "java/lang/StringBuilder.class": 138
+      },
+      "classSHA256": {
+        "RawStringBuilderReplacementMain.class": "f96472e89892b002e2449f279433a2446a2ce8a694288770ead73c4cbcf81933",
+        "java/lang/StringBuilder.class": "eedfc873c0418b5b9ab36f8e7418e3717d7b6464cb1b6da9b22eef30e9b00318"
+      },
+      "zipSHA256": "4b995a364c90741cdf8b8a1c827cf8b0b0ecbddfbbea25e2fbb06708ab94830b",
+      "java8HostOracle": false
+    },
+    "system-uninitialized": {
+      "entries": [
+        "SystemUninitializedProbe.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 234,
+      "classBytes": {
+        "SystemUninitializedProbe.class": 234
+      },
+      "classSHA256": {
+        "SystemUninitializedProbe.class": "043c4741d400ff6a6e8781f26918926157f842de5324a2123461fbf72c188d6d"
+      },
+      "zipSHA256": "9b5233ef88a43b7d742a850b99c7adf27d3fd3933894c6ee8395f9f181011804",
+      "java8HostOracle": true
+    },
+    "failed-init": {
+      "entries": [
+        "FailedInitProbe.class",
+        "Broken.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 686,
+      "classBytes": {
+        "FailedInitProbe.class": 457,
+        "Broken.class": 229
+      },
+      "classSHA256": {
+        "FailedInitProbe.class": "686fe8584bf36fb8f3f16eb462447d9ca131ecf1919dd0339e842273f8d3de09",
+        "Broken.class": "4d0da0c3a6356ebefdc0114904f466afc8e03615a4475bef60fcfbceb0ad1f11"
+      },
+      "zipSHA256": "d28df79f162010a01d355a73d3e4ea11afcf98e8ffb43eb41213d9b2396234f1",
+      "java8HostOracle": true
+    },
+    "raw-system": {
+      "entries": [
+        "RawSystemReplacementMain.class",
+        "java/lang/System.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 329,
+      "classBytes": {
+        "RawSystemReplacementMain.class": 198,
+        "java/lang/System.class": 131
+      },
+      "classSHA256": {
+        "RawSystemReplacementMain.class": "258f9f95765321bb8aebb70c62431ba22403e539ec3ffa741b8c2a129cb21cc7",
+        "java/lang/System.class": "8db501e5b7e1678985c4a757fc5273ecd0214c8b02cb9000f945fc486c5a5350"
+      },
+      "zipSHA256": "c7677cefb39c2120d4761c7d77273d86773362446549da558ea44ae379bb3da4",
+      "java8HostOracle": false
+    },
+    "raw-printstream": {
+      "entries": [
+        "RawPrintStreamReplacementMain.class",
+        "java/io/PrintStream.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 337,
+      "classBytes": {
+        "RawPrintStreamReplacementMain.class": 203,
+        "java/io/PrintStream.class": 134
+      },
+      "classSHA256": {
+        "RawPrintStreamReplacementMain.class": "19f95ea4c23729280afe395210de65c7ab57a61f779504180adba0c849c9f2c9",
+        "java/io/PrintStream.class": "ab20e0463e529c30c6f6c5668561145ae57f8c9b735a7cc95b5863a0d5db6fa0"
+      },
+      "zipSHA256": "5835ffb9d97ccb8c7cc3fcadf9aad29840115e7a476c8ed8419d9d4e9e06fa40",
+      "java8HostOracle": false
+    },
+    "enumset": {
+      "entries": [
+        "EnumSetMain.class",
+        "FocusLevel.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 1612,
+      "classBytes": {
+        "EnumSetMain.class": 716,
+        "FocusLevel.class": 896
+      },
+      "classSHA256": {
+        "EnumSetMain.class": "534d977e7856f51b3865027889b90d4bd5e8b752f66a8d9f092cc2166bced04c",
+        "FocusLevel.class": "2fdd017ed6827de5aa520a41f5d07d2ec57db4d14c43c2f2f17d6de1965af5af"
+      },
+      "zipSHA256": "a440fea3a17a1d99449e00c0f099fa9ab602039911101b4a87ec55d8abc488c4",
+      "java8HostOracle": true,
+      "focusLevelAccessFlags": 16432
+    },
+    "enumset-errors": {
+      "entries": [
+        "EnumSetErrorMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 528,
+      "classBytes": {
+        "EnumSetErrorMain.class": 528
+      },
+      "classSHA256": {
+        "EnumSetErrorMain.class": "454157105576a64d6a21bade79a71fe4bd9807bbc9d4687dd6fb267cda28f845"
+      },
+      "zipSHA256": "cb4d362d163a3a3e0de6723c40caa0336f4f7bed59b03252c107806c57e4f914",
+      "java8HostOracle": true
+    },
+    "enumset-failed": {
+      "entries": [
+        "FailedEnumMain.class",
+        "FailingLevel.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 1393,
+      "classBytes": {
+        "FailedEnumMain.class": 547,
+        "FailingLevel.class": 846
+      },
+      "classSHA256": {
+        "FailedEnumMain.class": "61aabf69c230c0510b5170aa3e88bf59b8a448d7352b2c889decf5b11b360d4b",
+        "FailingLevel.class": "3a0f912ade4d2ecc11ebcf2f5977097ea50fb5fde13b4def6b133846a6691f9a"
+      },
+      "zipSHA256": "516905e68b2ac0113b32d350b883fd6c201b08a304d49ccc78d3a17347deb214",
+      "java8HostOracle": true
+    },
+    "enumset-uninitialized": {
+      "entries": [
+        "EnumSetUninitializedMain.class",
+        "OtherLevel.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 967,
+      "classBytes": {
+        "EnumSetUninitializedMain.class": 302,
+        "OtherLevel.class": 665
+      },
+      "classSHA256": {
+        "EnumSetUninitializedMain.class": "31d43d8e993e0d4627c9670bdcacdd7608492eb4d4b326fa531532581c2068a8",
+        "OtherLevel.class": "7731c8a4f8a5b0fddc2cc96ad3de66689473b5acde824b3279777c9396f26192"
+      },
+      "zipSHA256": "f3f7dd4a9fac5514ebacb55f786940f22dedc344dd2b555741a138bbfba90236",
+      "java8HostOracle": false
+    },
+    "queue": {
+      "entries": [
+        "QueueMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 556,
+      "classBytes": {
+        "QueueMain.class": 556
+      },
+      "classSHA256": {
+        "QueueMain.class": "67b0dc9ed418432531894921ce58fa32ca403c5fb4c27eabff2ae6bcbfdfc3a2"
+      },
+      "zipSHA256": "6e053ae1c1ecf1cf9d97c744e722b38ab77c149c8c4f685d86663d92e45027ad",
+      "java8HostOracle": true
+    },
+    "oom": {
+      "entries": [
+        "OOMNewInstanceMain.class",
+        "TooWideTarget.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 15914,
+      "classBytes": {
+        "OOMNewInstanceMain.class": 492,
+        "TooWideTarget.class": 15422
+      },
+      "classSHA256": {
+        "OOMNewInstanceMain.class": "129a60f5b90d422c00d5215bdbf971dc284a3209fcd9000a25261007010cbb11",
+        "TooWideTarget.class": "06c5aac808d0229ef191781364b09f468ee4bd8b145f9c41be95fafa376c376d"
+      },
+      "zipSHA256": "2866d2d790a7033dfad6968a23dd3bc168dcefe902617405cb9be41ba1b4d0bc",
+      "java8HostOracle": false
+    },
+    "count-29": {
+      "entries": [
+        "CountMain.class",
+        "Tail01.class",
+        "Tail02.class",
+        "Tail03.class",
+        "Tail04.class",
+        "Tail05.class",
+        "Tail06.class",
+        "Tail07.class",
+        "Tail08.class",
+        "Tail09.class",
+        "Tail10.class",
+        "Tail11.class",
+        "Tail12.class",
+        "Tail13.class",
+        "Tail14.class",
+        "Tail15.class",
+        "Tail16.class",
+        "Tail17.class",
+        "Tail18.class",
+        "Tail19.class",
+        "Tail20.class",
+        "Tail21.class",
+        "Tail22.class",
+        "Tail23.class",
+        "Tail24.class",
+        "Tail25.class",
+        "Tail26.class",
+        "Tail27.class",
+        "Tail28.class"
+      ],
+      "bindingCount": 29,
+      "totalClassBytes": 5482,
+      "classSHA256": {
+        "CountMain.class": "2a70deb4bb5f3fcb4d8c9a777105f495955e4cf086eb84fb263240528cab2ded",
+        "Tail01.class": "de1b04aff970b62e7033f66c6dfce888180a5051c90862be1cced2a8a2006047",
+        "Tail02.class": "116e40fc230d01bea4c78257119e8e150f6ae211162ae34618d2a1d9532286dd",
+        "Tail03.class": "a1f59efe143a80b317fa3a581b06b067b650b415d7f37ad34b29f44d41802743",
+        "Tail04.class": "c6e9f03eeb94628805a51f312c083f34d4cc87a3803db56d170b703da47d1db0",
+        "Tail05.class": "d2a474a2cda38a250b9e13cc19e381105f000bdec91fec8cb260bc7d2be4985e",
+        "Tail06.class": "981235294287cb6870c448a4fb38a9cf823cd4fa538b4f5d9a86d4af056e91c3",
+        "Tail07.class": "602784a5c1a169d052f402d61c6586dbf1beb3f973b17d69f5aeba64d092fbc8",
+        "Tail08.class": "e30671f137024af7dca3db21334b923d142b3b2db8a96da93ea1689bd8af3aca",
+        "Tail09.class": "5330aebe287d03ee950dd8e6ea5ef2e9aa6888cd8cca638d4742b2ec867f419b",
+        "Tail10.class": "e9fa95ef706a48ff0bcf3184b30d4f4b3bf0daecbecbd7770a1f42fd487f657d",
+        "Tail11.class": "6723e2a08ebef8b48e1cd0dc97f26b8b49a2ba69480dda9133ca319cd078a079",
+        "Tail12.class": "eb211138319eaea2c1c56a97353fd247c780cb359b1c40cdaeea3c343d8cbd6d",
+        "Tail13.class": "c9b2d1fc0f6101565e1bfd51e824d4aabfaeee6784fc05b530bd6f1a64064dd6",
+        "Tail14.class": "05cdace2ebf25c55e8d34b6d85839519f49c02512b895cd88556b4a32797c994",
+        "Tail15.class": "2baa64a6de65e386f602baea009d6fd2525f5532c0bcfdf994acb922e17da74b",
+        "Tail16.class": "12e4a1262e330b85b0c90e3538d0c7837c8c3d35fb7ddec3beaacd3190cef6df",
+        "Tail17.class": "f84907fb3dacb9eeb484a3e9906473562945d34698ce1ce3ca94fc761e9374e4",
+        "Tail18.class": "a38b1eee2e3653e9f2a4d9eb9f92a5f9e6a0e85207bd8f98bd4cbd8e2dd2c27a",
+        "Tail19.class": "25f535bd75320338ecd72596e50ec1b12d704281fa6aad6d52d4642a180273ff",
+        "Tail20.class": "2f1e2ea9afaf2f2f6cdbb17bb44ff57d6c733b359b50322da8d9fc4253d7975d",
+        "Tail21.class": "a6a20191c249e24474fd4df471b01874486bc86ac8fa3c12998cd5de74b0dba2",
+        "Tail22.class": "6fb60053bded386e5759991e430d29e4b24c1df98b8036f73357b8fa26ae339f",
+        "Tail23.class": "3d4d1bf181737936c594f27cc28bfd314062c3cf6db64e67b0c1deace05ea3ca",
+        "Tail24.class": "c69f8bf82f29d572232a24082b28123b56915f3f4ac2666c8e3b498e62bbd14e",
+        "Tail25.class": "b612aa7654947a21b2a66a016415c3b8c0ef61311f1a462c220178f05585530b",
+        "Tail26.class": "52d1803992fc09495319f961a394c16a7512128c8f3056788e3a8862b04e8cca",
+        "Tail27.class": "1cc8f44d56d1025329918842993d8fb47da58b7704a572c18e31bb8894ef545e",
+        "Tail28.class": "5c8e47c5c5f5d2a19ab8284c226d05ba8072cf5bcc4bcc292546f8edf9737bce"
+      },
+      "zipSHA256": "88860a947b270a5c1007198cb0e8ab16a669074c6f97e10a3ab756a0d9098cda",
+      "java8HostOracle": true
+    },
+    "count-30": {
+      "entries": [
+        "CountMain.class",
+        "Tail01.class",
+        "Tail02.class",
+        "Tail03.class",
+        "Tail04.class",
+        "Tail05.class",
+        "Tail06.class",
+        "Tail07.class",
+        "Tail08.class",
+        "Tail09.class",
+        "Tail10.class",
+        "Tail11.class",
+        "Tail12.class",
+        "Tail13.class",
+        "Tail14.class",
+        "Tail15.class",
+        "Tail16.class",
+        "Tail17.class",
+        "Tail18.class",
+        "Tail19.class",
+        "Tail20.class",
+        "Tail21.class",
+        "Tail22.class",
+        "Tail23.class",
+        "Tail24.class",
+        "Tail25.class",
+        "Tail26.class",
+        "Tail27.class",
+        "Tail28.class",
+        "Tail29.class"
+      ],
+      "bindingCount": 30,
+      "totalClassBytes": 5667,
+      "classSHA256": {
+        "CountMain.class": "d4f309b3b37fd75452778f8aedc40f8da49fb9c9fc2a7e4b4c3c1500a781c7ea",
+        "Tail01.class": "de1b04aff970b62e7033f66c6dfce888180a5051c90862be1cced2a8a2006047",
+        "Tail02.class": "116e40fc230d01bea4c78257119e8e150f6ae211162ae34618d2a1d9532286dd",
+        "Tail03.class": "a1f59efe143a80b317fa3a581b06b067b650b415d7f37ad34b29f44d41802743",
+        "Tail04.class": "c6e9f03eeb94628805a51f312c083f34d4cc87a3803db56d170b703da47d1db0",
+        "Tail05.class": "d2a474a2cda38a250b9e13cc19e381105f000bdec91fec8cb260bc7d2be4985e",
+        "Tail06.class": "981235294287cb6870c448a4fb38a9cf823cd4fa538b4f5d9a86d4af056e91c3",
+        "Tail07.class": "602784a5c1a169d052f402d61c6586dbf1beb3f973b17d69f5aeba64d092fbc8",
+        "Tail08.class": "e30671f137024af7dca3db21334b923d142b3b2db8a96da93ea1689bd8af3aca",
+        "Tail09.class": "5330aebe287d03ee950dd8e6ea5ef2e9aa6888cd8cca638d4742b2ec867f419b",
+        "Tail10.class": "e9fa95ef706a48ff0bcf3184b30d4f4b3bf0daecbecbd7770a1f42fd487f657d",
+        "Tail11.class": "6723e2a08ebef8b48e1cd0dc97f26b8b49a2ba69480dda9133ca319cd078a079",
+        "Tail12.class": "eb211138319eaea2c1c56a97353fd247c780cb359b1c40cdaeea3c343d8cbd6d",
+        "Tail13.class": "c9b2d1fc0f6101565e1bfd51e824d4aabfaeee6784fc05b530bd6f1a64064dd6",
+        "Tail14.class": "05cdace2ebf25c55e8d34b6d85839519f49c02512b895cd88556b4a32797c994",
+        "Tail15.class": "2baa64a6de65e386f602baea009d6fd2525f5532c0bcfdf994acb922e17da74b",
+        "Tail16.class": "12e4a1262e330b85b0c90e3538d0c7837c8c3d35fb7ddec3beaacd3190cef6df",
+        "Tail17.class": "f84907fb3dacb9eeb484a3e9906473562945d34698ce1ce3ca94fc761e9374e4",
+        "Tail18.class": "a38b1eee2e3653e9f2a4d9eb9f92a5f9e6a0e85207bd8f98bd4cbd8e2dd2c27a",
+        "Tail19.class": "25f535bd75320338ecd72596e50ec1b12d704281fa6aad6d52d4642a180273ff",
+        "Tail20.class": "2f1e2ea9afaf2f2f6cdbb17bb44ff57d6c733b359b50322da8d9fc4253d7975d",
+        "Tail21.class": "a6a20191c249e24474fd4df471b01874486bc86ac8fa3c12998cd5de74b0dba2",
+        "Tail22.class": "6fb60053bded386e5759991e430d29e4b24c1df98b8036f73357b8fa26ae339f",
+        "Tail23.class": "3d4d1bf181737936c594f27cc28bfd314062c3cf6db64e67b0c1deace05ea3ca",
+        "Tail24.class": "c69f8bf82f29d572232a24082b28123b56915f3f4ac2666c8e3b498e62bbd14e",
+        "Tail25.class": "b612aa7654947a21b2a66a016415c3b8c0ef61311f1a462c220178f05585530b",
+        "Tail26.class": "52d1803992fc09495319f961a394c16a7512128c8f3056788e3a8862b04e8cca",
+        "Tail27.class": "1cc8f44d56d1025329918842993d8fb47da58b7704a572c18e31bb8894ef545e",
+        "Tail28.class": "5c8e47c5c5f5d2a19ab8284c226d05ba8072cf5bcc4bcc292546f8edf9737bce",
+        "Tail29.class": "eb16f38f56167d8659457df37b24dc2398c8fe5d0e93b7c17ddec319974c90bf"
+      },
+      "zipSHA256": "e7da2d6a77904bcac01b4c8737b9c06f4935c0736d34769abc938f3d18ad89dd",
+      "java8HostOracle": true
+    },
+    "count-31": {
+      "entries": [
+        "CountMain.class",
+        "Tail01.class",
+        "Tail02.class",
+        "Tail03.class",
+        "Tail04.class",
+        "Tail05.class",
+        "Tail06.class",
+        "Tail07.class",
+        "Tail08.class",
+        "Tail09.class",
+        "Tail10.class",
+        "Tail11.class",
+        "Tail12.class",
+        "Tail13.class",
+        "Tail14.class",
+        "Tail15.class",
+        "Tail16.class",
+        "Tail17.class",
+        "Tail18.class",
+        "Tail19.class",
+        "Tail20.class",
+        "Tail21.class",
+        "Tail22.class",
+        "Tail23.class",
+        "Tail24.class",
+        "Tail25.class",
+        "Tail26.class",
+        "Tail27.class",
+        "Tail28.class",
+        "Tail29.class",
+        "Tail30.class"
+      ],
+      "bindingCount": 31,
+      "totalClassBytes": 5852,
+      "classSHA256": {
+        "CountMain.class": "c50ab5e1d80fed512073d92691226c23b4707f453e418aade329907e095b1e7d",
+        "Tail01.class": "de1b04aff970b62e7033f66c6dfce888180a5051c90862be1cced2a8a2006047",
+        "Tail02.class": "116e40fc230d01bea4c78257119e8e150f6ae211162ae34618d2a1d9532286dd",
+        "Tail03.class": "a1f59efe143a80b317fa3a581b06b067b650b415d7f37ad34b29f44d41802743",
+        "Tail04.class": "c6e9f03eeb94628805a51f312c083f34d4cc87a3803db56d170b703da47d1db0",
+        "Tail05.class": "d2a474a2cda38a250b9e13cc19e381105f000bdec91fec8cb260bc7d2be4985e",
+        "Tail06.class": "981235294287cb6870c448a4fb38a9cf823cd4fa538b4f5d9a86d4af056e91c3",
+        "Tail07.class": "602784a5c1a169d052f402d61c6586dbf1beb3f973b17d69f5aeba64d092fbc8",
+        "Tail08.class": "e30671f137024af7dca3db21334b923d142b3b2db8a96da93ea1689bd8af3aca",
+        "Tail09.class": "5330aebe287d03ee950dd8e6ea5ef2e9aa6888cd8cca638d4742b2ec867f419b",
+        "Tail10.class": "e9fa95ef706a48ff0bcf3184b30d4f4b3bf0daecbecbd7770a1f42fd487f657d",
+        "Tail11.class": "6723e2a08ebef8b48e1cd0dc97f26b8b49a2ba69480dda9133ca319cd078a079",
+        "Tail12.class": "eb211138319eaea2c1c56a97353fd247c780cb359b1c40cdaeea3c343d8cbd6d",
+        "Tail13.class": "c9b2d1fc0f6101565e1bfd51e824d4aabfaeee6784fc05b530bd6f1a64064dd6",
+        "Tail14.class": "05cdace2ebf25c55e8d34b6d85839519f49c02512b895cd88556b4a32797c994",
+        "Tail15.class": "2baa64a6de65e386f602baea009d6fd2525f5532c0bcfdf994acb922e17da74b",
+        "Tail16.class": "12e4a1262e330b85b0c90e3538d0c7837c8c3d35fb7ddec3beaacd3190cef6df",
+        "Tail17.class": "f84907fb3dacb9eeb484a3e9906473562945d34698ce1ce3ca94fc761e9374e4",
+        "Tail18.class": "a38b1eee2e3653e9f2a4d9eb9f92a5f9e6a0e85207bd8f98bd4cbd8e2dd2c27a",
+        "Tail19.class": "25f535bd75320338ecd72596e50ec1b12d704281fa6aad6d52d4642a180273ff",
+        "Tail20.class": "2f1e2ea9afaf2f2f6cdbb17bb44ff57d6c733b359b50322da8d9fc4253d7975d",
+        "Tail21.class": "a6a20191c249e24474fd4df471b01874486bc86ac8fa3c12998cd5de74b0dba2",
+        "Tail22.class": "6fb60053bded386e5759991e430d29e4b24c1df98b8036f73357b8fa26ae339f",
+        "Tail23.class": "3d4d1bf181737936c594f27cc28bfd314062c3cf6db64e67b0c1deace05ea3ca",
+        "Tail24.class": "c69f8bf82f29d572232a24082b28123b56915f3f4ac2666c8e3b498e62bbd14e",
+        "Tail25.class": "b612aa7654947a21b2a66a016415c3b8c0ef61311f1a462c220178f05585530b",
+        "Tail26.class": "52d1803992fc09495319f961a394c16a7512128c8f3056788e3a8862b04e8cca",
+        "Tail27.class": "1cc8f44d56d1025329918842993d8fb47da58b7704a572c18e31bb8894ef545e",
+        "Tail28.class": "5c8e47c5c5f5d2a19ab8284c226d05ba8072cf5bcc4bcc292546f8edf9737bce",
+        "Tail29.class": "eb16f38f56167d8659457df37b24dc2398c8fe5d0e93b7c17ddec319974c90bf",
+        "Tail30.class": "8969f4d426f22766170f78f4576561ba4258d24b4ef33ea4e56eacc71db4cb36"
+      },
+      "zipSHA256": "891d47bdfef6cdda60249e3bd268c1263567dce4d36878564563ca75e4a27a06",
+      "java8HostOracle": true
+    },
+    "count-30-262144": {
+      "entries": [
+        "CountMain.class",
+        "Tail01.class",
+        "Tail02.class",
+        "Tail03.class",
+        "Tail04.class",
+        "Tail05.class",
+        "Tail06.class",
+        "Tail07.class",
+        "Tail08.class",
+        "Tail09.class",
+        "Tail10.class",
+        "Tail11.class",
+        "Tail12.class",
+        "Tail13.class",
+        "Tail14.class",
+        "Tail15.class",
+        "Tail16.class",
+        "Tail17.class",
+        "Tail18.class",
+        "Tail19.class",
+        "Tail20.class",
+        "Tail21.class",
+        "Tail22.class",
+        "Tail23.class",
+        "Tail24.class",
+        "Tail25.class",
+        "Tail26.class",
+        "Tail27.class",
+        "Tail28.class",
+        "Tail29.class"
+      ],
+      "bindingCount": 30,
+      "totalClassBytes": 262144,
+      "classSHA256": {
+        "CountMain.class": "ef5b5f8a15a556f1caf1ad956c79138377be67446b3ecf3ead07fd706c13f266",
+        "Tail01.class": "de1b04aff970b62e7033f66c6dfce888180a5051c90862be1cced2a8a2006047",
+        "Tail02.class": "116e40fc230d01bea4c78257119e8e150f6ae211162ae34618d2a1d9532286dd",
+        "Tail03.class": "a1f59efe143a80b317fa3a581b06b067b650b415d7f37ad34b29f44d41802743",
+        "Tail04.class": "c6e9f03eeb94628805a51f312c083f34d4cc87a3803db56d170b703da47d1db0",
+        "Tail05.class": "d2a474a2cda38a250b9e13cc19e381105f000bdec91fec8cb260bc7d2be4985e",
+        "Tail06.class": "981235294287cb6870c448a4fb38a9cf823cd4fa538b4f5d9a86d4af056e91c3",
+        "Tail07.class": "602784a5c1a169d052f402d61c6586dbf1beb3f973b17d69f5aeba64d092fbc8",
+        "Tail08.class": "e30671f137024af7dca3db21334b923d142b3b2db8a96da93ea1689bd8af3aca",
+        "Tail09.class": "5330aebe287d03ee950dd8e6ea5ef2e9aa6888cd8cca638d4742b2ec867f419b",
+        "Tail10.class": "e9fa95ef706a48ff0bcf3184b30d4f4b3bf0daecbecbd7770a1f42fd487f657d",
+        "Tail11.class": "6723e2a08ebef8b48e1cd0dc97f26b8b49a2ba69480dda9133ca319cd078a079",
+        "Tail12.class": "eb211138319eaea2c1c56a97353fd247c780cb359b1c40cdaeea3c343d8cbd6d",
+        "Tail13.class": "c9b2d1fc0f6101565e1bfd51e824d4aabfaeee6784fc05b530bd6f1a64064dd6",
+        "Tail14.class": "05cdace2ebf25c55e8d34b6d85839519f49c02512b895cd88556b4a32797c994",
+        "Tail15.class": "2baa64a6de65e386f602baea009d6fd2525f5532c0bcfdf994acb922e17da74b",
+        "Tail16.class": "12e4a1262e330b85b0c90e3538d0c7837c8c3d35fb7ddec3beaacd3190cef6df",
+        "Tail17.class": "f84907fb3dacb9eeb484a3e9906473562945d34698ce1ce3ca94fc761e9374e4",
+        "Tail18.class": "a38b1eee2e3653e9f2a4d9eb9f92a5f9e6a0e85207bd8f98bd4cbd8e2dd2c27a",
+        "Tail19.class": "25f535bd75320338ecd72596e50ec1b12d704281fa6aad6d52d4642a180273ff",
+        "Tail20.class": "2f1e2ea9afaf2f2f6cdbb17bb44ff57d6c733b359b50322da8d9fc4253d7975d",
+        "Tail21.class": "a6a20191c249e24474fd4df471b01874486bc86ac8fa3c12998cd5de74b0dba2",
+        "Tail22.class": "6fb60053bded386e5759991e430d29e4b24c1df98b8036f73357b8fa26ae339f",
+        "Tail23.class": "3d4d1bf181737936c594f27cc28bfd314062c3cf6db64e67b0c1deace05ea3ca",
+        "Tail24.class": "c69f8bf82f29d572232a24082b28123b56915f3f4ac2666c8e3b498e62bbd14e",
+        "Tail25.class": "b612aa7654947a21b2a66a016415c3b8c0ef61311f1a462c220178f05585530b",
+        "Tail26.class": "52d1803992fc09495319f961a394c16a7512128c8f3056788e3a8862b04e8cca",
+        "Tail27.class": "1cc8f44d56d1025329918842993d8fb47da58b7704a572c18e31bb8894ef545e",
+        "Tail28.class": "5c8e47c5c5f5d2a19ab8284c226d05ba8072cf5bcc4bcc292546f8edf9737bce",
+        "Tail29.class": "eb16f38f56167d8659457df37b24dc2398c8fe5d0e93b7c17ddec319974c90bf"
+      },
+      "zipSHA256": "af65aff2c62a1da4d6e3812bca2628e9b8475d55b187184c0ec860eff3ed1660",
+      "java8HostOracle": false
+    },
+    "count-30-262145": {
+      "entries": [
+        "CountMain.class",
+        "Tail01.class",
+        "Tail02.class",
+        "Tail03.class",
+        "Tail04.class",
+        "Tail05.class",
+        "Tail06.class",
+        "Tail07.class",
+        "Tail08.class",
+        "Tail09.class",
+        "Tail10.class",
+        "Tail11.class",
+        "Tail12.class",
+        "Tail13.class",
+        "Tail14.class",
+        "Tail15.class",
+        "Tail16.class",
+        "Tail17.class",
+        "Tail18.class",
+        "Tail19.class",
+        "Tail20.class",
+        "Tail21.class",
+        "Tail22.class",
+        "Tail23.class",
+        "Tail24.class",
+        "Tail25.class",
+        "Tail26.class",
+        "Tail27.class",
+        "Tail28.class",
+        "Tail29.class"
+      ],
+      "bindingCount": 30,
+      "totalClassBytes": 262145,
+      "classSHA256": {
+        "CountMain.class": "618cab9da90ef256c1a1eeb120bc14022540fb9f44bc4e6de2108fc1910b0f69",
+        "Tail01.class": "de1b04aff970b62e7033f66c6dfce888180a5051c90862be1cced2a8a2006047",
+        "Tail02.class": "116e40fc230d01bea4c78257119e8e150f6ae211162ae34618d2a1d9532286dd",
+        "Tail03.class": "a1f59efe143a80b317fa3a581b06b067b650b415d7f37ad34b29f44d41802743",
+        "Tail04.class": "c6e9f03eeb94628805a51f312c083f34d4cc87a3803db56d170b703da47d1db0",
+        "Tail05.class": "d2a474a2cda38a250b9e13cc19e381105f000bdec91fec8cb260bc7d2be4985e",
+        "Tail06.class": "981235294287cb6870c448a4fb38a9cf823cd4fa538b4f5d9a86d4af056e91c3",
+        "Tail07.class": "602784a5c1a169d052f402d61c6586dbf1beb3f973b17d69f5aeba64d092fbc8",
+        "Tail08.class": "e30671f137024af7dca3db21334b923d142b3b2db8a96da93ea1689bd8af3aca",
+        "Tail09.class": "5330aebe287d03ee950dd8e6ea5ef2e9aa6888cd8cca638d4742b2ec867f419b",
+        "Tail10.class": "e9fa95ef706a48ff0bcf3184b30d4f4b3bf0daecbecbd7770a1f42fd487f657d",
+        "Tail11.class": "6723e2a08ebef8b48e1cd0dc97f26b8b49a2ba69480dda9133ca319cd078a079",
+        "Tail12.class": "eb211138319eaea2c1c56a97353fd247c780cb359b1c40cdaeea3c343d8cbd6d",
+        "Tail13.class": "c9b2d1fc0f6101565e1bfd51e824d4aabfaeee6784fc05b530bd6f1a64064dd6",
+        "Tail14.class": "05cdace2ebf25c55e8d34b6d85839519f49c02512b895cd88556b4a32797c994",
+        "Tail15.class": "2baa64a6de65e386f602baea009d6fd2525f5532c0bcfdf994acb922e17da74b",
+        "Tail16.class": "12e4a1262e330b85b0c90e3538d0c7837c8c3d35fb7ddec3beaacd3190cef6df",
+        "Tail17.class": "f84907fb3dacb9eeb484a3e9906473562945d34698ce1ce3ca94fc761e9374e4",
+        "Tail18.class": "a38b1eee2e3653e9f2a4d9eb9f92a5f9e6a0e85207bd8f98bd4cbd8e2dd2c27a",
+        "Tail19.class": "25f535bd75320338ecd72596e50ec1b12d704281fa6aad6d52d4642a180273ff",
+        "Tail20.class": "2f1e2ea9afaf2f2f6cdbb17bb44ff57d6c733b359b50322da8d9fc4253d7975d",
+        "Tail21.class": "a6a20191c249e24474fd4df471b01874486bc86ac8fa3c12998cd5de74b0dba2",
+        "Tail22.class": "6fb60053bded386e5759991e430d29e4b24c1df98b8036f73357b8fa26ae339f",
+        "Tail23.class": "3d4d1bf181737936c594f27cc28bfd314062c3cf6db64e67b0c1deace05ea3ca",
+        "Tail24.class": "c69f8bf82f29d572232a24082b28123b56915f3f4ac2666c8e3b498e62bbd14e",
+        "Tail25.class": "b612aa7654947a21b2a66a016415c3b8c0ef61311f1a462c220178f05585530b",
+        "Tail26.class": "52d1803992fc09495319f961a394c16a7512128c8f3056788e3a8862b04e8cca",
+        "Tail27.class": "1cc8f44d56d1025329918842993d8fb47da58b7704a572c18e31bb8894ef545e",
+        "Tail28.class": "5c8e47c5c5f5d2a19ab8284c226d05ba8072cf5bcc4bcc292546f8edf9737bce",
+        "Tail29.class": "eb16f38f56167d8659457df37b24dc2398c8fe5d0e93b7c17ddec319974c90bf"
+      },
+      "zipSHA256": "e658f4a567ada8cfca68f50084d28821c17ada55a2c43c4de93d12a159fa9419",
+      "java8HostOracle": false
+    }
+  }
+}

@@ -1,0 +1,440 @@
+{
+  "status": "incomplete: gate assertion stopped at stringbuilder-oom; no retry was run",
+  "positiveTerminalHeads": {
+    "stringbuilder": {
+      "q1": {
+        "stage": "final-reopened",
+        "epoch": 429,
+        "lifecycle": 2,
+        "result": 0,
+        "jvmSteps": 429,
+        "internalSteps": 2,
+        "machineRoot": "0x55b86de64382f82858650d73a5ee57db395838e65ec82b31f0f583b34a3550c9",
+        "checkpointRoot": "0x5e1eebba1e03dc26d6de34840c902163ab3f3b60499859e30e28c24a68e45eaf"
+      },
+      "q7": {
+        "stage": "final-reopened",
+        "epoch": 62,
+        "lifecycle": 2,
+        "result": 0,
+        "jvmSteps": 429,
+        "internalSteps": 2,
+        "machineRoot": "0x55b86de64382f82858650d73a5ee57db395838e65ec82b31f0f583b34a3550c9",
+        "checkpointRoot": "0x8322aa1114e2f66188090ae514fb636ce70f86c12f084d8872ebe38564eee2f4"
+      },
+      "q4096": {
+        "stage": "final-reopened",
+        "epoch": 1,
+        "lifecycle": 2,
+        "result": 0,
+        "jvmSteps": 429,
+        "internalSteps": 2,
+        "machineRoot": "0x55b86de64382f82858650d73a5ee57db395838e65ec82b31f0f583b34a3550c9",
+        "checkpointRoot": "0xd376cf612c7d9cd48c5249b6208a59bee0fd15bc0d6bd80cfa8c7a6bc09fc7f7"
+      }
+    },
+    "stringbuilder-null": {
+      "q1": {
+        "stage": "final-reopened",
+        "epoch": 23,
+        "lifecycle": 2,
+        "result": 0,
+        "jvmSteps": 23,
+        "internalSteps": 3,
+        "machineRoot": "0x3d21b5a3b62f572ec70aa4e588cd529b83b92f45da654d5c40ee2ddb83d9fde8",
+        "checkpointRoot": "0x261d5693a6f0bb5b87f5f7af937ec486d31556b4ab59b5be344899567300d05f"
+      },
+      "q7": {
+        "stage": "final-reopened",
+        "epoch": 4,
+        "lifecycle": 2,
+        "result": 0,
+        "jvmSteps": 23,
+        "internalSteps": 3,
+        "machineRoot": "0x3d21b5a3b62f572ec70aa4e588cd529b83b92f45da654d5c40ee2ddb83d9fde8",
+        "checkpointRoot": "0x1fb021a4b15eeb6e5c6211c895ef2cefd3a194157f40c5edc5e29cf3a07ec359"
+      },
+      "q4096": {
+        "stage": "final-reopened",
+        "epoch": 1,
+        "lifecycle": 2,
+        "result": 0,
+        "jvmSteps": 23,
+        "internalSteps": 3,
+        "machineRoot": "0x3d21b5a3b62f572ec70aa4e588cd529b83b92f45da654d5c40ee2ddb83d9fde8",
+        "checkpointRoot": "0x35d245b8c5d82b3df39ef868be8b2082bac7ed314c3e739ac5e92066da2cbe4f"
+      }
+    },
+    "stringbuilder-uninitialized": {
+      "stage": "final-reopened",
+      "epoch": 1,
+      "lifecycle": 2,
+      "result": 0,
+      "jvmSteps": 3,
+      "internalSteps": 2,
+      "machineRoot": "0xc46fdf0310ab88d77747d99e45d8c79f33f59e45972b81144ffc13a04284fec2",
+      "checkpointRoot": "0x6020ff501d88eb665202bb59b5cb04d4561711452e95d27994073c9910e394dc"
+    }
+  },
+  "commandResults": {
+    "stringbuilder-null-q1-finish.json": {
+      "label": "stringbuilder-null-q1-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q1",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 1.0146944320295006
+    },
+    "stringbuilder-null-q1-reopen.json": {
+      "label": "stringbuilder-null-q1-reopen",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "verify",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q1",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03147148701827973
+    },
+    "stringbuilder-null-q1-start.json": {
+      "label": "stringbuilder-null-q1-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q1",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.1636867510387674
+    },
+    "stringbuilder-null-q4096-finish.json": {
+      "label": "stringbuilder-null-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03146715700859204
+    },
+    "stringbuilder-null-q4096-reopen.json": {
+      "label": "stringbuilder-null-q4096-reopen",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "verify",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.031456728000193834
+    },
+    "stringbuilder-null-q4096-start.json": {
+      "label": "stringbuilder-null-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.1636465199990198
+    },
+    "stringbuilder-null-q7-finish.json": {
+      "label": "stringbuilder-null-q7-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q7",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16363021999131888
+    },
+    "stringbuilder-null-q7-reopen.json": {
+      "label": "stringbuilder-null-q7-reopen",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "verify",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q7",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03142898698570207
+    },
+    "stringbuilder-null-q7-start.json": {
+      "label": "stringbuilder-null-q7-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-null-q7",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-null.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16365550097543746
+    },
+    "stringbuilder-oom-q4096-finish.json": {
+      "label": "stringbuilder-oom-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-oom-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-oom.zip",
+        "4096"
+      ],
+      "exit": 2,
+      "elapsedSeconds": 0.015383841004222631
+    },
+    "stringbuilder-oom-q4096-start.json": {
+      "label": "stringbuilder-oom-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-oom-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-oom.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.5641400820459239
+    },
+    "stringbuilder-q1-finish.json": {
+      "label": "stringbuilder-q1-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q1",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 21.639137977035716
+    },
+    "stringbuilder-q1-reopen.json": {
+      "label": "stringbuilder-q1-reopen",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "verify",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q1",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.06352029100526124
+    },
+    "stringbuilder-q1-start.json": {
+      "label": "stringbuilder-q1-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q1",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.21365891996538267
+    },
+    "stringbuilder-q4096-finish.json": {
+      "label": "stringbuilder-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03148230700753629
+    },
+    "stringbuilder-q4096-reopen.json": {
+      "label": "stringbuilder-q4096-reopen",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "verify",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03146066702902317
+    },
+    "stringbuilder-q4096-start.json": {
+      "label": "stringbuilder-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.2137020970112644
+    },
+    "stringbuilder-q7-finish.json": {
+      "label": "stringbuilder-q7-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q7",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 3.21734336996451
+    },
+    "stringbuilder-q7-reopen.json": {
+      "label": "stringbuilder-q7-reopen",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "verify",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q7",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03147676703520119
+    },
+    "stringbuilder-q7-start.json": {
+      "label": "stringbuilder-q7-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-q7",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.21371750900289044
+    },
+    "stringbuilder-uninitialized-q4096-finish.json": {
+      "label": "stringbuilder-uninitialized-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "finish",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-uninitialized-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-uninitialized.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03145734698045999
+    },
+    "stringbuilder-uninitialized-q4096-reopen.json": {
+      "label": "stringbuilder-uninitialized-q4096-reopen",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "verify",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-uninitialized-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-uninitialized.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03144034696742892
+    },
+    "stringbuilder-uninitialized-q4096-start.json": {
+      "label": "stringbuilder-uninitialized-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-gate-f3672a818/world-stringbuilder-uninitialized-q4096",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-build-f3672a818/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/bench-formal-t3-string-builder-terra/build/java-diff-mc-string-builder-fixtures-f3672a818/stringbuilder-uninitialized.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16358995100017637
+    }
+  },
+  "oomStartRefusal": {
+    "actualDI0ReadSizes": [
+      560
+    ],
+    "candidateCheckpoint": "",
+    "candidateHead": "",
+    "candidateRoot": "",
+    "checkpointBytes": 0,
+    "diagnostic": null,
+    "error": "execution reverted",
+    "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+    "gas": 218581239,
+    "resourceHashes": {
+      "0x4d911425688a8FC08dA52d58403A5604Ba791246": "d956cee388a0e3a737f402c0b0b4a8d150dd475af71ae91c0b5c287e6aee1f1f"
+    },
+    "resourceReadReceipts": [
+      {
+        "To": "0x4d911425688a8fc08da52d58403a5604ba791246",
+        "Offset": 0,
+        "Requested": 560,
+        "Returned": 560,
+        "Success": true,
+        "SHA256": "d956cee388a0e3a737f402c0b0b4a8d150dd475af71ae91c0b5c287e6aee1f1f"
+      }
+    ],
+    "revertHex": "0x71540d2000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000",
+    "rootAfter": "0xc656f38469938dc454baa90103cc080a153752abfce35d4718017864d7b2b7aa",
+    "rootBefore": "0xc656f38469938dc454baa90103cc080a153752abfce35d4718017864d7b2b7aa",
+    "rootUnchanged": true,
+    "selector": "0x71540d20",
+    "suppliedGas": 1000000000,
+    "uint256Words": [
+      "1",
+      "0"
+    ]
+  },
+  "failureInterpretation": "The returned selector is LC0StateError(1,0). In startMain this can only arise from the fixed 1MiB checkpoint guards in _encodeMachine/_commit after execution; it is not evidence of a changed bootstrap image, root, or layout contract."
+}
