@@ -1,0 +1,14 @@
+{
+  "base": "94757de1b",
+  "model": "deepseek/deepseek-flash",
+  "role": "isolated read-only scope review",
+  "providerCompletion": "upstream HTTP500 after report file was fully written",
+  "acceptedFindings": [
+    "append image82 and count constant76",
+    "reserve java/lang/Enum against raw replacement",
+    "constructor+name+ordinal+toString+compareTo bridge",
+    "declare existing Comparable and Serializable",
+    "omit reflection/hash/clone APIs",
+    "diagnostic111 and retained gates"
+  ]
+}
