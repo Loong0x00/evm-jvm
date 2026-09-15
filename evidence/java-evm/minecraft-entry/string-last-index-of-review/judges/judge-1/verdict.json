@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "task": "Independent acceptance review of bounded guest String.lastIndexOf(String)",
+  "verdict": "accept",
+  "confidence": {
+    "level": "high",
+    "score": 0.97
+  },
+  "scores": {
+    "correctness": 9.8,
+    "architectureUnderstanding": 9.8,
+    "minimality": 10.0,
+    "robustness": 9.7,
+    "maintainability": 9.5,
+    "completion": 9.8,
+    "overall": 9.77
+  },
+  "blockingFindings": 0,
+  "findings": [
+    {
+      "id": "INFO-001",
+      "severity": "info",
+      "title": "Acceptance is deliberately bounded",
+      "detail": "This evidence supports only lastIndexOf(String). It does not support lastIndexOf(String,int), substring, general String/Java compatibility, or Minecraft completion. The package states those limits accurately; original30 is reported as running followed by atomic refusal, not as a pass.",
+      "citations": [
+        "tools/gate.py:270-276",
+        "machine-result.json:1"
+      ]
+    }
+  ],
+  "review": {
+    "parentDelta": "The verifier pins six parent inputs, reconstructs the candidate engine as exactly nine domain substitutions plus one String image replacement, and requires exact coordinator/driver substitutions. The packaged diffs are consistent with that narrow delta.",
+    "java8Provenance": "The pinned recipe is javac -source 8 -target 8 -g:none. The verifier recompiles with the pinned Java 8 javac and requires byte-for-byte equality, 1187 bytes, SHA-256 2fbfe5d57906f5ebd4f2eeaceb209edf8d4a619afb21d1531f7aaea121506033, and classfile major 52. Independent package-only extraction confirmed the size, hash, and major version.",
+    "bootstrapPreservation": "Source verification requires 85 bootstrap functions with identical names and exact bytes for every image except _bootstrapString, requires String commitment slot 26, and retains the outlined tail/StringBuilder placement assertions. Fixed raw/checkpoint/frame/VFS/native/exception commitments are asserted unchanged.",
+    "guestSemantics": "The added method is public ordinary Code, not native. It dereferences target.length() first, handles empty target as receiver length, rejects longer targets, scans candidate starts backward, compares UTF-16 char units, supports overlaps, and returns -1 when absent. Loop bounds avoid out-of-range charAt and integer overflow under valid String lengths. Null target therefore uses the existing guest invokevirtual NPE path.",
+    "gates": "Every focused semantic witness runs q1/q7/direct plus reopen with terminal-success and machine-root/opaque-payload/step equivalence. Cases cover suffix, middle, prefix, overlap, repeats, absence, empty target/receiver, longer target, BMP UTF-16, surrogate pairs, and catchable null NPE. Retained initialization, replacement, raw-count/raw-byte, EnumSet, queue, and OOM controls are present, followed by independent canonical receipt re-encoding. The authoritative machine result reports source verification pass and 2565 canonical receipts.",
+    "claimHonesty": "The gate says generated-only and explicitly excludes overloads, substring, regex, encoding, PrintStream output, original artifacts, and host String execution authority. machine-result.json sets substringClaimed and doneClaimed to false and labels original30's atomic refusal precisely."
+  },
+  "citations": [
+    "bootstrap-pins.json:2-9",
+    "engine.diff:3-43",
+    "coordinator.diff:3-19",
+    "driver.diff:3-42",
+    "tools/verify_source.py:21-68",
+    "tools/verify_source.py:71-141",
+    "tools/verify_source.py:143-189",
+    "tools/build.py:25-58",
+    "tools/build.py:84-103",
+    "tools/generate_fixtures.py:183-228",
+    "tools/gate.py:72-106",
+    "tools/gate.py:119-149",
+    "tools/gate.py:191-276",
+    "tools/verify_receipts.js:10-28",
+    "machine-result.json:1"
+  ],
+  "independentChecks": [
+    "Parsed all package JSON and all five Python tools; Node syntax-check passed for verify_receipts.js.",
+    "Extracted the candidate String class directly from engine.diff: 1187 bytes, SHA-256 2fbfe5d57906f5ebd4f2eeaceb209edf8d4a619afb21d1531f7aaea121506033, classfile major 52.",
+    "Parsed parent and candidate class method tables from the diff: the candidate preserves the parent fields/method surface and adds one public non-native lastIndexOf(Ljava/lang/String;)I Code method.",
+    "Compared a source-equivalent implementation against an independent UTF-16-unit oracle for 116025 exhaustive receiver/target combinations, including isolated surrogate units; all matched."
+  ],
+  "verificationLimits": [
+    "No heavy build, EVM replay, original artifact access, network access, or other-worktree access was performed, as requested.",
+    "The machine result was treated as authoritative; runtime/gate execution claims were reviewed from the packaged scripts and machine-result.json rather than rerun."
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "task": "Independent acceptance review of bounded guest String.lastIndexOf(String)",
+  "decision": "accept",
+  "confidence": 0.97,
+  "overallScore": 9.6,
+  "scores": {
+    "correctness": 9.8,
+    "architectureUnderstanding": 9.7,
+    "minimality": 9.8,
+    "robustness": 9.5,
+    "maintainability": 9.1,
+    "completion": 9.7
+  },
+  "severityCounts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "findings": [],
+  "conclusions": [
+    "The exact parent-relative change is narrowly scoped to stage-domain/address rebinding and replacement of the bootstrap String image; the source verifier requires full-file equality to that constructed delta.",
+    "The replacement is a reproducible Java 8 classfile (major 52), 1187 bytes, SHA-256 2fbfe5d57906f5ebd4f2eeaceb209edf8d4a619afb21d1531f7aaea121506033. A package-only classfile decode found exactly public lastIndexOf(Ljava/lang/String;)I with 83 bytes of ordinary Code, max_stack 3 and max_locals 6.",
+    "The backward UTF-16 code-unit search is correct: it dereferences target first, handles empty and longer targets, scans candidate starts from receiverLength-targetLength down through zero, supports overlaps, and compares every target char before returning the greatest matching index.",
+    "No new native or host String implementation is introduced. Null target follows the existing invokevirtual NPE path; surrogate pairs are treated as two UTF-16 units, matching Java String index semantics.",
+    "The source verifier checks all 85 bootstrap names/images and permits only String at slot 26 to differ; it also pins outlined tail structure, coordinator/driver deltas, inherited build scripts, and fixed limits.",
+    "Generated gates cover q1, q7, direct, reopen, semantic edge cases, no-init, raw replacement, raw count/byte boundaries, initialization, OOM, EnumSet, queue, and canonical receipt integrity. The authoritative machine result reports 2565 canonical receipts and a passing generated gate.",
+    "Claims are bounded honestly: substring and Done are explicitly false, and the original-30 run is reported only as running until an atomic missing-TreeMap refusal."
+  ],
+  "citations": [
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/machine-result.json:1",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/bootstrap-pins.json:2-9",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/engine.diff:3-43",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/coordinator.diff:3-19",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/driver.diff:3-42",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_source.py:57-68",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_source.py:71-141",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_source.py:143-189",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/build.py:25-29",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/build.py:41-58",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/build.py:84-101",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/generate_fixtures.py:183-228",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/gate.py:72-106",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/gate.py:119-149",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/gate.py:183-276",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_receipts.js:12-28"
+  ],
+  "verification": {
+    "performed": [
+      "Read only the supplied review task and review package.",
+      "Statically reviewed every packaged diff, pin, verifier, build, fixture, and gate file.",
+      "Performed an in-memory package-only extraction and classfile decode of the added String image, confirming byte length, SHA-256, Java 8 major version, method descriptor/access, Code length, max stack, and max locals.",
+      "Manually decoded the method control flow and checked null, empty, longer, overlap, repeated, BMP, and surrogate indexing semantics.",
+      "Checked JSON syntax by construction of this verdict."
+    ],
+    "notRun": [
+      "No heavy tests or EVM replay.",
+      "No original Minecraft artifacts or worlds.",
+      "No network or other worktrees.",
+      "No parent evidence outside the supplied package; machine-result.json was treated as authoritative as instructed."
+    ],
+    "remainingUncertainty": "The receipt corpus and original-30 execution were not replayed under the review constraints; their recorded outcomes rely on the explicitly authoritative machine-result.json. No code or evidence defect was found."
+  }
+}

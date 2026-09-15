@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "review": "bounded guest java/lang/String.lastIndexOf(String)",
+  "verdict": "accept",
+  "confidence": {
+    "level": "high",
+    "value": 0.97
+  },
+  "scores": {
+    "correctness": 9.8,
+    "architectureUnderstanding": 9.8,
+    "minimality": 9.9,
+    "robustness": 9.6,
+    "maintainability": 9.5,
+    "completion": 9.8,
+    "overall": 9.7
+  },
+  "severityCounts": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "findings": [],
+  "conclusions": [
+    {
+      "topic": "parent delta",
+      "result": "pass",
+      "detail": "The reviewed engine patch changes stage-domain commitments and exactly one bootstrap literal, java/lang/String. Coordinator and driver patches are corresponding domain/address rebinding only. The source verifier pins the accepted parent inputs, constructs the exact expected replacements, compares all 85 bootstrap images, requires String at slot 26, and preserves the outlined StringBuilder tail checks."
+    },
+    {
+      "topic": "Java 8 provenance and bytecode",
+      "result": "pass",
+      "detail": "The pin and verifier specify /usr/lib/jvm/java-8-openjdk/bin/javac -source 8 -target 8 -g:none. Independent parsing of the added hex image found classfile major 52, 1187 bytes, SHA-256 2fbfe5d57906f5ebd4f2eeaceb209edf8d4a619afb21d1531f7aaea121506033, exactly one public non-native lastIndexOf(Ljava/lang/String;)I method, and an 83-byte Code body whose method references are the existing guest String.length() and String.charAt(int)."
+    },
+    {
+      "topic": "semantics",
+      "result": "pass",
+      "detail": "The ordinary guest Java Code performs a bounded backward UTF-16 code-unit search. It returns receiver length for an empty target, -1 when the target is longer or absent, handles overlaps by decrementing the candidate start one code unit at a time, and dereferences target.length() first so a null target follows the existing guest NPE path. Loop bounds keep both charAt indices in range."
+    },
+    {
+      "topic": "limits and preservation",
+      "result": "pass",
+      "detail": "Static checks preserve 30 raw classes, 262144 raw bytes, 1 MiB checkpoints, 128 frames, 25M commit reserve, 12 global native bindings, 14 exception kinds, path/transfer bounds, and the existing limits commitment. The authoritative result reports a 386525-byte runtime under the 393216-byte LOCAL cap with 6691 bytes headroom."
+    },
+    {
+      "topic": "gates and honesty",
+      "result": "pass",
+      "detail": "The generated gate gives each semantic case independent q1/q7/direct/reopen execution and compares final machine root, opaque payload, Java steps, and internal steps. It retains initialization, raw-replacement, raw-count/byte, EnumSet, queue, and OOM controls, then canonically verifies successful receipt chains. The authoritative result reports 2565 canonical receipts. Claims remain bounded: no overload, substring, Minecraft Done, or completed original execution is claimed; original30 is reported only as running until an atomic TreeMap frontier refusal."
+    }
+  ],
+  "citations": [
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/engine.diff:3-43",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/coordinator.diff:3-19",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/driver.diff:3-42",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/bootstrap-pins.json:2-9",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_source.py:57-69",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_source.py:71-141",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_source.py:143-189",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/gate.py:72-133",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/gate.py:135-268",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/gate.py:270-276",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/generate_fixtures.py:183-228",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/tools/verify_receipts.js:10-28",
+    "evidence/java-evm/minecraft-entry/string-last-index-of-review/machine-result.json:1"
+  ],
+  "reviewBoundary": "Static independent review of review-task.txt and its packaged evidence only. Per instruction, no heavy tests, original artifacts, network, other worktrees, or tracked edits were used. machine-result.json was treated as authoritative."
+}
