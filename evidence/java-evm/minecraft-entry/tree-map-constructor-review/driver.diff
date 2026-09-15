@@ -1,0 +1,71 @@
+--- evidence/java-evm/minecraft-entry/parent-fe370c161/executed-driver.go.txt	2026-09-16 02:52:18.086775675 +0800
++++ evidence/java-evm/minecraft-entry/parent-4fc3c418b/executed-driver.go.txt	2026-09-16 04:59:59.266207238 +0800
+@@ -42,19 +42,19 @@
+ 
+ // Explicit user-authorized LOCAL-only external call ceiling; EVM gas accounting unchanged.
+ const ordinaryGas = uint64(1_000_000_000)
+-const format = "MC-STRING-LAST-INDEX-P2-BOUNDED-1"
++const format = "MC-TREE-MAP-P2-BOUNDED-1"
+ const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
+-const immutableEngineSHA256 = "5b4148b1164fdc4187c9d28e9788bd60386de53a61eedb25da5bca61dac73db6"
+-const immutableEngineKeccak = "0xbb9e01713554271c07b5f8037626466f3766f4b69141ed36e378eb28bec7237d"
+-const immutableCoordinatorKeccak = "0xc919a4fd1b39415dd1a303ff8cf70a22380f08f999eb0e04aa58410ece2f00ef"
++const immutableEngineSHA256 = "4ed10a7ac3b3760f05aa7052cc94ed571bed156ca84c52c71fabbfbfea7f1d5f"
++const immutableEngineKeccak = "0x062db6774c081faeb4d0c28f593d854ee8d0996662fb4649e52c555361c5150b"
++const immutableCoordinatorKeccak = "0xc6e7af78a9b2072a600fdd57444b1668be59c3b59f40f0bc1bfcc9c4875c3ea3"
+ 
+ // The constructor owner is deliberately separate from the required fixed LOCAL
+ // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
+-var owner = common.HexToAddress("0x4d432d535452494e472d4c415354494e44455850")
++var owner = common.HexToAddress("0x4d432d545245452d4d41502d4f32000000000000")
+ var other = common.HexToAddress("0x4d432d434e46452d4f5448455200000000000003")
+-var engine = common.HexToAddress("0x4d432d535452494e472d4c415354494e44455832")
+-var packageDomain = crypto.Keccak256Hash([]byte("MC-STRING-LAST-INDEX-P2/package/v1"))
+-var resourceDomain = crypto.Keccak256Hash([]byte("MC-STRING-LAST-INDEX-P2/resource/v1"))
++var engine = common.HexToAddress("0x4d432d545245452d4d41502d5032000000000000")
++var packageDomain = crypto.Keccak256Hash([]byte("MC-TREE-MAP-P2/package/v1"))
++var resourceDomain = crypto.Keccak256Hash([]byte("MC-TREE-MAP-P2/resource/v1"))
+ var readSelector = crypto.Keccak256([]byte("read(uint32,uint32)"))[:4]
+ 
+ type artifact struct {
+@@ -968,7 +968,7 @@
+ var engineHash common.Hash
+ 
+ func installEngine(e *env) {
+-	if len(engineRun) != 386525 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
++	if len(engineRun) != 386844 || sha(engineRun) != immutableEngineSHA256 || crypto.Keccak256Hash(engineRun) != common.HexToHash(immutableEngineKeccak) || engineHash != common.HexToHash(immutableEngineKeccak) {
+ 		panic("MR0 Session immutable engine pin")
+ 	}
+ 	e.st.CreateAccount(engine)
+@@ -1144,7 +1144,7 @@
+ 	if assertOverride != nil {
+ 		assert = *assertOverride
+ 	}
+-	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-STRING-LAST-INDEX-P2/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
++	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-TREE-MAP-P2/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
+ 	must(x)
+ 	if len(init)+len(args) > 49152 {
+ 		panic(fmt.Sprintf("complete init %d", len(init)+len(args)))
+@@ -1598,7 +1598,7 @@
+ }
+ 
+ func constructorArgLen(ca abi.ABI, from common.Address, decs []common.Address, names [][]byte, ir common.Hash, roots []common.Hash, p common.Hash) int {
+-	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-STRING-LAST-INDEX-P2/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
++	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-TREE-MAP-P2/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
+ 	must(x)
+ 	return len(b)
+ }
+@@ -1729,11 +1729,11 @@
+ 		panic("MODE DIR COORDINATOR.json ENGINE.json FIXTURE.zip QUANTUM")
+ 	}
+ 	coordArt, _, _, coordRun := loadCoord(os.Args[3])
+-	if len(coordRun) != 4146 || crypto.Keccak256Hash(coordRun) != common.HexToHash(immutableCoordinatorKeccak) || coordArt.RuntimeSHA != sha(coordRun) {
++	if len(coordRun) != 4134 || crypto.Keccak256Hash(coordRun) != common.HexToHash(immutableCoordinatorKeccak) || coordArt.RuntimeSHA != sha(coordRun) {
+ 		panic("MR0 Session immutable coordinator pin")
+ 	}
+ 	_, engineABI0, _, run := loadCoord(os.Args[4])
+-	if len(run) != 386525 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
++	if len(run) != 386844 || sha(run) != immutableEngineSHA256 || crypto.Keccak256Hash(run) != common.HexToHash(immutableEngineKeccak) {
+ 		panic("MR0 Session immutable engine artifact")
+ 	}
+ 	engineABI = engineABI0

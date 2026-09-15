@@ -1,0 +1,10 @@
+Independently review this exact parent amendment for bounded guest java/util/TreeMap construction. Treat machine-result.json as authoritative; do not rerun heavy build/gate and do not access original artifacts, network, or other worktrees. Review only this package.
+
+Acceptance criteria:
+1. engine.diff is parent-relative and changes only equal-length MC-TREE-MAP-P2 domain commitments, appends exactly one bootstrap image86 java/util/TreeMap after all accepted85 images, extends the exact bootstrap commitments/count and diagnostic class bound115->116, and marks only this class platform/bootstrap. It must preserve raw30/262144 and all other accepted limits/semantics including outlined tail.
+2. The image is reproducibly Java8 major52 from the supplied source, exactly constructor-only Object subclass with no fields/interfaces/API fabrication. Ordinary guest new/dup/invokespecial construction must yield non-null stable identity.
+3. Deliberate omissions are honest: it does NOT implement SortedMap, NavigableMap, put/get/isEmpty or provider behavior. Generated omitted put and SortedMap paths must refuse, not return fabricated values.
+4. Gate design covers q1/q7/direct/reopen construction and uninitialized/raw replacement refusal, retained String/lastIndexOf/StringBuilder/System.err/initialization/raw boundary/EnumSet/queue/OOM controls, and canonical receipts.
+5. Parent domain/address/hash/driver delta is exact, runtime386844 <=393216, optimizer200/viaIR/Cancun/metadata-off retained. Original30 evidence claims only12005J/40I then atomic genuine ProviderUtil missing class, never provider result/world/Done.
+
+Return accept or reject, 0-10 scores for correctness, architecture understanding, minimality, robustness, maintainability, completion, findings with severity/citations, confidence. Write only build/review/verdict.json and verdict.md; no tracked edits.
