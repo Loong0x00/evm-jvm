@@ -217,18 +217,25 @@ for label in ("raw-string", "raw-system", "raw-printstream", "raw-stringbuilder"
 # TreeMap is not a Map or SortedMap implementation. Both generated controls run
 # a real TreeMap constructor first, then must stop through an EVM refusal; no
 # fabricated mutation result, interface assignment, or Java terminal is allowed.
-def omitted_refusal(label, expected_name, expected_missing=None):
+def omitted_refusal(label, expected_selector, expected_words=None, expected_missing=None):
     world = out / ("world-" + label)
     run(label + "-refusal", [driver, "setup-chain", world, coordinator, engine,
         fixtures / (label + ".zip"), "4096"], label)
     refusal = failure(world, "start-refusal.json")
-    assert refusal["name"] == expected_name and refusal["rootUnchanged"], refusal
+    assert refusal["selector"] == expected_selector and refusal["rootUnchanged"], refusal
+    if expected_words is not None:
+        assert words(refusal) == expected_words, refusal
     if expected_missing is not None:
         assert refusal["diagnostic"]["name"] == expected_missing, refusal
     rows[label] = refusal
 
-omitted_refusal("treemap-mutation-omitted", "MethodError")
-omitted_refusal("treemap-sortedmap-omitted", "MCEntryMissingClass", "java/util/SortedMap")
+# The virtual put member is absent from the constructor-only image: CallError
+# code3 at the source invocation PC13 is retained as an EVM refusal, not a Map
+# result or a synthetic Java exception.
+omitted_refusal("treemap-mutation-omitted", "0xd631c3a4", ["3", "13"])
+# The interface-call form resolves its explicit SortedMap owner and reports a
+# canonical missing-class diagnostic rather than silently accepting assignment.
+omitted_refusal("treemap-sortedmap-omitted", "0x555db429", expected_missing="java/util/SortedMap")
 
 # Exact raw30 remains admitted across q1/q7/direct/reopen, while raw31 remains
 # atomic at each transport/coordinator/engine layer.
