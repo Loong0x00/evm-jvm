@@ -1,0 +1,307 @@
+{
+  "profile": "MC-ENUM-SET-PARENT2",
+  "results": {
+    "positive/q1": {
+      "machineRoot": "0xed75481903fefc346b22aac6f4ae5a482ce72578ab38838cd083bfe24ac93022",
+      "opaque": "57326535663f16dc02e7f6d23298af2b5854be01cbabe3d99cee9d3b4cc253ec",
+      "java": 541,
+      "internal": 11,
+      "epoch": 541
+    },
+    "positive/q7": {
+      "machineRoot": "0xed75481903fefc346b22aac6f4ae5a482ce72578ab38838cd083bfe24ac93022",
+      "opaque": "57326535663f16dc02e7f6d23298af2b5854be01cbabe3d99cee9d3b4cc253ec",
+      "java": 541,
+      "internal": 11,
+      "epoch": 78
+    },
+    "positive/direct": {
+      "machineRoot": "0xed75481903fefc346b22aac6f4ae5a482ce72578ab38838cd083bfe24ac93022",
+      "opaque": "57326535663f16dc02e7f6d23298af2b5854be01cbabe3d99cee9d3b4cc253ec",
+      "java": 541,
+      "internal": 11,
+      "epoch": 1
+    },
+    "errors/q1": {
+      "machineRoot": "0x46392500977469f2d72ce3c477c821662baa1c4c8829ab84d3a58c7dbe1f5f0d",
+      "opaque": "22446e0da64624e27649eff9b89d0fa9014a822d5b2d4d783723b9dce60c8f0e",
+      "java": 27,
+      "internal": 7,
+      "epoch": 27
+    },
+    "errors/q7": {
+      "machineRoot": "0x46392500977469f2d72ce3c477c821662baa1c4c8829ab84d3a58c7dbe1f5f0d",
+      "opaque": "22446e0da64624e27649eff9b89d0fa9014a822d5b2d4d783723b9dce60c8f0e",
+      "java": 27,
+      "internal": 7,
+      "epoch": 4
+    },
+    "errors/direct": {
+      "machineRoot": "0x46392500977469f2d72ce3c477c821662baa1c4c8829ab84d3a58c7dbe1f5f0d",
+      "opaque": "22446e0da64624e27649eff9b89d0fa9014a822d5b2d4d783723b9dce60c8f0e",
+      "java": 27,
+      "internal": 7,
+      "epoch": 1
+    },
+    "failed/q1": {
+      "machineRoot": "0x82a1f23221a3f942848e2ef1b8878c7aab90d58274ddc0738b49429a6bcd54ce",
+      "opaque": "37e06f23b1d25b008cd653ec444639387935f985db50e28aaec5f6395a3a5b1f",
+      "java": 94,
+      "internal": 10,
+      "epoch": 94
+    },
+    "failed/q7": {
+      "machineRoot": "0x82a1f23221a3f942848e2ef1b8878c7aab90d58274ddc0738b49429a6bcd54ce",
+      "opaque": "37e06f23b1d25b008cd653ec444639387935f985db50e28aaec5f6395a3a5b1f",
+      "java": 94,
+      "internal": 10,
+      "epoch": 14
+    },
+    "failed/direct": {
+      "machineRoot": "0x82a1f23221a3f942848e2ef1b8878c7aab90d58274ddc0738b49429a6bcd54ce",
+      "opaque": "37e06f23b1d25b008cd653ec444639387935f985db50e28aaec5f6395a3a5b1f",
+      "java": 94,
+      "internal": 10,
+      "epoch": 1
+    },
+    "uninitialized-bounded-refusal": {
+      "actualDI0ReadSizes": [
+        288,
+        665
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 16441291,
+      "resourceHashes": {
+        "0x790062aa27298A09AB20a80cDBf354d075F342cC": "e6b8b89f50ecf91641d41a5dc27274cc74af5619ee80f0b1a467851c470859ee",
+        "0xE36bd046bD77DD561b200a83E74deE77678bA2fd": "7731c8a4f8a5b0fddc2cc96ad3de66689473b5acde824b3279777c9396f26192"
+      },
+      "resourceReadReceipts": [
+        {
+          "To": "0x790062aa27298a09ab20a80cdbf354d075f342cc",
+          "Offset": 0,
+          "Requested": 288,
+          "Returned": 288,
+          "Success": true,
+          "SHA256": "e6b8b89f50ecf91641d41a5dc27274cc74af5619ee80f0b1a467851c470859ee"
+        },
+        {
+          "To": "0xe36bd046bd77dd561b200a83e74dee77678ba2fd",
+          "Offset": 0,
+          "Requested": 665,
+          "Returned": 665,
+          "Success": true,
+          "SHA256": "7731c8a4f8a5b0fddc2cc96ad3de66689473b5acde824b3279777c9396f26192"
+        }
+      ],
+      "revertHex": "0xf3c66ace00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001",
+      "rootAfter": "0x8f203a94298e303673ccae961855f6daa09bddc087920af708a4d4607be3b51d",
+      "rootBefore": "0x8f203a94298e303673ccae961855f6daa09bddc087920af708a4d4607be3b51d",
+      "rootUnchanged": true,
+      "selector": "0xf3c66ace",
+      "suppliedGas": 1000000000,
+      "uint256Words": [
+        "2",
+        "1"
+      ]
+    },
+    "raw-replacement": {
+      "actualDI0ReadSizes": [
+        189,
+        132
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 384858,
+      "resourceHashes": {
+        "0x790062aa27298A09AB20a80cDBf354d075F342cC": "79f08cb0282e24772b76f95b502593a5b18dbee695acbe934d092ad075c2c842",
+        "0xE36bd046bD77DD561b200a83E74deE77678bA2fd": "c343e90787c6fe8990fca47dec80c02fb4844cd625975a1d8831c39df4f10f66"
+      },
+      "resourceReadReceipts": [
+        {
+          "To": "0x790062aa27298a09ab20a80cdbf354d075f342cc",
+          "Offset": 0,
+          "Requested": 189,
+          "Returned": 189,
+          "Success": true,
+          "SHA256": "79f08cb0282e24772b76f95b502593a5b18dbee695acbe934d092ad075c2c842"
+        },
+        {
+          "To": "0xe36bd046bd77dd561b200a83e74dee77678ba2fd",
+          "Offset": 0,
+          "Requested": 132,
+          "Returned": 132,
+          "Success": true,
+          "SHA256": "c343e90787c6fe8990fca47dec80c02fb4844cd625975a1d8831c39df4f10f66"
+        }
+      ],
+      "revertHex": "0x6a23ad8000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001",
+      "rootAfter": "0x3cf985dbe73ea7cf564de3f78cffc34a6f794df8deb2fd6575fff69031d08c4d",
+      "rootBefore": "0x3cf985dbe73ea7cf564de3f78cffc34a6f794df8deb2fd6575fff69031d08c4d",
+      "rootUnchanged": true,
+      "selector": "0x6a23ad80",
+      "suppliedGas": 1000000000,
+      "uint256Words": [
+        "1",
+        "1"
+      ]
+    }
+  },
+  "commands": [
+    {
+      "label": "positive-q1-start",
+      "exit": 0,
+      "seconds": 0.20584920200053602
+    },
+    {
+      "label": "positive-q1-finish",
+      "exit": 0,
+      "seconds": 40.393615891982336
+    },
+    {
+      "label": "positive-q1-reopen",
+      "exit": 0,
+      "seconds": 0.0320006679976359
+    },
+    {
+      "label": "positive-q7-start",
+      "exit": 0,
+      "seconds": 0.2062056940048933
+    },
+    {
+      "label": "positive-q7-finish",
+      "exit": 0,
+      "seconds": 5.952732426987495
+    },
+    {
+      "label": "positive-q7-reopen",
+      "exit": 0,
+      "seconds": 0.02875277999555692
+    },
+    {
+      "label": "positive-direct-start",
+      "exit": 0,
+      "seconds": 0.3659227979951538
+    },
+    {
+      "label": "positive-direct-finish",
+      "exit": 0,
+      "seconds": 0.027500182972289622
+    },
+    {
+      "label": "positive-direct-reopen",
+      "exit": 0,
+      "seconds": 0.02475087996572256
+    },
+    {
+      "label": "errors-q1-start",
+      "exit": 0,
+      "seconds": 0.16121981502510607
+    },
+    {
+      "label": "errors-q1-finish",
+      "exit": 0,
+      "seconds": 1.448774300981313
+    },
+    {
+      "label": "errors-q1-reopen",
+      "exit": 0,
+      "seconds": 0.027552941988687962
+    },
+    {
+      "label": "errors-q7-start",
+      "exit": 0,
+      "seconds": 0.16733596700942144
+    },
+    {
+      "label": "errors-q7-finish",
+      "exit": 0,
+      "seconds": 0.22018038399983197
+    },
+    {
+      "label": "errors-q7-reopen",
+      "exit": 0,
+      "seconds": 0.029061287990771234
+    },
+    {
+      "label": "errors-direct-start",
+      "exit": 0,
+      "seconds": 0.20737931900657713
+    },
+    {
+      "label": "errors-direct-finish",
+      "exit": 0,
+      "seconds": 0.027227836020756513
+    },
+    {
+      "label": "errors-direct-reopen",
+      "exit": 0,
+      "seconds": 0.024493262986652553
+    },
+    {
+      "label": "failed-q1-start",
+      "exit": 0,
+      "seconds": 0.1945992520195432
+    },
+    {
+      "label": "failed-q1-finish",
+      "exit": 0,
+      "seconds": 5.138147032004781
+    },
+    {
+      "label": "failed-q1-reopen",
+      "exit": 0,
+      "seconds": 0.027628041978459805
+    },
+    {
+      "label": "failed-q7-start",
+      "exit": 0,
+      "seconds": 0.1969041540287435
+    },
+    {
+      "label": "failed-q7-finish",
+      "exit": 0,
+      "seconds": 0.7882253379793838
+    },
+    {
+      "label": "failed-q7-reopen",
+      "exit": 0,
+      "seconds": 0.02752293401863426
+    },
+    {
+      "label": "failed-direct-start",
+      "exit": 0,
+      "seconds": 0.2486565529834479
+    },
+    {
+      "label": "failed-direct-finish",
+      "exit": 0,
+      "seconds": 0.030790502030868083
+    },
+    {
+      "label": "failed-direct-reopen",
+      "exit": 0,
+      "seconds": 0.0247174910036847
+    },
+    {
+      "label": "uninit-start",
+      "exit": 0,
+      "seconds": 0.17748527199728414
+    },
+    {
+      "label": "raw-start",
+      "exit": 0,
+      "seconds": 0.12961614498635754
+    }
+  ]
+}
