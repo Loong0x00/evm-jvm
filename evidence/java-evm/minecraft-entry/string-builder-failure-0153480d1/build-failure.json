@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "0153480d1",
+  "parentEvidence": "parent-89928ece8",
+  "generatedOnly": true,
+  "command": "python3 evidence/java-evm/minecraft-entry/string-builder-preflight/tools/build.py build/java-diff-mc-string-builder-build-0153480d1",
+  "sourceVerification": "passed",
+  "toolchain": {
+    "solc": "0.8.30+commit.73712a01.Emscripten.clang",
+    "optimizer": {"enabled": true, "runs": 200},
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": {"appendCBOR": false, "bytecodeHash": "none"}
+  },
+  "parentRuntimeBytes": 392775,
+  "candidateRuntimeBytes": 395319,
+  "runtimeCap": 393216,
+  "overageBytes": 2103,
+  "failure": "engine build stopped at the fixed runtime cap before coordinator/driver construction or generated-fixture gate execution",
+  "gateExecuted": false,
+  "originalArtifactsRead": false
+}
