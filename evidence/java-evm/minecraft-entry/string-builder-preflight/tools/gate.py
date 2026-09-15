@@ -16,7 +16,7 @@ import time
 
 here = Path(__file__).resolve().parent
 stage = here.parent
-root = here.parents[3]
+root = here.parents[4]
 build = Path(sys.argv[1]).resolve()
 fixtures = Path(sys.argv[2]).resolve()
 out = Path(sys.argv[3]).resolve()
@@ -61,7 +61,7 @@ def run(label, args, fixture_label=None, expect=0):
     (out / "logs" / (label + ".json")).write_text(json.dumps(row, indent=2) + "\n")
     assert proc.returncode == expect, (label, proc.returncode, log)
 
-spec = importlib.util.spec_from_file_location("checkpoint_diagnostic", here / "checkpoint_frames.py")
+spec = importlib.util.spec_from_file_location("checkpoint_diagnostic", here / "checkpoint_diagnostic.py")
 diagnostic = importlib.util.module_from_spec(spec); spec.loader.exec_module(diagnostic)
 driver = build / "driver"
 coordinator = build / "coordinator/MCEntryCoordinator.json"
