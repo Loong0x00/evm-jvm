@@ -1,0 +1,22 @@
+--- evidence/java-evm/minecraft-entry/parent-de60a3245/artifacts/coordinator/MCEntryCoordinator.sol	2026-09-15 22:29:52.770201265 +0800
++++ evidence/java-evm/minecraft-entry/system-err-preflight/coordinator/MCEntryCoordinator.sol	2026-09-15 23:03:40.062307648 +0800
+@@ -13,15 +13,15 @@
+         bool readOnly;
+     }
+ 
+-    address private constant ENGINE = address(bytes20(hex"4d432d454e554d2d5345542d5034000000000001"));
++    address private constant ENGINE = address(bytes20(hex"4d432d53595354454d2d4552522d50524e543100"));
+     // COPY-only repair engine pin; this coordinator remains otherwise ABI-identical.
+     bytes32 private constant ENGINE_CODEHASH = hex"e5baac0ddccaa86a471b2e0e53b63374db401f82ca6fe95643f1a64a21a0cb33";
+     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
+     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
+     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
+-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-ENUM-SET-PARENT4/package/v1");
+-    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-ENUM-SET-PARENT4/resource/v1");
+-    bytes32 private constant VM_DOMAIN = keccak256("MC-ENUM-SET-PARENT4/vm/v1");
++    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-SYSTEM-ERR-PRNT1/package/v1");
++    bytes32 private constant RESOURCE_DOMAIN = keccak256("MC-SYSTEM-ERR-PRNT1/resource/v1");
++    bytes32 private constant VM_DOMAIN = keccak256("MC-SYSTEM-ERR-PRNT1/vm/v1");
+ 
+     address public owner;
+     address public finalIndex;

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "submittedEligibility": {
+    "terra": "ineligible: timed out/blocked before compilation because the isolated worktree lacked local node_modules",
+    "deepseek": "ineligible: final product build changed required Solidity optimizer runs from 200 to 1"
+  },
+  "parentRecoveryBasis": "Terra source 3b2026179",
+  "parentAmendments": [
+    "fixed generated-fixture root off-by-one",
+    "fixed Tail fixture formatting",
+    "removed unnecessary precomputed limits/PrintStream hash repair after independent runs200 compilation proved the runtime fits; retained runtime-derived commitments"
+  ],
+  "sourceVerification": "pass",
+  "java8": {"SystemBytes": 913, "PrintStreamBytes": 134, "unaffectedBootstrapImagesExact": 82, "bootstrapCount": 84},
+  "compiler": {"solc": "0.8.30", "optimizerRuns": 200, "viaIR": true, "evmVersion": "cancun", "metadata": "off"},
+  "engine": {"bytes": 392775, "cap": 393216, "headroom": 441, "runtimeSHA256": "15e17e3d6ad5674f30bc6daa64f88609d1376021ed79168e5cbc19afc83a0f6e", "runtimeKeccak256": "fcdbb9f1ff129f17085127e6b4713ae41f8d8fd00a538d958ac0ad6863b616fc"},
+  "generatedGate": {"status": "pass", "canonicalReceipts": 1086, "seconds": 107.65064964001067, "coverage": ["System.err q1/q7/q4096/reopen/canonical", "uninitialized", "failed-init", "raw System/PrintStream replacement", "raw30", "raw31 driver/coordinator/engine", "262144/262145", "EnumSet/ACC_ENUM/errors/failed/uninitialized", "queue", "OOM"]},
+  "original30": {"status": "running then atomic refusal", "verifiedReceipts": 1245, "lastJavaSteps": 8697, "internalSteps": 39, "nextBlocker": "java/lang/StringBuilder", "site": 4104, "context": 9},
+  "minecraftDoneClaimed": false
+}

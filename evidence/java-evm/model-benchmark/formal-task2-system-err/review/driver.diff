@@ -1,0 +1,45 @@
+--- evidence/java-evm/minecraft-entry/parent-de60a3245/executed-driver.go.txt	2026-09-15 22:29:54.527201831 +0800
++++ evidence/java-evm/minecraft-entry/system-err-preflight/tools/Go.txt	2026-09-15 23:03:40.062991880 +0800
+@@ -42,7 +42,7 @@
+ 
+ // Explicit user-authorized LOCAL-only external call ceiling; EVM gas accounting unchanged.
+ const ordinaryGas = uint64(1_000_000_000)
+-const format = "MC-ENUM-SET-PARENT4-BOUNDED-1"
++const format = "MC-SYSTEM-ERR-PRNT1-BOUNDED-1"
+ const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
+ const immutableEngineSHA256 = "3944c4392408f79070728acfa2976fed825ca7c07b8d0d7436fb19277ccf857b"
+ const immutableEngineKeccak = "0xe5baac0ddccaa86a471b2e0e53b63374db401f82ca6fe95643f1a64a21a0cb33"
+@@ -50,11 +50,11 @@
+ 
+ // The constructor owner is deliberately separate from the required fixed LOCAL
+ // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
+-var owner = common.HexToAddress("0x4d432d454e554d2d5345542d4f34000000000002")
++var owner = common.HexToAddress("0x4d432d53595354454d2d4552522d4f574e523100")
+ var other = common.HexToAddress("0x4d432d434e46452d4f5448455200000000000003")
+-var engine = common.HexToAddress("0x4d432d454e554d2d5345542d5034000000000001")
+-var packageDomain = crypto.Keccak256Hash([]byte("MC-ENUM-SET-PARENT4/package/v1"))
+-var resourceDomain = crypto.Keccak256Hash([]byte("MC-ENUM-SET-PARENT4/resource/v1"))
++var engine = common.HexToAddress("0x4d432d53595354454d2d4552522d50524e543100")
++var packageDomain = crypto.Keccak256Hash([]byte("MC-SYSTEM-ERR-PRNT1/package/v1"))
++var resourceDomain = crypto.Keccak256Hash([]byte("MC-SYSTEM-ERR-PRNT1/resource/v1"))
+ var readSelector = crypto.Keccak256([]byte("read(uint32,uint32)"))[:4]
+ 
+ type artifact struct {
+@@ -1144,7 +1144,7 @@
+ 	if assertOverride != nil {
+ 		assert = *assertOverride
+ 	}
+-	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-ENUM-SET-PARENT4/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
++	args, x := a.Pack("", from, crypto.Keccak256Hash([]byte("MC-SYSTEM-ERR-PRNT1/fixture-instance/v1")), decs, names, repeatHash(e.m.IndexRoot, len(decs)), roots, [32]byte(assert))
+ 	must(x)
+ 	if len(init)+len(args) > 49152 {
+ 		panic(fmt.Sprintf("complete init %d", len(init)+len(args)))
+@@ -1598,7 +1598,7 @@
+ }
+ 
+ func constructorArgLen(ca abi.ABI, from common.Address, decs []common.Address, names [][]byte, ir common.Hash, roots []common.Hash, p common.Hash) int {
+-	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-ENUM-SET-PARENT4/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
++	b, x := ca.Pack("", from, crypto.Keccak256Hash([]byte("MC-SYSTEM-ERR-PRNT1/fixture-instance/v1")), decs, names, repeatHash(ir, len(decs)), roots, [32]byte(p))
+ 	must(x)
+ 	return len(b)
+ }
