@@ -1,0 +1,29 @@
+{
+  "taskId": "enumset-1",
+  "baseCommit": "65b006a00c545ccf3d4bbab12bd7c4cf588f79a9",
+  "taskSHA256": "a39d8d4f65aaf0aabfdd4f90e6f3ca3022d18da2c9f834bb6b0948d300c28c69",
+  "contextManifestSHA256": "d44abbdfe8da7407b306deaa1e0b73167e714fe4ed2ff7d6a40d611a028a74a3",
+  "toolAllowlist": [
+    "read",
+    "bash",
+    "edit",
+    "write"
+  ],
+  "environment": {
+    "java": "8-openjdk",
+    "solc": "0.8.30 viaIR optimizer200 Cancun metadata-off",
+    "runtimeCap": 393216,
+    "buildGateLimit": "20min/4GiB"
+  },
+  "candidateOrder": [
+    "terra",
+    "deepseek"
+  ],
+  "reasoning": "max",
+  "judges": {
+    "count": 3,
+    "model": "openai-codex/gpt-5.6-sol",
+    "reasoning": "xhigh"
+  },
+  "humanInterventions": []
+}
