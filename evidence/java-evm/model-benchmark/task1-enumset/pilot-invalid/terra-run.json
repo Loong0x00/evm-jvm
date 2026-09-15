@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "cwd": "/home/user/evm-jvm/bench-t1-enumset-terra",
+  "model": "openai-codex/gpt-5.6-terra",
+  "thinking": "max",
+  "taskSHA256": "a39d8d4f65aaf0aabfdd4f90e6f3ca3022d18da2c9f834bb6b0948d300c28c69",
+  "taskBytes": 1766,
+  "commandWithoutPrompt": [
+    "pi",
+    "--mode",
+    "json",
+    "--no-session",
+    "--approve",
+    "--model",
+    "openai-codex/gpt-5.6-terra",
+    "--thinking",
+    "max",
+    "--tools",
+    "read,bash,edit,write",
+    "--extension",
+    "/home/user/evm-jvm/geth/evidence/java-evm/model-benchmark-harness/metrics.ts",
+    "--append-system-prompt",
+    "You are an isolated benchmark candidate working on one bounded task. Stay inside the current working directory; do not inspect sibling or parent worktrees. Do not delegate. Preserve unrelated changes. Obey the task's original-artifact restrictions. Work autonomously, run proportionate verification, and leave a concise BENCHMARK_RESULT.md with Result, Files Changed, Verification, and Remaining Uncertainty. Do not identify or discuss your model.",
+    "-p",
+    "<TASK>"
+  ],
+  "exit": 143,
+  "timedOut": true,
+  "wallSeconds": 3600.0316950989654,
+  "maxChildRSSKiB": 1026136,
+  "childUserSeconds": 1999.417506,
+  "childSystemSeconds": 6.625159
+}

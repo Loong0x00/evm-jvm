@@ -1,0 +1,28 @@
+{
+  "status": "invalid-pilot",
+  "reason": "overbroad autonomous design+implementation+repeated-heavy-gates made side benchmark block main project",
+  "notPartOfThreeFormalTasks": true,
+  "terra": {
+    "stopped": "3600s hard timeout",
+    "requests": 81,
+    "totalTokens": 10025665,
+    "toolCalls": 129,
+    "toolErrors": 6,
+    "completed": false
+  },
+  "deepseek": {
+    "stopped": "parent terminated after user observed excessive wall",
+    "observedSeconds": 1936.438135308,
+    "requests": 109,
+    "totalTokens": 17812011,
+    "toolCalls": 111,
+    "toolErrors": 3,
+    "completed": false
+  },
+  "humanInterventions": [
+    "Parent terminated DeepSeek process tree after 32m16s",
+    "Protocol changed to xhigh when available, max otherwise, concurrent candidates, bounded execution route"
+  ],
+  "rawPiEvents": "retained only in isolated local worktrees; not Git-archived because they contain large source/tool payloads",
+  "metrics": "content-free timing/usage delta traces gzip-archived"
+}
