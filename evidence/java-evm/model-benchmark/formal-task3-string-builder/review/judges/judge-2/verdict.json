@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "task": "Independent review of parent-amended bounded StringBuilder image85",
+  "decision": "accept",
+  "acceptedScope": "MC-STRING-BUILDER-P1 only: genuine guest StringBuilder.<init>()V, append(String), and toString(), with the documented null-to-NPE bound and fixed LOCAL limits. This is not acceptance of full Java SE StringBuilder, Minecraft startup, or Done.",
+  "scoreScale": "0-10",
+  "scores": {
+    "correctness": 9.6,
+    "architectureUnderstanding": 9.7,
+    "modificationMinimality": 9.8,
+    "robustness": 9.3,
+    "maintainability": 9.4,
+    "completion": 9.6
+  },
+  "confidence": {
+    "level": "high",
+    "value": 0.97,
+    "rationale": "The review package contains an exact parent-pinned reverse construction, reproducible compiler and runtime pins, generated cross-quantum/reopen evidence, and canonical receipt checks. Independent lightweight inspection confirmed the embedded class size/hash and the exact preservation of all 39 moved prior-tail operations. No heavy gate was rerun, as required."
+  },
+  "severitySummary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "informational": 2
+  },
+  "findings": [
+    {
+      "id": "INFO-001",
+      "severity": "informational",
+      "title": "StringBuilder-specific OOM witness is an atomic checkpoint refusal, not a catchable terminal receipt",
+      "assessment": "This is honest and acceptable under the parent amendment. The witness's live arrays cannot be represented within the unchanged 1 MiB checkpoint, so the gate requires LC0StateError(1,0) with an unchanged root rather than claiming a fabricated catchable result. A separate small field-arena case retains catchable guest OOM coverage. The evidence must continue to be described with this distinction.",
+      "citations": [
+        "review/tools/gate.py:127-137",
+        "review/tools/gate.py:233-244",
+        "review/machine-parent-recovery.json:1"
+      ]
+    },
+    {
+      "id": "INFO-002",
+      "severity": "informational",
+      "title": "Acceptance is intentionally narrower than Java SE StringBuilder",
+      "assessment": "The image deliberately exposes only the no-arg constructor, append(String), and toString(), and null append raises guest NPE instead of appending the literal string 'null'. This is explicitly pinned, tested, and within the assigned bounded scope; it must not be generalized to other constructors, overloads, interfaces, capacity behavior, or full Java compatibility.",
+      "citations": [
+        "review/bootstrap-pins.json:2-8",
+        "review/tools/verify_source.py:71-114",
+        "review/tools/generate_fixtures.py:102-114",
+        "review/tools/gate.py:250-252"
+      ]
+    }
+  ],
+  "assessment": [
+    {
+      "area": "Guest semantics",
+      "result": "pass",
+      "basis": "The pinned source allocates an owned empty char array, allocates an exact-length fresh array for each non-null append, copies prior and input UTF-16 code units in order, returns this, and constructs toString via guest String(char[]). The positive fixture checks empty/non-interned output, chained receiver identity, ordered content, distinct outputs, and preservation of the earlier output; the null fixture catches guest NPE.",
+      "citations": [
+        "review/tools/verify_source.py:71-114",
+        "review/tools/generate_fixtures.py:80-114",
+        "review/tools/gate.py:108-125"
+      ]
+    },
+    {
+      "area": "Bootstrap append and replacement safety",
+      "result": "pass",
+      "basis": "The root grows from 84 to 85 hashes, image85 is appended after PrintStream, allocation count grows by exactly one, and StringBuilder is added to reserved raw-class names. The generated gate checks initialized and uninitialized states plus atomic raw replacement refusal.",
+      "citations": [
+        "review/engine.diff:38-64",
+        "review/engine.diff:124-140",
+        "review/engine.diff:189-206",
+        "review/tools/gate.py:108-125",
+        "review/tools/gate.py:167-173"
+      ]
+    },
+    {
+      "area": "Post-VFS helper equivalence and safety",
+      "result": "pass",
+      "basis": "The old post-VFS assignments are moved wholesale into a private internal helper. Solidity memory reference parameters preserve mutation of p.classes, p.classClass, and p.loaderClass across this internal call. Slot formulas and all prior writes remain in the same order; only the final classSlot+45 StringBuilder write is added. The strict verifier reconstructs the expected source mechanically from the pinned parent and requires exact equality.",
+      "citations": [
+        "review/engine.diff:65-120",
+        "review/engine.diff:142-196",
+        "review/tools/verify_source.py:170-227"
+      ]
+    },
+    {
+      "area": "Pins, commitments, and limits",
+      "result": "pass",
+      "basis": "The build fixes solc 0.8.30, runs 200, viaIR, Cancun, and metadata-off; derives engine and coordinator hashes from built runtimes before rebinding the disposable driver; enforces the 393216-byte runtime cap; and records unchanged raw/checkpoint/frame/gas limits. Domain-separated bootstrap and machine commitments are updated consistently.",
+      "citations": [
+        "review/engine.diff:3-34",
+        "review/coordinator.diff:7-19",
+        "review/tools/build.py:22-55",
+        "review/tools/build.py:57-99",
+        "review/tools/verify_source.py:228-256"
+      ]
+    },
+    {
+      "area": "Regression and receipt evidence",
+      "result": "pass",
+      "basis": "The gate checks q1/q7/direct equivalence and reopen, raw30/raw31 and 262144/262145 boundaries, retained System.err/failed-init/EnumSet/ACC_ENUM/queue/OOM controls, and canonical ABI/event/checkpoint/counter/resource-read receipts. The authoritative recovery record reports source verification pass, a 386100-byte runtime with 7116 bytes headroom, 1607 canonical generated receipts, exact prior84 images, and a passed generated gate.",
+      "citations": [
+        "review/tools/gate.py:72-106",
+        "review/tools/gate.py:139-165",
+        "review/tools/gate.py:175-244",
+        "review/tools/verify_receipts.js:10-28",
+        "review/machine-parent-recovery.json:1"
+      ]
+    }
+  ],
+  "verification": [
+    "Static review of review-task.txt, task.txt, machine-parent-recovery.json, bootstrap-pins.json, all three diffs, and all six packaged review tools.",
+    "Lightweight extraction/hash check of embedded StringBuilder class: 542 bytes, SHA-256 463d7859579627eff6065316f7c9759fb4648768c80ed29656e988db0a662832, Java 8 classfile header.",
+    "Lightweight diff normalization: all 39 prior post-VFS assignment/call operations are identical and ordered identically in the helper; one final StringBuilder delegation is added.",
+    "Direct-classfile javap inspection confirmed one private char[] field and only <init>(), append(String), and toString() bytecode with the expected allocation/copy/identity/constructor-call flow.",
+    "No build, generated gate, original artifact, network, other worktree, or heavy test was run."
+  ]
+}

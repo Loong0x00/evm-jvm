@@ -20,3 +20,7 @@ Both corrected runs have clean instrumentation (`validForComparison=true`) and e
 DeepSeek was 7.8% faster, had 23.9% lower median TTFT, 4.79x output-token throughput, and 84.5% lower reported cost, while consuming 3.31x total tokens and 2.37x tool calls. Terra's source used the correct final class flag and a 542-byte explicitly bounded non-null implementation; DeepSeek's 538-byte image omitted `final`. Neither difference overrides the mandatory runtime-cap failure.
 
 The invalid 105.8-second harness-path launch is retained separately. Parent recovery is outside the formal comparison and is not a retroactive model win.
+
+## Parent recovery
+
+Terra's post-formal layout repair was selected as the parent basis. Moving the byte-identical post-VFS Program-memory bootstrap tail into a private internal helper reduced runtime to386100B without precomputing commitments. After correcting the infeasible large-array OOM expectation, the full gate passed with1607 canonical receipts. Three Sol-xhigh reviewers unanimously accepted the parent-amended result (median correctness9.5, architecture9.6, minimality9.5, robustness9.2, maintainability9.1, completion9.5). Fresh original30 reached11566J/39I and next measured `String.lastIndexOf(String)`.

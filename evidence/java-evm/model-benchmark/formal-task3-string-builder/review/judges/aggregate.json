@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "decisions": [
+    "accept",
+    "accept",
+    "accept"
+  ],
+  "unanimousAccept": true,
+  "scores": {
+    "correctness": [
+      9.5,
+      9.6,
+      9.4
+    ],
+    "architecture_understanding": [
+      9.6,
+      9.7,
+      9.6
+    ],
+    "modification_minimality": [
+      9.5,
+      9.8,
+      9.5
+    ],
+    "robustness": [
+      9.0,
+      9.3,
+      9.2
+    ],
+    "maintainability": [
+      9.1,
+      9.4,
+      9.1
+    ],
+    "completion": [
+      9.5,
+      9.6,
+      9.4
+    ]
+  },
+  "medians": {
+    "correctness": 9.5,
+    "architecture_understanding": 9.6,
+    "modification_minimality": 9.5,
+    "robustness": 9.2,
+    "maintainability": 9.1,
+    "completion": 9.5
+  },
+  "nonBlockingFindings": [
+    "one low verifier hardening: Python assert checks can be disabled by -O; ordinary archived runs did not use -O",
+    "informational: large StringBuilder quota witness is checkpoint infeasibility, not completed catchable OOM",
+    "informational: null append is intentionally NPE-bounded"
+  ]
+}

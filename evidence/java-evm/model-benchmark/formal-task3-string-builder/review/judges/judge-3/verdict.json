@@ -1,0 +1,118 @@
+{
+  "schema": 1,
+  "task": "formal-task3-string-builder independent acceptance review",
+  "decision": "accept",
+  "accepted": true,
+  "confidence": {
+    "level": "high",
+    "score": 0.94,
+    "basis": "The review package gives an exact parent-relative source derivation, a pinned Java 8 image, generated semantic and boundary gates, canonical receipt verification, and an authoritative successful parent recovery record. Independent lightweight checks confirmed the embedded image digest and the statement-for-statement helper move.",
+    "limitations": [
+      "Per task constraints, the build and generated EVM gate were not rerun; machine-parent-recovery.json was treated as authoritative.",
+      "No original artifact, network resource, or other worktree was inspected.",
+      "Acceptance is only for the bounded StringBuilder profile, not general Java StringBuilder compatibility or Minecraft completion."
+    ]
+  },
+  "scores": {
+    "correctness": 9.4,
+    "architecture_understanding": 9.6,
+    "modification_minimality": 9.5,
+    "robustness": 9.2,
+    "maintainability": 9.1,
+    "completion": 9.4
+  },
+  "severity_summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "informational": 2
+  },
+  "findings": [
+    {
+      "id": "INFO-1",
+      "severity": "informational",
+      "title": "The large StringBuilder quota case is an atomic checkpoint refusal, not a StringBuilder-specific catchable-OOM proof",
+      "assessment": "This is honest and acceptable for the parent-amended scope. The two live 65536-char arrays make the fixed 1 MiB checkpoint unpublishable, so the gate requires LC0StateError(1,0) with an unchanged root rather than claiming a terminal caught OOM. A separate retained small field-arena fixture continues to establish catchable guest OOM behavior. The large fixture must not later be cited as a successful StringBuilder OOM/catch execution.",
+      "citations": [
+        "tools/gate.py:127-137",
+        "tools/gate.py:233-244",
+        "tools/generate_fixtures.py:126-142",
+        "machine-parent-recovery.json:1"
+      ]
+    },
+    {
+      "id": "INFO-2",
+      "severity": "informational",
+      "title": "append(null) intentionally differs from full Java 8 StringBuilder",
+      "assessment": "The bounded contract explicitly maps null to a catchable guest NullPointerException before destination allocation, rather than appending the literal string 'null'. The implementation evaluation order and dedicated fixture match that declared bound, so this is a scope constraint rather than a correctness defect.",
+      "citations": [
+        "bootstrap-pins.json:2-8",
+        "tools/verify_source.py:75-100",
+        "tools/generate_fixtures.py:102-114",
+        "tools/gate.py:116-117"
+      ]
+    }
+  ],
+  "acceptance_rationale": [
+    {
+      "area": "Guest semantics",
+      "assessment": "The pinned source constructs an empty owned char array, appends into a fresh exact-length array while preserving old/input order, returns the receiver, and creates each String result through guest String(char[]). The positive fixture checks empty/content identity, chained receiver identity, non-interned results, result independence, and preservation after later append.",
+      "citations": [
+        "tools/verify_source.py:71-137",
+        "tools/generate_fixtures.py:80-100",
+        "tools/gate.py:108-125"
+      ]
+    },
+    {
+      "area": "Image append and commitments",
+      "assessment": "The root grows from 84 to 85 and folds the new image at h[84]; the Program allocation grows by exactly one; replacement is reserved. The reverse verifier requires exactly 84 parent images byte-identical plus only StringBuilder, and the authoritative record reports prior84Exact and runtime-derived commitments.",
+      "citations": [
+        "engine.diff:41-64",
+        "engine.diff:124-130",
+        "tools/verify_source.py:139-168",
+        "tools/verify_source.py:211-227",
+        "machine-parent-recovery.json:1"
+      ]
+    },
+    {
+      "area": "Post-VFS helper equivalence and safety",
+      "assessment": "The deleted post-VFS tail and the new internal pure helper preserve the classSlot calculation, conditional Runnable insertion, all prior class assignments, classClass, and loaderClass in the same order; StringBuilder is the sole final-slot addition at classSlot+45. Program memory and its classes array are reference types for an internal call, so these mutations remain in the caller's memory graph; no external call or state boundary is introduced. The exact reverse verifier reconstructs the helper from the parent tail and compares the entire resulting engine source. Independent package-only analysis also matched all 39 pre-existing executable tail statements in order.",
+      "citations": [
+        "engine.diff:65-123",
+        "engine.diff:136-196",
+        "tools/verify_source.py:170-209",
+        "tools/verify_source.py:219-227"
+      ]
+    },
+    {
+      "area": "Pins, limits, and regressions",
+      "assessment": "The build enforces solc 0.8.30, optimizer 200, viaIR, Cancun, metadata off, derives runtime hashes into disposable coordinator/driver copies, and enforces the 393216-byte cap. Fixed raw30/262144, 1 MiB checkpoint, 128 frames, reserve, and related bounds are asserted. Generated gates retain q1/q7/direct/reopen equivalence, raw replacement, raw30/31 three-layer behavior, byte boundaries, System.err/PrintStream, EnumSet/ACC_ENUM, queue, failed-init, uninitialized, OOM, and canonical receipt controls.",
+      "citations": [
+        "tools/build.py:25-55",
+        "tools/build.py:57-98",
+        "tools/verify_source.py:228-248",
+        "tools/gate.py:96-106",
+        "tools/gate.py:139-249",
+        "tools/verify_receipts.js:10-28",
+        "machine-parent-recovery.json:1"
+      ]
+    }
+  ],
+  "authoritative_result": {
+    "source_verification": "pass",
+    "generated_gate": "pass",
+    "canonical_receipts": 1607,
+    "engine_bytes": 386100,
+    "engine_cap": 393216,
+    "engine_headroom": 7116,
+    "done_claimed": false,
+    "citation": "machine-parent-recovery.json:1"
+  },
+  "lightweight_verification": [
+    "Parsed all 5 packaged Python tools with Python ast.parse.",
+    "Ran node --check on tools/verify_receipts.js.",
+    "Extracted the StringBuilder class hex from engine.diff and confirmed 542 bytes and SHA-256 463d7859579627eff6065316f7c9759fb4648768c80ed29656e988db0a662832 against bootstrap-pins.json and machine-parent-recovery.json.",
+    "Compared the moved post-VFS tail in engine.diff and confirmed all 39 pre-existing executable statements remain in identical order, with one new final-slot StringBuilder insertion."
+  ]
+}

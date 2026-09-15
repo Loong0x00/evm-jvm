@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "review": "formal-task3-string-builder-parent-amended",
+  "verdict": "accept",
+  "accept": true,
+  "confidence": {
+    "level": "high",
+    "score": 0.93,
+    "rationale": "The authoritative recovery record reports a passing source verification and generated gate with 1,607 canonical receipts. The review package mechanically pins the parent delta, Java 8 image, compiler, runtime hashes, limits, and generated semantic controls. Confidence is below absolute because heavy execution was intentionally not repeated and the original artifacts were intentionally not inspected."
+  },
+  "scores": {
+    "correctness": 9.5,
+    "architecture_understanding": 9.6,
+    "modification_minimality": 9.5,
+    "robustness": 9.0,
+    "maintainability": 9.1,
+    "completion": 9.5
+  },
+  "severity_summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 1,
+    "informational": 2
+  },
+  "findings": [
+    {
+      "id": "L-01",
+      "severity": "low",
+      "title": "Python evidence checks depend on assertions remaining enabled",
+      "description": "The source, gate, fixture, and checkpoint tools express many acceptance conditions with Python assert statements. This is sound for the reported ordinary invocation, but a future run under python -O or inherited PYTHONOPTIMIZE could suppress them. This does not invalidate the authoritative reported run; hardening should reject optimized Python explicitly or use unconditional checks.",
+      "citations": [
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/build.py:15-18",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/build.py:38-55",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/gate.py:23-32",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/checkpoint_diagnostic.py:8-25"
+      ]
+    },
+    {
+      "id": "I-01",
+      "severity": "informational",
+      "title": "StringBuilder quota witness proves atomic checkpoint refusal, not a completed caught append OOM",
+      "description": "The large generated fixture cannot publish its live arrays within the unchanged 1 MiB checkpoint cap, so the amended gate correctly expects atomic LC0StateError(1,0) with an unchanged root. Catchable guest OOM remains covered by the smaller independent field-arena fixture. The package should therefore be read exactly as the parent amendment states, not as evidence that the large second append reached and caught OOM.",
+      "citations": [
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/generate_fixtures.py:126-142",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/gate.py:127-137",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/gate.py:233-244",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/machine-parent-recovery.json:1"
+      ]
+    },
+    {
+      "id": "I-02",
+      "severity": "informational",
+      "title": "Null append is an explicit bounded-profile divergence",
+      "description": "append((String)null) raises a catchable guest NullPointerException before destination allocation rather than appending the Java SE literal \"null\". This behavior is explicit in the pin, implementation, fixture, and gate, and is acceptable only within the stated bounded profile.",
+      "citations": [
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/bootstrap-pins.json:2-8",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/verify_source.py:86-96",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/generate_fixtures.py:102-114",
+        "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/gate.py:116-117"
+      ]
+    }
+  ],
+  "assessment": {
+    "guest_semantics": "The pinned guest source constructs an owned empty char array, append(String) creates an exact fresh array, copies old and new content in order, stores it, and returns this; toString creates a guest String from the backing array. Generated checks cover empty and nonempty content, chained receiver identity, non-interned/copy identity, and snapshot preservation after later append.",
+    "bootstrap_and_helper": "The bootstrap commitment grows from 84 to 85, the Program allocation grows by exactly one, and StringBuilder is written only at classSlot+45 after PrintStream at +44. The reverse verifier extracts the complete parent tail, moves it wholesale into one private pure internal helper, adds only the final image write, and requires exact source equality. Program memory structs and memory arrays passed to internal functions retain reference semantics, so writes to p.classes, p.classClass, and p.loaderClass affect the caller's Program; no external call, storage transition, reentrancy point, or assignment reordering is introduced.",
+    "pins_and_limits": "The build asserts the required solc 0.8.30/runs-200/viaIR/Cancun/metadata-off tuple, derives engine hashes from the built runtime, patches the coordinator pin, then patches the disposable driver pins. The reverse verifier preserves all 84 prior image bytes and fixed raw/checkpoint/frame/native/exception limits. The gate checks replacement refusal, raw30 admission, raw31 refusal at driver/coordinator/engine layers, byte boundaries, prior controls, reopen equivalence, and canonical receipts.",
+    "reported_result": "The authoritative machine record reports sourceVerification=pass, 85 images with prior84Exact=true, runtime-derived commitments, a 386100-byte runtime under the 393216-byte cap, generatedGate=pass, 1607 canonical receipts, honest atomic quota refusal, retained catchable OOM, and doneClaimed=false."
+  },
+  "key_citations": [
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/verify_source.py:71-137",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/verify_source.py:170-234",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/engine.diff:41-64",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/engine.diff:124-196",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/generate_fixtures.py:80-114",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/gate.py:72-137",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/gate.py:167-252",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/build.py:25-55",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/tools/build.py:57-99",
+    "evidence/java-evm/model-benchmark/formal-task3-string-builder/review/machine-parent-recovery.json:1"
+  ],
+  "verification": {
+    "performed": [
+      "Manual review of review-task.txt, task.txt, all three diffs, both JSON records, and all tools in the supplied review package",
+      "AST parsing of all five Python tools",
+      "JSON parsing of both supplied JSON records",
+      "node --check on tools/verify_receipts.js"
+    ],
+    "not_performed": [
+      "No heavy build or execution gate rerun",
+      "No original artifact, Minecraft payload, network, or other worktree inspection"
+    ]
+  }
+}
