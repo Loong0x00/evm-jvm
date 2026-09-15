@@ -1,0 +1,81 @@
+{
+  "verdict": "accept",
+  "confidence": {
+    "level": "high",
+    "score": 0.97
+  },
+  "scores": {
+    "correctness": 10,
+    "architecture_understanding": 10,
+    "minimality": 10,
+    "robustness": 9,
+    "maintainability": 9,
+    "completion": 10
+  },
+  "findings": [
+    {
+      "severity": "informational",
+      "title": "No acceptance-blocking discrepancy found",
+      "detail": "The parent-relative engine delta changes the profile commitments, grows the bootstrap root and prepared class count by exactly one, appends TreeMap after slot 84, and adds only TreeMap to the reserved map/bootstrap classification. Existing raw/checkpoint/path limits shown in the diff remain unchanged.",
+      "citations": [
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/engine.diff:3-34",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/engine.diff:38-71",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/engine.diff:75-103"
+      ]
+    },
+    {
+      "severity": "informational",
+      "title": "TreeMap surface is intentionally constructor-only",
+      "detail": "Independent parsing of the supplied 132-byte class image found major version 52, public class java/util/TreeMap, direct superclass java/lang/Object, zero interfaces, zero fields, and exactly one public <init>()V method. Its SHA-256 matches the pin and the embedded engine literal. This does not claim Java SE TreeMap compatibility.",
+      "citations": [
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/bootstrap/TreeMap.java:1-4",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/bootstrap/pins.json:2-10",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/engine.diff:97-103"
+      ]
+    },
+    {
+      "severity": "informational",
+      "title": "Positive, omission, boundary, and receipt gates are appropriately scoped",
+      "detail": "The generated positive checks distinct non-null allocations and stable aliases; no-use and raw replacement controls are present; omitted put and SortedMap paths require atomic refusal; q1/q7/direct/reopen equivalence, raw count/byte boundaries, retained controls, and canonical receipt re-encoding are all represented. The authoritative machine result reports the parent gate passed with 2,606 canonical receipts.",
+      "citations": [
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/tools/generate_fixtures.py:149-211",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/tools/gate.py:75-106",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/tools/gate.py:151-167",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/tools/gate.py:209-238",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/tools/gate.py:240-313",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/machine-result.json:1"
+      ]
+    },
+    {
+      "severity": "informational",
+      "title": "Final P2 pins and original30 claim are internally consistent and bounded",
+      "detail": "Coordinator and driver deltas consistently bind the P2 domains, 20-byte engine/owner addresses, engine/coordinator hashes, and measured byte lengths. Pins retain optimizer 200, viaIR, Cancun, metadata-off, raw 30/262144, frames 128, and diagnostic bound 116. Runtime is 386,844 bytes, 6,372 bytes below the 393,216 cap. Original30 is limited to 12,005 Java/40 internal steps and an atomic ProviderUtil missing-class refusal; no provider/world/Done result is claimed.",
+      "citations": [
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/coordinator.diff:7-20",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/driver.diff:5-27",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/driver.diff:31-69",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/parent-pins.json:5-55",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/provider-util-blocker.json:1",
+        "evidence/java-evm/minecraft-entry/tree-map-constructor-review/verified-original30.json:1-13"
+      ]
+    }
+  ],
+  "review_scope": {
+    "package_only": true,
+    "machine_result_treated_as_authoritative": true,
+    "heavy_tests_rerun": false,
+    "original_artifacts_accessed": false,
+    "network_accessed": false,
+    "other_worktrees_accessed": false
+  },
+  "verification": [
+    "Read every file in the supplied review package.",
+    "Performed a lightweight independent classfile parse and SHA-256 check of bootstrap/TreeMap.class.hex.",
+    "Counted and inspected all unified-diff hunks and cross-checked P2 pins/hashes/limits against machine-result.json.",
+    "Did not rerun the heavy build or execution gate."
+  ],
+  "limitations": [
+    "The retained build/gate scripts describe the worker P1 candidate, while machine-result.json separately records the authoritative parent P2 equal-length rebind and parent gate. This is treated as provenance, not a semantic discrepancy, per the review task.",
+    "Receipt and original30 execution claims were reviewed from the supplied evidence rather than independently replayed."
+  ]
+}

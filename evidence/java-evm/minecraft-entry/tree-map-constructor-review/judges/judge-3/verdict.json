@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "verdict": "accept",
+  "confidence": 0.94,
+  "scores": {
+    "correctness": 9,
+    "architectureUnderstanding": 9,
+    "minimality": 10,
+    "robustness": 9,
+    "maintainability": 8,
+    "completion": 9
+  },
+  "summary": "The supplied parent amendment satisfies the bounded constructor-only TreeMap acceptance criteria. The diff is narrowly append-only, the 132-byte Java 8 class has exactly one public Object constructor, positive and refusal gates cover the required execution modes and retained controls, final P2 pins are internally consistent, and the original30 claim stops atomically at genuine missing ProviderUtil without claiming provider, world, or Done behavior.",
+  "criteria": [
+    {
+      "id": 1,
+      "status": "pass",
+      "assessment": "engine.diff contains the nine P2 commitment rebases and only the expected bootstrap/count/platform additions: root size 85->86, appended h[85], class allocation +79->+80, one TreeMap reserved-platform predicate, one append helper/call after StringBuilder, and the exact image. The outlined tail remains in place. checkpoint_frames.py raises only the derived diagnostic class bound to 116. Final pins retain raw30/262144 and the other limits.",
+      "citations": [
+        "engine.diff:9-34",
+        "engine.diff:43-52",
+        "engine.diff:61-71",
+        "engine.diff:79-103",
+        "tools/checkpoint_frames.py:19",
+        "parent-pins.json:7-31"
+      ]
+    },
+    {
+      "id": 2,
+      "status": "pass",
+      "assessment": "Independent decoding of TreeMap.class.hex found 132 bytes, CAFEBABE, major 52, ACC_PUBLIC|ACC_SUPER, this java/util/TreeMap, super java/lang/Object, zero interfaces, zero fields, one public <init>()V, and constructor code aload_0; invokespecial Object.<init>; return. Its SHA-256 is c203bc1cf3e4f7d9901b49f0415e10e0aa6331eb99c366e24f68b6fc2a60e067, matching the supplied pin and embedded image. The positive fixture checks two distinct non-null objects and a stable alias under q1/q7/direct/reopen.",
+      "citations": [
+        "bootstrap/TreeMap.java:1-4",
+        "bootstrap/pins.json:2-9",
+        "engine.diff:103",
+        "tools/generate_fixtures.py:152-166",
+        "tools/gate.py:82-105",
+        "tools/gate.py:151-159"
+      ]
+    },
+    {
+      "id": 3,
+      "status": "pass",
+      "assessment": "The image exposes no Map, SortedMap, NavigableMap, fields, or methods beyond construction. The generated put path requires CallError(3,13), while the explicit SortedMap path requires a canonical missing-class refusal; both require an unchanged root and cannot fabricate a Java result.",
+      "citations": [
+        "bootstrap/pins.json:8-9",
+        "tools/generate_fixtures.py:187-208",
+        "tools/gate.py:218-238",
+        "tools/gate.py:315-317"
+      ]
+    },
+    {
+      "id": 4,
+      "status": "pass",
+      "assessment": "The gate runs start/finish/reopen at quanta 1, 7, and 4096 and compares machine root, opaque payload, and step totals. It covers TreeMap construction/no-init/raw replacement; retained String, lastIndexOf, StringBuilder, System.err, failed initialization, exact raw class/byte boundaries, EnumSet, queue, OOM, and canonical receipt re-encoding. machine-result records 71 passing worlds and 2606 canonical receipts for both candidate and parent gates.",
+      "citations": [
+        "tools/gate.py:82-105",
+        "tools/gate.py:108-167",
+        "tools/gate.py:184-238",
+        "tools/gate.py:240-314",
+        "machine-result.json:1"
+      ]
+    },
+    {
+      "id": 5,
+      "status": "pass",
+      "assessment": "Coordinator and driver deltas consistently bind the P2 domain, engine/owner addresses, engine SHA/Keccak, coordinator Keccak, and exact runtime lengths. Final pins retain optimizer runs 200, viaIR, Cancun, and metadata-off. The authoritative result records 386844 bytes under the 393216 cap with 6372 bytes headroom. Original30 records only 12005 Java/40 internal steps and an atomic missing ProviderUtil refusal, expressly excluding provider result, world, and Done.",
+      "citations": [
+        "coordinator.diff:7-20",
+        "driver.diff:7-27",
+        "driver.diff:35-68",
+        "parent-pins.json:32-55",
+        "machine-result.json:1",
+        "provider-util-blocker.json:1",
+        "verified-original30.json:1-11"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "severity": "low",
+      "title": "Archived runnable scripts retain candidate P1 labels",
+      "detail": "tools/verify_source.py, tools/build.py, and tools/gate.py still identify the generated candidate as MC-TREE-MAP-P1, while the reviewed parent pins/diffs are MC-TREE-MAP-P2. This is not a semantic blocker here because machine-result explicitly separates the passing candidate build/gate from the independently pinned passing P2 parent build/gate, and the supplied final coordinator/driver/pins all agree on P2. It is nevertheless a provenance/readability wart for future reproduction.",
+      "citations": [
+        "tools/verify_source.py:29-30",
+        "tools/build.py:87-101",
+        "tools/gate.py:315",
+        "parent-pins.json:5",
+        "machine-result.json:1"
+      ]
+    },
+    {
+      "severity": "info",
+      "title": "No blocking correctness or scope-expansion finding",
+      "detail": "The supplied evidence consistently limits this amendment to construction and honestly reports all omitted collection/provider behavior. No fabricated API, provider result, world, or Done claim was found.",
+      "citations": [
+        "bootstrap/pins.json:8-9",
+        "tools/gate.py:315-317",
+        "machine-result.json:1",
+        "provider-util-blocker.json:1"
+      ]
+    }
+  ],
+  "reviewScope": {
+    "packageOnly": true,
+    "heavyTestsRerun": false,
+    "originalArtifactsAccessed": false,
+    "networkAccessed": false,
+    "otherWorktreesAccessed": false,
+    "machineResultTreatedAsAuthoritative": true
+  },
+  "verification": [
+    "Read and cross-checked every supplied package file.",
+    "Performed lightweight offline structural decoding and SHA-256 verification of the supplied class hex.",
+    "Inspected complete engine/coordinator/driver diffs and gate/source-verifier logic.",
+    "Cross-checked final hashes, sizes, limits, compiler settings, receipt totals, and original30 blocker across machine-result.json and parent-pins.json."
+  ],
+  "remainingUncertainty": "Per instruction, no heavy build/gate was rerun; execution results and final runtime hashes rely on the authoritative supplied machine-result.json."
+}

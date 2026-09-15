@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "verdict": "accept",
+  "confidence": 0.96,
+  "scores": {
+    "correctness": 9.6,
+    "architecture_understanding": 9.7,
+    "minimality": 9.8,
+    "robustness": 9.4,
+    "maintainability": 8.6,
+    "completion": 9.4
+  },
+  "summary": "The bounded constructor-only java/util/TreeMap amendment satisfies the stated acceptance criteria. The final MC-TREE-MAP-P2 source delta is narrow and internally cross-pinned; the supplied 132-byte major-52 class is exactly a public Object subclass with one no-arg constructor; generated construction, omission, boundary, retained-control, reopen, and canonical-receipt coverage is appropriate. The authoritative machine result records the final P2 gate pass and the original30 atomic ProviderUtil missing-class frontier without broader claims.",
+  "criteria": [
+    {
+      "id": 1,
+      "result": "pass",
+      "basis": "engine.diff appends bootstrap slot 85, raises the allocation count by one, adds only java/util/TreeMap to the reserved platform set, and leaves the raw limits untouched in the shown context. parent-pins.json records 86 images, diagnostic bound 116, raw 30/262144, unchanged limits commitment, and 386844 bytes under the 393216 cap.",
+      "citations": [
+        "engine.diff:43-52",
+        "engine.diff:61-71",
+        "engine.diff:79-93",
+        "parent-pins.json:5-31",
+        "parent-pins.json:45-55",
+        "machine-result.json:1"
+      ]
+    },
+    {
+      "id": 2,
+      "result": "pass",
+      "basis": "Independent structural decoding of TreeMap.class.hex found magic CAFEBABE, major 52, 132 bytes, ACC_PUBLIC|ACC_SUPER, this java/util/TreeMap, super java/lang/Object, zero interfaces, zero fields, one public <init>()V, and constructor code aload_0; invokespecial Object.<init>; return. Its SHA-256 is c203bc1cf3e4f7d9901b49f0415e10e0aa6331eb99c366e24f68b6fc2a60e067 and it exactly matches the embedded bootstrap image and supplied source claim. The generated probe checks two distinct non-null allocations and stable alias identity across q1/q7/direct/reopen.",
+      "citations": [
+        "bootstrap/TreeMap.java:1-4",
+        "bootstrap/pins.json:2-9",
+        "engine.diff:103",
+        "tools/generate_fixtures.py:151-167",
+        "tools/gate.py:82-105",
+        "tools/gate.py:151-159"
+      ]
+    },
+    {
+      "id": 3,
+      "result": "pass",
+      "basis": "The image has no Map-family interface or operation surface. Separate generated paths require TreeMap.put to refuse with CallError(3,13) and explicit SortedMap use to refuse with a canonical missing-class diagnostic. Claims explicitly exclude providers, world, and Done.",
+      "citations": [
+        "bootstrap/pins.json:8-9",
+        "tools/generate_fixtures.py:179-211",
+        "tools/gate.py:217-238",
+        "tools/gate.py:315-317",
+        "machine-result.json:1"
+      ]
+    },
+    {
+      "id": 4,
+      "result": "pass",
+      "basis": "The gate runs construction at quanta 1, 7, and 4096, verifies reopen state, checks uninitialized and raw-replacement behavior, retains String/lastIndexOf/StringBuilder/System.err/failed-initialization/raw count and byte boundaries/EnumSet/queue/OOM controls, and canonically re-encodes successful receipts. The authoritative result reports 71 worlds and 2606 canonical receipts for the candidate and the same 2606-receipt pass for final P2.",
+      "citations": [
+        "tools/gate.py:72-105",
+        "tools/gate.py:108-167",
+        "tools/gate.py:181-215",
+        "tools/gate.py:240-309",
+        "tools/gate.py:311-317",
+        "machine-result.json:1"
+      ]
+    },
+    {
+      "id": 5,
+      "result": "pass",
+      "basis": "Final P2 engine/coordinator addresses and hashes agree across the engine/coordinator/driver deltas, parent pins, and authoritative machine result. Compiler settings remain optimizer 200, viaIR, Cancun, metadata-off. Original30 is limited to 12005 Java/40 internal steps, lifecycle 1, 1715 canonical receipts, then atomic ProviderUtil missing-class refusal; no provider/world/Done result is claimed.",
+      "citations": [
+        "coordinator.diff:7-20",
+        "driver.diff:8-27",
+        "driver.diff:35-68",
+        "parent-pins.json:29-55",
+        "provider-util-blocker.json:1",
+        "verified-original30.json:1-12",
+        "machine-result.json:1"
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "severity": "low",
+      "title": "Archived helper scripts retain the candidate P1 identity rather than the final parent P2 identity",
+      "detail": "tools/build.py, tools/verify_source.py, and the gate summary identify MC-TREE-MAP-P1/P1 addresses, while the reviewed final amendment is MC-TREE-MAP-P2. machine-result.json explicitly distinguishes the candidate build/gate from the authoritative final parent build/gate, and all final diffs/pins cross-match, so this is not a semantic or acceptance blocker. It is a traceability/standalone-reproduction sharp edge: the supplied helper scripts should not be mistaken for a direct P2 rebuild recipe.",
+      "citations": [
+        "tools/build.py:87-101",
+        "tools/verify_source.py:30-34",
+        "tools/gate.py:315",
+        "parent-pins.json:5",
+        "parent-pins.json:29-30",
+        "machine-result.json:1"
+      ]
+    }
+  ],
+  "review_constraints": {
+    "heavy_tests_run": false,
+    "network_used": false,
+    "original_artifacts_accessed": false,
+    "other_worktrees_accessed": false,
+    "tracked_files_modified": false
+  },
+  "checks_performed": [
+    "Read every file in the supplied review package.",
+    "Decoded and structurally validated the supplied class hex in memory.",
+    "Recomputed the class byte length and SHA-256.",
+    "Cross-checked final domains, addresses, code hashes, sizes, limits, compiler settings, gate design, receipt counts, and original30 claim across supplied evidence."
+  ]
+}
