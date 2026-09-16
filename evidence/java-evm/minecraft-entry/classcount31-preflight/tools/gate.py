@@ -61,7 +61,7 @@ def run(label, args, fixture_label=None, expect=0):
     (out / "logs" / (label + ".json")).write_text(json.dumps(row, indent=2) + "\n")
     assert proc.returncode == expect, (label, proc.returncode, log)
 
-spec = importlib.util.spec_from_file_location("checkpoint_diagnostic", here / "checkpoint_frames.py")
+spec = importlib.util.spec_from_file_location("checkpoint_diagnostic", here / "checkpoint_diagnostic.py")
 diagnostic = importlib.util.module_from_spec(spec); spec.loader.exec_module(diagnostic)
 driver = build / "driver"
 coordinator = build / "coordinator/MCEntryCoordinator.json"
