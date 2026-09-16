@@ -35,4 +35,4 @@ python3 evidence/java-evm/minecraft-entry/url-open-stream-preflight/tools/gate.p
 
 Only generated Java 8 classes and generated ZIP resources are used. No original
 artifact, JAR, class, resource, provider, factory, world, Minecraft run or Done
-claim is made here.
+claim is made here. Final durable gate evidence is recorded in [RESULT.md](RESULT.md).
