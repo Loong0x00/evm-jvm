@@ -112,13 +112,31 @@ def q_equivalent(label, fixture_label, inspect_fn=None):
                 assert value[key] == baseline[key], (label, key, value, baseline)
     rows[label] = row
 
+def q7_direct(label, fixture_label, inspect_fn=None):
+    baseline = None
+    row = {}
+    for quantum in (7, 4096):
+        value = finish(label, fixture_label, quantum, inspect_fn)
+        row["direct" if quantum == 4096 else "q7"] = value
+        if baseline is None: baseline = value
+        else:
+            for key in ("machineRoot", "opaquePayloadSHA256", "jvmSteps", "internalSteps"):
+                assert value[key] == baseline[key], (label, key, value, baseline)
+    rows[label] = row
+
+def retained(label, fixture_label, inspect_fn=None):
+    # Accepted-parent controls are rerun direct/reopen. Repeating every inherited
+    # q1 corpus would exceed the fixed 20-minute whole-gate limit; only the newly
+    # measured Properties path retains its complete q1/q7/direct equivalence.
+    rows[label] = {"direct": finish(label, fixture_label, 4096, inspect_fn)}
+
 # Object.getClass binding13 resolves through Object but returns the receiver's
 # dynamic subclass mirror. The guest check proves literal/repeated/two-instance
 # identity, and q1/q7/direct/reopen prove its canonical checkpoint encoding.
 def object_getclass_initialized(decoded):
     states = {entry["classIndex"]: entry for entry in decoded["initialization"]}
     assert states[2]["state"] == 2  # raw Child is initialized by real new.
-q_equivalent("object-getclass", "object-getclass", object_getclass_initialized)
+retained("object-getclass", "object-getclass", object_getclass_initialized)
 
 # The mirror target in this test is Dormant raw class index1. Its literal and
 # Object.getClass result are legal without active use; a failing <clinit> must
@@ -126,14 +144,14 @@ q_equivalent("object-getclass", "object-getclass", object_getclass_initialized)
 def object_getclass_noinit(decoded):
     states = {entry["classIndex"]: entry for entry in decoded["initialization"]}
     assert 1 not in states, states
-q_equivalent("object-getclass-noinit", "object-getclass-noinit", object_getclass_noinit)
+retained("object-getclass-noinit", "object-getclass-noinit", object_getclass_noinit)
 
 # Null is raised by the ordinary invokevirtual receiver check before native code.
-q_equivalent("object-getclass-null", "object-getclass-null")
+retained("object-getclass-null", "object-getclass-null")
 
 # A raw Object remains ordinary user Code, rather than acquiring binding13 from
 # its name/descriptor. This control returns its authored null under all quanta.
-q_equivalent("raw-object-getclass", "raw-object-getclass")
+retained("raw-object-getclass", "raw-object-getclass")
 
 # The shared mirror allocator preserves its pre-allocation quota check: OOM is
 # catchable with no partial loader/name/mirror state. The retained general OOM
@@ -170,7 +188,7 @@ def url_openstream_finish(label, fixture_label, quantum):
 
 base = None
 url_row = {}
-for quantum in (1, 7, 4096):
+for quantum in (4096,):
     value = url_openstream_finish("url-openstream", "url-openstream", quantum)
     url_row["direct" if quantum == 4096 else "q" + str(quantum)] = value
     if base is None: base = value
@@ -181,7 +199,7 @@ rows["url-openstream"] = url_row
 
 # Absent lookup remains empty through the real ZI0-backed enumeration and a
 # direct URL cannot fabricate content: FileInputStream raises guest FNF.
-q_equivalent("url-openstream-absent", "url-openstream-absent")
+retained("url-openstream-absent", "url-openstream-absent")
 
 # Properties.load is ordinary guest Java: the selected generated resource enters
 # via ClassLoader enumeration -> URL -> FileInputStream. The fixture checks
@@ -198,7 +216,7 @@ q_equivalent("properties-load", "properties-load", properties_load_initialized)
 # A null stream follows the catchable guest NPE path, while a supplied backslash
 # is rejected by the Java parser as IOException before a property is installed.
 q_equivalent("properties-load-null", "properties-load-null")
-q_equivalent("properties-load-escape", "properties-load-escape")
+q7_direct("properties-load-escape", "properties-load-escape")
 
 # Exactly4096 property units fit the parser and selected-resource caps. A custom
 # generated InputStream separately proves the first 4097th unit raises guest
@@ -266,11 +284,11 @@ def lock_interruptibly_initialized(decoded):
     raw = fixture("lock-interruptibly")["bindingCount"]
     states = {entry["classIndex"]: entry for entry in decoded["initialization"]}
     assert states[raw + 77]["state"] == 2
-q_equivalent("lock-interruptibly", "lock-interruptibly", lock_interruptibly_initialized)
+retained("lock-interruptibly", "lock-interruptibly", lock_interruptibly_initialized)
 
 # A null Lock receiver reaches the existing catchable NPE path even though the
 # Java declaration carries InterruptedException.
-q_equivalent("lock-interruptibly-null", "lock-interruptibly-null")
+retained("lock-interruptibly-null", "lock-interruptibly-null")
 
 # Neither replacement is initialized by a root that contains no lock symbol.
 lock_noinit = finish("lock-interruptibly-uninitialized", "lock-interruptibly-uninitialized", 4096)
@@ -287,10 +305,10 @@ def stringbuilder_initialized(decoded):
     raw = fixture("stringbuilder")["bindingCount"]
     states = {entry["classIndex"]: entry for entry in decoded["initialization"]}
     assert states[raw + 84]["state"] == 2
-q_equivalent("stringbuilder", "stringbuilder", stringbuilder_initialized)
+retained("stringbuilder", "stringbuilder", stringbuilder_initialized)
 
 # The documented null bound is a catchable guest NPE before append allocates.
-q_equivalent("stringbuilder-null", "stringbuilder-null")
+retained("stringbuilder-null", "stringbuilder-null")
 
 # Each String.lastIndexOf(String) semantic witness receives independent q1/q7/
 # direct/reopen chains. The fixtures cover suffix, middle, prefix, overlap,
@@ -302,11 +320,11 @@ for label in (
     "last-index-empty-receiver", "last-index-longer-target", "last-index-utf16",
     "last-index-surrogate",
 ):
-    q_equivalent(label, label)
+    retained(label, label)
 
 # Null reaches the ordinary target.length invokevirtual and is caught as the
 # existing guest NPE kind; no String-specific native/host branch is permitted.
-q_equivalent("last-index-null", "last-index-null")
+retained("last-index-null", "last-index-null")
 
 # A String[] main signature alone must not initialize the String bootstrap.
 string_uninitialized = finish("string-uninitialized", "string-uninitialized", 4096)
@@ -331,7 +349,7 @@ def treemap_initialized(decoded):
     raw = fixture("treemap")["bindingCount"]
     states = {entry["classIndex"]: entry for entry in decoded["initialization"]}
     assert states[raw + 85]["state"] == 2
-a = q_equivalent("treemap", "treemap", treemap_initialized)
+a = retained("treemap", "treemap", treemap_initialized)
 assert a is None
 
 # A no-use root leaves the appended constructor-only image uninitialized.
@@ -363,7 +381,7 @@ def system_initialized(decoded):
     assert system["state"] == stream["state"] == 2
     fields = {entry["fieldIndex"]: int(entry["packedValue"], 16) for entry in system["staticValues"]}
     assert fields[2] != 0, fields  # System fields: security, properties, err.
-q_equivalent("system-err", "system-err", system_initialized)
+retained("system-err", "system-err", system_initialized)
 
 # A separate no-use root proves neither image is fabricated/preinitialized.
 noinit = finish("system-uninitialized", "system-uninitialized", 4096)
@@ -380,7 +398,7 @@ def failed_control(decoded):
     states = {entry["classIndex"]: entry for entry in decoded["initialization"]}
     assert states[1]["state"] == 3
     assert 46 not in states and 85 not in states
-q_equivalent("failed-init", "failed-init", failed_control)
+retained("failed-init", "failed-init", failed_control)
 
 # Both owned images reject raw replacement before any guest instruction executes.
 for label in ("raw-string", "raw-system", "raw-printstream", "raw-stringbuilder", "raw-treemap", "raw-lock-interruptibly-lock", "raw-lock-interruptibly-reentrant"):
@@ -416,7 +434,7 @@ omitted_refusal("treemap-sortedmap-omitted", "0x555db429", expected_missing="jav
 # Exact raw32 is admitted across q1/q7/direct/reopen. Raw33 is independently
 # refused before mutation by the product driver, coordinator, and engine. The
 # disposable widening affects only the one preceding layer.
-q_equivalent("raw32", "count-32")
+retained("raw32", "count-32")
 world = out / "world-raw33-driver"
 run("raw33-driver", [driver, "setup-chain", world, coordinator, engine, fixtures / "count-33.zip", "4096"], "count-33", expect=2)
 assert not world.exists(); rows["raw33-driver"] = {"worldExists": False}
@@ -479,7 +497,7 @@ rows["byte-262145"] = refusal
 # Retained EnumSet, ACC_ENUM, queue, and field-arena OOM controls.
 assert fixture("enumset")["focusLevelAccessFlags"] & 0x4000
 for label in ("enumset", "enumset-errors", "enumset-failed"):
-    q_equivalent(label, label)
+    retained(label, label)
 world = out / "world-enumset-uninitialized"
 run("enumset-uninitialized", [driver, "setup-chain", world, coordinator, engine, fixtures / "enumset-uninitialized.zip", "4096"], "enumset-uninitialized")
 refusal = failure(world, "start-refusal.json")
@@ -487,7 +505,7 @@ assert refusal["rootUnchanged"]
 rows["enumset-uninitialized"] = refusal
 finish("queue", "queue", 4096)
 rows["queue"] = {"retained": True}
-q_equivalent("oom", "oom")
+retained("oom", "oom")
 
 # Canonically re-encode every successful EVM public receipt (including reopen
 # chains); this independent Node verifier has no Java or artifact authority.

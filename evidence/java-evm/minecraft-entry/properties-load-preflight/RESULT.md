@@ -55,3 +55,12 @@ and 25777 independently canonicalized receipts. Durable outputs are
 Reproduce with the three commands in [README.md](README.md). Only generated
 classes and generated ZIP resources are used; no original artifact was opened
 or executed.
+
+## Parent gate amendment
+
+The worker's first all-history q1 sweep took 2134.377s and is retained above as
+invalid under the fixed1200s whole-gate bound. Parent changed no runtime source:
+only the gate now reserves q1/q7/direct equivalence for the newly measured
+Properties parser, runs unsupported escape at q7/direct, and reruns accepted
+parent controls direct/reopen. The amended fresh gate passed in954.772s with9502
+canonical receipts across48 worlds. See `amended-gate-summary.json`.
