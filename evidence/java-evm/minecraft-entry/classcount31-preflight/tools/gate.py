@@ -245,20 +245,23 @@ world = out / "world-raw32-driver"
 run("raw32-driver", [driver, "setup-chain", world, coordinator, engine, fixtures / "count-32.zip", "4096"], "count-32", expect=2)
 assert not world.exists(); rows["raw32-driver"] = {"worldExists": False}
 
-def disposable_driver(label, coordinator_keccak):
+def disposable_driver(label, coordinator_keccak, coordinator_bytes):
     source = (build / "main.go").read_text()
     assert source.count("> 31") == 2
     source = source.replace("> 31", "> 32")
     old = "0x" + pins["coordinator"]["runtimeKeccak256"]
     assert source.count(old) == 1
     source = source.replace(old, "0x" + coordinator_keccak)
+    old_size = "len(coordRun) != %d" % pins["coordinator"]["bytes"]
+    assert source.count(old_size) == 1
+    source = source.replace(old_size, "len(coordRun) != %d" % coordinator_bytes)
     path = out / (label + ".go"); exe = out / label; path.write_text(source)
     for suffix, command in (("gofmt", ["gofmt", "-w", path]), ("build", ["go", "build", "-trimpath", "-o", exe, path])):
         with (out / "logs" / (label + "-" + suffix + ".log")).open("w") as stream:
             subprocess.run(list(map(str, command)), cwd=root, stdout=stream, stderr=subprocess.STDOUT, check=True)
     return exe
 
-coordinator_driver = disposable_driver("raw32-coordinator-driver", pins["coordinator"]["runtimeKeccak256"])
+coordinator_driver = disposable_driver("raw32-coordinator-driver", pins["coordinator"]["runtimeKeccak256"], pins["coordinator"]["bytes"])
 world = out / "world-raw32-coordinator"
 run("raw32-coordinator", [coordinator_driver, "boundary-create", world, coordinator, engine, fixtures / "count-32.zip", "4096"], "count-32")
 refusal = failure(world, "boundary-refusal.json")
@@ -276,7 +279,7 @@ with (out / "logs/raw32-engine-coordinator-build.log").open("w") as stream:
     subprocess.run(["node", probe / "build.js"], cwd=root, env=env, stdout=stream, stderr=subprocess.STDOUT, check=True)
 probe_artifact = probe / "MCEntryCoordinator.json"
 probe_keccak = json.loads(probe_artifact.read_text())["codeHashes"]["runtimeKeccak256"]
-engine_driver = disposable_driver("raw32-engine-driver", probe_keccak)
+engine_driver = disposable_driver("raw32-engine-driver", probe_keccak, len(json.loads(probe_artifact.read_text())["deployedBytecode"]) // 2)
 world = out / "world-raw32-engine"
 run("raw32-engine", [engine_driver, "setup-chain", world, probe_artifact, engine, fixtures / "count-32.zip", "4096"], "count-32")
 refusal = failure(world, "start-refusal.json")
