@@ -26,7 +26,7 @@ java = Path("/usr/lib/jvm/java-8-openjdk/bin/java")
 assert javac.is_file() and java.is_file()
 rows = {}
 
-def build(label, sources, entries, host_main=None):
+def build(label, sources, entries, host_main=None, bootstrap_count=86):
     src = source_root / label
     classes = classes_root / label
     src.mkdir()
@@ -47,7 +47,7 @@ def build(label, sources, entries, host_main=None):
             info.compress_type = zipfile.ZIP_STORED
             z.writestr(info, data)
     row = {
-        "entries": entries, "bindingCount": len(entries),
+        "entries": entries, "bindingCount": len(entries), "bootstrapCount": bootstrap_count,
         "totalClassBytes": sum((classes / name).stat().st_size for name in entries),
         "classBytes": {name: (classes / name).stat().st_size for name in entries},
         "classSHA256": {name: hashlib.sha256((classes / name).read_bytes()).hexdigest() for name in entries},
@@ -542,7 +542,7 @@ build("raw-object-getclass", {
     "java/lang/Object.java": """package java.lang;
 public class Object { public Object() {} public final Class<?> getClass() { return null; } }
 """,
-}, ["RawObjectGetClassMain.class", "java/lang/Object.class"])
+}, ["RawObjectGetClassMain.class", "java/lang/Object.class"], bootstrap_count=85)
 
 # The shared allocator's failure must be an ordinary catchable guest OOM with
 # no partial loader/name/mirror publication. 1023 ordinary objects leave the
@@ -638,7 +638,7 @@ def count_fixture(label, count, target=None):
         for name in entries:
             info = zipfile.ZipInfo(name, (1980, 1, 1, 0, 0, 0)); info.compress_type = zipfile.ZIP_STORED
             z.writestr(info, (classes / name).read_bytes())
-    row = {"entries": entries, "bindingCount": count, "totalClassBytes": total,
+    row = {"entries": entries, "bindingCount": count, "bootstrapCount": 86, "totalClassBytes": total,
            "classSHA256": {name: hashlib.sha256((classes / name).read_bytes()).hexdigest() for name in entries},
            "zipSHA256": hashlib.sha256(archive.read_bytes()).hexdigest(), "java8HostOracle": target is None}
     (out / (label + ".json")).write_text(json.dumps(row, indent=2) + "\n")

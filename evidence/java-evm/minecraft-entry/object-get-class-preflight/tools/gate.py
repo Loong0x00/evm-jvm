@@ -69,14 +69,14 @@ engine = build / "engine/MCEntryInterpreter.json"
 rows = {}
 canonical_labels = []
 
-def terminal(world, raw_count):
+def terminal(world, raw_count, bootstrap_count=86):
     head = json.loads((world / "durable-head.json").read_text())
     assert head["lifecycle"] == head["outcome"] == 2 and head["result"] == 0
     assert len(head["decoders"]) == raw_count and head["totalClassBytes"] <= 262144
     checkpoint = (world / "checkpoints" / (head["checkpointSHA256"] + ".bin")).read_bytes()
     assert hashlib.sha256(checkpoint).hexdigest() == head["checkpointSHA256"]
     decoded = diagnostic.inspect(checkpoint)
-    assert decoded["classCount"] == raw_count + 86
+    assert decoded["classCount"] == raw_count + bootstrap_count
     return head, checkpoint, decoded
 
 def finish(label, fixture_label, quantum, inspect_fn=None):
@@ -86,7 +86,8 @@ def finish(label, fixture_label, quantum, inspect_fn=None):
     run(label + "-q%d-start" % quantum, [driver, "setup-chain", *args], fixture_label)
     run(label + "-q%d-finish" % quantum, [driver, "finish", *args], fixture_label)
     run(label + "-q%d-reopen" % quantum, [driver, "verify", *args], fixture_label)
-    head, checkpoint, decoded = terminal(world, fixture(fixture_label)["bindingCount"])
+    spec = fixture(fixture_label)
+    head, checkpoint, decoded = terminal(world, spec["bindingCount"], spec["bootstrapCount"])
     if inspect_fn is not None: inspect_fn(decoded)
     canonical_labels.append(world.name)
     return {"world": world.name, "epoch": head["epoch"], "jvmSteps": head["jvmSteps"],
