@@ -43,7 +43,9 @@ def pin(artifact_data):
 
 # The strict source verifier proves that only Lock and ReentrantLock image bytes
 # differ from accepted cap31 source before the single Solidity engine build.
-run("source-verification-prebuild", [sys.executable, here / "verify_source.py", "--prebuild"])
+prebuild = not (stage / "pins.json").exists()
+verification_label = "source-verification-prebuild" if prebuild else "source-verification"
+run(verification_label, [sys.executable, here / "verify_source.py", *( ["--prebuild"] if prebuild else [])])
 
 engine_dir = out / "engine"
 shutil.copytree(stage / "engine", engine_dir)
@@ -58,8 +60,12 @@ parent_pins = json.loads((stage.parent / "parent-1e0e9e9aa/pins.json").read_text
 coordinator_source = stage / "coordinator/MCEntryCoordinator.sol"
 text = coordinator_source.read_text()
 old_engine = parent_pins["engine"]["runtimeKeccak256"]
-assert text.count(old_engine) == 1
-coordinator_source.write_text(text.replace(old_engine, engine_pin["runtimeKeccak256"]))
+if old_engine in text:
+    assert text.count(old_engine) == 1
+    text = text.replace(old_engine, engine_pin["runtimeKeccak256"])
+else:
+    assert text.count(engine_pin["runtimeKeccak256"]) == 1
+coordinator_source.write_text(text)
 coordinator_dir = out / "coordinator"
 shutil.copytree(stage / "coordinator", coordinator_dir)
 run("coordinator-build", ["node", coordinator_dir / "build.js"])
@@ -76,12 +82,15 @@ for old, new in (
     ("0x" + parent_pins["engine"]["runtimeKeccak256"], "0x" + engine_pin["runtimeKeccak256"]),
     ("0x" + parent_pins["coordinator"]["runtimeKeccak256"], "0x" + coordinator_pin["runtimeKeccak256"]),
 ):
-    assert text.count(old) == 1, old
-    text = text.replace(old, new)
+    if old in text:
+        assert text.count(old) == 1, old
+        text = text.replace(old, new)
+    else:
+        assert text.count(new) == 1, new
 for pattern, replacement in (
-    (r"len\(coordRun\) != 4146", "len(coordRun) != %d" % coordinator_pin["bytes"]),
-    (r"len\(engineRun\) != 386844", "len(engineRun) != %d" % engine_pin["bytes"]),
-    (r"len\(run\) != 386844", "len(run) != %d" % engine_pin["bytes"]),
+    (r"len\(coordRun\) != \d+", "len(coordRun) != %d" % coordinator_pin["bytes"]),
+    (r"len\(engineRun\) != \d+", "len(engineRun) != %d" % engine_pin["bytes"]),
+    (r"len\(run\) != \d+", "len(run) != %d" % engine_pin["bytes"]),
 ):
     text, changed = re.subn(pattern, replacement, text)
     assert changed == 1, (pattern, changed)
@@ -89,7 +98,7 @@ driver_source.write_text(text)
 
 # Bootstrap *class* hashes come from the prebuild verifier's Java-8 rebuild;
 # they are not confused with source-file hashes.
-verified_images = json.loads((out / "source-verification-prebuild.log").read_text())["replacedImages"]
+verified_images = json.loads((out / (verification_label + ".log")).read_text())["replacedImages"]
 assert set(verified_images) == {"Lock", "ReentrantLock"}
 pins = {
     "basis": "parent-1e0e9e9aa", "parentEvidence": "parent-1e0e9e9aa", "phase": "built",
