@@ -719,6 +719,9 @@ build("properties-load-line-4096", {
 public final class PropertiesLoadLine4096Main {
   static int result;
   public static void main(String[] ignored) throws Exception {
+    // As in the small selected-resource path, the raw main materializes its
+    // defining-loader mirror before materializing the system loader.
+    if (PropertiesLoadLine4096Main.class.getClassLoader() == null) throw new Error();
     Enumeration<URL> all = ClassLoader.getSystemClassLoader().getResources("generated/line-4096.properties");
     if (!all.hasMoreElements()) throw new Error();
     InputStream input = all.nextElement().openStream();
