@@ -19,7 +19,11 @@ for(const label of labels){
   const inner=word(64)+word(64+tuple.length/2)+tuple+bytes(cp),outer='0x'+word(32)+bytes(Buffer.from(inner,'hex'));assert.equal(r.outerABI,outer,'canonical nested ABI');
   assert.equal(r.nestedLogs.length,1);const l=r.nestedLogs[0];assert.equal(l.address.toLowerCase(),pins.address);assert.deepEqual(l.topics,['0x'+keccak256('CheckpointCommitted(bytes32,uint64,bytes32,bytes32,bytes32,uint8,uint64,uint64)'),m.instanceId,'0x'+word(n)]);
   assert.equal(l.data,'0x'+[s.checkpointRoot.slice(2),s.machineStateRoot.slice(2),s.vfsStateRoot.slice(2),word(s.lifecycle),word(j),word(i)].join(''));
-  let at=0;for(let k=0;k<m.decoders.length;k++){for(let off=0;off<m.classSizes[k];off+=4096){const x=r.resourceReadReceipts[at++],want=Math.min(4096,m.classSizes[k]-off);assert.equal(x.To.toLowerCase(),m.decoders[k]);assert.equal(x.Offset,off);assert.equal(x.Requested,want);assert.equal(x.Returned,want);assert(x.Success);}}assert.equal(at,r.resourceReadReceipts.length);
+  let at=0;for(let k=0;k<m.decoders.length;k++){for(let off=0;off<m.classSizes[k];off+=4096){const x=r.resourceReadReceipts[at++],want=Math.min(4096,m.classSizes[k]-off);assert.equal(x.To.toLowerCase(),m.decoders[k]);assert.equal(x.Offset,off);assert.equal(x.Requested,want);assert.equal(x.Returned,want);assert(x.Success);}}
+  // Start alone materializes the one scalar selected resource into VFS. Resume
+  // reads only classes; it must not fetch this decoder again.
+  if(n===1&&m.selectedResourceDecoder&&m.selectedResourceDecoder!=='0x0000000000000000000000000000000000000000'){for(let off=0;off<m.selectedResourceSize;off+=4096){const x=r.resourceReadReceipts[at++],want=Math.min(4096,m.selectedResourceSize-off);assert.equal(x.To.toLowerCase(),m.selectedResourceDecoder);assert.equal(x.Offset,off);assert.equal(x.Requested,want);assert.equal(x.Returned,want);assert(x.Success);}}
+  assert.equal(at,r.resourceReadReceipts.length);
  }
  assert.equal(n,m.epoch);assert.equal(j,m.jvmSteps);assert.equal(i,m.internalSteps);
  if(last){assert.equal(last.checkpointSHA256,m.checkpointSHA256);for(const [a,b] of [['lifecycle','lifecycle'],['outcome','outcome'],['checkpointRoot','checkpointRoot'],['machineStateRoot','machineRoot'],['vfsStateRoot','vfsRoot']])assert.equal(last.slice[a],m[b]);}
