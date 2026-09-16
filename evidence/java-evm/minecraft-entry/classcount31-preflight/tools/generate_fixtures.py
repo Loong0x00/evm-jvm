@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create only trusted generated Java-8 fixtures for the TreeMap constructor gate.
+"""Create only trusted generated Java-8 fixtures for the raw-class cap31 gate.
 
 No original artifact, class, resource, or world is read. Host execution is limited
 strictly to generated positive/control sources and is not an EVM execution path.
@@ -14,7 +14,7 @@ import zipfile
 
 out = Path(sys.argv[1]).resolve()
 root = Path(__file__).resolve().parents[5]
-assert out.parent == root / "build" and out.name.startswith("java-diff-mc-tree-map-constructor-fixtures-")
+assert out.parent == root / "build" and out.name.startswith("java-diff-mc-classcount31-fixtures-")
 assert not out.exists()
 out.mkdir()
 source_root = out / "src"
