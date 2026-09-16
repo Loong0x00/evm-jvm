@@ -15,7 +15,7 @@ contract MCEntryCoordinator {
 
     address private constant ENGINE = address(bytes20(hex"4d432d4f424a4543542d474554434c4153535031"));
     // COPY-only repair engine pin; this coordinator remains otherwise ABI-identical.
-    bytes32 private constant ENGINE_CODEHASH = hex"6035c2752b6af4bd581681f80fbf5dcb9eb886851ad6050fb3948cfb9289fe22";
+    bytes32 private constant ENGINE_CODEHASH = hex"d985017157caf2427f11b41128b0f90a389cbd5263c080bb3e2c9eb94165bc61";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
