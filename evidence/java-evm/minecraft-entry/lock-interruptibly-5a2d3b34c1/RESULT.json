@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "sourceCommit": "5a2d3b34c1",
+  "acceptedParent": "parent-1e0e9e9aa",
+  "generatedOnly": true,
+  "sourceBuild": {
+    "basis": "parent-1e0e9e9aa",
+    "parentEvidence": "parent-1e0e9e9aa",
+    "phase": "built",
+    "domain": "MC-LOCK-INTERRUPTIBLY-P1",
+    "runtimeCap": 393216,
+    "bootstrapCount": 86,
+    "bootstrapSHA256": {
+      "String": "2fbfe5d57906f5ebd4f2eeaceb209edf8d4a619afb21d1531f7aaea121506033",
+      "System": "4b0c92d2908cf30aa4df0bd0ee6f737d4fa8f7aff1872be3d882bc729d4e5e6e",
+      "PrintStream": "ab20e0463e529c30c6f6c5668561145ae57f8c9b735a7cc95b5863a0d5db6fa0",
+      "EnumSet": "ab36a2f498e571717f53554bb485b5d84a38616fc376f1af7a0f5a66846ff230",
+      "StringBuilder": "463d7859579627eff6065316f7c9759fb4648768c80ed29656e988db0a662832",
+      "TreeMap": "c203bc1cf3e4f7d9901b49f0415e10e0aa6331eb99c366e24f68b6fc2a60e067",
+      "Lock": "7a6fbd36152059e1c65f2044fda847ebb11a57d32985ff60998b8d4d147880f7",
+      "ReentrantLock": "a677d76e2d51c13bbdb120eafc1f88098cf0d65e6a0e0c650e76c05f84664175"
+    },
+    "globalNativeBindings": 12,
+    "stringLocalBinding": 10,
+    "exceptionKinds": 14,
+    "maxFrames": 128,
+    "externalLocalGas": 1000000000,
+    "reserve": 25000000,
+    "rawLimits": [
+      31,
+      262144
+    ],
+    "checkpointCap": 1048576,
+    "headCap": 32768,
+    "diagnosticClassBound": 117,
+    "address": "0x4d432d4c4f434b2d494e544552525550542d5031",
+    "owner": "0x4d432d4c4f434b2d494e544552525550542d4f31",
+    "limitsCommitment": "d97049f65bd9258f7c8ba2f1ec45e7611e26a574eee74823d95442488a39839e",
+    "compiler": {
+      "version": "0.8.30+commit.73712a01.Emscripten.clang",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "viaIR": true,
+      "evmVersion": "cancun",
+      "metadata": {
+        "appendCBOR": false,
+        "bytecodeHash": "none"
+      }
+    },
+    "engine": {
+      "bytes": 387394,
+      "initSHA256": "512eb4b744e32b1ababf22e6043d34ee60d76d6287e9456844af8c9acbcad401",
+      "runtimeSHA256": "c1b0f94b910697c06b14d449cc6897ee919afb3a8c9dd4fe434e708210225f26",
+      "runtimeKeccak256": "c890228060d660c38958bd0a779a49a2ca91610068f5b48db22232adf5018fbe"
+    },
+    "coordinator": {
+      "bytes": 4146,
+      "initSHA256": "0232e3801258dc59d28dcc45fac0529a3938b92ff2370cbfdab2500220b170da",
+      "runtimeSHA256": "0013551d34706de47b31280995126aa6cbfe7902bf550b0cbedeb75896ca7940",
+      "runtimeKeccak256": "ff92e723aa0335ec6d8beb2fc8f4e6cd634f056557ab74340e0ad43bd2ea9e85"
+    }
+  },
+  "sourceVerificationSHA256": "7261a1db9c9bcd80e29daf95745dd21aa5f009e8633cf21f2692bbc875c4c5da",
+  "fixtureSummarySHA256": "c1def542e1472bae6243740539e7d1735e1c89eff0c6bdea77afa0e39d51e4f8",
+  "focusedFixtures": {
+    "lock-interruptibly": {
+      "entries": [
+        "LockInterruptiblyMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 479,
+      "classBytes": {
+        "LockInterruptiblyMain.class": 479
+      },
+      "classSHA256": {
+        "LockInterruptiblyMain.class": "720963931cca8958e842b02e153cea4a2be2bdd5b4a5e1c1cdb16220a14cc751"
+      },
+      "zipSHA256": "065ea4d19d842bf037328e70965db12e0b7a0125ae9a90893a8655bae255e47f",
+      "java8HostOracle": true
+    },
+    "lock-interruptibly-null": {
+      "entries": [
+        "LockInterruptiblyNullMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 519,
+      "classBytes": {
+        "LockInterruptiblyNullMain.class": 519
+      },
+      "classSHA256": {
+        "LockInterruptiblyNullMain.class": "7648ded0fec1cba1e4f43046f4e3c4f03951e74031fe23afb007f11d9dbb1988"
+      },
+      "zipSHA256": "23fa9657d5edf4e00bf3801f1cdcd0ea10e04d4172e67a08b033c6583fdd0070",
+      "java8HostOracle": true
+    },
+    "lock-interruptibly-uninitialized": {
+      "entries": [
+        "LockInterruptiblyUninitializedMain.class"
+      ],
+      "bindingCount": 1,
+      "totalClassBytes": 244,
+      "classBytes": {
+        "LockInterruptiblyUninitializedMain.class": 244
+      },
+      "classSHA256": {
+        "LockInterruptiblyUninitializedMain.class": "d05f6e6e2fe0d466581221a73e498f0a3a37245d6b97f50229e20d543cdd2b51"
+      },
+      "zipSHA256": "50e5dbc54b2e3df8fd4260d9789d3db92c5cbbc44d743fe2df5e2b2ba47426ab",
+      "java8HostOracle": true
+    },
+    "raw-lock-interruptibly-lock": {
+      "entries": [
+        "RawLockInterruptiblyLockReplacementMain.class",
+        "java/util/concurrent/locks/Lock.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 296,
+      "classBytes": {
+        "RawLockInterruptiblyLockReplacementMain.class": 213,
+        "java/util/concurrent/locks/Lock.class": 83
+      },
+      "classSHA256": {
+        "RawLockInterruptiblyLockReplacementMain.class": "2f15e0a2bdeef42533ddb4f73c464ba926fb75188d4b03f4117e68b95e81bc71",
+        "java/util/concurrent/locks/Lock.class": "eafeb0040f17334dacc7530e11d2066b3508444601b6d8ec30d7e709fa3e32a6"
+      },
+      "zipSHA256": "70739d427c7e6a9f586356479e2b99dbfb3175a92fabb832827e6253fca518c0",
+      "java8HostOracle": false
+    },
+    "raw-lock-interruptibly-reentrant": {
+      "entries": [
+        "RawLockInterruptiblyReentrantReplacementMain.class",
+        "java/util/concurrent/locks/ReentrantLock.class"
+      ],
+      "bindingCount": 2,
+      "totalClassBytes": 373,
+      "classBytes": {
+        "RawLockInterruptiblyReentrantReplacementMain.class": 218,
+        "java/util/concurrent/locks/ReentrantLock.class": 155
+      },
+      "classSHA256": {
+        "RawLockInterruptiblyReentrantReplacementMain.class": "11389739fd0ca78ee51f437513f6ce3082cc290b218e062beb33634e83c1d47f",
+        "java/util/concurrent/locks/ReentrantLock.class": "18ac20869caa20b28e65661fa5c51d5fd873622f2cb93c5ae82a1bc5f1a5acde"
+      },
+      "zipSHA256": "f76e5b68b025aaef028595d740bf217d7909a06a83b83be7ccaabbf406eaae73",
+      "java8HostOracle": false
+    }
+  },
+  "gate": {
+    "seconds": 191.03391028795158,
+    "commands": 251,
+    "resultRows": 46,
+    "canonicalReceipts": 2700,
+    "canonicalWorlds": 78,
+    "summarySHA256": "53fdda3f4c6157eabf1f3a9cc579f79f83e8c935a94866483576a1b2e567185f",
+    "lockInterruptibly": {
+      "jvmSteps": 67,
+      "internalSteps": 2,
+      "machineRoot": "0x96f666d32c9a4f4e4821b2909f4f45c1255577469dacde53dda265b25d48e483",
+      "opaquePayloadSHA256": "ad27a5aa5a1989c1883a29381b0083b9092958d81a4c51b8b40879b0cf496aad"
+    },
+    "nullNPE": {
+      "jvmSteps": 8,
+      "internalSteps": 3,
+      "machineRoot": "0xec5e3a3572595fd7b6614d01d50fc9f8ad8df244da23f8e813d32f60ddbcbd99",
+      "opaquePayloadSHA256": "52200359727c1e51b33025cc6365673b47a7f140d94e12f5131f9f5c1c2a3e3a"
+    },
+    "noInitialization": {
+      "jvmSteps": 3,
+      "internalSteps": 2,
+      "machineRoot": "0xbfe4c4d2a87011c61a72a04a7c48b14941615b7d6a5e46539265957f0b9772f9",
+      "opaquePayloadSHA256": "947a41ec77b9860be019f5557aa1c57378267f5a8c12411fe2f1ccaee29df7b0"
+    },
+    "rawReplacement": {
+      "raw-lock-interruptibly-lock": {
+        "selector": "0x6a23ad80",
+        "uint256Words": [
+          "1",
+          "1"
+        ],
+        "rootUnchanged": true
+      },
+      "raw-lock-interruptibly-reentrant": {
+        "selector": "0x6a23ad80",
+        "uint256Words": [
+          "1",
+          "1"
+        ],
+        "rootUnchanged": true
+      }
+    },
+    "retained": {
+      "raw31": {
+        "jvmSteps": 124,
+        "internalSteps": 2,
+        "machineRoot": "0x6476c7eaf0bddb25f37188e82b3257ef6afafaafcd2b5ad2ac89ed60d86578b1",
+        "opaquePayloadSHA256": "eb476e4fe156cc7e8fec28a473bc62b41a12279028970eed5e1117fa82f45f47"
+      },
+      "raw32DriverNoWorld": true,
+      "raw32Coordinator": {
+        "selector": "0xab23ed08",
+        "uint256Words": [
+          "2"
+        ],
+        "rootUnchanged": true
+      },
+      "raw32Engine": {
+        "selector": "0x427cfac5",
+        "uint256Words": [
+          "1",
+          "32"
+        ],
+        "rootUnchanged": true
+      },
+      "bytes262144": {
+        "selector": "0x71540d20",
+        "uint256Words": [
+          "1",
+          "0"
+        ],
+        "rootUnchanged": true
+      },
+      "bytes262145": {
+        "selector": "0xab23ed08",
+        "uint256Words": [
+          "12"
+        ],
+        "rootUnchanged": true
+      },
+      "treeMap": {
+        "jvmSteps": 34,
+        "internalSteps": 2,
+        "machineRoot": "0xcbf3fc4eed06b1907fe7d87c4ccf9ddced5637283df5b4813089d74cc787545a",
+        "opaquePayloadSHA256": "7f4f965b91878396cf0b8e98d99b0b4a602ea69735fdf9c05277b5aad0ac6a89"
+      },
+      "enumSet": {
+        "jvmSteps": 541,
+        "internalSteps": 11,
+        "machineRoot": "0x55486467c60bab51b517599ad1b152aa7b9f29a943912a3ed315fa628babea54",
+        "opaquePayloadSHA256": "3e2b13dbcedd9d4af2cd47034de526c97642bfe61feef90ee021639a1b866405"
+      },
+      "queue": "direct/reopen terminal gate passed",
+      "oom": {
+        "jvmSteps": 9,
+        "internalSteps": 3,
+        "machineRoot": "0xb32bc38016603d5ebcc2e4d42e645107ef08535e10d4afb64f7036fe80ca059e",
+        "opaquePayloadSHA256": "0081572b2c1e8904c0fec86408d356080a25178652974fc376229b3f149c928c"
+      }
+    }
+  },
+  "limits": {
+    "bootstrapImages": 86,
+    "unchangedBootstrapImages": 84,
+    "raw": [
+      31,
+      262144
+    ],
+    "maxFrames": 128,
+    "checkpointBytes": 1048576,
+    "headBytes": 32768,
+    "runtimeCap": 393216,
+    "globalNativeBindings": 12,
+    "exceptionKinds": 14,
+    "optimizerRuns": 200,
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": "off"
+  },
+  "limitations": "Successful single-guest-thread hold-count path only; no interrupt-state observation, blocking, scheduling, fairness, ownership enforcement, conditions, timed acquisition, or broad JUC compatibility. No original input, ProviderUtil, factory, world, or Done execution."
+}

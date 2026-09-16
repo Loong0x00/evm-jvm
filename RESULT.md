@@ -1,11 +1,12 @@
 # Result
 
-Generated-only raw-class cap31 stage completed from accepted TreeMap parent.
+Generated-only bounded `Lock.lockInterruptibly` stage completed from accepted cap31 parent `parent-1e0e9e9aa`.
 
-- Raised only selected raw classes `30 -> 31` and diagnostic class bound `116 -> 117`; 86 bootstraps and all other fixed limits remain pinned.
-- One source build produced engine `386844 / 393216` bytes and coordinator `4146` bytes.
-- Full generated gate passed: raw31 q1/q7/direct/reopen equivalence; raw32 driver/coordinator/engine atomic refusals; 262144 parser admission and 262145 coordinator refusal; retained TreeMap/String/EnumSet/queue/OOM gates; 2610 canonical receipts across 71 successful worlds.
+- Replaced only the existing `Lock` and `ReentrantLock` Java-8 bootstrap images; all other 84 image bytes and the 86 slots/order remain verified unchanged.
+- `lockInterruptibly()V throws InterruptedException` now follows the single-guest-thread successful hold-count path; no interruption, blocking, scheduler, fairness, ownership, condition, timed-lock, or broad JUC claim is made.
+- One source build produced engine `387394 / 393216` bytes and coordinator `4146` bytes.
+- Full generated gate passed: 251 commands, 78 canonical receipt worlds, and 2700 verified receipts, including interface/reentrant/unlock, null NPE, no-init, both raw replacements, cap31 limits, TreeMap/String/EnumSet/queue/OOM controls.
 
-Evidence: `evidence/java-evm/minecraft-entry/classcount31-9d0007d46/`.
+Evidence: `evidence/java-evm/minecraft-entry/lock-interruptibly-5a2d3b34c1/`.
 
-No ProviderUtil, original artifact/JAR/class/resource, LoggerContextFactory, Minecraft/world, or Done workflow was run or claimed. Parent alone may append genuine ProviderUtil and run original31.
+No original artifact/JAR/class/resource, ProviderUtil/factory, Minecraft/world, or Done execution was run or claimed. Parent alone runs original31.
