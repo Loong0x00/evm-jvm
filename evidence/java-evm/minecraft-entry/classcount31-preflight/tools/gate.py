@@ -16,7 +16,7 @@ import time
 
 here = Path(__file__).resolve().parent
 stage = here.parent
-root = here.parents[3]
+root = here.parents[4]
 build = Path(sys.argv[1]).resolve()
 fixtures = Path(sys.argv[2]).resolve()
 out = Path(sys.argv[3]).resolve()
