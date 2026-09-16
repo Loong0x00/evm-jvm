@@ -44,57 +44,31 @@ public class Properties extends Hashtable {
         int length = 0;
         while (true) {
             int next = input.read();
-            if (next == -1) {
-                if (length != 0) {
-                    loadLine(line, length);
-                }
-                return;
-            }
-            if (next == '\r' || next == '\n') {
-                loadLine(line, length);
-                length = 0;
+            if (next != -1 && next != '\r' && next != '\n') {
+                if (next == '\\' || length == 4096) throw new IOException();
+                line[length++] = (char) next;
                 continue;
             }
-            if (next == '\\' || length == 4096) {
-                throw new IOException();
+            int at = 0;
+            while (at < length && (line[at] == ' ' || line[at] == '\t' || line[at] == '\f')) ++at;
+            if (at != length && line[at] != '#' && line[at] != '!') {
+                int keyStart = at;
+                while (at < length && line[at] != '=' && line[at] != ':' && !(line[at] == ' ' || line[at] == '\t' || line[at] == '\f')) ++at;
+                int keyEnd = at;
+                if (at < length && (line[at] == ' ' || line[at] == '\t' || line[at] == '\f')) {
+                    while (at < length && (line[at] == ' ' || line[at] == '\t' || line[at] == '\f')) ++at;
+                }
+                if (at < length && (line[at] == '=' || line[at] == ':')) ++at;
+                while (at < length && (line[at] == ' ' || line[at] == '\t' || line[at] == '\f')) ++at;
+                char[] key = new char[keyEnd - keyStart];
+                char[] value = new char[length - at];
+                for (int i = 0; i < key.length; ++i) key[i] = line[keyStart + i];
+                for (int i = 0; i < value.length; ++i) value[i] = line[at + i];
+                super.put(new String(key), new String(value));
             }
-            line[length++] = (char) next;
+            if (next == -1) return;
+            length = 0;
         }
     }
 
-    private static boolean whitespace(char value) {
-        return value == ' ' || value == '\t' || value == '\f';
-    }
-
-    private void loadLine(char[] line, int length) {
-        int at = 0;
-        while (at < length && whitespace(line[at])) {
-            ++at;
-        }
-        if (at == length || line[at] == '#' || line[at] == '!') {
-            return;
-        }
-
-        int keyStart = at;
-        while (at < length && line[at] != '=' && line[at] != ':' && !whitespace(line[at])) {
-            ++at;
-        }
-        int keyEnd = at;
-        if (at < length && whitespace(line[at])) {
-            while (at < length && whitespace(line[at])) {
-                ++at;
-            }
-        }
-        if (at < length && (line[at] == '=' || line[at] == ':')) {
-            ++at;
-        }
-        while (at < length && whitespace(line[at])) {
-            ++at;
-        }
-        char[] key = new char[keyEnd - keyStart];
-        char[] value = new char[length - at];
-        for (int i = 0; i < key.length; ++i) key[i] = line[keyStart + i];
-        for (int i = 0; i < value.length; ++i) value[i] = line[at + i];
-        super.put(new String(key), new String(value));
-    }
 }

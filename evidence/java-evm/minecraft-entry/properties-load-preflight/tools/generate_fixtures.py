@@ -657,6 +657,10 @@ build("properties-load", {
 public final class PropertiesLoadMain {
   static int result;
   public static void main(String[] ignored) throws Exception {
+    // Materialize this raw class's canonical defining-loader mirror before the
+    // system-loader native is used; the resource path must not rely on a
+    // loader/mirror state that raw bytecode never created.
+    if (PropertiesLoadMain.class.getClassLoader() == null) throw new Error();
     Enumeration<URL> all = ClassLoader.getSystemClassLoader().getResources("generated/properties.txt");
     if (!all.hasMoreElements()) throw new Error();
     URL url = all.nextElement();

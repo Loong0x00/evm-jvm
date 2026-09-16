@@ -15,7 +15,7 @@ contract MCEntryCoordinator {
     }
 
     address private constant ENGINE = address(bytes20(hex"4d432d50524f50532d4c4f41442d50312d303030"));
-    bytes32 private constant ENGINE_CODEHASH = hex"a675faa4856f8877bfbf48cbeec05f49ecd1f089fd109a86d656e2f44a1a39b1";
+    bytes32 private constant ENGINE_CODEHASH = hex"5e4217c308539f75be185a25dcbea0747f1d1e56ac0f05d8da158fc829a988e4";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";

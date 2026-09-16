@@ -75,8 +75,8 @@ for token in (
     "new char[4096]", "int next = input.read()",
     "if (next == '\\\\' || length == 4096)",
     "super.put(new String(key), new String(value))",
-    "line[at] == '#' || line[at] == '!'",
-    "line[at] != '=' && line[at] != ':' && !whitespace(line[at])",
+    "line[at] != '#' && line[at] != '!'",
+    "line[at] != '=' && line[at] != ':' && !(line[at] == ' '",
 ):
     required(source, token, 1)
 if source.count("throw new IOException()") != 1 or " native " in source or "\\u" in source.replace("Unicode escapes", ""):
