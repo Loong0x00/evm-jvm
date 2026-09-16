@@ -130,8 +130,10 @@ q_equivalent("object-getclass-null", "object-getclass-null")
 q_equivalent("raw-object-getclass", "raw-object-getclass")
 
 # The shared mirror allocator preserves its pre-allocation quota check: OOM is
-# catchable and q/reopen-equivalent, with no partial loader/name/mirror state.
-q_equivalent("object-getclass-oom", "object-getclass-oom")
+# catchable with no partial loader/name/mirror state. The retained general OOM
+# gate keeps its full q1/q7/direct sweep; this 1023-object allocator boundary is
+# exercised direct/reopen so its checkpoint corpus stays finite.
+rows["object-getclass-oom"] = finish("object-getclass-oom", "object-getclass-oom", 4096)
 
 # Arrays, primitive literals and forged Class objects remain narrow hard
 # refusals. They publish no Head and cannot fabricate a generic reflection path.
