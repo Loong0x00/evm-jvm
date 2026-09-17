@@ -1,24 +1,24 @@
 # Result
 
-Generated-only bounded `Integer.valueOf(int)` stage completed from accepted
-raw33 parent `parent-1b7a30656`.
+Generated-only bounded `WeakReference` stage completed from accepted Integer
+parent `parent-36ea2d7e6`.
 
-- Replaced only the fixed `java/lang/Integer` bootstrap image. Existing source
-  methods regenerate the exact parent 1667-byte image when the one new method
-  is removed; the new 1747-byte image adds ordinary Java-8
-  `valueOf(int) { return new Integer(value); }`.
-- One source build produced engine `392454 / 393216` bytes (762 bytes remain),
-  SHA-256 `120854fb62f22ace08424c0782af229038d863b91df239486104e2914d594e96`;
-  coordinator remains 5394 bytes.
-- Focused `-1`, `0`, min, max, equality/value/hash and distinct-allocation
-  fixture passes q1/q7/direct/reopen at 665 Java / 3 internal steps and epochs
-  665/95/1 with identical machine roots and opaque payloads. No-init, raw
-  replacement, and omitted String overload controls pass.
-- Full retained direct/reopen generated gate: 81 rows, 272 commands, 1512
-  canonical receipts, 144.675 seconds (cap 1200).
+- Appended bootstrap image87 `java/lang/ref/WeakReference` (281 bytes,
+  SHA-256 `9e3ef194b9d08f98f8e99f45fe8e192e38f6120e214e46596b8f9351351f9a36`):
+  direct `Object` subclass, one strong deterministic referent field,
+  constructor `(Object)V`, and `get()Object` only.
+- Runtime is 391765 / 393216 bytes (1451-byte headroom; required 762-byte
+  margin retained); coordinator remains 5394 bytes. Raw33/262158, native13,
+  selected resource/Properties/String/Integer pipeline, and all other limits
+  remain pinned; checkpoint diagnostic bound is 120.
+- Focused identity/null q1/q7/direct/reopen matches at 72 Java / 2 internal
+  steps and epochs 72/11/1. No-init, raw replacement, and omitted `clear()`
+  refusals pass. Retained direct/reopen gate: 85 rows, 286 commands, 1597
+  canonical receipts in 148.051 seconds (cap 1200).
 
-No cache/identity guarantee, String/radix overload, formatting, host primitive,
-or original artifact/JAR/class/resource is included. Parent alone runs unchanged
-original33; no Provider construction, factory, world, or Done claim is made.
+No GC clearing, `Reference`/`ReferenceQueue` hierarchy, clear/enqueue,
+reachability/finalization, original artifact/JAR/class/resource, Provider,
+factory, world, or Done claim is included. Parent alone runs unchanged
+original33.
 
-Evidence: `evidence/java-evm/minecraft-entry/integer-value-of-preflight/`.
+Evidence: `evidence/java-evm/minecraft-entry/weak-reference-preflight/`.
