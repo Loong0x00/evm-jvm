@@ -1,23 +1,23 @@
 # Result
 
-Generated-only raw class cap32 stage completed from accepted lockInterruptibly
-parent `parent-850386373`.
+Generated-only raw33 / byte262158 stage completed from accepted
+`String.startsWith` parent `parent-1709f8e18`.
 
-- Raised only raw selected-class capacity `31→32` and the derived checkpoint
-diagnostic bound `117→118`; all 86 bootstrap images, raw-byte cap262144, and
-remaining limits remain pinned.
-- One source build: engine `387394` bytes / Keccak
-`0b44515e1c596a5b3b4958d237cb630b040b6dc492434e26a5534de168f87f66`;
-coordinator `4145` bytes / Keccak
-`93c1e80ddc9a94db54e4b6aeaf64f28c2717b8225f18f623d9f520aa96ad6c6e`.
-- Full generated gate passed: raw32 q1/q7/direct/reopen agree at128J/2I;
-raw33 is atomically refused by driver/coordinator/engine; byte262144/262145
-boundaries and all retained lock/String/TreeMap/EnumSet/queue/OOM controls pass
-with2705 canonical receipts across251 commands.
+- Raised only raw selected-class capacity `32→33`, raw-byte capacity
+  `262144→262158`, and derived checkpoint diagnostic bound `118→119`.
+  All 86 bootstrap images, native13, selected resource `1/4096`, and remaining
+  limits/toolchain remain pinned.
+- One source build: engine `392076 / 393216` bytes, Keccak
+  `d7fae188f49b743f599f6eeb75f65c413108df3907167e847b20486537f3c24e`;
+  coordinator `5394` bytes, Keccak
+  `d279d9a438c32eb45d38a1db556e51eba68b39ae6f380eb3609d4196c9996320`.
+- Generated gate passed in `105.847s` (cap 1200): raw33 q1/q7/direct/reopen
+  agrees at 132 Java / 2 internal steps and epochs 132/19/1; raw34 is
+  atomically refused by driver/coordinator/engine; byte262158 is
+  coordinator-admitted and reaches engine reads, while byte262159 is atomically
+  rejected. 750 canonical receipts cover 77 result rows and 258 commands.
 
-Evidence: `evidence/java-evm/minecraft-entry/classcount32-4b2deb80c9/`
-(summary SHA-256 `4b2deb80c9a8b0cb487b1cbe9b6397d06f9574bce48e86f6e5e21517e8070f1d`).
+Evidence: `evidence/java-evm/minecraft-entry/classcount33-byte262158-preflight/`.
 
-No original artifact/JAR/class/resource/checkpoint/world was opened. Parent
-alone runs original32. No loader/resource result, Minecraft execution, world,
-or Done claim is made.
+No original artifact/JAR/class/resource was opened. Parent alone runs original33;
+no Provider construction, factory, world, or Done claim is made.
