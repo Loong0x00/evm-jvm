@@ -1,23 +1,24 @@
 # Result
 
-Generated-only raw33 / byte262158 stage completed from accepted
-`String.startsWith` parent `parent-1709f8e18`.
+Generated-only bounded `Integer.valueOf(int)` stage completed from accepted
+raw33 parent `parent-1b7a30656`.
 
-- Raised only raw selected-class capacity `32→33`, raw-byte capacity
-  `262144→262158`, and derived checkpoint diagnostic bound `118→119`.
-  All 86 bootstrap images, native13, selected resource `1/4096`, and remaining
-  limits/toolchain remain pinned.
-- One source build: engine `392076 / 393216` bytes, Keccak
-  `d7fae188f49b743f599f6eeb75f65c413108df3907167e847b20486537f3c24e`;
-  coordinator `5394` bytes, Keccak
-  `d279d9a438c32eb45d38a1db556e51eba68b39ae6f380eb3609d4196c9996320`.
-- Generated gate passed in `105.847s` (cap 1200): raw33 q1/q7/direct/reopen
-  agrees at 132 Java / 2 internal steps and epochs 132/19/1; raw34 is
-  atomically refused by driver/coordinator/engine; byte262158 is
-  coordinator-admitted and reaches engine reads, while byte262159 is atomically
-  rejected. 750 canonical receipts cover 77 result rows and 258 commands.
+- Replaced only the fixed `java/lang/Integer` bootstrap image. Existing source
+  methods regenerate the exact parent 1667-byte image when the one new method
+  is removed; the new 1747-byte image adds ordinary Java-8
+  `valueOf(int) { return new Integer(value); }`.
+- One source build produced engine `392454 / 393216` bytes (762 bytes remain),
+  SHA-256 `120854fb62f22ace08424c0782af229038d863b91df239486104e2914d594e96`;
+  coordinator remains 5394 bytes.
+- Focused `-1`, `0`, min, max, equality/value/hash and distinct-allocation
+  fixture passes q1/q7/direct/reopen at 665 Java / 3 internal steps and epochs
+  665/95/1 with identical machine roots and opaque payloads. No-init, raw
+  replacement, and omitted String overload controls pass.
+- Full retained direct/reopen generated gate: 81 rows, 272 commands, 1512
+  canonical receipts, 144.675 seconds (cap 1200).
 
-Evidence: `evidence/java-evm/minecraft-entry/classcount33-byte262158-preflight/`.
+No cache/identity guarantee, String/radix overload, formatting, host primitive,
+or original artifact/JAR/class/resource is included. Parent alone runs unchanged
+original33; no Provider construction, factory, world, or Done claim is made.
 
-No original artifact/JAR/class/resource was opened. Parent alone runs original33;
-no Provider construction, factory, world, or Done claim is made.
+Evidence: `evidence/java-evm/minecraft-entry/integer-value-of-preflight/`.
