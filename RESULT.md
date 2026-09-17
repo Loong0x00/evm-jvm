@@ -1,24 +1,19 @@
 # Result
 
-Generated-only bounded `WeakReference` stage completed from accepted Integer
-parent `parent-36ea2d7e6`.
+Generated-only bounded `Integer.valueOf(String)` stage completed from accepted
+WeakReference parent `parent-cb0c15e54`.
 
-- Appended bootstrap image87 `java/lang/ref/WeakReference` (281 bytes,
-  SHA-256 `9e3ef194b9d08f98f8e99f45fe8e192e38f6120e214e46596b8f9351351f9a36`):
-  direct `Object` subclass, one strong deterministic referent field,
-  constructor `(Object)V`, and `get()Object` only.
-- Runtime is 391765 / 393216 bytes (1451-byte headroom; required 762-byte
-  margin retained); coordinator remains 5394 bytes. Raw33/262158, native13,
-  selected resource/Properties/String/Integer pipeline, and all other limits
-  remain pinned; checkpoint diagnostic bound is 120.
-- Focused identity/null q1/q7/direct/reopen matches at 72 Java / 2 internal
-  steps and epochs 72/11/1. No-init, raw replacement, and omitted `clear()`
-  refusals pass. Retained direct/reopen gate: 85 rows, 286 commands, 1597
-  canonical receipts in 148.051 seconds (cap 1200).
+- Replaced only bootstrap `java/lang/Integer` image (1827 bytes, SHA-256
+  `0fb2a617951eb2228ac6277a85ae44da1c59647904d82c2cb68b613c6e33ba03`).
+  `valueOf(String)` is ordinary Java-8 `new Integer(parseInt(s))`; accepted
+  `valueOf(int)` and all prior Integer methods remain.
+- Runtime is 391802 / 393216 bytes; coordinator is 5394 bytes. Raw33/262158,
+  87 bootstrap images, native13, diagnostic120, and all other limits are pinned.
+- Valid/invalid/null/overflow focused q1/q7/direct/reopen chains agree. The
+  retained direct/reopen gate completed 89 rows, 322 commands, and 4311 canonical
+  receipts in 292.809 seconds (cap 1200). Radix, raw replacement, and no-init
+  controls refuse as specified.
 
-No GC clearing, `Reference`/`ReferenceQueue` hierarchy, clear/enqueue,
-reachability/finalization, original artifact/JAR/class/resource, Provider,
-factory, world, or Done claim is included. Parent alone runs unchanged
-original33.
-
-Evidence: `evidence/java-evm/minecraft-entry/weak-reference-preflight/`.
+No original artifact/JAR/class/resource, Provider/factory/world, or Done claim.
+Parent alone runs unchanged original33. Evidence:
+`evidence/java-evm/minecraft-entry/integer-value-of-string-preflight/`.
