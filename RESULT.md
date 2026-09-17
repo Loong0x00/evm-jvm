@@ -1,19 +1,23 @@
 # Result
 
-Generated-only bounded `Integer.valueOf(String)` stage completed from accepted
-WeakReference parent `parent-cb0c15e54`.
+Generated-only bounded `Collection` → `Iterable` linkage stage completed from
+accepted Integer/String parent `parent-61fd1832a`.
 
-- Replaced only bootstrap `java/lang/Integer` image (1827 bytes, SHA-256
-  `0fb2a617951eb2228ac6277a85ae44da1c59647904d82c2cb68b613c6e33ba03`).
-  `valueOf(String)` is ordinary Java-8 `new Integer(parseInt(s))`; accepted
-  `valueOf(int)` and all prior Integer methods remain.
-- Runtime is 391802 / 393216 bytes; coordinator is 5394 bytes. Raw33/262158,
-  87 bootstrap images, native13, diagnostic120, and all other limits are pinned.
-- Valid/invalid/null/overflow focused q1/q7/direct/reopen chains agree. The
-  retained direct/reopen gate completed 89 rows, 322 commands, and 4311 canonical
-  receipts in 292.809 seconds (cap 1200). Radix, raw replacement, and no-init
-  controls refuse as specified.
+- Appended bootstrap image88 `java/lang/Iterable` (215 bytes; SHA-256
+  `d144cca13fbb5ae0bf97773e84efb4308acbf3fe31cd9b4b0488c8a8e447a17f`) with
+  only `Iterator iterator()`. Replaced only `java/util/Collection` (368 bytes;
+  SHA-256 `a7e0e47540fc39afc022acea939c81d9a2143ef53e59f3227e2dd0ffda16487c`) so
+  it extends Iterable and retains add/size/iterator/isEmpty declarations.
+- Runtime: 393060 / 393216 bytes; coordinator: 5394 bytes. Bootstrap count88,
+  raw33/262158, native13, and all fixed limits remain pinned; diagnostic bound
+  advances only from120 to121.
+- Focused Collection→Iterable q1/q7/direct/reopen chains agree at 140 Java / 4
+  internal steps (epochs140/20/1); the null path agrees at13/3 (epochs13/2/1).
+  No-init, both raw replacement, and omitted `forEach`/`spliterator` controls
+  are atomic. Retained gate: 96 rows, 347 commands, 4489 canonical receipts,
+  305.613 seconds (cap1200).
 
-No original artifact/JAR/class/resource, Provider/factory/world, or Done claim.
-Parent alone runs unchanged original33. Evidence:
-`evidence/java-evm/minecraft-entry/integer-value-of-string-preflight/`.
+No default Iterable APIs beyond iterator, host fallback, original artifact/JAR/
+class/resource, Provider/factory/world, or Done claim. Parent alone reruns
+unchanged original33. Evidence:
+`evidence/java-evm/minecraft-entry/iterable-link-preflight/`.
