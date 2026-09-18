@@ -1,0 +1,25 @@
+{
+  "scope": "runtime-layout-only recovery; Java surface remains private Math constructor plus ordinary static int max/min",
+  "basis": "accepted parent-396d5b062 plus the same appended Math image and all final semantic deltas",
+  "runtimeCap": 393216,
+  "measurements": [
+    {
+      "layout": "direct root keccak plus Math materialization in the existing WeakReference/Iterable/ThreadLocal helper",
+      "mathImageBytes": 261,
+      "runtimeBytes": 393760,
+      "overCapBytes": 544
+    },
+    {
+      "layout": "literal root hash plus isolated Math materialization after loader metadata",
+      "mathImageBytes": 253,
+      "runtimeBytes": 393208,
+      "headroomBytes": 8,
+      "runtimeSHA256": "40f0fc6ea00b91a84e3bbf68798f9c09f127054f29603cce8407d96b8b1265c7"
+    }
+  ],
+  "acceptedLayout": {
+    "root": "h[89] = DBOOT_MATH, where DBOOT_MATH is the keccak256 of the exact Math image",
+    "materialization": "p.classes[classSlot + 50].data = _bootstrapMath() after p.loaderClass assignment",
+    "reason": "The root remains the exact image commitment while a fixed outlined-tail ordering keeps the viaIR output within LOCAL384. No prior bootstrap image, class slot, native binding, Java API, or limit changed."
+  }
+}
