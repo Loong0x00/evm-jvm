@@ -1,0 +1,19 @@
+{
+  "scope": "runtime-layout-only measurement; no Java surface beyond constructor-only ThreadLocal",
+  "basis": "parent-7183e57f8 plus the same 136-byte ThreadLocal image and all final semantic deltas",
+  "runtimeCap": 393216,
+  "rejectedDuplicateCommitmentLayout": {
+    "root": "h[88] = DBOOT_THREADLOCAL",
+    "constant": "DBOOT_THREADLOCAL = keccak256(hex<ThreadLocal image>)",
+    "runtimeBytes": 393811,
+    "overCapBytes": 595,
+    "runtimeSHA256": "7dd4459738f448528229bc258f549386f07fed7fd7a8ebc617ebe79ca6dfa6fd"
+  },
+  "acceptedSingleLiteralLayout": {
+    "root": "h[88] = keccak256(_bootstrapThreadLocal())",
+    "runtimeBytes": 392326,
+    "headroomBytes": 890,
+    "runtimeSHA256": "a917fa3454e39140ab114f1211b69270c5a980b13a4976f71d7060c38edcbd71"
+  },
+  "reason": "The accepted root computes the same keccak256 over the exact bootstrap bytes while avoiding a second constant-literal layout. No opcode, limit, bootstrap image byte, class slot, native binding, or Java API semantics changed for this recovery."
+}
