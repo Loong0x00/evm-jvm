@@ -1,0 +1,25 @@
+{
+  "scope": "runtime-layout-only recovery; Java surface remains final directly-created ThreadLocal constructor plus default-null Object get()",
+  "basis": "accepted raw37 image layout plus the same 193-byte ThreadLocal image and all final semantic deltas",
+  "runtimeCap": 393216,
+  "rejectedPrecomputedRootLayout": {
+    "root": "return a precomputed full keccak256(abi.encode(DBOOT, ordered bytes32[90])) commitment",
+    "runtimeBytes": 351723,
+    "reason": "rejected: the full bootstrap root must remain runtime-derived from exact image bytes"
+  },
+  "rejectedUnsharedDynamicRootLayout": {
+    "root": "allocate ordered bytes32[90], keccak each immutable bootstrap image, then keccak256(abi.encode(DBOOT, h))",
+    "runtimeBytes": 393291,
+    "overCapBytes": 75
+  },
+  "acceptedRuntimeDerivedLayout": {
+    "root": "keccak256(abi.encode(DBOOT, h)) with raw37's ordered runtime image hashes and retained isolated constants",
+    "objectHash": "runtime keccak256(_bootstrapObject()) through a single-sited helper; not a precomputed commitment",
+    "bootstrapRoot": "1aa769a912931967ca44cec129ff505741409aecaee7536a85a586213deb4a7b",
+    "runtimeBytes": 392959,
+    "savedBytes": 332,
+    "headroomBytes": 257,
+    "runtimeSHA256": "94bd54ce277258129466e80252f7599b0fdd6666ca086385f5ba06b881e97993"
+  },
+  "reason": "The accepted root allocates the ordered bytes32[90] array and returns keccak256(abi.encode(DBOOT, h)) on every configuration derivation. h[0] calls a private helper which itself evaluates keccak256(_bootstrapObject()) from the exact immutable Object image bytes; it is a code-layout sharing device, not a precomputed image hash or folded root. Every other non-isolated slot continues to call keccak256 over its exact image bytes in order. The retained isolated DBOOT_ENUMSET, DBOOT_ITERABLE, and DBOOT_MATH commitments are unchanged from raw37. verify_source.py recompiles ThreadLocal, checks every untouched image byte, independently reconstructs all 90 image hashes and the ABI root using pinned local js-sha3, and rejects any full precomputed root return. No limit, binding, image order, package root, or Java behavior changes."
+}
