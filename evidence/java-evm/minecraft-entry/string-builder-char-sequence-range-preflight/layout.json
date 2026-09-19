@@ -1,0 +1,11 @@
+{
+  "scope": "runtime layout measurement only; semantic guest-image delta is exclusively bootstrap image84 java/lang/StringBuilder",
+  "basis": "parent-baeda70ed runtime 393206",
+  "runtimeBaseline": 393206,
+  "runtimeCap": 393216,
+  "runtimeBytes": 393185,
+  "deltaBytes": -21,
+  "headroomBytes": 31,
+  "runtimeSHA256": "6fd885e700a28076b44eac81b35faaff3276cced18718c0c0431487054d56b1a",
+  "reason": "The 914-byte Java 8 StringBuilder image replaces image84's 736-byte setLength-zero image and retains its existing constructors, append(String), toString, and setLength(0), adding only String-backed valid CharSequence range append. The source verifier also permits exactly listed unchecked frame/step/handle/ordinary-allocation counter increments after their pre-existing finite guards; it derives the stage engine byte-for-byte from the parent and rejects every other engine edit. No precomputed root, cap, validation, or commitment change is used. The bootstrap root remains runtime-derived as keccak256(abi.encode(DBOOT, h)) over all 90 exact ordered image hashes."
+}
