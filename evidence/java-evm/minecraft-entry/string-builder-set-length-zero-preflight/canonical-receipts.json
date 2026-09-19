@@ -1,0 +1,944 @@
+{
+  "verifiedReceipts": 6141,
+  "summary": {
+    "world-object-getclass-q4096": {
+      "receipts": 1,
+      "java": 50,
+      "internal": 3,
+      "peakGas": 24536360,
+      "lifecycle": 2
+    },
+    "world-object-getclass-noinit-q4096": {
+      "receipts": 1,
+      "java": 9,
+      "internal": 2,
+      "peakGas": 22681458,
+      "lifecycle": 2
+    },
+    "world-object-getclass-null-q4096": {
+      "receipts": 1,
+      "java": 8,
+      "internal": 3,
+      "peakGas": 12310794,
+      "lifecycle": 2
+    },
+    "world-raw-object-getclass-q4096": {
+      "receipts": 1,
+      "java": 13,
+      "internal": 2,
+      "peakGas": 12089205,
+      "lifecycle": 2
+    },
+    "world-object-getclass-oom-q4096": {
+      "receipts": 4,
+      "java": 13316,
+      "internal": 3,
+      "peakGas": 730869527,
+      "lifecycle": 2
+    },
+    "world-url-openstream-q4096": {
+      "receipts": 2,
+      "java": 5769,
+      "internal": 8,
+      "peakGas": 192334664,
+      "lifecycle": 2
+    },
+    "world-url-openstream-absent-q4096": {
+      "receipts": 1,
+      "java": 3306,
+      "internal": 7,
+      "peakGas": 142546969,
+      "lifecycle": 2
+    },
+    "world-properties-load-q4096": {
+      "receipts": 2,
+      "java": 7752,
+      "internal": 8,
+      "peakGas": 164663609,
+      "lifecycle": 2
+    },
+    "world-properties-load-null-q4096": {
+      "receipts": 1,
+      "java": 43,
+      "internal": 5,
+      "peakGas": 24794400,
+      "lifecycle": 2
+    },
+    "world-properties-load-escape-q4096": {
+      "receipts": 1,
+      "java": 3133,
+      "internal": 8,
+      "peakGas": 139348182,
+      "lifecycle": 2
+    },
+    "world-properties-load-line-4096-q4096": {
+      "receipts": 60,
+      "java": 244702,
+      "internal": 5,
+      "peakGas": 170858515,
+      "lifecycle": 2
+    },
+    "world-properties-load-line-4097-q4096": {
+      "receipts": 38,
+      "java": 151687,
+      "internal": 8,
+      "peakGas": 223908593,
+      "lifecycle": 2
+    },
+    "world-url-resource-4096-q4096": {
+      "receipts": 1,
+      "java": 1,
+      "internal": 2,
+      "peakGas": 14480101,
+      "lifecycle": 2
+    },
+    "world-lock-interruptibly-q4096": {
+      "receipts": 1,
+      "java": 67,
+      "internal": 2,
+      "peakGas": 19671724,
+      "lifecycle": 2
+    },
+    "world-lock-interruptibly-null-q4096": {
+      "receipts": 1,
+      "java": 8,
+      "internal": 3,
+      "peakGas": 12423680,
+      "lifecycle": 2
+    },
+    "world-lock-interruptibly-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11565206,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-q4096": {
+      "receipts": 1,
+      "java": 429,
+      "internal": 2,
+      "peakGas": 35576594,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-null-q4096": {
+      "receipts": 1,
+      "java": 23,
+      "internal": 3,
+      "peakGas": 13935195,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-setlength-zero-q1": {
+      "receipts": 364,
+      "java": 364,
+      "internal": 2,
+      "peakGas": 18697061,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-setlength-zero-q7": {
+      "receipts": 52,
+      "java": 364,
+      "internal": 2,
+      "peakGas": 19254015,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-setlength-zero-q4096": {
+      "receipts": 1,
+      "java": 364,
+      "internal": 2,
+      "peakGas": 36282344,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-setlength-nonzero-q1": {
+      "receipts": 272,
+      "java": 272,
+      "internal": 7,
+      "peakGas": 18040574,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-setlength-nonzero-q7": {
+      "receipts": 39,
+      "java": 272,
+      "internal": 7,
+      "peakGas": 18621270,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-setlength-nonzero-q4096": {
+      "receipts": 1,
+      "java": 272,
+      "internal": 7,
+      "peakGas": 31116673,
+      "lifecycle": 2
+    },
+    "world-last-index-suffix-q4096": {
+      "receipts": 1,
+      "java": 81,
+      "internal": 2,
+      "peakGas": 17014530,
+      "lifecycle": 2
+    },
+    "world-last-index-middle-q4096": {
+      "receipts": 1,
+      "java": 144,
+      "internal": 2,
+      "peakGas": 19743939,
+      "lifecycle": 2
+    },
+    "world-last-index-prefix-q4096": {
+      "receipts": 1,
+      "java": 143,
+      "internal": 2,
+      "peakGas": 19724662,
+      "lifecycle": 2
+    },
+    "world-last-index-overlap-q4096": {
+      "receipts": 1,
+      "java": 81,
+      "internal": 2,
+      "peakGas": 17010244,
+      "lifecycle": 2
+    },
+    "world-last-index-repeated-q4096": {
+      "receipts": 1,
+      "java": 81,
+      "internal": 2,
+      "peakGas": 17023103,
+      "lifecycle": 2
+    },
+    "world-last-index-absent-q4096": {
+      "receipts": 1,
+      "java": 94,
+      "internal": 2,
+      "peakGas": 17044274,
+      "lifecycle": 2
+    },
+    "world-last-index-empty-target-q4096": {
+      "receipts": 1,
+      "java": 22,
+      "internal": 2,
+      "peakGas": 14291985,
+      "lifecycle": 2
+    },
+    "world-last-index-empty-receiver-q4096": {
+      "receipts": 1,
+      "java": 21,
+      "internal": 2,
+      "peakGas": 14224214,
+      "lifecycle": 2
+    },
+    "world-last-index-longer-target-q4096": {
+      "receipts": 1,
+      "java": 25,
+      "internal": 2,
+      "peakGas": 14310759,
+      "lifecycle": 2
+    },
+    "world-last-index-utf16-q4096": {
+      "receipts": 1,
+      "java": 53,
+      "internal": 2,
+      "peakGas": 15262120,
+      "lifecycle": 2
+    },
+    "world-last-index-surrogate-q4096": {
+      "receipts": 1,
+      "java": 67,
+      "internal": 2,
+      "peakGas": 16148127,
+      "lifecycle": 2
+    },
+    "world-last-index-null-q4096": {
+      "receipts": 1,
+      "java": 10,
+      "internal": 3,
+      "peakGas": 14003005,
+      "lifecycle": 2
+    },
+    "world-starts-empty-prefix-q1": {
+      "receipts": 26,
+      "java": 26,
+      "internal": 2,
+      "peakGas": 15197684,
+      "lifecycle": 2
+    },
+    "world-starts-empty-prefix-q7": {
+      "receipts": 4,
+      "java": 26,
+      "internal": 2,
+      "peakGas": 15559394,
+      "lifecycle": 2
+    },
+    "world-starts-empty-prefix-q4096": {
+      "receipts": 1,
+      "java": 26,
+      "internal": 2,
+      "peakGas": 14244822,
+      "lifecycle": 2
+    },
+    "world-starts-longer-prefix-q1": {
+      "receipts": 20,
+      "java": 20,
+      "internal": 2,
+      "peakGas": 15206912,
+      "lifecycle": 2
+    },
+    "world-starts-longer-prefix-q7": {
+      "receipts": 3,
+      "java": 20,
+      "internal": 2,
+      "peakGas": 15568277,
+      "lifecycle": 2
+    },
+    "world-starts-longer-prefix-q4096": {
+      "receipts": 1,
+      "java": 20,
+      "internal": 2,
+      "peakGas": 14228846,
+      "lifecycle": 2
+    },
+    "world-starts-exact-q1": {
+      "receipts": 62,
+      "java": 62,
+      "internal": 2,
+      "peakGas": 14830988,
+      "lifecycle": 2
+    },
+    "world-starts-exact-q7": {
+      "receipts": 9,
+      "java": 62,
+      "internal": 2,
+      "peakGas": 15224339,
+      "lifecycle": 2
+    },
+    "world-starts-exact-q4096": {
+      "receipts": 1,
+      "java": 62,
+      "internal": 2,
+      "peakGas": 16803520,
+      "lifecycle": 2
+    },
+    "world-starts-prefix-q1": {
+      "receipts": 50,
+      "java": 50,
+      "internal": 2,
+      "peakGas": 15208957,
+      "lifecycle": 2
+    },
+    "world-starts-prefix-q7": {
+      "receipts": 8,
+      "java": 50,
+      "internal": 2,
+      "peakGas": 15601223,
+      "lifecycle": 2
+    },
+    "world-starts-prefix-q4096": {
+      "receipts": 1,
+      "java": 50,
+      "internal": 2,
+      "peakGas": 15998297,
+      "lifecycle": 2
+    },
+    "world-starts-absent-q1": {
+      "receipts": 44,
+      "java": 44,
+      "internal": 2,
+      "peakGas": 15206912,
+      "lifecycle": 2
+    },
+    "world-starts-absent-q7": {
+      "receipts": 7,
+      "java": 44,
+      "internal": 2,
+      "peakGas": 15599177,
+      "lifecycle": 2
+    },
+    "world-starts-absent-q4096": {
+      "receipts": 1,
+      "java": 44,
+      "internal": 2,
+      "peakGas": 15972918,
+      "lifecycle": 2
+    },
+    "world-starts-empty-receiver-q1": {
+      "receipts": 26,
+      "java": 26,
+      "internal": 2,
+      "peakGas": 14812962,
+      "lifecycle": 2
+    },
+    "world-starts-empty-receiver-q7": {
+      "receipts": 4,
+      "java": 26,
+      "internal": 2,
+      "peakGas": 15173508,
+      "lifecycle": 2
+    },
+    "world-starts-empty-receiver-q4096": {
+      "receipts": 1,
+      "java": 26,
+      "internal": 2,
+      "peakGas": 14181736,
+      "lifecycle": 2
+    },
+    "world-starts-empty-receiver-nonempty-q1": {
+      "receipts": 20,
+      "java": 20,
+      "internal": 2,
+      "peakGas": 15184359,
+      "lifecycle": 2
+    },
+    "world-starts-empty-receiver-nonempty-q7": {
+      "receipts": 3,
+      "java": 20,
+      "internal": 2,
+      "peakGas": 15545049,
+      "lifecycle": 2
+    },
+    "world-starts-empty-receiver-nonempty-q4096": {
+      "receipts": 1,
+      "java": 20,
+      "internal": 2,
+      "peakGas": 14213930,
+      "lifecycle": 2
+    },
+    "world-starts-utf16-q1": {
+      "receipts": 38,
+      "java": 38,
+      "internal": 2,
+      "peakGas": 15198400,
+      "lifecycle": 2
+    },
+    "world-starts-utf16-q7": {
+      "receipts": 6,
+      "java": 38,
+      "internal": 2,
+      "peakGas": 15590485,
+      "lifecycle": 2
+    },
+    "world-starts-utf16-q4096": {
+      "receipts": 1,
+      "java": 38,
+      "internal": 2,
+      "peakGas": 15132943,
+      "lifecycle": 2
+    },
+    "world-starts-surrogate-pair-q1": {
+      "receipts": 50,
+      "java": 50,
+      "internal": 2,
+      "peakGas": 15211361,
+      "lifecycle": 2
+    },
+    "world-starts-surrogate-pair-q7": {
+      "receipts": 8,
+      "java": 50,
+      "internal": 2,
+      "peakGas": 15603627,
+      "lifecycle": 2
+    },
+    "world-starts-surrogate-pair-q4096": {
+      "receipts": 1,
+      "java": 50,
+      "internal": 2,
+      "peakGas": 16004301,
+      "lifecycle": 2
+    },
+    "world-starts-high-surrogate-q1": {
+      "receipts": 38,
+      "java": 38,
+      "internal": 2,
+      "peakGas": 15205201,
+      "lifecycle": 2
+    },
+    "world-starts-high-surrogate-q7": {
+      "receipts": 6,
+      "java": 38,
+      "internal": 2,
+      "peakGas": 15597137,
+      "lifecycle": 2
+    },
+    "world-starts-high-surrogate-q4096": {
+      "receipts": 1,
+      "java": 38,
+      "internal": 2,
+      "peakGas": 15139476,
+      "lifecycle": 2
+    },
+    "world-starts-null-q1": {
+      "receipts": 10,
+      "java": 10,
+      "internal": 3,
+      "peakGas": 15174500,
+      "lifecycle": 2
+    },
+    "world-starts-null-q7": {
+      "receipts": 2,
+      "java": 10,
+      "internal": 3,
+      "peakGas": 14889914,
+      "lifecycle": 2
+    },
+    "world-starts-null-q4096": {
+      "receipts": 1,
+      "java": 10,
+      "internal": 3,
+      "peakGas": 13938744,
+      "lifecycle": 2
+    },
+    "world-string-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11543635,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11559032,
+      "lifecycle": 2
+    },
+    "world-treemap-q4096": {
+      "receipts": 1,
+      "java": 34,
+      "internal": 2,
+      "peakGas": 12891690,
+      "lifecycle": 2
+    },
+    "world-treemap-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11544268,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-0-q1": {
+      "receipts": 171,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 16917544,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-0-q7": {
+      "receipts": 25,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 17243076,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-0-q4096": {
+      "receipts": 1,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 23909509,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-1-q1": {
+      "receipts": 171,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 16917544,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-1-q7": {
+      "receipts": 25,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 17243076,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-1-q4096": {
+      "receipts": 1,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 23909509,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-255-q1": {
+      "receipts": 171,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 16919014,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-255-q7": {
+      "receipts": 25,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 17244549,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-255-q4096": {
+      "receipts": 1,
+      "java": 171,
+      "internal": 2,
+      "peakGas": 23911490,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-negative-q1": {
+      "receipts": 16,
+      "java": 16,
+      "internal": 3,
+      "peakGas": 13992781,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-negative-q7": {
+      "receipts": 3,
+      "java": 16,
+      "internal": 3,
+      "peakGas": 14084059,
+      "lifecycle": 2
+    },
+    "world-stringbuilder-capacity-negative-q4096": {
+      "receipts": 1,
+      "java": 16,
+      "internal": 3,
+      "peakGas": 12879077,
+      "lifecycle": 2
+    },
+    "world-system-err-q4096": {
+      "receipts": 1,
+      "java": 129,
+      "internal": 6,
+      "peakGas": 28769982,
+      "lifecycle": 2
+    },
+    "world-system-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11544268,
+      "lifecycle": 2
+    },
+    "world-failed-init-q4096": {
+      "receipts": 1,
+      "java": 19,
+      "internal": 5,
+      "peakGas": 14122701,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-q1": {
+      "receipts": 665,
+      "java": 665,
+      "internal": 3,
+      "peakGas": 16931185,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-q7": {
+      "receipts": 95,
+      "java": 665,
+      "internal": 3,
+      "peakGas": 17625581,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-q4096": {
+      "receipts": 1,
+      "java": 665,
+      "internal": 3,
+      "peakGas": 53527705,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11560579,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-valid-q1": {
+      "receipts": 1240,
+      "java": 1240,
+      "internal": 3,
+      "peakGas": 18556706,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-valid-q7": {
+      "receipts": 178,
+      "java": 1240,
+      "internal": 3,
+      "peakGas": 18893828,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-valid-q4096": {
+      "receipts": 1,
+      "java": 1240,
+      "internal": 3,
+      "peakGas": 51773199,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-invalid-q1": {
+      "receipts": 320,
+      "java": 320,
+      "internal": 11,
+      "peakGas": 20570527,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-invalid-q7": {
+      "receipts": 46,
+      "java": 320,
+      "internal": 11,
+      "peakGas": 20535264,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-invalid-q4096": {
+      "receipts": 1,
+      "java": 320,
+      "internal": 11,
+      "peakGas": 31042753,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-null-q1": {
+      "receipts": 38,
+      "java": 38,
+      "internal": 8,
+      "peakGas": 15995996,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-null-q7": {
+      "receipts": 6,
+      "java": 38,
+      "internal": 8,
+      "peakGas": 16170601,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-null-q4096": {
+      "receipts": 1,
+      "java": 38,
+      "internal": 8,
+      "peakGas": 16533455,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-overflow-q1": {
+      "receipts": 771,
+      "java": 771,
+      "internal": 9,
+      "peakGas": 18429382,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-overflow-q7": {
+      "receipts": 111,
+      "java": 771,
+      "internal": 9,
+      "peakGas": 18564419,
+      "lifecycle": 2
+    },
+    "world-integer-valueof-string-overflow-q4096": {
+      "receipts": 1,
+      "java": 771,
+      "internal": 9,
+      "peakGas": 34492389,
+      "lifecycle": 2
+    },
+    "world-weak-reference-q1": {
+      "receipts": 72,
+      "java": 72,
+      "internal": 2,
+      "peakGas": 13887921,
+      "lifecycle": 2
+    },
+    "world-weak-reference-q7": {
+      "receipts": 11,
+      "java": 72,
+      "internal": 2,
+      "peakGas": 14170854,
+      "lifecycle": 2
+    },
+    "world-weak-reference-q4096": {
+      "receipts": 1,
+      "java": 72,
+      "internal": 2,
+      "peakGas": 15568734,
+      "lifecycle": 2
+    },
+    "world-weak-reference-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11559032,
+      "lifecycle": 2
+    },
+    "world-iterable-link-q1": {
+      "receipts": 140,
+      "java": 140,
+      "internal": 4,
+      "peakGas": 18007105,
+      "lifecycle": 2
+    },
+    "world-iterable-link-q7": {
+      "receipts": 20,
+      "java": 140,
+      "internal": 4,
+      "peakGas": 18366485,
+      "lifecycle": 2
+    },
+    "world-iterable-link-q4096": {
+      "receipts": 1,
+      "java": 140,
+      "internal": 4,
+      "peakGas": 40579105,
+      "lifecycle": 2
+    },
+    "world-iterable-null-q1": {
+      "receipts": 13,
+      "java": 13,
+      "internal": 3,
+      "peakGas": 13901249,
+      "lifecycle": 2
+    },
+    "world-iterable-null-q7": {
+      "receipts": 2,
+      "java": 13,
+      "internal": 3,
+      "peakGas": 14215466,
+      "lifecycle": 2
+    },
+    "world-iterable-null-q4096": {
+      "receipts": 1,
+      "java": 13,
+      "internal": 3,
+      "peakGas": 12618025,
+      "lifecycle": 2
+    },
+    "world-iterable-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11545815,
+      "lifecycle": 2
+    },
+    "world-threadlocal-set-q1": {
+      "receipts": 148,
+      "java": 148,
+      "internal": 2,
+      "peakGas": 14400092,
+      "lifecycle": 2
+    },
+    "world-threadlocal-set-q7": {
+      "receipts": 22,
+      "java": 148,
+      "internal": 2,
+      "peakGas": 14686288,
+      "lifecycle": 2
+    },
+    "world-threadlocal-set-q4096": {
+      "receipts": 1,
+      "java": 148,
+      "internal": 2,
+      "peakGas": 20717779,
+      "lifecycle": 2
+    },
+    "world-threadlocal-constructor-q1": {
+      "receipts": 40,
+      "java": 40,
+      "internal": 2,
+      "peakGas": 13827838,
+      "lifecycle": 2
+    },
+    "world-threadlocal-constructor-q7": {
+      "receipts": 6,
+      "java": 40,
+      "internal": 2,
+      "peakGas": 14073989,
+      "lifecycle": 2
+    },
+    "world-threadlocal-constructor-q4096": {
+      "receipts": 1,
+      "java": 40,
+      "internal": 2,
+      "peakGas": 13440825,
+      "lifecycle": 2
+    },
+    "world-threadlocal-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11555938,
+      "lifecycle": 2
+    },
+    "world-math-int-min-max-q1": {
+      "receipts": 63,
+      "java": 63,
+      "internal": 2,
+      "peakGas": 13370931,
+      "lifecycle": 2
+    },
+    "world-math-int-min-max-q7": {
+      "receipts": 9,
+      "java": 63,
+      "internal": 2,
+      "peakGas": 13603856,
+      "lifecycle": 2
+    },
+    "world-math-int-min-max-q4096": {
+      "receipts": 1,
+      "java": 63,
+      "internal": 2,
+      "peakGas": 12432974,
+      "lifecycle": 2
+    },
+    "world-math-uninitialized-q4096": {
+      "receipts": 1,
+      "java": 3,
+      "internal": 2,
+      "peakGas": 11540541,
+      "lifecycle": 2
+    },
+    "world-raw37-q1": {
+      "receipts": 148,
+      "java": 148,
+      "internal": 2,
+      "peakGas": 22090731,
+      "lifecycle": 2
+    },
+    "world-raw37-q7": {
+      "receipts": 22,
+      "java": 148,
+      "internal": 2,
+      "peakGas": 22711054,
+      "lifecycle": 2
+    },
+    "world-raw37-q4096": {
+      "receipts": 1,
+      "java": 148,
+      "internal": 2,
+      "peakGas": 36726922,
+      "lifecycle": 2
+    },
+    "world-enumset-q4096": {
+      "receipts": 1,
+      "java": 541,
+      "internal": 11,
+      "peakGas": 120288312,
+      "lifecycle": 2
+    },
+    "world-enumset-errors-q4096": {
+      "receipts": 1,
+      "java": 27,
+      "internal": 7,
+      "peakGas": 25724757,
+      "lifecycle": 2
+    },
+    "world-enumset-failed-q4096": {
+      "receipts": 1,
+      "java": 94,
+      "internal": 10,
+      "peakGas": 39754277,
+      "lifecycle": 2
+    },
+    "world-queue-q4096": {
+      "receipts": 1,
+      "java": 198,
+      "internal": 3,
+      "peakGas": 33702716,
+      "lifecycle": 2
+    },
+    "world-oom-q4096": {
+      "receipts": 1,
+      "java": 9,
+      "internal": 3,
+      "peakGas": 33457179,
+      "lifecycle": 2
+    }
+  },
+  "scope": "canonical nested ABI/events/CP hashes/counter chains/read ranges, not full Session acceptance"
+}
