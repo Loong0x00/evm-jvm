@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded ThreadLocal.get preparation
+
+Accepted `parent-24250cb9d` runs unchanged original37 to52841J/50I and8279 receipts. q7 then reaches the unchanged transaction gas bound atomically, so continuation switches only to q1 under the same LOCAL1B/25M policy and measures `CallError(3,3)` at `ParameterizedMessage.getThreadLocalStringBuilder` PC3: `ThreadLocal.get()Object`.
+
+Replace only bootstrap image89 with ordinary constructor plus bounded Java8 get initial/default-null behavior for the exact directly-created ThreadLocal. Preserve raw37/282358,90-image order,diagnostic127,native13,resource pipeline,gas policy,and all other limits/toolchain/semantics. Omitted set/remove/withInitial/overridden initialValue/multithread behavior must refuse. Runtime<=393216 (baseline393208,8B headroom), requiring semantics-preserving layout recovery if needed. Focused q1/q7/direct/reopen plus retained controls,<=1200s canonical receipts. Worker must not access originals; parent reruns unchanged original37 using q1 when q7 hits the measured gas bound. No set/provider factory/world/Done claim.
