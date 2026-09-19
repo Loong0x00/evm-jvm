@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded StringBuilder(int) preparation
+
+Accepted `parent-7227a13b1` runs unchanged original37 through ThreadLocal.get to52851J/50I and8289 receipts. Under the same LOCAL1B/25M policy, q1 measures `CallError(3,21)` at `ParameterizedMessage.getThreadLocalStringBuilder` PC21: `new StringBuilder(255)` / `<init>(I)V`.
+
+Replace only bootstrap image84 by adding ordinary bounded Java8 `StringBuilder(int capacity)` behavior compatible with the accepted logical-content representation: nonnegative capacity creates empty logical content; negative capacity throws guest NegativeArraySizeException. Preserve default constructor,append(String),toString,all 90 image order/runtime-derived bootstrap root,raw37/282358,diagnostic127,native13,and every other limit/toolchain/semantic. Omitted capacity/ensureCapacity/setLength and other methods refuse. Runtime<=393216 (baseline392834,382B headroom). Focus q1/q7/direct/reopen positive 0/1/255 and negative plus retained controls,<=1200s canonical receipts. No originals in worker; parent reruns original37 and q1 after measured q7 gas boundary. No setLength/ThreadLocal.set/provider factory/world/Done claim.
