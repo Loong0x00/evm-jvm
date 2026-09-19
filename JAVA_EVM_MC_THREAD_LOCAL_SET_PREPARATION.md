@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded ThreadLocal set preparation
+
+Accepted `parent-15aa4b8b0` runs unchanged original37 through StringBuilder(255) to52865J/50I and8303 receipts. Under unchanged LOCAL1B/25M with q1 after the measured q7 gas boundary, it atomically reaches `CallError(3,29)` at `ParameterizedMessage.getThreadLocalStringBuilder`: `ThreadLocal.set(Object)V`.
+
+Replace only image89 with a directly-created, unoverridden, single-guest-thread Java8 subset backed by one Object value field: default get returns null; set stores/replaces/nulls and subsequent get returns that reference. Preserve image order/runtime-derived root,raw37/282358,diagnostic127,native13,and all other limits/toolchain/semantics. remove/withInitial/subclass initialValue/multithread behavior refuse. Runtime<=393216 (baseline392934,282B headroom), semantics-preserving layout recovery only. Focus q1/q7/direct/reopen get/set/null/replace/identity and omitted paths plus retained controls,<=1200s canonical receipts. Worker no originals; parent reruns original37. No StringBuilder.setLength/provider factory/world/Done claim.
