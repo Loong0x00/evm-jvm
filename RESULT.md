@@ -1,24 +1,24 @@
 # Result
 
-Generated-only bounded directly-created Java 8 `ThreadLocal.get` stage completed
-from accepted raw37 parent `parent-24250cb9d`.
+Generated-only bounded Java 8 `StringBuilder(int)` stage completed from
+accepted `parent-7227a13b1`.
 
-- Replaced only bootstrap image89 (`java/lang/ThreadLocal`) with final direct
-  constructor plus `Object get()` default-null behavior (193 bytes, SHA-256
-  `cc0a43a9627fd7f6a1ec1b85711e4cb1ba3d988dab06e3fd5fbe795e175b1289`).
-- Raw37/282358, 90-image order, diagnostic127, native13, resource pipeline,
-  gas policy and all fixed limits remain pinned. `set`, `remove`, `withInitial`,
-  initialValue override, and multithread behavior refuse atomically.
-- Exact raw37 90-image root is runtime-derived as `keccak256(abi.encode(DBOOT,h))`,
-  including direct runtime `keccak256(_bootstrapObject())` at slot 0. Removing
-  an unused `Program` argument from a separate private validator recovers 457
-  bytes from the 393291-byte unshared layout: 392834 / 393216 engine bytes;
-  coordinator remains 5394.
-- Default-null get q1/q7/direct/reopen agrees at 51 Java/2 internal steps,
-  epochs 51/8/1, with identical terminal machine and opaque payload roots.
-- Corrected generated gate: 111 rows, 390 commands, 4683 canonical receipts,
-  359.116 seconds (cap1200).
+- Replaced only bootstrap image84 (`java/lang/StringBuilder`) with the 624-byte
+  Java 8 bounded `(I)V` image (SHA-256
+  `57eac8ab607a23fbb0a06a6af655321b7cf634b3d8c448d4c36fbaac99994fd9`).
+  Nonnegative capacity creates empty logical content; negative capacity raises
+  guest `NegativeArraySizeException` through ordinary `newarray`.
+- Existing `()V`, `append(String)`, and `toString()` remain. `capacity`,
+  `ensureCapacity`, `setLength`, primitive append, and other methods refuse.
+  Raw37/282358, 90 images, diagnostic127, native13, resource pipeline, and all
+  fixed limits remain pinned.
+- Runtime-derived ordered root remains `keccak256(abi.encode(DBOOT,h))`:
+  `842464491035a9f67034b5c943f785230649c0d5c59e66532a91826192bc5945`.
+  Runtime is 392934 / 393216 bytes; coordinator remains 5394.
+- Generated focused+retained gate: 430 commands, 5294 canonical receipts,
+  357.671 seconds (cap1200). 0/1/255 positive and negative capacity agree over
+  q1/q7/direct/reopen.
 
-No original artifact/JAR/class/resource, provider/factory/world, or Done claim.
-Parent alone reruns unchanged original37. Evidence:
-`evidence/java-evm/minecraft-entry/thread-local-get-preflight/`.
+No original artifact/JAR/class/resource, provider/factory/world, setLength,
+ThreadLocal.set, or Done claim. Parent alone reruns unchanged original37.
+Evidence: `evidence/java-evm/minecraft-entry/string-builder-capacity-constructor-preflight/`.
