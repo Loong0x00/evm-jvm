@@ -97,22 +97,16 @@ def expected_engine(parent_engine):
     old = "cafebabe00000034000a0a000300070700080700090100063c696e69743e010003282956010004436f64650c000400050100156a6176612f6c616e672f5468726561644c6f63616c0100106a6176612f6c616e672f4f626a656374002100020003000000000001000100040005000100060000001100010001000000052ab70001b1000000000000"
     assert text.count(old) == 1
     text = text.replace(old, THREADLOCAL_HEX)
-    begin = text.index("    function _bootstrapRoot() private pure returns (bytes32) {")
-    end = text.index("\n    function _prepare(", begin)
-    dynamic_root = parent_engine[begin:end]
-    assert dynamic_root.count("h[0] = keccak256(_bootstrapObject());") == 1
-    dynamic_root = dynamic_root.replace(
-        "h[0] = keccak256(_bootstrapObject());", "h[0] = _objectImageHash();"
+    # The complete ordered root stays exactly runtime-derived.  Remove only the
+    # unused Program argument from the post-allocation main-array validator;
+    # that private helper reads RuntimeState exclusively.
+    assert text.count("_validateInitialMainRoot(p, s);") == 1
+    assert text.count("function _validateInitialMainRoot(Program memory p, RuntimeState memory s)") == 1
+    text = text.replace("_validateInitialMainRoot(p, s);", "_validateInitialMainRoot(s);")
+    return text.replace(
+        "function _validateInitialMainRoot(Program memory p, RuntimeState memory s)",
+        "function _validateInitialMainRoot(RuntimeState memory s)",
     )
-    helper = '''
-
-    // This remains a runtime Keccak over the exact Object image bytes. Keeping the
-    // image materializer single-sited avoids duplicating that immutable literal.
-    function _objectImageHash() private pure returns (bytes32) {
-        return keccak256(_bootstrapObject());
-    }
-'''
-    return text[:begin] + dynamic_root + helper + text[end:]
 
 
 inputs = {name: digest(parent / name) for name in PARENT}
@@ -184,10 +178,10 @@ assert layout["rejectedUnsharedDynamicRootLayout"] == {
     "runtimeBytes": 393291, "overCapBytes": 75,
 }
 assert layout["acceptedRuntimeDerivedLayout"] == {
-    "root": "keccak256(abi.encode(DBOOT, h)) with raw37's ordered runtime image hashes and retained isolated constants",
-    "objectHash": "runtime keccak256(_bootstrapObject()) through a single-sited helper; not a precomputed commitment",
-    "bootstrapRoot": ROOT, "runtimeBytes": 392959, "savedBytes": 332, "headroomBytes": 257,
-    "runtimeSHA256": "94bd54ce277258129466e80252f7599b0fdd6666ca086385f5ba06b881e97993",
+    "root": "keccak256(abi.encode(DBOOT, h)) with raw37's complete ordered runtime image hashes and retained isolated constants",
+    "optimization": "remove the unused Program argument from the private post-allocation main String[] validator",
+    "bootstrapRoot": ROOT, "runtimeBytes": 392834, "savedBytes": 457, "headroomBytes": 382,
+    "runtimeSHA256": "7f4cd30f0cfeed3ba64b1d0be7663669bbd15e9cb388081052fe7643589f2a8b",
 }
 for fixed in (
     "MAX_RAW_CLASSES = 37;", "MAX_RAW_BYTES = 282358;", "MAX_CHECKPOINT_BYTES = 1048576;",
@@ -207,12 +201,14 @@ parent_rows = re.findall(r"h\[(\d+)\] = ([^;]+);", parent_engine[parent_root_beg
 root_rows = re.findall(r"h\[(\d+)\] = ([^;]+);", root_source)
 assert len(parent_rows) == len(root_rows) == 90
 assert [int(index) for index, _ in root_rows] == list(range(90))
-assert root_rows[0] == ("0", "_objectImageHash()")
-assert root_rows[1:] == parent_rows[1:]
+assert root_rows == parent_rows
+assert root_rows[0] == ("0", "keccak256(_bootstrapObject())")
 assert "return keccak256(abi.encode(DBOOT, h));" in root_source
 assert 'return hex"' + ROOT + '";' not in engine
-assert engine.count("function _objectImageHash() private pure returns (bytes32) {") == 1
-assert engine.count("return keccak256(_bootstrapObject());") == 1
+assert "_objectImageHash" not in engine
+assert engine.count("h[0] = keccak256(_bootstrapObject());") == 1
+assert engine.count("_validateInitialMainRoot(s);") == 1
+assert engine.count("function _validateInitialMainRoot(RuntimeState memory s)") == 1
 
 expected_coordinator = (parent / "coordinator/MCEntryCoordinator.sol").read_text().replace(PARENT_DOMAIN, DOMAIN).replace(PARENT_ENGINE, ENGINE)
 coordinator = (stage / "coordinator/MCEntryCoordinator.sol").read_text()

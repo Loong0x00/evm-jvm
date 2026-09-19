@@ -13,13 +13,13 @@
     "overCapBytes": 75
   },
   "acceptedRuntimeDerivedLayout": {
-    "root": "keccak256(abi.encode(DBOOT, h)) with raw37's ordered runtime image hashes and retained isolated constants",
-    "objectHash": "runtime keccak256(_bootstrapObject()) through a single-sited helper; not a precomputed commitment",
+    "root": "keccak256(abi.encode(DBOOT, h)) with raw37's complete ordered runtime image hashes and retained isolated constants",
+    "optimization": "remove the unused Program argument from the private post-allocation main String[] validator",
     "bootstrapRoot": "1aa769a912931967ca44cec129ff505741409aecaee7536a85a586213deb4a7b",
-    "runtimeBytes": 392959,
-    "savedBytes": 332,
-    "headroomBytes": 257,
-    "runtimeSHA256": "94bd54ce277258129466e80252f7599b0fdd6666ca086385f5ba06b881e97993"
+    "runtimeBytes": 392834,
+    "savedBytes": 457,
+    "headroomBytes": 382,
+    "runtimeSHA256": "7f4cd30f0cfeed3ba64b1d0be7663669bbd15e9cb388081052fe7643589f2a8b"
   },
-  "reason": "The accepted root allocates the ordered bytes32[90] array and returns keccak256(abi.encode(DBOOT, h)) on every configuration derivation. h[0] calls a private helper which itself evaluates keccak256(_bootstrapObject()) from the exact immutable Object image bytes; it is a code-layout sharing device, not a precomputed image hash or folded root. Every other non-isolated slot continues to call keccak256 over its exact image bytes in order. The retained isolated DBOOT_ENUMSET, DBOOT_ITERABLE, and DBOOT_MATH commitments are unchanged from raw37. verify_source.py recompiles ThreadLocal, checks every untouched image byte, independently reconstructs all 90 image hashes and the ABI root using pinned local js-sha3, and rejects any full precomputed root return. No limit, binding, image order, package root, or Java behavior changes."
+  "reason": "The accepted root allocates the ordered bytes32[90] array and evaluates each ordered image hash at runtime before returning keccak256(abi.encode(DBOOT, h)) on every configuration derivation. Slot 0 directly evaluates keccak256(_bootstrapObject()), as in raw37; the retained isolated DBOOT_ENUMSET, DBOOT_ITERABLE, and DBOOT_MATH commitments are unchanged. The only layout optimization is outside the root: _validateInitialMainRoot receives only RuntimeState because it never reads Program. verify_source.py recompiles ThreadLocal, checks every untouched image byte, requires the complete raw37 ordered root assignment sequence, independently reconstructs all 90 image hashes and the ABI root using pinned local js-sha3, and rejects any full precomputed root return. No limit, binding, image order, package root, or Java behavior changes."
 }

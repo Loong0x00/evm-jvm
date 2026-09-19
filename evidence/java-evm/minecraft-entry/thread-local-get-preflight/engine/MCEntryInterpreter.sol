@@ -619,7 +619,7 @@ contract MCEntryInterpreter {
 
     function _bootstrapRoot() private pure returns (bytes32) {
         bytes32[] memory h = new bytes32[](90);
-        h[0] = _objectImageHash();
+        h[0] = keccak256(_bootstrapObject());
         h[1] = keccak256(_bootstrapCloneable());
         h[2] = keccak256(_bootstrapSerializable());
         h[3] = keccak256(_bootstrapFloat());
@@ -727,13 +727,6 @@ contract MCEntryInterpreter {
         h[88] = keccak256(_bootstrapThreadLocal());
         h[89] = DBOOT_MATH;
         return keccak256(abi.encode(DBOOT, h));
-    }
-
-
-    // This remains a runtime Keccak over the exact Object image bytes. Keeping the
-    // image materializer single-sited avoids duplicating that immutable literal.
-    function _objectImageHash() private pure returns (bytes32) {
-        return keccak256(_bootstrapObject());
     }
 
     function _prepare(
@@ -882,7 +875,7 @@ contract MCEntryInterpreter {
             // invariant. Validate the canonical allocation before guest code can
             // execute, not on later checkpoints where local0 is ordinary mutable
             // Java storage.
-            _validateInitialMainRoot(p, s);
+            _validateInitialMainRoot(s);
         }
     }
 
@@ -2866,7 +2859,7 @@ contract MCEntryInterpreter {
         }
     }
 
-    function _validateInitialMainRoot(Program memory p, RuntimeState memory s) private pure {
+    function _validateInitialMainRoot(RuntimeState memory s) private pure {
         Frame memory root = s.frames[0];
         if (root.locals.length == 0 || !root.initialized[0] || _valueKind(root.locals[0]) != KIND_REF) revert LC0StateError(7, 0);
         uint256 h = _payload(root.locals[0]);
