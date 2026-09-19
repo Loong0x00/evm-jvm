@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded StringBuilder.setLength(0) preparation
+
+Accepted `parent-b8102b85b` runs unchanged original37 through ThreadLocal.set to52873J/50I. LOCAL4.2B q4096 plus atomic halving reproduced the exact `CallError(3,34)` in25.543s from22988J; 3298 mixed-policy canonical receipts verify. Target is `ParameterizedMessage.getThreadLocalStringBuilder` PC34: `StringBuilder.setLength(0)`.
+
+Replace only image84 to add bounded reset `setLength(int)` for exactly zero: replace logical content by empty char[]. Nonzero values must deterministically throw guest IllegalArgumentException and are not claimed. Preserve existing constructors/append/toString,90-image order/runtime-derived root,raw37/282358,diagnostic127,native13,and all other limits/toolchain/semantics. Runtime<=393216 (baseline393072,144B headroom); only semantics-preserving unrelated layout cleanup if needed. Focus zero reset before/after append q1/q7/direct/reopen, nonzero refusal, omitted APIs, retained controls<=1200s canonical receipts. Worker no originals; parent uses LOCAL4.2B/q4096 adaptive replay. No general setLength/capacity/provider factory/world/Done claim.
