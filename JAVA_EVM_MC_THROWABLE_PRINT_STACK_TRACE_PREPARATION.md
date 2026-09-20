@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded Throwable.printStackTrace(PrintStream) preparation
+
+Accepted `parent-2e155e0f6` runs unchanged original38 through PrintStream char sink to65279J/50I in26 successful LOCAL4.2B/q4096 blocks. Exact blocker is `SimpleLogger.logMessage` PC273 invoking `Throwable.printStackTrace(PrintStream)` on a non-null status throwable.
+
+Replace only bootstrap image5 Throwable to add bounded message-only output: for non-null detailMessage call the measured PrintStream.println(String) sink; null detailMessage performs no write. Preserve constructors/getMessage/getCause, all other90 images/order/runtime-derived root with changed Throwable hash derived from exact bytes,raw38/285489,diagnostic129,native13,and all limits/toolchain/semantics. No class name, frames, causes, suppressed exceptions, or host output claim. Runtime<=393216 (baseline393185,31B headroom); verified bounded-loop/layout cleanup only, no new folded historical commitments. Focus nonnull/null message, sink retention, q1/q7/direct/reopen and retained controls<=1200s receipts. Worker no originals; parent accelerated replay. No provider factory/world/Done claim.
