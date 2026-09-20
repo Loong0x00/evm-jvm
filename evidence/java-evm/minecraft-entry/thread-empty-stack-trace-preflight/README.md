@@ -10,8 +10,8 @@ appends the 142-byte `java/lang/StackTraceElement` image at slot 90
 allocates a fresh non-null zero-length `StackTraceElement[]`. The array leaf is
 canonical and bootstrap-owned. There is no frame capture, element construction,
 `StackTraceElement` API, scheduler, second thread, host callback, provider,
-world, or Done claim. A raw leaf replacement and `getClassName()` member
-reference refuse before a Head is published.
+world, or Done claim. A raw leaf replacement plus constructor and `getClassName()`
+member references refuse before a Head is published.
 
 The 91-image root remains runtime-derived:
 `keccak256(abi.encode(DBOOT, h))`, with ordered root
@@ -33,7 +33,7 @@ The focused `ThreadEmptyStackTraceMain` q1/q7/direct/reopen chains agree at
 `0x6432a63c75132d056033aed54b110923304767e396d674cb0bfd534bc9ee16bf`,
 and opaque payload SHA-256
 `95996f8dd8c7362a2c255d36603243f32b6106bec58b5f46a04f3a94ba08bb3c`.
-The generated retained gate completed 480 commands in 534.248 seconds and
+The generated retained gate completed 480 commands in 546.973 seconds and
 canonicalized 8329 receipts. It does not read an original JAR/class/resource or
 run Minecraft.
 

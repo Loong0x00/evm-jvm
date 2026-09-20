@@ -807,7 +807,7 @@ run("canonical-receipts", ["node", here / "verify_receipts.js", build, out, "1",
 canonical = json.loads((out / "logs/canonical-receipts.log").read_text())
 whole_gate_seconds = time.monotonic() - started
 assert whole_gate_seconds <= 1200, whole_gate_seconds
-summary = {"profile": "MC-SB-CHARSEQ-RANGE0-P", "generatedOnly": True, "results": rows,
+summary = {"profile": "MC-THREAD-EMPTY-TRACE0-P", "generatedOnly": True, "results": rows,
            "canonicalReceipts": canonical, "commands": commands, "wholeGateSeconds": whole_gate_seconds,
            "limitations": "Only bootstrap image50 java/lang/Thread and appended image90 java/lang/StackTraceElement change semantically. getStackTrace allocates a fresh non-null empty StackTraceElement[]; it exposes no frame capture, element construction or StackTraceElement API. The root remains runtime-derived as keccak256(abi.encode(DBOOT, h)) over 91 exact ordered image hashes. The ThreadLocal root leaf is an exact verified static hash and two unused interpreter parameters are removed only as layout recovery; no root, cap, error precedence or execution path is weakened. Raw37/282358, diagnostic128, native13, selected-resource count1/4096, CP/Code/frames/checkpoint/Head/toolchain and every other fixed limit remain pinned. This generated-only gate uses no original artifact, JAR, class, resource, Provider construction, factory, world, or Done input or claim."}
 (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
