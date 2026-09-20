@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded monitorenter/monitorexit preparation
+
+Accepted `parent-886800502` runs unchanged original38 through deterministic StatusData timestamp to60697J/50I. Linking `SimpleLogger.logMessage` from StatusLogger PC173 atomically reaches `BytecodeError(6,32)`: monitorenter at PC32, with paired monitorexit at PC46/54.
+
+Add opcodes0xc2/0xc3 to predecode and execution as a bounded single-guest-thread balanced-monitor subset: pop one reference, null raises guest NPE, non-null balanced/reentrant monitor operations complete without scheduler/contention state. Unbalanced ownership, cross-thread contention, wait/notify are not claimed. Preserve all91 images/runtime-derived root,raw38/285489,diagnostic129,native13,and all other limits/toolchain/semantics. Runtime<=393216 (baseline393123,93B headroom); verified semantics-preserving cleanup only. Focus synchronized/reentrant/null q1/q7/direct/reopen and retained controls<=1200s canonical receipts. Worker no originals; parent accelerated replay. No provider factory/world/Done claim.
