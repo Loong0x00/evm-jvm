@@ -1,0 +1,124 @@
+{
+  "status": "fitted-full-generated-gate",
+  "basis": "c5a9e702a",
+  "rejectedAttempt": "bfdfd1731527903d9dd32cb208af361007370894",
+  "runtimeCap": 393216,
+  "baselineRuntimeBytes": 393208,
+  "invariant": {
+    "objectLeaf": "h[0] = keccak256(_bootstrapObject())",
+    "objectLeafKeccak256": "8f96f9515a06956754c5de9446d653641348a60d238100e36354acf2f2794111",
+    "otherHistoricalLeaves": "runtime-derived exactly as before",
+    "allowedNewCommitment": "only h[83] = DBOOT_PRINT_STREAM for the changed PrintStream image",
+    "forbidden": [
+      "DBOOT_OBJECT",
+      "folding Object or the whole bootstrap root",
+      "additional folded historical-image commitments"
+    ]
+  },
+  "measurements": [
+    {
+      "variant": "ordinary String.length null dereference plus one PrintStream leaf commitment",
+      "printStreamBytes": 302,
+      "printStreamKeccak256": "fe355a8dfea553776ae172b7b87896b6520058093cd18ea0477cca0156a33a0c",
+      "runtimeBytes": 393300,
+      "overCapBytes": 84,
+      "runtimeSHA256": "5337ba32c8421c661b1c75f5ea3990cf4472099454c91ae40b3702afeaa0f2ba"
+    },
+    {
+      "variant": "compact non-null-only direct field store, reused method-name private field, one PrintStream leaf commitment",
+      "printStreamBytes": 239,
+      "printStreamSHA256": "0fda0bcbb7ca6f8aae2dc8e38494fc75df623712dfef520520a1bdbd4f4ecd5b",
+      "printStreamKeccak256": "ffdfe270a5c4faeeff544874a0a181720d4a29abce5385d400b8749a204fe271",
+      "runtimeBytes": 393217,
+      "overCapBytes": 1,
+      "runtimeSHA256": "a6cde650b0cb921f603b678b40e20e7b94335e7d57b96a13ccfa9e75c60e57d1",
+      "runtimeKeccak256": "e11105e5e391a85bb94bf6ecc828c21516c765acd530e5f2cdeafc2fa3aaac2b",
+      "engineSourceSHA256": "c985831c02bf1a0e9fa95d8e8d1cf2fa392ff94f9d925da298e2331c3d4d67e6",
+      "classHex": "cafebabe00000034000f0a0004000b090003000c07000d07000e0100077072696e746c6e0100124c6a6176612f6c616e672f537472696e673b0100063c696e69743e010003282956010004436f6465010015284c6a6176612f6c616e672f537472696e673b29560c000700080c000500060100136a6176612f696f2f5072696e7453747265616d0100106a6176612f6c616e672f4f626a6563740021000300040000000100020005000600000002000100070008000100090000001100010001000000052ab70001b10000000000010005000a000100090000001200020002000000062a2bb50002b1000000000000",
+      "classStructure": "Java 8 major=52; public superclass Object; one private String field named println; public constructor; public println(String) executes exactly aload_0, aload_1, putfield, return. Null is unsupported and was neither invoked nor claimed.",
+      "reproduction": "Starting from rejectedAttempt with dynamic h[0] = keccak256(_bootstrapObject()) and only h[83] = DBOOT_PRINT_STREAM, compile the exact classHex under the pinned compiler/settings; no monitorenter/monitorexit or String.length reference is present."
+    },
+    {
+      "variant": "compact balanced-monitor String null check, reused method-name private field, one PrintStream leaf commitment",
+      "printStreamBytes": 243,
+      "printStreamSHA256": "ce135ac9f005756572ce903eb6c0f07ffc8df4ac687a3995605a10667110a0bd",
+      "printStreamKeccak256": "ede9102c2f662b4e2af5cf741d663a04b394928c50c243f1b70144836f1b5f47",
+      "runtimeBytes": 393223,
+      "overCapBytes": 7,
+      "runtimeSHA256": "76eeba32f6d59b7366f710bab848e86ae6f291e098f5980c8cb3e1ec94837478",
+      "runtimeKeccak256": "ee1ca7d03d5aa385232c051865ccf8d1961ded47014754051fca6edcf22a1ac5",
+      "classHex": "cafebabe00000034000f0a0003000b090003000c07000d07000e0100124c6a6176612f6c616e672f537472696e673b0100063c696e69743e010003282956010004436f64650100077072696e746c6e010015284c6a6176612f6c616e672f537472696e673b29560c000600070c000900050100136a6176612f696f2f5072696e7453747265616d0100106a6176612f6c616e672f4f626a6563740021000300040000000100020009000500000002000100060007000100080000001100010001000000052ab70001b10000000000010009000a0001000800000016000200020000000a2bc22bc32a2bb50002b1000000000000",
+      "classStructure": "Java 8 major=52; public superclass Object; one private String field named println; public constructor; public println(String) executes aload_1, monitorenter, aload_1, monitorexit, aload_0, aload_1, putfield, return. The accepted monitor profile makes the balanced non-null pair a no-op and raises the normal guest NPE for null before the sink overwrite."
+    },
+    {
+      "variant": "same compact class with PrintStream literal inlined at its only preparation site",
+      "runtimeBytes": 393224,
+      "overCapBytes": 8,
+      "runtimeSHA256": "8d01011a9c6a32fa86479a1bca59de9e05807fd976a8c7a6579850df5c2bd797"
+    },
+    {
+      "variant": "same compact class moved into the existing StringBuilder helper",
+      "runtimeBytes": 393224,
+      "overCapBytes": 8,
+      "runtimeSHA256": "492a9ee3392b72bc859a6fed4243b6c5f7e5141aced564f94686e0436305b939"
+    },
+    {
+      "variant": "same compact function placed before System or Object bootstrap definitions",
+      "runtimeBytes": 393223,
+      "overCapBytes": 7,
+      "runtimeSHA256": "76eeba32f6d59b7366f710bab848e86ae6f291e098f5980c8cb3e1ec94837478"
+    },
+    {
+      "variant": "same compact function moved before root/config helpers",
+      "runtimeBytes": 394327,
+      "overCapBytes": 1111,
+      "runtimeSHA256": "1d797ff24b785b73466fc36353fae731b8feb1e5c39a98c1d00756ecbb5b93db"
+    }
+  ],
+  "compiler": {
+    "version": "0.8.30+commit.73712a01.Emscripten.clang",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    }
+  },
+  "verification": [
+    "The 243-byte class was parsed with javap -verbose: major version 52, one field, two methods, monitorenter/monitorexit, and putfield were present.",
+    "The 239-byte non-null-only class was recompiled with pinned Java 8 flags and javap: major=52, one field, two methods, and exactly aload_0/aload_1/putfield/return in println(String).",
+    "Each measured runtime was built with the pinned engine compiler settings after restoring dynamic h[0] and retaining only h[83] as a folded PrintStream leaf.",
+    "The exact 239-byte direct-store class plus only the three parser-bounded source-layout loop placements builds at 393200B, retains dynamic h[0] and only h[83] = DBOOT_PRINT_STREAM, and passed the full generated-only q1/q7/direct/reopen gate (9818 canonical receipts)."
+  ],
+  "conclusion": "Do not accept bfdfd1731 or any replacement that folds Object. The 239-byte non-null-only candidate now fits at 393200B through the documented bounded-slice source-layout recovery; null is unsupported and untested. The successful generated-only gate does not claim original-Minecraft execution, world, or Done.",
+  "layoutRecovery": {
+    "scope": "three source-equivalent private bounded-slice loop placements only; retained 239-byte direct-store PrintStream image",
+    "candidateRuntimeBytes": 393217,
+    "runtimeBytes": 393200,
+    "headroomBytes": 16,
+    "engineSourceSHA256": "01e791cfd1706d6ab286f569131cbc6720ffa966219eb786257b239e849f388f",
+    "runtimeSHA256": "d99183c8e4ce289ad0cc50f9d4c68791a474b87425be5113ea3f29e6b960ef34",
+    "runtimeKeccak256": "57703e25640b58f0c0420b6652588226ee4aa4c51b6266ad7ae7d907c4ac7963",
+    "dynamicObjectAndOnlyPrintStreamLeaf": true,
+    "fullGeneratedGate": {
+      "seconds": 597.7924059689976,
+      "canonicalReceipts": 9818,
+      "nonNullFixtures": [
+        "empty",
+        "ASCII",
+        "surrogate",
+        "replacement"
+      ],
+      "quantums": [
+        1,
+        7,
+        4096
+      ]
+    },
+    "durableEvidence": "evidence/java-evm/minecraft-entry/print-stream-println-string-preflight/layout-recovery.json"
+  }
+}

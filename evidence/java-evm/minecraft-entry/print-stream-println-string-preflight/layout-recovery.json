@@ -1,0 +1,35 @@
+{
+  "scope": "source-equivalent bounded-slice layout recovery for the 239-byte non-null-only PrintStream candidate",
+  "invariant": {
+    "objectLeaf": "h[0] = keccak256(_bootstrapObject())",
+    "permittedNewLeaf": "h[83] = DBOOT_PRINT_STREAM",
+    "forbidden": ["DBOOT_OBJECT", "folded bootstrap root", "other folded historical-image leaves"]
+  },
+  "candidate": {
+    "engineSourceSHA256": "c985831c02bf1a0e9fa95d8e8d1cf2fa392ff94f9d925da298e2331c3d4d67e6",
+    "printStreamBytes": 239,
+    "printStreamSHA256": "0fda0bcbb7ca6f8aae2dc8e38494fc75df623712dfef520520a1bdbd4f4ecd5b",
+    "runtimeBytes": 393217,
+    "runtimeSHA256": "a6cde650b0cb921f603b678b40e20e7b94335e7d57b96a13ccfa9e75c60e57d1"
+  },
+  "recovery": {
+    "engineSourceSHA256": "01e791cfd1706d6ab286f569131cbc6720ffa966219eb786257b239e849f388f",
+    "onlySourceLayoutChanges": [
+      "_equalsCross bounded byte slice loop",
+      "_equals bounded byte/literal slice loop",
+      "_equalsSlice bounded byte slice loop"
+    ],
+    "safety": "Each existing caller supplies parser-validated finite offsets and lengths; the loop guard keeps i and every offset+i in range, so the checked overflow branches are unreachable on every supported path.",
+    "runtimeBytes": 393200,
+    "headroomBytes": 16,
+    "runtimeSHA256": "d99183c8e4ce289ad0cc50f9d4c68791a474b87425be5113ea3f29e6b960ef34",
+    "runtimeKeccak256": "57703e25640b58f0c0420b6652588226ee4aa4c51b6266ad7ae7d907c4ac7963"
+  },
+  "fullGeneratedGate": {
+    "wholeGateSeconds": 597.7924059689976,
+    "canonicalReceipts": 9818,
+    "focusedLines": ["empty", "ASCII", "surrogate", "replacement"],
+    "quantums": [1, 7, 4096],
+    "nullClaim": "unsupported and not invoked"
+  }
+}
