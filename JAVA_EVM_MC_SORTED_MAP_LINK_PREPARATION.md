@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft `SortedMap` link preparation
+
+Accepted `parent-4e2489003` appends genuine `ReusableMessage.class` and reaches65349J/52I in22 successful LOCAL4.2B/q4096 blocks. It atomically requests platform interface `java/util/SortedMap` at site4100/context186.
+
+Implement one bounded generated bootstrap image92: `public interface SortedMap<K,V> extends Map<K,V> {}` for class/link availability only. Do not claim SortedMap methods, mutation, ordering, views, comparators, or that constructor-only TreeMap implements SortedMap. Preserve TreeMap constructor and mutation refusal. Update the historical explicit SortedMap-put fixture from missing-class to the exact measured unsupported-call refusal after interface availability. Add q1/q7/direct/reopen link-only/null probe and raw replacement refusal. Increase only bootstrap images91->92 and diagnostic class bound131->132; preserve raw40/295438, native13, runtime-derived exact ordered root, all limits/toolchain/semantics. Runtime<=393216 (baseline389150), whole gate<=1200s canonical receipts. Worker no originals; parent genuine replay. No provider factory/world/Done claim.
