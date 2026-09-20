@@ -31,7 +31,7 @@ assert pins["bootstrapCount"] == 91 and pins["rawLimits"] == [38, 285489]
 assert pins["diagnosticClassBound"] == 129 and pins["engine"]["bytes"] <= 393216
 assert pins["globalNativeBindings"] == 13 and pins["exceptionKinds"] == 14
 assert pins["bootstrapSHA256"]["System"] == "d10707987a9b7935e1c87a6a5fc5f574ffbc42f3cd82a629d20291dffa0487bf"
-assert pins["bootstrapSHA256"]["PrintStream"] == "0fda0bcbb7ca6f8aae2dc8e38494fc75df623712dfef520520a1bdbd4f4ecd5b"
+assert pins["bootstrapSHA256"]["PrintStream"] == "060f9aa1e9c6415ae6d6462678fdb19b8a7d0736e742821fa3130191eb497667"
 assert pins["bootstrapSHA256"]["Collection"] == "a7e0e47540fc39afc022acea939c81d9a2143ef53e59f3227e2dd0ffda16487c"
 assert pins["bootstrapSHA256"]["Iterable"] == "d144cca13fbb5ae0bf97773e84efb4308acbf3fe31cd9b4b0488c8a8e447a17f"
 assert pins["bootstrapSHA256"]["StringBuilder"] == "7f2e95a40c6ec353b603368e0a2609a2e0baa7cf84f7d65b7d4865daf6792270"
@@ -537,11 +537,11 @@ q_equivalent("stringbuilder-append-char", "stringbuilder-append-char")
 # The read-only heap decoder proves its private sole field equals the exact static
 # guest String reference supplied to println after every q1/q7/direct/reopen run.
 for label in ("printstream-empty", "printstream-ascii", "printstream-surrogate",
-              "printstream-replacement"):
+              "printstream-replacement", "printstream-null"):
     q_printstream(label)
 
 # All non-String print/println forms are absent from image83 and fail before a
-# Head exists.
+# Head exists; the null member call above instead takes ordinary guest NPE.
 for label in ("printstream-println-empty-omitted", "printstream-println-int-omitted",
               "printstream-print-string-omitted"):
     world = out / ("world-" + label)
@@ -934,6 +934,6 @@ whole_gate_seconds = time.monotonic() - started
 assert whole_gate_seconds <= 1200, whole_gate_seconds
 summary = {"profile": "MC-PRINTLN-STRING-0001", "generatedOnly": True, "results": rows,
            "canonicalReceipts": canonical, "commands": commands, "wholeGateSeconds": whole_gate_seconds,
-           "limitations": "Only bootstrap image83 java/io/PrintStream changes: its public constructor plus non-null println(String) ordinary Java Code directly stores that exact guest reference in its sole private String field. Null is outside this profile; every other print/println signature is absent. h[0] remains keccak256(_bootstrapObject()) and h[83] alone is the exact DBOOT_PRINT_STREAM image leaf; no Object, whole-root, or other historical-image commitment is folded. Three exact private slice-comparison loops use unchecked arithmetic only after parser-validated finite slice bounds; they preserve all supported/error paths while recovering seventeen runtime bytes from the measured 393217-byte direct-store candidate. No host stdout/stderr, encoding, throwable output, provider factory, world, or Done claim is made. The 91-image order/runtime-derived root, raw38/285489, diagnostic129, native13, selected-resource count1/4096, CP/Code/frames/checkpoint/Head/toolchain and every other fixed limit remain pinned. This generated-only gate uses no original artifact, JAR, class, resource, StatusData, formatted status, Provider construction, factory, world, or Done input or claim. Parent alone owns accelerated unchanged-original replay."}
+           "limitations": "Only bootstrap image83 java/io/PrintStream changes: its public constructor plus println(String) ordinary Java Code executes a balanced monitorenter/monitorexit null check then stores that exact guest reference in its sole private String field. Null takes normal guest NPE before overwrite; every other print/println signature is absent. h[0] remains keccak256(_bootstrapObject()) and h[83] alone is the exact DBOOT_PRINT_STREAM image leaf; no Object, whole-root, or other historical-image commitment is folded. Three exact private slice-comparison loops use unchecked arithmetic only after parser-validated finite slice bounds; they preserve all supported/error paths while recovering seventeen runtime bytes. No host stdout/stderr, encoding, throwable output, provider factory, world, or Done claim is made. The 91-image order/runtime-derived root, raw38/285489, diagnostic129, native13, selected-resource count1/4096, CP/Code/frames/checkpoint/Head/toolchain and every other fixed limit remain pinned. This generated-only gate uses no original artifact, JAR, class, resource, StatusData, formatted status, Provider construction, factory, world, or Done input or claim. Parent alone owns accelerated unchanged-original replay."}
 (out / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
 print(json.dumps(summary, indent=2))

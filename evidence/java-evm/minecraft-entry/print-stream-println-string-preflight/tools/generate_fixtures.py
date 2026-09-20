@@ -1641,7 +1641,24 @@ printstream_line("printstream-surrogate", '"\\ud83d\\ude00"')
 printstream_line("printstream-replacement", '"replacement"', True)
 
 # Null is outside the bounded non-null member contract.  The ordinary String
-# Null is deliberately outside the compact non-null-only member contract.
+# length dereference must throw before the prior stored guest reference changes.
+build("printstream-null", {
+    "java/io/PrintStream.java": PRINT_STREAM_STUB,
+    "PrintStreamNullMain.java": """public final class PrintStreamNullMain {
+  static java.io.PrintStream sink;
+  static String expected;
+  static int result;
+  public static void main(String[] ignored) {
+    sink = new java.io.PrintStream();
+    expected = "prior";
+    sink.println(expected);
+    try { sink.println((String) null); throw new Error(); }
+    catch (NullPointerException expected) {}
+    result = 7;
+  }
+}
+""",
+}, ["PrintStreamNullMain.class"])
 
 # The image declares exactly constructor plus println(String). Representative
 # print/println signatures must link-fail before a Head is published.

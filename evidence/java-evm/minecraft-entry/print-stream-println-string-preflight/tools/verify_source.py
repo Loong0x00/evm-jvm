@@ -21,9 +21,9 @@ parent = stage.parent / "string-builder-append-char-preflight"
 PD, D = "MC-SB-APPEND-CHAR-0001", "MC-PRINTLN-STRING-0001"
 PE, E = "4d432d53422d415050454e442d434841522d3031", "4d432d5052494e544c4e2d535452494e472d3031"
 PO, O = "4d432d53422d415050454e442d434841522d3032", "4d432d5052494e544c4e2d535452494e472d3032"
-IMAGE_SHA = "0fda0bcbb7ca6f8aae2dc8e38494fc75df623712dfef520520a1bdbd4f4ecd5b"
-IMAGE_KECCAK = "ffdfe270a5c4faeeff544874a0a181720d4a29abce5385d400b8749a204fe271"
-ENGINE_BYTES = 393200
+IMAGE_SHA = "060f9aa1e9c6415ae6d6462678fdb19b8a7d0736e742821fa3130191eb497667"
+IMAGE_KECCAK = "03915016b845257751cbb6de613d95effdc3c84cd4b59216de7783d0ca95ff2e"
+ENGINE_BYTES = 393206
 
 
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -54,20 +54,20 @@ assert parent_pins["rawLimits"] == [38, 285489] and parent_pins["diagnosticClass
 assert parent_pins["globalNativeBindings"] == 13 and parent_pins["exceptionKinds"] == 14 and parent_pins["maxFrames"] == 128
 
 # The checked-in class is generated solely by this local fixed producer. Its
-# sole println Code body is aload_0, aload_1, putfield, return: non-null-only
-# direct storage, no monitor/null path and no host output.
+# sole println Code body uses balanced monitorenter/monitorexit as its null
+# probe before direct storage; it has no host-output path.
 spec = importlib.util.spec_from_file_location("build_print_stream", stage / "bootstrap/build_print_stream.py")
 mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
 image = mod.build()
-assert len(image) == 239 and hashlib.sha256(image).hexdigest() == IMAGE_SHA
+assert len(image) == 243 and hashlib.sha256(image).hexdigest() == IMAGE_SHA
 assert image.hex() == "".join((stage / "bootstrap/java/io/PrintStream.class.hex").read_text().split())
 assert image.startswith(bytes.fromhex("cafebabe00000034000f0a0004000b"))
-assert image.count(bytes.fromhex("2a2bb50002b1")) == 1
+assert image.count(bytes.fromhex("2bc22bc32a2bb50002b1")) == 1
 assert image.count(b"java/io/PrintStream") == 1 and image.count(b"Ljava/lang/String;") == 2
 source = (stage / "bootstrap/java/io/PrintStream.java").read_text()
-for required in ("private String println;", "public PrintStream() {}", "public void println(String line)", "println = line;"):
+for required in ("private String println;", "public PrintStream() {}", "public void println(String line)", "synchronized (line) {}", "println = line;"):
     assert source.count(required) == 1
-assert source.count("synchronized") == 0 and source.count("print(") == 0
+assert source.count("synchronized (line) {}") == 1 and source.count("print(") == 0
 
 # Construct the only permitted engine delta mechanically from the accepted
 # parent. h[0] remains dynamic, h[83] alone receives a new exact image leaf.
@@ -75,8 +75,8 @@ p = (parent / "engine/MCEntryInterpreter.sol").read_text()
 assert p.count(PD) == 9
 expected = p.replace(PD, D)
 old_comment = "    /// @dev Java 8 constructor-only guest PrintStream; output APIs are omitted.\n"
-new_comment = ("    /// @dev Bounded Java 8 PrintStream: constructor plus non-null println(String) only.\n"
-               "    /// @dev println stores the exact supplied guest String reference in its private field; null is outside this profile.\n")
+new_comment = ("    /// @dev Bounded Java 8 PrintStream: constructor plus println(String) only.\n"
+               "    /// @dev println performs a balanced monitor null check then stores that exact reference in private println.\n")
 assert expected.count(old_comment) == 1
 expected = expected.replace(old_comment, new_comment)
 pattern = r'(function _bootstrapPrintStream\(\) private pure returns \(bytes memory\) \{ return hex")[0-9a-f]+("; \})'
@@ -121,8 +121,8 @@ for name in ("checkpoint_diagnostic.py","checkpoint_frames.py","verify_receipts.
     assert (stage / "tools" / name).read_bytes() == (parent / "tools" / name).read_bytes()
 assert (stage / "engine/build.js").read_bytes() == (parent / "engine/build.js").read_bytes()
 assert (stage / "coordinator/build.js").read_bytes() == (parent / "coordinator/build.js").read_bytes()
-assert sha(stage / "tools/generate_fixtures.py") == "349c41ce6b5b39945d59fc17cc0bbd9ced82fedd2103a692d5fe78bc381bd764"
-assert sha(stage / "tools/gate.py") == "03c5dbac579dc4f9958a6d7b8946244e4349da189c8fcf9c59548e92acfb74ca"
+assert sha(stage / "tools/generate_fixtures.py") == "acf6d157834d7465f19911f6252c97f0cbafd8e99689559c62e2e7e5292463d8"
+assert sha(stage / "tools/gate.py") == "65eed14c465a5f0ef5737a6599c799c50ff76e9019ff959ad7dbf6eed87a00bf"
 
 parent_coordinator = (parent / "coordinator/MCEntryCoordinator.sol").read_text()
 initial_coordinator = parent_coordinator.replace(PD,D).replace(PE,E)

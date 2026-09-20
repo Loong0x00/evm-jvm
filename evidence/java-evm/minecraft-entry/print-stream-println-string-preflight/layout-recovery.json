@@ -1,35 +1,50 @@
 {
-  "scope": "source-equivalent bounded-slice layout recovery for the 239-byte non-null-only PrintStream candidate",
+  "scope": "bounded PrintStream.println(String) correction",
   "invariant": {
     "objectLeaf": "h[0] = keccak256(_bootstrapObject())",
     "permittedNewLeaf": "h[83] = DBOOT_PRINT_STREAM",
-    "forbidden": ["DBOOT_OBJECT", "folded bootstrap root", "other folded historical-image leaves"]
+    "forbidden": [
+      "DBOOT_OBJECT",
+      "folded bootstrap root",
+      "other folded historical-image leaves"
+    ]
   },
-  "candidate": {
-    "engineSourceSHA256": "c985831c02bf1a0e9fa95d8e8d1cf2fa392ff94f9d925da298e2331c3d4d67e6",
-    "printStreamBytes": 239,
-    "printStreamSHA256": "0fda0bcbb7ca6f8aae2dc8e38494fc75df623712dfef520520a1bdbd4f4ecd5b",
-    "runtimeBytes": 393217,
-    "runtimeSHA256": "a6cde650b0cb921f603b678b40e20e7b94335e7d57b96a13ccfa9e75c60e57d1"
+  "rejectedRecovery": {
+    "imageBytes": 243,
+    "imageSHA256": "ce135ac9f005756572ce903eb6c0f07ffc8df4ac687a3995605a10667110a0bd",
+    "runtimeBytes": 393206,
+    "defect": "The constructor CP#1 Methodref selected class#3/java/io/PrintStream, causing invokespecial recursion instead of selecting class#4/java/lang/Object.",
+    "durableFailure": "results/recovery-self-constructor-failure.json"
   },
-  "recovery": {
-    "engineSourceSHA256": "01e791cfd1706d6ab286f569131cbc6720ffa966219eb786257b239e849f388f",
+  "acceptedCorrection": {
+    "imageBytes": 243,
+    "imageSHA256": "060f9aa1e9c6415ae6d6462678fdb19b8a7d0736e742821fa3130191eb497667",
+    "imageKeccak256": "03915016b845257751cbb6de613d95effdc3c84cd4b59216de7783d0ca95ff2e",
+    "constructorMethodref": "0a0004000b (class#4/java/lang/Object, NameAndType#11/<init>:()V)",
+    "runtimeBytes": 393206,
+    "runtimeCap": 393216,
+    "headroomBytes": 10,
+    "runtimeSHA256": "0639b249ebaf915836da08da734ba538da0a080d7425cc7d408aa9256694eecf",
+    "runtimeKeccak256": "da8cc0af9dd2a48b681634d2d925e2dc9c2703a598e4ab33001098f804e10982",
+    "engineSourceSHA256": "aabda26b815052fe1568234ed00acd2cc66e422f0371dce0dbb889ea60793466",
     "onlySourceLayoutChanges": [
-      "_equalsCross bounded byte slice loop",
-      "_equals bounded byte/literal slice loop",
-      "_equalsSlice bounded byte slice loop"
+      "_equalsCross bounded byte-slice loop",
+      "_equals bounded byte/literal-slice loop",
+      "_equalsSlice bounded byte-slice loop"
     ],
-    "safety": "Each existing caller supplies parser-validated finite offsets and lengths; the loop guard keeps i and every offset+i in range, so the checked overflow branches are unreachable on every supported path.",
-    "runtimeBytes": 393200,
-    "headroomBytes": 16,
-    "runtimeSHA256": "d99183c8e4ce289ad0cc50f9d4c68791a474b87425be5113ea3f29e6b960ef34",
-    "runtimeKeccak256": "57703e25640b58f0c0420b6652588226ee4aa4c51b6266ad7ae7d907c4ac7963"
+    "safety": "Existing callers supply parser-validated finite offsets and lengths; each strict loop guard keeps i and offset+i in range, making the removed checked-overflow branches unreachable on every supported path."
   },
   "fullGeneratedGate": {
-    "wholeGateSeconds": 597.7924059689976,
-    "canonicalReceipts": 9818,
-    "focusedLines": ["empty", "ASCII", "surrogate", "replacement"],
+    "wholeGateSeconds": 667.5706027569249,
+    "canonicalReceipts": 9879,
+    "focusedLines": [
+      "empty",
+      "ASCII",
+      "surrogate",
+      "replacement",
+      "null-retains-prior-reference"
+    ],
     "quantums": [1, 7, 4096],
-    "nullClaim": "unsupported and not invoked"
+    "summary": "results/gate-summary.json"
   }
 }

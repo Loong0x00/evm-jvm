@@ -48,7 +48,15 @@
       "runtimeSHA256": "76eeba32f6d59b7366f710bab848e86ae6f291e098f5980c8cb3e1ec94837478",
       "runtimeKeccak256": "ee1ca7d03d5aa385232c051865ccf8d1961ded47014754051fca6edcf22a1ac5",
       "classHex": "cafebabe00000034000f0a0003000b090003000c07000d07000e0100124c6a6176612f6c616e672f537472696e673b0100063c696e69743e010003282956010004436f64650100077072696e746c6e010015284c6a6176612f6c616e672f537472696e673b29560c000600070c000900050100136a6176612f696f2f5072696e7453747265616d0100106a6176612f6c616e672f4f626a6563740021000300040000000100020009000500000002000100060007000100080000001100010001000000052ab70001b10000000000010009000a0001000800000016000200020000000a2bc22bc32a2bb50002b1000000000000",
-      "classStructure": "Java 8 major=52; public superclass Object; one private String field named println; public constructor; public println(String) executes aload_1, monitorenter, aload_1, monitorexit, aload_0, aload_1, putfield, return. The accepted monitor profile makes the balanced non-null pair a no-op and raises the normal guest NPE for null before the sink overwrite."
+      "classStructure": "Java 8 major=52; public superclass Object; one private String field named println; public constructor; public println(String) executes aload_1, monitorenter, aload_1, monitorexit, aload_0, aload_1, putfield, return. The accepted monitor profile makes the balanced non-null pair a no-op and raises the normal guest NPE for null before the sink overwrite.",
+      "status": "rejected after fresh generated System.err probe",
+      "defect": "CP#1 Methodref is 0a0003000b: class#3/java/io/PrintStream rather than class#4/java/lang/Object, so the constructor invokespecial recurses.",
+      "freshSystemErrOutcome": {
+        "lifecycle": 3,
+        "javaKind": 2,
+        "jvmSteps": 345,
+        "checkpointSHA256": "12ccc7d8a6348560ec1fccf91c7b2790868289a4a7b8ff3207a9ed33660b5e9f"
+      }
     },
     {
       "variant": "same compact class with PrintStream literal inlined at its only preparation site",
@@ -73,6 +81,36 @@
       "runtimeBytes": 394327,
       "overCapBytes": 1111,
       "runtimeSHA256": "1d797ff24b785b73466fc36353fae731b8feb1e5c39a98c1d00756ecbb5b93db"
+    },
+    {
+      "variant": "corrected compact balanced-monitor null check with Object.<init> CP#1 and three bounded-loop placements",
+      "status": "accepted generated-only correction",
+      "printStreamBytes": 243,
+      "printStreamSHA256": "060f9aa1e9c6415ae6d6462678fdb19b8a7d0736e742821fa3130191eb497667",
+      "printStreamKeccak256": "03915016b845257751cbb6de613d95effdc3c84cd4b59216de7783d0ca95ff2e",
+      "constructorMethodref": "0a0004000b -> class#4/java/lang/Object, NameAndType#11/<init>:()V",
+      "runtimeBytes": 393206,
+      "headroomBytes": 10,
+      "runtimeSHA256": "0639b249ebaf915836da08da734ba538da0a080d7425cc7d408aa9256694eecf",
+      "runtimeKeccak256": "da8cc0af9dd2a48b681634d2d925e2dc9c2703a598e4ab33001098f804e10982",
+      "engineSourceSHA256": "aabda26b815052fe1568234ed00acd2cc66e422f0371dce0dbb889ea60793466",
+      "fullGeneratedGate": {
+        "seconds": 667.5706027569249,
+        "canonicalReceipts": 9879,
+        "fixtures": [
+          "empty",
+          "ASCII",
+          "surrogate",
+          "replacement",
+          "null-retains-prior-reference"
+        ],
+        "quantums": [
+          1,
+          7,
+          4096
+        ]
+      },
+      "durableEvidence": "evidence/java-evm/minecraft-entry/print-stream-println-string-preflight/"
     }
   ],
   "compiler": {
@@ -92,26 +130,29 @@
     "The 243-byte class was parsed with javap -verbose: major version 52, one field, two methods, monitorenter/monitorexit, and putfield were present.",
     "The 239-byte non-null-only class was recompiled with pinned Java 8 flags and javap: major=52, one field, two methods, and exactly aload_0/aload_1/putfield/return in println(String).",
     "Each measured runtime was built with the pinned engine compiler settings after restoring dynamic h[0] and retaining only h[83] as a folded PrintStream leaf.",
-    "The exact 239-byte direct-store class plus only the three parser-bounded source-layout loop placements builds at 393200B, retains dynamic h[0] and only h[83] = DBOOT_PRINT_STREAM, and passed the full generated-only q1/q7/direct/reopen gate (9818 canonical receipts)."
+    "The exact 239-byte direct-store class plus only the three parser-bounded source-layout loop placements builds at 393200B, retains dynamic h[0] and only h[83] = DBOOT_PRINT_STREAM, and passed the full generated-only q1/q7/direct/reopen gate (9818 canonical receipts).",
+    "Fresh javap validation pins CP#1 to Object.<init>; the former recovery image is retained with its failure receipt rather than treated as semantic evidence.",
+    "The corrected 243-byte image plus the same three parser-bounded loop placements builds at393206B, retains dynamic h[0]/only h[83] commitment, and passes the full generated-only q1/q7/direct/reopen gate (9879 canonical receipts), including caught null."
   ],
-  "conclusion": "Do not accept bfdfd1731 or any replacement that folds Object. The 239-byte non-null-only candidate now fits at 393200B through the documented bounded-slice source-layout recovery; null is unsupported and untested. The successful generated-only gate does not claim original-Minecraft execution, world, or Done.",
+  "conclusion": "Do not accept bfdfd1731, any replacement that folds Object, the 239-byte null-unsupported candidate, or the malformed recovered 243-byte self-recursive constructor. The corrected 243-byte monitor-pair image calls Object.<init>, fits at393206B through the documented three bounded-loop placements, and passed the full generated-only gate. It does not claim original-Minecraft execution, world, or Done.",
   "layoutRecovery": {
-    "scope": "three source-equivalent private bounded-slice loop placements only; retained 239-byte direct-store PrintStream image",
+    "scope": "three source-equivalent private bounded-slice loop placements only; corrected 243-byte monitor-pair PrintStream image",
     "candidateRuntimeBytes": 393217,
-    "runtimeBytes": 393200,
-    "headroomBytes": 16,
-    "engineSourceSHA256": "01e791cfd1706d6ab286f569131cbc6720ffa966219eb786257b239e849f388f",
-    "runtimeSHA256": "d99183c8e4ce289ad0cc50f9d4c68791a474b87425be5113ea3f29e6b960ef34",
-    "runtimeKeccak256": "57703e25640b58f0c0420b6652588226ee4aa4c51b6266ad7ae7d907c4ac7963",
+    "runtimeBytes": 393206,
+    "headroomBytes": 10,
+    "engineSourceSHA256": "aabda26b815052fe1568234ed00acd2cc66e422f0371dce0dbb889ea60793466",
+    "runtimeSHA256": "0639b249ebaf915836da08da734ba538da0a080d7425cc7d408aa9256694eecf",
+    "runtimeKeccak256": "da8cc0af9dd2a48b681634d2d925e2dc9c2703a598e4ab33001098f804e10982",
     "dynamicObjectAndOnlyPrintStreamLeaf": true,
     "fullGeneratedGate": {
-      "seconds": 597.7924059689976,
-      "canonicalReceipts": 9818,
-      "nonNullFixtures": [
+      "seconds": 667.5706027569249,
+      "canonicalReceipts": 9879,
+      "fixtures": [
         "empty",
         "ASCII",
         "surrogate",
-        "replacement"
+        "replacement",
+        "null-retains-prior-reference"
       ],
       "quantums": [
         1,
@@ -119,6 +160,7 @@
         4096
       ]
     },
-    "durableEvidence": "evidence/java-evm/minecraft-entry/print-stream-println-string-preflight/layout-recovery.json"
+    "durableEvidence": "evidence/java-evm/minecraft-entry/print-stream-println-string-preflight/layout-recovery.json",
+    "rejectedRecoveryEvidence": "evidence/java-evm/minecraft-entry/print-stream-println-string-preflight/results/recovery-self-constructor-failure.json"
   }
 }
