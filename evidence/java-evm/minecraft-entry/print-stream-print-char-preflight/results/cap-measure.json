@@ -1,0 +1,39 @@
+{
+  "image": {
+    "bytes": 317,
+    "sha256": "af8d5e198451494ab7a20f6f92c1559dedc3591a082268e50b9b6c9ccca16017",
+    "keccak256": "3731cc740c09a9df0c76d9775252bff86b931e928d443a2e340f9d7076deca45"
+  },
+  "runtimeCap": 393216,
+  "preLayout": {
+    "source": "engine/pre-layout-MCEntryInterpreter.sol",
+    "sourceSHA256": "2e9698e448cab2e6f355b6ea6d58f81404076c3e9809750121f8c5036b19d989",
+    "runtimeBytes": 393308,
+    "overCapBytes": 92,
+    "compliant": false,
+    "result": "pinned engine build rejected runtime >384KiB"
+  },
+  "selectedCleanup": {
+    "source": "engine/MCEntryInterpreter.sol",
+    "sourceSHA256": "369ae0d09b7a39a593d1328912e44f81ff14ed8ed11b2c9489ac3e1a5347316f",
+    "runtimeBytes": 393185,
+    "headroomBytes": 31,
+    "runtimeSHA256": "0f14908a5f86954d3909929420a3f39f1b5d661fe9bb0d4665e9735764040762",
+    "runtimeKeccak256": "13bb1fbd4ace52ca8f6b973340efcc45cf2350c531ffaaf90009d3faa2f031fc",
+    "compliant": true,
+    "loops": 10
+  },
+  "compiler": {
+    "version": "0.8.30+commit.73712a01.Emscripten.clang",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    }
+  }
+}

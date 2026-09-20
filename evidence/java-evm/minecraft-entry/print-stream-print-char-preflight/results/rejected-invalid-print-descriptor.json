@@ -1,0 +1,18 @@
+{
+  "rejectedImage": {
+    "bytes": 305,
+    "sha256": "5bf25322cbe18f3d7d22e8a258652c63741306d3fda03998ceb78cff129bdd95",
+    "member": "print",
+    "invalidDescriptor": "C",
+    "reason": "A method descriptor must be a method descriptor, not the char field descriptor."
+  },
+  "acceptedImage": {
+    "bytes": 317,
+    "sha256": "af8d5e198451494ab7a20f6f92c1559dedc3591a082268e50b9b6c9ccca16017",
+    "member": "print",
+    "descriptor": "(C)V",
+    "field": "print",
+    "fieldDescriptor": "C"
+  },
+  "verifier": "tools/verify_source.py parses the classfile member table, asserts exact field/method tables and Code, then mutates the print descriptor index to C and requires rejection."
+}
