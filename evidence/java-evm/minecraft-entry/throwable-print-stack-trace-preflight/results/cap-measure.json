@@ -1,0 +1,38 @@
+{
+  "image": {
+    "bytes": 657,
+    "sha256": "e0eb622a2e3f9df3989fa4793860538be9b01183d0f0911e7b7c5df578520afd",
+    "keccak256": "ad47871098a702ae866f30543bb5adf023c9be6abad8e0e6233a4ca652b2db9d"
+  },
+  "runtimeBaseline": 393185,
+  "runtimeCap": 393216,
+  "preLayout": {
+    "source": "engine/pre-layout-MCEntryInterpreter.sol",
+    "runtimeBytes": 393608,
+    "overCapBytes": 392,
+    "compliant": false,
+    "result": "unshared exact image literal exceeds the pinned cap"
+  },
+  "selectedLayout": {
+    "source": "engine/MCEntryInterpreter.sol",
+    "runtimeBytes": 389150,
+    "headroomBytes": 4066,
+    "runtimeSHA256": "e5b64de8b7fea6b62f6dc4f29a147c8325d7034ccffdd1e538a42376070b491a",
+    "runtimeKeccak256": "809bbcb06332ac40cc774390022348257438f6e043228e2d810ee44c126edd57",
+    "compliant": true,
+    "layout": "private fixed-length recursive guard prevents duplicate private-image literal inlining; image.length=657 cannot equal uint256.max"
+  },
+  "compiler": {
+    "version": "0.8.30+commit.73712a01.Emscripten.clang",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    }
+  }
+}
