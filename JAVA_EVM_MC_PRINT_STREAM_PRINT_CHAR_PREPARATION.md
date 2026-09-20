@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded PrintStream.print(char) preparation
+
+Accepted `parent-3dee801e7` runs unchanged original38 through guest last-line println storage to65271J/50I in25 successful LOCAL4.2B/q4096 blocks. Exact blocker is `SimpleLogger.logMessage` PC264 invoking `PrintStream.print(C)` with a space before non-null throwable output.
+
+Replace only image83 to retain prior println(String) field semantics and add bounded print(char) storing the exact UTF-16 code unit in a private char field (field/method name reuse allowed). No host bytes/stdout and no concatenation claim. Preserve91 images/runtime-derived Object/root with only changed-image83 leaf commitment,raw38/285489,diagnostic129,native13,and all limits/toolchain/semantics. Runtime<=393216 (baseline393206,10B headroom); verified finite-loop/layout cleanup only, no added historical commitments. Focus NUL/ASCII/surrogate/replacement q1/q7/direct/reopen and retained controls<=1200s receipts. Worker no originals; parent accelerated replay. No Throwable.printStackTrace/provider factory/world/Done claim.
