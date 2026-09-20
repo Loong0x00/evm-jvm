@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft bounded PrintStream.println(String) preparation
+
+Accepted `parent-6b7134cd1` runs unchanged original38 through StringBuilder.append(char) to65257J/50I in23 successful LOCAL4.2B/q4096 blocks. Exact blocker is `SimpleLogger.logMessage` PC250 invoking `PrintStream.println(String)` with the formatted status line.
+
+Replace only image83 PrintStream with constructor plus bounded non-null println(String) last-line sink: store the exact guest String reference in a private field so the side effect remains in committed guest heap state; no host stdout/stderr or byte encoding claim. Null and all other print/println overloads are unsupported. Preserve91 images/runtime-derived root,raw38/285489,diagnostic129,native13,and all limits/toolchain/semantics. Runtime<=393216 (baseline393208,8B headroom); verified semantics-preserving cleanup only, no commitment weakening. Focus nonnull empty/ASCII/surrogate/replacement lines q1/q7/direct/reopen and retained controls<=1200s canonical receipts. Worker no originals; parent accelerated replay. No throwable output/provider factory/world/Done claim.
