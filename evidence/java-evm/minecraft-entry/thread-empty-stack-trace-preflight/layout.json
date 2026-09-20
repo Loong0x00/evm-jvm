@@ -1,0 +1,12 @@
+{
+  "scope": "runtime layout measurement only; semantic guest-image delta is bootstrap slot50 java/lang/Thread plus appended slot90 java/lang/StackTraceElement",
+  "basis": "parent-bd1760569 runtime 393185",
+  "runtimeBaseline": 393185,
+  "unrecoveredBytes": 395621,
+  "runtimeCap": 393216,
+  "runtimeBytes": 393157,
+  "deltaBytes": -28,
+  "headroomBytes": 59,
+  "runtimeSHA256": "20632e87ced24bcb91eb2370f54a2d5de7dec12e0526f1320b411088b0a450f5",
+  "reason": "The direct two-image staging source measured 395621 bytes. The final source preserves keccak256(abi.encode(DBOOT,h)) over all 91 ordered hashes while using exact verified static leaves for Thread, StackTraceElement and the pre-existing ThreadLocal image, avoiding duplicate image materialization. It also removes only three unreferenced interpreter parameters: root and throwableBootstrapAt from _execute, and heapKinds from _allocateMultiArray. Both start/resume pass bundleMode=true and the private static invocation now forwards that unchanged value. No root result, limit, validation, error precedence, or executable guest Code is replaced."
+}
