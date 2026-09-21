@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "profile": "MC-THROWABLE-GUEST-STACK-TRACE-FULL-GATE",
+  "generatedOnly": true,
+  "run": "full-gate-run3",
+  "wholeGate": {
+    "seconds": 852.8919992969604,
+    "limitSeconds": 1200,
+    "commands": 525,
+    "resultRows": 192,
+    "canonicalReceipts": 13144,
+    "canonicalWorlds": 153
+  },
+  "candidate": {
+    "buildPinsSHA256": "383b99e9ed3c5bb613729537cb9d3fba9e459f0ee4ad333892532af7fbe08baf",
+    "engineSHA256": "25886e11575996eee036fca3bcfdc9acb1bc1735b5927b7465e1d23307b96a08",
+    "bootstrapRoot": "9f660cdd0bc878c66d6c1b0075e1e1843b9f2086f6757162dbb1514799c00742",
+    "globalNativeBindings": 14
+  },
+  "fixtureInputs": {
+    "retained": {
+      "generator": "evidence/java-evm/minecraft-entry/index-out-of-bounds-string-constructor-preflight/tools/generate_fixtures.py",
+      "generatorSHA256": "c94038e22ddf0d572a5477ed3a5f2b9e924491c5dcc417d5573b313a4cd8fa65",
+      "summarySHA256": "80824cc9c253ad35846a0d24f49def829ba6e319ad66761e65b684f86e9bed3a",
+      "fixtureCount": 205
+    },
+    "focused": {
+      "generator": "evidence/java-evm/minecraft-entry/throwable-guest-stack-trace-preflight/tools/generate_fixtures.py",
+      "generatorSHA256": "2e884192757ccafa9c4aae003cb7c8cd00730cc733d8f1b65c08d1564258f0c4",
+      "summarySHA256": "6c4929070cc8c3377255f231e1ba84c20981b9e9296dca376e46b0e9ecc3d5eb",
+      "fixtureCount": 6
+    },
+    "overlay": {
+      "uniqueFixtureLabels": 210,
+      "retainedRawThrowableOnOverlap": true
+    }
+  },
+  "coverage": {
+    "focusedQ1Q7DirectReopen": [
+      "guest-stack",
+      "guest-stack-two",
+      "thread-empty"
+    ],
+    "focusedDirectReopen": [
+      "guest-stack-uninitialized"
+    ],
+    "focusedRawRefusal": [
+      "raw-stack-trace-element"
+    ],
+    "retainedHistoricalResultRows": 187,
+    "supersededHistoricalChecks": [
+      "throwable-get-stack-trace empty-array positive",
+      "stacktraceelement-method-omitted getClassName omission"
+    ],
+    "replacement": "Focused stack snapshots prove the previously omitted getClassName surface and real nonempty Throwable frames; the four-argument StackTraceElement constructor omission remains retained."
+  },
+  "durableOutputs": {
+    "gateSummarySHA256": "a67802f5504096962acacb3db34c7ce407e1d1b930c803e01b94286549630968",
+    "canonicalReceiptsSHA256": "dfac1657033687c92d6d609333d2d8d9f366a6176995b3ea39a4eb3e176bf52e",
+    "fullGateToolSHA256": "359e0e2c57bbd2fd85cb4a915a6cab9fb0f98882be0dcb3e04f341ad5b9ee636"
+  },
+  "scope": "Trusted generated Java-8 sources only; no original artifact/JAR/network/Minecraft/world/EULA/Done input or claim."
+}
