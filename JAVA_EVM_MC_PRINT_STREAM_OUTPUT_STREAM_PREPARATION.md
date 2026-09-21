@@ -1,0 +1,7 @@
+# Java-on-EVM Minecraft `PrintStream` → `OutputStream` preparation
+
+Accepted `parent-98e55f145` genuinely loads raw52 and reaches83738J/67I. Atomic q1 at PC56 fails ReferenceError(2,56). Two fresh-domain EVM diagnostics prove final object argument assignability expected `java/io/OutputStream` but received canonical `java/io/PrintStream`.
+
+Change only canonical bootstrap PrintStream so it is a direct guest subtype of the already-retained `java/io/OutputStream`; no FilterOutputStream class/claim. Constructor must chain to OutputStream and retained println(String)/print(char) guest-sink behavior must remain. If Java class concreteness requires `write(int)`, implement only the minimal low-byte guest-sink bridge (no host output), and make its existence/scope explicit; do not add write(byte[]), flush, close, formatting, encoding, console/file or host behavior claims. The measured acceptance is subtype assignability.
+
+Generated probes: PrintStream/OutputStream assignment and instanceof, constructor/sink retention, raw replacement/uninitialized controls, q1/q7/direct/reopen plus retained direct/reopen<=1200s. Preserve raw52/329162,diagnostic146,94 images,native14,String-local11,System out/err,all caps/toolchain and runtime-derived ordered root. Runtime<=393216 (baseline373634). Independently commit only changed PrintStream image/root leaf; OutputStream and all other leaves remain dynamic. Worker no originals/JAR/classes/resources/network/other worktrees. Parent alone replays original52. No provider/world/EULA/Done claim.
