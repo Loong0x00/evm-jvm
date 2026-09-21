@@ -1,0 +1,7 @@
+# Java-on-EVM Minecraft `System.setErr(PrintStream)` preparation
+
+Accepted `parent-88245dfff` adds bounded `PrintStream(OutputStream)` and advances unchanged original52 to83763J/68I. Atomic q1 at PC59 refuses exact static `java/lang/System.setErr(Ljava/io/PrintStream;)V`, identified by fresh-domain EVM resolver diagnostics.
+
+Add only canonical public static native `System.setErr(PrintStream)` and one exact global native binding14->15. After normal invokestatic initialization/descriptor/assignability checks, binding15 updates only the canonical initialized System.err static slot to the supplied guest reference (null may be retained, matching bounded Java behavior); System.out and all other statics remain unchanged. Retain err field public static final in class metadata—native VM mutation is the sole exception. No SecurityManager permission, host stderr/stdout, forwarding, console/file or provider behavior claim.
+
+Generated tests cover replacement identity, out unchanged, null/reset, subclass PrintStream, raw System/native replacement refusal, q1/q7/direct/reopen plus retained direct/reopen<=1200s. Preserve raw52/329162,diagnostic146,94 images,String-local11,all caps/toolchain and runtime-derived ordered root. Runtime<=393216 (baseline373860). Commit only changed System image/root leaf and measured binding15 Solidity path; unchanged images remain dynamic. Worker no originals/JAR/classes/resources/network/other worktrees. Parent alone replays original52. No provider/world/EULA/Done claim.
