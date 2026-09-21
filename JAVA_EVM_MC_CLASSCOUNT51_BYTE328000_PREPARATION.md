@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft raw51 / byte328000 preparation
+
+Accepted `parent-e883ec304` runs unchanged original50 through bounded `String.substring(int)` to77306J/62I, then atomically requests genuine `ni.class`. A fresh-domain EVM ZI0/DI0 canonical read (no host ZIP/class parser) measured 3662B, SHA-256 `082e7f2a07078434e6b3dbf1d868cc9480c012ed52ec42370c445cfb5ebb1964`; total becomes raw51/328000 and diagnostic class bound145.
+
+Increase only raw count50->51,raw bytes324338->328000,diagnostic144->145. Preserve94 bootstrap images, runtime-derived ordered root,global native14,String-local11,exception14,frames128,checkpoint and all other limits/toolchain/semantics. Runtime<=393216 (baseline373596). Generated exact boundaries51/52 and328000/328001, q1/q7/direct/reopen plus retained direct/reopen full gate<=1200s canonical receipts. No image commitment changes. Worker no originals/JAR/classes/resources/network/other worktrees; parent alone appends genuine ni binding and replays. No ni behavior/provider/world/EULA/Done claim.
