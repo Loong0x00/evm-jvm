@@ -56,8 +56,24 @@ python3 evidence/java-evm/minecraft-entry/string-substring-int-preflight/tools/f
 ```
 
 The final command passed in 862.209204384 seconds (limit: 1200), issued 567
-commands, and independently canonicalized 13314 public receipts.  The complete
-ignored run summary has SHA-256
+commands, and independently canonicalized 13314 public receipts.
+
+## Durable metadata archive
+
+`results/` retains only metadata from that already-completed run:
+
+- `build-summary.json` and `source-verification-summary.json` record the
+  successful rebuilt artifacts and source/root verification.
+- `full-gate-summary.json` is the complete generated-only gate summary.
+- `canonical-receipts.json` is the independent canonical receipt aggregate;
+  `timing.json` records all 567 command outcomes/timings and the whole-gate
+  timing.
+- `manifest.json` binds every archived copy to its ignored completed-run source
+  and records the canonical verifier invocation result. `SHA256SUMS` hashes all
+  archived files; verify it with `cd results && sha256sum -c SHA256SUMS`.
+
+The archive contains no JAR/ZIP input, compiled class, world, LevelDB data,
+checkpoint, executable, or other binary. The full-gate summary SHA-256 is
 `f1be5954b520ae2285e907ed88eb4b4080ac1c23cec5f1c5db42f0a6c73e2eb5`.
 
 Focused valid cases were identical across q1/q7/direct/reopen:

@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "stage": "MC-STRING-SUBSTRING-INT-FULL-GATE",
+  "status": "completed-successful-generated-only-gate",
+  "runCommit": "24cbdbe40",
+  "runOutputs": {
+    "buildDirectory": "build/java-diff-mc-string-substring-int-build-full1",
+    "sourceVerificationDirectory": "build/java-diff-mc-string-substring-int-source-verify-final",
+    "fullGateDirectory": "build/java-diff-mc-string-substring-int-full-gate-full1"
+  },
+  "archivedMetadataOnly": [
+    "build-summary.json",
+    "source-verification-summary.json",
+    "full-gate-summary.json",
+    "canonical-receipts.json",
+    "timing.json"
+  ],
+  "notArchived": [
+    "JAR or ZIP inputs",
+    "compiled classes",
+    "world directories",
+    "LevelDB data",
+    "checkpoints",
+    "executables or other binaries"
+  ],
+  "sourceArtifacts": {
+    "buildSummary": {
+      "path": "build/java-diff-mc-string-substring-int-build-full1/pins.json",
+      "sha256": "9f024716f9dac316eea72fc2210b71f137ce345a5a0f519cca48139f8d684896"
+    },
+    "sourceVerificationSummary": {
+      "path": "build/java-diff-mc-string-substring-int-source-verify-final/summary.json",
+      "sha256": "09cf5cb2fd9cc4ae05cf2ff8aca55788073c799dacc4f7eed9f1a51accf374d2"
+    },
+    "fullGateSummary": {
+      "path": "build/java-diff-mc-string-substring-int-full-gate-full1/summary.json",
+      "sha256": "f1be5954b520ae2285e907ed88eb4b4080ac1c23cec5f1c5db42f0a6c73e2eb5"
+    },
+    "canonicalReceiptAggregate": {
+      "path": "build/java-diff-mc-string-substring-int-full-gate-full1/logs/canonical-receipts.log",
+      "sha256": "d1039752d95905ce1f1160655342d5c5698ab07c2c7cc2667cd247215694fef4"
+    },
+    "canonicalReceiptInvocation": {
+      "path": "build/java-diff-mc-string-substring-int-full-gate-full1/logs/canonical-receipts.json",
+      "sha256": "b4dc12038051212ffb077d5acc57d17225273bd6ab6124b9ea65b8f92e24cef1",
+      "exit": 0
+    }
+  },
+  "observed": {
+    "wholeGateSeconds": 862.2092043840094,
+    "wholeGateLimitSeconds": 1200,
+    "commandCount": 567,
+    "canonicalVerifiedReceipts": 13314,
+    "canonicalVerifierElapsedSeconds": 1.3653424789663404
+  },
+  "archiveVerification": "Run sha256sum -c SHA256SUMS from this directory. The sourceArtifacts hashes bind each archived metadata copy to its ignored completed-run source."
+}
