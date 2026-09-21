@@ -1,0 +1,76 @@
+{
+  "profile": "MC-RAW51-BYTE328000-P1",
+  "generatedOnly": true,
+  "wholeGateSeconds": 912.1951591470279,
+  "commandCount": 573,
+  "canonicalReceiptCount": 13548,
+  "runtimeBytes": 373596,
+  "runtimeCap": 393216,
+  "bootstrapCount": 94,
+  "diagnosticClassBound": 145,
+  "rawLimits": [
+    51,
+    328000
+  ],
+  "raw51": {
+    "q1": {
+      "world": "world-raw51-q1",
+      "epoch": 204,
+      "jvmSteps": 204,
+      "internalSteps": 2,
+      "machineRoot": "0xad594898f17f4edf3d1ec381261e90480fdfcb5dfb4f00e6d813939af5098616",
+      "opaquePayloadSHA256": "eb2651b10d8ab6da49037371479f5d0f0f3ec4e0c5548d3856a8fdf20e716cc6"
+    },
+    "q7": {
+      "world": "world-raw51-q7",
+      "epoch": 30,
+      "jvmSteps": 204,
+      "internalSteps": 2,
+      "machineRoot": "0xad594898f17f4edf3d1ec381261e90480fdfcb5dfb4f00e6d813939af5098616",
+      "opaquePayloadSHA256": "eb2651b10d8ab6da49037371479f5d0f0f3ec4e0c5548d3856a8fdf20e716cc6"
+    },
+    "direct": {
+      "world": "world-raw51-q4096",
+      "epoch": 1,
+      "jvmSteps": 204,
+      "internalSteps": 2,
+      "machineRoot": "0xad594898f17f4edf3d1ec381261e90480fdfcb5dfb4f00e6d813939af5098616",
+      "opaquePayloadSHA256": "eb2651b10d8ab6da49037371479f5d0f0f3ec4e0c5548d3856a8fdf20e716cc6"
+    }
+  },
+  "raw52Driver": {
+    "worldExists": false
+  },
+  "raw52Coordinator": {
+    "selector": "0xab23ed08",
+    "uint256Words": [
+      "2"
+    ],
+    "rootUnchanged": true
+  },
+  "raw52Engine": {
+    "selector": "0x427cfac5",
+    "uint256Words": [
+      "1",
+      "52"
+    ],
+    "rootUnchanged": true
+  },
+  "byte328000": {
+    "coordinatorAccepted": true,
+    "selector": "0x71540d20",
+    "uint256Words": [
+      "1",
+      "0"
+    ],
+    "rootUnchanged": true
+  },
+  "byte328001": {
+    "selector": "0xab23ed08",
+    "uint256Words": [
+      "12"
+    ],
+    "rootUnchanged": true
+  },
+  "limitations": "Only the raw capacity constants advance from raw50/324338/diagnostic144 to raw51/328000/diagnostic145. All 94 bootstrap images and their runtime-derived ordered root, global native14, String-local11, exception14, frame/checkpoint/selected-resource limits and toolchain remain pinned. The exact raw51 generated focus runs q1/q7/direct/reopen; inherited generated controls run direct/reopen under the fixed 1200-second whole-gate bound. This generated-only gate uses only trusted generated Java-8 fixtures and no original artifact, JAR, resource, provider construction, factory execution, world, EULA, or Done input or claim. Parent alone owns genuine ni append and replay."
+}
