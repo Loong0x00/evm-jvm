@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft `Integer.toString(int)` preparation
+
+Accepted `parent-12bfded16` provides exact StringBuilder.append(int) and reaches80892J/64I. `ReflectionUtil.getEquivalentStackTraceElement(int)` PC79 invokes `Integer.toString(I)String` before constructing its bounds exception and atomically refuses `CallError(3,79)`.
+
+Change only existing Integer bootstrap image by adding static `toString(int)` returning exact signed base-10 String for MIN/-1/0/positive/MAX. It may delegate entirely to retained `new StringBuilder().append(value).toString()`. No radix/unsigned overloads. Preserve all constructors, Number hierarchy, parse/valueOf/compare methods and tests. Add q1/q7/direct/reopen exact cases, fresh String/content checks, uninitialized and omitted radix controls. Preserve94 bootstraps,diagnostic144,raw50/324338,native13,all limits/toolchain and exact runtime-derived ordered root. Runtime<=393216 (baseline367072); changed Integer commitment only if necessary/verified, with Object/all unchanged leaves dynamic. Whole gate<=1200s canonical receipts. Worker no originals; parent genuine replay. No logger factory/world/Done claim.
