@@ -1,0 +1,52 @@
+{
+  "replayID": "parent-79011b731",
+  "sourceRevision": "79011b7319b3dc51aab9520bba7b3a1d626d1f26",
+  "generatedOnly": true,
+  "freshBuildDirectories": [
+    "build/java-diff-mc-throwable-get-stack-trace-build-parent-replay-parent-79011b731",
+    "build/java-diff-mc-throwable-get-stack-trace-fixtures-parent-replay-parent-79011b731",
+    "build/java-diff-mc-throwable-get-stack-trace-gate-parent-replay-parent-79011b731"
+  ],
+  "steps": [
+    {
+      "label": "build",
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/throwable-get-stack-trace/evidence/java-evm/minecraft-entry/throwable-get-stack-trace-preflight/tools/build.py",
+        "/home/user/evm-jvm/throwable-get-stack-trace/build/java-diff-mc-throwable-get-stack-trace-build-parent-replay-parent-79011b731"
+      ],
+      "elapsedSeconds": 216.98376873193774
+    },
+    {
+      "label": "fixtures",
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/throwable-get-stack-trace/evidence/java-evm/minecraft-entry/throwable-get-stack-trace-preflight/tools/generate_fixtures.py",
+        "/home/user/evm-jvm/throwable-get-stack-trace/build/java-diff-mc-throwable-get-stack-trace-fixtures-parent-replay-parent-79011b731"
+      ],
+      "elapsedSeconds": 27.465662898961455
+    },
+    {
+      "label": "gate",
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/throwable-get-stack-trace/evidence/java-evm/minecraft-entry/throwable-get-stack-trace-preflight/tools/gate.py",
+        "/home/user/evm-jvm/throwable-get-stack-trace/build/java-diff-mc-throwable-get-stack-trace-build-parent-replay-parent-79011b731",
+        "/home/user/evm-jvm/throwable-get-stack-trace/build/java-diff-mc-throwable-get-stack-trace-fixtures-parent-replay-parent-79011b731",
+        "/home/user/evm-jvm/throwable-get-stack-trace/build/java-diff-mc-throwable-get-stack-trace-gate-parent-replay-parent-79011b731"
+      ],
+      "elapsedSeconds": 699.591066289926
+    }
+  ],
+  "elapsedSeconds": 944.0457410700619,
+  "resultSHA256": {
+    "build-pins.json": "822bb6016a92c35d5334ede3202bc1403b8a8f54fa10c88056fb56c3250e6556",
+    "canonical-receipts.json": "f984e74f3e5959965669774fe129a5075eaa638f7228d6572e7c05fbd71c9976",
+    "fixture-summary.json": "b26a4929bc53d1f12c5cedf958c820c71a673bb9b62f090fd42914e831894013",
+    "gate-summary.json": "06dba79094891cd659c60714241a3cf97b9c2cb9f4a71d34564343c8377795cf",
+    "root-commitment.json": "516d963faded51b99a71a91751692940154d30d9c401396840eb32fab415293c",
+    "source-verification.json": "ae047cd1f109300efbfa1a3d16a57db902d18a12aa7dcc7539a1405a6181af57",
+    "summary.json": "95307a6b0a1150f3f52a02a1e05141fde841a8eb1ac1abb2aec69e94f3d86e7e"
+  },
+  "note": "The ignored build directories are disposable. Tracked results retain compact replay records; no original artifact, JAR, class, resource, world, provider, factory, or Done input was used."
+}

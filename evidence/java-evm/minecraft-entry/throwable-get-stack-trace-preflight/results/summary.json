@@ -1,0 +1,101 @@
+{
+  "profile": "MC-THROWABLE-GET-STACK-TRACE-P2",
+  "generatedOnly": true,
+  "parentReplay": true,
+  "wholeGateSeconds": 699.5588159499457,
+  "wholeGateLimitSeconds": 1200,
+  "commandCount": 736,
+  "canonicalReceiptCount": 11703,
+  "runtimeBytes": 393145,
+  "runtimeCap": 393216,
+  "bootstrapCount": 94,
+  "diagnosticClassBound": 144,
+  "rawLimits": [
+    50,
+    324338
+  ],
+  "bootstrapRoot": "43a87c0dfe115b957cac7c16049b2b54f15420dd57252957c100173f4a350525",
+  "throwable": {
+    "throwable-get-stack-trace": {
+      "q1": {
+        "world": "world-throwable-get-stack-trace-q1",
+        "epoch": 39,
+        "jvmSteps": 39,
+        "internalSteps": 2,
+        "machineRoot": "0x6c2da6444f2245a177995dfee32f9b225d6510330253dd4ac653aa288d3c48c4",
+        "opaquePayloadSHA256": "c08a3b2bbfd273456d0709e8849f61a5955d8429c23fe2b868a985764350aca7"
+      },
+      "q7": {
+        "world": "world-throwable-get-stack-trace-q7",
+        "epoch": 6,
+        "jvmSteps": 39,
+        "internalSteps": 2,
+        "machineRoot": "0x6c2da6444f2245a177995dfee32f9b225d6510330253dd4ac653aa288d3c48c4",
+        "opaquePayloadSHA256": "c08a3b2bbfd273456d0709e8849f61a5955d8429c23fe2b868a985764350aca7"
+      },
+      "direct": {
+        "world": "world-throwable-get-stack-trace-q4096",
+        "epoch": 1,
+        "jvmSteps": 39,
+        "internalSteps": 2,
+        "machineRoot": "0x6c2da6444f2245a177995dfee32f9b225d6510330253dd4ac653aa288d3c48c4",
+        "opaquePayloadSHA256": "c08a3b2bbfd273456d0709e8849f61a5955d8429c23fe2b868a985764350aca7"
+      }
+    },
+    "throwable-get-stack-trace-uninitialized": {
+      "world": "world-throwable-get-stack-trace-uninitialized-q4096",
+      "epoch": 1,
+      "jvmSteps": 3,
+      "internalSteps": 2,
+      "machineRoot": "0xbf8619110e0989e7d34c6256c01a540916e63e49baeef08d1e33b8632cf7fedb",
+      "opaquePayloadSHA256": "b51e144bc15e889d62801b7c7279e8e06f9f7bd456e21a716ae3d460e835b4dc"
+    },
+    "raw-throwable-get-stack-trace": {
+      "actualDI0ReadSizes": [
+        214,
+        134
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 378632,
+      "resourceHashes": {
+        "0x5B0049c35F93dF7dc41dc25CB421A5cEd6971357": "a15c96b87a45be278d1d0ca637021daea43e5b102c8bca1b75396f59de2cc608",
+        "0xe71D1D5b3e2703931804A0339d24cD64FE6b6c10": "49968c43bed5f8c314857eaf5d5de224abb341ddd158cb6ed66715218b461fc5"
+      },
+      "resourceReadReceipts": [
+        {
+          "To": "0xe71d1d5b3e2703931804a0339d24cd64fe6b6c10",
+          "Offset": 0,
+          "Requested": 214,
+          "Returned": 214,
+          "Success": true,
+          "SHA256": "49968c43bed5f8c314857eaf5d5de224abb341ddd158cb6ed66715218b461fc5"
+        },
+        {
+          "To": "0x5b0049c35f93df7dc41dc25cb421a5ced6971357",
+          "Offset": 0,
+          "Requested": 134,
+          "Returned": 134,
+          "Success": true,
+          "SHA256": "a15c96b87a45be278d1d0ca637021daea43e5b102c8bca1b75396f59de2cc608"
+        }
+      ],
+      "revertHex": "0x427cfac500000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000001",
+      "rootAfter": "0xaaba9e421393b40ffe9a8e4cf259b030ccae057623e172ce25bbf9ca3614f626",
+      "rootBefore": "0xaaba9e421393b40ffe9a8e4cf259b030ccae057623e172ce25bbf9ca3614f626",
+      "rootUnchanged": true,
+      "selector": "0x427cfac5",
+      "suppliedGas": 1000000000,
+      "uint256Words": [
+        "6",
+        "1"
+      ]
+    }
+  },
+  "limitations": "Only existing image5 changes: Throwable.getStackTrace() allocates a fresh non-null zero-length StackTraceElement array. It exposes no captured frames, class/method/file/line, causes, or suppressed state. All other 93 leaves, raw50/324338, native13, limits, toolchain, and runtime-derived ordered root construction remain pinned. This generated-only gate uses no original artifact, JAR, class, resource, provider construction, factory execution, world, or Done input or claim. Parent alone owns genuine replay."
+}
