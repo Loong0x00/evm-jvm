@@ -1,0 +1,7 @@
+# Java-on-EVM Minecraft `System.out` preparation
+
+Accepted `parent-1004177d2` genuinely loads measured `ni.class` under raw51/328000 and reaches77307J/63I. Atomic q1 fails at ni class initialization PC0 with FieldError(2,0). Fresh-domain EVM CP diagnostics identify exactly public static `java/lang/System.out:Ljava/io/PrintStream;`.
+
+Add only `public static final PrintStream out` to the bounded Java-8 System image and initialize it to a fresh non-null guest PrintStream distinct from retained `System.err`. Output remains guest sink state only: no host stdout/stderr, console, file, log, provider, or side-channel claim. Preserve arraycopy, properties, security getter, deterministic time and err behavior. Do not add setOut/setErr/in/out streams or broader System API.
+
+Generated probes must cover non-null/stable/final/static identity, out!=err, existing bounded print/println calls, initialization order, raw replacement refusal and retained controls; q1/q7/direct/reopen plus retained direct/reopen full gate<=1200s. Preserve raw51/328000,diagnostic145,94 images,native14,String-local11,all caps/toolchain and runtime-derived ordered root. Runtime<=393216 (baseline373596). Independently commit only changed System image/root leaf; unchanged leaves dynamic. Worker no originals/JAR/classes/resources/network/other worktrees. Parent alone replays original51. No ni/provider/world/EULA/Done claim.
