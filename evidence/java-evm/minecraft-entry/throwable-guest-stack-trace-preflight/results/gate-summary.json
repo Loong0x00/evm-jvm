@@ -1,0 +1,726 @@
+{
+  "profile": "MC-THROWABLE-GUEST-STACK-TRACE-PREPARATION",
+  "generatedOnly": true,
+  "results": {
+    "guest-stack": {
+      "q1": {
+        "world": "world-guest-stack-q1",
+        "epoch": 127,
+        "jvmSteps": 127,
+        "internalSteps": 2,
+        "machineRoot": "0x4e08978a1a7472eb817ec37b26bd30a9f3e0e414919e829a63a8286dda6429d5",
+        "opaquePayloadSHA256": "4985fdac9d4dc475a34190314ba0c4c88b0596e79338646851d5928cf087f1e8"
+      },
+      "q7": {
+        "world": "world-guest-stack-q7",
+        "epoch": 19,
+        "jvmSteps": 127,
+        "internalSteps": 2,
+        "machineRoot": "0x4e08978a1a7472eb817ec37b26bd30a9f3e0e414919e829a63a8286dda6429d5",
+        "opaquePayloadSHA256": "4985fdac9d4dc475a34190314ba0c4c88b0596e79338646851d5928cf087f1e8"
+      },
+      "direct": {
+        "world": "world-guest-stack-q4096",
+        "epoch": 1,
+        "jvmSteps": 127,
+        "internalSteps": 2,
+        "machineRoot": "0x4e08978a1a7472eb817ec37b26bd30a9f3e0e414919e829a63a8286dda6429d5",
+        "opaquePayloadSHA256": "4985fdac9d4dc475a34190314ba0c4c88b0596e79338646851d5928cf087f1e8"
+      }
+    },
+    "guest-stack-two": {
+      "q1": {
+        "world": "world-guest-stack-two-q1",
+        "epoch": 61,
+        "jvmSteps": 61,
+        "internalSteps": 2,
+        "machineRoot": "0xaa356ea8955796f4ac952f06394144250e94cf2505452519f752a229b5b13bf8",
+        "opaquePayloadSHA256": "b6c9279b5454187395a00e3976180f2ab726463745b1804dd2d0544ed5f1e53a"
+      },
+      "q7": {
+        "world": "world-guest-stack-two-q7",
+        "epoch": 9,
+        "jvmSteps": 61,
+        "internalSteps": 2,
+        "machineRoot": "0xaa356ea8955796f4ac952f06394144250e94cf2505452519f752a229b5b13bf8",
+        "opaquePayloadSHA256": "b6c9279b5454187395a00e3976180f2ab726463745b1804dd2d0544ed5f1e53a"
+      },
+      "direct": {
+        "world": "world-guest-stack-two-q4096",
+        "epoch": 1,
+        "jvmSteps": 61,
+        "internalSteps": 2,
+        "machineRoot": "0xaa356ea8955796f4ac952f06394144250e94cf2505452519f752a229b5b13bf8",
+        "opaquePayloadSHA256": "b6c9279b5454187395a00e3976180f2ab726463745b1804dd2d0544ed5f1e53a"
+      }
+    },
+    "thread-empty": {
+      "q1": {
+        "world": "world-thread-empty-q1",
+        "epoch": 42,
+        "jvmSteps": 42,
+        "internalSteps": 4,
+        "machineRoot": "0x435a1fee85266ce784cf89986e3d8bf6133841e072e2bd004c00c660b23baf9a",
+        "opaquePayloadSHA256": "c2c0e99141657fa9b11426ae2428a7e3b09c60d80d215908e7881ca06e1f6c27"
+      },
+      "q7": {
+        "world": "world-thread-empty-q7",
+        "epoch": 6,
+        "jvmSteps": 42,
+        "internalSteps": 4,
+        "machineRoot": "0x435a1fee85266ce784cf89986e3d8bf6133841e072e2bd004c00c660b23baf9a",
+        "opaquePayloadSHA256": "c2c0e99141657fa9b11426ae2428a7e3b09c60d80d215908e7881ca06e1f6c27"
+      },
+      "direct": {
+        "world": "world-thread-empty-q4096",
+        "epoch": 1,
+        "jvmSteps": 42,
+        "internalSteps": 4,
+        "machineRoot": "0x435a1fee85266ce784cf89986e3d8bf6133841e072e2bd004c00c660b23baf9a",
+        "opaquePayloadSHA256": "c2c0e99141657fa9b11426ae2428a7e3b09c60d80d215908e7881ca06e1f6c27"
+      }
+    },
+    "uninitialized": {
+      "world": "world-uninitialized-q4096",
+      "epoch": 1,
+      "jvmSteps": 3,
+      "internalSteps": 2,
+      "machineRoot": "0xb2f6faeee64fb2dd14f005ea4e53333544e086613ab360fa84f5c52863ce6ced",
+      "opaquePayloadSHA256": "3f01c1cb7fe64d32a0ed1011a3ff37fda144280eb8a5c42f63ace19bd7c0e35c"
+    },
+    "raw-throwable": {
+      "actualDI0ReadSizes": [
+        190,
+        134
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 355769,
+      "resourceHashes": {
+        "0x3763630861Ca8F260654d9E41Da7373805Db6460": "6fdc59f12241a75b826cef4afb1a13ec1dd454d2a893004351bcf638d1b39eb5",
+        "0xacC8fFeD7f25cBB35e4Dd18dC7ea49939a68E17b": "a15c96b87a45be278d1d0ca637021daea43e5b102c8bca1b75396f59de2cc608"
+      },
+      "resourceReadReceipts": [
+        {
+          "To": "0x3763630861ca8f260654d9e41da7373805db6460",
+          "Offset": 0,
+          "Requested": 190,
+          "Returned": 190,
+          "Success": true,
+          "SHA256": "6fdc59f12241a75b826cef4afb1a13ec1dd454d2a893004351bcf638d1b39eb5"
+        },
+        {
+          "To": "0xacc8ffed7f25cbb35e4dd18dc7ea49939a68e17b",
+          "Offset": 0,
+          "Requested": 134,
+          "Returned": 134,
+          "Success": true,
+          "SHA256": "a15c96b87a45be278d1d0ca637021daea43e5b102c8bca1b75396f59de2cc608"
+        }
+      ],
+      "revertHex": "0x427cfac500000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000001",
+      "rootAfter": "0xcc5aada2cb1461691b42e8789a6d3d4db628b4ab5b9c868f6a81b1b07591c5db",
+      "rootBefore": "0xcc5aada2cb1461691b42e8789a6d3d4db628b4ab5b9c868f6a81b1b07591c5db",
+      "rootUnchanged": true,
+      "selector": "0x427cfac5",
+      "suppliedGas": 1000000000,
+      "uint256Words": [
+        "6",
+        "1"
+      ]
+    },
+    "raw-stack-trace-element": {
+      "actualDI0ReadSizes": [
+        198,
+        142
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 386020,
+      "resourceHashes": {
+        "0x3763630861Ca8F260654d9E41Da7373805Db6460": "5743ab98a5dec9ed8c78c85fb61126d9dcf85768701fbc680440b294d2f6544b",
+        "0xacC8fFeD7f25cBB35e4Dd18dC7ea49939a68E17b": "6ed85cbf3b77b1b90730de7cce47e87149f8bc73cafef23435863dea0be3fb4e"
+      },
+      "resourceReadReceipts": [
+        {
+          "To": "0x3763630861ca8f260654d9e41da7373805db6460",
+          "Offset": 0,
+          "Requested": 198,
+          "Returned": 198,
+          "Success": true,
+          "SHA256": "5743ab98a5dec9ed8c78c85fb61126d9dcf85768701fbc680440b294d2f6544b"
+        },
+        {
+          "To": "0xacc8ffed7f25cbb35e4dd18dc7ea49939a68e17b",
+          "Offset": 0,
+          "Requested": 142,
+          "Returned": 142,
+          "Success": true,
+          "SHA256": "6ed85cbf3b77b1b90730de7cce47e87149f8bc73cafef23435863dea0be3fb4e"
+        }
+      ],
+      "revertHex": "0x6a23ad8000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000001",
+      "rootAfter": "0x44e9bb4bc5b67b2d1316336a753d7e798e7e8d20f2ac6e1fa7f0e5d40a473236",
+      "rootBefore": "0x44e9bb4bc5b67b2d1316336a753d7e798e7e8d20f2ac6e1fa7f0e5d40a473236",
+      "rootUnchanged": true,
+      "selector": "0x6a23ad80",
+      "suppliedGas": 1000000000,
+      "uint256Words": [
+        "1",
+        "1"
+      ]
+    }
+  },
+  "canonicalReceipts": {
+    "verifiedReceipts": 267,
+    "summary": {
+      "world-guest-stack-q1": {
+        "receipts": 127,
+        "java": 127,
+        "internal": 2,
+        "peakGas": 25422545,
+        "lifecycle": 2
+      },
+      "world-guest-stack-q7": {
+        "receipts": 19,
+        "java": 127,
+        "internal": 2,
+        "peakGas": 26267238,
+        "lifecycle": 2
+      },
+      "world-guest-stack-q4096": {
+        "receipts": 1,
+        "java": 127,
+        "internal": 2,
+        "peakGas": 28704289,
+        "lifecycle": 2
+      },
+      "world-guest-stack-two-q1": {
+        "receipts": 61,
+        "java": 61,
+        "internal": 2,
+        "peakGas": 19210472,
+        "lifecycle": 2
+      },
+      "world-guest-stack-two-q7": {
+        "receipts": 9,
+        "java": 61,
+        "internal": 2,
+        "peakGas": 19981356,
+        "lifecycle": 2
+      },
+      "world-guest-stack-two-q4096": {
+        "receipts": 1,
+        "java": 61,
+        "internal": 2,
+        "peakGas": 21607823,
+        "lifecycle": 2
+      },
+      "world-thread-empty-q1": {
+        "receipts": 42,
+        "java": 42,
+        "internal": 4,
+        "peakGas": 14081140,
+        "lifecycle": 2
+      },
+      "world-thread-empty-q7": {
+        "receipts": 6,
+        "java": 42,
+        "internal": 4,
+        "peakGas": 14838841,
+        "lifecycle": 2
+      },
+      "world-thread-empty-q4096": {
+        "receipts": 1,
+        "java": 42,
+        "internal": 4,
+        "peakGas": 14864200,
+        "lifecycle": 2
+      }
+    },
+    "scope": "canonical nested ABI/events/CP hashes/counter chains/read ranges, not full Session acceptance"
+  },
+  "commands": [
+    {
+      "label": "guest-stack-q1-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.21370396099518985
+    },
+    {
+      "label": "guest-stack-q1-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 8.12210448901169
+    },
+    {
+      "label": "guest-stack-q1-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03156199399381876
+    },
+    {
+      "label": "guest-stack-q7-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.21378285204991698
+    },
+    {
+      "label": "guest-stack-q7-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 1.2148926329100505
+    },
+    {
+      "label": "guest-stack-q7-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03144151601009071
+    },
+    {
+      "label": "guest-stack-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.21365619299467653
+    },
+    {
+      "label": "guest-stack-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03141116502229124
+    },
+    {
+      "label": "guest-stack-q4096-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03143157600425184
+    },
+    {
+      "label": "guest-stack-two-q1-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.1636128700338304
+    },
+    {
+      "label": "guest-stack-two-q1-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 3.2670670329825953
+    },
+    {
+      "label": "guest-stack-two-q1-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03147706494200975
+    },
+    {
+      "label": "guest-stack-two-q7-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.21369570295792073
+    },
+    {
+      "label": "guest-stack-two-q7-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.514072268968448
+    },
+    {
+      "label": "guest-stack-two-q7-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.031445614993572235
+    },
+    {
+      "label": "guest-stack-two-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.2136789329815656
+    },
+    {
+      "label": "guest-stack-two-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03144549601711333
+    },
+    {
+      "label": "guest-stack-two-q4096-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-guest-stack-two-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/guest-stack-two.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03141135605983436
+    },
+    {
+      "label": "thread-empty-q1-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16360114002600312
+    },
+    {
+      "label": "thread-empty-q1-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 1.915619984967634
+    },
+    {
+      "label": "thread-empty-q1-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "1"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03145661496091634
+    },
+    {
+      "label": "thread-empty-q7-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16355677205137908
+    },
+    {
+      "label": "thread-empty-q7-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.263665136997588
+    },
+    {
+      "label": "thread-empty-q7-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q7",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "7"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.0314379750052467
+    },
+    {
+      "label": "thread-empty-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.21365962293930352
+    },
+    {
+      "label": "thread-empty-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.031516425078734756
+    },
+    {
+      "label": "thread-empty-q4096-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-thread-empty-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/thread-empty.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03136541601270437
+    },
+    {
+      "label": "uninitialized-q4096-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-uninitialized-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/uninitialized.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16358478099573404
+    },
+    {
+      "label": "uninitialized-q4096-finish",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "finish",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-uninitialized-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/uninitialized.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.03137892601080239
+    },
+    {
+      "label": "uninitialized-q4096-reopen",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "verify",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-uninitialized-q4096",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/uninitialized.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.031392915989272296
+    },
+    {
+      "label": "raw-throwable-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-raw-throwable",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/raw-throwable.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16354755102656782
+    },
+    {
+      "label": "raw-stack-trace-element-start",
+      "command": [
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/driver",
+        "setup-chain",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1/world-raw-stack-trace-element",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-fixtures-run1/raw-stack-trace-element.zip",
+        "4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.16360834101215005
+    },
+    {
+      "label": "canonical-receipts",
+      "command": [
+        "node",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/evidence/java-evm/minecraft-entry/throwable-guest-stack-trace-preflight/tools/verify_receipts.js",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-build-run1",
+        "/home/user/evm-jvm/throwable-guest-stack-trace/build/java-diff-mc-throwable-guest-stack-trace-gate-run1",
+        "1",
+        "world-guest-stack-q1",
+        "world-guest-stack-q7",
+        "world-guest-stack-q4096",
+        "world-guest-stack-two-q1",
+        "world-guest-stack-two-q7",
+        "world-guest-stack-two-q4096",
+        "world-thread-empty-q1",
+        "world-thread-empty-q7",
+        "world-thread-empty-q4096"
+      ],
+      "exit": 0,
+      "elapsedSeconds": 0.06355209404136986
+    }
+  ],
+  "wholeGateSeconds": 18.072024564025924,
+  "limitations": "This verifies only trusted generated guest classes. It snapshots active interpreter frames for Throwable.getStackTrace, keeps Thread.getStackTrace empty, and makes no original/JAR/network/Minecraft/world/EULA/Done claim."
+}
