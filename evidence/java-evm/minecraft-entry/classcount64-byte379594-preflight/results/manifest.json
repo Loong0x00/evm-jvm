@@ -1,0 +1,62 @@
+{
+  "format": "MC-RAW64-BYTE379594-P1-generated-only-manifest-v1",
+  "basis": "classcount63-byte377990-preflight",
+  "limits": {
+    "rawClasses": 64,
+    "rawBytes": 379594,
+    "diagnosticClasses": 158,
+    "runtimeCapBytes": 393216
+  },
+  "engine": {
+    "bytes": 377432,
+    "initSHA256": "5120ba754fd9253640f954856116951c6e755b5ee47de42543fe4a18b7ef1416",
+    "runtimeSHA256": "0a52a8b0f61dd84a017c28f6b238e6d3e247bc6a6acb1d808eabaa09cbff9867",
+    "runtimeKeccak256": "dd5928fefe9a7a9a0ac2d78b2705cd1dbdb5c5a647874b14a41fda0162768e4d"
+  },
+  "coordinator": {
+    "bytes": 5394,
+    "initSHA256": "962adaf93436d269f90bb061e2ccf0215e4e56628160d416b2b642ec53905140",
+    "runtimeSHA256": "6edcc6d11660a46028072e5fdda5bcc83e92e47df8ade2dc24eab2373934dc63",
+    "runtimeKeccak256": "db41f8e16fec9b88d2fc4b32c6237b4fd5fe9188627519112d281821db058740"
+  },
+  "bootstrap": {
+    "count": 94,
+    "root": "57722a32ab679ecdca73bd05c5cb633aa5984568e531a0dcbf2651bc0dac997c",
+    "integerHighestOneBitSHA256": "5e224945101472050ed0837cc22b03f138c2e2409aec8fa058ccd531f6e410dd"
+  },
+  "gate": {
+    "profile": "MC-RAW64-BYTE379594-P1",
+    "generatedOnly": true,
+    "wholeGateSeconds": 199.56952847598586,
+    "wholeGateBoundSeconds": 1200,
+    "commands": 523,
+    "canonicalReceipts": 1731,
+    "capacityWitness": {
+      "raw64": "q1/q7/direct/reopen equal",
+      "raw65": "driver/coordinator/engine refused before mutation",
+      "bytes379594": {
+        "coordinatorAccepted": true,
+        "actualDI0ReadBytes": 379594,
+        "selector": "0x71540d20",
+        "words": [
+          "1",
+          "0"
+        ],
+        "rootUnchanged": true
+      },
+      "bytes379595": {
+        "selector": "0xab23ed08",
+        "words": [
+          "12"
+        ],
+        "rootUnchanged": true
+      }
+    },
+    "integerHighestOneBit": {
+      "q1q7directReopenEqual": true,
+      "machineRoot": "0x0a2a3bdc350c9cea0b7e59fb6d6c98735589a713762d6b109f2501bf64947dce"
+    },
+    "limitations": "capacity-only generated gate; no original/JAR/external class/resource or genuine ImmutableEntry replay"
+  },
+  "parentGenuineImmutableEntryReplay": "deferred"
+}
