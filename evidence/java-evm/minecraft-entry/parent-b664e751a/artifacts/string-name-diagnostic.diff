@@ -1,0 +1,83 @@
+--- build/java-diff-mc-locale-root-parent-build1-b664e751a/engine/MCEntryInterpreter.sol	2026-09-22 23:02:42.787408301 +0800
++++ build/java-diff-mc-locale-root-string-name-diagnostic-b664e751a/engine/MCEntryInterpreter.sol	2026-09-22 23:24:46.728249487 +0800
+@@ -387,8 +387,8 @@
+
+     uint32 private constant MR0_SCHEMA = 1;
+     uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
+-    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:MAIN:EMPTY-STRING-ARRAY:1");
+-    bytes32 private constant DROOT = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:ROOT:1");
++    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:MAIN:EMPTY-STRING-ARRAY:1");
++    bytes32 private constant DROOT = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:ROOT:1");
+     uint256 private constant MAX_RAW_CLASSES = 69;
+     uint256 private constant MAX_RAW_BYTES = 449904;
+     uint256 private constant MAX_CHECKPOINT_BYTES = 1048576;
+@@ -404,8 +404,8 @@
+     uint32 private constant MAX_PATH_DEPTH = 16;
+     uint32 private constant MAX_PATH_BYTES = 256;
+     uint32 private constant MAX_TRANSFER = 4096;
+-    bytes32 private constant DART = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:ARTIFACT:1");
+-    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:BOOTSTRAP:1");
++    bytes32 private constant DART = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:ARTIFACT:1");
++    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:BOOTSTRAP:1");
+     // Append-only EnumSet image commitment; folded from the exact bytes at
+     // compile time so the runtime carries the append-only literal once.
+     bytes32 private constant DBOOT_ENUMSET = keccak256(hex"cafebabe00000034001b0a000600110a000300120700130a000300140a000300150700160100063c696e69743e010016285b4c6a6176612f6c616e672f4f626a6563743b2956010004436f646501000d537461636b4d61705461626c65070013070017010005616c6c4f66010026284c6a6176612f6c616e672f436c6173733b294c6a6176612f7574696c2f456e756d5365743b010009756e69766572736530010026284c6a6176612f6c616e672f436c6173733b295b4c6a6176612f6c616e672f4f626a6563743b0c000700180c0019001a0100116a6176612f7574696c2f456e756d5365740c000f00100c000700080100116a6176612f7574696c2f486173685365740100135b4c6a6176612f6c616e672f4f626a6563743b010003282956010003616464010015284c6a6176612f6c616e672f4f626a6563743b295a0021000300060000000000030000000700080001000900000040000300030000001b2ab70001033d1c2bbea200112a2b1c32b6000257840201a7ffefb100000001000a000000130002ff0006000307000b07000c010000fa00130009000d000e0001000900000018000300010000000cbb0003592ab80004b70005b000000000010a000f001000000000");
+@@ -420,11 +420,11 @@
+     bytes32 private constant DBOOT_THREAD_LOCAL = hex"93a0007b6336f667890f5afa2b01572278a7e39ab93b2faf1095e054317f538a";
+     // Image94 commitment keeps the constrained runtime below its fixed LOCAL cap.
+     bytes32 private constant DBOOT_SECURITY_MANAGER = hex"057ca3fbcb2390bdc0d8a6bd4f9a942b378525c0dca258dff442b04e7b526a28";
+-    bytes32 private constant DCFG = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:CONFIG:1");
+-    bytes32 private constant DMACH = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:MACHINE:1");
+-    bytes32 private constant DSEED = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:SEED:1");
+-    bytes32 private constant DVFS = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:VFS:1");
+-    bytes32 private constant DFILE = keccak256("JVMEVM:MC-LOCALE-ROOT-P2:FILE:1");
++    bytes32 private constant DCFG = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:CONFIG:1");
++    bytes32 private constant DMACH = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:MACHINE:1");
++    bytes32 private constant DSEED = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:SEED:1");
++    bytes32 private constant DVFS = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:VFS:1");
++    bytes32 private constant DFILE = keccak256("JVMEVM:MC-LOCALE-ROOT-D2:FILE:1");
+
+     mapping(bytes32 => Anchor) private anchors;
+     bool private enteredVFS0A;
+@@ -3932,12 +3932,12 @@
+     // A missing profile API is not permission to hide a malformed descriptor.
+     // Scope this check to the profile fallback; ordinary linkage precedence stays
+     // unchanged, and a well-formed deferred API still receives StringProfileError.
+-    function _rejectStringProfileCall(bytes memory data, uint256 off, uint256 n, uint256 pc)
++    function _rejectStringProfileCall(bytes memory data, uint256 off, uint256 n, uint256 nameOff, uint256 nameN, uint256 pc)
+         private pure
+     {
+         Selected memory signature;
+         if (!_descriptor(data, off, n, signature)) revert CallError(4, pc);
+-        revert StringProfileError(1, pc);
++        _missingClass(0x1019, pc, data, nameOff, nameN);
+     }
+
+     function _stringNativeBinding(ClassInfo memory c, uint256 method)
+@@ -7455,7 +7455,7 @@
+         }
+         if (!resolvedDeclaration) {
+             if (_isStringProfileSymbolic(classes[symbolic])) {
+-                _rejectStringProfileCall(caller.data, out.descriptorOffset, out.descriptorLength, pc);
++                _rejectStringProfileCall(caller.data, out.descriptorOffset, out.descriptorLength, out.nameOffset, out.nameLength, pc);
+             }
+             (bool foundInterface, uint256 interfaceOwner, uint256 interfaceMethod) =
+                 _findInterfaceMethod(
+@@ -7549,7 +7549,7 @@
+             }
+             if (!objectFallback) {
+                 if (_isStringProfileSymbolic(classes[symbolic])) {
+-                    _rejectStringProfileCall(caller.data, out.descriptorOffset, out.descriptorLength, pc);
++                    _rejectStringProfileCall(caller.data, out.descriptorOffset, out.descriptorLength, out.nameOffset, out.nameLength, pc);
+                 }
+                 (bool inherited, uint256 interfaceOwner, uint256 interfaceMethod) =
+                     _findInterfaceMethod(
+@@ -7938,7 +7938,7 @@
+         }
+         // LB0 exposes no static API on any of its three reserved String-profile types.
+         if (_isStringProfileSymbolic(classes[owner])) {
+-            _rejectStringProfileCall(caller.data, descriptorOffset, descriptorLength, pc);
++            _rejectStringProfileCall(caller.data, descriptorOffset, descriptorLength, nameOffset, nameLength, pc);
+         }
+
+         if (interfaceReference) {
