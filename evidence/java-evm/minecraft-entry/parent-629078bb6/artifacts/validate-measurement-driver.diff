@@ -1,0 +1,20 @@
+--- build/java-diff-mc-string-lower-locale-parent-accelerated-629078bb6/main.go 2026-09-23 00:38:40.130686083 +0800
++++ build/java-diff-mc-string-lower-locale-parent-measure70-629078bb6/main.go   2026-09-23 00:48:01.831587497 +0800
+@@ -46,7 +46,7 @@
+ const context = "all-dev-chain:block=1,time=1,coinbase=0000000000000000000000000000000000000000,value=0"
+ const immutableEngineSHA256 = "39ac8af3ab9d75414fd122603f570e5a443e247a6cdb5be101a518d1781a1877"
+ const immutableEngineKeccak = "0x27d8e8148d588a207e60370f4795e76ddaeabcaff1ad1562f6c26296859b6987"
+-const immutableCoordinatorKeccak = "0xbe11e982508b68cdfe8d20138b34a9a6ef4cc47576b7b513f705d1072508dd82"
++const immutableCoordinatorKeccak = "0xfabdfa3fdf525b65ec0a35bd0412b99021d091d9d5b0d83c085d7ac1bba60399"
+
+ // The constructor owner is deliberately separate from the required fixed LOCAL
+ // engine address, so ordinary CREATE nonce changes cannot alter the engine anchor.
+@@ -1767,7 +1767,7 @@
+        panic("generated fixture requires explicit bindings")
+    }
+    parts := strings.Split(names, ",")
+-   if len(parts) > 69 {
++    if len(parts) > 70 {
+        panic("binding count")
+    }
+    out := make([][]byte, 0, len(parts))

@@ -1,0 +1,37 @@
+--- build/java-diff-mc-string-lower-locale-parent-accelerated-629078bb6/coordinator/MCEntryCoordinator.sol  2026-09-23 00:36:49.692338735 +0800
++++ build/java-diff-mc-string-lower-locale-parent-measure70-629078bb6/coordinator/MCEntryCoordinator.sol    2026-09-23 00:47:59.845592199 +0800
+@@ -33,10 +33,10 @@
+     uint32 public totalClassBytes;
+     uint8 public classCount;
+
+-    address[69] private decoders;
+-    bytes32[69] private classRoots;
+-    uint32[69] private classSizes;
+-    bytes[69] private rawNames;
++    address[70] private decoders;
++    bytes32[70] private classRoots;
++    uint32[70] private classSizes;
++    bytes[70] private rawNames;
+
+     // A scalar, rather than an array, makes one selected resource the complete
+     // package surface. The all-zero tuple means no seed; no second resource can
+@@ -62,7 +62,7 @@
+         if (fixedOwner == address(0) || fixedOwner != msg.sender) revert MR0Error(1);
+         uint256 n = fixedDecoders.length;
+         if (
+-            n == 0 || n > 69 || fixedRawNames.length != n ||
++            n == 0 || n > 70 || fixedRawNames.length != n ||
+             assertedIndexRoots.length != n || assertedClassRoots.length != n
+         ) revert MR0Error(2);
+         if (ENGINE.codehash != ENGINE_CODEHASH) revert MR0Error(3);
+@@ -93,8 +93,8 @@
+             bytes32 resourceRoot = assertedClassRoots[i];
+             if (resourceRoot == bytes32(0) || _b32(decoder, bytes4(keccak256("finalRoot()"))) != resourceRoot) revert MR0Error(10);
+             uint32 size = _u32(decoder, bytes4(keccak256("plainSize()")));
+-            if (size == 0 || size > 449904) revert MR0Error(11);
+-            if (uint256(total) + size > 449904) revert MR0Error(12);
++            if (size == 0 || size > 600000) revert MR0Error(11);
++            if (uint256(total) + size > 600000) revert MR0Error(12);
+             total += size;
+
+             address index = _address(decoder, bytes4(keccak256("index()")));
