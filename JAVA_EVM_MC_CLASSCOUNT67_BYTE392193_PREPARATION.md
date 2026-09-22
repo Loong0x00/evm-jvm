@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft raw67 / byte392193 preparation
+
+Accepted `parent-9b6046a66` loads genuine qz.class and advances unchanged original66 to87225J/76I, then requests `com/google/common/collect/HashBiMap$Inverse.class`. Fresh EVM authenticated reads measure6661B,SHA-256 `73a810d11090211b2f070035d5592b306ea9b25fa4244a83b9a88d0f59b86f24`; total raw67/392193 and diagnostic162. The measurement setup fails without commit/root change and supplies no continuation; only its authenticated4096+2565 resource reads are evidence.
+
+Increase only raw66->67,bytes385532->392193,diagnostic161->162. Preserve bootstrap95 Map$Entry/root, Integer image and every other image/order/native/semantic/limit. Runtime<=393216 (prior376562). Gate exact67/68 and392193/392194, focused q1/q7/direct/reopen+retained direct/reopen<=1200s, durable manifest. Exact admitted input may retain the existing checkpoint-cap refusal, but must fully DI0-read and remain atomic. Worker no originals; parent genuine Inverse replay. No class behavior/provider/world/Done claim.
