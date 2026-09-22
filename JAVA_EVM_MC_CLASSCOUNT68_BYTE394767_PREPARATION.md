@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft raw68 / byte394767 preparation
+
+Accepted `parent-b27911363` genuinely loads HashBiMap$Inverse.class and advances unchanged original67 to87258J/77I, then requests `nf.class`. Fresh EVM authenticated read measures2574B,SHA-256 `e8e74db24e18f0bbb5b3ee6ebcbcd623310d55154eae87f4a6514f013dff5f1f`; total raw68/394767,diagnostic163. Setup creates only a coordinator stage0 head then engine refusal; it supplies no execution checkpoint/continuation.
+
+Increase only raw67->68,bytes392193->394767,diagnostic162->163. Preserve bootstrap95 Map$Entry/root, Integer image and every other image/order/native/semantic/limit. Deployed runtime, not raw input size, must remain<=393216 (prior376562). Gate exact68/69 and394767/394768, focused q1/q7/direct/reopen+retained direct/reopen<=1200s, durable manifest. Exact admitted input may fully DI0-read then atomically refuse at existing engine/checkpoint/gas bounds. Worker no originals; parent genuine nf replay. No class behavior/provider/world/Done claim.
