@@ -1,0 +1,5 @@
+# Java-on-EVM Minecraft raw69 / byte449904 preparation
+
+Accepted `parent-e8569f01e` proves genuine `String.indexOf(I)I`, advances unchanged original68 to87427J/77I, then requests `org/apache/commons/lang3/StringUtils.class`. Fresh EVM authenticated reads measure55137B,SHA-256 `ba5d836c69b071eae4d18814e789c14ed674afb774e2a4e2c013f1c7843be19d`; total raw69/449904,diagnostic164. Setup creates only coordinator stage0 head then engine refusal; no execution checkpoint/continuation is used.
+
+Increase only raw68->69,bytes394767->449904,diagnostic163->164. Preserve changed String indexOf image/root, bootstrap95 Map$Entry, Integer and every other image/order/native/semantic/limit. Deployed runtime<=393216 (prior377043); raw input size is not deployed runtime. Gate exact69/70 and449904/449905, focused q1/q7/direct/reopen+retained direct/reopen<=1200s, durable manifest. Exact admitted input must fully DI0-read and atomically retain the existing engine/checkpoint/gas refusal if it cannot commit. Worker no originals; parent genuine StringUtils replay. No class behavior/provider/world/Done claim.
