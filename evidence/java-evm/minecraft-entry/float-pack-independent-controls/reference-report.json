@@ -1,0 +1,189 @@
+{
+  "canonicalPackedDecodeCases": 2,
+  "classification": "TEST-ONLY NOT EVM ACCEPTANCE",
+  "generatedFloatFixtures": [
+    {
+      "file": "float-16-small.u32be",
+      "independentU32Roundtrip": "bit-exact",
+      "length": 16,
+      "nonzeroRawBits": 8,
+      "oldCanonicalChoice": "old-sparse-u32-index-u64-value",
+      "proposedReferenceChoice": "old-sparse-u32-index-u64-value",
+      "sha256": "d2fe20b14ebc226a06d9bd3116e427c01e124cbc811c69cdb4ce26bfcf0dda4b",
+      "sizesBytes": {
+        "denseU64": 128,
+        "oldSparseU32IndexU64Value": 100,
+        "packedFloatU32": 64
+      }
+    },
+    {
+      "file": "float-1024-sparse.u32be",
+      "independentU32Roundtrip": "bit-exact",
+      "length": 1024,
+      "nonzeroRawBits": 32,
+      "oldCanonicalChoice": "old-sparse-u32-index-u64-value",
+      "proposedReferenceChoice": "old-sparse-u32-index-u64-value",
+      "sha256": "667431c717488fee4d221f1acc61c24ff6e60c2ea22bcf6a491ecf31f257f131",
+      "sizesBytes": {
+        "denseU64": 8192,
+        "oldSparseU32IndexU64Value": 388,
+        "packedFloatU32": 4096
+      }
+    },
+    {
+      "file": "float-1024-dense.u32be",
+      "independentU32Roundtrip": "bit-exact",
+      "length": 1024,
+      "nonzeroRawBits": 400,
+      "oldCanonicalChoice": "old-sparse-u32-index-u64-value",
+      "proposedReferenceChoice": "packed-float-u32",
+      "sha256": "e49f26fb2a0e7ac2ec12726822e73cfa0c2a498646d904c603a9d08f4b3dfba9",
+      "sizesBytes": {
+        "denseU64": 8192,
+        "oldSparseU32IndexU64Value": 4804,
+        "packedFloatU32": 4096
+      }
+    },
+    {
+      "file": "float-65536-sparse.u32be",
+      "independentU32Roundtrip": "bit-exact",
+      "length": 65536,
+      "nonzeroRawBits": 128,
+      "oldCanonicalChoice": "old-sparse-u32-index-u64-value",
+      "proposedReferenceChoice": "old-sparse-u32-index-u64-value",
+      "sha256": "35521c3aa5f462d63e0e432e826e86ad68de437d511a955b101ca0e61cb86c19",
+      "sizesBytes": {
+        "denseU64": 524288,
+        "oldSparseU32IndexU64Value": 1540,
+        "packedFloatU32": 262144
+      }
+    },
+    {
+      "file": "float-65536-dense.u32be",
+      "independentU32Roundtrip": "bit-exact",
+      "length": 65536,
+      "nonzeroRawBits": 30000,
+      "oldCanonicalChoice": "old-sparse-u32-index-u64-value",
+      "proposedReferenceChoice": "packed-float-u32",
+      "sha256": "8b31245c969006cb92b4766eeac9da07cdbeb01f0d2c7c4f402def749afb5eb7",
+      "sizesBytes": {
+        "denseU64": 524288,
+        "oldSparseU32IndexU64Value": 360004,
+        "packedFloatU32": 262144
+      }
+    }
+  ],
+  "generatorClassMajorVersion": 52,
+  "hostOracleControls": {
+    "longArrayU64Hex": [
+      "0000000000000000",
+      "0000000000000001",
+      "ffffffffffffffff",
+      "8000000000000000",
+      "7fffffffffffffff",
+      "00000001ffffffff",
+      "7ff8000000000042",
+      "8000000000000000"
+    ],
+    "longControlSha256": "27391fb33172c6cc1ca2a9d8039bf55d62b1fcac8070ffd475bd8f8b4d7034d2",
+    "oracleManifestSha256": "1f4e3cfc0b865dab933357e53fd4856f424bcd9cd02426c16fa50faf3ea48c5c",
+    "referenceArray": [
+      "alpha",
+      null,
+      "alpha",
+      "guest",
+      ""
+    ],
+    "referenceControlSha256": "8e7444063835ccfa5adb4e7be586ef971758efe7f61ae3196217bc522f4307e0"
+  },
+  "limits": "No original Minecraft inputs, source/bytecode injection, EVM execution, or checkpoint acceptance claim.",
+  "oldSparsePositiveControl": {
+    "bytes": 388,
+    "canonical": true,
+    "rawCellsRoundtrip": "bit-exact"
+  },
+  "rawU32RoundtripCases": 5,
+  "refusalControls": [
+    {
+      "case": "truncated packed payload",
+      "reason": "packed payload length mismatch",
+      "refused": true
+    },
+    {
+      "case": "extra packed payload byte",
+      "reason": "packed payload length mismatch",
+      "refused": true
+    },
+    {
+      "case": "wrong primitive kind",
+      "reason": "packed flag is restricted to primitive float arrays",
+      "refused": true
+    },
+    {
+      "case": "packed+sparse flag collision",
+      "reason": "malformed or combined packed flags",
+      "refused": true
+    },
+    {
+      "case": "unknown packed flag",
+      "reason": "malformed or combined packed flags",
+      "refused": true
+    },
+    {
+      "case": "length below packed minimum",
+      "reason": "packed float array is below minimum length",
+      "refused": true
+    },
+    {
+      "case": "packed is not strict size winner",
+      "reason": "packed encoding is not the strict canonical size winner",
+      "refused": true
+    },
+    {
+      "case": "u64 float source has high bits",
+      "reason": "float cell has bits outside u32",
+      "refused": true
+    },
+    {
+      "case": "old sparse count/payload mismatch",
+      "reason": "old sparse count/payload length mismatch",
+      "refused": true
+    },
+    {
+      "case": "old sparse content mismatch",
+      "reason": "old sparse contents mismatch expected raw cells",
+      "refused": true
+    },
+    {
+      "case": "old sparse is noncanonical after packed wins",
+      "reason": "old sparse record is no longer canonical",
+      "refused": true
+    }
+  ],
+  "roundtripCases": 8,
+  "sizingModel": {
+    "dense": "8 bytes per cell",
+    "oldChoiceRule": "sparse iff oldSparseBytes < denseBytes, else dense",
+    "oldSparse": "4-byte u32 count + 12 bytes per (u32 index,u64 value)",
+    "packedFloat": "4 bytes per float cell",
+    "strictPackedRule": "length >= 1024 and packedFloatBytes < oldSparseBytes"
+  },
+  "strictCrossover": [
+    {
+      "firstWinPackedBytes": 4096,
+      "firstWinSparseBytes": 4108,
+      "length": 1024,
+      "strictFirstPackedNonzeroCount": 342,
+      "tieAtCount": 341,
+      "tieBytes": 4096
+    },
+    {
+      "firstWinPackedBytes": 262144,
+      "firstWinSparseBytes": 262156,
+      "length": 65536,
+      "strictFirstPackedNonzeroCount": 21846,
+      "tieAtCount": 21845,
+      "tieBytes": 262144
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema":"generated-java8-float-bits-v1",
+  "floatEncoding":"Float.floatToRawIntBits, big-endian u32",
+  "floatFixtures":[
+    {"file":"float-16-small.u32be","length":16,"nonzeroRawBits":8},
+    {"file":"float-1024-sparse.u32be","length":1024,"nonzeroRawBits":32},
+    {"file":"float-1024-dense.u32be","length":1024,"nonzeroRawBits":400},
+    {"file":"float-65536-sparse.u32be","length":65536,"nonzeroRawBits":128},
+    {"file":"float-65536-dense.u32be","length":65536,"nonzeroRawBits":30000}
+  ],
+  "referenceControl":{"file":"reference-control.json","length":5},
+  "longControl":{"file":"long-control.u64be","length":8,"encoding":"big-endian u64"}
+}
