@@ -42,19 +42,59 @@ root_block=block(source,'    function _bootstrapRoot()')
 assignments={int(i):rhs.strip() for i,rhs in re.findall(r'h\[(\d+)\]\s*=\s*([^;]+);',root_block)}
 assert set(assignments)==set(range(97))
 leaves=[]
+constant_indexes={}
 for index in range(97):
  rhs=assignments[index]; call=re.fullmatch(r'keccak256\((_bootstrap\w+)\(\)\)',rhs); const=re.fullmatch(r'(DBOOT_[A-Z_]+)',rhs)
+ assert bool(call) != bool(const),(index,rhs)
  name=call.group(1) if call else pascal_constant(const.group(1))
  assert (name=='_bootstrapMath') == (index==89),(index,name)
  leaf=image(source,name)
  if const:
+  assert const.group(1) not in constant_indexes
+  constant_indexes[const.group(1)]=index
   declaration=re.search(r'bytes32 private constant '+const.group(1)+r'\s*=\s*([^;]+);',source); assert declaration
   value=declaration.group(1).strip()
-  if value.startswith('keccak256(hex"'): assert bytes.fromhex(value[len('keccak256(hex"'):-2])==leaf
+  literal_hash=re.fullmatch(r'hex"([0-9a-f]+)"',value)
+  literal_image=re.fullmatch(r'keccak256\(hex"([0-9a-f]+)"\)',value)
+  assert bool(literal_hash) != bool(literal_image),(const.group(1),value[:80])
+  if literal_image: assert bytes.fromhex(literal_image.group(1))==leaf,(const.group(1),'image literal differs')
  leaves.append(leaf)
 node=r'''const fs=require("fs"),{keccak256}=require("js-sha3");const x=JSON.parse(fs.readFileSync(0,"utf8"));const k=b=>keccak256(Buffer.from(b,"hex"));const word=n=>Buffer.from(BigInt(n).toString(16).padStart(64,"0"),"hex");const d=keccak256(x.domain);const hs=x.images.map(k);const enc=Buffer.concat([Buffer.from(d,"hex"),word(64),word(hs.length),...hs.map(h=>Buffer.from(h,"hex"))]);process.stdout.write(JSON.stringify({domain:d,hashes:hs,root:keccak256(enc)}));'''
 env={**os.environ,'NODE_PATH':str(root/'jvmevm/runtime/node_modules')}
 commit=json.loads(subprocess.run(['node','-e',node],input=json.dumps({'domain':'JVMEVM:MC-RANDOM-CLASS-P2:BOOTSTRAP:1','images':[x.hex() for x in leaves]}),text=True,cwd=root,env=env,capture_output=True,check=True).stdout)
+# Materialized DBOOT digests are Solidity root inputs, not comments or hints.
+# Check every DBOOT constant against the exact image selected by h[index].
+declared_dboot_constants=dict(re.findall(r'bytes32 private constant (DBOOT_[A-Z_]+)\s*=\s*hex"([0-9a-f]+)"\s*;',source))
+all_dboot_constants=set(re.findall(r'bytes32 private constant (DBOOT_[A-Z_]+)\s*=',source))
+assert set(constant_indexes)==all_dboot_constants
+actual_leaf_hashes=[]
+for index in range(97):
+ rhs=assignments[index]
+ call=re.fullmatch(r'keccak256\((_bootstrap\w+)\(\)\)',rhs)
+ if call:
+  actual_leaf_hashes.append(commit['hashes'][index])
+  continue
+ const=re.fullmatch(r'(DBOOT_[A-Z_]+)',rhs).group(1)
+ declaration=re.search(r'bytes32 private constant '+const+r'\s*=\s*([^;]+);',source)
+ value=declaration.group(1).strip()
+ literal_hash=re.fullmatch(r'hex"([0-9a-f]+)"',value)
+ literal_image=re.fullmatch(r'keccak256\(hex"([0-9a-f]+)"\)',value)
+ if literal_hash:
+  digest=literal_hash.group(1)
+  assert len(digest)==64,(const,len(digest))
+  assert digest==commit['hashes'][index],(const,index,digest,commit['hashes'][index])
+  actual_leaf_hashes.append(digest)
+ else:
+  assert literal_image and bytes.fromhex(literal_image.group(1))==leaves[index]
+  actual_leaf_hashes.append(commit['hashes'][index])
+hex_root_constants={name for name in constant_indexes if re.fullmatch(r'hex"[0-9a-f]+"',re.search(r'bytes32 private constant '+name+r'\s*=\s*([^;]+);',source).group(1).strip())}
+assert set(declared_dboot_constants)==hex_root_constants
+root_from_leaves=r'''const fs=require("fs"),{keccak256}=require("js-sha3");const x=JSON.parse(fs.readFileSync(0,"utf8"));const word=n=>Buffer.from(BigInt(n).toString(16).padStart(64,"0"),"hex");const d=keccak256(x.domain);const enc=Buffer.concat([Buffer.from(d,"hex"),word(64),word(x.hashes.length),...x.hashes.map(h=>Buffer.from(h,"hex"))]);process.stdout.write(JSON.stringify({root:keccak256(enc)}));'''
+solidity_root=json.loads(subprocess.run(['node','-e',root_from_leaves],input=json.dumps({'domain':'JVMEVM:MC-RANDOM-CLASS-P2:BOOTSTRAP:1','hashes':actual_leaf_hashes}),text=True,cwd=root,env=env,capture_output=True,check=True).stdout)['root']
+assert actual_leaf_hashes==commit['hashes']
+assert solidity_root==commit['root']
+root_pin=json.loads((stage/'root-commitment.json').read_text())['bootstrapRoot']
+assert solidity_root==root_pin,(solidity_root,root_pin)
 # Normalize the exact native-20 changes back to the sine baseline.
 normalized=source
 for old,new,label in [
@@ -88,14 +128,22 @@ old_math=block(baseline,math_start)
 new_math=block(normalized,math_start)
 assert normalized.count(new_math)==1
 normalized=normalized.replace(new_math,old_math,1)
-assert normalized==baseline, 'unreviewed engine source changes beyond Math.asin native20'
+new_math_commitment=re.search(r'    bytes32 private constant DBOOT_MATH = hex"[0-9a-f]+";\n',source).group(0)
+old_math_commitment=re.search(r'    bytes32 private constant DBOOT_MATH = hex"[0-9a-f]+";\n',baseline).group(0)
+old_math_digest=re.fullmatch(r'    bytes32 private constant DBOOT_MATH = hex"([0-9a-f]+)";\n',old_math_commitment).group(1)
+old_hash_node='const fs=require("fs"),{keccak256}=require("js-sha3");process.stdout.write(keccak256(Buffer.from(fs.readFileSync(0,"utf8"),"hex")));'
+assert subprocess.run(['node','-e',old_hash_node],input=image(baseline,'_bootstrapMath').hex(),text=True,cwd=root,env=env,capture_output=True,check=True).stdout==old_math_digest
+assert new_math_commitment != old_math_commitment
+assert normalized.count(new_math_commitment)==1
+normalized=normalized.replace(new_math_commitment,old_math_commitment,1)
+assert normalized==baseline, 'unreviewed engine source changes beyond Math.asin native20 and its exact Math image commitment'
 assert 'Math.asin(' not in kernel and 'Math.sqrt(' not in kernel and 'blockhash(' not in kernel
 for phrase in ('for (uint256 n = 1; n <= 128; ++n)','for (uint256 i; i < 120; ++i)','0x3ff0000000000000','0x3e40000000000000','2087946453251888179413438228831778874','MathAsinProfileError(1, pc)'):
  assert phrase in kernel,phrase
 assert 'return 20;' in block(source,'    function _nativeBinding(')
 assert 'binding != 20' in block(source,'    function _loadNativeCallee(')
-report={'result':'PASS','basis':'math-sin-bounded-preparation','baselineEngineSourceSHA256':hashlib.sha256(baseline.encode()).hexdigest(),'candidateEngineSourceSHA256':hashlib.sha256(source.encode()).hexdigest(),'onlySemanticDelta':['global native binding20 exact bounded Q120 integer Math.asin(D)D','bootstrap Math image89 adds only exact native asin(D)D'],'bootstrapCount':97,'changedBootstrapIndices':[89],'changedBootstrapImages':['Math'],'mathImageBytes':len(generated),'mathImageSHA256':hashlib.sha256(generated).hexdigest(),'mathImageKeccak256':commit['hashes'][89],'previousMathImageSHA256':pins['baselineMathSHA256'],'previousMathImageBytes':pins['baselineMathBytes'],'bootstrapRoot':commit['root'],'previousSourceDerivedRoot':pins['bootstrapRoot'],'orderedRoot':commit['root'],'orderedLeafKeccak256':commit['hashes'],'globalNativeBindings':20,'stringLocalBinding':12,'rawLimits':[71,471911],'diagnosticClassBound':168,'kernel':{'qBits':120,'piOverTwoQ':'2087946453251888179413438228831778874','seriesLastN':128,'tailBound':'<2^-258','inputMagnitudeMaxRaw':'3ff0000000000000','smallIdentityMaxRaw':'3e40000000000000','sqrtRounds':120,'externalMath':False,'lookupTable':False,'all96OtherBootstrapImagesByteIdentical':True,'intermediateProof':'all series products <2^240; sqrt radicand <2^238; sums <2^121; each <2^255'}}
+report={'result':'PASS','basis':'math-sin-bounded-preparation','baselineEngineSourceSHA256':hashlib.sha256(baseline.encode()).hexdigest(),'candidateEngineSourceSHA256':hashlib.sha256(source.encode()).hexdigest(),'onlySemanticDelta':['global native binding20 exact bounded Q120 integer Math.asin(D)D','bootstrap Math image89 adds only exact native asin(D)D'],'bootstrapCount':97,'changedBootstrapIndices':[89],'changedBootstrapImages':['Math'],'mathImageBytes':len(generated),'mathImageSHA256':hashlib.sha256(generated).hexdigest(),'mathImageKeccak256':commit['hashes'][89],'previousMathImageSHA256':pins['baselineMathSHA256'],'previousMathImageBytes':pins['baselineMathBytes'],'bootstrapRoot':commit['root'],'solidityMaterializedBootstrapRoot':solidity_root,'materializedDBootHexConstantsChecked':len(declared_dboot_constants),'previousSourceDerivedRoot':pins['bootstrapRoot'],'orderedRoot':commit['root'],'orderedLeafKeccak256':commit['hashes'],'globalNativeBindings':20,'stringLocalBinding':12,'rawLimits':[71,471911],'diagnosticClassBound':168,'kernel':{'qBits':120,'piOverTwoQ':'2087946453251888179413438228831778874','seriesLastN':128,'tailBound':'<2^-258','inputMagnitudeMaxRaw':'3ff0000000000000','smallIdentityMaxRaw':'3e40000000000000','sqrtRounds':120,'externalMath':False,'lookupTable':False,'all96OtherBootstrapImagesByteIdentical':True,'intermediateProof':'all series products <2^240; sqrt radicand <2^238; sums <2^121; each <2^255'}}
 historical_p1=json.loads((previous/'baseline-pins.json').read_text())['bootstrapRoot']
-(stage/'root-commitment.json').write_text(json.dumps({'basis':'math-sin-bounded-preparation','bootstrapCount':97,'priorSourceDerivedRoot':pins['bootstrapRoot'],'priorHistoricalP1PinRoot':historical_p1,'historicalP1PinMatchesSourceDerivedRoot':historical_p1==pins['bootstrapRoot'],'changedIndices':[89],'orderedLeafKeccak256':commit['hashes'],'bootstrapRoot':commit['root']},indent=2)+'\n')
+(stage/'root-commitment.json').write_text(json.dumps({'basis':'math-sin-bounded-preparation','bootstrapCount':97,'priorSourceDerivedRoot':pins['bootstrapRoot'],'priorHistoricalP1PinRoot':historical_p1,'historicalP1PinMatchesSourceDerivedRoot':historical_p1==pins['bootstrapRoot'],'changedIndices':[89],'orderedLeafKeccak256':commit['hashes'],'materializedDBootHexConstantsChecked':len(declared_dboot_constants),'solidityMaterializedBootstrapRoot':solidity_root,'bootstrapRoot':commit['root']},indent=2)+'\n')
 (stage/'results/source-invariants.json').write_text(json.dumps(report,indent=2)+'\n')
 print(json.dumps(report,indent=2))

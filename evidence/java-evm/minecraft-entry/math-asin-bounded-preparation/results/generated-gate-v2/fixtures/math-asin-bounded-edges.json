@@ -1,0 +1,322 @@
+{
+  "entries": [
+    "MathAsinBoundedMain.class"
+  ],
+  "bindingCount": 1,
+  "bootstrapCount": 97,
+  "totalClassBytes": 4003,
+  "classBytes": {
+    "MathAsinBoundedMain.class": 4003
+  },
+  "classSHA256": {
+    "MathAsinBoundedMain.class": "90394078db20877ee96af14a289215200ef8c46eaee1ba03b40cba2e7ca08aaf"
+  },
+  "zipSHA256": "a2f11a7e8263a29706bd964e550df4727d57099ac4ae36ab56047c9db7b1371e",
+  "java8HostOracle": true,
+  "hostOutput": [
+    "positive-zero\t0000000000000000\t0\t0",
+    "negative-zero\t8000000000000000\t8000000000000000\t80000000",
+    "positive-min-subnormal\t0000000000000001\t1\t0",
+    "negative-min-subnormal\t8000000000000001\t8000000000000001\t80000000",
+    "positive-max-subnormal\t000fffffffffffff\tfffffffffffff\t0",
+    "negative-max-subnormal\t800fffffffffffff\t800fffffffffffff\t80000000",
+    "positive-min-normal\t0010000000000000\t10000000000000\t0",
+    "negative-min-normal\t8010000000000000\t8010000000000000\t80000000",
+    "tiny-cutoff-positive\t3e40000000000000\t3e40000000000000\t32000000",
+    "tiny-cutoff-negative\tbe40000000000000\tbe40000000000000\tb2000000",
+    "tiny-successor-positive\t3e40000000000001\t3e40000000000001\t32000000",
+    "tiny-successor-negative\tbe40000000000001\tbe40000000000001\tb2000000",
+    "half-below\t3fdfffffffffffff\t3fe0c152382d7365\t3f060a92",
+    "half-exact\t3fe0000000000000\t3fe0c152382d7366\t3f060a92",
+    "half-above\t3fe0000000000001\t3fe0c152382d7367\t3f060a92",
+    "half-below-negative\tbfdfffffffffffff\tbfe0c152382d7365\tbf060a92",
+    "half-exact-negative\tbfe0000000000000\tbfe0c152382d7366\tbf060a92",
+    "half-above-negative\tbfe0000000000001\tbfe0c152382d7367\tbf060a92",
+    "one-below\t3fefffffffffffff\t3ff921fb50442d18\t3fc90fdb",
+    "one-two-below\t3feffffffffffffe\t3ff921fb4e9c057f\t3fc90fda",
+    "one\t3ff0000000000000\t3ff921fb54442d18\t3fc90fdb",
+    "negative-one-below\tbfefffffffffffff\tbff921fb50442d18\tbfc90fdb",
+    "negative-one\tbff0000000000000\tbff921fb54442d18\tbfc90fdb",
+    "k1/256-positive\t3f70000000000000\t3f700002aaabdddf\t3b800015",
+    "k1/256-negative\tbf70000000000000\tbf700002aaabdddf\tbb800015",
+    "k32/256-positive\t3fc0000000000000\t3fc00abe0c129e1e\t3e0055f0",
+    "k32/256-negative\tbfc0000000000000\tbfc00abe0c129e1e\tbe0055f0",
+    "k64/256-positive\t3fd0000000000000\t3fd02be9ce0b87cd\t3e815f4e",
+    "k64/256-negative\tbfd0000000000000\tbfd02be9ce0b87cd\tbe815f4e",
+    "k127/256-positive\t3fdfc00000000000\t3fe09c6b2a636bb7\t3f04e359",
+    "k127/256-negative\tbfdfc00000000000\tbfe09c6b2a636bb7\tbf04e359",
+    "k128/256-positive\t3fe0000000000000\t3fe0c152382d7366\t3f060a92",
+    "k128/256-negative\tbfe0000000000000\tbfe0c152382d7366\tbf060a92",
+    "k129/256-positive\t3fe0200000000000\t3fe0e651e85229ce\t3f07328f",
+    "k129/256-negative\tbfe0200000000000\tbfe0e651e85229ce\tbf07328f",
+    "k192/256-positive\t3fe8000000000000\t3feb235315c680dc\t3f591a99",
+    "k192/256-negative\tbfe8000000000000\tbfeb235315c680dc\tbf591a99",
+    "k224/256-positive\t3fec000000000000\t3ff10c066d3e6932\t3f886033",
+    "k224/256-negative\tbfec000000000000\tbff10c066d3e6932\tbf886033",
+    "k255/256-positive\t3fefe00000000000\t3ff7b7d33b928c5b\t3fbdbe9a",
+    "k255/256-negative\tbfefe00000000000\tbff7b7d33b928c5b\tbfbdbe9a",
+    "k256/256-positive\t3ff0000000000000\t3ff921fb54442d18\t3fc90fdb",
+    "k256/256-negative\tbff0000000000000\tbff921fb54442d18\tbfc90fdb"
+  ],
+  "selectedResource": null,
+  "asinVectors": [
+    {
+      "name": "positive-zero",
+      "inputRaw": "0000000000000000",
+      "javaDoubleRaw": "0000000000000000",
+      "javaFloatRaw": "00000000"
+    },
+    {
+      "name": "negative-zero",
+      "inputRaw": "8000000000000000",
+      "javaDoubleRaw": "8000000000000000",
+      "javaFloatRaw": "80000000"
+    },
+    {
+      "name": "positive-min-subnormal",
+      "inputRaw": "0000000000000001",
+      "javaDoubleRaw": "0000000000000001",
+      "javaFloatRaw": "00000000"
+    },
+    {
+      "name": "negative-min-subnormal",
+      "inputRaw": "8000000000000001",
+      "javaDoubleRaw": "8000000000000001",
+      "javaFloatRaw": "80000000"
+    },
+    {
+      "name": "positive-max-subnormal",
+      "inputRaw": "000fffffffffffff",
+      "javaDoubleRaw": "000fffffffffffff",
+      "javaFloatRaw": "00000000"
+    },
+    {
+      "name": "negative-max-subnormal",
+      "inputRaw": "800fffffffffffff",
+      "javaDoubleRaw": "800fffffffffffff",
+      "javaFloatRaw": "80000000"
+    },
+    {
+      "name": "positive-min-normal",
+      "inputRaw": "0010000000000000",
+      "javaDoubleRaw": "0010000000000000",
+      "javaFloatRaw": "00000000"
+    },
+    {
+      "name": "negative-min-normal",
+      "inputRaw": "8010000000000000",
+      "javaDoubleRaw": "8010000000000000",
+      "javaFloatRaw": "80000000"
+    },
+    {
+      "name": "tiny-cutoff-positive",
+      "inputRaw": "3e40000000000000",
+      "javaDoubleRaw": "3e40000000000000",
+      "javaFloatRaw": "32000000"
+    },
+    {
+      "name": "tiny-cutoff-negative",
+      "inputRaw": "be40000000000000",
+      "javaDoubleRaw": "be40000000000000",
+      "javaFloatRaw": "b2000000"
+    },
+    {
+      "name": "tiny-successor-positive",
+      "inputRaw": "3e40000000000001",
+      "javaDoubleRaw": "3e40000000000001",
+      "javaFloatRaw": "32000000"
+    },
+    {
+      "name": "tiny-successor-negative",
+      "inputRaw": "be40000000000001",
+      "javaDoubleRaw": "be40000000000001",
+      "javaFloatRaw": "b2000000"
+    },
+    {
+      "name": "half-below",
+      "inputRaw": "3fdfffffffffffff",
+      "javaDoubleRaw": "3fe0c152382d7365",
+      "javaFloatRaw": "3f060a92"
+    },
+    {
+      "name": "half-exact",
+      "inputRaw": "3fe0000000000000",
+      "javaDoubleRaw": "3fe0c152382d7366",
+      "javaFloatRaw": "3f060a92"
+    },
+    {
+      "name": "half-above",
+      "inputRaw": "3fe0000000000001",
+      "javaDoubleRaw": "3fe0c152382d7367",
+      "javaFloatRaw": "3f060a92"
+    },
+    {
+      "name": "half-below-negative",
+      "inputRaw": "bfdfffffffffffff",
+      "javaDoubleRaw": "bfe0c152382d7365",
+      "javaFloatRaw": "bf060a92"
+    },
+    {
+      "name": "half-exact-negative",
+      "inputRaw": "bfe0000000000000",
+      "javaDoubleRaw": "bfe0c152382d7366",
+      "javaFloatRaw": "bf060a92"
+    },
+    {
+      "name": "half-above-negative",
+      "inputRaw": "bfe0000000000001",
+      "javaDoubleRaw": "bfe0c152382d7367",
+      "javaFloatRaw": "bf060a92"
+    },
+    {
+      "name": "one-below",
+      "inputRaw": "3fefffffffffffff",
+      "javaDoubleRaw": "3ff921fb50442d18",
+      "javaFloatRaw": "3fc90fdb"
+    },
+    {
+      "name": "one-two-below",
+      "inputRaw": "3feffffffffffffe",
+      "javaDoubleRaw": "3ff921fb4e9c057f",
+      "javaFloatRaw": "3fc90fda"
+    },
+    {
+      "name": "one",
+      "inputRaw": "3ff0000000000000",
+      "javaDoubleRaw": "3ff921fb54442d18",
+      "javaFloatRaw": "3fc90fdb"
+    },
+    {
+      "name": "negative-one-below",
+      "inputRaw": "bfefffffffffffff",
+      "javaDoubleRaw": "bff921fb50442d18",
+      "javaFloatRaw": "bfc90fdb"
+    },
+    {
+      "name": "negative-one",
+      "inputRaw": "bff0000000000000",
+      "javaDoubleRaw": "bff921fb54442d18",
+      "javaFloatRaw": "bfc90fdb"
+    },
+    {
+      "name": "k1/256-positive",
+      "inputRaw": "3f70000000000000",
+      "javaDoubleRaw": "3f700002aaabdddf",
+      "javaFloatRaw": "3b800015"
+    },
+    {
+      "name": "k1/256-negative",
+      "inputRaw": "bf70000000000000",
+      "javaDoubleRaw": "bf700002aaabdddf",
+      "javaFloatRaw": "bb800015"
+    },
+    {
+      "name": "k32/256-positive",
+      "inputRaw": "3fc0000000000000",
+      "javaDoubleRaw": "3fc00abe0c129e1e",
+      "javaFloatRaw": "3e0055f0"
+    },
+    {
+      "name": "k32/256-negative",
+      "inputRaw": "bfc0000000000000",
+      "javaDoubleRaw": "bfc00abe0c129e1e",
+      "javaFloatRaw": "be0055f0"
+    },
+    {
+      "name": "k64/256-positive",
+      "inputRaw": "3fd0000000000000",
+      "javaDoubleRaw": "3fd02be9ce0b87cd",
+      "javaFloatRaw": "3e815f4e"
+    },
+    {
+      "name": "k64/256-negative",
+      "inputRaw": "bfd0000000000000",
+      "javaDoubleRaw": "bfd02be9ce0b87cd",
+      "javaFloatRaw": "be815f4e"
+    },
+    {
+      "name": "k127/256-positive",
+      "inputRaw": "3fdfc00000000000",
+      "javaDoubleRaw": "3fe09c6b2a636bb7",
+      "javaFloatRaw": "3f04e359"
+    },
+    {
+      "name": "k127/256-negative",
+      "inputRaw": "bfdfc00000000000",
+      "javaDoubleRaw": "bfe09c6b2a636bb7",
+      "javaFloatRaw": "bf04e359"
+    },
+    {
+      "name": "k128/256-positive",
+      "inputRaw": "3fe0000000000000",
+      "javaDoubleRaw": "3fe0c152382d7366",
+      "javaFloatRaw": "3f060a92"
+    },
+    {
+      "name": "k128/256-negative",
+      "inputRaw": "bfe0000000000000",
+      "javaDoubleRaw": "bfe0c152382d7366",
+      "javaFloatRaw": "bf060a92"
+    },
+    {
+      "name": "k129/256-positive",
+      "inputRaw": "3fe0200000000000",
+      "javaDoubleRaw": "3fe0e651e85229ce",
+      "javaFloatRaw": "3f07328f"
+    },
+    {
+      "name": "k129/256-negative",
+      "inputRaw": "bfe0200000000000",
+      "javaDoubleRaw": "bfe0e651e85229ce",
+      "javaFloatRaw": "bf07328f"
+    },
+    {
+      "name": "k192/256-positive",
+      "inputRaw": "3fe8000000000000",
+      "javaDoubleRaw": "3feb235315c680dc",
+      "javaFloatRaw": "3f591a99"
+    },
+    {
+      "name": "k192/256-negative",
+      "inputRaw": "bfe8000000000000",
+      "javaDoubleRaw": "bfeb235315c680dc",
+      "javaFloatRaw": "bf591a99"
+    },
+    {
+      "name": "k224/256-positive",
+      "inputRaw": "3fec000000000000",
+      "javaDoubleRaw": "3ff10c066d3e6932",
+      "javaFloatRaw": "3f886033"
+    },
+    {
+      "name": "k224/256-negative",
+      "inputRaw": "bfec000000000000",
+      "javaDoubleRaw": "bff10c066d3e6932",
+      "javaFloatRaw": "bf886033"
+    },
+    {
+      "name": "k255/256-positive",
+      "inputRaw": "3fefe00000000000",
+      "javaDoubleRaw": "3ff7b7d33b928c5b",
+      "javaFloatRaw": "3fbdbe9a"
+    },
+    {
+      "name": "k255/256-negative",
+      "inputRaw": "bfefe00000000000",
+      "javaDoubleRaw": "bff7b7d33b928c5b",
+      "javaFloatRaw": "bfbdbe9a"
+    },
+    {
+      "name": "k256/256-positive",
+      "inputRaw": "3ff0000000000000",
+      "javaDoubleRaw": "3ff921fb54442d18",
+      "javaFloatRaw": "3fc90fdb"
+    },
+    {
+      "name": "k256/256-negative",
+      "inputRaw": "bff0000000000000",
+      "javaDoubleRaw": "bff921fb54442d18",
+      "javaFloatRaw": "bfc90fdb"
+    }
+  ]
+}

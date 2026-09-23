@@ -418,7 +418,7 @@ contract MCEntryInterpreter {
     // Iterable root commitment is constant-folded; its image remains appended below.
     // Math root commitment is its exact append image hash; the image stays materialized once below.
     bytes32 private constant DBOOT_RANDOM = hex"7c7093faf1a5f9610a8a179f48e634e451e0621862af33c14ec409dc8d6ef184";
-    bytes32 private constant DBOOT_MATH = hex"e354be66a6f5f6eecabb17b461000b63b90bea635f692a0cf0c36b6b5a688748";
+    bytes32 private constant DBOOT_MATH = hex"109b02106c7d644052ff74938768421a9a78caf8d9bfd2378b943cf567c2d192";
     bytes32 private constant DBOOT_ITERABLE = keccak256(hex"cafebabe00000034000a0700080700090100086974657261746f7201001628294c6a6176612f7574696c2f4974657261746f723b0100095369676e617475726501001b28294c6a6176612f7574696c2f4974657261746f723c54543b3e3b0100283c543a4c6a6176612f6c616e672f4f626a6563743b3e4c6a6176612f6c616e672f4f626a6563743b0100126a6176612f6c616e672f4974657261626c650100106a6176612f6c616e672f4f626a6563740601000100020000000000010401000300040001000500000002000600010005000000020007");
     // Exact hashes of the two materialized Java 8 images below. The ordered root remains derived at runtime.
     bytes32 private constant DBOOT_THREAD = hex"5b69bdf77be902d446ec0bf3a58c69bff4db5e1255558b7d92f8a29cc7a74ae6";

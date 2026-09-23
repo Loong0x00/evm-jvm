@@ -3,12 +3,22 @@
 from pathlib import Path
 import hashlib, importlib.util, json, os, subprocess, zipfile
 here=Path(__file__).resolve().parent; stage=here.parent; root=here.parents[4]
-archive=stage/'results/generated-gate-v1'
+archive=stage/'results/generated-gate-v2'
+legacy_archive=stage/'results/generated-gate-v1'
+legacy_review=json.loads((stage.parent/'parent-41a4cbe35/asin-root-mismatch-review.json').read_text())
+legacy_pins=json.loads((legacy_archive/'build-pins.json').read_text())
 read=lambda n:json.loads((archive/n).read_text())
 sha=lambda b:hashlib.sha256(b).hexdigest()
 pins=read('build-pins.json'); summary=read('gate-summary.json'); proof=read('proof.json')
 source=read('source-invariants.json'); commitment=read('root-commitment.json'); base=read('baseline-pins.json')
 manifest=read('manifest.json'); fixture_summary=read('fixtures/summary.json')
+assert manifest['archiveVersion']==proof['archiveVersion']==2 and manifest['canonicalArchive'] is proof['canonicalArchive'] is True
+assert manifest['historicalV1Status']==proof['historicalV1Status']=='NON_ACCEPTANCE_INVALID_SOURCE_ROOT_NOT_PROMOTED'
+assert legacy_review['status']=='REJECTED_FOR_PARENT_ACCEPTANCE_UNTIL_SOURCE_COMMITMENT_FIXED'
+assert legacy_pins['bootstrapRoot']==legacy_review['candidateClaimedP2Root']
+assert legacy_review['actualCandidateP2SolidityRoot']!=legacy_review['candidateClaimedP2Root']
+assert proof['historicalV1ClaimedRoot']==legacy_review['candidateClaimedP2Root']
+assert proof['historicalV1ActualSolidityRoot']==legacy_review['actualCandidateP2SolidityRoot']
 assert summary['profile']==proof['profile']==manifest['profile']=='MC-RANDOM-CLASS-P2-MATH-ASIN-BOUNDED-Q120'
 assert summary['generatedOnly'] and pins['bootstrapCount']==proof['bootstrapCount']==97
 assert pins['globalNativeBindings']==proof['globalNativeBindings']==20 and pins['stringLocalBinding']==proof['stringLocalBinding']==12
@@ -18,6 +28,8 @@ assert pins['engine']['bytes']==summary['engineBytes']==proof['engineBytes']<=39
 assert summary['wholeGateSeconds']==manifest['gateSeconds']<=manifest['limitSeconds']==1200
 assert summary['canonicalReceipts']['verifiedReceipts']==proof['canonicalReceipts']
 assert pins['bootstrapRoot']==summary['bootstrapRoot']==proof['bootstrapRoot']==commitment['bootstrapRoot']==source['bootstrapRoot']
+assert source['solidityMaterializedBootstrapRoot']==commitment['solidityMaterializedBootstrapRoot']==source['bootstrapRoot']
+assert source['materializedDBootHexConstantsChecked']==commitment['materializedDBootHexConstantsChecked']==7
 assert source['changedBootstrapIndices']==[89] and source['changedBootstrapImages']==['Math']
 assert source['globalNativeBindings']==20 and source['stringLocalBinding']==12
 assert source['rawLimits']==[71,471911] and source['mathImageBytes']==304

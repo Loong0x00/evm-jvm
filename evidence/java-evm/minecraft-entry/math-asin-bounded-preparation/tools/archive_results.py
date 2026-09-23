@@ -15,8 +15,14 @@ assert build.parent == fixtures.parent == gate.parent == root / "build"
 assert build.name.startswith("java-diff-mc-math-asin-build-")
 assert fixtures.name.startswith("java-diff-mc-math-asin-fixtures-")
 assert gate.name.startswith("java-diff-mc-math-asin-gate-")
-dest = stage / "results/generated-gate-v1"
+dest = stage / "results/generated-gate-v2"
 assert not dest.exists(), f"refuse to overwrite durable evidence: {dest}"
+legacy = stage / "results/generated-gate-v1"
+legacy_review = json.loads((stage.parent / "parent-41a4cbe35/asin-root-mismatch-review.json").read_text())
+legacy_pins = json.loads((legacy / "build-pins.json").read_text())
+assert legacy_review["status"] == "REJECTED_FOR_PARENT_ACCEPTANCE_UNTIL_SOURCE_COMMITMENT_FIXED"
+assert legacy_pins["bootstrapRoot"] == legacy_review["candidateClaimedP2Root"]
+assert legacy_review["actualCandidateP2SolidityRoot"] != legacy_review["candidateClaimedP2Root"]
 summary = json.loads((gate / "summary.json").read_text())
 assert summary["wholeGateSeconds"] <= 1200
 pins = json.loads((build / "pins.json").read_text())
@@ -118,6 +124,11 @@ for label in summary["results"]["sparse-malformed-refusals"]:
          "refusals/" + label + ".json")
 
 proof = {
+    "archiveVersion": 2,
+    "canonicalArchive": True,
+    "historicalV1Status": "NON_ACCEPTANCE_INVALID_SOURCE_ROOT_NOT_PROMOTED",
+    "historicalV1ClaimedRoot": legacy_review["candidateClaimedP2Root"],
+    "historicalV1ActualSolidityRoot": legacy_review["actualCandidateP2SolidityRoot"],
     "profile": summary["profile"],
     "wholeGateSeconds": summary["wholeGateSeconds"],
     "limitSeconds": 1200,
@@ -142,7 +153,9 @@ proof = {
     "sourceRootPinCaveat": {
         "historicalP1Pin": json.loads((stage / "root-commitment.json").read_text())["priorHistoricalP1PinRoot"],
         "sourceDerivedP2Root": json.loads((stage / "root-commitment.json").read_text())["bootstrapRoot"],
-        "note": "The inherited historical P1 7e17... root is stale. The prior source-derived P2 root is independently recomputed; this stage changes only exact Math image89 and recomputes all 97 ordered leaves.",
+        "solidityMaterializedP2Root": json.loads((stage / "root-commitment.json").read_text())["solidityMaterializedBootstrapRoot"],
+        "materializedDBootHexConstantsChecked": json.loads((stage / "root-commitment.json").read_text())["materializedDBootHexConstantsChecked"],
+        "note": "The inherited historical P1 7e17... root is stale. The current source-derived P2 root and Solidity-materialized P2 root are independently recomputed and equal; every DBOOT_* hex digest is checked against its exact image. This stage changes only exact Math image89 and its matching DBOOT_MATH leaf; the historical v1 archive remains a non-acceptance because its actual Solidity root mismatched its claim.",
     },
     "scope": "Generated fixtures only. Exact Math image89 adds native asin(D)D and only global binding20 is appended; prior binding19 bounded sine, sqrt18, other96 images, String-local12, raw71/471911 and sparse wire remain. Binding20 uses finite |x|<=1, signed-zero identity, a bounded Q120 n=128 series plus exact integer sqrt transform, nearest-even output, and atomic refusals for nonfinite/out-of-domain bits. q1/q7/direct/reopen EVM receipts check selected k/256, signed zero, tiny/half/endpoint edges against generated Java8 <=1 ULP and exact float-cast witnesses. The independent 17,066-row Q120 model is test-only and observes <=1 ULP/0 float mismatches; no original program inputs were used. Retained sine, sqrt, float-packed/sparse q1/reopen/malformed, raw71/471911 and older profiles are separately gated. No original JAR/classes/resources/world/EULA data opened; parent must independently rebuild/gate and perform authorized unchanged-original replay.",
 }
@@ -152,6 +165,8 @@ proof = {
 def sha(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 files = {p.relative_to(dest).as_posix(): sha(p) for p in sorted(dest.rglob("*")) if p.is_file()}
 manifest = {
+    "archiveVersion": 2, "canonicalArchive": True,
+    "historicalV1Status": "NON_ACCEPTANCE_INVALID_SOURCE_ROOT_NOT_PROMOTED",
     "profile": summary["profile"], "generatedOnly": True,
     "baselineEngineSourceSHA256": json.loads((stage / "results/source-invariants.json").read_text())["baselineEngineSourceSHA256"],
     "candidateEngineSourceSHA256": json.loads((stage / "results/source-invariants.json").read_text())["candidateEngineSourceSHA256"],
