@@ -6,6 +6,8 @@
   "authenticatedGuestArray": {"handle": 666, "type": "float[65536]", "packedWire": true, "denseGuestHeap": true, "zeroIndices": [0], "nonzeroCells": 65535, "all65536RawFloatBitsComparedToIndependentGeneratedJava8Oracle": true, "mismatchCount": 0, "comparisonIsTestOnlyNotExecutionAuthority": true},
   "atomicQ1Refusal": {"selector": "0xd631c3a4", "error": "CallError(3,290)", "gas": 1924548486, "rootUnchanged": true, "failedStateUsedForContinuation": false},
   "lastSuccessfulGuestFrame": {"classIndex": 70, "methodIndex": 39, "pc": 290, "stackSize": 1},
-  "measuredBlocker": "unresolved method at original class70 method39 bytecode PC290; exact symbolic owner/name/descriptor NOT YET IDENTIFIED and must be diagnosed on EVM without host class parsing or speculative implementation",
+  "freshDomainEvmDiagnostic": {"domain": "MC-RANDOM-CLASS-D7", "site": 4130, "pc": 290, "symbol": "java/lang/Math|asin|(D)D", "genuineSuccessfulJvmSteps": 1267352, "verifiedCanonicalReceipts": 2060, "failedStateUsedForContinuation": false},
+  "readOnlyAuthenticatedGuestArgument": {"packedStackTop": "0x70000000000000000", "doubleRawBits": "0x0000000000000000", "scope": "only the first asin argument is measured; later inputs are unknown"},
+  "measuredBlocker": "java/lang/Math.asin(D)D (static) at original class70 method39 bytecode PC290, first argument +0.0; only this symbol and first input are established",
   "notClaimed": ["logger provider complete", "world creation", "EULA", "Done", "standard-chain compatibility"]
 }
