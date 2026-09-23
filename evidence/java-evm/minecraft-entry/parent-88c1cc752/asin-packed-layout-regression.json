@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "candidateCommit": "88c1cc752",
+  "parentStatus": "REJECTED_FOR_ORIGINAL_STARTUP_CONTINUATION",
+  "source": "unchanged original Minecraft Java 1.12.2 server71 in independent P8 LOCAL4.2B domain after generated gate PASS",
+  "generatedGate": {"seconds": 563.9621156569992, "canonicalReceipts": 4314, "runtimeBytes": 387706, "actualBootstrapRoot": "c721290c273fd58665f69fa8541f33159b9543d4b167fdc7545f27bf66381835"},
+  "lastSuccessfulOriginal": {"jvmSteps": 661637, "internalSteps": 80, "lifecycle": 1, "canonicalReceiptsVerified": 2106, "checkpointBytes": 504516, "floatArrayHandle": 666, "floatArrayLength": 65536, "floatNonzeroCells": 31892, "wireFormat": "old sparse index-u32/value-u64 pairs, NOT accepted P6 packed-float-u32"},
+  "atomicQ1Failure": {"selector": "0x", "gas": 4134639284, "rootUnchanged": true, "noNewCheckpoint": true, "failedStateUsedForContinuation": false},
+  "measuredRegression": "the candidate engine/source and its source verifier are based on pre-packed math-sin-bounded-preparation (P2). PACKED_FLOAT_ARRAY_FLAG/_usePackedFloatArray are absent despite candidate documentation claiming float packing retained. Authentic P8 sine-table initialization cannot continue at q1 under LOCAL4.2B around 31,892 nonzero cells. Accepted P6 lossless float-packed source reaches 1,267,352J, all65,536 genuine raw float bits match generated Java8, and measures Math.asin(D)D next. Rebase only measured asin+Math image/leaf onto accepted P6 packed-float baseline; do NOT use P8's failed state or remove authentication.",
+  "notClaimed": ["Math.asin completed", "provider", "world", "EULA", "Done"]
+}
