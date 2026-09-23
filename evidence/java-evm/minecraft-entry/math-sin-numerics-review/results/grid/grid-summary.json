@@ -1,0 +1,26 @@
+{
+  "double_bit_mismatch_count": 2008,
+  "double_max_ulp_distance": 1,
+  "double_mismatch_records_sha256": "a6370ce597d1ec4742dc0485e1a858edaedc11599ae2913de36a41457e1c11a6",
+  "fixture_sha256": "6001a5c714608ca9649b08b25eba27a3aa011f7c870a32ddae15ca330fefc058",
+  "float_cast_bit_mismatch_count": 0,
+  "grid_count": 65536,
+  "intermediate_multiplication_max_signed_bit_length": 246,
+  "max_multiplication": {
+    "max_bits": 246,
+    "stage": "term*x2@n=2",
+    "x_raw_bits": "4006e56d2eac7bf5"
+  },
+  "max_ulp_example": {
+    "index": 3194,
+    "jdk8_raw_bits": "3fd34b14781bd9f8",
+    "q120_raw_bits": "3fd34b14781bd9f9",
+    "x_raw_bits": "3fd3991f9b95a9aa"
+  },
+  "nonclaim": "finite generated probes only; no universal Math.sin correctness claim",
+  "pi_q120": "4175892906503776358826876457663557747",
+  "purpose": "independent test-only two-step Q120 Taylor candidate versus existing generated OpenJDK 8 grid",
+  "q_bits": 120,
+  "range_reduction": "exact input bits to Q120; subtract/add 2*pi_Q when outside [-pi_Q,+pi_Q]",
+  "recurrence": "x2=roundEven(x*x/Q); term_n=roundEven(-term_(n-1)*x2/(Q*(2n)*(2n+1))), n=1..30"
+}

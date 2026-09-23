@@ -1,0 +1,73 @@
+{
+  "double_bit_mismatch_count": 1,
+  "double_max_ulp_distance": 1,
+  "float_cast_bit_mismatch_count": 0,
+  "group_counts": {
+    "finite-boundary": {
+      "count": 12,
+      "double_bit_mismatch_count": 0,
+      "float_cast_bit_mismatch_count": 0,
+      "max_ulp_distance": 0
+    },
+    "near-special": {
+      "count": 66,
+      "double_bit_mismatch_count": 0,
+      "float_cast_bit_mismatch_count": 0,
+      "max_ulp_distance": 0
+    },
+    "prior-measured-x1-control": {
+      "count": 1,
+      "double_bit_mismatch_count": 0,
+      "float_cast_bit_mismatch_count": 0,
+      "max_ulp_distance": 0
+    },
+    "random": {
+      "count": 32768,
+      "double_bit_mismatch_count": 1,
+      "float_cast_bit_mismatch_count": 0,
+      "max_ulp_distance": 1
+    },
+    "subnormal-edge": {
+      "count": 14,
+      "double_bit_mismatch_count": 0,
+      "float_cast_bit_mismatch_count": 0,
+      "max_ulp_distance": 0
+    },
+    "tiny-identity-boundary": {
+      "count": 14,
+      "double_bit_mismatch_count": 0,
+      "float_cast_bit_mismatch_count": 0,
+      "max_ulp_distance": 0
+    },
+    "zero": {
+      "count": 2,
+      "double_bit_mismatch_count": 0,
+      "float_cast_bit_mismatch_count": 0,
+      "max_ulp_distance": 0
+    }
+  },
+  "input_sha256": "eae8a57c1d25b9452fcdfd9e99c9110f423b58fb117bc8c7f5be7dbda5a08e31",
+  "intermediate_multiplication_max_signed_bit_length": 246,
+  "max_multiplication": {
+    "max_bits": 246,
+    "stage": "term*x2@n=2",
+    "x_raw_bits": "400921fb54442d10"
+  },
+  "max_ulp_example": {
+    "jdk8_raw_bits": "3fe5486bbad79890",
+    "key": "splitmix64-31250",
+    "kind": "random",
+    "q120_raw_bits": "3fe5486bbad79891",
+    "x_raw_bits": "c00ef423186271dd"
+  },
+  "mismatch_records_sha256": "9d811d93eefeccf1bdb30aa456381f131a0247ef68503d15f96898018f282010",
+  "mismatch_rows_file": "sample-comparison.tsv (all rows, match flags, raw bits and ULP distances)",
+  "near_special_caveats": [
+    "Near pi and 2*pi, exact raw-bit equality is highly sensitive to reduction and implementation details; counts are measurements of this finite set only.",
+    "Java 8 Math.sin is not specified as universally correctly rounded; a match or <=1 ULP sample result is not a proof for all inputs.",
+    "The generated random raw-bit distribution and edge rows are controls, not evidence that unchanged Minecraft supplied these values."
+  ],
+  "oracle_sha256": "67157c3ccd2b79e472f5e7c2aff075e697601b23a5eb99c8d1e2417b3b3c102c",
+  "purpose": "test-only Q120 comparison to JDK8 Math.sin for fixed edges and deterministic generated finite samples",
+  "total_count": 32877
+}

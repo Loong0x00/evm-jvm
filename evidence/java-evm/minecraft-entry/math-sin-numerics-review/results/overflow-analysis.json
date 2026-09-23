@@ -1,0 +1,25 @@
+{
+  "algebraic_bounds": {
+    "Q": "2^120",
+    "largest_recurrence_denominator": "Q*(60*61) = 3660*2^120 < 2^132",
+    "largest_signed_256_product_bound": "<2^247, below signed int256 max 2^255-1 (at least 8 exponent bits of headroom)",
+    "reduced_abs_xq": "< (13/4) Q",
+    "sum_abs": "< (13/4 + 30*7)Q < 214Q < 2^128",
+    "term_n": "< 7 Q for n=1..30: n=1 <= (13/4*11/6 + 1/2)Q < 7Q; for n>=2 ratio <=11/20 and +1/2 rounding remains <7Q",
+    "term_times_x2_product": "< 7*11 Q^2 = 77 Q^2 < 128 Q^2 = 2^247",
+    "x2": "< 11 Q (since (13/4)^2 < 11; rounding adds <= 1/2 Q-unit)",
+    "xq_squared_product": "< (13/4)^2 Q^2 < 16 Q^2 = 2^244"
+  },
+  "assumptions": [
+    "Input is finite and raw magnitude <= 0x401921fb54442d18 (the specified binary64 6.283185307179586 bound).",
+    "Range reduction uses nearest-Q120 input conversion and pi_Q=roundEven(pi*2^120); the one-step +/-2*pi_Q reduction leaves |xq| < (13/4)*Q.",
+    "Q=2^120, x2=roundEven(xq*xq/Q), and each term is rounded by nearest-even division using denominator Q*(2n)*(2n+1), n=1..30."
+  ],
+  "measured": {
+    "combined_max_signed_product_bit_length": 246,
+    "generated_sample_max_signed_product_bit_length": 246,
+    "grid_max_signed_product_bit_length": 246
+  },
+  "status": "bounded algebraic estimate for the specified finite domain and recurrence; not a universal sine-correctness proof",
+  "warning": "These bounds concern arithmetic intermediates only. They do not establish approximation error, correct rounding, JDK8 agreement for all finite inputs, nor behavior outside the stated domain."
+}
