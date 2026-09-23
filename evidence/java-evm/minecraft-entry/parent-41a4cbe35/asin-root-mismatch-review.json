@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "candidateIntegratedCommit": "41a4cbe35",
+  "status": "REJECTED_FOR_PARENT_ACCEPTANCE_UNTIL_SOURCE_COMMITMENT_FIXED",
+  "method": "independently evaluate the exact Solidity _bootstrapRoot() h[0..96] right-hand expressions and abi.encode(DBOOT,h) in the candidate P2 source, including materialized hex hash constants; do not substitute an image-derived digest for a stale hex constant",
+  "newMathImageIndex": 89,
+  "newMathImageSHA256": "678f8cef035281f8db9c55ca436048c4494ace649b82c54eb859f4ecb4ea99ad",
+  "newMathImageKeccak256": "109b02106c7d644052ff74938768421a9a78caf8d9bfd2378b943cf567c2d192",
+  "candidateSourceMaterializedDBOOT_MATH": "e354be66a6f5f6eecabb17b461000b63b90bea635f692a0cf0c36b6b5a688748",
+  "candidateClaimedP2Root": "e4e36043b03626d5766b849f9504f6520fafbd462fc19238a0e9a580f480ef42",
+  "actualCandidateP2SolidityRoot": "e8d2682b12ee29790e98011eb4745d7f41706d085b11c649de02faffd633efac",
+  "finding": "The new exact Math class bytes and native asin method were compiled, but _bootstrapRoot() still uses the previous Math.sin image's materialized DBOOT_MATH leaf. The original candidate's source verifier hashes the new image but does not check hex-form materialized leaf constants. Generated gate receipts do not cure this source/root commitment discrepancy. No original Minecraft replay was run for this candidate.",
+  "requiredCorrection": "Replace only DBOOT_MATH with the new image's true Keccak, enforce all materialized leaf constants equal their exact embedded image hashes in source verifier, normalize that intentional constant change, independently rebuild and rerun the full generated gate under 1200s/runtime cap, then parent fresh-domain source-root audit and original replay.",
+  "noFailedStateContinuation": true,
+  "noMinecraftDoneClaim": true
+}
