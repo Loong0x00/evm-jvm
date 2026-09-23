@@ -42,4 +42,4 @@ The test-only bounded-sine check reads the pinned generated Java-8 oracle under 
 
 ## Pending
 
-Parent must independently rebuild/replay this source and verify the gate before integration/acceptance. Any subsequent original-server replay is separately governed by the current local budget authorization and must resume only from a successful canonical checkpoint. The older 4.2B mention in the preparation scope is historical, not current call-budget authorization. No push permission is implied.
+Parent must independently rebuild/replay this source and verify the gate before integration/acceptance. Any subsequent original-server replay is separately governed by the current local budget authorization and must resume only from a successful canonical checkpoint. The user expressly authorized LOCAL4.2B for unchanged original replay (at most 30s/call); ordinary generated calls retain their 1B ceiling. This is not a standard-chain claim. No push permission is implied.
