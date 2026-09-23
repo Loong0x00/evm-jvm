@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "basis": "23f706fbc",
+  "source": "unchanged pinned Minecraft Java server 1.12.2 original71 after EVM-only sparse primitive-array checkpoint repair",
+  "lastSuccessful": {"javaSteps": 87563, "internalSteps": 80, "lifecycle": 1, "canonicalReceipts": 63, "checkpointBytes": 121812, "bootstrapCount": 97},
+  "measuredGasRepair": {"densePriorCheckpointBytes": 677904, "sparseCheckpointAt87552Bytes": 121780, "firstSuccessfulQ1AfterLargeArray": {"javaSteps": 87563, "gas": 3736845897, "suppliedGas": 4200000000}, "failedStateUsedForContinuation": false},
+  "atomicQ1Refusal": {"selector": "0xd631c3a4", "error": "CallError(3,50)", "gas": 1800397109, "rootUnchanged": true, "engineCheckpointCommitted": false},
+  "freshDomainEvmDiagnostics": {"siteCode": 3013, "pc": 50, "symbolSite": 4129, "symbol": "java/lang/Math|sin|(D)D"},
+  "readOnlyPublicCheckpointStack": {"callerRawClassIndex": 70, "callerMethodIndex": 39, "pc": 50, "lastPackedValue": "0x70000000000000000", "doubleRawBits": "0x0000000000000000", "interpretation": "only the first genuine invocation argument is positive zero; no claim for later values"},
+  "independentGeneratedBoundary": {"rawClassBytes": 471911, "DI0ReadAllBytes": true, "suppliedGas": 4200000000, "selector": "0x71540d20", "error": "LC0StateError(1,0)", "rootUnchanged": true, "candidateCheckpoint": false},
+  "measuredBlocker": {"owner": "java/lang/Math", "method": "sin", "descriptor": "(D)D", "kind": "static platform method"},
+  "claim": "Math.sin is the exact next measured symbol. No general sin implementation, trig-table output, provider/world/EULA/Done result has been fabricated or claimed."
+}
