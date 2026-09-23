@@ -1,0 +1,9 @@
+# Result: bounded Java `Math.asin(D)D` candidate
+
+- Added genuine Java 8 `Math.asin(double)` declaration to bootstrap Math image89 and exact global native binding20 only. Existing sqrt18 and bounded integer sin19 remain unchanged; only Math differs from the other 96 bootstrap images.
+- Implemented deterministic Q120 integer arcsine: identity path through `2^-27`, n=128 nearest-even series for `|x|<=1/2`, exact 120-round integer sqrt transform for the high interval, and nearest-even binary64 packing. Signed zero and exact ±1 endpoints are retained. Nonfinite and finite out-of-range inputs atomically refuse.
+- Source-derived 97-leaf root: `e4e36043b03626d5766b849f9504f6520fafbd462fc19238a0e9a580f480ef42`. Math image is 304 bytes, SHA-256 `678f8cef035281f8db9c55ca436048c4494ace649b82c54eb859f4ecb4ea99ad`. Engine is 387,706 bytes, below 393,216.
+- Generated EVM gate: 568.123s, 4,314 canonical receipts, 43 asin vectors q1/q7/direct/reopen. All outputs are within 1 ULP of generated OpenJDK 8 raw-bit witnesses; selected float casts match exactly. Test-only Q120 model covers 17,066 supported inputs (max 1 ULP, 472 binary64 one-ULP differences, zero float-cast mismatches); this is not an original-program or EVM 17k-grid claim.
+- Retained sine/sqrt, packed-float, sparse q1/reopen/malformed, raw71, and existing profile/capacity controls passed. The 471,911-byte package is coordinator-admitted and fully read, but the ordinary 1B-gas call OOGs before the checkpoint-cap selector; this is explicitly not a checkpoint-cap acceptance. 471,912 bytes is refused by the unchanged coordinator. Durable receipts and SHA256 manifests: `results/generated-gate-v1/`.
+
+**Not completed here:** parent fresh-domain independent build/gate and the authorized unchanged-original replay. No original JAR/classes/resources/world/EULA was used; no Minecraft world or `Done` claim.
