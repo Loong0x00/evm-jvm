@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "basis": "56f2377a5",
+  "source": "unchanged pinned Minecraft server 1.12.2 original71 genuine EVM startup under LOCAL4.2B, P5 bounded integer Math.sin",
+  "acceptedFrontier": {"jvmSteps": 658937, "internalSteps": 80, "lifecycle": 1, "canonicalReceipts": 1638, "checkpointBytes": 502716, "floatArrayHandle": 666, "floatArrayLength": 65536, "sparseNonzeroValues": 31742, "floatValuesComparedToIndependentJava8Oracle": 31742, "floatValueBitMismatches": 0},
+  "measuredAtomicGasNarrowing": {"fromSuccessfulJvmSteps": 657825, "q16RefusalSelector": "0x", "q16RefusalGas": 4134638883, "rootUnchanged": true, "noCheckpointFromFailedCall": true, "laterQ8Successful": true, "lastQ8SuccessfulGas": 4141058442, "suppliedGas": 4200000000, "perCallElapsedMS": 2509},
+  "classification": "Measured throughput/gas pressure, NOT a fatal q1 blocker. The guest initializer and array are real and progressing. Current wire has u32 index + u64 value for each nonzero float (12 bytes/cell), rescans the fully materialized array, and becomes expensive at >31k nonzero elements. Under this gas ceiling q16 has failed and q8 succeeds; further progress is slow. A lossless float-only packed 4-byte IEEE754 checkpoint representation is proposed as a transport/layout optimization, not a Java semantic or output shortcut. It must be independently gated, and original replay must continue from a fresh domain; no failed state is continuation.",
+  "notClaimed": ["q1 out of gas", "float array fully initialized", "logger provider", "world creation", "EULA", "Done"]
+}
