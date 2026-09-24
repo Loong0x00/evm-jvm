@@ -7,7 +7,10 @@ import importlib.util
 import json
 import os
 import subprocess
+import sys
 import zipfile
+
+sys.dont_write_bytecode = True
 
 here = Path(__file__).resolve().parent
 stage = here.parent
@@ -47,12 +50,19 @@ assert source_proof["result"] == "PASS"
 assert source_proof["onlyChangedFunctions"] == ["_machineSize", "_encodeMachine"]
 assert source_proof["bootstrapCount"] == 97
 assert source_proof["actualP16BootstrapRoot"] == "8c5bc495513b12e7ee40f71f447c5f8f894d49ec9cf318d2744143f1d20ff310"
+cap_algebra = source_proof["capFallbackAlgebra"]
+assert cap_algebra["status"] == "PASS"
+assert cap_algebra["allNonzeroCountsChecked"] == 167942
+assert cap_algebra["zeroNonzeroCase"]["exactEnvelopeBytes"] == 1048576
+assert cap_algebra["zeroNonzeroCase"]["upperEnvelopeBytes"] == 1310716
+assert cap_algebra["oneNonzeroCase"]["exactEnvelopeBytes"] == 1048588
 
 pins = read_json(results / "build-pins.json")
 engine_json = read_json(stage / "engine/MCEntryInterpreter.json")
 engine_runtime = bytes.fromhex((stage / "engine/MCEntryInterpreter.runtime.hex").read_text().strip())
-assert len(engine_runtime) == pins["engine"]["bytes"] == 389818
+assert len(engine_runtime) == pins["engine"]["bytes"] == 392176
 assert len(engine_runtime) <= 393216
+assert 393216 - len(engine_runtime) == 1040
 assert sha(engine_runtime) == pins["engine"]["runtimeSHA256"] == engine_json["codeHashes"]["runtimeSHA256"]
 assert engine_json["sourceHashes"]["MCEntryInterpreter.sol"] == source_proof["candidateSourceSHA256"]
 coord_dir = results / "artifacts/coordinator"
@@ -71,7 +81,7 @@ receipts = read_json(results / "canonical-receipts.json")
 key = read_json(results / "key-results.json")
 assert gate["generatedOnly"] and gate["profile"] == "MC-RANDOM-CLASS-P16-FLOAT-PACKED-CHECKPOINT"
 assert gate["wholeGateSeconds"] <= 1200
-assert gate["engineBytes"] == 389818 and gate["engineCapBytes"] == 393216
+assert gate["engineBytes"] == 392176 and gate["engineCapBytes"] == 393216
 assert gate["bootstrapCount"] == 97 and gate["bootstrapRoot"] == source_proof["actualP16BootstrapRoot"]
 assert gate["globalNativeBindings"] == 21 and gate["stringLocalBinding"] == 12
 assert gate["rawLimits"] == [71, 471911] and gate["externalLocalGas"] == 1_000_000_000
@@ -89,7 +99,7 @@ for label in ("packed-array-oracle", "array-savings-boundary", "sparse-array-str
 spec = importlib.util.spec_from_file_location("singleScanCheckpointDiagnostic", here / "checkpoint_diagnostic.py")
 diagnostic = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(diagnostic)
-comparison = read_json(results / "opaque-equivalence-gate-04/comparison.json")
+comparison = read_json(results / "opaque-equivalence-gate-06/comparison.json")
 assert comparison["result"] == "PASS" and comparison["generatedOnly"]
 assert len(comparison["comparisons"]) == 9
 node = r'''const fs=require('fs'),{keccak256}=require('js-sha3');
@@ -108,8 +118,8 @@ for row in comparison["comparisons"]:
     label = row["fixture"]
     tag = "direct" if row["quantum"] == 4096 else "q" + str(row["quantum"])
     relative = f"{label}-{tag}.mr01.bin"
-    baseline = (results / "opaque-equivalence-gate-04/baseline" / relative).read_bytes()
-    candidate = (results / "opaque-equivalence-gate-04/candidate" / relative).read_bytes()
+    baseline = (results / "opaque-equivalence-gate-06/baseline" / relative).read_bytes()
+    candidate = (results / "opaque-equivalence-gate-06/candidate" / relative).read_bytes()
     assert baseline == candidate
     assert len(candidate) == row["MR01Bytes"]
     assert sha(candidate) == row["MR01SHA256"]
@@ -131,7 +141,7 @@ for label in ("packed-array-oracle", "array-savings-boundary", "sparse-array-str
         assert len({rows[q][metric] for q in ("q1", "q7", "direct")}) == 1
 
 def inspect_saved(label, quantum):
-    p = results / "opaque-equivalence-gate-04/candidate" / (label + "-" + quantum + ".mr01.bin")
+    p = results / "opaque-equivalence-gate-06/candidate" / (label + "-" + quantum + ".mr01.bin")
     return diagnostic.inspect(bytes(280) + p.read_bytes())
 
 packed = inspect_saved("packed-array-oracle", "direct")
@@ -162,16 +172,28 @@ for refusal_set, names in (("packed-malformed-refusals", {
     assert all(row["rootUnchanged"] and row["headUnchanged"] and row["logsUnchanged"]
                for row in failures.values())
 
-direct = read_json(results / "opaque-equivalence-gate-04-direct/comparison.json")
+direct = read_json(results / "opaque-equivalence-gate-06-direct/comparison.json")
 assert direct["result"] == "PASS" and direct["comparisonMode"] == "direct-only"
 assert len(direct["comparisons"]) == 3
 assert all(row["MR01ByteIdenticalToAcceptedP16"] for row in direct["comparisons"])
 run_metadata = read_json(results / "run-metadata.json")
 assert run_metadata["candidateGatePlusRequiredDirectEqualityWallSeconds"] < 1200
+assert run_metadata["fullEvmNearCapFallbackCaseRun"] is False
+assert run_metadata["originalOrSiblingInputsAccessed"] is False
+followup = read_json(results / "cap-fallback-followup-gate-06.json")
+assert followup["result"] == "PASS" and followup["baseCommit"] == "0110df3d9"
+assert followup["sourceSHA256"] == source_proof["candidateSourceSHA256"]
+assert followup["fullGeneratedGate"]["seconds"] == gate["wholeGateSeconds"]
+assert followup["acceptedP16MR01Equality"]["allEqual"]
+assert followup["acceptedP16MR01Equality"]["allQuantaComparisons"] == 9
+assert followup["capFallbackAlgebra"]["status"] == "PASS"
+assert followup["malformedAndResumeControls"]["packedCheckpointResume"] is True
+assert any("No full-EVM near-cap" in line for line in followup["limitations"])
 
-gas = read_json(results / "generated-gas-comparison-gate-04.json")
+gas = read_json(results / "generated-gas-comparison-gate-06.json")
 assert gas["result"] == "PASS" and len(gas["measurements"]) == 9
-assert max(row["gasSaved"] for row in gas["measurements"]) == 9_950_957
+assert min(row["gasSaved"] for row in gas["measurements"]) > 0
+assert max(row["gasSaved"] for row in gas["measurements"]) == 9_950_820
 
 # Verify the append-only local evidence checksum manifest last.
 check_sums(stage / "SHA256SUMS")

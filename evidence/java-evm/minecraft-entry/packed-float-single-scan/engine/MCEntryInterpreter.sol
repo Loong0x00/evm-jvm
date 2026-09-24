@@ -1085,7 +1085,7 @@ contract MCEntryInterpreter {
 
     function _machineSize(
         Program memory p, RuntimeState memory s, bytes memory ec, bytes memory en,
-        int32[] memory args
+        int32[] memory args, bool exactFloatArraySizes
     ) private pure returns (uint256 z) {
         z = 63 + 2 + ec.length + 2 + en.length + 1 + 4 * args.length + 2;
         for (uint256 i; i < p.classes.length; ++i) {
@@ -1107,10 +1107,10 @@ contract MCEntryInterpreter {
             if (k == HEAP_ARRAY) {
                 uint256 length = s.arena.heap.arrayHeap[h].length;
                 if (meta == PRIMITIVE_FLOAT && s.arena.heap.ranks[h] == 1
-                    && length >= SPARSE_ARRAY_MIN_LENGTH) {
+                    && length >= SPARSE_ARRAY_MIN_LENGTH && !exactFloatArraySizes) {
                     // For these arrays encoding always chooses packed iff
                     // 4*length < 4+12*nonzero; otherwise the old sparse form
-                    // fits within this same safe reservation.
+                    // fits within this safe reservation.
                     z += 43 + 4 * length;
                 } else {
                     uint256 sparseCount = _checkpointArrayNonzeroCount(s, h);
@@ -1136,8 +1136,17 @@ contract MCEntryInterpreter {
     ) private pure returns (bytes memory out) {
         if (ec.length == 0 || ec.length > 256 || en.length == 0 || en.length > 256
             || args.length > 8) revert LC0StateError(4, 0);
-        uint256 size = _machineSize(p, s, ec, en, args);
-        if (size + CHECKPOINT_HEADER_BYTES > MAX_CHECKPOINT_BYTES) revert LC0StateError(1, 0);
+        uint256 size = _machineSize(p, s, ec, en, args, false);
+        if (size + CHECKPOINT_HEADER_BYTES > MAX_CHECKPOINT_BYTES) {
+            // The fast reservation is intentionally conservative for sparse
+            // large float arrays. Near the checkpoint cap, recover the exact
+            // validated P16 size before refusing; ordinary packed checkpoints
+            // still reach encoding after only the reservation plus its one scan.
+            size = _machineSize(p, s, ec, en, args, true);
+            if (size + CHECKPOINT_HEADER_BYTES > MAX_CHECKPOINT_BYTES) {
+                revert LC0StateError(1, 0);
+            }
+        }
         out = new bytes(size);
         uint256 at;
         at = _put(out, at, uint32(bytes4("MR01")), 4);

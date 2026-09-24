@@ -1,0 +1,79 @@
+{
+  "result": "PASS",
+  "baseCommit": "0110df3d9",
+  "sourceSHA256": "f6824f6ebeb6c937f264462c41d3a2dfa152db81c8c8e51440df98f759a5bb1f",
+  "runtime": {
+    "bytes": 392176,
+    "initSHA256": "302a5efd28cb5f5f60538114ecbf623736eda2962901280de3fc0f341f9b75df",
+    "runtimeSHA256": "39d6d33a7925a7ee015ea4502bc4c32ff2c6c83bd1e5ceec7a758c632504696d",
+    "runtimeKeccak256": "775f179ebc3fa127438a315ab987ee2b502cd3ea9ef36e38eea29f869ff841ca"
+  },
+  "bootstrapRoot": "8c5bc495513b12e7ee40f71f447c5f8f894d49ec9cf318d2744143f1d20ff310",
+  "fullGeneratedGate": {
+    "runId": "06",
+    "seconds": 942.7153853909986,
+    "limitSeconds": 1200,
+    "ordinaryLocalGas": 1000000000,
+    "canonicalReceipts": 11814,
+    "candidateRuntimeBytes": 392176,
+    "runtimeCapBytes": 393216,
+    "runtimeHeadroomBytes": 1040
+  },
+  "acceptedP16MR01Equality": {
+    "allQuantaComparisons": 9,
+    "allQuantaElapsedSeconds": 614.0376028740138,
+    "directRequiredElapsedSeconds": 1.8064404600008857,
+    "gatePlusDirectRequiredSeconds": 944.5218258509994,
+    "allEqual": true,
+    "packedCrossoverSparseControls": [
+      "packed-array-oracle",
+      "array-savings-boundary 341/342",
+      "sparse-array-stress"
+    ]
+  },
+  "gasSavings": {
+    "measurements": 9,
+    "minimumGasSaved": 307770,
+    "maximumGasSaved": 9950820
+  },
+  "malformedAndResumeControls": {
+    "packedRefusals": 7,
+    "sparseRefusals": 7,
+    "packedCheckpointResume": true
+  },
+  "capFallbackAlgebra": {
+    "status": "PASS",
+    "eligibleLengthsChecked": [
+      1024,
+      1025,
+      2048,
+      32768,
+      65535,
+      65536
+    ],
+    "allNonzeroCountsChecked": 167942,
+    "selection": "P16 strict packed iff 4*length < 4+12*nonzero; otherwise canonical sparse",
+    "upperRecordBytesAtLength65536": 262187,
+    "sameFixedRemainderBytes": 1048249,
+    "zeroNonzeroCase": {
+      "exactSparseRecordBytes": 47,
+      "exactEnvelopeBytes": 1048576,
+      "upperEnvelopeBytes": 1310716,
+      "expected": "exact fallback accepts at cap although upper reservation exceeds cap"
+    },
+    "oneNonzeroCase": {
+      "exactSparseRecordBytes": 59,
+      "exactEnvelopeBytes": 1048588,
+      "upperEnvelopeBytes": 1310716,
+      "expected": "exact fallback preserves typed cap refusal when exact P16 bytes exceed cap"
+    },
+    "ordinaryPackedPath": "upper reservation equals exact packed record; false-mode does not count float cells",
+    "executionScope": "bounded generated/source/algebra control only; synthetic near-cap states are not EVM execution claims"
+  },
+  "limitations": [
+    "No full-EVM near-cap positive or exact-over-cap fallback case was executed under the ordinary 1B local gas budget.",
+    "Cap fallback correctness is mechanically checked at source order and against bounded algebra; the synthetic fixed remainder does not establish a reachable guest state.",
+    "No original Minecraft JAR, sibling worktree, or network input was accessed; generated fixtures and tracked accepted-P16 evidence only.",
+    "No original Minecraft execution, EULA, world, or Done claim."
+  ]
+}

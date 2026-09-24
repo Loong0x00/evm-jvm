@@ -2,7 +2,7 @@
   "result": "PASS",
   "baseline": "accepted P16 source, parent-50541377b",
   "baselineSourceSHA256": "e53932817b1537f0e06911e4114a2995d1bcf12c946c6529accaa3d75bb1d849",
-  "candidateSourceSHA256": "a9b65577ab39f071782096b579fb19a4c6783a775de4cdf5768ae31344252746",
+  "candidateSourceSHA256": "f6824f6ebeb6c937f264462c41d3a2dfa152db81c8c8e51440df98f759a5bb1f",
   "onlyChangedFunctions": [
     "_machineSize",
     "_encodeMachine"
@@ -124,6 +124,35 @@
     "safeSparseBound": "not packed implies 47+12*nonzero <= 43+4*length",
     "eagerDecodeUnchanged": true,
     "shrinkAfterBoundsCheck": true
+  },
+  "capFallbackAlgebra": {
+    "status": "PASS",
+    "eligibleLengthsChecked": [
+      1024,
+      1025,
+      2048,
+      32768,
+      65535,
+      65536
+    ],
+    "allNonzeroCountsChecked": 167942,
+    "selection": "P16 strict packed iff 4*length < 4+12*nonzero; otherwise canonical sparse",
+    "upperRecordBytesAtLength65536": 262187,
+    "sameFixedRemainderBytes": 1048249,
+    "zeroNonzeroCase": {
+      "exactSparseRecordBytes": 47,
+      "exactEnvelopeBytes": 1048576,
+      "upperEnvelopeBytes": 1310716,
+      "expected": "exact fallback accepts at cap although upper reservation exceeds cap"
+    },
+    "oneNonzeroCase": {
+      "exactSparseRecordBytes": 59,
+      "exactEnvelopeBytes": 1048588,
+      "upperEnvelopeBytes": 1310716,
+      "expected": "exact fallback preserves typed cap refusal when exact P16 bytes exceed cap"
+    },
+    "ordinaryPackedPath": "upper reservation equals exact packed record; false-mode does not count float cells",
+    "executionScope": "bounded generated/source/algebra control only; synthetic near-cap states are not EVM execution claims"
   },
   "transportAndAuthenticationSourceByteIdentical": true
 }

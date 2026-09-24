@@ -89,13 +89,84 @@ assert computed["root"] == P16_ROOT, computed["root"]
 machine_size = function(candidate, "_machineSize")
 encode_machine = function(candidate, "_encodeMachine")
 assert "meta == PRIMITIVE_FLOAT && s.arena.heap.ranks[h] == 1" in machine_size
-assert "length >= SPARSE_ARRAY_MIN_LENGTH" in machine_size
+assert "length >= SPARSE_ARRAY_MIN_LENGTH && !exactFloatArraySizes" in machine_size
 assert machine_size.count("_checkpointArrayNonzeroCount(s, h)") == 1
 assert "uint256 sparseCount = _checkpointArrayNonzeroCount(s, h);" in machine_size
+assert "if (_usePackedFloatArray(meta, s.arena.heap.ranks[h], length, sparseCount))" in machine_size
+assert "else if (_useSparsePrimitiveArray(meta, s.arena.heap.ranks[h], length, sparseCount))" in machine_size
+assert "z += 47 + 12 * sparseCount;" in machine_size
+assert "z += 43 + 8 * length;" in machine_size
+assert "if (cell > type(uint32).max) revert LC0StateError(6, handle);" in function(candidate, "_checkpointArrayNonzeroCount")
 assert encode_machine.count("_checkpointArrayNonzeroCount(s, h)") == 1
+assert "_machineSize(p, s, ec, en, args, false)" in encode_machine
+assert "_machineSize(p, s, ec, en, args, true)" in encode_machine
+upper_check = encode_machine.index("if (size + CHECKPOINT_HEADER_BYTES > MAX_CHECKPOINT_BYTES)")
+exact_call = encode_machine.index("size = _machineSize(p, s, ec, en, args, true);", upper_check)
+exact_check = encode_machine.index("if (size + CHECKPOINT_HEADER_BYTES > MAX_CHECKPOINT_BYTES)", exact_call)
+allocation = encode_machine.index("out = new bytes(size);", exact_check)
+assert upper_check < exact_call < exact_check < allocation
 assert "assert(at <= out.length);" in encode_machine
 assert 'assembly ("memory-safe") { mstore(out, at) }' in encode_machine
 assert "at + CHECKPOINT_HEADER_BYTES > MAX_CHECKPOINT_BYTES" in encode_machine
+
+# Bounded algebra over every eligible float-array length/count proves that the
+# upper reservation is exact for packed P16 records and dominates sparse P16
+# records; sparse is necessarily selected whenever packed is not. Then exercise
+# both sides of the checkpoint cap using the same fixed remainder. These are
+# source/algebra controls, not claims that this synthetic near-cap state is
+# reachable within the ordinary EVM gas budget.
+CHECKPOINT_HEADER_BYTES = 280
+MAX_CHECKPOINT_BYTES = 1_048_576
+algebra_lengths = [1024, 1025, 2048, 32768, 65535, 65536]
+for length in algebra_lengths:
+    upper_record = 43 + 4 * length
+    for nonzero in range(length + 1):
+        packed = 4 * length < 4 + 12 * nonzero
+        sparse_eligible = (4 + 12 * nonzero) * 4 <= (8 * length) * 3
+        if packed:
+            exact_record = 43 + 4 * length
+            assert exact_record == upper_record
+        else:
+            assert sparse_eligible, (length, nonzero)
+            exact_record = 47 + 12 * nonzero
+            assert exact_record <= upper_record, (length, nonzero)
+
+length = 65536
+upper_record = 43 + 4 * length
+exact_zero_record = 47
+fixed_remainder = MAX_CHECKPOINT_BYTES - CHECKPOINT_HEADER_BYTES - exact_zero_record
+upper_envelope = CHECKPOINT_HEADER_BYTES + fixed_remainder + upper_record
+exact_zero_envelope = CHECKPOINT_HEADER_BYTES + fixed_remainder + exact_zero_record
+exact_one_envelope = CHECKPOINT_HEADER_BYTES + fixed_remainder + (47 + 12)
+assert upper_envelope > MAX_CHECKPOINT_BYTES
+assert exact_zero_envelope == MAX_CHECKPOINT_BYTES
+assert exact_one_envelope == MAX_CHECKPOINT_BYTES + 12
+assert not (4 * length < 4 + 12 * 0)
+assert not (4 * length < 4 + 12 * 1)
+assert (4 + 12 * 0) * 4 <= (8 * length) * 3
+assert (4 + 12 * 1) * 4 <= (8 * length) * 3
+cap_fallback_algebra = {
+    "status": "PASS",
+    "eligibleLengthsChecked": algebra_lengths,
+    "allNonzeroCountsChecked": sum(length + 1 for length in algebra_lengths),
+    "selection": "P16 strict packed iff 4*length < 4+12*nonzero; otherwise canonical sparse",
+    "upperRecordBytesAtLength65536": upper_record,
+    "sameFixedRemainderBytes": fixed_remainder,
+    "zeroNonzeroCase": {
+        "exactSparseRecordBytes": exact_zero_record,
+        "exactEnvelopeBytes": exact_zero_envelope,
+        "upperEnvelopeBytes": upper_envelope,
+        "expected": "exact fallback accepts at cap although upper reservation exceeds cap",
+    },
+    "oneNonzeroCase": {
+        "exactSparseRecordBytes": 59,
+        "exactEnvelopeBytes": exact_one_envelope,
+        "upperEnvelopeBytes": upper_envelope,
+        "expected": "exact fallback preserves typed cap refusal when exact P16 bytes exceed cap",
+    },
+    "ordinaryPackedPath": "upper reservation equals exact packed record; false-mode does not count float cells",
+    "executionScope": "bounded generated/source/algebra control only; synthetic near-cap states are not EVM execution claims",
+}
 assert "4 * length < 4 + 12 * nonzero" in function(baseline, "_usePackedFloatArray")
 assert "uint256 private constant SPARSE_ARRAY_MIN_LENGTH = 1024;" in candidate
 assert "uint256 private constant PACKED_FLOAT_ARRAY_FLAG = uint256(1) << 30;" in candidate
@@ -127,6 +198,7 @@ report = {
         "eagerDecodeUnchanged": True,
         "shrinkAfterBoundsCheck": True,
     },
+    "capFallbackAlgebra": cap_fallback_algebra,
     "transportAndAuthenticationSourceByteIdentical": True,
 }
 (stage / "source-invariants.json").write_text(json.dumps(report, indent=2) + "\n")

@@ -20,16 +20,16 @@
   "address": "0x4d432d52414e444f4d2d434c4153532d50310034",
   "owner": "0x4d432d52414e444f4d2d434c4153532d50310035",
   "engine": {
-    "bytes": 389818,
-    "initSHA256": "105a951d4e4dd32e22a56cf4b4d206b23c6c7305aacb3e127408733f9b82d198",
-    "runtimeSHA256": "ef6614d67b1d7a81877a2705de4361d0c2ecb43818e4ac002cbc6510ecff4be5",
-    "runtimeKeccak256": "092371814f0714f41278b1901d183dbfaf4350437c118b8747d2046988264ed5"
+    "bytes": 392176,
+    "initSHA256": "302a5efd28cb5f5f60538114ecbf623736eda2962901280de3fc0f341f9b75df",
+    "runtimeSHA256": "39d6d33a7925a7ee015ea4502bc4c32ff2c6c83bd1e5ceec7a758c632504696d",
+    "runtimeKeccak256": "775f179ebc3fa127438a315ab987ee2b502cd3ea9ef36e38eea29f869ff841ca"
   },
   "coordinator": {
     "bytes": 5394,
-    "initSHA256": "3f41e6787dbe117ddac3ef659162fbdb2792d2fa88f057e3259cb365b1241390",
-    "runtimeSHA256": "f8f3218429cc9ab97d18734c5d716047c59170adb300c805872c4694f83216c1",
-    "runtimeKeccak256": "4bdf4aa087ed83ddc32825ac3746723be0540f034c7a6f4e683f1d708ffb5681"
+    "initSHA256": "69b4b5c502acf6a4a7cfb6bcea56f76f6642c9c762a57c16fa33e2250cde66fe",
+    "runtimeSHA256": "0364573e1d85971a8ce260b053a6b1a4e421c200e4bd8bd5970ca5add8c86a18",
+    "runtimeKeccak256": "2dbd2d4d353e8abc8b74d7fc1782a7070846a7f15696415b7eac709bc6f306b2"
   },
   "baselineEngine": {
     "bytes": 389579,
@@ -44,12 +44,12 @@
     "runtimeKeccak256": "6cc88a9357a1ff9222cf5ebfbed6cf0aa8d75d2bbc1b365c7144a338fc7c6d65"
   },
   "baselineDriverSHA256": "003b872d6c736d3974d1af6af096697cae24d6b73e51246684b33dd005c3f5c1",
-  "driverSHA256": "3ffd8a12bc20bf12f09d29cf1be2ecdc471d629332d3d333e23b9cd923be1954",
+  "driverSHA256": "4a85fdb6f2ba77a31a414a8bbeaf3a8fd01838f1b3eda3bb65a4a77623f919c0",
   "sourceInvariants": {
     "result": "PASS",
     "baseline": "accepted P16 source, parent-50541377b",
     "baselineSourceSHA256": "e53932817b1537f0e06911e4114a2995d1bcf12c946c6529accaa3d75bb1d849",
-    "candidateSourceSHA256": "a9b65577ab39f071782096b579fb19a4c6783a775de4cdf5768ae31344252746",
+    "candidateSourceSHA256": "f6824f6ebeb6c937f264462c41d3a2dfa152db81c8c8e51440df98f759a5bb1f",
     "onlyChangedFunctions": [
       "_machineSize",
       "_encodeMachine"
@@ -171,6 +171,35 @@
       "safeSparseBound": "not packed implies 47+12*nonzero <= 43+4*length",
       "eagerDecodeUnchanged": true,
       "shrinkAfterBoundsCheck": true
+    },
+    "capFallbackAlgebra": {
+      "status": "PASS",
+      "eligibleLengthsChecked": [
+        1024,
+        1025,
+        2048,
+        32768,
+        65535,
+        65536
+      ],
+      "allNonzeroCountsChecked": 167942,
+      "selection": "P16 strict packed iff 4*length < 4+12*nonzero; otherwise canonical sparse",
+      "upperRecordBytesAtLength65536": 262187,
+      "sameFixedRemainderBytes": 1048249,
+      "zeroNonzeroCase": {
+        "exactSparseRecordBytes": 47,
+        "exactEnvelopeBytes": 1048576,
+        "upperEnvelopeBytes": 1310716,
+        "expected": "exact fallback accepts at cap although upper reservation exceeds cap"
+      },
+      "oneNonzeroCase": {
+        "exactSparseRecordBytes": 59,
+        "exactEnvelopeBytes": 1048588,
+        "upperEnvelopeBytes": 1310716,
+        "expected": "exact fallback preserves typed cap refusal when exact P16 bytes exceed cap"
+      },
+      "ordinaryPackedPath": "upper reservation equals exact packed record; false-mode does not count float cells",
+      "executionScope": "bounded generated/source/algebra control only; synthetic near-cap states are not EVM execution claims"
     },
     "transportAndAuthenticationSourceByteIdentical": true
   },
