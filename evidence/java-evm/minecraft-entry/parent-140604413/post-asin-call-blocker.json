@@ -7,6 +7,7 @@
   "atomicQ1Refusal": {"selector": "0xd631c3a4", "error": "CallError(3,299)", "gas": 1924597390, "rootUnchanged": true, "failedStateUsedForContinuation": false},
   "lastSuccessfulGuestFrame": {"classIndex": 70, "methodIndex": 39, "pc": 299, "stackSize": 3, "stackTopKind": "binary64 double", "stackTopDoubleRawBits": "0x0000000000000000"},
   "measuredProgress": "native20 Math.asin(D)D at PC290 successfully returned for the first genuine +0.0 argument, advancing 5 JVM steps from the accepted P6 frontier; no later asin arguments have yet been measured",
-  "nextBlocker": "unresolved method at PC299; symbolic owner/name/descriptor NOT YET IDENTIFIED and requires fresh-domain EVM-only diagnostic. No guessed Math API may be implemented from this error alone.",
+  "freshDomainEvmDiagnostic": {"domain": "MC-RANDOM-CLASS-D11", "site": 4131, "pc": 299, "symbol": "java/lang/Math|cos|(D)D", "genuineSuccessfulJvmSteps": 1267357, "verifiedCanonicalReceipts": 2062, "failedStateUsedForContinuation": false},
+  "nextBlocker": "java/lang/Math.cos(D)D at original class70 method39 PC299, first argument binary64 +0.0; later inputs unknown, no Math.cos implementation yet.",
   "notClaimed": ["asin table complete", "logger provider", "world", "EULA", "Done", "standard-chain compatibility"]
 }

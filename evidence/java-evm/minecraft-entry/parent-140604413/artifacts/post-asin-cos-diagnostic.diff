@@ -1,0 +1,167 @@
+--- evidence/java-evm/minecraft-entry/parent-140604413/artifacts/engine/MCEntryInterpreter.sol	2026-09-24 06:58:55.933069137 +0800
++++ build/java-diff-mc-post-asin-symbol-diagnostic-140604413/engine/MCEntryInterpreter.sol	2026-09-24 06:59:18.786955813 +0800
+@@ -398,8 +398,8 @@
+
+     uint32 private constant MR0_SCHEMA = 1;
+     uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
+-    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:MAIN:EMPTY-STRING-ARRAY:1");
+-    bytes32 private constant DROOT = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:ROOT:1");
++    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:MAIN:EMPTY-STRING-ARRAY:1");
++    bytes32 private constant DROOT = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:ROOT:1");
+     uint256 private constant MAX_RAW_CLASSES = 71;
+     uint256 private constant MAX_RAW_BYTES = 471911;
+     uint256 private constant MAX_CHECKPOINT_BYTES = 1048576;
+@@ -415,8 +415,8 @@
+     uint32 private constant MAX_PATH_DEPTH = 16;
+     uint32 private constant MAX_PATH_BYTES = 256;
+     uint32 private constant MAX_TRANSFER = 4096;
+-    bytes32 private constant DART = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:ARTIFACT:1");
+-    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:BOOTSTRAP:1");
++    bytes32 private constant DART = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:ARTIFACT:1");
++    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:BOOTSTRAP:1");
+     // Append-only EnumSet image commitment; folded from the exact bytes at
+     // compile time so the runtime carries the append-only literal once.
+     bytes32 private constant DBOOT_ENUMSET = keccak256(hex"cafebabe00000034001b0a000600110a000300120700130a000300140a000300150700160100063c696e69743e010016285b4c6a6176612f6c616e672f4f626a6563743b2956010004436f646501000d537461636b4d61705461626c65070013070017010005616c6c4f66010026284c6a6176612f6c616e672f436c6173733b294c6a6176612f7574696c2f456e756d5365743b010009756e69766572736530010026284c6a6176612f6c616e672f436c6173733b295b4c6a6176612f6c616e672f4f626a6563743b0c000700180c0019001a0100116a6176612f7574696c2f456e756d5365740c000f00100c000700080100116a6176612f7574696c2f486173685365740100135b4c6a6176612f6c616e672f4f626a6563743b010003282956010003616464010015284c6a6176612f6c616e672f4f626a6563743b295a0021000300060000000000030000000700080001000900000040000300030000001b2ab70001033d1c2bbea200112a2b1c32b6000257840201a7ffefb100000001000a000000130002ff0006000307000b07000c010000fa00130009000d000e0001000900000018000300010000000cbb0003592ab80004b70005b000000000010a000f001000000000");
+@@ -432,11 +432,11 @@
+     bytes32 private constant DBOOT_THREAD_LOCAL = hex"93a0007b6336f667890f5afa2b01572278a7e39ab93b2faf1095e054317f538a";
+     // Image94 commitment keeps the constrained runtime below its fixed LOCAL cap.
+     bytes32 private constant DBOOT_SECURITY_MANAGER = hex"057ca3fbcb2390bdc0d8a6bd4f9a942b378525c0dca258dff442b04e7b526a28";
+-    bytes32 private constant DCFG = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:CONFIG:1");
+-    bytes32 private constant DMACH = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:MACHINE:1");
+-    bytes32 private constant DSEED = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:SEED:1");
+-    bytes32 private constant DVFS = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:VFS:1");
+-    bytes32 private constant DFILE = keccak256("JVMEVM:MC-RANDOM-CLASS-P10:FILE:1");
++    bytes32 private constant DCFG = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:CONFIG:1");
++    bytes32 private constant DMACH = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:MACHINE:1");
++    bytes32 private constant DSEED = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:SEED:1");
++    bytes32 private constant DVFS = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:VFS:1");
++    bytes32 private constant DFILE = keccak256("JVMEVM:MC-RANDOM-CLASS-D11:FILE:1");
+
+     mapping(bytes32 => Anchor) private anchors;
+     bool private enteredVFS0A;
+@@ -7293,9 +7293,9 @@
+     ) private pure {
+         _validateHierarchy(classes, stringClass, parentLinks, hierarchyState);
+         uint256 link = parentLinks[stringClass];
+-        if (link == 0 || link == type(uint256).max) revert CallError(3, pc);
++        if (link == 0 || link == type(uint256).max) revert CallError(3001, pc);
+         uint256 objectClass = link - 1;
+-        if (!_isObjectClass(classes[objectClass])) revert CallError(3, pc);
++        if (!_isObjectClass(classes[objectClass])) revert CallError(3002, pc);
+         uint256 foundPlusOne;
+         for (uint256 i; i < classes[objectClass].methods.length; ++i) {
+             uint256 meta = classes[objectClass].methods[i];
+@@ -7303,10 +7303,10 @@
+             (uint256 doff, uint256 dn) = _utf(classes[objectClass].cp[(meta >> 32) & 0xffff]);
+             if (!_equalsLiteral(classes[objectClass].data, no, nn, bytes("<init>"))
+                 || !_equalsLiteral(classes[objectClass].data, doff, dn, bytes("()V"))) continue;
+-            if (foundPlusOne != 0) revert CallError(3, pc);
++            if (foundPlusOne != 0) revert CallError(3003, pc);
+             foundPlusOne = i + 1;
+         }
+-        if (foundPlusOne == 0) revert CallError(3, pc);
++        if (foundPlusOne == 0) revert CallError(3004, pc);
+         uint256 method = foundPlusOne - 1;
+         if (!_canAccessMember(
+             classes, stringClass, objectClass,
+@@ -7431,7 +7431,7 @@
+                 _utf(target.cp[(candidate >> 32) & 0xffff]);
+             if (!_equalsCross(target.data, candidateDescriptorOffset, candidateDescriptorLength,
+                 nameData, descriptorOffset, descriptorLength)) continue;
+-            if (foundPlusOne != 0) revert CallError(3, pc);
++            if (foundPlusOne != 0) revert CallError(3005, pc);
+             foundPlusOne = i + 1;
+         }
+         if (foundPlusOne != 0) return (true, foundPlusOne - 1);
+@@ -7446,7 +7446,7 @@
+             classes, targetClass, nameData, nameOffset, nameLength,
+             descriptorOffset, descriptorLength, pc
+         );
+-        if (!found) revert CallError(3, pc);
++        if (!found) revert CallError(3006, pc);
+         return result;
+     }
+
+@@ -7708,7 +7708,7 @@
+                 out.javaFault = interfaceMethod;
+                 return out;
+             }
+-            if (!foundInterface) revert CallError(3, pc);
++            if (!foundInterface) revert CallError(3007, pc);
+             out.owner = interfaceOwner;
+             out.method = interfaceMethod;
+         }
+@@ -7802,7 +7802,7 @@
+                     out.javaFault = interfaceMethod;
+                     return out;
+                 }
+-                if (!inherited) revert CallError(3, pc);
++                if (!inherited) revert CallError(3008, pc);
+                 out.owner = interfaceOwner;
+                 out.method = interfaceMethod;
+             }
+@@ -7963,7 +7963,7 @@
+                 out.javaFault = inheritedMethod;
+                 return out;
+             }
+-            if (!inherited) revert CallError(3, pc);
++            if (!inherited) revert CallError(3009, pc);
+             out.owner = inheritedOwner;
+             out.method = inheritedMethod;
+         }
+@@ -8059,7 +8059,7 @@
+                 if (found) { method = resolvedMethod; break; }
+                 uint256 resolutionLink = parentLinks[owner];
+                 if (resolutionLink == 0 || resolutionLink == type(uint256).max) {
+-                    revert CallError(3, pc);
++                    revert CallError(3010, pc);
+                 }
+                 owner = resolutionLink - 1;
+             }
+@@ -8081,7 +8081,7 @@
+                         );
+                         if (found) { method = selectedMethod; break; }
+                         uint256 link = parentLinks[owner];
+-                        if (link == 0 || link == type(uint256).max) revert CallError(3, pc);
++                        if (link == 0 || link == type(uint256).max) revert CallError(3011, pc);
+                         owner = link - 1;
+                     }
+                 }
+@@ -8095,6 +8095,22 @@
+             | ((symbolic + 1) << 64) | (isConstructor ? uint256(1) << 96 : 0);
+     }
+
++    // Fresh-domain EVM-only diagnostic of a statically unresolved method; never installed.
++    function _diagnoseStaticSymbol(
++        ClassInfo memory ownerInfo, bytes memory callerData,
++        uint256 nameOffset, uint256 nameLength,
++        uint256 descriptorOffset, uint256 descriptorLength, uint256 pc
++    ) private pure {
++        bytes memory joined = new bytes(ownerInfo.thisNameLength + nameLength + descriptorLength + 2);
++        uint256 at;
++        for (uint256 i; i < ownerInfo.thisNameLength; ++i) joined[at++] = ownerInfo.data[ownerInfo.thisNameOffset + i];
++        joined[at++] = bytes1(uint8(0x7c));
++        for (uint256 i; i < nameLength; ++i) joined[at++] = callerData[nameOffset + i];
++        joined[at++] = bytes1(uint8(0x7c));
++        for (uint256 i; i < descriptorLength; ++i) joined[at++] = callerData[descriptorOffset + i];
++        _missingClass(0x1023, pc, joined, 0, joined.length);
++    }
++
+     function _resolveCall(
+         ClassInfo[] memory classes,
+         uint256 callerClass,
+@@ -8209,12 +8225,12 @@
+                         target.data, candidateDescriptorOffset, candidateDescriptorLength,
+                         caller.data, descriptorOffset, descriptorLength
+                     )) continue;
+-                    if (foundPlusOne != 0) revert CallError(3, pc);
++                    if (foundPlusOne != 0) revert CallError(3012, pc);
+                     foundPlusOne = i + 1;
+                 }
+                 if (foundPlusOne != 0) break; // first declaring class with an exact match wins
+                 uint256 link = parentLinks[declaring];
+-                if (link == 0 || link == type(uint256).max) revert CallError(3, pc);
++                if (link == 0 || link == type(uint256).max) _diagnoseStaticSymbol(classes[owner], caller.data, nameOffset, nameLength, descriptorOffset, descriptorLength, pc);
+                 declaring = link - 1;
+             }
+             owner = declaring;
