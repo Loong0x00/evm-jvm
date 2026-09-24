@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "acceptedCandidateCommit": "cd8122975",
+  "domain": "MC-RANDOM-CLASS-P12",
+  "bootstrapRoot": {
+    "acceptedP10Root": "024b2528b5031981a29a4e611f48f98bb4f3d43209b007d1e78543d5d4033a3e",
+    "candidateP10Root": "b3a3ca5d1f2cf32f335af88c094391b4f70125ad2d17cf26ac236f578a76e069",
+    "actualIndependentParentP12Root": "a2fe7bacf0077f8dcc48b9da2f0ea2295401ca42e648aadf4e0fdcf6b11aa003",
+    "orderedLeaves": 97
+  },
+  "runtimeBytes": 389230,
+  "unchangedOriginalJavaJarSHA256": "fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e",
+  "lastSuccessful": {
+    "jvmSteps": 1273130,
+    "internalSteps": 81,
+    "epoch": 2083,
+    "lifecycle": 1,
+    "checkpointSHA256": "c5b55092d1f2c07ae0f9568f41ea7b8fbd2e9516866ad6dd603fc32ee8003420",
+    "trieRoot": "0xae95db6a546b6ade80f9a70b24ba67540723775e47fe7b1c8bbea18cb806491e",
+    "verifiedCanonicalReceipts": 2083
+  },
+  "atomicQ1Refusal": {
+    "error": "CallError(3,9)",
+    "selector": "0xd631c3a4",
+    "gasUsed": 1927389671,
+    "rootUnchanged": true,
+    "failedStateUsedForContinuation": false
+  },
+  "lastAuthenticatedFrame": {
+    "classIndex": 61,
+    "methodIndex": 2,
+    "pc": 9,
+    "callPC": "0x3",
+    "flags": 16,
+    "receiver": 0,
+    "stackSize": 1,
+    "locals": 1
+  },
+  "diagnostics": {
+    "D13": {
+      "branch": "virtual method resolution: no class-hierarchy declaration, no interface fallback",
+      "selector": "0xd631c3a4",
+      "words": [
+        "3007",
+        "9"
+      ],
+      "verifiedSuccessfulReceipts": 2084
+    },
+    "D14": {
+      "source": "EVM-constructed unresolved symbolic call from unchanged original guest class bytes",
+      "kind": "0x1023",
+      "pc": 9,
+      "symbol": "java/lang/Object|hashCode|()I",
+      "verifiedSuccessfulReceipts": 2084,
+      "rootUnchanged": true
+    }
+  },
+  "measuredNextBlocker": "java/lang/Object.hashCode()I virtual resolution from original class61 method2 PC9",
+  "notClaimed": [
+    "Object.hashCode implemented",
+    "logger provider",
+    "world",
+    "EULA",
+    "Done",
+    "standard-chain compatibility"
+  ]
+}
