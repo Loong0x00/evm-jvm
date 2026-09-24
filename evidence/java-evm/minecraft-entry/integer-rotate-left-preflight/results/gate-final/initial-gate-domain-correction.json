@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "run": "initial disposable generated-only gate attempt",
+  "result": "test-harness profile-domain mismatch; not an engine semantic result",
+  "failure": "sparse malformed checkpoint expected LC0StateError(6), got LC0StateError(3) with root unchanged",
+  "cause": "the test-only checkpoint rehash helper still used JVMEVM:MC-RANDOM-CLASS-P12:MACHINE:1 after candidate profile moved to MC-RANDOM-CLASS-P15; wrong domain made validation reject before reaching sparse-codec checks",
+  "correction": "changed checkpoint_rehash domain to P15 and reran the complete suite in a fresh gate directory/world set; final gate passed all sparse and packed malformed cases",
+  "log": "initial-gate-domain-mismatch.log",
+  "logSHA256": "17bca998eea2027a2762fb6de49260b55fb7d8b917930363f7d7bf754c2df060",
+  "failedWorldContinued": false,
+  "finalFreshGate": "build/java-diff-mc-integer-rotate-left-gate-final"
+}
