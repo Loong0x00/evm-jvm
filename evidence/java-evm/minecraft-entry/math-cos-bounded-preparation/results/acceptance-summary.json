@@ -1,0 +1,62 @@
+{
+  "status": "GENERATED_GATES_PASS_PARENT_REPLAY_PENDING",
+  "basis": "exact accepted P10 parent-140604413 source; only Math bootstrap image89 and native binding21 differ",
+  "scope": "generated-only deterministic bounded Java Math.cos(D)D candidate",
+  "source": {
+    "normalizedByteExactToP10": true,
+    "candidateEngineSourceSHA256": "6eb35b74fba7661afcd930345f42065dc97eb7376a18ff12fa79f59c5064235c",
+    "bootstrapCount": 97,
+    "changedBootstrapIndices": [89],
+    "otherBootstrapImagesChanged": 0,
+    "MathImageBytes": 318,
+    "MathImageSHA256": "238f380d8591ed92477d0372cef7c01dc4a0758f8c773fa3e343df425912f630",
+    "MathImageKeccak256": "32f856e3b1567f72aa4922b4f4232dd2ab0f525772f46a3b7229f3eafcf44005",
+    "bootstrapRoot": "b3a3ca5d1f2cf32f335af88c094391b4f70125ad2d17cf26ac236f578a76e069",
+    "globalNativeBindings": 21,
+    "StringLocalBinding": 12,
+    "rawLimits": [71, 471911],
+    "runtimeBytes": 389230,
+    "runtimeCapBytes": 393216
+  },
+  "kernel": {
+    "format": "Q120 deterministic EVM integer/bitwise cosine, nearest-even conversion",
+    "finiteDomainAbsoluteRawMaximum": "0x401921fb54442d18",
+    "seriesTermsThroughN": 30,
+    "nonfiniteAndOutOfDomain": "typed atomic refusal",
+    "signedZero": "both inputs return +1",
+    "externalMathOrLookupTable": false
+  },
+  "generatedGate": {
+    "wholeSeconds": 912.6505061589996,
+    "targetSeconds": 1200,
+    "verifiedCanonicalReceipts": 8138,
+    "MathCosVectors": 176,
+    "cosQ120ModelMaximumULPDistanceFromJava8": 1,
+    "cosQ120ModelRawBinary64Mismatches": 4,
+    "cosQ120ModelFloatCastBitMismatches": 0,
+    "cosQ1JvmSteps": 1939,
+    "cosQ7JvmSteps": 1939,
+    "cosDirectJvmSteps": 1939,
+    "packedFloatArray": {
+      "length": 1024,
+      "nonzeroCells": 348,
+      "allRawCellsMatchGeneratedJava8Oracle": true,
+      "q1JvmSteps": 1406,
+      "q7JvmSteps": 1406,
+      "directJvmSteps": 1406,
+      "q1SuccessfulContinuationAfterPackedCheckpoint": true,
+      "q1ResumeParentEpoch": 1372,
+      "q1ResumeChildEpoch": 1373
+    },
+    "packedSparseCrossover": "341 tie remains sparse; 342 strictly profitable cells packed",
+    "malformedPackedCases": 7,
+    "malformedSparseCases": 7,
+    "refusalsPreserveRootHeadLogs": true,
+    "retainedControls": ["Math.asin", "Math.sin", "Math.sqrt", "sparse wire", "raw71", "471911-byte class bundle"]
+  },
+  "limitations": [
+    "No original JAR, original class/resource bytes, world, EULA or network input was used.",
+    "No original Minecraft execution, readiness or Done claim.",
+    "Parent's separate explicitly authorized fresh-domain original-program replay remains outstanding."
+  ]
+}

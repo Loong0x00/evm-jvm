@@ -1,0 +1,11 @@
+Generated-only MC Math.cos bounded gate reproduction
+
+From repository root, first build the exact candidate and generated Java-8 fixtures into fresh, nonexisting paths:
+  python3 evidence/java-evm/minecraft-entry/math-cos-bounded-preparation/tools/build.py build/java-diff-mc-math-cos-build-final
+  python3 evidence/java-evm/minecraft-entry/math-cos-bounded-preparation/tools/generate_fixtures.py build/java-diff-mc-math-cos-fixtures-final
+  python3 evidence/java-evm/minecraft-entry/math-cos-bounded-preparation/tools/verify_q120.py build/java-diff-mc-math-cos-fixtures-final > build/math-cos-q120-final.json
+  python3 evidence/java-evm/minecraft-entry/math-cos-bounded-preparation/tools/gate.py build/java-diff-mc-math-cos-build-final build/java-diff-mc-math-cos-fixtures-final build/java-diff-mc-math-cos-gate-final
+
+Final measured run: generated-gate-worker7-summary.json; whole generated gate 912.650506 seconds, 8,138 independently checked canonical receipts, under the 1,200-second target. Output directories are deliberately disposable; tracked summaries, fixture hashes, source/build pins and this command are the durable record.
+
+No original Minecraft JAR/class/resource, EULA, world or network data was used. This does not run or accept the official program and does not claim original-world replay, Minecraft readiness or Done. The separate authorized parent replay remains outstanding.

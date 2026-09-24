@@ -1,0 +1,14 @@
+{
+  "disposition": "FIXED; final generated gate passed",
+  "failedRun": "build/java-diff-mc-math-cos-gate-worker6 (disposable intermediate; no acceptance credit)",
+  "failure": "packed-float raw-bit oracle assertion: guest cells contained patched quiet-NaN 0x7fc12345, but the generated Java8 host witness had run before the classfile constant-pool mutation and still expected 0x3fa00000",
+  "rootCause": "fixture builder applied the test-only CONSTANT_Float payload mutation only while writing the ZIP, after executing the host oracle",
+  "correction": "apply the same mutation to the generated classfile before running the Java8 oracle, and package those exact bytes for guest execution",
+  "finalFixture": {
+    "archiveSHA256": "d7e91572c388e4c5ec1f0af025978281218d4fc2612aeb9447b36f4c5ea640c6",
+    "matchedRawCells": 1024,
+    "nonzeroCells": 348,
+    "hostOracle": "generated OpenJDK 8 raw-bit output"
+  },
+  "finalGate": "generated-gate-worker7-summary.json"
+}

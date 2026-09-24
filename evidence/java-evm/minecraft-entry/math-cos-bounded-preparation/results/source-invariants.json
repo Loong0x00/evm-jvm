@@ -1,0 +1,45 @@
+{
+  "result": "PASS",
+  "basis": "exact accepted P10 parent-140604413 source",
+  "baselineEngineSourceSHA256": "5f00201b2cd4d8189c953a91e670fc89171568406313daf95054f4f087f9719d",
+  "candidateEngineSourceSHA256": "6eb35b74fba7661afcd930345f42065dc97eb7376a18ff12fa79f59c5064235c",
+  "normalizedByteExactToP10": true,
+  "transferredSemanticDelta": [
+    "global native21 Math.cos(D)D using bounded deterministic Q120 EVM integer arithmetic",
+    "Java8-g:none Math bootstrap image89 exact append cos(D)D native",
+    "materialized DBOOT_MATH leaf updated to exact image Keccak"
+  ],
+  "bootstrapCount": 97,
+  "changedBootstrapIndices": [
+    89
+  ],
+  "changedOther96Images": 0,
+  "materializedRootRHSLLeavesChecked": 97,
+  "materializedDBootLeavesChecked": 9,
+  "mathImageBytes": 318,
+  "mathImageSHA256": "238f380d8591ed92477d0372cef7c01dc4a0758f8c773fa3e343df425912f630",
+  "mathImageKeccak256": "32f856e3b1567f72aa4922b4f4232dd2ab0f525772f46a3b7229f3eafcf44005",
+  "bootstrapRoot": "b3a3ca5d1f2cf32f335af88c094391b4f70125ad2d17cf26ac236f578a76e069",
+  "solidityMaterializedBootstrapRoot": "b3a3ca5d1f2cf32f335af88c094391b4f70125ad2d17cf26ac236f578a76e069",
+  "globalNativeBindings": 21,
+  "stringLocalBinding": 12,
+  "rawLimits": [
+    71,
+    471911
+  ],
+  "runtimeCapBytes": 393216,
+  "kernel": {
+    "qBits": 120,
+    "piQ": "4175892906503776358826876457663557747",
+    "seriesN": 30,
+    "tailBound": "<2^-180 on |x|<=pi",
+    "tinyIdentityRawMax": "3e40000000000000",
+    "domainRawMagnitudeMax": "401921fb54442d18",
+    "allNonfiniteRefused": true,
+    "allOutOfDomainRefused": true,
+    "externalMath": false,
+    "lookupTable": false,
+    "highPrecisionRangeReduction": true,
+    "strictSigned256Bound": "all intermediate magnitudes <2^255"
+  }
+}
