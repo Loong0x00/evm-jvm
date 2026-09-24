@@ -1,0 +1,78 @@
+{
+  "caveats": [
+    "All non-grid vectors are generated controls, not observed subsequent original Minecraft arguments.",
+    "OpenJDK 8 Math.cos is the host reference; Java permits semi-monotonic rather than universally correctly-rounded results.",
+    "A finite sample with small ULP distance is not a global proof and is not an execution-path implementation."
+  ],
+  "conversion_and_range_reduction": "exact raw-binary64 decode to Q120 after tiny shortcut; nearest-even integer turns by 2*piQ; nearest-even Q120 recurrence n=1..30; integer nearest-even binary64 and binary32 conversion",
+  "double_mismatch_records_sha256": "0dc0233123aead08b5c506bdae1c0b811c22420210a91fdd66e0ac130b672bba",
+  "double_raw_bit_mismatches_vs_openjdk8": 2206,
+  "even_symmetry": {
+    "java8_raw_mismatches": 0,
+    "q120_raw_mismatches": 0,
+    "signed_pairs_compared": 5992
+  },
+  "float_cast_raw_bit_mismatches_vs_openjdk8": 0,
+  "float_mismatch_records_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "input_domain": "finite |x|<=raw 0x401921fb54442d18; all other rows are REFUSE controls",
+  "maximum_absolute_intermediate_bit_length": 246,
+  "maximum_intermediate_bit_lengths": {
+    "binary64-conversion-input-q": 121,
+    "binary64-output-significand": 54,
+    "input-q": 123,
+    "input-significand": 53,
+    "period-2pi-q": 123,
+    "range-reduced-x-q": 122,
+    "range-reduction-turn-count": 1,
+    "round.denominator": 132,
+    "round.input-numerator": 246,
+    "round.quotient-after": 124,
+    "round.quotient-before": 124,
+    "round.remainder": 132,
+    "round.tie-comparison-difference": 132,
+    "round.twice-remainder": 133,
+    "taylor-initial-sum": 121,
+    "taylor-initial-term": 121,
+    "taylor-partial-sum": 122,
+    "taylor-term": 123,
+    "taylor-term-denominator": 132,
+    "taylor-term-product": 246,
+    "x-square-product": 244,
+    "x-squared-q": 124
+  },
+  "maximum_ulp_distance_vs_openjdk8": 1,
+  "maximum_ulp_witness": {
+    "categories": "grid-2pi-over-65536:5257",
+    "input_bits": "3fe020d690ab6010",
+    "java8_bits": "3fec055aed594b3e",
+    "q120_bits": "3fec055aed594b3f",
+    "ulp_distance": 1
+  },
+  "model": "Q120 signed integer cosine; no host libm, Decimal trig, or binary64 arithmetic in cosine evaluation",
+  "n30_taylor_tail_bound": {
+    "alternating_series_note": "terms decrease on |x|<=pi for the omitted tail; this bounds truncation only, not Q120 rounding/input-reduction error",
+    "decimal_upper_bound": "2.168859185985E-55",
+    "first_omitted_term": "|x|^62/62! for |x|<=pi",
+    "rational_upper_bound": "(22/7)^62/62! = 7320369996487888194126504471471766182155694426847737667845472/33752168161909481658198651904827488872799804512535031672575753426484544074836978825629871483330324637707464599609375",
+    "strictly_less_than": "2^-181"
+  },
+  "pi_q": "4175892906503776358826876457663557747",
+  "pi_q_source": "task-pinned nearest-even Q120 constant",
+  "q_bits": 120,
+  "refused_controls": 74,
+  "sampled_monotonicity": {
+    "caveat": "sampled only on the 65536-point positive grid; the split uses nearest binary64 pi, not an exhaustive real-domain proof",
+    "grid_rows": 65536,
+    "java8_decreasing_side_violations": 0,
+    "java8_increasing_side_violations": 0,
+    "q120_decreasing_side_violations": 0,
+    "q120_increasing_side_violations": 0,
+    "split_index_last_raw_input_le_nearest_binary64_pi": 32768
+  },
+  "signed_256_product_bound": {
+    "maximum_observed_product_bits": 246,
+    "scope": "observed generated inputs only; report includes all recorded Python integer intermediates",
+    "strictly_below_255_bits": true
+  },
+  "supported_rows": 77517
+}
