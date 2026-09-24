@@ -1,0 +1,12 @@
+{
+  "result": "INCOMPLETE_HARNESS_ASSERTION_ONLY",
+  "fixture": "packed-array-oracle",
+  "quantum": 1,
+  "initialAssertion": "machineRoot equality",
+  "finding": "Accepted P16 and candidate MR01 bytes were byte-identical at 5393 bytes (SHA256 164a320599bf4695543cc0ba655beab1fffd72ab19a72e8cfc9b0d434e3387a7). The machineRoot differs because configRoot commits the changed runtime code hash; the outer checkpoint therefore also differs as expected.",
+  "baselineConfigRoot": "0xe93f68a963a33d2614330a922d5b5886cacc82e99df1f80f476513f7d64589e9",
+  "candidateConfigRoot": "0xd7bccd4b2d503ec2b17cbc9aea4aee52d84f4fcf8e2656501783ee3279a49c60",
+  "baselineMachineRoot": "0x12b2fa0eb8717eeaf562c09258f57231590bccf9d7ae219a02c73871633bd21e",
+  "candidateMachineRoot": "0xc73435c9995276bab6e4e2eb903f549f6602c58c735081dd20295583f8c7626a",
+  "correction": "Compare complete MR01 bytes and SHA256/Keccak, plus unchanged artifactRoot/vfsRoot and execution outcome; record code-hash-dependent config/machine roots without requiring equality."
+}
