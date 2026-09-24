@@ -1,0 +1,96 @@
+{
+  "profile": "MC-RANDOM-CLASS-P17-PACKED-FLOAT-BULK-U32",
+  "basis": "parent-485ccd8d4 P17 source; only packed float MR01 cell loops changed",
+  "bootstrapCount": 97,
+  "bootstrapRoot": "aae001d9449928180fe6daf66cc3a7bffa4686a7823f69bb994cd882fa89ec0d",
+  "expectedBootstrapRoot": "8c5bc495513b12e7ee40f71f447c5f8f894d49ec9cf318d2744143f1d20ff310",
+  "diagnosticClassBound": 168,
+  "globalNativeBindings": 21,
+  "stringLocalBinding": 12,
+  "rawLimits": [
+    71,
+    471911
+  ],
+  "checkpointCap": 1048576,
+  "reserve": 25000000,
+  "externalLocalGas": 1000000000,
+  "runtimeCap": 393216,
+  "maxFrames": 128,
+  "exceptionKinds": 14,
+  "address": "0x4d432d52414e444f4d2d434c4153532d50310036",
+  "owner": "0x4d432d52414e444f4d2d434c4153532d50310037",
+  "engine": {
+    "bytes": 392268,
+    "initSHA256": "43371c4775f9961355d44f4c0f49f2cd481132ebb3a082dead44bd3b850c2e8c",
+    "runtimeSHA256": "c0d3be5e0af7bb0649ab802716970f91fab7a39965cb94677185942d416a8deb",
+    "runtimeKeccak256": "5839b8e20b67c056268db041427350cbed00ba859779fee0217a04afb878a963"
+  },
+  "coordinator": {
+    "bytes": 5394,
+    "initSHA256": "8472e7c67c78aebaff63f6d00daca5dbb48b081f77df5b68bef0d6bd57c09ccf",
+    "runtimeSHA256": "b6176e46c364e0dbb0826710f26ec104779f653dbbe9f36350a5630c438c3c71",
+    "runtimeKeccak256": "2c641a4ee49739e9a4f5cbcc1e74e83426b1bef1983cbc68ff494b05a3c74eb5"
+  },
+  "baselineEngine": {
+    "bytes": 392176,
+    "initSHA256": "8fed98d6356d41b817a2a04421c3e89c2a869406ebc8ea4df949d0e3ea1bb70d",
+    "runtimeSHA256": "df4aa62656b0507ee5f058916eaa49eb70bb8ae819d4ffc615c9303903748af8",
+    "runtimeKeccak256": "ae7f8eecbb0ec4c0015c3814ca5a784a0dbfcaafb7ee1a005563f6d087cb974f"
+  },
+  "baselineCoordinator": {
+    "bytes": 5394,
+    "initSHA256": "3bb1c005ddf7c787ef768ab0ea0e2075c7e0a2175a890e933ed813f921b25650",
+    "runtimeSHA256": "39bf6f00e216b34cf9ad2575ed3303801b410e2c77088f76eb451d58c406ca4b",
+    "runtimeKeccak256": "c237a5da6f4d5362d450556c3d8c35c4149c544c532cc11cedb79163afd09ec4"
+  },
+  "baselineDriverSHA256": "82589aff5248734c18092478636da78dd2309277c39ddb86e5d7de2c2fa09b10",
+  "driverSHA256": "60c7a0d21364820834b7f4fcdf211865ab9fffc7078070045837681208db88a1",
+  "sourceInvariants": {
+    "actualP16BootstrapRoot": "8c5bc495513b12e7ee40f71f447c5f8f894d49ec9cf318d2744143f1d20ff310",
+    "actualIndependentParentP17Root": "aae001d9449928180fe6daf66cc3a7bffa4686a7823f69bb994cd882fa89ec0d",
+    "orderedLeaves": 97
+  },
+  "integer": {
+    "slot": 70,
+    "bytes": 2087,
+    "sha256": "8c166273089342e5bd5fba6a6c79b861d2a823a8941307a71695374b510def22",
+    "keccak256": "a650a3f15565b8248e97233b6fe628abff4418eb54574c75fef46fad2680864f"
+  },
+  "object": {
+    "slot": 0,
+    "bytes": 401,
+    "sha256": "ac898039bbd7f71df4c6553f6156c75465f41c1d1537e99c50a09aeee9eab138",
+    "keccak256": "d08322f3721eccab25e9087ee347cd633e0cd3bd618b1ea8dc71c4e099732c37"
+  },
+  "math": {
+    "keccak256": "32f856e3b1567f72aa4922b4f4232dd2ab0f525772f46a3b7229f3eafcf44005"
+  },
+  "expectedMathKeccak256": "32f856e3b1567f72aa4922b4f4232dd2ab0f525772f46a3b7229f3eafcf44005",
+  "string": {
+    "sha256": "259bed03edf8602dca9ad26e639cb7668b8da38d62422b80788d8339020017fe"
+  },
+  "system": {
+    "sha256": "6e29f00abed753017741ad667314982061178298cb3fca5baa0d92f2f9d57564"
+  },
+  "locale": {
+    "sha256": "8401495628aed9de6e7c7c0ad56f73ac563bd5e7a892b8eb8ca9fcf91bc03e31"
+  },
+  "random": {
+    "sha256": "8d2a1e974c79f6a2a0344a5c776f5feb7b7f09eb7431bd02d54d75518bf76bf3"
+  },
+  "sparseWire": {
+    "flag": "0x80000000",
+    "minimumLength": 1024,
+    "savingRule": "(4+12*nonzero)*4 <= (8*length)*3"
+  },
+  "packedFloatWire": {
+    "flag": "0x40000000",
+    "sparseFlag": "0x80000000",
+    "minimumLength": 1024,
+    "cellWidthBytes": 4,
+    "strictSelection": "4*length < 4+12*nonzero",
+    "guestRepresentation": "eager dense uint64[]"
+  },
+  "buildID": "01-run-c",
+  "generatedFixtureSource": "evidence/java-evm/minecraft-entry/float-packed-checkpoint-preparation/results/generated-gate-v5/fixtures"
+}

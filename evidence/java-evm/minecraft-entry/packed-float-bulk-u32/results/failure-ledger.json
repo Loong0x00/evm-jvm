@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "scope": "Generated synthetic fixtures only; no original Java/JAR/resource/world inputs",
+  "attempts": [
+    {
+      "run": "broad-generated-gate-01-run-c",
+      "status": "not accepted",
+      "limitSeconds": 1200,
+      "outcome": "external timeout before final summary",
+      "lastObservedStage": "raw-71 q1 had reopened; q7 was beginning",
+      "note": "This was the copied broad historical suite, larger than the bounded task gate. Partial results are not counted."
+    },
+    {
+      "run": "focused-01-a",
+      "status": "harness assertion failure",
+      "outcome": "P17 and candidate opaque MR01 bytes had already compared equal; harness then incorrectly asserted cross-runtime machineRoot equality",
+      "correction": "Compare every byte and SHA-256 of checkpoint[280:] as requested; report the independently authenticated roots without equating them."
+    },
+    {
+      "run": "focused-01-b",
+      "status": "not accepted",
+      "limitSeconds": 1200,
+      "outcome": "external timeout during redundant P17 q1 replay of the large sparse fixture",
+      "correction": "Retain candidate q1/q7/direct coverage for packed/tails and raw-71; perform the exact P17 sparse/packed/crossover/tail MR01 comparison at direct quantum."
+    },
+    {
+      "run": "focused-01-c",
+      "status": "harness failure",
+      "outcome": "packed malformed helper passed its row list where the row was expected",
+      "correction": "Pass the selected packed row to packed mutators and the full list only to sparse mutators."
+    },
+    {
+      "run": "focused-01-d",
+      "status": "PASS",
+      "wholeGateSeconds": 450.4359157770232,
+      "canonicalReceipts": 6765,
+      "candidateRuntimeBytes": 392268,
+      "runtimeCapBytes": 393216,
+      "p17MR01Cases": 6,
+      "rawOriginalReplay": false
+    }
+  ]
+}
