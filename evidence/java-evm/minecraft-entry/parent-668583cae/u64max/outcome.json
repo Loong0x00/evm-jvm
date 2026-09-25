@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "scope": "unchanged original71 continuation from authenticated P19 head; gas-only LOCAL driver change",
+  "startJvmSteps": 1274589,
+  "terminal": {
+    "epoch": 1399,
+    "jvmSteps": 1405662,
+    "internalSteps": 84,
+    "lifecycle": 3,
+    "outcome": 3,
+    "javaKind": 7,
+    "javaRef": 1974,
+    "checkpointSHA256": "1a5996cc032cdee1ddf48d1a652368ec5e2b1291b23e4979fa0693a5f89aa771",
+    "trieRoot": "0xd1b343dd44ffaccbb3c5edb393ef479831c63be89bd965789aa14cf67d92f848"
+  },
+  "progressJvmSteps": 131073,
+  "u64maxReceipts": 34,
+  "q4096SuccessfulSlices": 32,
+  "totalElapsedMS": 173740,
+  "peakGasUsed": 39305852937,
+  "terminalCheckpointBytes": 536276,
+  "exception": {
+    "classIndex": 80,
+    "bootstrapDerivation": "raw71 + Object/Cloneable/Serializable/Float/Double + Throwable/Error/VME/SOE => slot80 is java/lang/OutOfMemoryError",
+    "heapHandle": 1974,
+    "heapMetadata": "0x8000000000000000000000000000000000000000000000000000000000000007",
+    "ordinaryArrays": 1024,
+    "MAX_ARRAYS": 1024,
+    "ordinaryObjects": 943,
+    "arrayElements": 81133
+  },
+  "classification": "genuine guest OutOfMemoryError caused by bounded interpreter ordinary-array quota, not host memory or EVM OOG",
+  "notClaimed": [
+    "Done",
+    "world",
+    "EULA",
+    "standard-chain"
+  ]
+}
