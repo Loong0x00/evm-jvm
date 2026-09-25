@@ -1,0 +1,7 @@
+# Independent P19 grouped-scan acceptance; later q1 gas frontier
+
+Final candidate tree `668583cae` preserves accepted P18 evidence and scopes the one-function delta under its own stage. Independent fresh `MC-RANDOM-CLASS-P19` root is `f4cf01e4356d76476b5ccd0949152c0422010df332d20bb1c84855793921dc81`; runtime392090/393216. Parent focused gate:448.367s/6765 receipts with same-P19 baseline MR01 equality. Full gate:938.762s/11814 receipts. Direct test-only helper covers14 exact counts and16 typed high-bit lane/tail refusals. Ordinary generated calls use1B.
+
+Parent-alone fresh replay of the unchanged original Minecraft Java server1.12.2 JAR SHA256 `fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e`, under authorized LOCAL4.2B <=30s/call, reaches **1,274,589 JVM /83 internal**, lifecycle1 and **1365 verified successful receipts**—157 steps beyond P18. Packed wire/eager dense guest array and all65536 sine bits remain intact. Last q1 publishes a390015-byte checkpoint; following q1 returns empty bubbled engine revert with root/head unchanged. Failed state is not continued and no Java symbol is inferred.
+
+The remaining packed codec still uses a Solidity inner loop for eight already-bounded lanes in both grouped encode and grouped decode. A bounded next optimization may unroll only those lanes with in-bounds memory-safe loads/stores and exact nonzero predicates while preserving tails, exact MR01, canonical checks and runtime<=393216. No logger/world/EULA/`Done`, standard-chain, or push claim.

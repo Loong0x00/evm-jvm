@@ -1,0 +1,15 @@
+    // Test-only wrapper, inserted into a disposable compiled copy of the engine.
+    function groupedScanProbe(uint64[] calldata input) external pure returns (uint256 result) {
+        uint256 handle = 37;
+        RuntimeState memory s;
+        s.arena.heap.arrayHeap = new uint64[][](handle + 1);
+        s.arena.heap.metadata = new uint256[](handle + 1);
+        s.arena.heap.ranks = new uint8[](handle + 1);
+        s.arena.heap.arrayHeap[handle] = input;
+        s.arena.heap.metadata[handle] = PRIMITIVE_FLOAT;
+        s.arena.heap.ranks[handle] = 1;
+        uint256 count = _checkpointArrayNonzeroCount(s, handle);
+        result = count;
+        if (_usePackedFloatArray(PRIMITIVE_FLOAT, 1, input.length, count)) result |= 1 << 255;
+        if (_useSparsePrimitiveArray(PRIMITIVE_FLOAT, 1, input.length, count)) result |= 1 << 254;
+    }
