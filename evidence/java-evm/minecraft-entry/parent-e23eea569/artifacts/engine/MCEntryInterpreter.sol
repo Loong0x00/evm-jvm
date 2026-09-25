@@ -1064,40 +1064,9 @@ contract MCEntryInterpreter {
             || s.arena.heap.metadata[handle] != PRIMITIVE_FLOAT) {
             return _sparsePrimitiveArrayCount(s, handle);
         }
-        uint64[] memory cells = s.arena.heap.arrayHeap[handle];
-        uint256 length = cells.length;
-        uint256 grouped = length & ~uint256(7);
-        for (uint256 i; i < grouped; i += 8) {
-            uint256 base;
-            assembly ("memory-safe") {
-                base := add(add(cells, 32), shl(5, i))
-            }
-            uint256 highBits;
-            uint256 nonzero;
-            assembly ("memory-safe") {
-                let mask := 0xffffffffffffffff
-                let v0 := and(mload(base), mask)
-                let v1 := and(mload(add(base, 32)), mask)
-                let v2 := and(mload(add(base, 64)), mask)
-                let v3 := and(mload(add(base, 96)), mask)
-                let v4 := and(mload(add(base, 128)), mask)
-                let v5 := and(mload(add(base, 160)), mask)
-                let v6 := and(mload(add(base, 192)), mask)
-                let v7 := and(mload(add(base, 224)), mask)
-                highBits := or(
-                    or(or(shr(32, v0), shr(32, v1)), or(shr(32, v2), shr(32, v3))),
-                    or(or(shr(32, v4), shr(32, v5)), or(shr(32, v6), shr(32, v7)))
-                )
-                nonzero := add(
-                    add(add(iszero(iszero(v0)), iszero(iszero(v1))), add(iszero(iszero(v2)), iszero(iszero(v3)))),
-                    add(add(iszero(iszero(v4)), iszero(iszero(v5))), add(iszero(iszero(v6)), iszero(iszero(v7))))
-                )
-            }
-            if (highBits != 0) revert LC0StateError(6, handle);
-            count += nonzero;
-        }
-        for (uint256 i = grouped; i < length; ++i) {
-            uint64 cell = cells[i];
+        uint256 length = s.arena.heap.arrayHeap[handle].length;
+        for (uint256 i; i < length; ++i) {
+            uint64 cell = s.arena.heap.arrayHeap[handle][i];
             if (cell > type(uint32).max) revert LC0StateError(6, handle);
             if (cell != 0) ++count;
         }

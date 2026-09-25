@@ -2,11 +2,15 @@
 
 ## Scope
 
-This candidate changes exactly one function in the assigned P18 source:
-`_checkpointArrayNonzeroCount` in
-`../parent-e23eea569/artifacts/engine/MCEntryInterpreter.sol`. Its rank-one
-`PRIMITIVE_FLOAT` path loads eight in-bounds `uint64[]` words per outer loop,
-validates the complete group before counting, and uses the unchanged checked tail.
+This candidate changes exactly one function from the assigned P18 source:
+`_checkpointArrayNonzeroCount`. The immutable baseline is the source at commit
+`f867e6279` and its archival copy remains at
+`../parent-e23eea569/artifacts/engine/MCEntryInterpreter.sol`; the candidate is
+kept separately at `engine/MCEntryInterpreter.sol`. The source audit verifies
+that replacing only the candidate helper with the baseline helper produces the
+byte-identical baseline source. Its rank-one `PRIMITIVE_FLOAT` path loads eight
+in-bounds `uint64[]` words per outer loop, validates the complete group before
+counting, and uses the unchanged checked tail.
 Each valid array cell is read once per scan. Values are narrowed to the stored
 `uint64` domain before high-bit validation, preserving the prior typed
 `LC0StateError(6, handle)` for bits above uint32 and the exact nonzero count.
@@ -25,7 +29,11 @@ The durable run is [`results/01-local-b/`](results/01-local-b/). It records sour
 and artifact pins, the all-97 root audit, complete compressed focused/full gate
 summaries, the direct-helper result matrix, and SHA256SUMS. Verify the package
 with `sha256sum -c SHA256SUMS` from this directory, then verify the run files
-with `sha256sum -c SHA256SUMS` from `results/01-local-b`.
+with `sha256sum -c SHA256SUMS` from `results/01-local-b`. The follow-up
+[source relocation verification](results/02-relocation-followup/verification.json)
+has its own `SHA256SUMS`; verify it from that directory as well. It documents
+the exact source paths and confirms the rebuilt runtime and existing result-file
+hashes.
 
 - Candidate runtime: **392,090 bytes**, under the unchanged **393,216-byte** cap
   (1,126 bytes remaining; 178 bytes smaller than the 392,268-byte P18 baseline).
@@ -76,12 +84,23 @@ python3 -B evidence/java-evm/minecraft-entry/packed-float-grouped-scan/probe_gat
   build/java-diff-mc-packed-float-grouped-scan-probe-01-rerun-a
 ```
 
-Each gate enforces its 1,200-second timeout. `build.py` reconstructs the baseline
-from the assigned `f867e6279` source and refuses any source delta beyond the
-specified helper; it compiles both engines/coordinators independently. The probe
-gate instruments only a disposable source copy to call the private helper with
-synthetic arrays; the expanded compiler byte guard applies only to that direct
-runtime-execution probe, never to the candidate engine.
+Each gate enforces its 1,200-second timeout. `build.py` reconstructs the
+baseline from immutable commit `f867e6279`, asserts that the archival parent
+source is byte-identical to it, and reads the candidate
+only from `engine/MCEntryInterpreter.sol`. It refuses any normalized source delta
+beyond the specified helper, then independently compiles both engines and
+coordinators using the pinned P18 build settings. The probe gate instruments only
+a disposable source copy to call the private helper with synthetic arrays; the
+expanded compiler byte guard applies only to that direct runtime-execution probe,
+never to the candidate engine.
+
+The follow-up specifically re-ran the source audit, clean engine/coordinator
+build, rebuilt-runtime/hash comparison, and archived checksum/result verification.
+It did **not** rerun the expensive focused, full-generated, or direct-helper EVM
+gates: their archived summaries and result hashes are unchanged, and the freshly
+rebuilt candidate runtime (including init/runtime hashes) matches the recorded
+candidate exactly. This is a source-location/evidence-immutability correction,
+not a new performance or behavioral measurement.
 
 ## Limits
 

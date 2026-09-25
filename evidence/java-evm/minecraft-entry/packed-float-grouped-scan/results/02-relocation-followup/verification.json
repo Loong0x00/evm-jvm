@@ -1,0 +1,83 @@
+{
+  "result": "PASS",
+  "purpose": "Follow-up to keep accepted historical P18 source immutable while preserving the grouped-scan candidate in its stage directory.",
+  "priorCandidateCommit": "ab7e2c2ac",
+  "baseline": {
+    "commit": "f867e6279",
+    "sourcePath": "evidence/java-evm/minecraft-entry/parent-e23eea569/artifacts/engine/MCEntryInterpreter.sol",
+    "sourceSHA256": "921b3d2b864f00dd13f0ea0d391271e00687dddefe9d8edcb5fcccfa3881a17b",
+    "archivalCopyByteIdenticalToCommit": true
+  },
+  "candidate": {
+    "sourcePath": "evidence/java-evm/minecraft-entry/packed-float-grouped-scan/engine/MCEntryInterpreter.sol",
+    "sourceSHA256": "c1a97891c94ecef1a879bf63e3beb6fe7400de6e1b1f7104ccc9fdb9930c3c70",
+    "sourceSHA256MatchesPriorRun": true,
+    "builderPath": "evidence/java-evm/minecraft-entry/packed-float-grouped-scan/engine/build.js",
+    "builderSHA256": "519351b42549fea4dacf5da41f350954f1d916756ab03a40704c160307b9204d",
+    "builderByteIdenticalToPinnedP18Builder": true
+  },
+  "sourceAudit": {
+    "changedFunctions": [
+      "_checkpointArrayNonzeroCount"
+    ],
+    "normalizedDeltaExact": true,
+    "normalization": "Replace candidate _checkpointArrayNonzeroCount with the baseline function body; resulting complete Solidity source is byte-identical to f867e6279 P18.",
+    "bootstrapCount": 97,
+    "bootstrapRoot": "828af33f62f6e92513d9605bf832437e1330b4d325bb04f913b97fd6f20596bd"
+  },
+  "freshBuild": {
+    "reproductionCommand": "python3 -B evidence/java-evm/minecraft-entry/packed-float-grouped-scan/build.py 02-followup-relocation",
+    "temporaryBuildID": "02-followup-relocation",
+    "baselineEngine": {
+      "bytes": 392268,
+      "initSHA256": "94c7dd99ac1bafc38a2bc729b9c6988237f56a4f1db4f01dec1c87b14aa37d13",
+      "runtimeSHA256": "c11676a39e2ad88c1f506a646d00f5a3953e8f5bbe523b6d2ae316b89d8cc1cb",
+      "runtimeKeccak256": "477f2108ac390a37b17519bcd573bd337ca386ccdbf37a635aa5eb97bb1494ae"
+    },
+    "candidateEngine": {
+      "bytes": 392090,
+      "initSHA256": "f1259aae1301b802a1b5b3c4bad384bba87f7520c79605509333f8564dc242a0",
+      "runtimeSHA256": "ac229a2cd8e92360bbde140ba9e6fe856891b03cec8ba390de5b9bab8a109e33",
+      "runtimeKeccak256": "55792744164726ca4c61636a98503008fd971de48d84ac9f85fe6e695ede61d2"
+    },
+    "baselineCoordinator": {
+      "bytes": 5394,
+      "initSHA256": "df1f73952c7ec611b31d8cc99f04ba389a373bf716d7ff37c9fd47e269573b3b",
+      "runtimeSHA256": "a117aa131f1bd8697d7f433b0e248f9a0b7fd274dc47e5d99af3c538973fee5a",
+      "runtimeKeccak256": "f9cf63920aa48d18bb9640d281ff71b2ef830131895deb61a7df83948f741279"
+    },
+    "candidateCoordinator": {
+      "bytes": 5394,
+      "initSHA256": "68e97ad7b14b7a163142b9c4bb6196c84f3a971b81413fd588b37258dc25aa4f",
+      "runtimeSHA256": "69e6aaea597fcb357573c297653617305979cf8e4ff5d1526ce4d4912bffc510",
+      "runtimeKeccak256": "3979a21b809b47f60d4c7aa923c509d98e5f40c36d0e3b43cf19ca09b2d396b7"
+    },
+    "allFourEngineCoordinatorPinsMatchArchivedRun": true,
+    "candidateRuntimeMatchesArchivedResult": true,
+    "candidateInitSHA256": "f1259aae1301b802a1b5b3c4bad384bba87f7520c79605509333f8564dc242a0",
+    "candidateRuntimeSHA256": "ac229a2cd8e92360bbde140ba9e6fe856891b03cec8ba390de5b9bab8a109e33",
+    "candidateRuntimeKeccak256": "55792744164726ca4c61636a98503008fd971de48d84ac9f85fe6e695ede61d2"
+  },
+  "priorRun": {
+    "path": "evidence/java-evm/minecraft-entry/packed-float-grouped-scan/results/01-local-b",
+    "sha256ManifestVerified": true,
+    "archivedFilesSHA256": {
+      "build-result.json": "3529105620bbe89c06f0288dec8426bd8a4e769c25988ebf44e41716c8cc1199",
+      "direct-probe-gate.json": "8ad6fd045b0bd58c834a5fddf175d1e5681a7287ebc2b83c13d7592668145c9b",
+      "direct-probe-summary.json": "cbc1b7db7dafa7f9bf9666f2001753bbd22632d7b48dbf97956cc5ae5948fa87",
+      "focused-summary.json.gz": "1c31405528f11dac7a24757215251022948bbb6acd10c03e1b5793feaa55c106",
+      "full-generated-summary.json.gz": "99c28337046642f100700e55fe628a237249498484b7e7e944a63231b8c9b1d9",
+      "pins.json": "429c94d33b3890d6db5d8c0eac211e687ac2275e2c678354fa7edb5910819d96",
+      "result.json": "74bb06cd3a56ff6924f728da4a57a4070c6b98180bf3d85bfac96c778f8f880c",
+      "source-audit.json": "509ede53d29828caf127eca19777682e136c3aa2d490b8414225d3496e2e0c25"
+    },
+    "focusedFullAndDirectEVMGatesRerunForThisFollowup": false,
+    "reason": "The follow-up changes source location/tooling only; candidate bytes and freshly rebuilt engine/coordinator pins exactly match the archived run. The archived gate outputs and hashes remain unchanged."
+  },
+  "scope": {
+    "originalJarOrClassesOrResourcesOrWorldsUsed": false,
+    "networkUsed": false,
+    "siblingRepositoryAccessed": false,
+    "minecraftExecutionOrDoneClaim": false
+  }
+}

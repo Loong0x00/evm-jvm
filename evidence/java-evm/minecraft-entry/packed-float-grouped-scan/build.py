@@ -11,8 +11,11 @@ import sys
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
-TARGET = "evidence/java-evm/minecraft-entry/parent-e23eea569/artifacts/engine/MCEntryInterpreter.sol"
+BASELINE_COMMIT = "f867e6279"
+BASELINE_SOURCE_PATH = "evidence/java-evm/minecraft-entry/parent-e23eea569/artifacts/engine/MCEntryInterpreter.sol"
+CANDIDATE_SOURCE_PATH = "evidence/java-evm/minecraft-entry/packed-float-grouped-scan/engine/MCEntryInterpreter.sol"
 PARENT = ROOT / "evidence/java-evm/minecraft-entry/parent-e23eea569"
+STAGE_ENGINE = HERE / "engine"
 PINS = json.loads((PARENT / "artifacts/parent-build-pins.json").read_text())
 
 if len(sys.argv) != 2:
@@ -118,22 +121,33 @@ def bootstrap_pairs(source):
     return pairs
 
 
-# Reconstruct the exact accepted P18 source from the assigned starting commit,
-# not a newer artifact, and prove only the requested helper function changed.
-baseline_source = subprocess.run(
-    ["git", "show", "f867e6279:" + TARGET], cwd=ROOT,
-    env=ENV, text=True, capture_output=True, check=True,
+# Reconstruct the immutable accepted P18 baseline from its commit and check
+# that the historical evidence copy is byte-identical. The candidate is read
+# only from this scoped stage, never from the accepted parent directory.
+baseline_source_bytes = subprocess.run(
+    ["git", "show", BASELINE_COMMIT + ":" + BASELINE_SOURCE_PATH], cwd=ROOT,
+    env=ENV, capture_output=True, check=True,
 ).stdout
-candidate_source = (ROOT / TARGET).read_text()
+parent_source_bytes = (ROOT / BASELINE_SOURCE_PATH).read_bytes()
+assert parent_source_bytes == baseline_source_bytes, "historical P18 source changed"
+baseline_source = baseline_source_bytes.decode("utf-8")
+candidate_source_bytes = (ROOT / CANDIDATE_SOURCE_PATH).read_bytes()
+candidate_source = candidate_source_bytes.decode("utf-8")
 base_functions = function_bodies(baseline_source)
 candidate_functions = function_bodies(candidate_source)
 assert base_functions.keys() == candidate_functions.keys()
 changed = sorted(name for name in base_functions
                  if base_functions[name] != candidate_functions[name])
 assert changed == ["_checkpointArrayNonzeroCount"], changed
-for name in base_functions:
-    if name != "_checkpointArrayNonzeroCount":
-        assert base_functions[name] == candidate_functions[name], name
+assert len(base_functions["_checkpointArrayNonzeroCount"]) == 1
+assert len(candidate_functions["_checkpointArrayNonzeroCount"]) == 1
+base_helper = base_functions["_checkpointArrayNonzeroCount"][0]
+candidate_helper = candidate_functions["_checkpointArrayNonzeroCount"][0]
+assert candidate_source.count(candidate_helper) == 1
+normalized_candidate = candidate_source.replace(candidate_helper, base_helper, 1)
+assert normalized_candidate == baseline_source, "normalized source delta exceeds helper"
+assert (STAGE_ENGINE / "build.js").read_bytes() == (PARENT / "artifacts/engine/build.js").read_bytes(), \
+    "candidate builder differs from the pinned P18 engine builder"
 
 # Independently recompute all 97 ordered bootstrap leaves and the P18 root for
 # both byte sources. This code uses only the pinned local js-sha3 package.
@@ -150,12 +164,15 @@ root_data = json.loads(subprocess.run(
 assert root_data["root"] == PINS["bootstrapRoot"]
 assert len(root_data["leaves"]) == PINS["bootstrapCount"] == 97
 
-# Compile exact pre-scan and grouped-scan engines independently.
+# Compile exact pre-scan and grouped-scan engines independently with their
+# respective immutable/scoped builders.
 for label, source in (("baseline", baseline_source), ("candidate", candidate_source)):
     directory = BUILD / label / "engine"
     directory.mkdir(parents=True)
     (directory / "MCEntryInterpreter.sol").write_text(source)
-    shutil.copy2(PARENT / "artifacts/engine/build.js", directory / "build.js")
+    builder = (PARENT / "artifacts/engine/build.js" if label == "baseline"
+               else STAGE_ENGINE / "build.js")
+    shutil.copy2(builder, directory / "build.js")
     run(label + "-engine-build", ["node", directory / "build.js"])
 
 base_engine_artifact = json.loads((BUILD / "baseline/engine/MCEntryInterpreter.json").read_text())
@@ -240,7 +257,10 @@ run("generated-fixture-build", [sys.executable, "-B", fixture_generator, FIXTURE
 pins = dict(PINS)
 pins.update({
     "profile": "MC-RANDOM-CLASS-P18-PACKED-FLOAT-GROUPED-SCAN",
-    "basis": "f867e6279 same-domain P18; only _checkpointArrayNonzeroCount changed",
+    "basis": BASELINE_COMMIT + " same-domain P18; only _checkpointArrayNonzeroCount changed",
+    "baselineSourcePath": BASELINE_SOURCE_PATH,
+    "candidateSourcePath": CANDIDATE_SOURCE_PATH,
+    "normalizedSourceDelta": "exactly _checkpointArrayNonzeroCount; replacing candidate helper with baseline helper yields byte-identical P18 source",
     "worker": "local-grouped-scan",
     "engine": candidate_engine,
     "coordinator": candidate_coord,
@@ -258,10 +278,13 @@ pins.update({
 (BUILD / "pins.json").write_text(json.dumps(pins, indent=2) + "\n")
 (BUILD / "source-audit.json").write_text(json.dumps({
     "result": "PASS",
-    "baselineCommit": "f867e6279",
+    "baselineCommit": BASELINE_COMMIT,
+    "baselineSourcePath": BASELINE_SOURCE_PATH,
     "baselineSourceSHA256": pins["baselineSourceSHA256"],
+    "candidateSourcePath": CANDIDATE_SOURCE_PATH,
     "candidateSourceSHA256": pins["sourceSHA256"],
     "changedFunctions": changed,
+    "normalizedSourceDeltaExact": normalized_candidate == baseline_source,
     "bootstrapRootDomain": "JVMEVM:MC-RANDOM-CLASS-P18:BOOTSTRAP:1",
     "bootstrapRoot": root_data["root"],
     "orderedBootstrapLeaves": root_data["leaves"],
@@ -272,6 +295,9 @@ pins.update({
     "engineABIUnchanged": candidate_engine_artifact["abi"] == base_engine_artifact["abi"],
     "engineStorageLayoutUnchanged": candidate_engine_artifact["storageLayout"] == base_engine_artifact["storageLayout"],
     "coordinatorABIUnchanged": candidate_coord_artifact["abi"] == base_coord_artifact["abi"],
+    "baselineSourcePath": BASELINE_SOURCE_PATH,
+    "candidateSourcePath": CANDIDATE_SOURCE_PATH,
+    "normalizedSourceDeltaExact": normalized_candidate == baseline_source,
     "changedFunctions": changed,
     "baselineEngine": base_engine,
     "candidateEngine": candidate_engine,
