@@ -1,0 +1,170 @@
+{
+  "result": "PASS",
+  "startingCommit": "f867e6279",
+  "sourceDeltaOnly": [
+    "MCEntryInterpreter.sol::_checkpointArrayNonzeroCount"
+  ],
+  "generatedOnly": true,
+  "networkUsed": false,
+  "originalJarOrClassesOrResourcesOrWorldsUsed": false,
+  "originalReplay": false,
+  "minecraftDone": false,
+  "bootstrap": {
+    "count": 97,
+    "domain": "JVMEVM:MC-RANDOM-CLASS-P18:BOOTSTRAP:1",
+    "root": "828af33f62f6e92513d9605bf832437e1330b4d325bb04f913b97fd6f20596bd",
+    "sameDomainRootRecomputed": true
+  },
+  "engine": {
+    "baselineRuntimeBytes": 392268,
+    "candidateRuntimeBytes": 392090,
+    "runtimeCapBytes": 393216,
+    "remainingBytes": 1126,
+    "runtimeSHA256": "ac229a2cd8e92360bbde140ba9e6fe856891b03cec8ba390de5b9bab8a109e33",
+    "runtimeKeccak256": "55792744164726ca4c61636a98503008fd971de48d84ac9f85fe6e695ede61d2",
+    "abiUnchanged": true,
+    "storageLayoutUnchanged": true
+  },
+  "focusedGate": {
+    "seconds": 444.53875565199996,
+    "ordinaryExternalGas": 1000000000,
+    "canonicalReceipts": 6765,
+    "candidateWorlds": 21,
+    "q1q7directReopen": true,
+    "mr01BaselineComparisons": {
+      "packed-array-oracle": {
+        "byteEquality": true,
+        "mr01Bytes": 5393,
+        "sha256": "77936cefbae5bc43d7e4db586417a6ac3eda659047ff34463b0cd89853c4facf",
+        "gasSaved": 233682
+      },
+      "sparse-array-stress": {
+        "byteEquality": true,
+        "mr01Bytes": 10021,
+        "sha256": "4c22682b7008baa9822a97baaf1a6d55794af37513e8d7359356a279dc147e53",
+        "gasSaved": 13042610
+      },
+      "array-savings-boundary": {
+        "byteEquality": true,
+        "mr01Bytes": 9571,
+        "sha256": "d3565024572414eb28145c6459303de047dabbfc5ce6bd7ee90c91f642915629",
+        "gasSaved": 917682
+      },
+      "float-tail-1024": {
+        "byteEquality": true,
+        "mr01Bytes": 5393,
+        "sha256": "77936cefbae5bc43d7e4db586417a6ac3eda659047ff34463b0cd89853c4facf",
+        "gasSaved": 233682
+      },
+      "float-tail-1025": {
+        "byteEquality": true,
+        "mr01Bytes": 5397,
+        "sha256": "fdf80d073e5ff49ea90f7a8db78a1bafdc50f594bd98d4fb997e950ed5e350f8",
+        "gasSaved": 233776
+      },
+      "float-tail-1031": {
+        "byteEquality": true,
+        "mr01Bytes": 5421,
+        "sha256": "5948091d8370ac9ab520b63e3a8955c1ced543423559442df709817d77be2c44",
+        "gasSaved": 234340
+      }
+    },
+    "malformedAtomicRefusals": 6,
+    "raw71": {
+      "bindingCount": 71,
+      "classBytesRead": 471911,
+      "expectedLocal1BAtomicRefusal": true,
+      "rootUnchanged": true,
+      "checkpointBytes": 0
+    }
+  },
+  "retainedFullGeneratedGate": {
+    "seconds": 939.226095571008,
+    "ordinaryExternalGas": 1000000000,
+    "canonicalReceipts": 11814,
+    "generatedCases": [
+      "lower-ascii",
+      "lower-null-caught",
+      "lower-null-uncaught",
+      "locale-root",
+      "retained-string",
+      "retained-map",
+      "retained-integer",
+      "retained-system-out-err",
+      "retained-properties",
+      "math-sqrt-binary64",
+      "math-sin-bounded-edges",
+      "math-sin-bounded-grid",
+      "random-construction",
+      "sparse-array-stress",
+      "array-savings-boundary",
+      "packed-array-oracle",
+      "q1-sparse-resume-from-successful-large-array-head",
+      "q1-packed-resume-from-successful-array-head",
+      "sparse-malformed-refusals",
+      "packed-malformed-refusals",
+      "identity-hash",
+      "identity-no-mutation-control",
+      "raw-string-replacement",
+      "raw-locale-replacement",
+      "raw-system-replacement",
+      "raw-math-replacement",
+      "raw-random-replacement",
+      "upper-omitted",
+      "math-cbrt-omitted",
+      "random-next-int-omitted",
+      "random-set-seed-omitted",
+      "lower-non-ascii-refusal",
+      "object-hashcode-omitted",
+      "system-general-omitted",
+      "math-sin-above-bound-refusal",
+      "math-sin-below-negative-bound-refusal",
+      "math-sin-nan-refusal",
+      "math-sin-positive-infinity-refusal",
+      "math-sin-negative-infinity-refusal",
+      "strictmath-sqrt-omitted",
+      "count-71",
+      "raw72-driver",
+      "raw72-coordinator",
+      "raw72-engine",
+      "byte-471911",
+      "byte-471912"
+    ],
+    "result": "PASS"
+  },
+  "directScanProbe": {
+    "seconds": 231.99592134499107,
+    "ordinaryExternalGas": 1000000000,
+    "runtimeBytes": 393308,
+    "successCases": 14,
+    "typedRefusalCases": 16,
+    "countAndSelectionCases": [
+      "zero",
+      "mixed",
+      "full at lengths 1024,1025,1031"
+    ],
+    "groupHighBitLanes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "tailHighBitCases": 8,
+    "error": "LC0StateError(6,37)"
+  },
+  "toolchain": {
+    "solc": "0.8.30+commit.73712a01.Emscripten.clang",
+    "node": "v24.14.0",
+    "go": "go1.27.1 X:nodwarf5",
+    "javac": "21.0.9",
+    "npm": "offline local cache; install used --offline"
+  },
+  "notes": [
+    "The direct probe compiles a disposable test-only wrapper exposing the private helper and selection predicates; that instrumented runtime is not the candidate product artifact. The product candidate remains 392090 bytes under the unchanged 393216-byte cap.",
+    "High-bit probes assert the exact custom-error selector and ABI arguments code=6, handle=37 for group lanes 0..7 and all tail positions in lengths 1025/1031."
+  ]
+}
