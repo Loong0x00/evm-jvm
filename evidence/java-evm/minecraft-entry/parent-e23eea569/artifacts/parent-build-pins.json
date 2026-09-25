@@ -1,0 +1,98 @@
+{
+  "profile": "MC-RANDOM-CLASS-P18-PACKED-FLOAT-BULK-U32",
+  "basis": "e23eea569",
+  "bootstrapCount": 97,
+  "bootstrapRoot": "828af33f62f6e92513d9605bf832437e1330b4d325bb04f913b97fd6f20596bd",
+  "expectedBootstrapRoot": "828af33f62f6e92513d9605bf832437e1330b4d325bb04f913b97fd6f20596bd",
+  "diagnosticClassBound": 168,
+  "globalNativeBindings": 21,
+  "stringLocalBinding": 12,
+  "rawLimits": [
+    71,
+    471911
+  ],
+  "checkpointCap": 1048576,
+  "reserve": 25000000,
+  "externalLocalGas": 1000000000,
+  "runtimeCap": 393216,
+  "maxFrames": 128,
+  "exceptionKinds": 14,
+  "address": "0x4d432d52414e444f4d2d434c4153532d50310038",
+  "owner": "0x4d432d52414e444f4d2d434c4153532d50310039",
+  "engine": {
+    "bytes": 392268,
+    "initSHA256": "94c7dd99ac1bafc38a2bc729b9c6988237f56a4f1db4f01dec1c87b14aa37d13",
+    "runtimeSHA256": "c11676a39e2ad88c1f506a646d00f5a3953e8f5bbe523b6d2ae316b89d8cc1cb",
+    "runtimeKeccak256": "477f2108ac390a37b17519bcd573bd337ca386ccdbf37a635aa5eb97bb1494ae"
+  },
+  "coordinator": {
+    "bytes": 5394,
+    "initSHA256": "df1f73952c7ec611b31d8cc99f04ba389a373bf716d7ff37c9fd47e269573b3b",
+    "runtimeSHA256": "a117aa131f1bd8697d7f433b0e248f9a0b7fd274dc47e5d99af3c538973fee5a",
+    "runtimeKeccak256": "f9cf63920aa48d18bb9640d281ff71b2ef830131895deb61a7df83948f741279"
+  },
+  "baselineEngine": {
+    "bytes": 392176,
+    "initSHA256": "93153d3b8f02c81c9ee536dfd73027afe9c27bf8aa847bbe5292c709b6c6f35a",
+    "runtimeSHA256": "ee7e13739382c60e40a846024bdb36dfaf115c05f65ac0dede46ea9e8e3b2ce2",
+    "runtimeKeccak256": "65746195a50de0785936498d041c4413b5434bf7161153c168401293400ba145"
+  },
+  "baselineCoordinator": {
+    "bytes": 5394,
+    "initSHA256": "dd98736b15dd16b5ba82ede2d72563f003315b49f63f414ada1735a9897f2810",
+    "runtimeSHA256": "3e1c9c5e939b1de7b73ad612ea226e6e0f1e5168c65f3ee5d440fb21cc3f64b2",
+    "runtimeKeccak256": "7b5420f63c8222abf926b4a67d6fa6ed3530d8f79ef05f457b8f65bb1f3843b9"
+  },
+  "baselineDriverSHA256": "82589aff5248734c18092478636da78dd2309277c39ddb86e5d7de2c2fa09b10",
+  "driverSHA256": "60c7a0d21364820834b7f4fcdf211865ab9fffc7078070045837681208db88a1",
+  "sourceInvariants": {
+    "actualP16BootstrapRoot": "8c5bc495513b12e7ee40f71f447c5f8f894d49ec9cf318d2744143f1d20ff310",
+    "actualIndependentParentP17Root": "aae001d9449928180fe6daf66cc3a7bffa4686a7823f69bb994cd882fa89ec0d",
+    "orderedLeaves": 97
+  },
+  "integer": {
+    "slot": 70,
+    "bytes": 2087,
+    "sha256": "8c166273089342e5bd5fba6a6c79b861d2a823a8941307a71695374b510def22",
+    "keccak256": "a650a3f15565b8248e97233b6fe628abff4418eb54574c75fef46fad2680864f"
+  },
+  "object": {
+    "slot": 0,
+    "bytes": 401,
+    "sha256": "ac898039bbd7f71df4c6553f6156c75465f41c1d1537e99c50a09aeee9eab138",
+    "keccak256": "d08322f3721eccab25e9087ee347cd633e0cd3bd618b1ea8dc71c4e099732c37"
+  },
+  "math": {
+    "keccak256": "32f856e3b1567f72aa4922b4f4232dd2ab0f525772f46a3b7229f3eafcf44005"
+  },
+  "expectedMathKeccak256": "32f856e3b1567f72aa4922b4f4232dd2ab0f525772f46a3b7229f3eafcf44005",
+  "string": {
+    "sha256": "259bed03edf8602dca9ad26e639cb7668b8da38d62422b80788d8339020017fe"
+  },
+  "system": {
+    "sha256": "6e29f00abed753017741ad667314982061178298cb3fca5baa0d92f2f9d57564"
+  },
+  "locale": {
+    "sha256": "8401495628aed9de6e7c7c0ad56f73ac563bd5e7a892b8eb8ca9fcf91bc03e31"
+  },
+  "random": {
+    "sha256": "8d2a1e974c79f6a2a0344a5c776f5feb7b7f09eb7431bd02d54d75518bf76bf3"
+  },
+  "sparseWire": {
+    "flag": "0x80000000",
+    "minimumLength": 1024,
+    "savingRule": "(4+12*nonzero)*4 <= (8*length)*3"
+  },
+  "packedFloatWire": {
+    "flag": "0x40000000",
+    "sparseFlag": "0x80000000",
+    "minimumLength": 1024,
+    "cellWidthBytes": 4,
+    "strictSelection": "4*length < 4+12*nonzero",
+    "guestRepresentation": "eager dense uint64[]"
+  },
+  "buildID": "01-run-b",
+  "generatedFixtureSource": "evidence/java-evm/minecraft-entry/float-packed-checkpoint-preparation/results/generated-gate-v5/fixtures",
+  "worker": "parent",
+  "domain": "MC-RANDOM-CLASS-P18"
+}

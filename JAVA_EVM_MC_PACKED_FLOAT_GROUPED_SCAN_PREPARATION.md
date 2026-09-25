@@ -1,0 +1,9 @@
+# Measured post-bulk q1 gas blocker: grouped float validation scan
+
+Accepted independent P18 grouped packed-u32 codec genuinely executes unchanged Minecraft Java server1.12.2 through 1,274,432 JVM /83 internal, lifecycle1, 1372 verified successful receipts. It clears P17 by329 Java steps. Last q1 publishes a389865-byte checkpoint; next authorized LOCAL4.2B q1 returns empty bubbled engine revert with root/head unchanged. No failed state resumes and no Java symbol is inferred. Evidence: `evidence/java-evm/minecraft-entry/parent-e23eea569/`.
+
+## One bounded internal-loop optimization
+
+Optimize only `_checkpointArrayNonzeroCount`'s rank1 `PRIMITIVE_FLOAT` path by validating/counting a bounded group of dense `uint64[]` cells per outer iteration (e.g. eight). Guest array representation remains ordinary eager dense uint64 words. Every cell must still be read exactly once; any value with bits above uint32 must trigger the same typed `LC0StateError(6,handle)` before encoding; nonzero count must be exact and feed the unchanged strict packed/sparse decision. A memory-safe assembly group may load the in-bounds complete groups and aggregate high bits/nonzero predicates, followed by the unchanged bounded tail. No skipped cells, cached count, mutation, alias/lazy view, or wire change.
+
+P18 runtime392268 leaves948 bytes, so reject if runtime>393216. Generated tests must include high-bit violation at every lane0..7 and tails, all-zero/mixed/all-nonzero counts, lengths1024/1025/1031, opaque P18 MR01 equality, q1/q7/direct/reopen, malformed/old-sparse/crossover, retained Integer/Object/Math/raw71/471911 and canonical receipts; each gate<=1200s ordinary1B. Measure gas. Parent independently compiles fresh domain and replays untouched original under authorized LOCAL4.2B <=30s/call using only successful checkpoints. No worker original inputs, output tables, logger/world/EULA/`Done`, standard-chain, or push claim.
