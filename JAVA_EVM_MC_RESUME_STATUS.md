@@ -1,3 +1,16 @@
+## Latest: LOCAL1M ArrayList constructor profile / independent P30
+
+- Guarded candidate runtime **394996 bytes**, authorized runtime ceiling1048576; checkpoint ceiling still1048576. All prior97 bootstrap images and geth `core/vm`, `core/state`, `params` unchanged;99 images total.
+- Independent constructor/type/negative/eager-backing/reopen gate:773 receipts,86.878s. Retained1B semantic/packed/sparse/malformed/native gate:11814 receipts,920.460s. Extra generated matrix/65536-capacity gate rerun on guarded source also passes.
+- New AbstractList has unbound-native `hashCode/equals` declarations to prevent wrong inherited Object fallback. Original v1 generated counterexample and read-only Java8 oracle retained; no fabricated results and no new operational native binding.
+- Fresh unchanged-original75 replay: **1914084 Java /85 internal**,36 verified receipts,652.172s, lifecycle1; checkpoint1019654B, SHA256 `82e1ae2650783c7a2fde4c744a37385398098b3822d299227f54190498fad042`.
+- Genuine next atomic q1 blocker: **`com/google/common/primitives/Ints`**, site0x100b/contextPC19; Lists raw74 method3 PC19 computes capacity. ArrayList type resolved/object allocated, but its `(I)V` constructor has **not yet been entered in the original**.
+- User policy: measured-insufficient project budgets double; no code-size micro-optimization. Original watchdog30→60s; ordinary gates remain1B/30s. A stale replay384KiB guard was caught before EVM and aligned with pinned runtimeCap. Old failures/profiles/worlds preserved.
+- Evidence: `evidence/java-evm/minecraft-entry/parent-array-list-local1m-safe/`; guarded source: `array-list-local1m-safe/`. LOCAL preinstalled-code Call is not standard CREATE deployment. No logger/world/EULA/Done claim. No push.
+- Next: parent EVM-only measure Ints resource; raise insufficient raw count75→150 and raw byte531965→1063930 coherently under doubling rule; checkpoint only on a measured shortage, preserving old1MiB profile.
+
+---
+
 # Resume anchor — Minecraft-first, local-only
 
 Latest accepted continuation (`parent-raw75-byte531965/`): independentP28 raw75/531965, runtime392091/root4a77a01a..., targeted1B gate58.222s/18receipts. Fresh original75 maxgas/adaptiveq65536 replay699.733s reaches1,914,062J/84I,lifecycle1,38receipts. Lists executes then q1missing bootstrap java/util/ArrayList, rawLists74 method7PC0. Separate authenticated EVM-only metadata view on fresh successful-world copy confirms Lists.newArrayListWithExpectedSize(I) -> ArrayList.<init>(I)V atCodePC8. No Java/CP published by inspector; original Head/CP unchanged. Next measured bounded ArrayList(int) bootstrap+typeclosure, not raw substitute; all97priorimages immutable, runtimeheadroom1125B/caps fixed. Preserveallhistory/worlds/manifests/failed attempts.

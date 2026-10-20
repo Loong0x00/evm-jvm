@@ -1,0 +1,92 @@
+{
+  "independentDomain": "MC-ARRAY-LIST-LOCAL1M-P30",
+  "runtimeBytes": 394996,
+  "runtimeCap": 1048576,
+  "checkpointCapUnchanged": 1048576,
+  "bootstrapCount": 99,
+  "bootstrapRoot": "833422be66151e74a1fb517b24ae0fbca61e17d9041814a8dca4cb883edf6161",
+  "old97ImagesAndUnderlyingEVMUnchanged": true,
+  "rawLimits": [
+    75,
+    531965
+  ],
+  "generatedConstructorAndRefusalGate": {
+    "seconds": 86.87790908501484,
+    "verifiedReceipts": 773,
+    "realBackingCapacities": [
+      0,
+      1,
+      3,
+      10,
+      1024
+    ],
+    "unimplementedListHashEqualsDoNotFallBackToObject": true
+  },
+  "retainedGate": {
+    "seconds": 920.4600692109962,
+    "verifiedReceipts": 11814,
+    "ordinaryGas": 1000000000
+  },
+  "lastSuccessful": {
+    "epoch": 36,
+    "jvmSteps": 1914084,
+    "internalSteps": 85,
+    "lifecycle": 1,
+    "checkpointSHA256": "82e1ae2650783c7a2fde4c744a37385398098b3822d299227f54190498fad042",
+    "machineRoot": "0x517214e8a3fb2315c9f97a0622dcbf43e2fa8016779008452849c67a3fef5d73",
+    "trieRoot": "0x50d8bf9b3363c6ec0a89ce5936500ce4e0bd4523a01d0c25110b653163702123"
+  },
+  "checkpointBytes": 1019654,
+  "heapCounts": {
+    "ordinaryObjects": 2569,
+    "ordinaryArrays": 3065,
+    "arrayElements": 100584,
+    "ordinaryFields": 7950,
+    "emergency": 1,
+    "exceptionObjects": 5,
+    "exceptionFields": 12
+  },
+  "replaySeconds": 652.1720811630075,
+  "progressFromP28Jvm": 22,
+  "nextMeasuredBlocker": {
+    "rawClass": "com/google/common/primitives/Ints",
+    "site": 4107,
+    "contextPC": 19,
+    "lastAuthenticatedFrame": {
+      "classIndex": 74,
+      "methodIndex": 3,
+      "pc": 19,
+      "callPC": "0x5",
+      "flags": 16,
+      "receiver": 0,
+      "stackSize": 1,
+      "locals": 1
+    },
+    "atomicQ1Refusal": true
+  },
+  "originalArrayListStatus": "type resolved and ordinary object allocated; constructor(I)V not entered yet because capacity computation first needs Ints",
+  "v1RejectedFallback": "generated oracle expected empty-list hash1/equals true, v1 returned3/false; safe new AbstractList declares both unbound native, atomic typed refusal proven",
+  "budgetAdjustments": {
+    "runtime": {
+      "old": 393216,
+      "new": 1048576,
+      "authority": "explicit user LOCAL1M"
+    },
+    "originalWatchdogSeconds": {
+      "old": 30,
+      "new": 60,
+      "authority": "user double measured insufficient project budgets"
+    },
+    "staleReplayAdmissionGuard": "old393216 startup assert caught before EVM; now uses pinned profile.runtimeCap"
+  },
+  "verificationOperatorCorrection": "initial verifier invocation omitted world label and returned zero receipts; preserved unaccepted and verifier now fails closed without labels; corrected invocation verified36",
+  "executionMode": "LOCAL StateDB preinstalled pinned oversized interpreter plus ordinary EVM Call, not standard CREATE deployment",
+  "notClaimed": [
+    "original constructor completion",
+    "logger completion",
+    "world",
+    "EULA",
+    "Done",
+    "standard-chain compatibility"
+  ]
+}
