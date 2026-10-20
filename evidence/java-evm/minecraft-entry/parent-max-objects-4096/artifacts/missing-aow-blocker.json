@@ -1,0 +1,61 @@
+{
+  "candidateCommit": "d1506940d",
+  "freshParentDomain": "MC-RANDOM-CLASS-P24",
+  "runtimeBytes": 392090,
+  "actualBootstrapRoot": "e5fd9b703bccd28948443e9027362ea6ff9f46a4f4d53f88c523fa4a8b5d75e6",
+  "semanticChange": "MAX_OBJECTS2048->4096 only",
+  "ordinaryGeneratedGate": {
+    "seconds": 972.4428640200058,
+    "receipts": 11814,
+    "gas": 1000000000
+  },
+  "highGasCapacityDiagnostic": {
+    "separateFromOrdinaryGate": true,
+    "targets": [
+      2048,
+      2049,
+      4096,
+      4097
+    ],
+    "verifiedReceipts": 34,
+    "4096Completes": true,
+    "4097TypedGuestOOMAt4096": true,
+    "peakGasUsed": 1731339978
+  },
+  "lastSuccessful": {
+    "epoch": 474,
+    "jvmSteps": 1913717,
+    "internalSteps": 83,
+    "lifecycle": 1,
+    "checkpointSHA256": "fe88e20a4015081255fcf1893719e0611fff275b91c1146b4d32f81673f9afdc"
+  },
+  "checkpointBytes": 1009044,
+  "ordinaryHeapCounters": {
+    "ordinaryObjects": 2560,
+    "ordinaryArrays": 3056,
+    "arrayElements": 99578,
+    "ordinaryFields": 7920,
+    "emergency": 1,
+    "exceptionObjects": 5,
+    "exceptionFields": 12
+  },
+  "progressFromP23Jvm": 219741,
+  "nextMeasuredBlocker": {
+    "kind": "genuine missing raw class",
+    "name": "aow",
+    "site": 4107,
+    "context": 17,
+    "q1AtomicRootHeadUnchanged": true,
+    "resourceMeasurement": "EVM AS0/ZI0/DI0 only, no host ZIP/class parser",
+    "newClassBytes": 41473,
+    "requiredDeclaredRawClassCount": 72,
+    "requiredDeclaredRawClassBytes": 513384
+  },
+  "notClaimed": [
+    "logger completion",
+    "world",
+    "EULA",
+    "Done",
+    "standard-chain compatibility"
+  ]
+}
