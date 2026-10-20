@@ -1,5 +1,7 @@
 # Resume anchor — Minecraft-first, local-only
 
+Sole semantic writer now in `/home/user/evm-jvm/max-objects-4096` from44841c2f3, with pinned local dependencies provisioned, implementing only measured objects2048->4096 on arrays4096. Parent P24 tooling is prepared separately; no P24 execution is claimed yet.
+
 Latest accepted continuation (see `parent-max-arrays-4096/`): MAX_ARRAYS4096 on objects2048 accepted in independent P23, runtime392090, root3488aad4..., full gate970.933s/11814receipts plus25capacity receipts and42atomic malformed probes. Fresh max-gas/q4096 original1697.720s reaches1,693,976J/84I,414receipts, lifecycle3 guestOOM with objects2048/2048 and arrays2411/4096; checkpoint839104bytes. Next measured change onlyMAX_OBJECTS2048->4096. Preserve all prior worlds/manifests/branches; optional unrolled lanes remains unmerged.
 
 Latest accepted continuation (see `parent-max-objects-2048/`): MAX_OBJECTS2048 on arrays2048 accepted in independent P22, runtime392090, root66321185..., full gate1024.794s/11832receipts. Fresh max-gas/q4096 untouched-original replay1600.022s reaches1,633,009J/84I,399receipts, lifecycle3 guestOOM with arrays2048/2048, objects1758/2048, checkpoint766313bytes. Next measured change onlyMAX_ARRAYS2048->4096; prior worlds/branches remain preserved. Optional unrolled-lanes still not merged.
