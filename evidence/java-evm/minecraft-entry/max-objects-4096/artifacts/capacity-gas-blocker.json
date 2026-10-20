@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "status": "BLOCKED",
+  "targetObjects": 4096,
+  "nextTarget4097": "not attempted",
+  "candidateSourceSHA256": "4e4e404209eb21581785aa02254f11dd0ad8f070fe5c1768e1cc25b6134406d1",
+  "runtimeSHA256": "147cd3bd20deb77a5497e61c242d10149ad814c0f3c21e70a8f6a183ccdb250a",
+  "baseSourceSHA256": "99de296ccbbdb1fe2890b52a70f9c217690fa858c443ccec7d0028963ccbbbd6",
+  "domain": "MC-RANDOM-CLASS-P23",
+  "ordinaryGasCap": 1000000000,
+  "checkpointCapBytes": 1048576,
+  "q4096Setup": {
+    "headEpoch": 7,
+    "jvmSteps": 28672,
+    "ordinaryObjects": 2867,
+    "refusalGas": 984377212,
+    "selector": "0x",
+    "revertHex": "0x",
+    "headUnchanged": true,
+    "rootUnchanged": true
+  },
+  "q256Diagnostic": {
+    "successfulResumeCalls": 5,
+    "failedResumeCalls": 1,
+    "headEpoch": 12,
+    "jvmSteps": 29952,
+    "ordinaryObjects": 2995,
+    "checkpointBytes": 130406,
+    "refusalGas": 984377271,
+    "selector": "0x",
+    "revertHex": "0x",
+    "headUnchanged": true,
+    "rootUnchanged": true
+  },
+  "checkpointCapExceeded": false,
+  "highCountQ1Q7Attempted": false,
+  "interpretation": "Ordinary-1B resume OOG prevents the requested q4096 zero-field Object4096 success and reaching the 4097 guest OOM boundary. Failed q4096 and q256 calls leave authenticated Head/root unchanged; no Java OOM is inferred from EVM OOG.",
+  "capacitySummarySHA256": "d80ce18853ef1f2e8441248a84471276c190973ee7746b2b83d0b943b4cf43cd"
+}

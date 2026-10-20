@@ -1,0 +1,318 @@
+{
+  "schema": 1,
+  "status": "BLOCKED",
+  "profile": "MC-RANDOM-CLASS-P23-MAX-OBJECTS-4096-WORKER-CANDIDATE",
+  "generatedOnly": true,
+  "ordinaryGasCap": 1000000000,
+  "bootstrapCount": 97,
+  "bootstrapRoot": "3488aad418a50e641220126a44a1b5dd9ce190505611a0f20f50e8814311a33c",
+  "maxArrays": 4096,
+  "maxObjects": 4096,
+  "maxHandles": 8449,
+  "runtimeBytes": 392090,
+  "runtimeCapBytes": 393216,
+  "targetsIncludeImplicitMainStringArray": false,
+  "bindingNamesIncludeClassSuffix": true,
+  "typedOOMPolicy": "kind7; derive java/lang/OutOfMemoryError from authenticated heap object classIndex=bindingCount+9; javaClass intentionally empty",
+  "canonicalReceipts": {
+    "verifiedReceipts": 24,
+    "summary": {
+      "world-object-capacity-2048-q4096": {
+        "receipts": 6,
+        "java": 20486,
+        "internal": 2,
+        "peakGas": 523437971,
+        "lifecycle": 2
+      },
+      "world-object-capacity-2049-q4096": {
+        "receipts": 6,
+        "java": 20496,
+        "internal": 2,
+        "peakGas": 524716627,
+        "lifecycle": 2
+      },
+      "world-object-capacity-4096-q4096": {
+        "receipts": 12,
+        "java": 29952,
+        "internal": 2,
+        "peakGas": 981030282,
+        "lifecycle": 1
+      }
+    },
+    "scope": "canonical nested ABI/events/CP hashes/counter chains/read ranges, not full Session acceptance"
+  },
+  "results": {
+    "2048": {
+      "status": "success",
+      "fixtureSHA256": "46ad33345eca73546d68175a8a2d021e94a6f63932d0c45dfbe6e256ab12f339",
+      "classSHA256": "85f93242846bb96c5d2df5540afb070560fca3c44f13ba068aa6ddcdacdf68fa",
+      "entryNameIncludesClassSuffix": true,
+      "world": "world-object-capacity-2048-q4096",
+      "setupQuantum": 4096,
+      "finishQ4096Calls": 1,
+      "q4096Refusal": null,
+      "q256ResumeCalls": 0,
+      "q256Refusal": null,
+      "epoch": 6,
+      "jvmSteps": 20486,
+      "internalSteps": 2,
+      "machineRoot": "0xb359ed434839a8cb24e759be3fa53869bbbdda7a5bfd4d4740fde1b0b876c361",
+      "checkpointSHA256": "255ef4287a8291f4f5712a12bc3d83efb62424fa96970a8033fecf9d73580902",
+      "checkpointBytes": 89539,
+      "opaquePayloadSHA256": "d86b8bf4bd11fd65b2d0df5736c6e84e616ae829ceffc52c3c327edcd50e38a6",
+      "requestedObjects": 2048,
+      "ordinaryObjects": 2048,
+      "ordinaryArrays": 1,
+      "ordinaryFields": 0,
+      "arrayElements": 0,
+      "ordinaryObjectRecords": 2048,
+      "nextHandle": 2050,
+      "lifecycle": 2,
+      "javaKind": 0,
+      "javaRef": 0,
+      "typedOOM": null
+    },
+    "2049": {
+      "status": "success",
+      "fixtureSHA256": "ba7d2ff18df6f17cc3d40866bce1bdd458ad88a1aeff256692973a25382941ca",
+      "classSHA256": "e63f08943d593a4d9aaa1927cfd4d65ea5995c458009b2c347a020cc618d3e6c",
+      "entryNameIncludesClassSuffix": true,
+      "world": "world-object-capacity-2049-q4096",
+      "setupQuantum": 4096,
+      "finishQ4096Calls": 1,
+      "q4096Refusal": null,
+      "q256ResumeCalls": 0,
+      "q256Refusal": null,
+      "epoch": 6,
+      "jvmSteps": 20496,
+      "internalSteps": 2,
+      "machineRoot": "0xba813ef3a744e04c05751f8cb7788a5c59b0ff8181e3e6afe8ab7a99b02672ee",
+      "checkpointSHA256": "e988faa7f96a399621ae049304263487a47dc1fa0b98cea2f1082d4b83fb7b3c",
+      "checkpointBytes": 89582,
+      "opaquePayloadSHA256": "57887e4df5f3f24604e13a504846d365ac83d2336ae81b9d2ff44553980d18f1",
+      "requestedObjects": 2049,
+      "ordinaryObjects": 2049,
+      "ordinaryArrays": 1,
+      "ordinaryFields": 0,
+      "arrayElements": 0,
+      "ordinaryObjectRecords": 2049,
+      "nextHandle": 2051,
+      "lifecycle": 2,
+      "javaKind": 0,
+      "javaRef": 0,
+      "typedOOM": null
+    },
+    "4096": {
+      "status": "blocked-before-terminal-by-ordinary-1B-oog",
+      "fixtureSHA256": "ddcb8af7009230e4ce85b34da65201141dd56bfa726158bceadd45f9c7a488d9",
+      "classSHA256": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc",
+      "entryNameIncludesClassSuffix": true,
+      "world": "world-object-capacity-4096-q4096",
+      "setupQuantum": 4096,
+      "finishQ4096Calls": 1,
+      "q4096Refusal": {
+        "actualDI0ReadSizes": [
+          256
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "durableHeadEpochAfter": 7,
+        "durableHeadEpochBefore": 7,
+        "durableHeadSHA256After": "f1e1f75d8f2a850cbc96fece0c0e7cf0563f263973b80f3a1a829f7817d56f18",
+        "durableHeadSHA256Before": "f1e1f75d8f2a850cbc96fece0c0e7cf0563f263973b80f3a1a829f7817d56f18",
+        "durableHeadUnchanged": true,
+        "error": "execution reverted",
+        "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+        "gas": 984377212,
+        "resourceHashes": {
+          "0xDcFc76ED744512F1197150A1867Ee0451d5f1Fd7": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc"
+        },
+        "resourceReadReceipts": [
+          {
+            "Offset": 0,
+            "Requested": 256,
+            "Returned": 256,
+            "SHA256": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc",
+            "Success": true,
+            "To": "0xdcfc76ed744512f1197150a1867ee0451d5f1fd7"
+          }
+        ],
+        "revertHex": "0x",
+        "rootAfter": "0x884b2c8ccd1a848aa9b9ee7b8e5f39c8839216990a7b9c05ad3500a5c25e49c8",
+        "rootBefore": "0x884b2c8ccd1a848aa9b9ee7b8e5f39c8839216990a7b9c05ad3500a5c25e49c8",
+        "rootUnchanged": true,
+        "selector": "0x",
+        "suppliedGas": 1000000000,
+        "uint256Words": []
+      },
+      "q256ResumeCalls": 6,
+      "q256Refusal": {
+        "actualDI0ReadSizes": [
+          256
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "durableHeadEpochAfter": 12,
+        "durableHeadEpochBefore": 12,
+        "durableHeadSHA256After": "2d259b63cae5c23ac4e5f0cda23fa5805348bbd4e30e8550924de99b1eb2f68b",
+        "durableHeadSHA256Before": "2d259b63cae5c23ac4e5f0cda23fa5805348bbd4e30e8550924de99b1eb2f68b",
+        "durableHeadUnchanged": true,
+        "error": "execution reverted",
+        "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+        "gas": 984377271,
+        "resourceHashes": {
+          "0xDcFc76ED744512F1197150A1867Ee0451d5f1Fd7": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc"
+        },
+        "resourceReadReceipts": [
+          {
+            "Offset": 0,
+            "Requested": 256,
+            "Returned": 256,
+            "SHA256": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc",
+            "Success": true,
+            "To": "0xdcfc76ed744512f1197150a1867ee0451d5f1fd7"
+          }
+        ],
+        "revertHex": "0x",
+        "rootAfter": "0x9ac233f4598c8966493ef9e7a489fec85f7355b2d8f4cb693976b6265a0d8429",
+        "rootBefore": "0x9ac233f4598c8966493ef9e7a489fec85f7355b2d8f4cb693976b6265a0d8429",
+        "rootUnchanged": true,
+        "selector": "0x",
+        "suppliedGas": 1000000000,
+        "uint256Words": []
+      },
+      "epoch": 12,
+      "jvmSteps": 29952,
+      "internalSteps": 2,
+      "machineRoot": "0x5f10b14389ca4367535e2c6a1951c2fbfbd4b721b1c57d917cd0e05c4bfff2b6",
+      "checkpointSHA256": "98786105b85b8a6e8c8ec0f1c742295eea26b09938bb565b26e42c5a1e44cc27",
+      "checkpointBytes": 130406,
+      "opaquePayloadSHA256": "bd9cc4b9c42ad19c80f1b791c1e85382acc5da5625662dadbdea8aaf4e639a3b",
+      "requestedObjects": 4096,
+      "ordinaryObjects": 2995,
+      "ordinaryArrays": 1,
+      "ordinaryFields": 0,
+      "arrayElements": 0,
+      "ordinaryObjectRecords": 2995,
+      "nextHandle": 2997,
+      "lifecycle": 1,
+      "javaKind": 0,
+      "javaRef": 0,
+      "typedOOM": null
+    }
+  },
+  "blocker": {
+    "target": 4096,
+    "world": "world-object-capacity-4096-q4096",
+    "status": "blocked-before-terminal-by-ordinary-1B-oog",
+    "head": {
+      "epoch": 12,
+      "quantum": 4096,
+      "lifecycle": 1,
+      "jvmSteps": 29952,
+      "internalSteps": 2,
+      "machineRoot": "0x5f10b14389ca4367535e2c6a1951c2fbfbd4b721b1c57d917cd0e05c4bfff2b6",
+      "checkpointSHA256": "98786105b85b8a6e8c8ec0f1c742295eea26b09938bb565b26e42c5a1e44cc27"
+    },
+    "heapCounts": {
+      "ordinaryObjects": 2995,
+      "ordinaryArrays": 1,
+      "arrayElements": 0,
+      "ordinaryFields": 0,
+      "emergency": 1,
+      "exceptionObjects": 0,
+      "exceptionFields": 2
+    },
+    "ordinaryObjectRecords": 2995,
+    "q4096Refusal": {
+      "actualDI0ReadSizes": [
+        256
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "durableHeadEpochAfter": 7,
+      "durableHeadEpochBefore": 7,
+      "durableHeadSHA256After": "f1e1f75d8f2a850cbc96fece0c0e7cf0563f263973b80f3a1a829f7817d56f18",
+      "durableHeadSHA256Before": "f1e1f75d8f2a850cbc96fece0c0e7cf0563f263973b80f3a1a829f7817d56f18",
+      "durableHeadUnchanged": true,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 984377212,
+      "resourceHashes": {
+        "0xDcFc76ED744512F1197150A1867Ee0451d5f1Fd7": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc"
+      },
+      "resourceReadReceipts": [
+        {
+          "Offset": 0,
+          "Requested": 256,
+          "Returned": 256,
+          "SHA256": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc",
+          "Success": true,
+          "To": "0xdcfc76ed744512f1197150a1867ee0451d5f1fd7"
+        }
+      ],
+      "revertHex": "0x",
+      "rootAfter": "0x884b2c8ccd1a848aa9b9ee7b8e5f39c8839216990a7b9c05ad3500a5c25e49c8",
+      "rootBefore": "0x884b2c8ccd1a848aa9b9ee7b8e5f39c8839216990a7b9c05ad3500a5c25e49c8",
+      "rootUnchanged": true,
+      "selector": "0x",
+      "suppliedGas": 1000000000,
+      "uint256Words": []
+    },
+    "q256Refusal": {
+      "actualDI0ReadSizes": [
+        256
+      ],
+      "candidateCheckpoint": "",
+      "candidateHead": "",
+      "candidateRoot": "",
+      "checkpointBytes": 0,
+      "diagnostic": null,
+      "durableHeadEpochAfter": 12,
+      "durableHeadEpochBefore": 12,
+      "durableHeadSHA256After": "2d259b63cae5c23ac4e5f0cda23fa5805348bbd4e30e8550924de99b1eb2f68b",
+      "durableHeadSHA256Before": "2d259b63cae5c23ac4e5f0cda23fa5805348bbd4e30e8550924de99b1eb2f68b",
+      "durableHeadUnchanged": true,
+      "error": "execution reverted",
+      "executionBudget": "LOCAL1B-USER-AUTHORIZED",
+      "gas": 984377271,
+      "resourceHashes": {
+        "0xDcFc76ED744512F1197150A1867Ee0451d5f1Fd7": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc"
+      },
+      "resourceReadReceipts": [
+        {
+          "Offset": 0,
+          "Requested": 256,
+          "Returned": 256,
+          "SHA256": "cda9cd9f3e94c0ed01ccc141ea9963a651f55e8bffdbdcbe705cba1b92314fbc",
+          "Success": true,
+          "To": "0xdcfc76ed744512f1197150a1867ee0451d5f1fd7"
+        }
+      ],
+      "revertHex": "0x",
+      "rootAfter": "0x9ac233f4598c8966493ef9e7a489fec85f7355b2d8f4cb693976b6265a0d8429",
+      "rootBefore": "0x9ac233f4598c8966493ef9e7a489fec85f7355b2d8f4cb693976b6265a0d8429",
+      "rootUnchanged": true,
+      "selector": "0x",
+      "suppliedGas": 1000000000,
+      "uint256Words": []
+    },
+    "q256ResumeCalls": 6,
+    "note": "Both full q4096 and narrower q256 resume calls fail at the unchanged Head under the 1B ordinary ceiling; the object limit is not reached."
+  },
+  "notAttempted": [
+    4097
+  ],
+  "capacityQuantumCaveat": "Worlds start with persisted q4096. Target4096 hits ordinary-1B OOG before reaching MAX_OBJECTS and a q256 diagnostic retry also OOGs with Head/root unchanged. Target4097 is not attempted because the same per-call gas blocker prevents reaching the object cap. High-count q1/q7 worlds were not attempted.",
+  "execution": "Generated Java-8 zero-field java/lang/Object allocations, ordinary local 1B gas, exact heap counters and durable reopen; no original Minecraft inputs.",
+  "elapsedSeconds": 5.540586274000816
+}
