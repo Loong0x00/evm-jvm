@@ -1,0 +1,47 @@
+{
+  "scope": "Preserved harness/preflight failures; none indicate a candidate EVM semantic failure.",
+  "attempts": [
+    {
+      "run": "build/java-diff-mc-max-arrays-2048-gate-03-local-a",
+      "status": "failed before Java execution",
+      "cause": "Generated capacity DI0 binding omitted the .class ZIP entry suffix; DI0Error(4), selector 0xb8c7a310 (lookup missing). Fixed generator binding names to exact ZIP entry names."
+    },
+    {
+      "run": "build/java-diff-mc-max-arrays-2048-gate-04-local-a",
+      "status": "EVM capacity worlds completed; gate stopped at final OOM metadata assertion",
+      "cause": "Harness assumed javaClass was populated for static kind 7. Actual typed terminal is javaKind=7, javaRef=2050, javaClass empty; generated checkpoint maps the handle to OOM bootstrap class index 10. Gate corrected to validate kind/handle/class index."
+    },
+    {
+      "run": "capacity-output-audit attempt 1",
+      "status": "verifier assertion corrected",
+      "cause": "Success worlds have the reserved emergency record initialized: emergency=1 and exceptionFields=2, with exceptionObjects=0."
+    },
+    {
+      "run": "capacity-output-audit attempt 2",
+      "status": "verifier path corrected",
+      "cause": "Read-only audit looked for reports under gate.parent instead of gate/reports."
+    }
+  ],
+  "priorInterruptedOutputs": [
+    {
+      "path": "build/java-diff-mc-max-arrays-2048-build-01-local-a",
+      "preserved": true,
+      "observed": "Engine and coordinator compiled; engine runtime 392090 bytes; no files overwritten."
+    },
+    {
+      "path": "build/java-diff-mc-max-arrays-2048-build-02-local-a",
+      "preserved": true,
+      "observed": "Empty engine-build.log from interrupted run; no files overwritten."
+    },
+    {
+      "path": "evidence/java-evm/minecraft-entry/max-arrays-2048/results/01-local-a",
+      "preserved": true,
+      "observed": "Existing empty result directory retained."
+    },
+    {
+      "path": "evidence/java-evm/minecraft-entry/parent-668583cae",
+      "preserved": true,
+      "observed": "Used read-only as pinned P19 basis; no historical parent files modified."
+    }
+  ]
+}
