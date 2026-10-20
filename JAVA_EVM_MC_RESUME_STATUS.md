@@ -1,3 +1,13 @@
+## Latest: P32 IdentityHashMap(int) accepted, original constructor completed
+
+- Independent P32 runtime398071B,100bootstrap images; old99 byte-identical. New IdentityHashMap2682B owns eager real Object[] table/correct capacity; negativeIAE and unsupported map operations explicit atomicrefusals; no new operationalnative. Raw150/1063930, runtime1MiB, checkpoint1MiB unchanged; underlying EVM/state/params unchanged.
+- Fresh parent ordinary1B generated gate714.931s: matrix9 zero-filled distinct Object[] tables8/8/8/16/32/64/2048/4096/65536, q1/q7/q4096/q65536 andfreshprocessreopen, typedatomiccontrols; retainedraw150coordinator3224calls max440293189gas,11918B CP.
+- Fresh untouched-original76: **1914194J/85I**,36 verified receipts,675.152s,lifecycle1; CP1040331B SHA256 `b84da8d399ba0b05dc603d7c05cdb4b42c1423313792d2036c16750fb39af6d5`. **IdentityHashMap(int) genuinely returned**: handle5642, real Object[2048] handle5643 allnull,size0; fd constructor gone/caller aow<clinit>PC36 resumed.
+- Next atomic q1 missing originalraw `bhb`, site0x1008/context36. Parent genuine EVM AS0/ZI0/DI0 measurement: bhb8175B;77classes/547449B. Fits existingraw150/1063930; no VM/quota/code changes needed, just new authenticated binding/fresh original77 replay under same P32 code.
+- Evidence `parent-identity-hash-map-int/artifacts/bhb-resource-blocker.json`; accepted world `build/java-diff-mc-identity-hash-map-original76-parent-p32/official`. LOCAL preinstalled-code Call is not standard-chain CREATE. No world/EULA/Doneclaim, no push. Next checkpoint shortage ifactuallyhit =>double coherently, no code optimization.
+
+---
+
 ## Latest: P31 raw quota doubling accepted; original ArrayList constructor completed
 
 - Independent domain `MC-RAW150-BYTE1063930-P31`, runtime394996B,99 bootstrap images unchanged; raw limits75→150 /531965→1063930. Runtime1MiB and checkpoint1MiB remain separate and unchanged. Underlying EVM/state/params unchanged.
