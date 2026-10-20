@@ -1,0 +1,42 @@
+{
+  "profile": "P28-RAW75-ARRAY-LIST-INT-CONSTRUCTOR-PREFLIGHT1",
+  "status": "blocked-by-fixed-LOCAL384-runtime-cap; not-accepted",
+  "baseProfile": "P28 raw75 / raw75-byte531965",
+  "baseRuntimeBytes": 392091,
+  "candidateRuntimeBytes": 394435,
+  "runtimeCapBytes": 393216,
+  "overCapBytes": 1219,
+  "runtimeGrowthBytes": 2344,
+  "compileGate": {
+    "result": "fixed-cap-refusal",
+    "exitCode": 1,
+    "candidateArtifactsWritten": false,
+    "coordinatorCompiled": false
+  },
+  "baseBootstrapImages": 97,
+  "candidateBootstrapImages": 99,
+  "oldBootstrapImagesByteIdentical": true,
+  "engineSourceSHA256": "9ab9d8ce8403ab1a66d897a91cae34c9da62f3d5595508cde814bab1c0c742c3",
+  "parentEngineSourceSHA256": "005bb1d6d2e1355956cbaff5ea5fd3c5838b7f328fee030c88836444951ceb70",
+  "compiler": {
+    "solc": "0.8.30+commit.73712a01.Emscripten.clang",
+    "optimizer": true,
+    "runs": 200,
+    "viaIR": true,
+    "evmVersion": "cancun",
+    "metadataAppendCBOR": false,
+    "metadataBytecodeHash": "none"
+  },
+  "javaCompiler": "javac 1.8.0_504",
+  "newBootstrapImages": {
+    "AbstractList": {
+      "bytes": 171,
+      "sha256": "8d1561a7648fa2da2150621be2b74b4a599efc57c039563502167770f1a76607"
+    },
+    "ArrayList": {
+      "bytes": 559,
+      "sha256": "76a02ffc33cd5749965629183f3f75b0ee9fb4adeb1d972fd6a444e56d39664d"
+    }
+  },
+  "scope": "minimal candidate compile and bootstrap source/image verification only; no coordinator artifact, EVM execution, original replay, or acceptance"
+}
