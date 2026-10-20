@@ -1,5 +1,7 @@
 # Resume anchor — Minecraft-first, local-only
 
+Latest accepted continuation (see `parent-max-objects-2048/`): MAX_OBJECTS2048 on arrays2048 accepted in independent P22, runtime392090, root66321185..., full gate1024.794s/11832receipts. Fresh max-gas/q4096 untouched-original replay1600.022s reaches1,633,009J/84I,399receipts, lifecycle3 guestOOM with arrays2048/2048, objects1758/2048, checkpoint766313bytes. Next measured change onlyMAX_ARRAYS2048->4096; prior worlds/branches remain preserved. Optional unrolled-lanes still not merged.
+
 Latest accepted continuation (parent evidence commit `434bc61ab`): MAX_ARRAYS2048 accepted in fresh P20, runtime392090, root845e0c87..., full independent generated gate973.878s/11827receipts. Fresh uint64-max/q4096 original replay1057.392s reaches1,421,619J/84I,348receipts, lifecycle3 guestOOM with ordinaryObjects1024/1024 and arrays1126/2048. All prior evidence/worlds remain preserved. Sole writer now on `mc-max-objects-2048` in `/home/user/evm-jvm/max-objects-2048`, changing only MAX_OBJECTS1024->2048. Independent P21 tooling is staged separately in `parent-max-objects-2048/`; no original replay for that candidate is yet claimed.
 
 Verified at recovery from main `3ac58bf72` (branch `java-on-evm`, not pushed):
