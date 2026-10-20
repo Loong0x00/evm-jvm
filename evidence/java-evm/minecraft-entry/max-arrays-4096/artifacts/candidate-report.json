@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "status": "worker candidate; parent independent acceptance pending",
+  "candidateBaseCommit": "0863d0c87f3b5defa9129926e2e652993c1ab692",
+  "sourceBuildCommit": "5ed9515dc",
+  "semanticChange": "MAX_ARRAYS 2048 -> 4096 only",
+  "unchanged": {
+    "MAX_OBJECTS": 2048,
+    "otherLimits": true,
+    "ABI": true,
+    "storageLayout": true,
+    "bootstrapLeaves": 97,
+    "workerDomainRelabeled": false
+  },
+  "derivedMAX_HANDLES": 6401,
+  "runtime": {
+    "bytes": 392090,
+    "capBytes": 393216,
+    "sha256": "980c57efa68750a161adcac3864f2bd1dcdff53b0d06e9d1c81748f02349ddac",
+    "keccak256": "1d5e2aa0ee6d0e8199c968396ee000a5533d5c7a285849317b4bdacd3e02c1fb"
+  },
+  "bootstrapRoot97": "663211851e33185b08b0616167ddc3c37ae6789c161de4cd19515e4192f8c1a9",
+  "sourceSHA256": "77551df125ebd371900167ce03e57c567628b8258c8de133fe9af1612931fac4",
+  "capacityPreflight": {
+    "gasCeiling": 1000000000,
+    "quantum": 4096,
+    "targets": {
+      "2048": {
+        "ordinaryArrays": 2048,
+        "lifecycle": 2,
+        "javaKind": 0,
+        "checkpointSHA256": "7c62ac5f6dc99abb8cd354f47a6957df295cd67f44b7e5d64f03d6f5c570560f"
+      },
+      "2049": {
+        "ordinaryArrays": 2049,
+        "lifecycle": 2,
+        "javaKind": 0,
+        "checkpointSHA256": "79219e00ecb6a0468c15eb52bd5a9586cf90582f80aa592a85350ed01300aaee"
+      },
+      "4096": {
+        "ordinaryArrays": 4096,
+        "lifecycle": 2,
+        "javaKind": 0,
+        "checkpointSHA256": "f97c91a5a11de2354177e90129fc48d3ee77a313872e03ff0a843278bacf5434"
+      },
+      "4097": {
+        "ordinaryArrays": 4096,
+        "lifecycle": 3,
+        "javaKind": 7,
+        "checkpointSHA256": "236f363d41ca984e35e058eed712ef2ff64f7f0ee3bb8110a6c42ae418f0b4a9"
+      }
+    },
+    "canonicalReceipts": 25,
+    "peakGas": 97166682,
+    "highCountQ1Q7Attempted": false
+  },
+  "retainedGeneratedGate": {
+    "seconds": 1005.8294700880069,
+    "canonicalReceipts": 11814,
+    "worlds": 60,
+    "categories": [
+      "packed",
+      "sparse",
+      "malformed",
+      "Integer",
+      "Object",
+      "Math",
+      "raw71"
+    ],
+    "quantums": [
+      "q1",
+      "q7",
+      "direct-q4096"
+    ],
+    "reopened": true
+  },
+  "malformedQuantumGate": {
+    "cases": 42,
+    "quantums": [
+      1,
+      7,
+      4096
+    ],
+    "maxGas": 493121659,
+    "elapsedSeconds": 5.521961359016132,
+    "headRootLogsUnchanged": true,
+    "summarySHA256": "81f5b723d78ba9f69f20f5b9726848651fa0d7bb90a982ed624bf9955a23ca93"
+  },
+  "receiptEvidence": {
+    "file": "artifacts/ordered-receipt-hashes.json.gz",
+    "sha256": "3999954b5dc4d1d432781e61b0adf83387002260c9e78b7b5ac3ceb87a75259d",
+    "capacityReceipts": 25,
+    "retainedReceipts": 11814
+  },
+  "artifacts": {
+    "source-build-audit.json": "9b11e8f49b2eb4cfac9053a6e37bf82b8a1fb7c21fc12ae12054fa70463794cc",
+    "source-build-audit-rerun.json": "55e3cf2fa18b862d7d7c3aea0600f9ee3440b1d4ccef75d93921f524a712de10",
+    "build-pins.json": "f9e5b63d88e9228b309a3dd75b63d7918a534fc6e39ad507ce84c028cb148bed",
+    "generated-fixture-manifest.json": "2698e78e6a6629e00e213ca85a114bde1f5014511e771154d66ae34118cbaf54",
+    "capacity-preflight-summary.json": "750621950381fed7bf87f86ad2af2889fc43c06b76bcd0fb5bcb27954cc5d1a3",
+    "full-generated-gate-summary.json.gz": "d64881e6e3f7f14c15fb4ef2ef6a2402cd9075dd3b57f7e9c101f5d6b0704cc0",
+    "malformed-quantum-summary.json": "4d588df6b6607d282c3370b0ea1042ebd0515003c483827366941a8c46176dc6",
+    "malformed-quantum-summary-run2.json": "81f5b723d78ba9f69f20f5b9726848651fa0d7bb90a982ed624bf9955a23ca93",
+    "ordered-receipt-hashes.json.gz": "3999954b5dc4d1d432781e61b0adf83387002260c9e78b7b5ac3ceb87a75259d"
+  },
+  "coordinatorArtifactSHA256": "6e33f6ef33680bc1217852f5944db8ba2a596e0b8f8df948a3d7ed53add2814a",
+  "limitations": [
+    "generated inputs only",
+    "no original Minecraft/JAR/class/resource/world/checkpoint",
+    "no original server replay",
+    "not Done or readiness evidence",
+    "parent independent acceptance pending"
+  ]
+}

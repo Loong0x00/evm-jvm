@@ -7,13 +7,13 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 import tempfile
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 ENGINE = HERE / "engine"
 BASE = ROOT / "evidence/java-evm/minecraft-entry/parent-max-objects-2048/artifacts/engine"
-ARTIFACTS = HERE / "artifacts"
 NODE_MODULES = ROOT / "jvmevm/runtime/node_modules"
 EXPECTED_P22_ROOT = "663211851e33185b08b0616167ddc3c37ae6789c161de4cd19515e4192f8c1a9"
 OLD = "uint256 private constant MAX_ARRAYS = 2048;"
@@ -63,6 +63,10 @@ console.log(k(Buffer.concat([Buffer.from(k(x.domain),"hex"),w(64),w(97),...hs.ma
 
 
 def main() -> None:
+    assert len(sys.argv) == 2, "usage: rebuild.py UNIQUE_BUILD_DIR/source-audit.json"
+    audit_path = Path(sys.argv[1]).resolve()
+    assert audit_path.parent == ROOT / "build"
+    assert audit_path.name.startswith("java-diff-mc-max-arrays-4096-audit-") and not audit_path.exists()
     assert NODE_MODULES.is_dir()
     assert shutil.which("node")
     assert OLD in (BASE / "MCEntryInterpreter.sol").read_text()
@@ -82,7 +86,7 @@ def main() -> None:
     assert root == base_root == EXPECTED_P22_ROOT, (root, base_root)
 
     artifact_path = ENGINE / "MCEntryInterpreter.json"
-    assert artifact_path.is_file(), "run node engine/build.js first"
+    assert artifact_path.is_file(), "candidate engine artifact is absent"
     candidate = json.loads(artifact_path.read_text())
     runtime_bytes = len(candidate["deployedBytecode"]) // 2
     assert runtime_bytes == 392090 and runtime_bytes <= 393216
@@ -91,25 +95,32 @@ def main() -> None:
     assert candidate["codeHashes"]["runtimeSHA256"] == sha(bytes.fromhex(candidate["deployedBytecode"]))
     assert candidate["codeHashes"]["initSHA256"] == sha(bytes.fromhex(candidate["bytecode"]))
 
-    # Compile the accepted predecessor from its preserved source with the same
-    # pinned compiler, then compare the complete ABI and storage layout.
-    with tempfile.TemporaryDirectory(prefix="mc-max-arrays-4096-baseline-") as temp:
-        baseline_dir = Path(temp)
-        shutil.copy2(BASE / "MCEntryInterpreter.sol", baseline_dir / "MCEntryInterpreter.sol")
-        shutil.copy2(BASE / "build.js", baseline_dir / "build.js")
+    # Compile both exact sources into disposable isolated directories with the
+    # same pinned offline compiler. This never overwrites historical artifacts.
+    with tempfile.TemporaryDirectory(prefix="mc-max-arrays-4096-rebuild-") as temp:
+        tmp = Path(temp)
+        baseline_dir, candidate_dir = tmp / "baseline", tmp / "candidate"
+        baseline_dir.mkdir(); candidate_dir.mkdir()
+        for directory, src in ((baseline_dir, BASE), (candidate_dir, ENGINE)):
+            shutil.copy2(src / "MCEntryInterpreter.sol", directory / "MCEntryInterpreter.sol")
+            shutil.copy2(src / "build.js", directory / "build.js")
         env = {**os.environ, "NODE_PATH": str(NODE_MODULES), "npm_config_offline": "true"}
-        subprocess.run(["node", str(baseline_dir / "build.js")], cwd=ROOT, env=env,
-                       check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        for directory in (baseline_dir, candidate_dir):
+            subprocess.run(["node", str(directory / "build.js")], cwd=ROOT, env=env,
+                           check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         baseline = json.loads((baseline_dir / "MCEntryInterpreter.json").read_text())
-        assert candidate["abi"] == baseline["abi"]
-        assert candidate["storageLayout"] == baseline["storageLayout"]
+        rebuilt_candidate = json.loads((candidate_dir / "MCEntryInterpreter.json").read_text())
+        assert candidate["abi"] == baseline["abi"] == rebuilt_candidate["abi"]
+        assert candidate["storageLayout"] == baseline["storageLayout"] == rebuilt_candidate["storageLayout"]
+        assert candidate["bytecode"] == rebuilt_candidate["bytecode"]
+        assert candidate["deployedBytecode"] == rebuilt_candidate["deployedBytecode"]
+        assert candidate["codeHashes"] == rebuilt_candidate["codeHashes"]
         abi_hash = sha(json.dumps(candidate["abi"], sort_keys=True, separators=(",", ":")).encode())
         layout_hash = sha(json.dumps(candidate["storageLayout"], sort_keys=True, separators=(",", ":")).encode())
         baseline_runtime = len(baseline["deployedBytecode"]) // 2
         assert baseline_runtime == runtime_bytes
         baseline_runtime_hash = baseline["codeHashes"]["runtimeSHA256"]
 
-    ARTIFACTS.mkdir(exist_ok=True)
     report = {
         "schema": 1,
         "status": "worker candidate build/source audit; not parent acceptance",
@@ -132,9 +143,10 @@ def main() -> None:
         "storageLayoutSHA256": layout_hash,
         "sourceSHA256": sha(source.encode()),
         "baseSourceSHA256": sha(base_source.encode()),
+        "candidateArtifactMatchesFreshCompile": True,
     }
-    (ARTIFACTS / "source-build-audit.json").write_text(json.dumps(report, indent=2) + "\n")
-    print(json.dumps(report, indent=2))
+    audit_path.write_text(json.dumps(report, indent=2) + "\n")
+    print(json.dumps({**report, "auditPath": str(audit_path)}, indent=2))
 
 
 if __name__ == "__main__":
