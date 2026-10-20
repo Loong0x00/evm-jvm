@@ -1,0 +1,9 @@
+# Independent P26 raw73/516040 acceptance; next measured fd.class
+
+Workerbbc122b47 integrated6e309a26f changes only the acceptedP25 raw envelope72/513384->73/516040. Engine constants/two raw config leaves, coordinator fixed arrays/count/byte guards and observer raw bounds are mechanically normalized; q65536/internal4096, transfer/CP4096, perclass262144, heap4k, checkpoint1MiB and all97 images unchanged. FreshP26 actual root `9badb7b2e5fd2990b0285dcad078f36955841cc091e7f2eeb07f8401fbfb694d`; runtime392091/393216. Independent targeted ordinary1B gate46.801s,12 verified coordinator receipts, q1/q7/direct/reopen, exact516040 positive/516041 refusal, raw74 refusals and q4096/q65536 state/MR01 equivalence. This is envelope acceptance, not full JVM/Session compatibility.
+
+Fresh unchanged original73 replay under maxgas/adaptiveq65536/30s reaches **1,914,050J/84I**, lifecycle1,36 independently verified successful receipts, in697.276s. One q65536 call is cancelled atomically at30s and narrows to32768. Failed output is never resumed. All65536 sine-array bits remain equal in read-only test-only Java8 comparison. ey.class is successfully bound and passed its prior frontier; next q1 atomically refuses original fd atsite4104/context26, aow class71 method116 PC26. Checkpoint1018674bytes, still below1MiB.
+
+Separate fresh original-JAR EVM AS0/ZI0/DI0 resource measurement yields fd.class2476bytes and required74/518516 envelope; old73-class coordinator atomically refuses count74 with no checkpoint/Java product. No host ZIP/class parser, original class injection or host execution is used. Preserve current checkpoint cap until actually measured otherwise. Next scoped amendment is only raw74/518516, q65536 unchanged.
+
+All earlier worlds, source manifests, failures and branches remain preserved; no logger/world/EULA/Done/standard-chain/push claim.
