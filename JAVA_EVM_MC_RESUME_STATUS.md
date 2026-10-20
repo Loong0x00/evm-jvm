@@ -1,3 +1,12 @@
+## Latest original77: actual Math.min/max(DD) requirement
+
+- Fresh unchanged-original77 binds EVM-measured bhb8175B (77classes/547449B), **same P32 engine/coordinator/code/limits**. Reaches **1914209J/85I**,36 verifiedreceipts,652.121s,lifecycle1; CP1041165B SHA `56cdf44f013860ca8578ea69987fa078dbaf43ed7e5b051689f0173e0f596b99`.
+- Atomic q1 **CallError(3,8)** in bhb raw76/method0 `<init>(DDDDDD)V` PC8. Authenticated EVM-only metadata on copiedsuccessfulworld confirms **Math.min(DD)D PC8**, and **Math.max(DD)D PC39** in same constructor. No class/ZIP parsing onhost, noJava/CPpublished, noinspector deploymentcommitted; derivedroots notexecutionauthority.
+- Next measured scope: genuine IEEE754 Math double min/max, preferordinaryguestJava using existing admitteddouble comparison/division (signedzero), no newnative ifnotneeded. Preserveall100imagesexceptmeasuredMathimage, alloldMathAPIs/rootmaterializercommitment/packedcheckpoint/VMsemantics. Projectquota doubling/nooptimization policy unchanged; checkpoint nearcap but noactualshortage yet, keep1MiB untilmeasured.
+- Evidence: `parent-original77-bhb/artifacts/math-double-min-max-blocker.json`; world `build/java-diff-mc-bhb-original77-parent-p32/official`. No world/EULA/Doneclaim; no push.
+
+---
+
 ## Latest: P32 IdentityHashMap(int) accepted, original constructor completed
 
 - Independent P32 runtime398071B,100bootstrap images; old99 byte-identical. New IdentityHashMap2682B owns eager real Object[] table/correct capacity; negativeIAE and unsupported map operations explicit atomicrefusals; no new operationalnative. Raw150/1063930, runtime1MiB, checkpoint1MiB unchanged; underlying EVM/state/params unchanged.
