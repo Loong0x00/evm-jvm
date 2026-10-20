@@ -1,0 +1,14 @@
+{
+  "status": "harness-only-failure-preserved-and-corrected",
+  "command": "python3 evidence/java-evm/minecraft-entry/identity-hash-map-int-constructor/tools/generate_fixtures.py \"$PWD/build/java-diff-mc-identity-hash-map-fixtures-manual\"",
+  "exit": 1,
+  "error": "host oracle failed for ArrayListNegativeMin: exit=1; local Java 8 correctly threw IllegalArgumentException",
+  "cause": "expected_ok incorrectly included the two negative ArrayList fixtures; generator then misclassified their expected Java exception as a normal-return failure",
+  "correction": "subtract expected_iae from the normal-return fixture set; no guest/runtime changes were made for this harness fix",
+  "reproducibility": {
+    "baseCommit": "c4c85871b8cb59858ee6e58c563823626cffb2f6",
+    "failingGeneratorSHA256": "8aef520b0c659484333430220154abcb9f4a2d71f2e5ca2079bed4bc55d9b841",
+    "correctedGeneratorSHA256": "fcae38a5047173f565b2b571884888ab5e235dde7d8552aa24b6315f21169cd9"
+  },
+  "originalInputsUsed": false
+}

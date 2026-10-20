@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "tools/generate_fixtures.py", line 242, in <module>
+    raise RuntimeError(f'host oracle failed for {name}: exit={p.returncode}\n{p.stdout}')
+RuntimeError: host oracle failed for ArrayListNegativeMin: exit=1
+Exception in thread "main" java.lang.IllegalArgumentException: Illegal Capacity: -2147483648
+	at java.util.ArrayList.<init>(ArrayList.java:157)
+	at ArrayListNegativeMin.main(Unknown Source)
