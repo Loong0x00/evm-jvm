@@ -1,0 +1,48 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "error": "direct generated EVM gate failed (1): {\n  \"status\": \"failed\",\n  \"mode\": \"gate\",\n  \"engineRuntimeSHA256\": \"61b71a4377733891a4a91ebff2a1765b2c96ecce268e69e9ec7d8ed0320a8df8\",\n  \"engineRuntimeKeccak256\": \"0x4e597aae15eff28bd2247108c9cc461974d8a7762bf65983bedde38dcb419c2e\",\n  \"coordinatorRuntimeSHA256\": \"d52256ab219719b8bc700177443b2d8d884378378b78f92bd126450657e56240\",\n  \"coordinatorRuntimeKeccak256\": \"0x99a642d08d254eb5083314f61e73ee429cc5ac3634bd8c8348a195b0d72001e3\",\n  \"localGasBudget\": 1000000000,\n  \"caller\": \"0x4d432d41525241594c4953544c4f43414c310001\",\n  \"engineAddress\": \"0x4d432d52414e444f4d2d434c4153532d50310060\",\n  \"coordinatorAddress\": \"0x4d432d41525241594c4953544c4f43414c310002\",\n  \"schedules\": [\n    {\n      \"name\": \"q1-matrix\",\n      \"quantum\": 1,\n      \"transport\": \"geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice\",\n      \"rawCount\": 1,\n      \"rawBytes\": 1177,\n      \"bootstrapCount\": 99,\n      \"diagnosticClassCount\": 100,\n      \"callCount\": 336,\n      \"totalGas\": 12223426089,\n      \"maxCallGas\": 49978069,\n      \"wallMs\": 14531,\n      \"stateRoot\": \"0x00fc834fcfdc190a3e8493841b444b0d0719a0b715b9966a5aef9d432311c48c\",\n      \"instanceId\": \"0xd7721c",
+      "gasBudget": 1000000000,
+      "status": "failed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "error": "direct generated EVM gate failed (1): {\n  \"status\": \"failed\",\n  \"mode\": \"gate\",\n  \"engineRuntimeSHA256\": \"61b71a4377733891a4a91ebff2a1765b2c96ecce268e69e9ec7d8ed0320a8df8\",\n  \"engineRuntimeKeccak256\": \"0x4e597aae15eff28bd2247108c9cc461974d8a7762bf65983bedde38dcb419c2e\",\n  \"coordinatorRuntimeSHA256\": \"d52256ab219719b8bc700177443b2d8d884378378b78f92bd126450657e56240\",\n  \"coordinatorRuntimeKeccak256\": \"0x99a642d08d254eb5083314f61e73ee429cc5ac3634bd8c8348a195b0d72001e3\",\n  \"localGasBudget\": 1000000000,\n  \"caller\": \"0x4d432d41525241594c4953544c4f43414c310001\",\n  \"engineAddress\": \"0x4d432d52414e444f4d2d434c4153532d50310060\",\n  \"coordinatorAddress\": \"0x4d432d41525241594c4953544c4f43414c310002\",\n  \"schedules\": [\n    {\n      \"name\": \"q1-matrix\",\n      \"quantum\": 1,\n      \"transport\": \"geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice\",\n      \"rawCount\": 1,\n      \"rawBytes\": 1177,\n      \"bootstrapCount\": 99,\n      \"diagnosticClassCount\": 100,\n      \"callCount\": 336,\n      \"totalGas\": 12223426089,\n      \"maxCallGas\": 49978069,\n      \"wallMs\": 14531,\n      \"stateRoot\": \"0x00fc834fcfdc190a3e8493841b444b0d0719a0b715b9966a5aef9d432311c48c\",\n      \"instanceId\": \"0xd7721c",
+  "gitHead": "3e87b6e0736554e273c0e40d9758cbc4e7a03468",
+  "pairedPins": {
+    "candidateEngine": {
+      "initSHA256": "3ccd953e032e933decc2761966036bee18cbdce301b0941dee7cccc37809b138",
+      "runtimeBytes": 394435,
+      "runtimeKeccak256": "4e597aae15eff28bd2247108c9cc461974d8a7762bf65983bedde38dcb419c2e",
+      "runtimeSHA256": "61b71a4377733891a4a91ebff2a1765b2c96ecce268e69e9ec7d8ed0320a8df8"
+    },
+    "coordinatorAndResourceTransport": "ordinary generated-only AS0/ZI0/DI0 CREATE plus coordinator; no external/original assets",
+    "coordinatorCompiler": {
+      "evmVersion": "cancun",
+      "metadata": {
+        "appendCBOR": false,
+        "bytecodeHash": "none"
+      },
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "version": "0.8.30+commit.73712a01.Emscripten.clang",
+      "viaIR": true
+    },
+    "coordinatorPinsCandidateEngineKeccak": "4e597aae15eff28bd2247108c9cc461974d8a7762bf65983bedde38dcb419c2e",
+    "engineExecutionMode": "LOCAL preinstalled-code Call, not CREATE deployment",
+    "pairVerifiedFromFreshBuild": true,
+    "pairedCoordinator": {
+      "buildScriptSHA256": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b",
+      "initSHA256": "a752f53ea3fb1f97a311d92461d7364bcb6d64c73f4928e370458b1ff4cda85d",
+      "runtimeBytes": 5394,
+      "runtimeKeccak256": "99a642d08d254eb5083314f61e73ee429cc5ac3634bd8c8348a195b0d72001e3",
+      "runtimeSHA256": "d52256ab219719b8bc700177443b2d8d884378378b78f92bd126450657e56240",
+      "sourceSHA256": "22145d79b4ca3b8113bb0f68e57a1d5abdb5b8acc5125701cef7350f4eb69d42"
+    },
+    "profile": "P28-ARRAY-LIST-LOCAL1M-GENERATED-EVM-TESTS"
+  },
+  "status": "failed"
+}

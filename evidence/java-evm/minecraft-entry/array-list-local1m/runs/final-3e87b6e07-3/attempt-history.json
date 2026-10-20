@@ -1,0 +1,113 @@
+[
+  {
+    "attempt": 1,
+    "commands": [
+      {
+        "command": [
+          "go",
+          "build",
+          "-trimpath",
+          "-o",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/tools/canonical_generated_driver",
+          "./build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/tools/canonical_generated_driver.go"
+        ],
+        "exit": 0,
+        "label": "build-canonical-driver",
+        "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/logs/build-canonical-driver.log",
+        "timedOut": false,
+        "timeoutSeconds": 1199,
+        "wallSeconds": 0.614
+      },
+      {
+        "command": [
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/tools/evm_driver",
+          "gate",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/engine/MCEntryInterpreter.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/coordinator/MCEntryCoordinator.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-3/fixture-manifest.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-3",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/direct",
+          "1000000000"
+        ],
+        "exit": 0,
+        "label": "direct-generated-evm-gate",
+        "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/logs/direct-generated-evm-gate.log",
+        "timedOut": false,
+        "timeoutSeconds": 1199,
+        "wallSeconds": 18.741
+      },
+      {
+        "command": [
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/tools/evm_driver",
+          "reopen",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/engine/MCEntryInterpreter.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/coordinator/MCEntryCoordinator.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-3/fixture-manifest.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-3",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/direct",
+          "1000000000"
+        ],
+        "exit": 0,
+        "label": "fresh-process-q1-reopen",
+        "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/logs/fresh-process-q1-reopen.log",
+        "timedOut": false,
+        "timeoutSeconds": 1180,
+        "wallSeconds": 0.114
+      },
+      {
+        "command": [
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/tools/canonical_generated_driver",
+          "setup-chain",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/coordinator-route/world-q1",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/coordinator/MCEntryCoordinator.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/engine/MCEntryInterpreter.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/ArrayListMatrix.generated.zip",
+          "1"
+        ],
+        "exit": 0,
+        "label": "coordinator-start-q1",
+        "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/logs/coordinator-start-q1.log",
+        "timedOut": false,
+        "timeoutSeconds": 1180,
+        "wallSeconds": 0.314
+      },
+      {
+        "command": [
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/tools/canonical_generated_driver",
+          "finish",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/coordinator-route/world-q1",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/coordinator/MCEntryCoordinator.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/engine/MCEntryInterpreter.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/ArrayListMatrix.generated.zip",
+          "1"
+        ],
+        "exit": 0,
+        "label": "coordinator-resume-q1",
+        "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/logs/coordinator-resume-q1.log",
+        "timedOut": false,
+        "timeoutSeconds": 1180,
+        "wallSeconds": 26.801
+      },
+      {
+        "command": [
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/tools/canonical_generated_driver",
+          "verify",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/coordinator-route/world-q1",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/coordinator/MCEntryCoordinator.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/engine/MCEntryInterpreter.json",
+          "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-3/ArrayListMatrix.generated.zip",
+          "1"
+        ],
+        "exit": 0,
+        "label": "coordinator-reopen-q1",
+        "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-3/attempts/attempt-1/logs/coordinator-reopen-q1.log",
+        "timedOut": false,
+        "timeoutSeconds": 1153,
+        "wallSeconds": 0.064
+      }
+    ],
+    "gasBudget": 1000000000,
+    "status": "passed",
+    "wallBudgetSeconds": 1200
+  }
+]

@@ -1,0 +1,5 @@
+# Retained diagnostic-harness attempt (not candidate failure)
+
+This attempt stopped on a test-harness assertion that treated the ephemeral StateDB result of a normal `runtime.Call` to a Solidity `view` method as a persistent state mutation. `runtime.Call` prepares call/access state; directly comparing `IntermediateRoot` around that non-StaticCall view produced a false-positive `head` root difference. No positive fixture or candidate EVM semantic failed; all positive schedules/cases preceding the assertion had completed.
+
+The runner was corrected to execute observer `head`/`validateCheckpoint` calls on an isolated `StateDB.Copy()` that is discarded, while preserving real geth EVM execution. The complete fresh run `../final-3e87b6e07-3/` then passed, including q1/q7/direct root equivalence, the 65,536-capacity heap boundary, reverts' state-root atomicity, and separate-process reopen. The JSON and log under `attempt-failures/attempt-1/` are retained as the original harness failure; do not treat it as a candidate failure or a pass.

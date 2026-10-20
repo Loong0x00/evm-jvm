@@ -1,6 +1,6 @@
 {
   "profile": "P28-ARRAY-LIST-LOCAL1M-CANDIDATE",
-  "status": "compiled under user-authorized LOCAL1M; EVM behavior gates pending",
+  "status": "generated LOCAL1M ArrayList EVM gates passed; candidate stage acceptance remains pending parent review",
   "baseProfile": "P28 raw75 / raw75-byte531965",
   "baseRuntimeBytes": 392091,
   "candidateRuntimeBytes": 394435,
@@ -10,7 +10,8 @@
   "compileGate": {
     "result": "compiled",
     "candidateArtifactsWritten": true,
-    "coordinatorCompiled": false
+    "coordinatorCompiled": true,
+    "coordinatorArtifactsWritten": true
   },
   "baseBootstrapImages": 97,
   "candidateBootstrapImages": 99,
@@ -37,7 +38,7 @@
       "sha256": "76a02ffc33cd5749965629183f3f75b0ee9fb4adeb1d972fd6a444e56d39664d"
     }
   },
-  "scope": "minimal candidate compile and bootstrap source/image verification only; no coordinator artifact, EVM execution, original replay, or acceptance",
+  "scope": "generated-only LOCAL1M ArrayList EVM behavior gates passed; parent candidate acceptance/original Minecraft replay remain separate; unchanged bootstrap/source, opcodes, gas rules, consensus, and independent quotas",
   "checkpointCapBytes": 1048576,
   "theseAreIndependentLimits": true,
   "sourceSHA256": "9ab9d8ce8403ab1a66d897a91cae34c9da62f3d5595508cde814bab1c0c742c3",
@@ -168,5 +169,43 @@
     "7c7093faf1a5f9610a8a179f48e634e451e0621862af33c14ec409dc8d6ef184",
     "8361d2cb325413a4f0a189c44677219064271c8bd32ff8d0a2585db07ffb3187",
     "801e4d226e90a49022a3f063a8e041cad49dc67c5a1df7dd235da8986a0a3343"
-  ]
+  ],
+  "pairedCoordinator": {
+    "runtimeBytes": 5394,
+    "runtimeSHA256": "d52256ab219719b8bc700177443b2d8d884378378b78f92bd126450657e56240",
+    "runtimeKeccak256": "99a642d08d254eb5083314f61e73ee429cc5ac3634bd8c8348a195b0d72001e3",
+    "sourceSHA256": "22145d79b4ca3b8113bb0f68e57a1d5abdb5b8acc5125701cef7350f4eb69d42",
+    "pinsCandidateEngineRuntimeKeccak256": "4e597aae15eff28bd2247108c9cc461974d8a7762bf65983bedde38dcb419c2e",
+    "compiler": "solc 0.8.30+commit.73712a01.Emscripten.clang"
+  },
+  "generatedEvmBehaviorGate": {
+    "status": "passed; not profile acceptance and not original Minecraft execution",
+    "evidence": "runs/final-3e87b6e07-3",
+    "generatedFixtureCases": 19,
+    "hostJava8Oracles": 14,
+    "positiveSchedules": [
+      "q1",
+      "q7",
+      "direct-q65536",
+      "raw75",
+      "raw-bytes-exact-531965"
+    ],
+    "matrixJavaSteps": 336,
+    "diagnosticClassCount": 100,
+    "arrayListBackingLengths": [
+      0,
+      1,
+      3,
+      10,
+      1024
+    ],
+    "q1Q7DirectMachineAndVfsRootsEqual": true,
+    "freshProcessStateAndCheckpointReopen": true,
+    "typedRefusalControls": 13,
+    "ordinaryTestGasPerCall": 1000000000,
+    "testWallWatchdogSeconds": 1200,
+    "maximumLegalArrayListCapacity": 65536,
+    "maximumCapacityCheckpointBytes": 525915,
+    "maximumCapacityCheckpointSHA256": "3fcb523ae0d32f72e36e55ea7860cfbc8c75fdaa2c6152012d48c701120dcb14"
+  }
 }

@@ -1,0 +1,257 @@
+{
+  "attemptBudgetHistory": [
+    {
+      "attempt": 1,
+      "commands": [
+        {
+          "command": [
+            "go",
+            "build",
+            "-trimpath",
+            "-o",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/tools/canonical_generated_driver",
+            "./build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/tools/canonical_generated_driver.go"
+          ],
+          "exit": 0,
+          "label": "build-canonical-driver",
+          "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/logs/build-canonical-driver.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 0.564
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/tools/evm_driver",
+            "gate",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-2/fixture-manifest.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-2",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "direct-generated-evm-gate",
+          "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/logs/direct-generated-evm-gate.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 18.24
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/tools/evm_driver",
+            "reopen",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-2/fixture-manifest.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-2",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "fresh-process-q1-reopen",
+          "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/logs/fresh-process-q1-reopen.log",
+          "timedOut": false,
+          "timeoutSeconds": 1181,
+          "wallSeconds": 0.114
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/tools/canonical_generated_driver",
+            "setup-chain",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/coordinator-route/world-q1",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/ArrayListMatrix.generated.zip",
+            "1"
+          ],
+          "exit": 0,
+          "label": "coordinator-start-q1",
+          "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/logs/coordinator-start-q1.log",
+          "timedOut": false,
+          "timeoutSeconds": 1181,
+          "wallSeconds": 0.264
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/tools/canonical_generated_driver",
+            "finish",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/coordinator-route/world-q1",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/ArrayListMatrix.generated.zip",
+            "1"
+          ],
+          "exit": 0,
+          "label": "coordinator-resume-q1",
+          "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/logs/coordinator-resume-q1.log",
+          "timedOut": false,
+          "timeoutSeconds": 1180,
+          "wallSeconds": 26.5
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/tools/canonical_generated_driver",
+            "verify",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/coordinator-route/world-q1",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/ArrayListMatrix.generated.zip",
+            "1"
+          ],
+          "exit": 0,
+          "label": "coordinator-reopen-q1",
+          "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/attempts/attempt-1/logs/coordinator-reopen-q1.log",
+          "timedOut": false,
+          "timeoutSeconds": 1154,
+          "wallSeconds": 0.064
+        }
+      ],
+      "gasBudget": 1000000000,
+      "status": "passed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "coordinatorRuntimeBytes": 5394,
+  "engineRuntimeBytes": 394435,
+  "evidenceFiles": [
+    "gate-summary.json",
+    "reopen-summary.json",
+    "fixture-manifest.json",
+    "paired-pins.json",
+    "direct-q1-matrix.checkpoint.bin",
+    "coordinator-q1-matrix.checkpoint.bin",
+    "coordinator-durable-head.json",
+    "coordinator-world-report.json",
+    "coordinator-start.json",
+    "coordinator-process-receipts.json"
+  ],
+  "freshBuildCommands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/array-list-local1m-tests/evidence/java-evm/minecraft-entry/array-list-local1m/tools/build_candidate.py",
+        "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2"
+      ],
+      "exit": 0,
+      "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/build-logs/candidate.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 231.049
+    },
+    {
+      "command": [
+        "node",
+        "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/coordinator/build.js"
+      ],
+      "exit": 0,
+      "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/build-logs/coordinator.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 1.916
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/array-list-local1m-tests/evidence/java-evm/minecraft-entry/array-list-local1m/tools/generate_fixtures.py",
+        "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-fixtures-final-3e87b6e07-2"
+      ],
+      "exit": 0,
+      "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/build-logs/fixtures.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 0.765
+    },
+    {
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-build-final-3e87b6e07-2/tools/evm_driver",
+        "./evidence/java-evm/minecraft-entry/array-list-local1m/tools/evm_driver.go"
+      ],
+      "exit": 0,
+      "log": "/home/user/evm-jvm/array-list-local1m-tests/build/java-diff-mc-array-list-local1m-gate-final-3e87b6e07-2/build-logs/direct-driver.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 0.665
+    }
+  ],
+  "generatedCaseCount": 18,
+  "gitHead": "3e87b6e0736554e273c0e40d9758cbc4e7a03468",
+  "hostOracleCases": 13,
+  "pairedPins": {
+    "candidateEngine": {
+      "initSHA256": "3ccd953e032e933decc2761966036bee18cbdce301b0941dee7cccc37809b138",
+      "runtimeBytes": 394435,
+      "runtimeKeccak256": "4e597aae15eff28bd2247108c9cc461974d8a7762bf65983bedde38dcb419c2e",
+      "runtimeSHA256": "61b71a4377733891a4a91ebff2a1765b2c96ecce268e69e9ec7d8ed0320a8df8"
+    },
+    "coordinatorAndResourceTransport": "ordinary generated-only AS0/ZI0/DI0 CREATE plus coordinator; no external/original assets",
+    "coordinatorCompiler": {
+      "evmVersion": "cancun",
+      "metadata": {
+        "appendCBOR": false,
+        "bytecodeHash": "none"
+      },
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "version": "0.8.30+commit.73712a01.Emscripten.clang",
+      "viaIR": true
+    },
+    "coordinatorPinsCandidateEngineKeccak": "4e597aae15eff28bd2247108c9cc461974d8a7762bf65983bedde38dcb419c2e",
+    "engineExecutionMode": "LOCAL preinstalled-code Call, not CREATE deployment",
+    "pairVerifiedFromFreshBuild": true,
+    "pairedCoordinator": {
+      "buildScriptSHA256": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b",
+      "initSHA256": "a752f53ea3fb1f97a311d92461d7364bcb6d64c73f4928e370458b1ff4cda85d",
+      "runtimeBytes": 5394,
+      "runtimeKeccak256": "99a642d08d254eb5083314f61e73ee429cc5ac3634bd8c8348a195b0d72001e3",
+      "runtimeSHA256": "d52256ab219719b8bc700177443b2d8d884378378b78f92bd126450657e56240",
+      "sourceSHA256": "22145d79b4ca3b8113bb0f68e57a1d5abdb5b8acc5125701cef7350f4eb69d42"
+    },
+    "profile": "P28-ARRAY-LIST-LOCAL1M-GENERATED-EVM-TESTS"
+  },
+  "runId": "final-3e87b6e07-2",
+  "scopeCaveats": [
+    "Generated Java 8 classes only; no official Minecraft class/JAR/resource/world/checkpoint was loaded or executed.",
+    "No EULA/config/world/listener setup and no original Minecraft Done marker.",
+    "LOCAL engine runtime exceeds EIP-170 and was preinstalled for explicit local Call; no standard CREATE claim.",
+    "Engine, bootstrap, EVM opcode/gas, consensus, and independent execution quotas were not changed by this test harness.",
+    "Only the test-driver per-call gas or external wall watchdog may double, and every attempt is retained separately.",
+    "Checkpoint heap audit is read-only observer code; execution and Java outcomes come from geth EVM calls."
+  ],
+  "sourceSHA256": {
+    "evidence/java-evm/minecraft-entry/array-list-local1m/coordinator/MCEntryCoordinator.sol": "22145d79b4ca3b8113bb0f68e57a1d5abdb5b8acc5125701cef7350f4eb69d42",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/coordinator/build.js": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/engine/MCEntryInterpreter.sol": "9ab9d8ce8403ab1a66d897a91cae34c9da62f3d5595508cde814bab1c0c742c3",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/engine/build.js": "395752305ea04f1c8eceb0ebe7f832e964b060aacf6105d9b8f5fe26859b85ab",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListMathObjectInteger.java": "5b88cc17242302a9cf9f3116d5b36172c87cf4a4a6a7701270f6c9376ab87695",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListMatrix.java": "19ba9cc62179ad1fdcc012bee8fcbb294b674139e7d3cbdff4db8456ade1aed7",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListMissingDefaultConstructor.java": "5fe4b071f778ea5fe4506265c41e0f9600c4b47fda103dbbab501b4f693111eb",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListNegativeMin.java": "0e059523445b6cd7ae47483400096556c1131d3747eb539a3b14ebd6f6638b87",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListNegativeMinusOne.java": "40672112374b40782854660478d14aef332ddb304172698ed3ab4960d115d4ce",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListPackedSparse.java": "b9a0a280f4e8b0486c990d9cbc625957bf9ab0f732ef23b59cb3eb575c1777d8",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListQuotaOOM.java": "b8e1e0895ccadb47d3f8e585c358b817b7fdfaac62994a461730fbece716e556",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListRawReplacementMain.java": "3e930fe595f147855752b82792dc2022029f2ce8f9e1599753a1eab5a551d09d",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListUnboundAddConcrete.java": "cf0dfd7c684fe42a8d675cfa070fb0d0748d52e1d91d549aca07ff2d59760b5f",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListUnboundAddInterface.java": "8a6acd83bce8c8f01de24539eb1cb8be3242b7f4441279614578e2207b51cf17",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListUnboundIteratorConcrete.java": "1dedd842a05727305cacf0e748f3bf56d6b4dc0b0a7711c8f4eca4f7997a0089",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/ArrayListUnboundIteratorInterface.java": "a1503928eb95565d562677fc7002135810233ebdbd76817268c9891b616a919b",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/fixtures/src/replacement/java/util/ArrayList.java": "4d20cff98be309dc7c8ed3337101060449d3462ebaf4e691d61cb134cbb719be",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/tools/build_candidate.py": "591ab0c939ada42660514937634fb8f7161b2d1aebc15a1b3c44e438e8d37dca",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/tools/evm_driver.go": "10f97c58500c874f63e732077830e7538da575e0b9e558a1ffb5e1a7e839b29e",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/tools/generate_fixtures.py": "d6ed1af990d59831b983369148050b2a3a35c507aecfbadeb9632911169888ce",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/tools/run_gate.py": "24e7961d19382df2b0c17e836c99ca44c8621a784987d1f5cb0ba918f46cfbea",
+    "evidence/java-evm/minecraft-entry/array-list-local1m/tools/verify_source.py": "0897a7317c43ba44844cdd24ac4d857bf1049f6cb0d0b7f4c04818b465977d97",
+    "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/canonical-driver.go.txt": "d5f3ea7664d48879d2d96347acdb048f489ec0d2febbde576a5935ebca82a0f8"
+  },
+  "status": "generated LOCAL1M ArrayList EVM gates passed; candidate stage acceptance and original Minecraft replay remain separate",
+  "testTransports": [
+    "Direct raw-class startMain/resumeMain via geth core/vm/runtime.Call with locally preinstalled engine; no host bytecode interpreter.",
+    "Canonical package route via ordinary CREATE of accepted AS0/ZI0/DI0 and paired coordinator, calling local preinstalled engine; generated matrix class only."
+  ]
+}
