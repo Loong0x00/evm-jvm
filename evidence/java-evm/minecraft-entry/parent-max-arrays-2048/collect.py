@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+"""Collect already-observed P20 results; never original execution or continuation input."""
+from pathlib import Path
+import hashlib,importlib.util,json,shutil
+HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[3];A=HERE/'artifacts';A.mkdir(exist_ok=True)
+B=ROOT/'build/java-diff-mc-max-arrays-2048-build-parent-p20';G=ROOT/'build/java-diff-mc-max-arrays-2048-gate-parent-p20-final';O=ROOT/'build/java-diff-mc-max-arrays-2048-original71-parent-p20';U=ROOT/'build/java-diff-mc-max-arrays-2048-original-authorized-parent-p20';R=ROOT/'build/java-diff-mc-max-arrays-2048-replay-parent-p20'
+for src,dst in [(B/'pins.json',A/'parent-build-pins.json'),(B/'root-audit.json',A/'root-audit.json'),(G/'summary.json',A/'full-generated-gate-summary.json'),(O/'official/durable-head.json',A/'original71-terminal-head.json'),(R/'summary.json',A/'original71-replay-summary.json'),(U/'authorization.json',A/'authorization.json'),(B/'main.go',HERE/'canonical-driver.go.txt'),(U/'main.go',HERE/'max-gas-driver.go.txt')]:assert src.is_file(),src;shutil.copyfile(src,dst)
+for sub,names in [('engine',('MCEntryInterpreter.sol','MCEntryInterpreter.json','MCEntryInterpreter.abi.json','MCEntryInterpreter.runtime.hex','MCEntryInterpreter.init.hex','build.js')),('coordinator',('MCEntryCoordinator.sol','MCEntryCoordinator.json','build.js'))]:
+ (A/sub).mkdir(exist_ok=True)
+ for n in names:shutil.copyfile(B/sub/n,A/sub/n)
+h=json.load(open(O/'official/durable-head.json'));assert h['epoch']==348 and h['jvmSteps']==1421619 and h['internalSteps']==84 and h['lifecycle']==3 and h['javaKind']==7
+cp=O/'official/checkpoints'/(h['checkpointSHA256']+'.bin');blob=cp.read_bytes();assert hashlib.sha256(blob).hexdigest()==h['checkpointSHA256']
+spec=importlib.util.spec_from_file_location('cp_view',HERE/'checkpoint_diagnostic.py');mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod);s=mod.inspect(blob);obj=next(v for v in s['heap'] if v['handle']==h['javaRef']);assert s['heapCounts']['ordinaryObjects']==1024 and s['heapCounts']['ordinaryArrays']==1126 and obj['classIndex']==80
+(A/'terminal-checkpoint-diagnostic.json').write_text(json.dumps({k:s[k] for k in s if k!='heap'}|{'checkpointBytes':len(blob),'exceptionRecord':obj},indent=2)+'\n')
+# Verify sine table read-only against independently generated Java8 data, never an input.
+f=next(v for v in s['heap'] if v['handle']==666);assert f['packedFloat'] and f['metadata']=='0x46' and f['count']==65536
+oracle=ROOT/'evidence/java-evm/minecraft-entry/math-sin-independent-oracle/results/samples.tsv';ob=oracle.read_bytes();assert hashlib.sha256(ob).hexdigest()=='6001a5c714608ca9649b08b25eba27a3aa011f7c870a32ddae15ca330fefc058';lines=ob.decode().splitlines()[1:65537];expected=[int(x.split('\t')[-1],16) for x in lines];actual=[int(x,16) for x in f['cells']];assert len(expected)==len(actual)==65536;assert actual==expected
+(A/'readonly-sine-comparison.json').write_text(json.dumps({'scope':'read-only test-only independent Java8 oracle, never execution input','cells':65536,'mismatches':0,'packedWire':True,'checkpointSHA256':h['checkpointSHA256'],'rawGuestCellsSHA256':hashlib.sha256(b''.join(x.to_bytes(4,'big') for x in actual)).hexdigest()},indent=2)+'\n')
+index=[]
+for n,path in enumerate(sorted((O/'reports/official').glob('slice-*.json')),1):
+ b=path.read_bytes();r=json.loads(b);assert r['epoch']==n and r['suppliedGas']==(1<<64)-1 and r['executionBudget']=='LOCAL-U64MAX-USER-AUTHORIZED';index.append({'epoch':n,'reportSHA256':hashlib.sha256(b).hexdigest(),'checkpointSHA256':r['checkpointSHA256'],'gasUsed':r['gasUsed'],'elapsedMS':r['elapsedMS'],'executedJvmSteps':r['slice']['executedJvmSteps'],'executedInternalSteps':r['slice']['executedInternalSteps']})
+assert len(index)==h['epoch'];(A/'original71-ordered-receipt-hashes.json').write_text(json.dumps(index,indent=2)+'\n');shutil.copyfile(O/f"reports/official/slice-{h['epoch']:020d}.json",A/'terminal-receipt.json')
+g=json.load(open(G/'summary.json'));p=json.load(open(B/'pins.json'));v=json.load(open(A/'verified-original71.json'));assert v['verifiedReceipts']==348
+report={'schema':1,'candidateCommit':'0ff8c59b5','independentDomain':'MC-RANDOM-CLASS-P20','onlySemanticDelta':'MAX_ARRAYS1024->2048, derived MAX_HANDLES','runtimeBytes':p['engine']['bytes'],'actualBootstrapRoot':p['bootstrapRoot'],'generatedGate':{'seconds':g['wholeGateSeconds'],'verifiedReceipts':g['canonicalReceipts']['verifiedReceipts'],'capacityTargets':[1024,1025,2048,2049],'highCountQuantum':4096,'highCountQ1Q7Attempted':False},'lastAuthenticResult':{k:h[k] for k in ('epoch','jvmSteps','internalSteps','lifecycle','javaKind','javaRef','checkpointSHA256')},'progressFromPriorTerminalJvm':1421619-1405662,'ordinaryHeapCounters':s['heapCounts'],'terminalClass':'java/lang/OutOfMemoryError','measuredNextBlocker':'ordinaryObjects hits MAX_OBJECTS1024; arrays1126 is below raised cap2048','executionGas':'uint64.max LOCAL, watchdog30s/call','notClaimed':['Done','world','EULA','standard-chain compatibility']}
+(A/'object-cap-blocker.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
