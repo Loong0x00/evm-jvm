@@ -7,7 +7,7 @@
 - Genuine next atomic q1 blocker: **`com/google/common/primitives/Ints`**, site0x100b/contextPC19; Lists raw74 method3 PC19 computes capacity. ArrayList type resolved/object allocated, but its `(I)V` constructor has **not yet been entered in the original**.
 - User policy: measured-insufficient project budgets double; no code-size micro-optimization. Original watchdog30→60s; ordinary gates remain1B/30s. A stale replay384KiB guard was caught before EVM and aligned with pinned runtimeCap. Old failures/profiles/worlds preserved.
 - Evidence: `evidence/java-evm/minecraft-entry/parent-array-list-local1m-safe/`; guarded source: `array-list-local1m-safe/`. LOCAL preinstalled-code Call is not standard CREATE deployment. No logger/world/EULA/Done claim. No push.
-- Next: parent EVM-only measure Ints resource; raise insufficient raw count75→150 and raw byte531965→1063930 coherently under doubling rule; checkpoint only on a measured shortage, preserving old1MiB profile.
+- Next dependency measured through genuine EVM AS0/ZI0/DI0: Ints7309B;76 declared classes/539274B total. Managed worker `sa_0ef0f553b80a445d` in disjoint `mc-raw150-bytes1063930` implements count75→150/byte531965→1063930 under doubling rule; checkpoint only after measured shortage, preserving old1MiB profile. Parent only handles original inputs, no active parent semantic edits.
 
 ---
 
