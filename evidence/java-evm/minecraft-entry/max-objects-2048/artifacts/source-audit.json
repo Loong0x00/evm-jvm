@@ -104,6 +104,12 @@
   "sourceSHA256": "5dea91f4ea301590a4ff890f266a0ef24c1b843b2bd1815fd488eee4c7cfceb0",
   "normalizedP20SourceSHA256": "b8b97a4e3a8076398eb8996b3a9b960c82ee8d7d35d895020c93bbc8cbbff10b",
   "onlyNormalizedSemanticChange": "MAX_OBJECTS1024->2048; MAX_HANDLES derived4353",
+  "limits": {
+    "MAX_ARRAYS": 2048,
+    "MAX_OBJECTS": 2048,
+    "MAX_HANDLES": 4353,
+    "MAX_HANDLES_FORMULA": "MAX_ARRAYS + MAX_OBJECTS + MAX_EXCEPTION_OBJECTS + 1"
+  },
   "canonicalOOMBootstrapLeafIndex": 9,
   "canonicalOOMBootstrapImageFunction": "_bootstrapOutOfMemoryError",
   "canonicalOOMClass": "java/lang/OutOfMemoryError",

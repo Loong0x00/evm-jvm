@@ -67,6 +67,8 @@ source_audit = {
     "sourceSHA256": hashlib.sha256(source.encode()).hexdigest(),
     "normalizedP20SourceSHA256": hashlib.sha256(normalized.encode()).hexdigest(),
     "onlyNormalizedSemanticChange": "MAX_OBJECTS1024->2048; MAX_HANDLES derived4353",
+    "limits": {"MAX_ARRAYS": 2048, "MAX_OBJECTS": 2048, "MAX_HANDLES": 4353,
+               "MAX_HANDLES_FORMULA": "MAX_ARRAYS + MAX_OBJECTS + MAX_EXCEPTION_OBJECTS + 1"},
     "canonicalOOMBootstrapLeafIndex": 9,
     "canonicalOOMBootstrapImageFunction": "_bootstrapOutOfMemoryError",
     "canonicalOOMClass": "java/lang/OutOfMemoryError",
