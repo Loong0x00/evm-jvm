@@ -1,0 +1,7 @@
+# Genuine P23 guest OOM at MAX_OBJECTS2048
+
+Independent accepted P23 MAX_ARRAYS4096 reaches unchanged original Minecraft1.12.2 at1,693,976J/84I,414 verified receipts, lifecycle3 guestOOM7. Counters ordinaryObjects2048/2048, arrays2411/4096, elements90932/262144, fields6256/65536. Checkpoint839104bytes. Evidence `parent-max-arrays-4096/artifacts/object-cap-2048-blocker.json`.
+
+Next exact single-constant change: MAX_OBJECTS2048->4096; retain arrays4096, all other caps/wire/images/Java semantics. Derived MAX_HANDLES8449. Base accepted P23 `parent-max-arrays-4096/artifacts/engine/MCEntryInterpreter.sol`; worker preserves domainlabels, parent separately chooses fresh domain. No parent evidence edits or terminal-state continuation. No GC/lazy/fabricated allocation.
+
+Use provisioned pinned local node_modules solc0.8.30; no npm/network or original/sibling/geth inputs by worker. Preflight generated ordinary1B/q4096 zero-field Objects2048/2049/4096 success4097 typedOOM; exact counters, reopen. High-countq1/q7 optional and honest caveat. Retained full q1/q7/direct/reopen packed/sparse/malformed/Integer/Object/Math/raw71 gates<=1200s, runtime<=393216, actual97-leaf root. Parent independent build/gates and fresh untouched-original uint64-max/q4096 replay with30s watchdog follows. Checkpoint1MiB cap is not altered before a genuine measured refusal. No world/EULA/Done/standard-chain/push claim.
