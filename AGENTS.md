@@ -1,3 +1,14 @@
+# Current Minecraft-first operating policy (user directive)
+
+- Goal: unchanged Minecraft Java1.12.2 genuinely running inside unmodified geth EVM execution/charging rules, through guest `Done`, superflat first. Do not alter core/vm, core/state or consensus params for this goal. LOCAL preinstalled-code Call is distinct from standard CREATE deployment; never claim EIP170 compatibility for the oversized interpreter.
+- Self-imposed resource/test quotas: **when measured insufficient, double the relevant budget coherently, verify and record it; do not ask the user to approve each numeric knob.** Runtime artifact ceiling is now LOCAL1M1048576bytes. Other independent budgets are not silently renamed or conflated.
+- **Do not spend the main line optimizing code/layout merely to fit obsolete artificial caps.** Implement the measured Java capability, test it, and resume the original. Keep old profiles, source commits, worlds, failures and manifests.
+- Never blindly replace limits with2^64: inspect preallocations and integer/schema widths, update all coupled checks/formats safely. JVM/EVM format rules, owner/package/codehash authentication, authenticated reads and atomic/successful-checkpoint continuation remain protected. No fabricated guest results, original-JAR rewriting, host Java/class/ZIP interpretation in the original execution path, lazy original loading or failed-state continuation.
+- Existing numeric/state protocol widths may require coordinated application-level versioning, never an EVM rule bypass. If a budget is exceeded (including a test-driver gas/time budget), classify it separately from a Java semantic/API blocker, double and rerun rather than label it missing functionality.
+- Current accepted anchor and detailed limitations: JAVA_EVM_MC_RESUME_STATUS.md and JAVA_EVM_MC_LIMITS_AUDIT.md. ArrayList(int) LOCAL384394435-byte candidate is preserved but unaccepted; LOCAL1M build/tests are the next step. No push. No Fast. At most2 disjoint workers, one semantic Solidity writer. No sleep polling.
+
+---
+
 # Java-inside-EVM agent guide
 
 LATEST MC-FIRST CLASS.ASSUBCLASS: Class1015B SHA8986691a...,ordinary generic wrapper
