@@ -1,3 +1,15 @@
+## Latest: P31 raw quota doubling accepted; original ArrayList constructor completed
+
+- Independent domain `MC-RAW150-BYTE1063930-P31`, runtime394996B,99 bootstrap images unchanged; raw limits75→150 /531965→1063930. Runtime1MiB and checkpoint1MiB remain separate and unchanged. Underlying EVM/state/params unchanged.
+- Fresh parent1B gate87.545s: exact150classes/1063930bytes terminal MR01, +1refusals, q1/q7/q65536/q4096/reopen, namespace/codehash guards, coordinator3224calls /max438085981gas; checkpoint11914B. Source verified exact quota/config-only edits.
+- Fresh untouched-original76 (Ints7309B, total539274B): **1914117J/85I**,35 independently verified receipts,634.216s,lifecycle1; CP1024053B SHA256 `8904eac148ef3f8e24be3ae514410eb34451442005041874b78d6747798918b9`.
+- **Original ArrayList(int) has genuinely returned**: ordinary ArrayList handle5638, size0, actual owned Object[568] handle5641 with all568 zero/null cells; fd.<init>(I)V resumed atPC13. No injected values/lazy arrays/host class parsing.
+- Next atomic q1 missing platform type `java/util/IdentityHashMap`, site0x1008/context13. Authenticated EVM-only original fd metadata confirms `(I)V` constructor atCodePC18 in fd.<init>(I)V, rawclass73/method1/newPC13. Inspector on fresh successful-world copy executes noJava/publishes noCP/commits no derived deployment; originalworld untouched.
+- Parent evidence: `parent-raw150-byte1063930/artifacts/identity-map-constructor-blocker.json`. Accepted original world: `build/java-diff-mc-raw150-byte1063930-original76-parent-p31/official`. No logger/world/EULA/Done/standard-chain CREATE claim. No push.
+- Next measured scope: bootstrap-owned IdentityHashMap(int), actual eager table/correct capacity logic/type closure; all99 current images immutable, no fake get/put/equality or caller-specific success. Userdoubling/no-size-optimization policy continues.
+
+---
+
 ## Latest: LOCAL1M ArrayList constructor profile / independent P30
 
 - Guarded candidate runtime **394996 bytes**, authorized runtime ceiling1048576; checkpoint ceiling still1048576. All prior97 bootstrap images and geth `core/vm`, `core/state`, `params` unchanged;99 images total.

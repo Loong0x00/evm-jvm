@@ -1,0 +1,1107 @@
+{
+  "attempt": 1,
+  "status": "passed",
+  "gasBudget": 1000000000,
+  "wallBudgetSeconds": 1200,
+  "elapsedWallSeconds": 88,
+  "direct": {
+    "status": "generated EVM gates passed; original replay/Done not part of this worker",
+    "mode": "gate",
+    "engineRuntimeSHA256": "2642857d60fbc658eae57f34e1aee4ee83b6a27a429372c320c89e5e563e9d73",
+    "engineRuntimeKeccak256": "0xc7d177d43d4559fb50f5024c719eba1b7e5fafd75522a92d10d6eee5c724e203",
+    "coordinatorRuntimeSHA256": "a0c3a21de42c2291123f7be598ae492ded28f47a5b377da9dc5eb21e3a2dceab",
+    "coordinatorRuntimeKeccak256": "0x829278fd74352681e54e18ef99740519925642cf25560cbff729344b8b1c21ba",
+    "localGasBudget": 1000000000,
+    "caller": "0x4d432d41525241594c4953544c4f43414c310001",
+    "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310066",
+    "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+    "schedules": [
+      {
+        "name": "q1-matrix",
+        "quantum": 1,
+        "transport": "geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice",
+        "rawCount": 1,
+        "rawBytes": 1177,
+        "bootstrapCount": 99,
+        "diagnosticClassCount": 100,
+        "callCount": 336,
+        "totalGas": 12228912513,
+        "maxCallGas": 49995673,
+        "wallMs": 13987,
+        "stateRoot": "0x088958ac3baef167a3ac5d3c99ae522cfa3b96cb8d3b88e349c3bd5cb3c8d20c",
+        "instanceId": "0xd7721cf03a326d491cc508cc5789558038afd992528048663541b84419c31e04",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 336,
+          "checkpointRoot": "0x468c39d05e35bdd2c052fa6c04bf1ecb3e8d9309abcd97647ce3306e42fa745a",
+          "machineStateRoot": "0xc4435d734399922f57e6923b73b73c073acb810be87914a06cf3168c75d721bf",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 1,
+          "executedInternalSteps": 0,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 49752053,
+          "wallMs": 57
+        },
+        "checkpointBytes": 11318,
+        "checkpointSHA256": "9a1fb9caf4c90b9d23135aabf47af1d61e623249a617f26a4cdd3779331ed272",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11038,
+          "classCount": 100,
+          "rawCount": 1,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 99,
+          "objectClassIndex": 1,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        },
+        "reopenRequest": "q1-reopen-request.json"
+      },
+      {
+        "name": "q7-matrix",
+        "quantum": 7,
+        "transport": "geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice",
+        "rawCount": 1,
+        "rawBytes": 1177,
+        "bootstrapCount": 99,
+        "diagnosticClassCount": 100,
+        "callCount": 48,
+        "totalGas": 1810597603,
+        "maxCallGas": 46353503,
+        "wallMs": 2124,
+        "stateRoot": "0x4b182b84b9c52cdc0f24d0a581cca81396d611c0b8def5c15b84ad869e90a7cb",
+        "instanceId": "0x8d40fe49ca33f4fdc5d63ce1f6b8926147fa077709723977465173a73209901f",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 48,
+          "checkpointRoot": "0x943b0f3cb7254890af6eac739adcc476a409e060fc3f0e0275888f1fe5abb3ba",
+          "machineStateRoot": "0xc4435d734399922f57e6923b73b73c073acb810be87914a06cf3168c75d721bf",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 7,
+          "executedInternalSteps": 0,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 46353503,
+          "wallMs": 52
+        },
+        "checkpointBytes": 11318,
+        "checkpointSHA256": "864243274d5f81ea58fa813ef786074e0d8a9780dc5c65d7b8f535c17d129a4f",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11038,
+          "classCount": 100,
+          "rawCount": 1,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 99,
+          "objectClassIndex": 1,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        }
+      },
+      {
+        "name": "q65536-direct-matrix",
+        "quantum": 65536,
+        "transport": "geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice",
+        "rawCount": 1,
+        "rawBytes": 1177,
+        "bootstrapCount": 99,
+        "diagnosticClassCount": 100,
+        "callCount": 1,
+        "totalGas": 101061511,
+        "maxCallGas": 101061511,
+        "wallMs": 156,
+        "stateRoot": "0x810b8311eecfc649e8ff400261e66f9282c88288180260745c03c272df50b9db",
+        "instanceId": "0x8992b030c459067df0ae60ad93f334d3d7f6970f650d7fdd42303cf757c78c27",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 1,
+          "checkpointRoot": "0xb5fbce504b6996f769e4ff1fff7b7c0378c0a91b6079d3dbc4a841866fb91292",
+          "machineStateRoot": "0xc4435d734399922f57e6923b73b73c073acb810be87914a06cf3168c75d721bf",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 336,
+          "executedInternalSteps": 4,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 101061511,
+          "wallMs": 113
+        },
+        "checkpointBytes": 11318,
+        "checkpointSHA256": "32db2e0a1ca8cd90c2631490481ccb9430deee4ffd8e2f74efd2f2a84fadb4e7",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11038,
+          "classCount": 100,
+          "rawCount": 1,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 99,
+          "objectClassIndex": 1,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        }
+      },
+      {
+        "name": "q1-raw150",
+        "quantum": 1,
+        "transport": "geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice",
+        "rawCount": 150,
+        "rawBytes": 27018,
+        "bootstrapCount": 99,
+        "diagnosticClassCount": 249,
+        "callCount": 336,
+        "totalGas": 39948062323,
+        "maxCallGas": 152447453,
+        "wallMs": 44324,
+        "stateRoot": "0xfdb0ed8203fec949e036c7d3a5f7e7d28e57bc14cea53842d6160505b4699584",
+        "instanceId": "0x1b7970c05e8bcce3edcc31bc4695725387a7ca929e230cf7244632fb654287a6",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 336,
+          "checkpointRoot": "0x330f3e6cf0014dc0b1bdba80f25729c4366615b5358d70c8dfa87b4fe22f91cc",
+          "machineStateRoot": "0x6360a46dfac12c36560b2c1bde702b2eed9fda67fa0d01b74b2dc3f827ce272d",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 1,
+          "executedInternalSteps": 0,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 151658055,
+          "wallMs": 163
+        },
+        "checkpointBytes": 11914,
+        "checkpointSHA256": "bda0179225cd71b0a801d8ce9f3d57a609e5d11fdc190021974c3bf4f415fe93",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11634,
+          "classCount": 249,
+          "rawCount": 150,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 248,
+          "objectClassIndex": 150,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        },
+        "reopenRequest": "q1-reopen-request.json"
+      },
+      {
+        "name": "q7-raw150",
+        "quantum": 7,
+        "transport": "geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice",
+        "rawCount": 150,
+        "rawBytes": 27018,
+        "bootstrapCount": 99,
+        "diagnosticClassCount": 249,
+        "callCount": 48,
+        "totalGas": 5883538737,
+        "maxCallGas": 142726754,
+        "wallMs": 6636,
+        "stateRoot": "0x8c46b6f97bb59f589239cf0ad768f21cdfc1a86f160192883ca2e56af76eba66",
+        "instanceId": "0x0d4081150d2f0604a838c763230d0de1c1a6a6797c52dfab951630cd5b762551",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 48,
+          "checkpointRoot": "0xca7ca62fb77f8e6263408ffdc4f3dd8d532e52cd1d6825d3cd971cee2320d289",
+          "machineStateRoot": "0x6360a46dfac12c36560b2c1bde702b2eed9fda67fa0d01b74b2dc3f827ce272d",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 7,
+          "executedInternalSteps": 0,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 142726754,
+          "wallMs": 153
+        },
+        "checkpointBytes": 11914,
+        "checkpointSHA256": "797f5e59eb58ff919751d47e9056b75a2f24a404ce042f37b956abe88607deaa",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11634,
+          "classCount": 249,
+          "rawCount": 150,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 248,
+          "objectClassIndex": 150,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        }
+      },
+      {
+        "name": "q65536-raw150",
+        "quantum": 65536,
+        "transport": "geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice",
+        "rawCount": 150,
+        "rawBytes": 27018,
+        "bootstrapCount": 99,
+        "diagnosticClassCount": 249,
+        "callCount": 1,
+        "totalGas": 314887921,
+        "maxCallGas": 314887921,
+        "wallMs": 436,
+        "stateRoot": "0xe59f4cedbbffbea3b89b509f24382e278d5dbed479562f16389b2198e4910e0c",
+        "instanceId": "0xee720c3f62280ca23500e5f154405e859706406a66e70f90cea1e740dc3728d1",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 1,
+          "checkpointRoot": "0x9f7fdb31b58a7c1907a233d8dcfe6a02962038d7077cbfd8dd78593ee8ea420f",
+          "machineStateRoot": "0x6360a46dfac12c36560b2c1bde702b2eed9fda67fa0d01b74b2dc3f827ce272d",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 336,
+          "executedInternalSteps": 4,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 314887921,
+          "wallMs": 297
+        },
+        "checkpointBytes": 11914,
+        "checkpointSHA256": "02904b5a537e8ddf4a42e874ac5c72c7da45be9b4558784973f760882fa6d09f",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11634,
+          "classCount": 249,
+          "rawCount": 150,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 248,
+          "objectClassIndex": 150,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        }
+      },
+      {
+        "name": "q4096-raw150",
+        "quantum": 4096,
+        "transport": "geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice",
+        "rawCount": 150,
+        "rawBytes": 27018,
+        "bootstrapCount": 99,
+        "diagnosticClassCount": 249,
+        "callCount": 1,
+        "totalGas": 314887921,
+        "maxCallGas": 314887921,
+        "wallMs": 440,
+        "stateRoot": "0xa67560a2f61b3dfb4b27dcba85b5e699d14da17b37710db79e568d2f56eaee0d",
+        "instanceId": "0x7a609fb6af1ef3c18055da51270b5e3b74201083382474f50990b59707aabe6f",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 1,
+          "checkpointRoot": "0xa6a8320d652cafffdf97a91f193ffba8a2933b37f25fa6af8caacb5494fb7ae8",
+          "machineStateRoot": "0x6360a46dfac12c36560b2c1bde702b2eed9fda67fa0d01b74b2dc3f827ce272d",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 336,
+          "executedInternalSteps": 4,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 314887921,
+          "wallMs": 297
+        },
+        "checkpointBytes": 11914,
+        "checkpointSHA256": "7a8298d3732005326d42cea012790da25c455274c53b0a8bfe7c940836d9f16c",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11634,
+          "classCount": 249,
+          "rawCount": 150,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 248,
+          "objectClassIndex": 150,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        }
+      }
+    ],
+    "cases": [
+      {
+        "name": "negative-minus-one",
+        "expectation": "guest java/lang/IllegalArgumentException",
+        "rawCount": 1,
+        "rawBytes": 250,
+        "bootstrapCount": 99,
+        "classCount": 100,
+        "callCount": 1,
+        "totalGas": 28329877,
+        "stateRoot": "0xeaaa1b705562f65f19bccec298032521de9753c9da1b79935b664f68f2e22f68",
+        "final": {
+          "schema": 1,
+          "lifecycle": 3,
+          "outcome": 3,
+          "epoch": 1,
+          "checkpointRoot": "0xb6c60ed49115ed2904dcdb74ed430223fe8fe7938e7b6cb98d04e2eea198eca1",
+          "machineStateRoot": "0x4e9508599fc874173e33dfac3eb96494004d0fef80729d32d7990ed979d83e93",
+          "totalJvmSteps": 37,
+          "totalInternalSteps": 8,
+          "executedJvmSteps": 37,
+          "executedInternalSteps": 8,
+          "javaKind": 0,
+          "javaRef": 4,
+          "javaClass": "java/lang/IllegalArgumentException",
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 28329877,
+          "wallMs": 30
+        },
+        "checkpointBytes": 1694,
+        "checkpointSHA256": "3a2ce74de5f5e27a4697cbede9cbf6352dd3a7d5b39c019303506600ada0fef5"
+      },
+      {
+        "name": "negative-int-min",
+        "expectation": "guest java/lang/IllegalArgumentException",
+        "rawCount": 1,
+        "rawBytes": 274,
+        "bootstrapCount": 99,
+        "classCount": 100,
+        "callCount": 1,
+        "totalGas": 28347837,
+        "stateRoot": "0x0894e897bef4aaa568bcffce9b18db025ff1b6ff4a6e97838036f979ed0956ef",
+        "final": {
+          "schema": 1,
+          "lifecycle": 3,
+          "outcome": 3,
+          "epoch": 1,
+          "checkpointRoot": "0x3a3a84fcf57c0ed9522aea27a2ed0bfcee379a29be4c53de2c04def8d2087c77",
+          "machineStateRoot": "0xce5e98f63fb44e9008f41c3d45da02cfb3e86e92045c7f1e2e3409b1e519a788",
+          "totalJvmSteps": 37,
+          "totalInternalSteps": 8,
+          "executedJvmSteps": 37,
+          "executedInternalSteps": 8,
+          "javaKind": 0,
+          "javaRef": 4,
+          "javaClass": "java/lang/IllegalArgumentException",
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 28347837,
+          "wallMs": 30
+        },
+        "checkpointBytes": 1689,
+        "checkpointSHA256": "0c94dc5afd99a0c60d3dfbc247355c6e1418e71116fb84df25e3546ad7168fc8"
+      },
+      {
+        "name": "math-object-integer-control",
+        "expectation": "Math.max/min; Integer.parseInt bounds; Object.equals identity; empty ArrayList",
+        "rawCount": 1,
+        "rawBytes": 863,
+        "bootstrapCount": 99,
+        "classCount": 100,
+        "callCount": 1,
+        "totalGas": 51771546,
+        "stateRoot": "0xb90b3d9a8285cb24236ce3e5c47709fb46dc5abedd6e5d8a7bacbfe0e384b637",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 1,
+          "checkpointRoot": "0x09bef6f9149bef847a0a424864ed85e2d21a4230857408a2dc47a764d2ba6602",
+          "machineStateRoot": "0x43b5fe81d8efa03ca9c07c544176fbac32ecdb26b20ad34bdc61a6b25319f1f6",
+          "totalJvmSteps": 818,
+          "totalInternalSteps": 5,
+          "executedJvmSteps": 818,
+          "executedInternalSteps": 5,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 51771546,
+          "wallMs": 59
+        },
+        "checkpointBytes": 2225,
+        "checkpointSHA256": "b279198675f3bf55319c58667cfae643922720e588296672b393e997a1b86480"
+      },
+      {
+        "name": "arraylist-maximum-legal-capacity",
+        "expectation": "ArrayList constructor accepts max legal 65536-element Object[] and leaves it zero-filled",
+        "rawCount": 1,
+        "rawBytes": 466,
+        "bootstrapCount": 99,
+        "classCount": 100,
+        "callCount": 1,
+        "totalGas": 181237438,
+        "stateRoot": "0x642efa81617471a9c287e43e393db18c6cfe2cf65349b340cbe570e1e0ac08b7",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 1,
+          "checkpointRoot": "0x94bbe0051f27c2b2ddefae2bd168ee71ac9e1b07b34bd1b7df102e90290b87d2",
+          "machineStateRoot": "0xb62ebd316fd26ba11c76b7a53d29da98e37eae1a95275247ec5865c9db343e65",
+          "totalJvmSteps": 41,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 41,
+          "executedInternalSteps": 4,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 181237438,
+          "wallMs": 184
+        },
+        "checkpointBytes": 525915,
+        "checkpointSHA256": "9a4ef18d3ee1d06a3f74b03bddd5534b40e7a42d533dd0f315d0a3faa17649b8",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 525635,
+          "classCount": 100,
+          "rawCount": 1,
+          "bootstrapCount": 99,
+          "nextHandle": 4,
+          "arrayListClassIndex": 99,
+          "objectClassIndex": 1,
+          "arrayListObjectCount": 1,
+          "arrayListBackingLengths": [
+            65536
+          ],
+          "arrayListBackingHandles": [
+            4
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        }
+      },
+      {
+        "name": "packed-sparse-control",
+        "expectation": "genuine void terminal plus canonical packed/sparse arrays",
+        "rawCount": 1,
+        "rawBytes": 464,
+        "bootstrapCount": 99,
+        "classCount": 100,
+        "callCount": 1,
+        "totalGas": 77281665,
+        "stateRoot": "0x2b509d4bf3a0fe4419c4d30677890378b11d5a785b59eda1c0a50a29c33fb3e9",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 1,
+          "checkpointRoot": "0xfad8bf4ea16f0474ba8c501eecdab422e03b0c6a80ea92f16287d99e93ff9d8b",
+          "machineStateRoot": "0x1fba7122b45491649df0c22cef64ded48d9699086a7eb9eb1944d13d93a1ec96",
+          "totalJvmSteps": 13353,
+          "totalInternalSteps": 2,
+          "executedJvmSteps": 13353,
+          "executedInternalSteps": 2,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 77281665,
+          "wallMs": 128
+        },
+        "checkpointBytes": 5674,
+        "checkpointSHA256": "db53e5fe5045d170d193d9bbecb7844ad2273ad997c96726ac26f7a48dc43197",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 5394,
+          "classCount": 100,
+          "rawCount": 1,
+          "bootstrapCount": 99,
+          "nextHandle": 4,
+          "arrayListClassIndex": 99,
+          "objectClassIndex": 1,
+          "arrayListObjectCount": 0,
+          "arrayListBackingLengths": null,
+          "arrayListBackingHandles": null,
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true,
+          "packedFloatLengths": [
+            1024
+          ],
+          "sparseFloatLengths": [
+            1024
+          ],
+          "floatNonzeroCounts": {
+            "1073741824/1024": 1024,
+            "2147483648/1024": 1
+          }
+        }
+      },
+      {
+        "name": "arraylist-quota-oom",
+        "expectation": "guest known OutOfMemoryError kind at unchanged array quota",
+        "rawCount": 1,
+        "rawBytes": 248,
+        "bootstrapCount": 99,
+        "classCount": 100,
+        "callCount": 1,
+        "totalGas": 25417061,
+        "stateRoot": "0x4d7f744814512d194a369471ebc5898b05052086e0c4cc74346ad67d291f0070",
+        "final": {
+          "schema": 1,
+          "lifecycle": 3,
+          "outcome": 3,
+          "epoch": 1,
+          "checkpointRoot": "0x04f74e296638f59f365d538c307cc31c82a8b4242a36af6773c202611f274da9",
+          "machineStateRoot": "0xbdb7d1ee7ca4809ec1c4a660c2ff4776eee88adf6af3551a517f842383f4df7e",
+          "totalJvmSteps": 19,
+          "totalInternalSteps": 5,
+          "executedJvmSteps": 19,
+          "executedInternalSteps": 5,
+          "javaKind": 7,
+          "javaRef": 4,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 25417061,
+          "wallMs": 27
+        },
+        "checkpointBytes": 1686,
+        "checkpointSHA256": "c484855f1c2f9f998bdf82c9ee8b3c416643b826bc73e8d583d98be89ba24dcc"
+      },
+      {
+        "name": "raw-bytes-exact",
+        "expectation": "exact 1,063,930-byte positive aggregate raw envelope",
+        "rawCount": 150,
+        "rawBytes": 1063930,
+        "bootstrapCount": 99,
+        "classCount": 249,
+        "callCount": 1,
+        "totalGas": 388315043,
+        "stateRoot": "0xa11f1f2e9b44e2531fd5683ef04ec7a2eb5cf780b6966b7a3f0358ae735ca2cb",
+        "final": {
+          "schema": 1,
+          "lifecycle": 2,
+          "outcome": 2,
+          "epoch": 1,
+          "checkpointRoot": "0x43152b6740d94fbf2d1fb61b7c760cb5f7f4b17bf01eb0b9185fe3b153173a9c",
+          "machineStateRoot": "0xabccf524ed225ed416caf5e685d86580614e5c7c4b49540d18e255b7c022b84b",
+          "totalJvmSteps": 336,
+          "totalInternalSteps": 4,
+          "executedJvmSteps": 336,
+          "executedInternalSteps": 4,
+          "javaKind": 0,
+          "javaRef": 0,
+          "vfsStateRoot": "0x5e2ba94b90061d448b6690515afbf9eb7bd66200d9e37b7ec6413bd64d697659",
+          "gasUsed": 388315043,
+          "wallMs": 306
+        },
+        "checkpointBytes": 11914,
+        "checkpointSHA256": "9ac8a97febc2317a4b7147d2199a79166c7ea37e3312c418696b8d7f872ac518",
+        "readOnlyCheckpointHeapAudit": {
+          "machineBytes": 11634,
+          "classCount": 249,
+          "rawCount": 150,
+          "bootstrapCount": 99,
+          "nextHandle": 18,
+          "arrayListClassIndex": 248,
+          "objectClassIndex": 150,
+          "arrayListObjectCount": 5,
+          "arrayListBackingLengths": [
+            0,
+            1,
+            3,
+            10,
+            1024
+          ],
+          "arrayListBackingHandles": [
+            4,
+            6,
+            8,
+            10,
+            12
+          ],
+          "allBackingsAreObjectArrays": true,
+          "allBackingElementsZero": true
+        }
+      }
+    ],
+    "controls": [
+      {
+        "name": "old-engine-codehash-resume-refusal",
+        "expectation": "typed LC0ControlError(5); prior successful q1 head and state preserved",
+        "errorName": "LC0ControlError",
+        "errorArgs": [
+          "5"
+        ],
+        "selector": "0xf15d7343",
+        "rootBefore": "0xfa63757aee68151de8f1f6d2ad76f92b57bf7e8161d2400fd5cf40015391cf51",
+        "rootAfter": "0xfa63757aee68151de8f1f6d2ad76f92b57bf7e8161d2400fd5cf40015391cf51",
+        "atomic": true,
+        "gasUsed": 178328,
+        "wallMs": 0
+      },
+      {
+        "name": "raw151-envelope",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "LinkError",
+        "errorArgs": [
+          "1",
+          "151"
+        ],
+        "selector": "0x427cfac5",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 28345,
+        "wallMs": 0
+      },
+      {
+        "name": "raw-bytes-over",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "LinkError",
+        "errorArgs": [
+          "1",
+          "1063931"
+        ],
+        "selector": "0x427cfac5",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 72941,
+        "wallMs": 0
+      },
+      {
+        "name": "unbound-add-concrete",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "CallError",
+        "errorArgs": [
+          "4",
+          "15"
+        ],
+        "selector": "0xd631c3a4",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 25145704,
+        "wallMs": 28
+      },
+      {
+        "name": "unbound-add-interface",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "CallError",
+        "errorArgs": [
+          "4",
+          "17"
+        ],
+        "selector": "0xd631c3a4",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 25420438,
+        "wallMs": 29
+      },
+      {
+        "name": "unbound-iterator-concrete",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "CallError",
+        "errorArgs": [
+          "4",
+          "8"
+        ],
+        "selector": "0xd631c3a4",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 24813449,
+        "wallMs": 28
+      },
+      {
+        "name": "unbound-iterator-interface",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "CallError",
+        "errorArgs": [
+          "4",
+          "10"
+        ],
+        "selector": "0xd631c3a4",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 25285001,
+        "wallMs": 28
+      },
+      {
+        "name": "missing-default-constructor",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "CallError",
+        "errorArgs": [
+          "3",
+          "4"
+        ],
+        "selector": "0xd631c3a4",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 20789405,
+        "wallMs": 23
+      },
+      {
+        "name": "raw-platform-arraylist-replacement",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "BootstrapProfileError",
+        "errorArgs": [
+          "1",
+          "1"
+        ],
+        "selector": "0x6a23ad80",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 280854,
+        "wallMs": 1
+      },
+      {
+        "name": "malformed-classfile",
+        "expectation": "typed EVM refusal; root/head unchanged",
+        "errorName": "ClassError",
+        "errorArgs": [
+          "1",
+          "0"
+        ],
+        "selector": "0x8e473891",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 116904,
+        "wallMs": 1
+      },
+      {
+        "name": "q-zero",
+        "expectation": "expected guest execution-budget rejection; not an expansion trigger",
+        "errorName": "LC0ControlError",
+        "errorArgs": [
+          "6"
+        ],
+        "selector": "0xf15d7343",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 28025,
+        "wallMs": 0
+      },
+      {
+        "name": "q-over",
+        "expectation": "expected guest execution-budget rejection; not an expansion trigger",
+        "errorName": "LC0ControlError",
+        "errorArgs": [
+          "6"
+        ],
+        "selector": "0xf15d7343",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 28050,
+        "wallMs": 0
+      },
+      {
+        "name": "internal-zero",
+        "expectation": "expected guest execution-budget rejection; not an expansion trigger",
+        "errorName": "LC0ControlError",
+        "errorArgs": [
+          "6"
+        ],
+        "selector": "0xf15d7343",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 28079,
+        "wallMs": 0
+      },
+      {
+        "name": "internal-over",
+        "expectation": "expected guest execution-budget rejection; not an expansion trigger",
+        "errorName": "LC0ControlError",
+        "errorArgs": [
+          "6"
+        ],
+        "selector": "0xf15d7343",
+        "rootBefore": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "rootAfter": "0x6483d40ae3b3820e449c1f19350735185cd40d240380676046a0460ffb85d127",
+        "atomic": true,
+        "gasUsed": 28110,
+        "wallMs": 0
+      }
+    ],
+    "processId": 3263320,
+    "elapsedMs": 70201
+  },
+  "reopen": {
+    "bootstrapCount": 99,
+    "checkpointBytes": 11914,
+    "checkpointRoot": "0x330f3e6cf0014dc0b1bdba80f25729c4366615b5358d70c8dfa87b4fe22f91cc",
+    "diagnosticClassCount": 249,
+    "distinctProcess": true,
+    "epoch": 336,
+    "heapAudit": {
+      "machineBytes": 11634,
+      "classCount": 249,
+      "rawCount": 150,
+      "bootstrapCount": 99,
+      "nextHandle": 18,
+      "arrayListClassIndex": 248,
+      "objectClassIndex": 150,
+      "arrayListObjectCount": 5,
+      "arrayListBackingLengths": [
+        0,
+        1,
+        3,
+        10,
+        1024
+      ],
+      "arrayListBackingHandles": [
+        4,
+        6,
+        8,
+        10,
+        12
+      ],
+      "allBackingsAreObjectArrays": true,
+      "allBackingElementsZero": true
+    },
+    "instanceId": "0x1b7970c05e8bcce3edcc31bc4695725387a7ca929e230cf7244632fb654287a6",
+    "lifecycle": 2,
+    "machineStateRoot": "0x6360a46dfac12c36560b2c1bde702b2eed9fda67fa0d01b74b2dc3f827ce272d",
+    "priorProcessId": 3263320,
+    "processId": 3263957,
+    "rawCount": 150,
+    "stateRoot": "0xfdb0ed8203fec949e036c7d3a5f7e7d28e57bc14cea53842d6160505b4699584",
+    "status": "fresh-process LevelDB/StateDB reopen and read-only EVM checkpoint validation passed"
+  },
+  "coordinator": {
+    "status": "generated exact150/exact1063930 positive through ordinary AS0+ZI0+DI0 CREATE, coordinator CREATE, and pinned local engine Call; MR01 terminal/checkpoint/head validation passed",
+    "rawCount": 150,
+    "rawBytes": 1063930,
+    "bootstrapCount": 99,
+    "diagnosticClassCount": 249,
+    "coordinator": "0x0405d3e84767aeba1b6e3c1da0e6c4494a0c7348",
+    "coordinatorRuntimeBytes": 5411,
+    "coordinatorRuntimeKeccak256": "0x829278fd74352681e54e18ef99740519925642cf25560cbff729344b8b1c21ba",
+    "coordinatorRuntimeSHA256": "a0c3a21de42c2291123f7be598ae492ded28f47a5b377da9dc5eb21e3a2dceab",
+    "engineRuntimeBytes": 394996,
+    "engineRuntimeKeccak256": "0xc7d177d43d4559fb50f5024c719eba1b7e5fafd75522a92d10d6eee5c724e203",
+    "engineRuntimeSHA256": "2642857d60fbc658eae57f34e1aee4ee83b6a27a429372c320c89e5e563e9d73",
+    "as0RuntimeBytes": 2831,
+    "as0RuntimeKeccak256": "0xc8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896",
+    "as0RuntimeSHA256": "e7f8e95b0af80bf15e89a01ceb635d8ae858560c606cc86ac3877d8f0de69b13",
+    "zi0RuntimeBytes": 9177,
+    "zi0RuntimeKeccak256": "0x0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77",
+    "zi0RuntimeSHA256": "74ea23889368b3381843e39bb2caf53a66de8dbfdb3dc58dc4a066c97a33d7a3",
+    "di0RuntimeBytes": 14978,
+    "di0RuntimeKeccak256": "0x946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37",
+    "di0RuntimeSHA256": "8c309455d3b0817725cd775f909abc2477b39fed6e18235114737480b05e17b0",
+    "as0Controller": "0x2826297a4f9c6a4b7b35f19757cccd1c61c13d55",
+    "zi0Index": "0xa97843d3e0f199320340e8e2f015b7c1dcec10ed",
+    "di0DecoderCount": 150,
+    "generatedZipBytes": 1081750,
+    "generatedZipSHA256": "0ed3bdf080ad4552c660d34721f076407b1b6456e777935f8334daf4bd4eee66",
+    "indexRoot": "0x3f8ea425e1b3cb93d089d70de12c7ad5ebe68305b2883802d02ea8fe14e52b24",
+    "packageRoot": "0xaefc83d643a80ef48d802ad354a4e26596cfb4274a67918591182eacd71b74d5",
+    "finalStateRoot": "0xbcc97d225707f76f17bd3358ecd3bdf11160bef34cd1347809f500247c4c8ae8",
+    "machineStateRoot": "0xabccf524ed225ed416caf5e685d86580614e5c7c4b49540d18e255b7c022b84b",
+    "checkpointRoot": "0x8ee9b08f4e5a9d4fe5b5b85fe2b93631fd44914071ed51dd383a999fcd1b9cd1",
+    "checkpointBytes": 11914,
+    "lifecycle": 2,
+    "outcome": 2,
+    "epoch": 1,
+    "jvmSteps": 336,
+    "internalSteps": 4,
+    "totalGas": 11813734408,
+    "maxCallGas": 438085981,
+    "evmCallCount": 3224,
+    "deploymentAndMutationGas": 11641705449,
+    "maxDeploymentAndMutationGas": 438085981,
+    "coordinator151CountRefusal": {
+      "name": "MR0Error",
+      "selector": "0xab23ed08",
+      "args": [
+        "2"
+      ]
+    },
+    "coordinatorNamespaceRefusal": {
+      "name": "MR0Error",
+      "selector": "0xab23ed08",
+      "args": [
+        "6"
+      ]
+    },
+    "namespaceHeadPreserved": true
+  },
+  "commands": [
+    {
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/generated-driver",
+        "gate",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-build-parent-p31-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-build-parent-p31-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-raw150-fixtures-parent-p31/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-raw150-fixtures-parent-p31",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/attempt-1/direct",
+        "1000000000"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "timeoutSeconds": 1199,
+      "wallSeconds": 70.247,
+      "log": "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/attempt-1/logs/direct-generated-engine-gate.log",
+      "label": "direct-generated-engine-gate"
+    },
+    {
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/generated-driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-build-parent-p31-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-build-parent-p31-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-raw150-fixtures-parent-p31/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-raw150-fixtures-parent-p31",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/attempt-1/direct",
+        "1000000000"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "timeoutSeconds": 1129,
+      "wallSeconds": 0.164,
+      "log": "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/attempt-1/logs/fresh-process-q1-reopen.log",
+      "label": "fresh-process-q1-reopen"
+    },
+    {
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/generated-driver",
+        "coordinator",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-build-parent-p31-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-build-parent-p31-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-raw150-fixtures-parent-p31/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-raw150-fixtures-parent-p31",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/attempt-1/coordinator",
+        "1000000000"
+      ],
+      "exit": 0,
+      "timedOut": false,
+      "timeoutSeconds": 1129,
+      "wallSeconds": 17.133,
+      "log": "/home/user/evm-jvm/geth/build/java-diff-mc-raw150-byte1063930-generated-parent-p31/attempt-1/logs/generated-coordinator-engine-route.log",
+      "label": "generated-coordinator-engine-route"
+    }
+  ],
+  "parentDomain": "MC-RAW150-BYTE1063930-P31",
+  "parentRuntimeSHA256": "2642857d60fbc658eae57f34e1aee4ee83b6a27a429372c320c89e5e563e9d73",
+  "actualGateSeconds": 87.54453065400594,
+  "testDriverOnlyPatches": [
+    {
+      "file": "evm_driver.go",
+      "addressOccurrences": 1,
+      "domainOccurrences": 0
+    },
+    {
+      "file": "coordinator_route.go",
+      "addressOccurrences": 0,
+      "domainOccurrences": 2
+    }
+  ],
+  "notOriginalInputs": true
+}

@@ -1,0 +1,68 @@
+{
+  "domain": "MC-RAW150-BYTE1063930-P31",
+  "candidateCommit": "5a9ee8f8b",
+  "runtimeBytes": 394996,
+  "runtimeCap": 1048576,
+  "checkpointCapUnchanged": 1048576,
+  "rawLimits": [
+    150,
+    1063930
+  ],
+  "bootstrapCount": 99,
+  "generatedParentGate": {
+    "seconds": 87.54453065400594,
+    "ordinaryGas": 1000000000,
+    "coordinatorCalls": 3224,
+    "exactPositiveClasses": 150,
+    "exactPositiveBytes": 1063930,
+    "maxCallGas": 438085981,
+    "checkpointBytes": 11914
+  },
+  "original": {
+    "epoch": 35,
+    "jvmSteps": 1914117,
+    "internalSteps": 85,
+    "lifecycle": 1,
+    "checkpointSHA256": "8904eac148ef3f8e24be3ae514410eb34451442005041874b78d6747798918b9",
+    "machineRoot": "0xee5485715c91a452fea2d862b7e2081d049195030398962df71434396fe6f30e",
+    "trieRoot": "0x9fe2292be159a7978e442ae62de7a4c9ee4069776fd7c9b2ff6a27b9175c3a39"
+  },
+  "checkpointBytes": 1024053,
+  "replaySeconds": 634.2161599939864,
+  "progressFromP30Jvm": 33,
+  "arrayListConstructor": {
+    "genuineOriginal": true,
+    "constructorCompletionEvidence": "call returned to fd constructor PC13; ArrayList instance holds real nonnull Object[568], size0",
+    "arrayListClassIndex": 174,
+    "arrayListHandle": 5638,
+    "backingHandle": 5641,
+    "backingLength": 568,
+    "all568BackingCellsZero": true,
+    "size": 0,
+    "classCount": 175,
+    "checkpointSHA256": "8904eac148ef3f8e24be3ae514410eb34451442005041874b78d6747798918b9",
+    "noStateInjected": true
+  },
+  "nextMeasuredBlocker": {
+    "type": "java/util/IdentityHashMap",
+    "constructor": "(I)V",
+    "originalCaller": "fd.<init>(I)V",
+    "rawClassIndex": 73,
+    "methodIndex": 1,
+    "newPC": 13,
+    "constructorPC": 18,
+    "atomicQ1Refusal": true
+  },
+  "underlyingEVMUnchanged": true,
+  "diagnosticMetadataNotExecutionAuthority": true,
+  "noPush": true,
+  "notClaimed": [
+    "IdentityHashMap implemented",
+    "logger completion",
+    "world",
+    "EULA",
+    "Done",
+    "standard-chain CREATE compatibility"
+  ],
+  "preservedBuildAttempt": "first builder finished binaries but audit serialization variable shadow causedTypeError; fixed and independently freshv2 reproduces identical engine/coordinator pins"
+}
