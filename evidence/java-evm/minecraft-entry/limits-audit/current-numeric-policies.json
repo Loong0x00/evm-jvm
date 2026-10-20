@@ -1,0 +1,496 @@
+{
+  "scope": "accepted P28 execution path and its active artifact/resource/test wrappers, not every historical worktree",
+  "acceptedEngineSource": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+  "acceptedEngineSHA256": "005bb1d6d2e1355956cbaff5ea5fd3c5838b7f328fee030c88836444951ceb70",
+  "numericPolicyCountLowerBound": 46,
+  "engineNumericPolicyCount": 31,
+  "countingRule": "deduplicate repeated checks of a logical policy; exclude derived handle/page counts, inactive legacy gas labels and JVM/EVM/DEFLATE format-inherent widths; include engine policies shadowed by stricter coordinator policy and test budgets, mark them as such",
+  "notAnExhaustiveCountOfAllConstraints": true,
+  "runtime1MStatus": "user-authorized1048576-byte LOCAL1M artifact ceiling, pending execution acceptance; legacy active builder393216 unchanged",
+  "limits": [
+    {
+      "id": 1,
+      "layer": "engine",
+      "name": "MAX_CONSTANT_POOL",
+      "purpose": "每个class常量池槽位",
+      "value": 4096,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 47,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 2,
+      "layer": "engine",
+      "name": "MAX_STACK",
+      "purpose": "每个Java帧操作数栈容量",
+      "value": 1024,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 49,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 3,
+      "layer": "engine",
+      "name": "MAX_LOCALS",
+      "purpose": "每个Java帧局部变量容量",
+      "value": 1024,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 50,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 4,
+      "layer": "engine",
+      "name": "MAX_FRAMES",
+      "purpose": "Java帧/初始化续帧总深度",
+      "value": 128,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 51,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 5,
+      "layer": "engine",
+      "name": "MAX_ARRAYS",
+      "purpose": "普通数组累计配额",
+      "value": 4096,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 52,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 6,
+      "layer": "engine",
+      "name": "MAX_ARRAY_LENGTH",
+      "purpose": "单数组长度",
+      "value": 65536,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 53,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 7,
+      "layer": "engine",
+      "name": "MAX_ARRAY_ELEMENTS",
+      "purpose": "普通数组元素总配额",
+      "value": 262144,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 63,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 8,
+      "layer": "engine",
+      "name": "MAX_OBJECTS",
+      "purpose": "普通对象累计配额",
+      "value": 4096,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 64,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 9,
+      "layer": "engine",
+      "name": "MAX_OBJECT_FIELDS",
+      "purpose": "字段/单对象继承字段槽上限",
+      "value": 1024,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 65,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 10,
+      "layer": "engine",
+      "name": "MAX_OBJECT_FIELD_SLOTS",
+      "purpose": "普通对象字段槽总配额",
+      "value": 65536,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 66,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 11,
+      "layer": "engine",
+      "name": "MAX_EXCEPTION_OBJECTS",
+      "purpose": "异常arena对象配额",
+      "value": 256,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 67,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 12,
+      "layer": "engine",
+      "name": "MAX_EXCEPTION_FIELD_SLOTS",
+      "purpose": "异常arena字段槽总配额",
+      "value": 262144,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 68,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 13,
+      "layer": "engine",
+      "name": "MAX_EXCEPTION_HANDLERS",
+      "purpose": "方法异常表条目",
+      "value": 256,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 69,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 14,
+      "layer": "engine",
+      "name": "MAX_INTERNED_STRINGS",
+      "purpose": "intern字符串记录配额",
+      "value": 1024,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 70,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 15,
+      "layer": "engine",
+      "name": "MAX_RAW_CLASSES",
+      "purpose": "每包声明原始类数",
+      "value": 75,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 404,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 16,
+      "layer": "engine",
+      "name": "MAX_RAW_BYTES",
+      "purpose": "声明类字节总量",
+      "value": 531965,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 405,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 17,
+      "layer": "engine",
+      "name": "MAX_CHECKPOINT_BYTES",
+      "purpose": "完整checkpoint字节数",
+      "value": 1048576,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 406,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 18,
+      "layer": "engine",
+      "name": "MAX_SEEDS",
+      "purpose": "引擎启动seed文件数",
+      "value": 16,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 409,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 19,
+      "layer": "engine",
+      "name": "MAX_SEED_BYTES",
+      "purpose": "引擎启动seed数据合计",
+      "value": 65536,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 410,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 20,
+      "layer": "engine",
+      "name": "MAX_VFS_INODES",
+      "purpose": "VFS节点数",
+      "value": 64,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 411,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 21,
+      "layer": "engine",
+      "name": "MAX_VFS_DESCRIPTORS",
+      "purpose": "VFS描述符数",
+      "value": 32,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 412,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 22,
+      "layer": "engine",
+      "name": "MAX_FILE_BYTES",
+      "purpose": "VFS单文件数据",
+      "value": 65536,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 413,
+      "guardStyle": "same-valued literal guards; declared constant unused",
+      "literalGuardLine": 1350
+    },
+    {
+      "id": 23,
+      "layer": "engine",
+      "name": "MAX_ALL_FILE_BYTES",
+      "purpose": "VFS全部文件数据合计",
+      "value": 65536,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 414,
+      "guardStyle": "same-valued literal guards; declared constant unused",
+      "literalGuardLine": 1364
+    },
+    {
+      "id": 24,
+      "layer": "engine",
+      "name": "MAX_PATH_COMPONENT",
+      "purpose": "VFS单路径段字节数",
+      "value": 64,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 415,
+      "guardStyle": "same-valued literal guards; declared constant unused",
+      "literalGuardLine": 1401
+    },
+    {
+      "id": 25,
+      "layer": "engine",
+      "name": "MAX_PATH_DEPTH",
+      "purpose": "VFS路径层级",
+      "value": 16,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 416,
+      "guardStyle": "same-valued literal guards; declared constant unused",
+      "literalGuardLine": 1407
+    },
+    {
+      "id": 26,
+      "layer": "engine",
+      "name": "MAX_PATH_BYTES",
+      "purpose": "VFS路径总字节数",
+      "value": 256,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 417,
+      "guardStyle": "same-valued literal guards; declared constant unused",
+      "literalGuardLine": 1371
+    },
+    {
+      "id": 27,
+      "layer": "engine",
+      "name": "MAX_TRANSFER",
+      "purpose": "VFS/inspectFile单次传输字节数",
+      "value": 4096,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "declarationLine": 418,
+      "guardStyle": "named constant"
+    },
+    {
+      "id": 28,
+      "layer": "engine",
+      "name": "MAX_JVM_STEPS",
+      "purpose": "单slice JVM步骤",
+      "value": 65536,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "guardLine": 607
+    },
+    {
+      "id": 29,
+      "layer": "engine",
+      "name": "MAX_INTERNAL_STEPS",
+      "purpose": "单slice内部步骤",
+      "value": 4096,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "guardLine": 607
+    },
+    {
+      "id": 30,
+      "layer": "engine",
+      "name": "COMMIT_RESERVE",
+      "purpose": "gas下界/提交预留检查",
+      "value": 25000000,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "guardLine": 408
+    },
+    {
+      "id": 31,
+      "layer": "engine",
+      "name": "RESOURCE_LOOKUP_GAS",
+      "purpose": "资源存在查询回调固定gas预算",
+      "value": 1000000,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/MCEntryInterpreter.sol",
+      "guardLine": 4525,
+      "note": "nested staticcall budget; independent of outer original-call uint64.max gas"
+    },
+    {
+      "id": 32,
+      "layer": "coordinator",
+      "name": "SELECTED_RESOURCE_COUNT",
+      "purpose": "协调器绑定非class资源数",
+      "value": 1,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/coordinator/MCEntryCoordinator.sol",
+      "note": "scalar constructor tuple, zero or one selected resource"
+    },
+    {
+      "id": 33,
+      "layer": "coordinator",
+      "name": "SELECTED_RESOURCE_BYTES",
+      "purpose": "协调器绑定非class资源字节",
+      "value": 4096,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/coordinator/MCEntryCoordinator.sol",
+      "note": "MAX_SELECTED_RESOURCE_BYTES"
+    },
+    {
+      "id": 34,
+      "layer": "artifact",
+      "name": "LOCAL_RUNTIME_BYTES",
+      "purpose": "本地解释器runtime验收",
+      "value": 393216,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/artifacts/engine/build.js",
+      "note": "LOCAL1M1048576 explicitly authorized, pending new profile acceptance; LOCAL384 legacy preserved"
+    },
+    {
+      "id": 35,
+      "layer": "driver",
+      "name": "OWNED_CALL_SECONDS",
+      "purpose": "单次EVM调用取消watchdog",
+      "value": 30,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/max-gas-driver.go.txt",
+      "note": "return 30 * time.Second"
+    },
+    {
+      "id": 36,
+      "layer": "tests",
+      "name": "ORDINARY_GENERATED_GAS",
+      "purpose": "普通生成测试单call gas",
+      "value": 1000000000,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/gate.py",
+      "note": "original uses separate user-authorized uint64.max driver, not this cap"
+    },
+    {
+      "id": 37,
+      "layer": "tests",
+      "name": "WHOLE_GENERATED_GATE_SECONDS",
+      "purpose": "普通生成门总时长",
+      "value": 1200,
+      "source": "evidence/java-evm/minecraft-entry/parent-raw75-byte531965/gate.py",
+      "note": "deadline = started + 1200"
+    },
+    {
+      "id": 38,
+      "layer": "AS0/ZI0",
+      "name": "ARCHIVE_BYTES",
+      "purpose": "原始ZIP/JAR大小",
+      "value": 33554432,
+      "source": "jvmevm/artifactstore/as0/runtime/AS0ArtifactStore.sol",
+      "note": "MAX_LENGTH; same ZIP bound in ZI0 counted once"
+    },
+    {
+      "id": 39,
+      "layer": "ZI0",
+      "name": "ZIP_ENTRY_COUNT",
+      "purpose": "ZIP条目数",
+      "value": 32768,
+      "source": "jvmevm/artifactstore/zi0/runtime/ZI0ZipIndex.sol",
+      "note": "MAX_ENTRIES"
+    },
+    {
+      "id": 40,
+      "layer": "ZI0",
+      "name": "CENTRAL_DIRECTORY_BYTES",
+      "purpose": "ZIP中央目录字节数",
+      "value": 4194304,
+      "source": "jvmevm/artifactstore/zi0/runtime/ZI0ZipIndex.sol",
+      "note": "MAX_CD"
+    },
+    {
+      "id": 41,
+      "layer": "ZI0/DI0",
+      "name": "ZIP_ENTRY_NAME_BYTES",
+      "purpose": "ZIP资源名长度",
+      "value": 256,
+      "source": "jvmevm/artifactstore/zi0/runtime/ZI0ZipIndex.sol",
+      "note": "MAX_NAME; repeated DI0/name guards counted once"
+    },
+    {
+      "id": 42,
+      "layer": "ZI0",
+      "name": "ZIP_EXTRA_BYTES",
+      "purpose": "ZIP extra字段长度",
+      "value": 1024,
+      "source": "jvmevm/artifactstore/zi0/runtime/ZI0ZipIndex.sol",
+      "note": "MAX_EXTRA"
+    },
+    {
+      "id": 43,
+      "layer": "ZI0",
+      "name": "ZIP_COMMENT_BYTES",
+      "purpose": "ZIP中央目录单条目comment字段长度",
+      "value": 1024,
+      "source": "jvmevm/artifactstore/zi0/runtime/ZI0ZipIndex.sol",
+      "note": "MAX_COMMENT"
+    },
+    {
+      "id": 44,
+      "layer": "DI0",
+      "name": "RESOURCE_PLAINTEXT_BYTES",
+      "purpose": "单资源解压输出/单class传输",
+      "value": 262144,
+      "source": "jvmevm/artifactstore/di0/runtime/DI0Resource.sol",
+      "note": "MAX_OUTPUT; derived page count32 not separately counted"
+    },
+    {
+      "id": 45,
+      "layer": "DI0",
+      "name": "DECODE_STEP_UNITS",
+      "purpose": "单次解压step工作预算",
+      "value": 128,
+      "source": "jvmevm/artifactstore/di0/runtime/DI0Resource.sol",
+      "note": "MAX_UNITS"
+    },
+    {
+      "id": 46,
+      "layer": "AS0/DI0/coordinator",
+      "name": "RESOURCE_READ_CHUNK_BYTES",
+      "purpose": "认证资源单次read片段",
+      "value": 4096,
+      "source": "jvmevm/artifactstore/di0/di0.go",
+      "note": "MaxRead and repeated AS0/DI0/coordinator read guards grouped once; distinct from guest VFS transfer"
+    }
+  ],
+  "derivedNotCounted": {
+    "MAX_HANDLES": 8449,
+    "AS0_MAX_PAGES": 4096,
+    "DI0_MAX_OUTPUT_PAGES": 32
+  },
+  "formatNotCounted": [
+    "JVM method Code length65535",
+    "array rank255",
+    "classfile u2/u4 widths",
+    "EVM256-bit words and native call/stack rules",
+    "EIP170 standard-chain code size24576",
+    "EIP3860 initcode size49152",
+    "DEFLATE history32768"
+  ],
+  "additionalNonNumericRestrictions": [
+    "immutable predeclared class/resource package and uint8 coordinator classCount/classBinding indices (schema needs widening above255)",
+    "only empty-main-String[] entry, no generic CLI/classpath/dynamic class loader",
+    "97 bootstrap images with narrow API subsets; ArrayList pending, Random construction-only",
+    "no general GC; full allocated-handle heap retained in checkpoint",
+    "single guest Thread/currentThread profile, not full scheduler/synchronization",
+    "incomplete reflection/native/IO/network APIs and bytecode set",
+    "String.split only -|\\.; Locale.ROOT lower-case ASCII only",
+    "Math.sin/cos finite abs<=2pi; asin finiteabs<=1, unsupported special cases refuse",
+    "fixed replay context block=1,time=1, not host wall-clock Java environment",
+    "VFS lexical paths accept printable ASCII only",
+    "ZIP implementation supports stored/DEFLATE bounded profile rather than arbitrary ZIP features"
+  ],
+  "unverifiedNotCounted": [
+    "whether historical4GiB test-memory goal is uniformly enforced by current entry scripts",
+    "every literal/API-specific name/input limit beyond named quota inventory"
+  ],
+  "additionalInputGuardsNotIncludedInLowerBound": [
+    "entry class/method identifiers<=256 ASCII bytes",
+    "Class.forName/resource enumeration names<=256 units/bytes in their profile",
+    "checkpoint entry-args codec<=8 but actualmain(String[]) is fixed-empty",
+    "uint8 coordinator class count/index, u16 MR01 class/object counters and other schema field widths"
+  ]
+}
