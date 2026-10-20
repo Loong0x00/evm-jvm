@@ -1,0 +1,25 @@
+{
+  "stage": "MC-RANDOM-CLASS-P21-MAX-OBJECTS-2048",
+  "accepted": false,
+  "blocker": "pinned solc 0.8.30 JavaScript package unavailable from local dependencies/cache",
+  "checkedPath": "jvmevm/runtime/node_modules/solc",
+  "present": false,
+  "offlineInstallCommand": "cd jvmevm/runtime && npm ci --offline --ignore-scripts --no-audit --no-fund",
+  "offlineInstallExit": 1,
+  "offlineInstallError": "ENOTCACHED: https://registry.npmjs.org/tmp/-/tmp-0.0.33.tgz; cache mode only-if-cached",
+  "networkUsed": false,
+  "siblingWorktreesUsed": false,
+  "blockedChecks": [
+    "Solidity compile and runtime-size verification <=393216 bytes",
+    "generated q4096 object-capacity EVM preflight",
+    "retained full generated q1/q7/direct/reopen gate <=1200 seconds"
+  ],
+  "completedChecks": [
+    "normalized P20 source byte equality except MAX_OBJECTS constant and P21 domain labels",
+    "independent source-only Keccak root and equality of all97 ordered bootstrap leaves",
+    "generated fixture compilation with javac --release 8 -g:none",
+    "capacity fixture/archive/class SHA256 manifests",
+    "javap confirmation that the 2049 fixture performs each Object allocation in-loop"
+  ],
+  "no_original_or_world_inputs": true
+}
