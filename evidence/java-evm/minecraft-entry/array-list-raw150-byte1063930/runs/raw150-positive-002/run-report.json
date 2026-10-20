@@ -1,0 +1,210 @@
+{
+  "acceptedEngineCapChanged": false,
+  "actualCountsVerified": {
+    "bootstrapClasses": 99,
+    "raw150": 150,
+    "raw151Refused": true,
+    "rawByteLimit": 1063930,
+    "rawBytePlusOneRefused": true,
+    "rawDiagnosticClasses": 249
+  },
+  "attemptHistory": [
+    {
+      "attempt": 1,
+      "commands": [
+        {
+          "command": [
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/tools/evm_driver",
+            "gate",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-fixtures-raw150-positive-002/fixture-manifest.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-fixtures-raw150-positive-002",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-gate-raw150-positive-002/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "direct-generated-engine-gate",
+          "log": "logs/direct-generated-engine-gate.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 70.183
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/tools/evm_driver",
+            "reopen",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-fixtures-raw150-positive-002/fixture-manifest.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-fixtures-raw150-positive-002",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-gate-raw150-positive-002/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "fresh-process-q1-reopen",
+          "log": "logs/fresh-process-q1-reopen.log",
+          "timedOut": false,
+          "timeoutSeconds": 1129,
+          "wallSeconds": 0.164
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/tools/evm_driver",
+            "coordinator",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-fixtures-raw150-positive-002/fixture-manifest.json",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-fixtures-raw150-positive-002",
+            "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-gate-raw150-positive-002/attempts/attempt-1/coordinator",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "generated-coordinator-engine-route",
+          "log": "logs/generated-coordinator-engine-route.log",
+          "timedOut": false,
+          "timeoutSeconds": 1129,
+          "wallSeconds": 17.03
+        }
+      ],
+      "gasBudget": 1000000000,
+      "status": "passed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "buildCommands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/mc-raw150-bytes1063930/evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/build_candidate.py",
+        "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002"
+      ],
+      "exit": 0,
+      "log": "logs/build-1-engine-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 221.563
+    },
+    {
+      "command": [
+        "node",
+        "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/coordinator/build.js"
+      ],
+      "exit": 0,
+      "log": "logs/build-2-coordinator-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 1.915
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/mc-raw150-bytes1063930/evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/generate_fixtures.py",
+        "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-fixtures-raw150-positive-002"
+      ],
+      "exit": 0,
+      "log": "logs/build-3-fixtures.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 0.765
+    },
+    {
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/mc-raw150-bytes1063930/build/java-diff-mc-array-list-raw150-build-raw150-positive-002/tools/evm_driver",
+        "./evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools"
+      ],
+      "exit": 0,
+      "log": "logs/build-4-driver-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 0.714
+    }
+  ],
+  "checkpointCapBytes": 1048576,
+  "coordinatorMaxCallGas": 438085981,
+  "coordinatorTotalGas": 11813734408,
+  "directElapsedMS": 70157,
+  "directTerminalRaw150Schedules": [
+    "q1-raw150",
+    "q7-raw150",
+    "q65536-raw150",
+    "q4096-raw150"
+  ],
+  "elapsedWallSeconds": 88,
+  "generatedClassCount": 19,
+  "gitHead": "fff70258adc619bc09ae34f18993daafd9ddd66f",
+  "hostOracleCount": 14,
+  "pairedPins": {
+    "acceptedEngineCapChanged": false,
+    "bootstrapCount": 99,
+    "constructorRawByteLimit": 1063930,
+    "constructorRawClassLimit": 150,
+    "coordinator": {
+      "initSHA256": "f00f58276fa9e89188a7473238fde7eda551162160d9f7e02000b753c984493f",
+      "runtimeBytes": 5411,
+      "runtimeKeccak256": "e61b992c3e14dc9ffe780d00cb7ee780a90c38d46169566b924ce8ff397ae44b",
+      "runtimeSHA256": "8dd740ab4b4b9fe89e5b6837a2f60701aa40af6619a816e60e8f49b5a3c08274",
+      "sourceSHA256": "004936d359f792784211fb1a209a82f24447ce3d298e49c116dd7c54d38b0c44"
+    },
+    "coordinatorExecution": "ordinary EVM CREATE with constructor-pinned AS0/ZI0/DI0 dependencies",
+    "engine": {
+      "initSHA256": "a303973b7134532e171fe62fe60ad98b94787f388ae74a2b2c182dd25927bca1",
+      "runtimeBytes": 394996,
+      "runtimeKeccak256": "aca57c1cbc1d702155edc89675e4ac4e2513b57464ec8e80b240787b8ae0b1e1",
+      "runtimeSHA256": "7a17eae9b4d459e19547928d3cf959cefbac5debf8bbe1206e2bc818114eec33"
+    },
+    "engineExecution": "LOCAL preinstalled-code runtime.Call, not CREATE",
+    "maximumMR01DiagnosticClasses": 249,
+    "ordinaryOpcodeGasChanged": false,
+    "profile": "LOCAL1M-array-list-raw150-byte1063930"
+  },
+  "runId": "raw150-positive-002",
+  "runtimeCapBytes": 1048576,
+  "sourceHashes": {
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/README.md": "1693faee035385463c123649132a034a1c0e034e3ea8c274e5ee307d80b4924c",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/bootstrap/java/util/AbstractList.java": "cc6f99920d5b9a8bc32e5d8d2807da178d66921e357680409ed142061966f601",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/bootstrap/java/util/ArrayList.java": "2db3b97e97f9d65252371445fb589576092eaecc9684647a8a3f7c421a221c23",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/bootstrap/stub/java/util/AbstractCollection.java": "c70eec71eb4784e646a97710696cede06335c7a65b9b440060b3f774bf6e50ae",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/bootstrap/stub/java/util/Collection.java": "4ca7f5cf95977d1ae58ab9a9f4a51e658f4a9b9b1dfb32f0b56c7a4133f6755b",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/bootstrap/stub/java/util/List.java": "25a245341b424f3b4eccf237c556dd0f5971fcd521b14d8544ac07d6030fb7dd",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/bootstrap/stub/java/util/RandomAccess.java": "e352a53d2db0adb22e3b7d809ad2cf22297c9ef69f42b4774655392afb06a885",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/coordinator/MCEntryCoordinator.sol": "004936d359f792784211fb1a209a82f24447ce3d298e49c116dd7c54d38b0c44",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/coordinator/build.js": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/engine/MCEntryInterpreter.sol": "774913db117cbdb4fec39ee652894a1a25c0bf9b7101140248b4456af76af637",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/engine/build.js": "395752305ea04f1c8eceb0ebe7f832e964b060aacf6105d9b8f5fe26859b85ab",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListMathObjectInteger.java": "5b88cc17242302a9cf9f3116d5b36172c87cf4a4a6a7701270f6c9376ab87695",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListMatrix.java": "19ba9cc62179ad1fdcc012bee8fcbb294b674139e7d3cbdff4db8456ade1aed7",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListMissingDefaultConstructor.java": "5fe4b071f778ea5fe4506265c41e0f9600c4b47fda103dbbab501b4f693111eb",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListNegativeMin.java": "0e059523445b6cd7ae47483400096556c1131d3747eb539a3b14ebd6f6638b87",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListNegativeMinusOne.java": "40672112374b40782854660478d14aef332ddb304172698ed3ab4960d115d4ce",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListPackedSparse.java": "b9a0a280f4e8b0486c990d9cbc625957bf9ab0f732ef23b59cb3eb575c1777d8",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListQuotaBoundary.java": "e0868f65cbae95b6fd92b83b11a470e51e0ef7f16ef7b60fe2c4062832eacf16",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListQuotaOOM.java": "b8e1e0895ccadb47d3f8e585c358b817b7fdfaac62994a461730fbece716e556",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListRawReplacementMain.java": "3e930fe595f147855752b82792dc2022029f2ce8f9e1599753a1eab5a551d09d",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListUnboundAddConcrete.java": "cf0dfd7c684fe42a8d675cfa070fb0d0748d52e1d91d549aca07ff2d59760b5f",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListUnboundAddInterface.java": "8a6acd83bce8c8f01de24539eb1cb8be3242b7f4441279614578e2207b51cf17",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListUnboundIteratorConcrete.java": "1dedd842a05727305cacf0e748f3bf56d6b4dc0b0a7711c8f4eca4f7997a0089",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/ArrayListUnboundIteratorInterface.java": "a1503928eb95565d562677fc7002135810233ebdbd76817268c9891b616a919b",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/fixtures/src/replacement/java/util/ArrayList.java": "4d20cff98be309dc7c8ed3337101060449d3462ebaf4e691d61cb134cbb719be",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/pins.json": "23393af9b73bcc24e9f391cd1dd6de65ce921a7e765ad12bfac4a9543f060f1c",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/build_candidate.py": "812acf6357f9f4d54f3b302bab86027605f98486d6429ac071047a82822edbb5",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/coordinator_route.go": "c6d60004685cc302b058c0062aaa7c3f77ab42d99a780c3673d78d6abb411e2c",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/evm_driver.go": "52b8090f1c61953d89fdf16c87bf0a0e9e54eb969c14e1a5182e27b241bb5c38",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/generate_fixtures.py": "a2025c7632bbd82fe1d02ddd5e30b3ff646f941a43994ce33fe6ee5d98fe6871",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/run_gate.py": "863f3fa867e6b4609b5cdb51de71b05a04bbac6805990a438dae50243de6c86d",
+    "evidence/java-evm/minecraft-entry/array-list-raw150-byte1063930/tools/verify_source.py": "f6343096851a18b4b174903265b06250bdd8e9d0445d4627a2d9564da3e332d2"
+  },
+  "status": "generated raw150/1,063,930-byte engine and coordinator gates passed; original replay remains parent-owned and was not run here",
+  "testOnlyGasBudget": 1000000000,
+  "testOnlyWallBudgetSeconds": 1200,
+  "toolVersions": {
+    "go": "go version go1.27.2-X:nodwarf5 linux/amd64",
+    "javac": "javac 21.0.9",
+    "node": "v24.14.0",
+    "python": "Python 3.14.8"
+  }
+}
