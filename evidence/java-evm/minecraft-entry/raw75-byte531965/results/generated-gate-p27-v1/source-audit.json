@@ -1,0 +1,212 @@
+{
+  "profile": "MC-RANDOM-CLASS-P27-RAW75-BYTE531965",
+  "acceptedParentArtifactRoot": "/home/user/evm-jvm/raw75-byte531965/evidence/java-evm/minecraft-entry/parent-raw74-byte518516",
+  "acceptedParentEngineSourceSHA256": "221e82759ecbfacbc0f6be3bb86b9b71ef6c08491f5dbff18a1cc9dce404dc8f",
+  "acceptedParentCoordinatorSourceSHA256": "552a4e606ccc6f23c7866bfa1c57030514dc186667143552faf9921f4e90ab43",
+  "candidateEngineSourceSHA256": "3f17c17efea4b094ac2e75977a9f1ce837f05506d7549ce070121ad42782f148",
+  "candidateCoordinatorSourceSHA256": "5d54f528d3bf5fe8fe239d3f9ddb771554f17df7b3a1f97edaa75345f432b8df",
+  "engineChangedLines": [
+    "MAX_RAW_CLASSES 74->75",
+    "MAX_RAW_BYTES 518516->531965",
+    "two matching _configRoot leaves only"
+  ],
+  "coordinatorChangedLines": [
+    "four fixed raw arrays 74->75",
+    "raw count guard 74->75",
+    "per-class/aggregate bytes 518516->531965",
+    "candidate engine codehash pin"
+  ],
+  "observerChangedLines": [
+    "normal raw bound 74->75",
+    "raw76 driver/coordinator/engine refusals",
+    "531965 positive/531966 refusal",
+    "MR01 class bound 171->172"
+  ],
+  "bootstrapCount": 97,
+  "bootstrapRoot": "70b6401e629c75ad213efb8b6bf484cb3f364dc9a281031c4651069bd3776ec4",
+  "bootstrapLeavesEqualParent": true,
+  "P27LabelsRetained": true,
+  "noHistoricalParentEdit": true,
+  "noGlobalNumericReplacement": true,
+  "raw76IsExplicitRefusalOnly": true,
+  "diagnosticOnlyChange": "class bound 171->172",
+  "engineABIUnchanged": true,
+  "engineStorageLayoutUnchanged": true,
+  "coordinatorABIUnchanged": true,
+  "coordinatorStorageLayoutExactExpectedDelta": true,
+  "coordinatorStorageLayout": {
+    "storage": [
+      {
+        "astId": 59,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "owner",
+        "offset": 0,
+        "slot": "0",
+        "type": "t_address"
+      },
+      {
+        "astId": 61,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "finalIndex",
+        "offset": 0,
+        "slot": "1",
+        "type": "t_address"
+      },
+      {
+        "astId": 63,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "finalIndexRoot",
+        "offset": 0,
+        "slot": "2",
+        "type": "t_bytes32"
+      },
+      {
+        "astId": 65,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "packageRoot",
+        "offset": 0,
+        "slot": "3",
+        "type": "t_bytes32"
+      },
+      {
+        "astId": 67,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "instanceId",
+        "offset": 0,
+        "slot": "4",
+        "type": "t_bytes32"
+      },
+      {
+        "astId": 69,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "totalClassBytes",
+        "offset": 0,
+        "slot": "5",
+        "type": "t_uint32"
+      },
+      {
+        "astId": 71,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "classCount",
+        "offset": 4,
+        "slot": "5",
+        "type": "t_uint8"
+      },
+      {
+        "astId": 75,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "decoders",
+        "offset": 0,
+        "slot": "6",
+        "type": "t_array(t_address)75_storage"
+      },
+      {
+        "astId": 79,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "classRoots",
+        "offset": 0,
+        "slot": "81",
+        "type": "t_array(t_bytes32)75_storage"
+      },
+      {
+        "astId": 83,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "classSizes",
+        "offset": 0,
+        "slot": "156",
+        "type": "t_array(t_uint32)75_storage"
+      },
+      {
+        "astId": 87,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "rawNames",
+        "offset": 0,
+        "slot": "166",
+        "type": "t_array(t_bytes_storage)75_storage"
+      },
+      {
+        "astId": 89,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "seedDecoder",
+        "offset": 0,
+        "slot": "241",
+        "type": "t_address"
+      },
+      {
+        "astId": 91,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "seedName",
+        "offset": 0,
+        "slot": "242",
+        "type": "t_bytes_storage"
+      },
+      {
+        "astId": 93,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "seedRoot",
+        "offset": 0,
+        "slot": "243",
+        "type": "t_bytes32"
+      },
+      {
+        "astId": 95,
+        "contract": "MCEntryCoordinator.sol:MCEntryCoordinator",
+        "label": "seedSize",
+        "offset": 0,
+        "slot": "244",
+        "type": "t_uint32"
+      }
+    ],
+    "types": {
+      "t_address": {
+        "encoding": "inplace",
+        "label": "address",
+        "numberOfBytes": "20"
+      },
+      "t_array(t_address)75_storage": {
+        "base": "t_address",
+        "encoding": "inplace",
+        "label": "address[75]",
+        "numberOfBytes": "2400"
+      },
+      "t_array(t_bytes32)75_storage": {
+        "base": "t_bytes32",
+        "encoding": "inplace",
+        "label": "bytes32[75]",
+        "numberOfBytes": "2400"
+      },
+      "t_array(t_bytes_storage)75_storage": {
+        "base": "t_bytes_storage",
+        "encoding": "inplace",
+        "label": "bytes[75]",
+        "numberOfBytes": "2400"
+      },
+      "t_array(t_uint32)75_storage": {
+        "base": "t_uint32",
+        "encoding": "inplace",
+        "label": "uint32[75]",
+        "numberOfBytes": "320"
+      },
+      "t_bytes32": {
+        "encoding": "inplace",
+        "label": "bytes32",
+        "numberOfBytes": "32"
+      },
+      "t_bytes_storage": {
+        "encoding": "bytes",
+        "label": "bytes",
+        "numberOfBytes": "32"
+      },
+      "t_uint32": {
+        "encoding": "inplace",
+        "label": "uint32",
+        "numberOfBytes": "4"
+      },
+      "t_uint8": {
+        "encoding": "inplace",
+        "label": "uint8",
+        "numberOfBytes": "1"
+      }
+    }
+  }
+}
