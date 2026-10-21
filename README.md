@@ -1,3 +1,87 @@
+# Java on EVM — Minecraft startup experiment
+
+Research branch: **`java-on-evm`** of this Go Ethereum fork.
+The goal is to run the **unchanged Minecraft Java server 1.12.2** inside a
+Solidity JVM interpreter executed by geth's EVM, eventually reaching the genuine
+server `Done (...)!` message. Superflat is the first world-generation target.
+
+> **Not booted yet.** The latest accepted original-server run is still in early
+> bootstrap / built-in registration. It has **not** reached world preparation,
+> an accepted EULA/configuration startup, a listening server, or `Done`.
+
+## What is verified
+
+| Area | Latest accepted evidence |
+| --- | --- |
+| Original workload | Unmodified 1.12.2 server; 90 explicit, authenticated class resources (658,601 bytes) |
+| Guest execution | **1,920,998 JVM instructions**, 95 internal steps, 39 verified successful checkpoint receipts |
+| Current blocker | `java/util/HashMap.<init>()V`, called by Guava `Maps.newHashMap()`; implementation/review remains pending |
+| Runtime profile | 398,336-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 100 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
+
+Execution is genuine guest bytecode, not a replacement Minecraft program or a
+host-produced result. Only successfully authenticated checkpoints can continue;
+failed execution and diagnostic metadata do not authorize guest-state recovery.
+
+### Important LOCAL-only limits
+
+The interpreter is **preinstalled with `StateDB.SetCode` and invoked through
+ordinary EVM calls**. It is oversized for standard-chain contract deployment.
+EIP-170/EIP-3860, EVM opcode behavior, and gas accounting have **not** been disabled
+or changed. The audited geth `core/vm`, `core/state`, and `params` match base
+commit `95665d570`.
+
+The current harness uses a fixed `block.number = 1` / `timestamp = 1` context and
+commits/reopens state between calls. **Checkpoint counts are not mined-block
+counts**, and this is not a demonstration of public-chain deployment, real
+cross-block operation, multiplayer connectivity, or production readiness.
+
+## Performance: faster dependency discovery, unchanged precise acceptance
+
+On the **same original-server input and P34 guest runtime**, dependency discovery
+improved from **700.916 s to 420.494 s** (about **40% less discovery time**).
+Continuing from its last successful checkpoint in precise mode produced the
+**same canonical Head, deterministic counters, and byte-identical checkpoint /
+MR01 state** as the legacy precise replay.
+
+This is an **iteration-workflow improvement**, not a 40% speedup of complete
+Minecraft startup. Discovery stops are explicitly **not final acceptance**.
+Precise q1 verification remains; an authenticated, read-only EVM selected-method
+inspector helps batch explicit dependencies without skipping guest execution or
+migrating checkpoints across different packages.
+
+## Start here
+
+- [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
+- [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-perf-resource-batch/artifacts/hashmap-constructor-blocker.json)
+- [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
+- [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
+- [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)
+- [Capacity/implementation-limit audit](JAVA_EVM_MC_LIMITS_AUDIT.md)
+
+A small generated-fixture controller check can be run from the repository root:
+
+```sh
+python3 -B evidence/java-evm/minecraft-entry/perf-replay-discovery/test_replay_controller.py
+```
+
+The linked tool READMEs document the compiler/runtime prerequisites and larger
+generated-EVM checks. **These are not commands to start a working Minecraft
+server.** The original server JAR is not bundled; its pinned SHA-256 is
+`fe1f9274e6dad9191bf6e6e8e36ee6ebc737f373603df0946aafcded0d53167e`.
+Historical profiles, successful worlds, failed attempts, and manifests are kept
+rather than overwritten. Many older documents describe earlier, superseded
+limits; use the accepted-state link above for the current anchor.
+
+---
+
+## Upstream geth documentation
+
+The original Go Ethereum README follows unchanged. Its build/run commands are for
+the Ethereum client, **not** an end-to-end Minecraft launcher.
+
 ## Go Ethereum
 
 Golang execution layer implementation of the Ethereum protocol.
