@@ -1,3 +1,13 @@
+## Latest P34: checkpoint2MiB accepted, genuine original surpasses1MiB
+
+- IndependentP34 runtime398336B, runtimeceiling**1MiB unchanged**, checkpoint**2MiB**; all100images/native21/String12/raw150/1063930/JVMsemantics and underlyinggethEVM/state/params unchanged. Profile-awareopaqueGo transport haslegacyzero/default1MiB; oldsharedLC0/defaults untouched. Old1MiBsource/world/failures preserved.
+- Parentordinary1B generatedgate**1030.610s** passes actualeagerObject[65536]pair1050210B CP, q1/q7/q4096/q65536/direct/reopen, legacy1M/new2Moutput/+1refusal andcanonicalcoordinator1050806B CP/max681699505gas/3224calls. InitialparenttestadaptationwronglyusedP34domainforlegacyP33artifactroot; failedattemptpreserved, fixedonlylegacydomainexpectation beforefreshv2.
+- Fresh unchanged-original81 (556329B) **1915695J/89I**,39verifiedreceipts,719.380s,lifecycle1; genuineCP**1052046B>1MiB** SHA `c047b42b4c14ae683b1befd9bafc15feb267b68eeabda781bad61f6975a0b0ac`. Oldcapblockerpassed,+863J; all65536sinbitsstillmatchreadonlyoracle. No oldfailed/crossprofileCPused.
+- Next atomicq1missing`ahs`,site0x1007/context741, bda raw80/method2 `<clinit>()V` PC741. ParentgenuineEVMmeasurement ahs3639B=>82classes/559968B, fitsraw150/1063930; `parent-checkpoint-2m/original82-bindings.json` ready. Nextfreshoriginal82sameP34code/driver.
+- Evidence `parent-checkpoint-2m/artifacts/ahs-resource-blocker.json`; latestworld `build/java-diff-mc-checkpoint-2m-original81-parent-p34/official`. LOCALpreinstalledCallnotstandardCREATE. NoWorld/EULA/Doneclaim, nopush. Noactiveworkers.
+
+---
+
 ## Latest original81: measured checkpoint1MiB capacity blocker -> double2MiB
 
 - Added only genuineEVM-measured bda3537B:81classes/556329B, sameP33engine398336B/coordinator/100images/native21/raw150/1063930/runtime1MiB/CP1MiB. Freshoriginal81 **1914832J/89I**,37verifiedreceipts,769.154s,lifecycle1.
