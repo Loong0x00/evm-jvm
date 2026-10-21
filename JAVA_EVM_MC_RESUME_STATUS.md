@@ -1,3 +1,14 @@
+## Latest: equivalent performance workflow accepted; precise original90 reaches HashMap()V
+
+- Newtools donotchange P34engine398336B/coordinator/100images/native21/gas/opcodes/raw150/1063930/CP2MiB/runtime1MiB. Independentgeneratedscanner14methods1123instructions18refs passed; controllergenerated14.705s exactold/new/discovery+preciseequalitypassed.
+- **Original86measured700.916s→420.494s discovery,40.0% reduction** (notfullstartup speedup). Subsequentprecisecontinuation283.297s givesbyte-exactsamecanonicalHead/deterministiccounters/allCP+MR01 aslegacy, SHA b2eb2c4975c6d49e3cfb788a9a95615cb22175594b88461e4ec8214f93f79b52,1920904J/93I/epoch36. Strictmode/defaultfinalgates unchanged; discoverystopnotacceptance.
+- PreservedfirstbenchmarkfailclosedonlegacyGo diagnosticJSONroundingMAXgas; fixedONLYjson.Decoder.UseNumber withexactsource-normalization+GoMAX/2^53tests. No gasguardrelaxation/guestchange.
+- AuthenticatedEVMstaticselectedmethodcandidates batchoriginalPreconditions20674B/Joiner$11379B/MapJoiner5366B =>90explicitclasses658601B; **freshlegacy preciseq1 replay782.262s reaches1920998J/95I**,39verifiedreceipts,CP1080058B SHA d9e14cbe33fb3671906f285c0fd9a33581489ff5fca62ce8898bb81755f52eac.
+- Nextactualplatformtype **java/util/HashMap.<init>()V**, Mapsraw84/method8 newHashMap() atNEW0/ctorPC4 confirmedbyEVMmetadata; atomicq1missingtype. No originalhostclassZIPparser/Java/no oldpackageCPmigration/no falseWorld/EULA/Doneclaim. Latestworld `build/java-diff-mc-perf-batch-original90-parent-p34/official`.
+- Evidence `JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md`, `performance-review/parent-original-equivalence/`, `parent-perf-resource-batch/artifacts/hashmap-constructor-blocker.json`. UserauthorizedGitHubsync oforigin/java-on-evm ispendingfinalcommit/pushverification; noforce/upstream/otherbranchpush. Noactiveworkers.
+
+---
+
 ## Latest same-P34 original85: next Guava Collections2 raw resource
 
 - NoVM/code/quota changes. Declared85originalclasses/616195B includingMaps50454B. Freshoriginal85 **1920902J/91I**,37verifiedreceipts,705.036s,lifecycle1;CP1079153B SHA `d51601b488e3389808259c41da81762eef53ac72f783dddddbb48b9c5ad24c2a`.

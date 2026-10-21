@@ -1,0 +1,11 @@
+# Performance workflow: independent generated and original equivalence acceptance
+
+Guest Java, all100 bootstrap image bytes/order, P34 interpreter/coordinator bytes, gas charging, geth EVM/state/params, and all application quotas remain unchanged. This is iteration-workflow optimization, not a measured full Minecraft-startup speedup.
+
+1. Independent parent generated preflight:14methods/1123instructions/18staticreferences matchedfixture-onlyjavap; malformed/auth/switch/wide/boundarycontrols passed. No originalhostclassparser andno guestexecution byscanner.
+2. Independent parent generatedcontrollergate:14.705s, exactlegacy vsnewprecise vsdiscovery+preciseevent/Head/deterministiccounter/MR01equality; positiveguestterminalcaseandfailclosedguards passed.
+3. **Original86 real benchmark:700.916s precise ->420.494s discovery (1.667x,40.0% less discovery time).** Subsequentprecisecontinuation283.297s yields **identical canonicalHead/deterministiccounters/wholecheckpoint/MR01bytes** tooriginallegacy, SHA b2eb2c4975c6d49e3cfb788a9a95615cb22175594b88461e4ec8214f93f79b52,1920904J/93I/epoch36. Discoveryonly stops areexplicitly notq1/final/guestterminalacceptance.
+4. A legacyGo diagnosticJSON roundtrip rounded uint64.max throughfloat64. Strictcontroller correctlyfailedclosed. Preservedfailedrun; fixedONLYannotationdecoder.UseNumber, exactsource-normalizationandgeneratedGo>2^53/MAXtests. No relaxedgasguard/EVMchange.
+5. EVM authenticated staticmetadata fromselectedoriginalCollections2/Maps/Joinermethods providedcandidateowners. Parent explicitlybatchedoriginalPreconditions20674B/Joiner$11379B/MapJoiner5366B, authenticEVMAS0ZI0DI0measurement90classes658601B. Onefresh**unchangedlegacy precise q1** replay782.262s yielded1920998J/95I/39verifiedreceipts andnextactualHashMap()V blocker. No claimthatscannerprovesreachability; no oldpackageCPmigration.
+
+Evidence: `performance-review/parent-original-equivalence/`, `parent-perf-resource-batch/artifacts/`, and parent-independent generatedresults inbothperformance toolfolders. Alloldtests/defaultprecise mode/failedattempts preserved. NoWorld/EULA/Doneclaim. UserauthorizedGitHubsync onlyorigin/java-on-evm, noforce/upstreampush, afterthisverification.

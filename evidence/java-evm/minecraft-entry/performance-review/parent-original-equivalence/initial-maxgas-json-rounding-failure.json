@@ -1,0 +1,9 @@
+{
+  "status": "integrity-failure",
+  "detail": "IntegrityError: refusal was not made with the explicitly pinned call gas",
+  "elapsedSeconds": 424.65918182302266,
+  "lastSuccessfulJvm": 1900544,
+  "failureCause": "legacy Go diagnostic receipt annotation decoded uint64.max through float64; strict controller rejected rounded gas",
+  "evidencePreserved": "build/java-diff-mc-perf-original86-discovery",
+  "fix": "json.Decoder.UseNumber only, exact normalized source audit, no relaxed guard/guest/EVM change"
+}
