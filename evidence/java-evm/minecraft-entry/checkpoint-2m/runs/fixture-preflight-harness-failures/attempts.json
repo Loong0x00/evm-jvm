@@ -1,0 +1,31 @@
+{
+  "status": "reproduced harness-only fixture failures; corrected before runtime execution",
+  "generatedOnly": true,
+  "originalInputsRead": false,
+  "attempts": [
+    {
+      "id": "preflight-1-output-path-existed",
+      "command": "python3 tools/generate_fixtures.py build/java-diff-mc-checkpoint-2m-fixtures-parent-preflight",
+      "classification": "invocation-error",
+      "error": "generator intentionally rejected the output directory because the caller had created it before invoking the script",
+      "generatedClassCompilationStarted": false
+    },
+    {
+      "id": "preflight-2-filler-source-filename-mismatch",
+      "command": "python3 tools/generate_fixtures.py build/java-diff-mc-checkpoint-2m-fixtures-parent-preflight-20261021T021906Z",
+      "classification": "generated-fixture-harness-error",
+      "error": "The generator wrote Local1MFillerNN.java while declaring public Checkpoint2MFillerNN; javac rejected the source/file name mismatch (150 filler sources). No EVM execution occurred.",
+      "reproduction": "run the recorded command against a fresh path with the pre-fix tools/generate_fixtures.py; the first compiler diagnostic names Local1MFiller00.java and Checkpoint2MFiller00",
+      "fix": "changed the generated filler source filename to Checkpoint2MFillerNN.java, matching its declared public class and existing fixture lookup",
+      "generatedClassCompilationCompleted": false
+    }
+  ],
+  "correctedFixtureGate": "build/java-diff-mc-checkpoint-2m-fixtures-parent-preflight-20261021T021917Z",
+  "correctedFixtureResult": {
+    "caseCount": 41,
+    "hostOracleCount": 21,
+    "raw150Bytes": 27763,
+    "exactRawBytes": 1063930,
+    "rawBytePlusOne": 1063931
+  }
+}

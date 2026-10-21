@@ -1,0 +1,10 @@
+{
+  "status": "failed-before-EVM-execution",
+  "classification": "gate-harness-path-handling-error",
+  "runId": "p34-checkpoint-2m-generated-20261021",
+  "command": "python3 evidence/java-evm/minecraft-entry/checkpoint-2m/tools/run_gate.py p34-checkpoint-2m-generated-20261021",
+  "error": "build_candidate.py had already created build/coordinator; run_gate.py incorrectly attempted coordinator_dir.mkdir() and raised FileExistsError.",
+  "EVMCallsStarted": false,
+  "originalInputsRead": false,
+  "fix": "reuse the coordinator source/artifact freshly built by build_candidate.py, verify its pinned source/runtime, and avoid a redundant second directory creation/compile"
+}
