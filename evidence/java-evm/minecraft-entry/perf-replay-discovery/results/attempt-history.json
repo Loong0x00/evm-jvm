@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "scope": "generated-fixture harness iteration history; no original input was read",
+  "attempts": [
+    {
+      "run": "generated-evm-gate-v1",
+      "outcome": "failed before legacy replay; the test harness removed its disposable work directory in a finally block",
+      "durableLog": false,
+      "reproduction": "The same missing driver-copy issue was preserved and diagnosed in generated-evm-gate-v2-driver-path.log.",
+      "codeChanged": "The gate now retains all failed/interrupted work directories; only a successful non-keep run removes intermediates."
+    },
+    {
+      "run": "generated-evm-gate-v2",
+      "outcome": "failed before EVM replay because the isolated legacy build copy omitted the already-built public driver binary",
+      "log": "failures/generated-gate-v2-driver-path.log",
+      "logSHA256": "cfd14747fd5b837d033ced7640163b55c46d377940763440048695a57aabb7c0",
+      "repair": "Copy the exact same generated public driver binary into the isolated legacy build directory; no source/runtime/gas change."
+    },
+    {
+      "run": "generated-evm-gate-v3",
+      "outcome": "real replay reached precise termination, but the controller rejected the public verifier report because its in-memory post-publication DirectorySyncs counter is one ahead of the durable Head snapshot",
+      "log": "failures/generated-gate-v3-reopen-counter.log",
+      "logSHA256": "f004ae2a4358801a983901ac96052823655bc7d16c49867cc14edd24d8f28473",
+      "repair": "The verifier comparison now checks all EVM/package/guest authority fields and excludes only the documented post-publication observer counter snapshot; final durable deterministic counters remain compared across runs."
+    },
+    {
+      "run": "generated-evm-gate-v4",
+      "outcome": "generated-EVM old/new precise and discovery-continuation equivalence passed; positive terminal equivalence passed",
+      "elapsedSeconds": 14.550781610014383,
+      "result": "results/generated-evm-equivalence-v1.json",
+      "patchAudit": "results/harness-patches-generated-gate-v4.json",
+      "note": "This historical run used --keep-work; its small patch audit and hashed result are preserved, and generated world/class/build intermediates are disposable."
+    },
+    {
+      "run": "generated-evm-gate-v5",
+      "outcome": "generated-EVM gate passed after controller path and evidence normalization; later strict counter checks warranted one more fresh run",
+      "elapsedSeconds": 14.692122936947271,
+      "result": "results/generated-evm-equivalence-v2.json",
+      "resultSHA256": "195761b278f87b141c9c85a1f43551981e97b26816c074f0c798d81d18eb5902"
+    },
+    {
+      "run": "generated-evm-gate-v6",
+      "outcome": "generated-EVM gate passed with strict counter/pin checks; followed by one clean-source rerun",
+      "elapsedSeconds": 14.924621735990513,
+      "result": "results/generated-evm-equivalence-v3.json",
+      "resultSHA256": "9d226a465a2cf0180e5e9ba122d059e14a460ce5ad3aabc88860bbb76d1ab6b1"
+    },
+    {
+      "run": "generated-evm-gate-v7",
+      "outcome": "gate passed against the cleaned controller/test source; a final evidence-expansion rerun followed",
+      "elapsedSeconds": 14.572521828988101,
+      "result": "results/generated-evm-equivalence-v4.json",
+      "resultSHA256": "0b5d0d8cdddc8ac97e86bd5202cf5e96842920523e595d0031510699d4bb4ab8"
+    },
+    {
+      "run": "generated-evm-gate-v8",
+      "outcome": "final generated-EVM equivalence gate passed with exact old/new event sequences, final Heads/counters, full MR01 bytes/read-only views, and raw discovery refusal receipt in durable evidence; successful generated work tree removed",
+      "elapsedSeconds": 14.5310583729879,
+      "result": "results/generated-evm-equivalence-v5.json",
+      "resultSHA256": "46efcffa55d33ea9170461bad448541857c7abaad8d81f59969e2e5547e63e76"
+    }
+  ],
+  "noOriginalInputsRead": true,
+  "frozenP34ManifestVerifiedBeforeUse": true
+}

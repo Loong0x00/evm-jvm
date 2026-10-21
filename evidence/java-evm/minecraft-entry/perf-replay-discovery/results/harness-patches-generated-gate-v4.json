@@ -1,0 +1,21 @@
+{
+  "driver": {
+    "sourceSHA256": "0b90129b9c77408b4881b791a10c861f0cb3ce8c94eedcf46e0ca28006471ddd",
+    "patchedSourceSHA256": "a4c3011ae98b9468ca4704aa39a01801892e65717c4cb9b0eb4f23f62ac9599d",
+    "onlyPatch": "add resume-one-qn dispatch to existing doResumeBudget; no gas/ABI/runtime change"
+  },
+  "legacyPrecise": {
+    "sourceSHA256": "9c33955cc206512ae97d0f6c43cd4fd9abd9f049921fa249ac69fca4c2eabc93",
+    "patchedSHA256": "ccd57cbab4f958cbfc8c06aa59246583902c342fda549e5d905779aba5bfed89",
+    "patches": [
+      "generated ROOT/gas inputs",
+      "replace original-only SHA guard with explicit fixture file check",
+      "replace original-only binding list with explicit generated input",
+      "replace original-selected-resource default with explicit binding input",
+      "use bounded generated-fixture quantum",
+      "respect explicit generated quantum ceiling",
+      "align label to frozen P34 1B transport pin; no gas change"
+    ],
+    "scope": "disposable generated-fixture compatibility copy; frozen precise-replay.py unchanged"
+  }
+}
