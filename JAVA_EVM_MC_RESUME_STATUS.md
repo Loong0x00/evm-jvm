@@ -1,3 +1,12 @@
+## Latest same-P34 resource replays through original84
+
+- SameP34engine398336B/100images/native21/CP2MiB, runtime1MiB, raw150/1063930; onlyauthenticatedinputbindings changed. Original82ahs3639B=>1915695J/89I,39receipts,718.672s,CP1052696B; original83ro110B=>1915705J/90I,38receipts,705.476s,CP1053942B.
+- Original84a5663B (84classes/565741B) freshreplay **1920901J/91I**,37verifiedreceipts,699.799s,lifecycle1;CP1079066B SHA `83f96cd4e184c2fb255dcfcd1e3a41bb8f05e5e2359dc82d1d1e2ad704d243f3`.
+- Nextatomicq1missing `com/google/common/collect/Maps`,site0x100b/context584,a raw83/method15 `<clinit>()V`. GenuineEVMmeasurement Maps50454B=>85classes/616195B, withinexistingraw150/1063930. `parent-original84-a/original85-bindings.json` ready; nextfreshoriginal85sameP34code.
+- Evidence `parent-original82-ahs/artifacts/ro-hierarchy-resource-blocker.json`, `parent-original83-ro/artifacts/a-resource-blocker.json`, `parent-original84-a/artifacts/maps-resource-blocker.json`; lastacceptedworld `build/java-diff-mc-a-original84-parent-p34/official`. Nohostoriginalparser/Java/no failedstatecontinuation/World/EULA/Doneclaim/push; underlyingEVMunchanged.
+
+---
+
 ## Latest P34: checkpoint2MiB accepted, genuine original surpasses1MiB
 
 - IndependentP34 runtime398336B, runtimeceiling**1MiB unchanged**, checkpoint**2MiB**; all100images/native21/String12/raw150/1063930/JVMsemantics and underlyinggethEVM/state/params unchanged. Profile-awareopaqueGo transport haslegacyzero/default1MiB; oldsharedLC0/defaults untouched. Old1MiBsource/world/failures preserved.
