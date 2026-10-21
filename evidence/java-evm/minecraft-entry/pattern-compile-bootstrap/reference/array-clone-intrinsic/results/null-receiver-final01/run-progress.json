@@ -1,0 +1,106 @@
+{
+  "acceptedBudgetsChanged": false,
+  "attempts": [
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/evm_driver",
+        "array-clone",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-null-receiver-final01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-null-receiver-final01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/clone-attempt-1",
+        "1000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 1000000000,
+      "label": "array-clone",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/logs/array-clone-attempt-1.log",
+      "mode": "array-clone",
+      "timedOut": false,
+      "timeoutSeconds": 1205,
+      "wallBudgetSeconds": 1200,
+      "wallSeconds": 29.797
+    },
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/evm_driver",
+        "reopen",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-null-receiver-final01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-null-receiver-final01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/clone-attempt-1",
+        "1000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 1000000000,
+      "label": "array-clone-reopen",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/logs/array-clone-reopen-attempt-1.log",
+      "mode": "reopen",
+      "timedOut": false,
+      "timeoutSeconds": 1205,
+      "wallBudgetSeconds": 1200,
+      "wallSeconds": 0.064
+    },
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/evm_driver",
+        "coordinator",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-null-receiver-final01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-null-receiver-final01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/canonical-coordinator-attempt-1",
+        "2000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 2000000000,
+      "label": "canonical-coordinator",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/logs/canonical-coordinator-attempt-1.log",
+      "mode": "coordinator",
+      "timedOut": false,
+      "timeoutSeconds": 2405,
+      "wallBudgetSeconds": 2400,
+      "wallSeconds": 17.133
+    }
+  ],
+  "cloneGate": {
+    "directSummary": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-null-receiver-final01/clone-attempt-1/array-clone-gate-summary.json",
+    "gasBudget": 1000000000,
+    "status": "passed",
+    "wallBudgetSeconds": 1200
+  },
+  "hostOriginalExecution": false,
+  "initialCloneOnlyTestGasBudget": 1000000000,
+  "initialCloneOnlyWallBudgetSeconds": 1200,
+  "ordinaryEvmGasAccountingChanged": false,
+  "originalMinecraftInputsRead": false,
+  "profile": "MC-ARRAY-CLONE-INTRINSIC-P37",
+  "requestedScope": "clone-only with exact fixture/P36 prior cross-check",
+  "retainedP36Gate": {
+    "gasBudget": 2000000000,
+    "sourceRun": "clone-reopen-v1",
+    "status": "cross-referenced-identical-engine-and-byte-identical-prior-fixtures",
+    "wallBudgetSeconds": 2400
+  },
+  "retainedP36PriorReference": {
+    "onlyAddedJavaSource": "fixtures/src/ArrayCloneNullReceiver.java",
+    "priorBundleManifestsUnchanged": true,
+    "priorCompiledJavaClassHashesUnchanged": true,
+    "priorJavaSourceHashesUnchanged": true,
+    "sameEngineRuntimeSHA256": "9145fbb48f5dae753d77c2591e7aa3f6b0e6f6f3c1e0ffdf1f5545626d08aa96",
+    "sourceFixtureManifestSHA256": "4f3f249513de35144b9f2105b4aa7332a12eeaef44e02f7bee025869e66788aa",
+    "sourceRun": "clone-reopen-v1",
+    "sourceRunSummarySHA256": "f6235d324376137a0f20806a161b949c58143d85220634d8d416053b1b17ea1d",
+    "status": "previously-verified on the identical engine and byte-identical prior fixtures"
+  },
+  "retainedP36TestGasBudget": 2000000000,
+  "retainedP36WallBudgetSeconds": 2400,
+  "runId": "null-receiver-final01",
+  "schema": 1,
+  "sourceOnlyBaseline": "evidence/java-evm/minecraft-entry/array-clone-source-base-p36"
+}

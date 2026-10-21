@@ -1,0 +1,80 @@
+{
+  "acceptedBudgetsChanged": false,
+  "attempts": [
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/evm_driver",
+        "array-clone",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-objectclone-control01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-objectclone-control01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/clone-attempt-1",
+        "1000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 1000000000,
+      "label": "array-clone",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/logs/array-clone-attempt-1.log",
+      "mode": "array-clone",
+      "timedOut": false,
+      "timeoutSeconds": 1205,
+      "wallBudgetSeconds": 1200,
+      "wallSeconds": 30.198
+    },
+    {
+      "classification": "semantic-or-harness-failure",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/evm_driver",
+        "reopen",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-objectclone-control01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-objectclone-control01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/clone-reopen-attempt-1",
+        "1000000000"
+      ],
+      "exit": 1,
+      "failure": {
+        "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+        "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+        "coordinatorRuntimeKeccak256": "0x083a87b4073ca9cd1fe3ca76c744e6d7b1bce5092f3108b4415be72ff8c2499d",
+        "coordinatorRuntimeSHA256": "e72e53a29e308b2a63ffd0e550e9a809aa37469fb5bd7decbd6b833697356f1e",
+        "elapsedMs": 0,
+        "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+        "engineRuntimeKeccak256": "0x61d5020d370eced2479ff7be2a998550a5a5801b59cc4f423c111835c1318b14",
+        "engineRuntimeSHA256": "9145fbb48f5dae753d77c2591e7aa3f6b0e6f6f3c1e0ffdf1f5545626d08aa96",
+        "failure": {
+          "case": "unknown",
+          "classification": "semantic-or-harness-failure",
+          "error": "open /home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/clone-reopen-attempt-1/reopen-requests: no such file or directory",
+          "gasBudget": 1000000000
+        },
+        "localGasBudget": 1000000000,
+        "mode": "reopen",
+        "processId": 677125,
+        "status": "failed"
+      },
+      "gasBudget": 1000000000,
+      "label": "array-clone-reopen",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-objectclone-control01/logs/array-clone-reopen-attempt-1.log",
+      "mode": "reopen",
+      "timedOut": false,
+      "timeoutSeconds": 1205,
+      "wallBudgetSeconds": 1200,
+      "wallSeconds": 0.007
+    }
+  ],
+  "hostOriginalExecution": false,
+  "initialCloneOnlyTestGasBudget": 1000000000,
+  "initialCloneOnlyWallBudgetSeconds": 1200,
+  "ordinaryEvmGasAccountingChanged": false,
+  "originalMinecraftInputsRead": false,
+  "profile": "MC-ARRAY-CLONE-INTRINSIC-P37",
+  "retainedP36TestGasBudget": 2000000000,
+  "retainedP36WallBudgetSeconds": 2400,
+  "runId": "objectclone-control01",
+  "schema": 1,
+  "sourceOnlyBaseline": "evidence/java-evm/minecraft-entry/array-clone-source-base-p36"
+}

@@ -1,0 +1,127 @@
+{
+  "acceptedBudgetsChanged": false,
+  "attempts": [
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/evm_driver",
+        "array-clone",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-gofmt-final01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-gofmt-final01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/clone-attempt-1",
+        "1000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 1000000000,
+      "label": "array-clone",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/logs/array-clone-attempt-1.log",
+      "mode": "array-clone",
+      "timedOut": false,
+      "timeoutSeconds": 1205,
+      "wallBudgetSeconds": 1200,
+      "wallSeconds": 30.248
+    },
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/evm_driver",
+        "reopen",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-gofmt-final01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-gofmt-final01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/clone-attempt-1",
+        "1000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 1000000000,
+      "label": "array-clone-reopen",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/logs/array-clone-reopen-attempt-1.log",
+      "mode": "reopen",
+      "timedOut": false,
+      "timeoutSeconds": 1205,
+      "wallBudgetSeconds": 1200,
+      "wallSeconds": 0.064
+    },
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/evm_driver",
+        "coordinator",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-gofmt-final01/fixture-manifest.json",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-fixtures-gofmt-final01",
+        "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/canonical-coordinator-attempt-1",
+        "2000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 2000000000,
+      "label": "canonical-coordinator",
+      "log": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/logs/canonical-coordinator-attempt-1.log",
+      "mode": "coordinator",
+      "timedOut": false,
+      "timeoutSeconds": 2405,
+      "wallBudgetSeconds": 2400,
+      "wallSeconds": 17.332
+    }
+  ],
+  "canonicalCoordinatorRoute": {
+    "gasBudget": 2000000000,
+    "status": "passed",
+    "wallBudgetSeconds": 2400
+  },
+  "cloneGate": {
+    "directSummary": "/home/user/evm-jvm/array-clone-intrinsic/build/java-diff-mc-array-clone-intrinsic-gofmt-final01/clone-attempt-1/array-clone-gate-summary.json",
+    "gasBudget": 1000000000,
+    "status": "passed",
+    "wallBudgetSeconds": 1200
+  },
+  "coordinator": {
+    "initSHA256": "e2dd188a8dfb3294a0bc0b8ccfed540a86e1300afda59edf8d9f42068f99671c",
+    "runtimeBytes": 5411,
+    "runtimeKeccak256": "083a87b4073ca9cd1fe3ca76c744e6d7b1bce5092f3108b4415be72ff8c2499d",
+    "runtimeSHA256": "e72e53a29e308b2a63ffd0e550e9a809aa37469fb5bd7decbd6b833697356f1e",
+    "sourceSHA256": "5047118613f9234ba632ffbfebcfc50cafe35b683d2d616bf23ef62d864ca871"
+  },
+  "engine": {
+    "initSHA256": "e44f2537b4f5bf0ba6f144664ec6b508f4886d901c414c356ce016b23fcb1e65",
+    "runtimeBytes": 410780,
+    "runtimeKeccak256": "61d5020d370eced2479ff7be2a998550a5a5801b59cc4f423c111835c1318b14",
+    "runtimeSHA256": "9145fbb48f5dae753d77c2591e7aa3f6b0e6f6f3c1e0ffdf1f5545626d08aa96",
+    "sourceSHA256": "e6775dc4bf560cbfda57a77b8347515c54d9d10651182f6eb40ef000805047bb"
+  },
+  "generatedFixtureManifestSHA256": "5bca9395c227c373df2ac96cb2980f163faa7664eeb02df684b82aca2e16a8e8",
+  "hostOriginalExecution": false,
+  "initialCloneOnlyTestGasBudget": 1000000000,
+  "initialCloneOnlyWallBudgetSeconds": 1200,
+  "ordinaryEvmGasAccountingChanged": false,
+  "originalMinecraftInputsRead": false,
+  "profile": "MC-ARRAY-CLONE-INTRINSIC-P37",
+  "requestedScope": "clone-only with exact fixture/P36 prior cross-check",
+  "retainedP36Gate": {
+    "gasBudget": 2000000000,
+    "sourceRun": "clone-reopen-v1",
+    "status": "cross-referenced-identical-engine-and-byte-identical-prior-fixtures",
+    "wallBudgetSeconds": 2400
+  },
+  "retainedP36PriorReference": {
+    "onlyAddedJavaSource": "fixtures/src/ArrayCloneNullReceiver.java",
+    "priorBundleManifestsUnchanged": true,
+    "priorCompiledJavaClassHashesUnchanged": true,
+    "priorJavaSourceHashesUnchanged": true,
+    "sameEngineRuntimeSHA256": "9145fbb48f5dae753d77c2591e7aa3f6b0e6f6f3c1e0ffdf1f5545626d08aa96",
+    "sourceFixtureManifestSHA256": "4f3f249513de35144b9f2105b4aa7332a12eeaef44e02f7bee025869e66788aa",
+    "sourceRun": "clone-reopen-v1",
+    "sourceRunSummarySHA256": "f6235d324376137a0f20806a161b949c58143d85220634d8d416053b1b17ea1d",
+    "status": "previously-verified on the identical engine and byte-identical prior fixtures"
+  },
+  "retainedP36TestGasBudget": 2000000000,
+  "retainedP36WallBudgetSeconds": 2400,
+  "runId": "gofmt-final01",
+  "schema": 1,
+  "sourceOnlyBaseline": "evidence/java-evm/minecraft-entry/array-clone-source-base-p36",
+  "status": "generated array-clone, fresh-process reopen, canonical coordinator, and identical-fixture P36 cross-reference passed"
+}
