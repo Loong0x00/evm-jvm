@@ -1,0 +1,9 @@
+# P37 generic array.clone: independent parent acceptance
+
+Genericarray-ownerclone()Object resolveswithtype/owner/descriptorguards, nullguestNPE, ordinaryeagerdistinctsame-runtimearray/shallowraw-cellcopy, resourceguardedguestOOM. ExistingObject.clone remainsunsupported. Rebuildsreferenceleafhierarchyscratchforcovariance andarraycasts; thisscratchisnotserialized. NoEnum/caller-specificsuccess. All103bootstrapimagebytes/root andallwirecodec/native/quotasfixed, ABI/storageexactlyunchanged; noEVMopcode/charging/consensusmodifications. Runtime410780B under1MiBartifactoriginalcap;CP2MiB.
+
+Independentparentclonegate30.348s at1B/1200s passesall8primitive/reference/multirank/covariant/null/65536length/array+elementOOM/wrongowners controls anddistinctprocessreopen. FullretainedP36gate1125.337s atseparatelabeled2B/2400s passed; canonicalroute17.232s/3224calls/max242435752gas/4677Bcheckpointpassed. Norelaxationfromold1Bsourceprofileisclaimed.
+
+Freshoriginal90precision699.553s reaches1922305J/95I,34verifiedreceipts,CP1082451B. Genuineoriginala.values()clone: sourcehandle5970/clone5989 aredistinctnormal[La; arrays22cellswithidenticalall22refs;enumhelperreturned. NextStringProfileError(1,11) inoriginala.c(String)String invokesString.replaceAll(String,String). EVM-onlyselectedCode/literalqueriesverify regex`[^a-z]`,replacementempty. Thosemetadataworldcopies neverexecuteJava/publishCP/commitdeployment/changeoriginalworld;notexecutionauthority. Oneinitialdiagnosticnameguardharnessfailureispreservedbeforefix.
+
+Evidence `parent-array-clone/artifacts/string-replaceall-blocker.json`; oldworlds/manifests/failurespreserved. LOCALpreinstalledoversizedCallnotstandardCREATE. NoObject.clone/replaceAll/World/EULA/Doneclaim.

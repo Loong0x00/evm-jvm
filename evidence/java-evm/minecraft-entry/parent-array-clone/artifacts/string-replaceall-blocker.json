@@ -1,0 +1,78 @@
+{
+  "domain": "MC-ARRAY-CLONE-INTRINSIC-P37",
+  "candidateCommit": "efc4b05c38061a79d047af82fd78d889a68bc7e8",
+  "runtimeBytes": 410780,
+  "runtimeCap": 1048576,
+  "checkpointCap": 2097152,
+  "rawLimits": [
+    150,
+    1063930
+  ],
+  "bootstrapCount": 103,
+  "all103BootstrapImagesAndRootUnchanged": true,
+  "nativeBindings": 21,
+  "newBindings": 0,
+  "underlyingEVMAndGasUnchanged": true,
+  "changedFunctions": [
+    "_execute",
+    "_resolveVirtual"
+  ],
+  "parentGates": {
+    "cloneSeconds": 30.348,
+    "cloneBudgetGas": 1000000000,
+    "retainedP36Seconds": 1125.337,
+    "retainedBudgetGas": 2000000000,
+    "retainedWallSeconds": 2400,
+    "coordinatorSeconds": 17.232,
+    "coordinatorMaxCallGas": 242435752,
+    "coordinatorCalls": 3224,
+    "coordinatorCP": 4677,
+    "separateBudgetsHonestlyLabeled": true
+  },
+  "original": {
+    "epoch": 34,
+    "jvmSteps": 1922305,
+    "internalSteps": 95,
+    "lifecycle": 1,
+    "checkpointSHA256": "d5ea3cd57407f3c6a26319b7c15894ad6d4948f1886e3baeb4056a31dfef6257",
+    "machineRoot": "0x9b958b17565c51aa1ffcb60d06937094befa8b5358da97118b1bdccdcfc5401e",
+    "trieRoot": "0x55df50b75e9dda5a94e2fb903af3ea42a1dd156728d6f23c58835d77b96e1432"
+  },
+  "checkpointBytes": 1082451,
+  "preciseReplaySeconds": 699.5526538559934,
+  "progressFromP36Jvm": 25,
+  "actualCloneProof": {
+    "genuineOriginal": true,
+    "aValuesReturnedArrayClone": true,
+    "originalArrayHandle": 5970,
+    "cloneArrayHandle": 5989,
+    "arrayType": "[La;",
+    "length": 22,
+    "all22ReferenceCellsIdentical": true,
+    "distinctNormalEagerArrays": true,
+    "checkpointSHA256": "d5ea3cd57407f3c6a26319b7c15894ad6d4948f1886e3baeb4056a31dfef6257"
+  },
+  "nextMeasuredBlocker": {
+    "error": "StringProfileError(1,11)",
+    "class": "java/lang/String",
+    "method": "replaceAll",
+    "descriptor": "(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;",
+    "regexLiteral": "[^a-z]",
+    "replacementLiteral": "",
+    "caller": "a.c(Ljava/lang/String;)Ljava/lang/String;",
+    "rawClassIndex": 83,
+    "methodIndex": 2,
+    "pc": 11,
+    "atomicQ1Refusal": true,
+    "EVMMetadataConfirmed": true
+  },
+  "noHostOriginalParserJavaOrResultInjection": true,
+  "notClaimed": [
+    "String.replaceAll supported",
+    "Object.clone supported",
+    "World",
+    "EULA",
+    "Done",
+    "standard-chain CREATE compatibility"
+  ]
+}

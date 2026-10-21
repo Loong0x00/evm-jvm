@@ -1,3 +1,13 @@
+## Latest P37: generic array.clone accepted and original enum clone returned
+
+- Independentfreshcompile reproducesworkerengine runtime410780B SHA9145fbb48f5dae753d77c2591e7aa3f6b0e6f6f3c1e0ffdf1f5545626d08aa96; all103imagebytes/root851a47c08ef61b29471de2db8b764c88989b18e2c523490bbe9b0588a8725faa/ABIs/storage/native21/String12/raw1501063930/CP2MiB/runtimecap1MiB fixed. OnlyJVMexecute/virtualresolutionchangedforgenericarrayclone/type-hierarchyscratch, noObject.clonehijack/noEVMcore/gaschange.
+- Parentclonegate30.348s at1B/1200s+freshreopen passesallprimitive/ref/covariant/multirank/shallow/null/maxlen/quota/wrongownercontrols; fullretainedP36regression1125.337s at**separatelylabeled2B/2400s**,coordinator17.232s/3224calls/max242435752gas/4677B CPpass.
+- Freshoriginal90precise **1922305J/95I**,34verifiedreceipts,699.553s,lifecycle1;CP1082451B SHA `d5ea3cd57407f3c6a26319b7c15894ad6d4948f1886e3baeb4056a31dfef6257`. Genuinea.valuesclone source5970/clone5989 distinctnormal[La; arrays22refsidentical;returnedinoriginal. Full65536sinetablestillreadonlyoracleexact.
+- Nextatomicq1 **StringProfileError(1,11)**; EVM-authenticatedoriginala raw83/method2 c(String)StringPC11 calls String.replaceAll(String,String); actualregexliteral`[^a-z]` PC7/replacementempty PC9 confirmedinEVM(nohostparser). ExistingPatterncompiledtokens alreadycanrepresentthisnegatedclass; needrealgenericboundedreplacementbehavior, nofiltertablecaller-specificshortcut/fakeemptyresult. Metadataqueriesoncopiedsuccessfulworlds noJava/CP/deploymentcommit/originalworldchange.
+- Evidence `parent-array-clone/artifacts/string-replaceall-blocker.json`; latestacceptedworld `build/java-diff-mc-array-clone-original90-parent-p37/official`. NoWorld/EULA/Doneclaim; P37+READMEpendingGitHubsync. Noactiveworkers.
+
+---
+
 ## Latest P36: bounded Pattern.compile accepted; next array.clone intrinsic
 
 - IndependentP36 runtime407632B/103images; allprior101leafbytes/order fixed. Pattern3663B+PatternSyntaxException967B append. ActualguestJava parser emits eager int[] program; noMatcher/fullregex/fakePattern success. Native21/String12 unchanged;raw150/1063930/runtimecap1MiB/CP2MiB/gethVMsemantics fixed.
