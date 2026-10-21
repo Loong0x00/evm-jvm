@@ -1,3 +1,11 @@
+# Latest user performance/sync directive
+
+- User now requests performance optimization **with execution equivalence preserved**, especially reducing redundant replay/localization. Do not alter JVM/EVM semantics or use failed-state continuation. Explicit discovery stops are not final acceptance; precise q1 gates remain.
+- After equivalence/performance verification, synchronize only current `java-on-evm` to GitHub `origin` (`Loong0x00/evm-jvm`), no forcepush/no upstream/otherbranches. This is the latest exception to earlier no-push text below; workers still never push/network.
+- See `JAVA_EVM_MC_PERFORMANCE_DISCOVERY_PLAN.md`. Source/data provenance, original-input isolation and old evidence stay protected.
+
+---
+
 # Current Minecraft-first operating policy (user directive)
 
 - Goal: unchanged Minecraft Java1.12.2 genuinely running inside unmodified geth EVM execution/charging rules, through guest `Done`, superflat first. Do not alter core/vm, core/state or consensus params for this goal. LOCAL preinstalled-code Call is distinct from standard CREATE deployment; never claim EIP170 compatibility for the oversized interpreter.
