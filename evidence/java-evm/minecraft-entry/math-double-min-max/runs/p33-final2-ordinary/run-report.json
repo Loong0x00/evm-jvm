@@ -1,0 +1,250 @@
+{
+  "acceptedEngineCapChanged": false,
+  "actualCountsVerified": {
+    "bootstrapClasses": 100,
+    "identityHashMapDiagnosticClasses": 101,
+    "identityHashMapRawCount": 1,
+    "identityHashMapReflectionMatrix": 9,
+    "mathEdgePairs": 24,
+    "mathRandomPairs": 256,
+    "mathRawResultsComparedToReadOnlyJdk8": 560,
+    "newNativeBindings": 0,
+    "raw150": 150,
+    "raw151Refused": true,
+    "rawByteLimit": 1063930,
+    "rawBytePlusOneRefused": true,
+    "rawDiagnosticClasses": 250
+  },
+  "attemptHistory": [
+    {
+      "attempt": 1,
+      "commands": [
+        {
+          "command": [
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/tools/evm_driver",
+            "gate",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-final2-ordinary/fixture-manifest.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-final2-ordinary",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-gate-p33-final2-ordinary/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "direct-generated-engine-gate",
+          "log": "logs/direct-generated-engine-gate.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 757.137
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/tools/evm_driver",
+            "reopen",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-final2-ordinary/fixture-manifest.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-final2-ordinary",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-gate-p33-final2-ordinary/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "fresh-process-q1-reopen",
+          "log": "logs/fresh-process-q1-reopen.log",
+          "timedOut": false,
+          "timeoutSeconds": 442,
+          "wallSeconds": 0.564
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/tools/evm_driver",
+            "coordinator",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-final2-ordinary/fixture-manifest.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-final2-ordinary",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-gate-p33-final2-ordinary/attempts/attempt-1/coordinator",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "generated-coordinator-engine-route",
+          "log": "logs/generated-coordinator-engine-route.log",
+          "timedOut": false,
+          "timeoutSeconds": 442,
+          "wallSeconds": 16.782
+        }
+      ],
+      "gasBudget": 1000000000,
+      "status": "passed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "budgetClassification": "ordinary1B/1200s",
+  "buildCommands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/math-double-min-max/evidence/java-evm/minecraft-entry/math-double-min-max/tools/build_candidate.py",
+        "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary"
+      ],
+      "exit": 0,
+      "log": "logs/build-1-engine-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 221.606
+    },
+    {
+      "command": [
+        "node",
+        "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/coordinator/build.js"
+      ],
+      "exit": 0,
+      "log": "logs/build-2-coordinator-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 1.866
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/math-double-min-max/evidence/java-evm/minecraft-entry/math-double-min-max/tools/generate_fixtures.py",
+        "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-final2-ordinary"
+      ],
+      "exit": 0,
+      "log": "logs/build-3-fixtures.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 1.215
+    },
+    {
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-final2-ordinary/tools/evm_driver",
+        "./evidence/java-evm/minecraft-entry/math-double-min-max/tools"
+      ],
+      "exit": 0,
+      "log": "logs/build-4-driver-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 0.614
+    }
+  ],
+  "checkpointCapBytes": 1048576,
+  "coordinatorMaxCallGas": 440330205,
+  "coordinatorTotalGas": 11817220427,
+  "directElapsedMS": 757112,
+  "directTerminalRaw150Schedules": [
+    "q1-raw150",
+    "q7-raw150",
+    "q65536-raw150",
+    "q4096-raw150"
+  ],
+  "elapsedWallSeconds": 775,
+  "generatedClassCount": 38,
+  "gitHead": "75cdce6339d6c2175fc8772d8b5ab72710c2951a",
+  "hostOracleCount": 19,
+  "identityHashMapSchedules": [
+    "q1-identity-hash-map-matrix",
+    "q7-identity-hash-map-matrix",
+    "q65536-identity-hash-map-matrix",
+    "q4096-identity-hash-map-matrix"
+  ],
+  "mathDoubleMinMaxSchedules": [
+    "q1/q7/q65536/q4096 edge witness",
+    "q65536/q4096 deterministic random matrix",
+    "fresh-process q1 edge checkpoint reopen"
+  ],
+  "pairedPins": {
+    "acceptedEngineCapChanged": false,
+    "bootstrapCount": 100,
+    "constructorRawByteLimit": 1063930,
+    "constructorRawClassLimit": 150,
+    "coordinator": {
+      "initSHA256": "36da99e696b5d78882322595f3644e0f76881f4de27abded1a092a0fdd877bd1",
+      "runtimeBytes": 5411,
+      "runtimeKeccak256": "379a63599d75d707c7b6d3c24b15fcd6c9a01423a02c36183f11a17d59a04ced",
+      "runtimeSHA256": "2c2019ff9f76df04413dd27b567c54569922f7a737ede3bf7e3fc87294244b49",
+      "sourceSHA256": "598abe27a106b3891b5f554feb75f1f726df6baee26c58ff3fe6ec150fbeae27"
+    },
+    "coordinatorExecution": "ordinary EVM CREATE with constructor-pinned AS0/ZI0/DI0 dependencies",
+    "engine": {
+      "initSHA256": "29b1c4d7c7f9a6cfd74ee1f672ef831059da2d2e7405dc3366e696819fdf66c4",
+      "runtimeBytes": 398336,
+      "runtimeKeccak256": "1861b93187fec1fc4fe9b81dcbdf9243e4d0d1550a72be50d7c67fdb1f10eddf",
+      "runtimeSHA256": "f6a9d7717851302527f316459ad5adc21286ab8709d5ad2b2195f7bab7d01ea6"
+    },
+    "engineExecution": "LOCAL preinstalled-code runtime.Call, not CREATE",
+    "maximumMR01DiagnosticClasses": 250,
+    "ordinaryOpcodeGasChanged": false,
+    "profile": "LOCAL1M-math-double-min-max-raw150-byte1063930"
+  },
+  "runId": "p33-final2-ordinary",
+  "runtimeCapBytes": 1048576,
+  "sourceHashes": {
+    "evidence/java-evm/minecraft-entry/math-double-min-max/README.md": "7edb0b95047b25a7cb4c83444ca06a3adfe5ecad8b7e28fe991b2eaf5e2a5c08",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/java/lang/Math.java": "996d72985c6faac2d720e3a72122d086427c2b47e6f1f18cf33e17e6dfffe125",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/java/util/AbstractList.java": "cc6f99920d5b9a8bc32e5d8d2807da178d66921e357680409ed142061966f601",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/java/util/ArrayList.java": "2db3b97e97f9d65252371445fb589576092eaecc9684647a8a3f7c421a221c23",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/java/util/IdentityHashMap.java": "d20646e70677d3030080d2fc28dc6999f93adf79ac1d22dba1301ad4540e90a4",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/stub/java/util/AbstractCollection.java": "c70eec71eb4784e646a97710696cede06335c7a65b9b440060b3f774bf6e50ae",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/stub/java/util/Collection.java": "4ca7f5cf95977d1ae58ab9a9f4a51e658f4a9b9b1dfb32f0b56c7a4133f6755b",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/stub/java/util/List.java": "25a245341b424f3b4eccf237c556dd0f5971fcd521b14d8544ac07d6030fb7dd",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/bootstrap/stub/java/util/RandomAccess.java": "e352a53d2db0adb22e3b7d809ad2cf22297c9ef69f42b4774655392afb06a885",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/coordinator/MCEntryCoordinator.sol": "598abe27a106b3891b5f554feb75f1f726df6baee26c58ff3fe6ec150fbeae27",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/coordinator/build.js": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/engine/MCEntryInterpreter.sol": "e88d6536e414af54cbb1430044a548c86f9f4f9374d4070aab10d68b758c485d",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/engine/build.js": "395752305ea04f1c8eceb0ebe7f832e964b060aacf6105d9b8f5fe26859b85ab",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListMathObjectInteger.java": "ffc79a328cf5f37cb53591b2631738fd87c5deffc6f415d7f91a7818ccf5c10a",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListMatrix.java": "19ba9cc62179ad1fdcc012bee8fcbb294b674139e7d3cbdff4db8456ade1aed7",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListMissingDefaultConstructor.java": "5fe4b071f778ea5fe4506265c41e0f9600c4b47fda103dbbab501b4f693111eb",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListNegativeMin.java": "0e059523445b6cd7ae47483400096556c1131d3747eb539a3b14ebd6f6638b87",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListNegativeMinusOne.java": "40672112374b40782854660478d14aef332ddb304172698ed3ab4960d115d4ce",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListPackedSparse.java": "b9a0a280f4e8b0486c990d9cbc625957bf9ab0f732ef23b59cb3eb575c1777d8",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListQuotaBoundary.java": "e0868f65cbae95b6fd92b83b11a470e51e0ef7f16ef7b60fe2c4062832eacf16",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListQuotaOOM.java": "b8e1e0895ccadb47d3f8e585c358b817b7fdfaac62994a461730fbece716e556",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListRawReplacementMain.java": "3e930fe595f147855752b82792dc2022029f2ce8f9e1599753a1eab5a551d09d",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListUnboundAddConcrete.java": "cf0dfd7c684fe42a8d675cfa070fb0d0748d52e1d91d549aca07ff2d59760b5f",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListUnboundAddInterface.java": "8a6acd83bce8c8f01de24539eb1cb8be3242b7f4441279614578e2207b51cf17",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListUnboundIteratorConcrete.java": "1dedd842a05727305cacf0e748f3bf56d6b4dc0b0a7711c8f4eca4f7997a0089",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/ArrayListUnboundIteratorInterface.java": "a1503928eb95565d562677fc7002135810233ebdbd76817268c9891b616a919b",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapArrayQuotaControl.java": "6d21fa698086927110474c24d0d257f91be6770e04ba2f0f2348f8561fa297ca",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapMatrix.java": "cc84daeb5cc6e984f4acf9f4b0344e604b53031dd6fb729a3964331526e3653a",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapMaximumControl.java": "5189714a4c34bdda40c2f58ec5e6e83b635c7bbb50e7675515164d006754b45d",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapMissingDefaultConstructor.java": "447296a304c3826692539aef9eda9ddbf8882703e8dfb7fe2a18bffbf84eeaf4",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapNegativeMin.java": "a40dcfad117982d2d68d21fe11a623db65c8f60b276a06b212d6ffaf58e8ca5b",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapNegativeMinusOne.java": "c1b567da7e74c2f517e294aa211c6967c30a7b4349825bc88ad36b6b1a1b820e",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapRawReplacementMain.java": "e78689579bde26769f20674f9b6a3e270300b97fc967e6aa087fe122fb1ae757",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapUnboundDefaultMethod.java": "a93a96e13f983ec47ca2978c01a030160447994c90399d24941d70c398f920af",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapUnboundEqualsObject.java": "56a5367fecb55ec3b36757c1cf8b537fd1fdb7e42031dddc49afe3654f79e990",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapUnboundGetInterface.java": "f8c1eae5dd63e9fe687c75dc70c4e3e26a27947dd18189d8454a6803d5ed1bc3",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapUnboundHashCodeObject.java": "a317734b235c512fbaadda80cbd00f4f6f94df7b0f335f4398f11447f5865fee",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapUnboundPutConcrete.java": "8971f0f26eaca0ab0036f0560c980cb4431f8b4bf1d84e5e560b49973c7b6de7",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapUnboundPutInterface.java": "8679084bc2f8d3eacf1b45946e135167f50cf58904bdd5bfe6e8207a788d0951",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/IdentityHashMapUnboundViews.java": "16d8da5b2e58949a2fab336cbcdc04b3dceb93c7916631ea1bef3cf83ec1409e",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/MathAbsUnsupported.java": "9fbf6de8d7a98029b0d53b4ef7e0bfc21fd3fd49e1de52547ee9799cd5eea5b8",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/MathDoubleMinMax.template": "6ba8cc9097652c2526a0f920a2c3bc1474655dde6efa916e060e318c71d8eda2",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/MathRawReplacementMain.java": "6a00bad963f1434be39fd2a5eabbcaedc85acf6480714c3468b82198f864076a",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/replacement/java/lang/Math.java": "b42bc663c241348e92cd6274cfbce9b1b8aa5cc793d501604daf6917492b3c2f",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/replacement/java/util/ArrayList.java": "4d20cff98be309dc7c8ed3337101060449d3462ebaf4e691d61cb134cbb719be",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/fixtures/src/replacement/java/util/IdentityHashMap.java": "31ccf78acd8a307ccc1a38969e37abfdf560a3e43a895fd80fcd7e2460371dd5",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/pins.json": "d0218f8935ebe190a63b27c1fddab5284c5c869e60f67e7ac780ebc5dc99d145",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/tools/build_candidate.py": "bd00b78f33f60ea68df99de7a70255ec2b02bb833e2ad84ebd7fd580916f3fd6",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/tools/coordinator_route.go": "67a6604dfc858c8d39b6e50b131ff9d432cb1e8d471616e95752555a038e1318",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/tools/evm_driver.go": "3bbabd846a94cc602fc768e15535f87c907d7a3d20004b9a1978a56612e81282",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/tools/generate_fixtures.py": "cc0f557bae31404dba3e9c4902c636b12e7bddcddfd1253cecfe8d49da817a49",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/tools/run_gate.py": "d605ee7d7e2a2f8820fd868adb09157144e56c1be78aca7596554a628804f65b",
+    "evidence/java-evm/minecraft-entry/math-double-min-max/tools/verify_source.py": "3d06cfd3c808e866232a132f64e1b26e5bf14da5a0fa5138f7b057e7febdee79"
+  },
+  "status": "generated-only Java 8 Math.min/max(double) IEEE edge/raw-NaN/oracle/quanta/reopen plus retained P32 and raw150 engine/coordinator gates passed; original replay remains parent-owned and was not run here",
+  "testOnlyGasBudget": 1000000000,
+  "testOnlyWallBudgetSeconds": 1200,
+  "toolVersions": {
+    "go": "go version go1.27.2-X:nodwarf5 linux/amd64",
+    "javac": "javac 21.0.9",
+    "node": "v24.14.0",
+    "python": "Python 3.14.8"
+  }
+}

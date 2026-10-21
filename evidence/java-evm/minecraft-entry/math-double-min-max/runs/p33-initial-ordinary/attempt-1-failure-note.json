@@ -1,0 +1,11 @@
+{
+  "status": "generated-positive-gates-completed; final refusal assertion failed due harness expected-code mismatch",
+  "testOnlyGasBudget": 1000000000,
+  "testOnlyWallBudgetSeconds": 1200,
+  "observed": "Math.abs(double) correctly refused atomically as CallError(3,3); harness initially expected CallError code 4.",
+  "classification": "harness-expectation-only; not a Java semantic blocker, not a test-budget shortage",
+  "preservedGateFailure": "attempts/attempt-1/direct/gate-failure.json",
+  "preservedFixtureManifest": "fixture-manifest.json",
+  "preservedMathEdgeCheckpoint": "attempts/attempt-1/q1-math-double-min-max-edges.checkpoint.bin",
+  "note": "The gate had already completed all q1/q7/q65536/q4096 Math edge results, q65536/q4096 256-pair matrix, and retained profiles before this refusal expectation mismatch. This failed attempt is retained and is not credited as the final passing gate."
+}

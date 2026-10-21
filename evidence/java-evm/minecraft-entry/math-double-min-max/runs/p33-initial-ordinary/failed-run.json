@@ -1,0 +1,56 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "commands": [
+        {
+          "command": [
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-initial-ordinary/tools/evm_driver",
+            "gate",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-initial-ordinary/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-build-p33-initial-ordinary/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-initial-ordinary/fixture-manifest.json",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-fixtures-p33-initial-ordinary",
+            "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-gate-p33-initial-ordinary/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 1,
+          "label": "direct-generated-engine-gate",
+          "log": "/home/user/evm-jvm/math-double-min-max/build/java-diff-mc-math-double-min-max-gate-p33-initial-ordinary/attempts/attempt-1/logs/direct-generated-engine-gate.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 754.302
+        }
+      ],
+      "error": "direct-generated-engine-gate failed (1): {\n  \"status\": \"failed\",\n  \"mode\": \"gate\",\n  \"engineRuntimeSHA256\": \"f6a9d7717851302527f316459ad5adc21286ab8709d5ad2b2195f7bab7d01ea6\",\n  \"engineRuntimeKeccak256\": \"0x1861b93187fec1fc4fe9b81dcbdf9243e4d0d1550a72be50d7c67fdb1f10eddf\",\n  \"coordinatorRuntimeSHA256\": \"2c2019ff9f76df04413dd27b567c54569922f7a737ede3bf7e3fc87294244b49\",\n  \"coordinatorRuntimeKeccak256\": \"0x379a63599d75d707c7b6d3c24b15fcd6c9a01423a02c36183f11a17d59a04ced\",\n  \"localGasBudget\": 1000000000,\n  \"caller\": \"0x4d432d41525241594c4953544c4f43414c310001\",\n  \"engineAddress\": \"0x4d432d52414e444f4d2d434c4153532d50310060\",\n  \"coordinatorAddress\": \"0x4d432d41525241594c4953544c4f43414c310002\",\n  \"schedules\": [\n    {\n      \"name\": \"q1-matrix\",\n      \"quantum\": 1,\n      \"transport\": \"geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice\",\n      \"rawCount\": 1,\n      \"rawBytes\": 1177,\n      \"bootstrapCount\": 100,\n      \"diagnosticClassCount\": 101,\n      \"callCount\": 336,\n      \"totalGas\": 12441192363,\n      \"maxCallGas\": 50762183,\n      \"wallMs\": 14016,\n      \"stateRoot\": \"0x25b7d5317cbc8204fb7d2dc03ae0adf28c8e005601ac0156f80c429e11a70441\",\n      \"instanceId\": \"0xd7721cf03a326d491cc508cc5789558038afd992528048663541b84419c31e04\",\n      \"final\": {\n        \"schema\": 1,\n        \"lifecycle\": 2,\n        \"outcome\": 2,\n        \"epoch\": 336,\n        \"checkpointRoot\": \"0x2df1d4b0a46ddd61f09603e683926c3cbea9238b9290e6c196ad964bcaf03e3f\",\n        \"machineStateRoot\": \"0x45d69deb5510469718500354c185a5fb8edda96597f31b676ca4907f61addf4f\",\n        \"totalJvmSteps\": 336,\n        \"totalInternalSteps\": 4,\n        \"executedJvmSteps\": 1,\n        \"executedInternalSteps\": 0,\n        \"javaKind\": 0,\n        \"javaRef\": 0,\n        \"vfsStateRoot\": \"0xfd5dc551928e8a3a473e055437d8ede2e843008017c5876ef1644d245fd351f0\",\n        \"gasUsed\": 50519763,\n        \"wallMs\": 56\n      },\n      \"checkpointBytes\": 11322,\n      \"checkpointSHA256\": \"55e80a40a800a916cd2e7f4497297b11362345c65f6b9708133",
+      "gasBudget": 1000000000,
+      "status": "failed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "pairPins": {
+    "acceptedEngineCapChanged": false,
+    "bootstrapCount": 100,
+    "constructorRawByteLimit": 1063930,
+    "constructorRawClassLimit": 150,
+    "coordinator": {
+      "initSHA256": "36da99e696b5d78882322595f3644e0f76881f4de27abded1a092a0fdd877bd1",
+      "runtimeBytes": 5411,
+      "runtimeKeccak256": "379a63599d75d707c7b6d3c24b15fcd6c9a01423a02c36183f11a17d59a04ced",
+      "runtimeSHA256": "2c2019ff9f76df04413dd27b567c54569922f7a737ede3bf7e3fc87294244b49",
+      "sourceSHA256": "598abe27a106b3891b5f554feb75f1f726df6baee26c58ff3fe6ec150fbeae27"
+    },
+    "coordinatorExecution": "ordinary EVM CREATE with constructor-pinned AS0/ZI0/DI0 dependencies",
+    "engine": {
+      "initSHA256": "29b1c4d7c7f9a6cfd74ee1f672ef831059da2d2e7405dc3366e696819fdf66c4",
+      "runtimeBytes": 398336,
+      "runtimeKeccak256": "1861b93187fec1fc4fe9b81dcbdf9243e4d0d1550a72be50d7c67fdb1f10eddf",
+      "runtimeSHA256": "f6a9d7717851302527f316459ad5adc21286ab8709d5ad2b2195f7bab7d01ea6"
+    },
+    "engineExecution": "LOCAL preinstalled-code runtime.Call, not CREATE",
+    "maximumMR01DiagnosticClasses": 250,
+    "ordinaryOpcodeGasChanged": false,
+    "profile": "LOCAL1M-math-double-min-max-raw150-byte1063930"
+  },
+  "status": "failed"
+}
