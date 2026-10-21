@@ -1,0 +1,92 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "commands": [
+        {
+          "command": [
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/tools/evm_driver",
+            "gate",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-first/fixture-manifest.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-first",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-first/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "direct-generated-engine-gate",
+          "log": "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-first/attempts/attempt-1/logs/direct-generated-engine-gate.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 759.036
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/tools/evm_driver",
+            "reopen",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-first/fixture-manifest.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-first",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-first/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "fresh-process-q1-reopen",
+          "log": "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-first/attempts/attempt-1/logs/fresh-process-q1-reopen.log",
+          "timedOut": false,
+          "timeoutSeconds": 440,
+          "wallSeconds": 0.614
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/tools/evm_driver",
+            "coordinator",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-first/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-first/fixture-manifest.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-first",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-first/attempts/attempt-1/coordinator",
+            "1000000000"
+          ],
+          "exit": 1,
+          "label": "generated-coordinator-engine-route",
+          "log": "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-first/attempts/attempt-1/logs/generated-coordinator-engine-route.log",
+          "timedOut": false,
+          "timeoutSeconds": 440,
+          "wallSeconds": 15.581
+        }
+      ],
+      "error": "generated-coordinator-engine-route failed (1): {\n  \"status\": \"failed\",\n  \"mode\": \"coordinator\",\n  \"engineRuntimeSHA256\": \"564966fcc8cbaad224700af6d6e4911cc799f0ab7951fbfbacb9e2548326c555\",\n  \"engineRuntimeKeccak256\": \"0x75f6adffa805f56d5e5f8ebb0953293019398f65dd179c058648e3b195a345b2\",\n  \"coordinatorRuntimeSHA256\": \"196add3bf46db3ede0d230c6842a8b28b31c85358bdefe309eb8f47aa9a411b5\",\n  \"coordinatorRuntimeKeccak256\": \"0x6c7933c443b33c3c864bcf1171f5184b3eeb436a37e5c69a53bcced6942e4313\",\n  \"localGasBudget\": 1000000000,\n  \"caller\": \"0x4d432d52414e444f4d2d434c4153532d5031006d\",\n  \"engineAddress\": \"0x4d432d52414e444f4d2d434c4153532d5031006c\",\n  \"coordinatorAddress\": \"0x4d432d41525241594c4953544c4f43414c310002\",\n  \"failure\": {\n    \"classification\": \"EVM-positive-call-failure\",\n    \"case\": \"coordinator-create-exact150\",\n    \"gasBudget\": 1000000000,\n    \"error\": \"EVM-positive-call-failure: coordinator-create-exact150 failed at gas=1000000000: execution reverted revert=0xab23ed080000000000000000000000000000000000000000000000000000000000000010\"\n  },\n  \"processId\": 62743,\n  \"elapsedMs\": 0\n}\n",
+      "gasBudget": 1000000000,
+      "status": "failed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "pairPins": {
+    "acceptedEngineCapChanged": false,
+    "bootstrapCount": 101,
+    "constructorRawByteLimit": 1063930,
+    "constructorRawClassLimit": 150,
+    "coordinator": {
+      "initSHA256": "f70d5b8d25784d059d4686dad1f5674317502c101ef362d190d2db1ec4817013",
+      "runtimeBytes": 5411,
+      "runtimeKeccak256": "6c7933c443b33c3c864bcf1171f5184b3eeb436a37e5c69a53bcced6942e4313",
+      "runtimeSHA256": "196add3bf46db3ede0d230c6842a8b28b31c85358bdefe309eb8f47aa9a411b5",
+      "sourceSHA256": "ce7dc99baa84e28247542944ec631a5a02a8cd97f4a403e4ca70f8fcd821b70d"
+    },
+    "coordinatorExecution": "ordinary EVM CREATE with constructor-pinned AS0/ZI0/DI0 dependencies",
+    "engine": {
+      "initSHA256": "83561756b6828a7d5d7349dbeccf342c5e56f2486f3e3735b82562dda1bae199",
+      "runtimeBytes": 402675,
+      "runtimeKeccak256": "75f6adffa805f56d5e5f8ebb0953293019398f65dd179c058648e3b195a345b2",
+      "runtimeSHA256": "564966fcc8cbaad224700af6d6e4911cc799f0ab7951fbfbacb9e2548326c555"
+    },
+    "engineExecution": "LOCAL preinstalled-code runtime.Call, not CREATE",
+    "maximumMR01DiagnosticClasses": 251,
+    "ordinaryOpcodeGasChanged": false,
+    "profile": "MC-CHECKPOINT-2M-P35-HASHMAP-DEFAULT-CONSTRUCTOR"
+  },
+  "status": "failed"
+}

@@ -1,0 +1,266 @@
+{
+  "acceptedEngineCapChanged": false,
+  "actualCountsVerified": {
+    "bootstrapClasses": 101,
+    "hashMapDiagnosticClasses": 102,
+    "hashMapRawCount": 1,
+    "identityHashMapDiagnosticClasses": 102,
+    "identityHashMapRawCount": 1,
+    "identityHashMapReflectionMatrix": 9,
+    "mathEdgePairs": 24,
+    "mathRandomPairs": 256,
+    "mathRawResultsComparedToReadOnlyJdk8": 560,
+    "newNativeBindings": 0,
+    "raw150": 150,
+    "raw151Refused": true,
+    "rawByteLimit": 1063930,
+    "rawBytePlusOneRefused": true,
+    "rawDiagnosticClasses": 251
+  },
+  "attemptHistory": [
+    {
+      "attempt": 1,
+      "commands": [
+        {
+          "command": [
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/tools/evm_driver",
+            "gate",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-domain-fix1/fixture-manifest.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-domain-fix1",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-domain-fix1/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "direct-generated-engine-gate",
+          "log": "logs/direct-generated-engine-gate.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 761.775
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/tools/evm_driver",
+            "reopen",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-domain-fix1/fixture-manifest.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-domain-fix1",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-domain-fix1/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "fresh-process-q1-reopen",
+          "log": "logs/fresh-process-q1-reopen.log",
+          "timedOut": false,
+          "timeoutSeconds": 438,
+          "wallSeconds": 0.614
+        },
+        {
+          "command": [
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/tools/evm_driver",
+            "coordinator",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-domain-fix1/fixture-manifest.json",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-domain-fix1",
+            "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-gate-p35-hashmap-domain-fix1/attempts/attempt-1/coordinator",
+            "1000000000"
+          ],
+          "exit": 0,
+          "label": "generated-coordinator-engine-route",
+          "log": "logs/generated-coordinator-engine-route.log",
+          "timedOut": false,
+          "timeoutSeconds": 437,
+          "wallSeconds": 17.032
+        }
+      ],
+      "gasBudget": 1000000000,
+      "status": "passed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "budgetClassification": "ordinary1B/1200s",
+  "buildCommands": [
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/hash-map-default-constructor/evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/build_candidate.py",
+        "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1"
+      ],
+      "exit": 0,
+      "log": "logs/build-1-engine-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 225.825
+    },
+    {
+      "command": [
+        "node",
+        "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/coordinator/build.js"
+      ],
+      "exit": 0,
+      "log": "logs/build-2-coordinator-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 900,
+      "wallSeconds": 1.866
+    },
+    {
+      "command": [
+        "/usr/bin/python3",
+        "/home/user/evm-jvm/hash-map-default-constructor/evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/generate_fixtures.py",
+        "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-fixtures-p35-hashmap-domain-fix1"
+      ],
+      "exit": 0,
+      "log": "logs/build-3-fixtures.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 1.315
+    },
+    {
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/hash-map-default-constructor/build/java-diff-mc-hash-map-default-constructor-build-p35-hashmap-domain-fix1/tools/evm_driver",
+        "./evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools"
+      ],
+      "exit": 0,
+      "log": "logs/build-4-driver-build.log",
+      "timedOut": false,
+      "timeoutSeconds": 300,
+      "wallSeconds": 0.715
+    }
+  ],
+  "checkpointCapBytes": 2097152,
+  "coordinatorMaxCallGas": 442847484,
+  "coordinatorTotalGas": 11821230757,
+  "directElapsedMS": 761741,
+  "directTerminalRaw150Schedules": [
+    "q1-raw150",
+    "q7-raw150",
+    "q65536-raw150",
+    "q4096-raw150"
+  ],
+  "elapsedWallSeconds": 780,
+  "generatedClassCount": 43,
+  "gitHead": "df9ef365e21882ff3775277f2f5287f3a3fc4c36",
+  "hashMapConstructorSchedules": [
+    "q1-hash-map-constructor-matrix",
+    "q7-hash-map-constructor-matrix",
+    "q65536-hash-map-constructor-matrix",
+    "q4096-hash-map-constructor-matrix"
+  ],
+  "hostOracleCount": 21,
+  "identityHashMapSchedules": [
+    "q1-identity-hash-map-matrix",
+    "q7-identity-hash-map-matrix",
+    "q65536-identity-hash-map-matrix",
+    "q4096-identity-hash-map-matrix"
+  ],
+  "mathDoubleMinMaxSchedules": [
+    "q1/q7/q65536/q4096 edge witness",
+    "q65536/q4096 deterministic random matrix",
+    "fresh-process q1 edge checkpoint reopen"
+  ],
+  "pairedPins": {
+    "acceptedEngineCapChanged": false,
+    "bootstrapCount": 101,
+    "constructorRawByteLimit": 1063930,
+    "constructorRawClassLimit": 150,
+    "coordinator": {
+      "initSHA256": "f70d5b8d25784d059d4686dad1f5674317502c101ef362d190d2db1ec4817013",
+      "runtimeBytes": 5411,
+      "runtimeKeccak256": "6c7933c443b33c3c864bcf1171f5184b3eeb436a37e5c69a53bcced6942e4313",
+      "runtimeSHA256": "196add3bf46db3ede0d230c6842a8b28b31c85358bdefe309eb8f47aa9a411b5",
+      "sourceSHA256": "ce7dc99baa84e28247542944ec631a5a02a8cd97f4a403e4ca70f8fcd821b70d"
+    },
+    "coordinatorExecution": "ordinary EVM CREATE with constructor-pinned AS0/ZI0/DI0 dependencies",
+    "engine": {
+      "initSHA256": "83561756b6828a7d5d7349dbeccf342c5e56f2486f3e3735b82562dda1bae199",
+      "runtimeBytes": 402675,
+      "runtimeKeccak256": "75f6adffa805f56d5e5f8ebb0953293019398f65dd179c058648e3b195a345b2",
+      "runtimeSHA256": "564966fcc8cbaad224700af6d6e4911cc799f0ab7951fbfbacb9e2548326c555"
+    },
+    "engineExecution": "LOCAL preinstalled-code runtime.Call, not CREATE",
+    "maximumMR01DiagnosticClasses": 251,
+    "ordinaryOpcodeGasChanged": false,
+    "profile": "MC-CHECKPOINT-2M-P35-HASHMAP-DEFAULT-CONSTRUCTOR"
+  },
+  "runId": "p35-hashmap-domain-fix1",
+  "runtimeCapBytes": 1048576,
+  "sourceHashes": {
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/README.md": "49fcf2ae129054878db222a20f414db5d731cd3f9abbc614ecd57115a769fc9e",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/java/lang/Math.java": "996d72985c6faac2d720e3a72122d086427c2b47e6f1f18cf33e17e6dfffe125",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/java/util/AbstractList.java": "cc6f99920d5b9a8bc32e5d8d2807da178d66921e357680409ed142061966f601",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/java/util/ArrayList.java": "2db3b97e97f9d65252371445fb589576092eaecc9684647a8a3f7c421a221c23",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/java/util/HashMap.java": "1f7324f6f28e08fca2b3a95beb4a9539a1f08b4c17e0cd35f816e8a81f6b4806",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/java/util/IdentityHashMap.java": "d20646e70677d3030080d2fc28dc6999f93adf79ac1d22dba1301ad4540e90a4",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/stub/java/util/AbstractCollection.java": "c70eec71eb4784e646a97710696cede06335c7a65b9b440060b3f774bf6e50ae",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/stub/java/util/Collection.java": "4ca7f5cf95977d1ae58ab9a9f4a51e658f4a9b9b1dfb32f0b56c7a4133f6755b",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/stub/java/util/List.java": "25a245341b424f3b4eccf237c556dd0f5971fcd521b14d8544ac07d6030fb7dd",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/bootstrap/stub/java/util/RandomAccess.java": "e352a53d2db0adb22e3b7d809ad2cf22297c9ef69f42b4774655392afb06a885",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/coordinator/MCEntryCoordinator.sol": "ce7dc99baa84e28247542944ec631a5a02a8cd97f4a403e4ca70f8fcd821b70d",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/coordinator/build.js": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/engine/MCEntryInterpreter.sol": "aee8024d8f7b97ac91cd314020d6943f78313b3afe4ce8d0cb00ce39f539b00d",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/engine/build.js": "395752305ea04f1c8eceb0ebe7f832e964b060aacf6105d9b8f5fe26859b85ab",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListMathObjectInteger.java": "ffc79a328cf5f37cb53591b2631738fd87c5deffc6f415d7f91a7818ccf5c10a",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListMatrix.java": "19ba9cc62179ad1fdcc012bee8fcbb294b674139e7d3cbdff4db8456ade1aed7",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListMissingDefaultConstructor.java": "5fe4b071f778ea5fe4506265c41e0f9600c4b47fda103dbbab501b4f693111eb",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListNegativeMin.java": "0e059523445b6cd7ae47483400096556c1131d3747eb539a3b14ebd6f6638b87",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListNegativeMinusOne.java": "40672112374b40782854660478d14aef332ddb304172698ed3ab4960d115d4ce",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListPackedSparse.java": "b9a0a280f4e8b0486c990d9cbc625957bf9ab0f732ef23b59cb3eb575c1777d8",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListQuotaBoundary.java": "e0868f65cbae95b6fd92b83b11a470e51e0ef7f16ef7b60fe2c4062832eacf16",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListQuotaOOM.java": "b8e1e0895ccadb47d3f8e585c358b817b7fdfaac62994a461730fbece716e556",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListRawReplacementMain.java": "3e930fe595f147855752b82792dc2022029f2ce8f9e1599753a1eab5a551d09d",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListUnboundAddConcrete.java": "cf0dfd7c684fe42a8d675cfa070fb0d0748d52e1d91d549aca07ff2d59760b5f",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListUnboundAddInterface.java": "8a6acd83bce8c8f01de24539eb1cb8be3242b7f4441279614578e2207b51cf17",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListUnboundIteratorConcrete.java": "1dedd842a05727305cacf0e748f3bf56d6b4dc0b0a7711c8f4eca4f7997a0089",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/ArrayListUnboundIteratorInterface.java": "a1503928eb95565d562677fc7002135810233ebdbd76817268c9891b616a919b",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/HashMapConstructorMatrix.java": "e24af00484a2aa6d36b11182585d8dd963b015155e2f2566bad1b0824d97f151",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/HashMapMissingCapacityConstructor.java": "7277d902aa508e10532ba9f01e0d912f04cdfa56fdc8fe8ee8818a9d6a8839ba",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/HashMapPutRefusal.java": "addbac2c186e164ca0a76354bf0200155a987dd3a9a6952ffdc0bd0341104333",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/HashMapRawReplacementMain.java": "2b5f50acd6282420519a1b64cc320ddd4582237ccadf92aa9e1d2c52b26fa5ba",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapArrayQuotaControl.java": "6d21fa698086927110474c24d0d257f91be6770e04ba2f0f2348f8561fa297ca",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapMatrix.java": "cc84daeb5cc6e984f4acf9f4b0344e604b53031dd6fb729a3964331526e3653a",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapMaximumControl.java": "5189714a4c34bdda40c2f58ec5e6e83b635c7bbb50e7675515164d006754b45d",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapMissingDefaultConstructor.java": "447296a304c3826692539aef9eda9ddbf8882703e8dfb7fe2a18bffbf84eeaf4",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapNegativeMin.java": "a40dcfad117982d2d68d21fe11a623db65c8f60b276a06b212d6ffaf58e8ca5b",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapNegativeMinusOne.java": "c1b567da7e74c2f517e294aa211c6967c30a7b4349825bc88ad36b6b1a1b820e",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapRawReplacementMain.java": "e78689579bde26769f20674f9b6a3e270300b97fc967e6aa087fe122fb1ae757",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapUnboundDefaultMethod.java": "a93a96e13f983ec47ca2978c01a030160447994c90399d24941d70c398f920af",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapUnboundEqualsObject.java": "56a5367fecb55ec3b36757c1cf8b537fd1fdb7e42031dddc49afe3654f79e990",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapUnboundGetInterface.java": "f8c1eae5dd63e9fe687c75dc70c4e3e26a27947dd18189d8454a6803d5ed1bc3",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapUnboundHashCodeObject.java": "a317734b235c512fbaadda80cbd00f4f6f94df7b0f335f4398f11447f5865fee",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapUnboundPutConcrete.java": "8971f0f26eaca0ab0036f0560c980cb4431f8b4bf1d84e5e560b49973c7b6de7",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapUnboundPutInterface.java": "8679084bc2f8d3eacf1b45946e135167f50cf58904bdd5bfe6e8207a788d0951",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/IdentityHashMapUnboundViews.java": "16d8da5b2e58949a2fab336cbcdc04b3dceb93c7916631ea1bef3cf83ec1409e",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/MathAbsUnsupported.java": "9fbf6de8d7a98029b0d53b4ef7e0bfc21fd3fd49e1de52547ee9799cd5eea5b8",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/MathDoubleMinMax.template": "6ba8cc9097652c2526a0f920a2c3bc1474655dde6efa916e060e318c71d8eda2",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/MathRawReplacementMain.java": "6a00bad963f1434be39fd2a5eabbcaedc85acf6480714c3468b82198f864076a",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/replacement/java/lang/Math.java": "b42bc663c241348e92cd6274cfbce9b1b8aa5cc793d501604daf6917492b3c2f",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/replacement/java/util/ArrayList.java": "4d20cff98be309dc7c8ed3337101060449d3462ebaf4e691d61cb134cbb719be",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/replacement/java/util/HashMap.java": "79d6c1ea624c09f3d0796ff44337abe1d2ba26761d0236de3e8d000e51d69fce",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/fixtures/src/replacement/java/util/IdentityHashMap.java": "31ccf78acd8a307ccc1a38969e37abfdf560a3e43a895fd80fcd7e2460371dd5",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/jdk8-reflection-oracle.txt": "c1029b296ef5a7965c1dbe78dd27a3ea69d6bd8084a4677befcd512b10a45055",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/pins.json": "f990062749c4ed1f9e1e6f7bd793a6448999a84d7312f08e609fca22ab56ba70",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/HashMapJdk8ReflectionOracle.java": "dc6fef04acf04031c5dbd7195d066ea0628ff86c78c717cd6b0d39e719ccbc36",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/build_candidate.py": "3955f08e3dfaadee9d0e6a51d1a89c47c157acf0f0282b1304c1a9f8c2dde1f1",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/coordinator_route.go": "7381f6acd961e1878da843d458313ba92d93cac5dcd30047b20f503bd13fdc59",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/evm_driver.go": "615cbb1a853c1cb3b1baa4319918ce6e8586ee2f9d0a7022e9f583a074fed766",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/generate_fixtures.py": "b124b79df783ddbe9a8c0f1cbdd5fddfb7ea78e99803f3647c2000c9f550d119",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/run_gate.py": "1bbfcaa42bdcf439d3e9f9f862f295e393bc56064cd80f536b792246463cf085",
+    "evidence/java-evm/minecraft-entry/hash-map-default-constructor/tools/verify_source.py": "54bb7677a7a6686015476a5e2c9615f153887320de6f89f39497e8ca5c70c9f0"
+  },
+  "status": "generated-only Java 8 HashMap() constructor/type-closure/field-state/refusal plus retained prior engine/coordinator gates passed; original replay remains parent-owned and was not run here",
+  "testOnlyGasBudget": 1000000000,
+  "testOnlyWallBudgetSeconds": 1200,
+  "toolVersions": {
+    "go": "go version go1.27.2-X:nodwarf5 linux/amd64",
+    "javac": "javac 21.0.9",
+    "node": "v24.14.0",
+    "python": "Python 3.14.8"
+  }
+}
