@@ -1,0 +1,184 @@
+{
+  "zipPath": "evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/fixtures/generated/fixture.zip",
+  "coordinatorArtifact": "evidence/java-evm/minecraft-entry/performance-base-p34/coordinator/MCEntryCoordinator.json",
+  "engineArtifact": "evidence/java-evm/minecraft-entry/performance-base-p34/engine/MCEntryInterpreter.json",
+  "inspectorArtifact": "evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/BindingMethodInspector.json",
+  "bindings": [
+    "scan/Base.class",
+    "scan/Bad.class",
+    "scan/Helper.class",
+    "scan/Marker.class",
+    "scan/Probe.class",
+    "scan/WrongName.class"
+  ],
+  "requests": [
+    {
+      "label": "Probe.<init>",
+      "binding": 4,
+      "methodIndex": 0,
+      "pcStart": 0,
+      "pcEnd": 15,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.<clinit>",
+      "binding": 4,
+      "methodIndex": 13,
+      "pcStart": 0,
+      "pcEnd": 11,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.dependencies",
+      "binding": 4,
+      "methodIndex": 1,
+      "pcStart": 0,
+      "pcEnd": 35,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.getCurrent",
+      "binding": 4,
+      "methodIndex": 2,
+      "pcStart": 0,
+      "pcEnd": 4,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.setCurrent",
+      "binding": 4,
+      "methodIndex": 3,
+      "pcStart": 0,
+      "pcEnd": 5,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.interfaceCall",
+      "binding": 4,
+      "methodIndex": 4,
+      "pcStart": 0,
+      "pcEnd": 7,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.virtualCall",
+      "binding": 4,
+      "methodIndex": 5,
+      "pcStart": 0,
+      "pcEnd": 5,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.staticCall",
+      "binding": 4,
+      "methodIndex": 6,
+      "pcStart": 0,
+      "pcEnd": 4,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.classLiteral",
+      "binding": 4,
+      "methodIndex": 7,
+      "pcStart": 0,
+      "pcEnd": 3,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.operandTrap",
+      "binding": 4,
+      "methodIndex": 10,
+      "pcStart": 0,
+      "pcEnd": 4,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.fixturePadding",
+      "binding": 4,
+      "methodIndex": 11,
+      "pcStart": 0,
+      "pcEnd": 3,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.tableSwitch",
+      "binding": 4,
+      "methodIndex": 8,
+      "pcStart": 0,
+      "pcEnd": 60,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.lookupSwitch",
+      "binding": 4,
+      "methodIndex": 9,
+      "pcStart": 0,
+      "pcEnd": 54,
+      "maxResults": 64,
+      "expectSuccess": true
+    },
+    {
+      "label": "Probe.wideLocals",
+      "binding": 4,
+      "methodIndex": 12,
+      "pcStart": 0,
+      "pcEnd": 1972,
+      "maxResults": 64,
+      "expectSuccess": true
+    }
+  ],
+  "negativeRequests": [
+    {
+      "label": "truncated-class",
+      "binding": 1,
+      "methodIndex": 0,
+      "pcStart": 0,
+      "pcEnd": 1,
+      "maxResults": 8,
+      "expectSuccess": false
+    },
+    {
+      "label": "binding-name-mismatch",
+      "binding": 5,
+      "methodIndex": 0,
+      "pcStart": 0,
+      "pcEnd": 1,
+      "maxResults": 8,
+      "expectSuccess": false
+    },
+    {
+      "label": "pc-end-inside-operand",
+      "binding": 4,
+      "methodIndex": 1,
+      "pcStart": 0,
+      "pcEnd": 1,
+      "maxResults": 64,
+      "expectSuccess": false
+    },
+    {
+      "label": "reference-cap",
+      "binding": 4,
+      "methodIndex": 1,
+      "pcStart": 0,
+      "pcEnd": 35,
+      "maxResults": 1,
+      "expectSuccess": false
+    }
+  ],
+  "tamperBinding": 4,
+  "invalidBinding": 250,
+  "runWrongPackageConstructor": true,
+  "runWrongCodeConstructor": true
+}

@@ -1,0 +1,916 @@
+{
+  "bindingRoots": [
+    "0xdc9e79bb86b0d5f132095195f8092d6a92329ca8b27f75efaf4ef61faec88c07",
+    "0x6707c6e5cf57e8337a19f6105c957098633dab5168d54b5cfd2a43d6efbf1bb4",
+    "0x1ef2bb55acc9e99cf33002fcd758a8ba416152bc597d82cc4f99b0290d9f7254",
+    "0x0d57e1b621699b7f91aca2b4d95240ee2d13996f56606e2e89deff9abbe12afc",
+    "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+    "0xc3609b5572746f88f1503f543a57d1783efa2e427aa46786f4fc5ca69521642f"
+  ],
+  "bindingSizes": [
+    124,
+    19,
+    202,
+    147,
+    8349,
+    202
+  ],
+  "checkpointOrContinuation": false,
+  "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+  "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+  "diagnosticOnly": true,
+  "elapsedMillis": 5564,
+  "explicitBindings": [
+    "scan/Base.class",
+    "scan/Bad.class",
+    "scan/Helper.class",
+    "scan/Marker.class",
+    "scan/Probe.class",
+    "scan/WrongName.class"
+  ],
+  "fixtureZIPBytes": 9719,
+  "forgedStateGuardProbeGas": 64940923,
+  "forgedStateGuardSlots": {
+    "coordinator-finalIndexRoot": 2,
+    "coordinator-owner": 0,
+    "coordinator-packageRoot": 3,
+    "di0-finalRoot": 10,
+    "di0-indexRoot": 3,
+    "di0-owner": 0,
+    "di0-phase": 12,
+    "di0-plainSize": 11
+  },
+  "guestExecution": false,
+  "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+  "inputProvenance": "generated Java 8 fixture ZIP only",
+  "inspector": "0x3dfE0F77e47bC96B58266b335CF04072B8A3B9b2",
+  "inspectorRuntimeBytes": 18117,
+  "inspectorRuntimeKeccak": "0x4511adc038fcceca8a47eb5e98af43ecf1d1d0b4cca176f4475fdaa7a1ea5f6d",
+  "maximumObservedEVMCallGas": 38517629,
+  "observedEVMCallCount": 210,
+  "ordinaryGasLimitPerEVMCall": 1000000000,
+  "otherNegativeProbeGas": 39787,
+  "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+  "readChunkLimit": 4096,
+  "results": [
+    {
+      "label": "Probe.<init>",
+      "success": true,
+      "stats": {
+        "gasUsed": 456926,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodName": "<init>",
+      "methodDescriptor": "()V",
+      "pcEnd": 15,
+      "codeLength": 15,
+      "decodedInstructions": 7,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 0,
+          "pc": 1,
+          "opcodeByte": 183,
+          "opcode": "invokespecial",
+          "provenance": "Code operand -> CONSTANT_Methodref",
+          "kind": 3,
+          "constantPoolTag": 10,
+          "constantPoolIndex": 1,
+          "owner": "scan/Base",
+          "ownerHex": "7363616e2f42617365",
+          "name": "<init>",
+          "nameHex": "3c696e69743e",
+          "descriptor": "()V",
+          "descriptorHex": "282956"
+        },
+        {
+          "methodIndex": 0,
+          "pc": 4,
+          "opcodeByte": 187,
+          "opcode": "new",
+          "provenance": "Code operand -> CONSTANT_Class",
+          "kind": 1,
+          "constantPoolTag": 7,
+          "constantPoolIndex": 7,
+          "typeName": "scan/Helper",
+          "typeNameHex": "7363616e2f48656c706572"
+        },
+        {
+          "methodIndex": 0,
+          "pc": 8,
+          "opcodeByte": 183,
+          "opcode": "invokespecial",
+          "provenance": "Code operand -> CONSTANT_Methodref",
+          "kind": 3,
+          "constantPoolTag": 10,
+          "constantPoolIndex": 9,
+          "owner": "scan/Helper",
+          "ownerHex": "7363616e2f48656c706572",
+          "name": "<init>",
+          "nameHex": "3c696e69743e",
+          "descriptor": "()V",
+          "descriptorHex": "282956"
+        },
+        {
+          "methodIndex": 0,
+          "pc": 11,
+          "opcodeByte": 179,
+          "opcode": "putstatic",
+          "provenance": "Code operand -> CONSTANT_Fieldref",
+          "kind": 2,
+          "constantPoolTag": 9,
+          "constantPoolIndex": 10,
+          "owner": "scan/Probe",
+          "ownerHex": "7363616e2f50726f6265",
+          "name": "current",
+          "nameHex": "63757272656e74",
+          "descriptor": "Lscan/Helper;",
+          "descriptorHex": "4c7363616e2f48656c7065723b"
+        }
+      ]
+    },
+    {
+      "label": "Probe.<clinit>",
+      "success": true,
+      "stats": {
+        "gasUsed": 437515,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 13,
+      "methodName": "<clinit>",
+      "methodDescriptor": "()V",
+      "pcEnd": 11,
+      "codeLength": 11,
+      "decodedInstructions": 5,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 13,
+          "pc": 0,
+          "opcodeByte": 187,
+          "opcode": "new",
+          "provenance": "Code operand -> CONSTANT_Class",
+          "kind": 1,
+          "constantPoolTag": 7,
+          "constantPoolIndex": 7,
+          "typeName": "scan/Helper",
+          "typeNameHex": "7363616e2f48656c706572"
+        },
+        {
+          "methodIndex": 13,
+          "pc": 4,
+          "opcodeByte": 183,
+          "opcode": "invokespecial",
+          "provenance": "Code operand -> CONSTANT_Methodref",
+          "kind": 3,
+          "constantPoolTag": 10,
+          "constantPoolIndex": 9,
+          "owner": "scan/Helper",
+          "ownerHex": "7363616e2f48656c706572",
+          "name": "<init>",
+          "nameHex": "3c696e69743e",
+          "descriptor": "()V",
+          "descriptorHex": "282956"
+        },
+        {
+          "methodIndex": 13,
+          "pc": 7,
+          "opcodeByte": 179,
+          "opcode": "putstatic",
+          "provenance": "Code operand -> CONSTANT_Fieldref",
+          "kind": 2,
+          "constantPoolTag": 9,
+          "constantPoolIndex": 10,
+          "owner": "scan/Probe",
+          "ownerHex": "7363616e2f50726f6265",
+          "name": "current",
+          "nameHex": "63757272656e74",
+          "descriptor": "Lscan/Helper;",
+          "descriptorHex": "4c7363616e2f48656c7065723b"
+        }
+      ]
+    },
+    {
+      "label": "Probe.dependencies",
+      "success": true,
+      "stats": {
+        "gasUsed": 521297,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 1,
+      "methodName": "dependencies",
+      "methodDescriptor": "(Ljava/lang/Object;)Ljava/lang/Object;",
+      "pcEnd": 35,
+      "codeLength": 35,
+      "decodedInstructions": 19,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 1,
+          "pc": 0,
+          "opcodeByte": 187,
+          "opcode": "new",
+          "provenance": "Code operand -> CONSTANT_Class",
+          "kind": 1,
+          "constantPoolTag": 7,
+          "constantPoolIndex": 7,
+          "typeName": "scan/Helper",
+          "typeNameHex": "7363616e2f48656c706572"
+        },
+        {
+          "methodIndex": 1,
+          "pc": 4,
+          "opcodeByte": 183,
+          "opcode": "invokespecial",
+          "provenance": "Code operand -> CONSTANT_Methodref",
+          "kind": 3,
+          "constantPoolTag": 10,
+          "constantPoolIndex": 9,
+          "owner": "scan/Helper",
+          "ownerHex": "7363616e2f48656c706572",
+          "name": "<init>",
+          "nameHex": "3c696e69743e",
+          "descriptor": "()V",
+          "descriptorHex": "282956"
+        },
+        {
+          "methodIndex": 1,
+          "pc": 9,
+          "opcodeByte": 189,
+          "opcode": "anewarray",
+          "provenance": "Code operand -> CONSTANT_Class",
+          "kind": 1,
+          "constantPoolTag": 7,
+          "constantPoolIndex": 7,
+          "typeName": "scan/Helper",
+          "typeNameHex": "7363616e2f48656c706572"
+        },
+        {
+          "methodIndex": 1,
+          "pc": 14,
+          "opcodeByte": 192,
+          "opcode": "checkcast",
+          "provenance": "Code operand -> CONSTANT_Class",
+          "kind": 1,
+          "constantPoolTag": 7,
+          "constantPoolIndex": 7,
+          "typeName": "scan/Helper",
+          "typeNameHex": "7363616e2f48656c706572"
+        },
+        {
+          "methodIndex": 1,
+          "pc": 19,
+          "opcodeByte": 193,
+          "opcode": "instanceof",
+          "provenance": "Code operand -> CONSTANT_Class",
+          "kind": 1,
+          "constantPoolTag": 7,
+          "constantPoolIndex": 16,
+          "typeName": "scan/Marker",
+          "typeNameHex": "7363616e2f4d61726b6572"
+        }
+      ]
+    },
+    {
+      "label": "Probe.getCurrent",
+      "success": true,
+      "stats": {
+        "gasUsed": 407038,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 2,
+      "methodName": "getCurrent",
+      "methodDescriptor": "()Lscan/Helper;",
+      "pcEnd": 4,
+      "codeLength": 4,
+      "decodedInstructions": 2,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 2,
+          "pc": 0,
+          "opcodeByte": 178,
+          "opcode": "getstatic",
+          "provenance": "Code operand -> CONSTANT_Fieldref",
+          "kind": 2,
+          "constantPoolTag": 9,
+          "constantPoolIndex": 10,
+          "owner": "scan/Probe",
+          "ownerHex": "7363616e2f50726f6265",
+          "name": "current",
+          "nameHex": "63757272656e74",
+          "descriptor": "Lscan/Helper;",
+          "descriptorHex": "4c7363616e2f48656c7065723b"
+        }
+      ]
+    },
+    {
+      "label": "Probe.setCurrent",
+      "success": true,
+      "stats": {
+        "gasUsed": 411604,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 3,
+      "methodName": "setCurrent",
+      "methodDescriptor": "(Lscan/Helper;)V",
+      "pcEnd": 5,
+      "codeLength": 5,
+      "decodedInstructions": 3,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 3,
+          "pc": 1,
+          "opcodeByte": 179,
+          "opcode": "putstatic",
+          "provenance": "Code operand -> CONSTANT_Fieldref",
+          "kind": 2,
+          "constantPoolTag": 9,
+          "constantPoolIndex": 10,
+          "owner": "scan/Probe",
+          "ownerHex": "7363616e2f50726f6265",
+          "name": "current",
+          "nameHex": "63757272656e74",
+          "descriptor": "Lscan/Helper;",
+          "descriptorHex": "4c7363616e2f48656c7065723b"
+        }
+      ]
+    },
+    {
+      "label": "Probe.interfaceCall",
+      "success": true,
+      "stats": {
+        "gasUsed": 412864,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 4,
+      "methodName": "interfaceCall",
+      "methodDescriptor": "(Lscan/Marker;)Ljava/lang/String;",
+      "pcEnd": 7,
+      "codeLength": 7,
+      "decodedInstructions": 3,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 4,
+          "pc": 1,
+          "opcodeByte": 185,
+          "opcode": "invokeinterface",
+          "provenance": "Code operand -> CONSTANT_InterfaceMethodref",
+          "kind": 3,
+          "constantPoolTag": 11,
+          "constantPoolIndex": 18,
+          "owner": "scan/Marker",
+          "ownerHex": "7363616e2f4d61726b6572",
+          "name": "markerName",
+          "nameHex": "6d61726b65724e616d65",
+          "descriptor": "()Ljava/lang/String;",
+          "descriptorHex": "28294c6a6176612f6c616e672f537472696e673b"
+        }
+      ]
+    },
+    {
+      "label": "Probe.virtualCall",
+      "success": true,
+      "stats": {
+        "gasUsed": 411813,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 5,
+      "methodName": "virtualCall",
+      "methodDescriptor": "(Ljava/lang/Object;)Ljava/lang/String;",
+      "pcEnd": 5,
+      "codeLength": 5,
+      "decodedInstructions": 3,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 5,
+          "pc": 1,
+          "opcodeByte": 182,
+          "opcode": "invokevirtual",
+          "provenance": "Code operand -> CONSTANT_Methodref",
+          "kind": 3,
+          "constantPoolTag": 10,
+          "constantPoolIndex": 22,
+          "owner": "java/lang/Object",
+          "ownerHex": "6a6176612f6c616e672f4f626a656374",
+          "name": "toString",
+          "nameHex": "746f537472696e67",
+          "descriptor": "()Ljava/lang/String;",
+          "descriptorHex": "28294c6a6176612f6c616e672f537472696e673b"
+        }
+      ]
+    },
+    {
+      "label": "Probe.staticCall",
+      "success": true,
+      "stats": {
+        "gasUsed": 407561,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 6,
+      "methodName": "staticCall",
+      "methodDescriptor": "()Lscan/Helper;",
+      "pcEnd": 4,
+      "codeLength": 4,
+      "decodedInstructions": 2,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 6,
+          "pc": 0,
+          "opcodeByte": 184,
+          "opcode": "invokestatic",
+          "provenance": "Code operand -> CONSTANT_Methodref",
+          "kind": 3,
+          "constantPoolTag": 10,
+          "constantPoolIndex": 27,
+          "owner": "scan/Helper",
+          "ownerHex": "7363616e2f48656c706572",
+          "name": "make",
+          "nameHex": "6d616b65",
+          "descriptor": "()Lscan/Helper;",
+          "descriptorHex": "28294c7363616e2f48656c7065723b"
+        }
+      ]
+    },
+    {
+      "label": "Probe.classLiteral",
+      "success": true,
+      "stats": {
+        "gasUsed": 403309,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 7,
+      "methodName": "classLiteral",
+      "methodDescriptor": "()Ljava/lang/Class;",
+      "pcEnd": 3,
+      "codeLength": 3,
+      "decodedInstructions": 2,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc",
+      "references": [
+        {
+          "methodIndex": 7,
+          "pc": 0,
+          "opcodeByte": 18,
+          "opcode": "ldc",
+          "provenance": "ldc operand -> CONSTANT_Class",
+          "kind": 5,
+          "constantPoolTag": 7,
+          "constantPoolIndex": 7,
+          "typeName": "scan/Helper",
+          "typeNameHex": "7363616e2f48656c706572"
+        }
+      ]
+    },
+    {
+      "label": "Probe.operandTrap",
+      "success": true,
+      "stats": {
+        "gasUsed": 398640,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 10,
+      "methodName": "operandTrap",
+      "methodDescriptor": "()I",
+      "pcEnd": 4,
+      "codeLength": 4,
+      "decodedInstructions": 2,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc"
+    },
+    {
+      "label": "Probe.fixturePadding",
+      "success": true,
+      "stats": {
+        "gasUsed": 398404,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 11,
+      "methodName": "fixturePadding",
+      "methodDescriptor": "()Ljava/lang/String;",
+      "pcEnd": 3,
+      "codeLength": 3,
+      "decodedInstructions": 2,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc"
+    },
+    {
+      "label": "Probe.tableSwitch",
+      "success": true,
+      "stats": {
+        "gasUsed": 489757,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 8,
+      "methodName": "tableSwitch",
+      "methodDescriptor": "(I)I",
+      "pcEnd": 60,
+      "codeLength": 60,
+      "decodedInstructions": 16,
+      "switchInstructions": 1,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc"
+    },
+    {
+      "label": "Probe.lookupSwitch",
+      "success": true,
+      "stats": {
+        "gasUsed": 469320,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 9,
+      "methodName": "lookupSwitch",
+      "methodDescriptor": "(I)I",
+      "pcEnd": 54,
+      "codeLength": 54,
+      "decodedInstructions": 12,
+      "switchInstructions": 1,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc"
+    },
+    {
+      "label": "Probe.wideLocals",
+      "success": true,
+      "stats": {
+        "gasUsed": 7118742,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 8
+      },
+      "bindingIndex": 4,
+      "resourceName": "scan/Probe.class",
+      "resourceNameHex": "7363616e2f50726f62652e636c617373",
+      "declaringClass": "scan/Probe",
+      "methodIndex": 12,
+      "methodName": "wideLocals",
+      "methodDescriptor": "()I",
+      "pcEnd": 1972,
+      "codeLength": 1972,
+      "decodedInstructions": 1045,
+      "wideInstructions": 11,
+      "coordinator": "0x85231Ca80713Fdf9ffEdC9D2C68a9c511D505d37",
+      "coordinatorCodeHash": "0x3ea16a99b237255584b709aeac06f484d4cf8ca52ecfae138e718ed4320f58f7",
+      "packageRoot": "0x3ff3f9ed646a7089546c3d76b64f6e540338c8ea9fc5504cafcfcc6a76c9a854",
+      "indexRoot": "0x2f515ac050add5cd649108ef8153f51045e76fddf1939399fa6c3e0889f552b9",
+      "resourceRoot": "0x0bf9b80b7f35c945e18e314f2b771bb43f65ba12e50581e13201a4a269280b2d",
+      "classBytesKeccak": "0x00d9d5669d664bbc59ea0ecff04bd52aa1fb57be0bafa52b4185c64ada9d20fc"
+    },
+    {
+      "label": "truncated-class",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000f726561642075313620626f756e64730000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 75339,
+        "di0ReadSizes": [
+          19
+        ],
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "binding-name-mismatch",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001262696e64696e6720636c617373206e616d650000000000000000000000000000",
+      "stats": {
+        "gasUsed": 102761,
+        "di0ReadSizes": [
+          202
+        ],
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "pc-end-inside-operand",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000001b5043206e6f7420696e737472756374696f6e20626f756e646172790000000000",
+      "stats": {
+        "gasUsed": 464145,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "reference-cap",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000167265666572656e6365206f757470757420626f756e6400000000000000000000",
+      "stats": {
+        "gasUsed": 377600,
+        "di0ReadSizes": [
+          4096,
+          4096,
+          157
+        ],
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "invalid-binding",
+      "success": false,
+      "error": "execution reverted revert=0xab23ed080000000000000000000000000000000000000000000000000000000000000013",
+      "stats": {
+        "gasUsed": 14554,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-coordinator-code",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000018636f6f7264696e61746f7220636f6465206368616e6765640000000000000000",
+      "stats": {
+        "gasUsed": 3430,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-di0-code",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000c44493020636f6465686173680000000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 27535,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-coordinator-owner",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000009444930206f776e65720000000000000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 30842,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-coordinator-packageRoot",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000f7061636b616765206368616e6765640000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 6122,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-coordinator-finalIndexRoot",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000e44493020696e64657820726f6f74000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 36842,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-di0-owner",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000009444930206f776e65720000000000000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 30842,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-di0-phase",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000094449302070686173650000000000000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 34094,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-di0-indexRoot",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000e44493020696e64657820726f6f74000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 36842,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-di0-plainSize",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000084449302073697a65000000000000000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 39843,
+        "elapsedMillis": 0
+      }
+    },
+    {
+      "label": "tamper-di0-finalRoot",
+      "success": false,
+      "error": "execution reverted revert=0x08c379a00000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000e4449302066696e616c20726f6f74000000000000000000000000000000000000",
+      "stats": {
+        "gasUsed": 42790,
+        "elapsedMillis": 0
+      }
+    }
+  ],
+  "totalObservedEVMGas": 149828714,
+  "worldOrPackageMutationByInspector": false,
+  "wrongCoordinatorCodeHashConstructorRefused": true,
+  "wrongPackageRootConstructorRefused": true,
+  "fixtureOracleChecks": {
+    "generatedProbeClassBytes": 8349,
+    "generatedZipBytes": 9719,
+    "positiveMethodsCrosschecked": 14,
+    "negativeControls": 15,
+    "referenceRowsCrosschecked": 18,
+    "decodedInstructionsCrosschecked": 1123,
+    "switchMethods": [
+      "Probe.tableSwitch",
+      "Probe.lookupSwitch"
+    ],
+    "wideMethod": "Probe.wideLocals",
+    "perCallReadLimit": 4096
+  },
+  "p34SourceManifestVerified": true,
+  "solidityBuild": "solc 0.8.30 pinned artifact matches source",
+  "javac": "javac --release 8 -g:none",
+  "javapOracle": "javap -v -p -c -s on generated Probe only"
+}
