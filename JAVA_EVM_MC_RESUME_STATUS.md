@@ -1,3 +1,12 @@
+## Latest same-P33 original78 resource replay
+
+- Only authenticated inputlist changes: aom1259B,78classes/548708B; **sameP33code/100images/native21/raw150/1063930/runtime1MiB/CP1MiB**.
+- Fresh original78 **1914383J/86I**,37verifiedreceipts,672.985s,lifecycle1; CP1042125B SHA `2f9d2a38e3a88d6a20e328a5c2482882a945b98553563a4adbf1908504e0d249`.
+- Next atomicmissing`bcz` site0x1007/context1, aom raw77/method0 `<init>()V` PC1(getstatic). GenuineEVMmeasurement bcz3615B=>79classes/552323B; fits existingraw150/1063930, noquota/codechange needed. Prepared `parent-original78-aom/original79-bindings.json`; nextfreshoriginal79sameP33driver.
+- Evidence `parent-original78-aom/artifacts/bcz-resource-blocker.json`; world `build/java-diff-mc-aom-original78-parent-p33/official`. No world/EULA/Doneclaim, no push. Noactive semanticworker; resources parentonly.
+
+---
+
 ## Latest P33: guest Math double min/max accepted and completed in original
 
 - IndependentP33 runtime398336B,100images; **only Mathimage/rootleaf89 changed**, other99imagebytes andallpriorMathmethodbytecode unchanged. GuestJava min/max(DD)D,0newnative, native21/String12. ActualMathleaf `ce47f22975cb30c8cec530657ebcaa855cc62fcc3dc62f4fa2f464dc2555cff7`; bootstraproot `c9555cfa4a2696b1063471bd08794c2ecf71a0c35fd569fa0661ddba182263fd`. Raw150/1063930/runtime1MiB/CP1MiB/underlyingEVM unchanged.
