@@ -1,3 +1,13 @@
+## Latest original81: measured checkpoint1MiB capacity blocker -> double2MiB
+
+- Added only genuineEVM-measured bda3537B:81classes/556329B, sameP33engine398336B/coordinator/100images/native21/raw150/1063930/runtime1MiB/CP1MiB. Freshoriginal81 **1914832J/89I**,37verifiedreceipts,769.154s,lifecycle1.
+- Lastsuccessful CP**1048554B** (only22B below1048576), SHA `c11195458a94a3f90ec2347ebae300009a548e76cfee830e0d73681e6ecbf23c`. Nextq1 atomicallyrefuses **LC0StateError(1,0)** (`0x71540d20`), Root/Headunchanged. Allsourcecode1branches arecheckpoint input/outputsizeguards; validinput andfailureatoutputserialization. **Actualquota shortage, not missingJavaAPI**.
+- Userpolicy: double projectCP budget1048576→2097152 coherently, noapprovalask/nooptimization. Preserve old1MiBprofile/source/world/failures. Runtimeceiling remains1048576 independently; no blanket2^64/noVMcorechange. Auditcoupledcoordinator/GoLC0envelope/driver/verifier widthlimits; preferprofile-aware validation withlegacydefault/pins preserved.
+- Evidence `parent-original81-bda/artifacts/checkpoint1m-capacity-blocker.json`; acceptedlastworld `build/java-diff-mc-bda-original81-parent-p33/official`; explicit81bindings `parent-original80-bcx/original81-bindings.json`. bda raw80 constructor0 PC24inside<clinit>method2PC259 active; nofailedstatecontinuation allowed. FreshP34under2MiB aftergates.
+- NoHostoriginalparser/Java/lazyarrays/fabricatedvalues, no push, noWorld/EULA/Doneclaim. Nextsemanticwriter scope checkpointquotaonly/all100imagesimmutable.
+
+---
+
 ## Latest same-P33 original80: next measured bda resource
 
 - SameP33 engine398336B/coordinator/100images/native21/quotas; added only originalbcz3615B andbcx469B authenticatedbindings. Original79(552323B):1914384J/86I,34verifiedreceipts,630.375s; original80(552792B): **1914387J/88I**,36verifiedreceipts,667.743s,lifecycle1.
