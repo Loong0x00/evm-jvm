@@ -14,10 +14,10 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 90 explicit, authenticated class resources (658,601 bytes) |
-| Guest execution | **1,921,014 JVM instructions**, 95 internal steps, 40 verified successful checkpoint receipts |
-| Current blocker | `java/util/regex/Pattern.compile(String)`, reached during formatting-constant initialization; `HashMap()` has returned |
-| Runtime profile | 402,675-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 101 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **1,922,280 JVM instructions**, 95 internal steps, 36 verified successful checkpoint receipts |
+| Current blocker | Array `clone()` inside an original enum’s `values()`; bounded `Pattern.compile(String)` has returned |
+| Runtime profile | 407,632-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 103 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
@@ -55,7 +55,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-hash-map-default/artifacts/pattern-compile-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-pattern-compile/artifacts/array-clone-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

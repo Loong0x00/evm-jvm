@@ -1,3 +1,13 @@
+## Latest P36: bounded Pattern.compile accepted; next array.clone intrinsic
+
+- IndependentP36 runtime407632B/103images; allprior101leafbytes/order fixed. Pattern3663B+PatternSyntaxException967B append. ActualguestJava parser emits eager int[] program; noMatcher/fullregex/fakePattern success. Native21/String12 unchanged;raw150/1063930/runtimecap1MiB/CP2MiB/gethVMsemantics fixed.
+- Parentgeneratedgate1175.104s with **separate doubled2Bgas/2400s** (NOTordinary1B);55fixtures/31readonlyJava8oracles/directquanta/freshreopen/coordinator3224calls/max1673277345gas/6927B CP. Workeractual1B/1200wall/10000callshortageevidence preserved; coherenttest-onlydoubling2B/2400/20000.
+- Freshoriginal90precise **1922280J/95I**,36verifiedreceipts,739.679s,lifecycle1. CP1081707B SHA `fe0cd279abb09d792d1dc386cc4c68f55fba9aa49b3fca1525490d02bfffe443`. ActualPatternhandle5988/class191, flags2, actualint[16]handle5986 containing `[0x50415431,2,1,167,2,0,4,48,57,65,70,75,79,82,82,0]`; compile returned froma<clinit>PC593andadvancedPC602.
+- Nextatomicq1CallError(1,3): a raw83/method0 **values()[La;** atPC3 `invokevirtual [La;.clone()Ljava/lang/Object;`. Authenticatedread-onlyEVMmetadata alsoseesgetstatica.D[La; PC0/checkcast[La;PC6. Needgenuinearrayclone intrinsic, notObject.clonefakeorEnumcaller-specificreturn. Freshcopieddiagnosticworld noJava/CP/deploymentcommit andnotexecutionauthority.
+- Evidence `parent-pattern-compile/artifacts/array-clone-blocker.json`; acceptedworld `build/java-diff-mc-pattern-compile-original90-parent-p36/official`. NoWorld/EULA/Doneclaim. P36acceptance/README pendingGitHubsync, noactiveworkers.
+
+---
+
 ## Latest P35: HashMap() accepted, original next Pattern.compile(String)
 
 - IndependentP35runtime402675B/101images; **allprior100actualrootleaves byte-identical/orderfixed**, appendHashMap2883B SHA c472e63d6975ee4391bda1d05f91653029e680778fc20dff2b09c3e8e243e86f. Worker59regexcountnotleafcount; parentrootproofall100. NewprivateconstantonlysourceASTids+3, actualABI/storage slots/types/offsets/members unchanged; initialAST-only strictbuildfailurepreserved/freshv2passed.
