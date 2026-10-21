@@ -1,3 +1,13 @@
+## Latest P33: guest Math double min/max accepted and completed in original
+
+- IndependentP33 runtime398336B,100images; **only Mathimage/rootleaf89 changed**, other99imagebytes andallpriorMathmethodbytecode unchanged. GuestJava min/max(DD)D,0newnative, native21/String12. ActualMathleaf `ce47f22975cb30c8cec530657ebcaa855cc62fcc3dc62f4fa2f464dc2555cff7`; bootstraproot `c9555cfa4a2696b1063471bd08794c2ecf71a0c35fd569fa0661ddba182263fd`. Raw150/1063930/runtime1MiB/CP1MiB/underlyingEVM unchanged.
+- Fresh parentordinary1B gate789.596s;560rawbitresults comparedreadonlyJava8oracle, q1/q7/q65536/q4096/reopen; retainedconstructor/raw150coordinatorcontrols3224calls,max440330205gas/11918B CP.
+- Fresh unchanged-original77: **1914379J/86I**,36verifiedreceipts,662.480s,lifecycle1. CP1041324B SHA `8a4025b62145ddd0c4c981ab0d8767591cbb37aa875591ff469fa7b9bedc761a`. Originalbhbconstructor returned afteractualmin/max computations; sixdoublefields min0/0/0,max1/1/1; all65536sinebits stillmatchreadonlyoracle.
+- New atomicq1missing raw `aom`,site0x1008/context4. ParentgenuineEVM AS0/ZI0/DI0: aom1259B;78classes/548708B fitscurrentenvelope, noVM/quotachange needed. NextsameP33codefreshoriginal78binding/replay.
+- Evidence `parent-math-double-min-max/artifacts/aom-resource-blocker.json`; world `build/java-diff-mc-math-double-min-max-original77-parent-p33/official`. LOCALpreinstalled-codeCallnotstandardCREATE. No world/EULA/Doneclaim, no push. CPstillbelow1MiB; doubleonlyonactualshortage peruserpolicy, nooptimization.
+
+---
+
 ## Latest original77: actual Math.min/max(DD) requirement
 
 - Fresh unchanged-original77 binds EVM-measured bhb8175B (77classes/547449B), **same P32 engine/coordinator/code/limits**. Reaches **1914209J/85I**,36 verifiedreceipts,652.121s,lifecycle1; CP1041165B SHA `56cdf44f013860ca8578ea69987fa078dbaf43ed7e5b051689f0173e0f596b99`.
