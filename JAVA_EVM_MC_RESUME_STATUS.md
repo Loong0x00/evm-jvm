@@ -1,3 +1,11 @@
+## Latest same-P34 original85: next Guava Collections2 raw resource
+
+- NoVM/code/quota changes. Declared85originalclasses/616195B includingMaps50454B. Freshoriginal85 **1920902J/91I**,37verifiedreceipts,705.036s,lifecycle1;CP1079153B SHA `d51601b488e3389808259c41da81762eef53ac72f783dddddbb48b9c5ad24c2a`.
+- Nextatomicq1missing `com/google/common/collect/Collections2`,site0x1007/context0, Mapsraw84/method0 `<clinit>()V` PC0. GenuineEVM AS0/ZI0/DI0 measurement Collections27901B=>86classes/624096B; `parent-original85-maps/original86-bindings.json` ready, withinraw150/1063930/CP2MiB. Nextfreshoriginal86sameP34driver.
+- Evidence `parent-original85-maps/artifacts/collections2-resource-blocker.json`; acceptedlatestworld `build/java-diff-mc-maps-original85-parent-p34/official`. Runtime398336B underindependent1MiBceiling, all100images/native21/opcode/consensusunchanged. NoWorld/EULA/Doneclaim/nopush; noactiveworkers.
+
+---
+
 ## Latest same-P34 resource replays through original84
 
 - SameP34engine398336B/100images/native21/CP2MiB, runtime1MiB, raw150/1063930; onlyauthenticatedinputbindings changed. Original82ahs3639B=>1915695J/89I,39receipts,718.672s,CP1052696B; original83ro110B=>1915705J/90I,38receipts,705.476s,CP1053942B.
