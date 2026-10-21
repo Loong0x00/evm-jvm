@@ -1,3 +1,12 @@
+## Latest same-P33 original80: next measured bda resource
+
+- SameP33 engine398336B/coordinator/100images/native21/quotas; added only originalbcz3615B andbcx469B authenticatedbindings. Original79(552323B):1914384J/86I,34verifiedreceipts,630.375s; original80(552792B): **1914387J/88I**,36verifiedreceipts,667.743s,lifecycle1.
+- Original80CP1043786B SHA `9f1335063719189973ef7d136cbc44749f1b2bdc342336ad7f390bf9b787af40`; headroom4790B below1MiB. **Noactualcheckpointcaprefusal** yet: preserve1MiB untilmeasured, thenuserallowsdoublewithoutapproval/nooptimization.
+- Next atomicq1missing`bda`,site0x1007/context4, bcz raw78/method18 `<clinit>()V` PC4(getstatic). GenuineEVMmeasurement bda3537B=>81classes/556329B fitsraw150/1063930; `parent-original80-bcx/original81-bindings.json` ready. Nextfreshoriginal81sameP33driver/code. No crosspackagecheckpointreuse.
+- Evidence `parent-original79-bcz/artifacts/bcx-resource-blocker.json`, `parent-original80-bcx/artifacts/bda-resource-blocker.json`. Acceptedlatestworld `build/java-diff-mc-bcx-original80-parent-p33/official`. UnderlyingEVM unchanged; nohostoriginalparser/Java, lazyarrays, fabricatedresults, failedstatecontinuation, push, World/EULA/Doneclaim. Noactiveworkers.
+
+---
+
 ## Latest same-P33 original78 resource replay
 
 - Only authenticated inputlist changes: aom1259B,78classes/548708B; **sameP33code/100images/native21/raw150/1063930/runtime1MiB/CP1MiB**.
