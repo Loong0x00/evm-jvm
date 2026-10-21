@@ -1,3 +1,13 @@
+## Latest P35: HashMap() accepted, original next Pattern.compile(String)
+
+- IndependentP35runtime402675B/101images; **allprior100actualrootleaves byte-identical/orderfixed**, appendHashMap2883B SHA c472e63d6975ee4391bda1d05f91653029e680778fc20dff2b09c3e8e243e86f. Worker59regexcountnotleafcount; parentrootproofall100. NewprivateconstantonlysourceASTids+3, actualABI/storage slots/types/offsets/members unchanged; initialAST-only strictbuildfailurepreserved/freshv2passed.
+- No newoperationalnative, native21/String12/raw150/1063930/runtimeceiling1MiB/CP2MiB/underlyingEVMunchanged. Parentordinary1Bgeneratedgate801.381s,coordinator3224calls/max442847484gas,12160B CP.
+- Fresh original90 preciseq1 **1921014J/95I**,40verifiedreceipts,802.959s,lifecycle1. CP1080812B SHA `eebf79fb65584a7aeff66e3766ab153b13ff2aad6177e1b511d8d8485cee0018`. GenuineHashMap()returned;handle5980/class190 fields table/entrySetnull,size/modCount/threshold0,loadFactorbits3f400000. HashMapput/get/etcstillunsupportedtypedrefusals.
+- Nextatomicq1missing **java/util/regex/Pattern.compile(String)**. AuthenticatedEVM-onlymetadata originala raw83/method15<clinit> literalPC590/callPC593 confirms `(?i)§[0-9A-FK-OR]` (UTF8hex283f6929c2a75b302d39412d464b2d4f525d). Metadataonfreshsuccessfulworldcopy, noJava/CP/committeddeployment andnotexecutionauthority. Needrealcompiledrepresentation/validationorcleartypedrefusal, nofakeemptyPattern/caller-specificsuccess.
+- Evidence `parent-hash-map-default/artifacts/pattern-compile-blocker.json`; acceptedlatestworld `build/java-diff-mc-hash-map-default-original90-parent-p35/official`. Stillbeforemainargs/World/EULA/Done. P34+READMEwerepushed1e3477e0c; P35acceptancependingnextsync. Noactiveworkers.
+
+---
+
 ## Latest: equivalent performance workflow accepted; precise original90 reaches HashMap()V
 
 - Newtools donotchange P34engine398336B/coordinator/100images/native21/gas/opcodes/raw150/1063930/CP2MiB/runtime1MiB. Independentgeneratedscanner14methods1123instructions18refs passed; controllergenerated14.705s exactold/new/discovery+preciseequalitypassed.
