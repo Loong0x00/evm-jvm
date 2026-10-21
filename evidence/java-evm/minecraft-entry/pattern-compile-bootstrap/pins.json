@@ -1,0 +1,84 @@
+{
+  "profile": "MC-PATTERN-COMPILE-P36",
+  "task": "append-only Java 8 Pattern.compile(String) compiler slice",
+  "sourceBase": {
+    "profile": "MC-HASHMAP-DEFAULT-P35",
+    "directory": "evidence/java-evm/minecraft-entry/pattern-source-base-p35",
+    "acceptedSourceCommit": "8359c35c266e2e495d43ba5a3bdd187a16e7b4db",
+    "sourceManifestSHA256": "6007664f92c88718f0ed07647076beafd01e49647a5d288bb401f220851cdf90",
+    "engineSourceSHA256": "7b709a48af873bdaeccf7a8d9fcf38f54a29d824fd6da8027367f1769a6a02ee",
+    "coordinatorSourceSHA256": "c00eb9dba631d4609670ff7df64ea37ca8f05d0d6d03baf3eff1bf07874b648d",
+    "engineRuntimeBytes": 402675,
+    "engineRuntimeSHA256": "26e2b9c7775d969ec9a85f4a5a74ff71484c82717c7b9970a3d40f1fcc22b052",
+    "engineRuntimeKeccak256": "15bfe9f5d986227dd4d948af95cb9c88ecc0e4d2fc5c938ede2c8b6421e6de27",
+    "coordinatorRuntimeBytes": 5411,
+    "bootstrapCount": 101,
+    "bootstrapRoot": "cd331a65aa7d50c414389e8fe3d757c8a0c1febaa05f8351a0f93355bd40b3de"
+  },
+  "jdk": {
+    "release": "OpenJDK 8, source/target 8, -g:none",
+    "javac": "/usr/lib/jvm/java-8-openjdk/bin/javac"
+  },
+  "bootstrap": {
+    "count": 103,
+    "root": "fef7d3ab9b0e079d8b92dff70f9ff8ee944d0948d69b3258d6efaf83efbdcf68",
+    "previousLeaves": 101,
+    "newImages": [
+      {
+        "index": 101,
+        "binaryName": "java.util.regex.Pattern",
+        "bytes": 3663,
+        "sha256": "329e8d775f14abeab2432726a199226aee2f79d3b1dbae7638e74221ead04947",
+        "keccak256": "c00433f134a87e9466c2affacba5f176b869a14142edb59435d6e12f8164046b"
+      },
+      {
+        "index": 102,
+        "binaryName": "java.util.regex.PatternSyntaxException",
+        "bytes": 967,
+        "sha256": "2b8e5e3ee19502fa88c3dfe06948777500ad71a77708f9b1f2685b396ee067d7",
+        "keccak256": "486cb333853155ebd6334af067b8479764389718e9de547114e987e677058ab5"
+      }
+    ]
+  },
+  "engineRuntimeBytes": 407633,
+  "engineInitBytes": 407661,
+  "engineSourceSHA256": "8aff3c4b1ae209a59ced3a5440de7566748dbe6a71c07b07e827de3fac3f512a",
+  "engineRuntimeSHA256": "c4d9d14d10fbd0bc73c843b7b06b9fda60c6fec46f8c255fa9a60ed203ee9514",
+  "engineRuntimeKeccak256": "ebd0ca83ae9c0b926a9f7933044776db5f9bd2d1aa8cb78271757f8892c1f562",
+  "coordinatorRuntimeBytes": 5411,
+  "coordinatorInitBytes": 10379,
+  "coordinatorSourceSHA256": "89985d01a8b4d4140026d144d2966976d65b58d05f5a8dfec2abb7f0e326e196",
+  "coordinatorRuntimeSHA256": "b50da3f9b670c6534aef5248a464d1674f630b7aaa853a770d852a5dc22260a5",
+  "coordinatorRuntimeKeccak256": "9e5201b5bea8fc2e5105ac258e60f8281729bace5c68f4340b73ca0a09a527c4",
+  "runtimeCapBytes": 1048576,
+  "checkpointCapBytes": 2097152,
+  "ordinaryGas": 1000000000,
+  "testOnlyCallGasBudget": 2000000000,
+  "testOnlyWallBudgetSeconds": 2400,
+  "reserve": 25000000,
+  "rawClassLimit": 150,
+  "rawByteLimit": 1063930,
+  "diagnosticClassBound": 253,
+  "globalNativeBindings": 21,
+  "stringLocalBinding": 12,
+  "maxFrames": 128,
+  "exceptionKinds": 14,
+  "testDriverMaxContinuationCalls": 20000,
+  "newNativeBindings": 0,
+  "executionBoundary": "LOCAL preinstalled-code runtime.Call; no CREATE/EIP170 claim for engine",
+  "grammar": "optional leading (?i), UTF-16 literal code units, escaped punctuation, and positive/negated literal classes with inclusive ranges",
+  "unsupportedValidSyntax": ["quantifiers/operators", "letter escapes", "other inline modifiers", "class intersection/nesting"],
+  "invalidSyntaxFixtures": ["trailing backslash", "unclosed class", "reversed range", "unknown inline modifier"],
+  "omittedApis": ["compile(String,int)", "matcher(String)", "matching APIs"],
+  "patternSourceSHA256": "af710882ae30bdff4952ca7f7e3b26b70de34b98e993023938623ecf58e5d6be",
+  "patternSyntaxExceptionSourceSHA256": "2b9d7494e58776185268b881be88b512266eac81d3028e7f05b7faa4270a675c",
+  "patternCompileFixtureSourceSHA256": "95c4f2ab29cb21f1e6c3d9e4ceb96217a5e1a36880845a60b25763b5aabf3b8d",
+  "patternSyntaxFixtureSourceSHA256": "e10ab9d091e37c1b885c79bc033a27754f7825ec0bf3aca3ff38f4032f0750fc",
+  "sourceDelta": [
+    "Change P35 engine/coordinator domain labels to P36",
+    "Append Pattern and PatternSyntaxException Java 8 bootstrap images after P35 leaf 100",
+    "Increase class image storage and the immutable bootstrap leaf vector by exactly two",
+    "Reserve both new java.util.regex names against raw replacement",
+    "No new native bindings, EVM opcode/accounting, gas, runtime cap, raw cap, or checkpoint cap"
+  ]
+}

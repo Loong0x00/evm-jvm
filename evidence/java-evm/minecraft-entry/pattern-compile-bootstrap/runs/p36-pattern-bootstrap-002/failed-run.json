@@ -1,0 +1,56 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "commands": [
+        {
+          "command": [
+            "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-002/tools/evm_driver",
+            "gate",
+            "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-002/engine/MCEntryInterpreter.json",
+            "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-002/coordinator/MCEntryCoordinator.json",
+            "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-002/fixture-manifest.json",
+            "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-002",
+            "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-002/attempts/attempt-1/direct",
+            "1000000000"
+          ],
+          "exit": 1,
+          "label": "direct-generated-engine-gate",
+          "log": "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-002/attempts/attempt-1/logs/direct-generated-engine-gate.log",
+          "timedOut": false,
+          "timeoutSeconds": 1199,
+          "wallSeconds": 194.072
+        }
+      ],
+      "error": "direct-generated-engine-gate failed (1): {\n  \"status\": \"failed\",\n  \"mode\": \"gate\",\n  \"engineRuntimeSHA256\": \"c4d9d14d10fbd0bc73c843b7b06b9fda60c6fec46f8c255fa9a60ed203ee9514\",\n  \"engineRuntimeKeccak256\": \"0xebd0ca83ae9c0b926a9f7933044776db5f9bd2d1aa8cb78271757f8892c1f562\",\n  \"coordinatorRuntimeSHA256\": \"b50da3f9b670c6534aef5248a464d1674f630b7aaa853a770d852a5dc22260a5\",\n  \"coordinatorRuntimeKeccak256\": \"0x9e5201b5bea8fc2e5105ac258e60f8281729bace5c68f4340b73ca0a09a527c4\",\n  \"localGasBudget\": 1000000000,\n  \"caller\": \"0x4d432d52414e444f4d2d434c4153532d5031006d\",\n  \"engineAddress\": \"0x4d432d52414e444f4d2d434c4153532d5031006c\",\n  \"coordinatorAddress\": \"0x4d432d41525241594c4953544c4f43414c310002\",\n  \"schedules\": [\n    {\n      \"name\": \"q1-matrix\",\n      \"quantum\": 1,\n      \"transport\": \"geth core/vm/runtime.Call; preinstalled local bytecode; state trie committed/reloaded after every successful slice\",\n      \"rawCount\": 1,\n      \"rawBytes\": 1177,\n      \"bootstrapCount\": 103,\n      \"diagnosticClassCount\": 104,\n      \"callCount\": 336,\n      \"totalGas\": 13148500205,\n      \"maxCallGas\": 53301854,\n      \"wallMs\": 15072,\n      \"stateRoot\": \"0x0f1d84ee887c8b154968e49ea19462c18031e182e4095f6e33793dbd8606a686\",\n      \"instanceId\": \"0xb9b977fd1f29d216fcb2b080e448ac2e3cdd1bdc1b310cc9efbe2101f644f490\",\n      \"final\": {\n        \"schema\": 1,\n        \"lifecycle\": 2,\n        \"outcome\": 2,\n        \"epoch\": 336,\n        \"checkpointRoot\": \"0xb63db06d1211345de8008e5f348c027ffc79a963d18bd07d72b72eaf59180a27\",\n        \"machineStateRoot\": \"0x3dde1fb4fe775461475f035e02b44f67b7587d800e6909c3205feff2612bf947\",\n        \"totalJvmSteps\": 336,\n        \"totalInternalSteps\": 4,\n        \"executedJvmSteps\": 1,\n        \"executedInternalSteps\": 0,\n        \"javaKind\": 0,\n        \"javaRef\": 0,\n        \"vfsStateRoot\": \"0x5e07a9f19301538337a8417ec534dd8af2b59437f373df148804ff5efce20a88\",\n        \"gasUsed\": 53061700,\n        \"wallMs\": 59\n      },\n      \"checkpointBytes\": 11776,\n      \"checkpointSHA256\": \"35880f84c55477459516bb01b687b10747e02066bd297b08a75",
+      "gasBudget": 1000000000,
+      "status": "failed",
+      "wallBudgetSeconds": 1200
+    }
+  ],
+  "pairPins": {
+    "acceptedEngineCapChanged": false,
+    "bootstrapCount": 103,
+    "constructorRawByteLimit": 1063930,
+    "constructorRawClassLimit": 150,
+    "coordinator": {
+      "initSHA256": "f1c9171695242b3f32936bf29f87c6dad417fd1cb41224bc53a299cde75641e9",
+      "runtimeBytes": 5411,
+      "runtimeKeccak256": "9e5201b5bea8fc2e5105ac258e60f8281729bace5c68f4340b73ca0a09a527c4",
+      "runtimeSHA256": "b50da3f9b670c6534aef5248a464d1674f630b7aaa853a770d852a5dc22260a5",
+      "sourceSHA256": "89985d01a8b4d4140026d144d2966976d65b58d05f5a8dfec2abb7f0e326e196"
+    },
+    "coordinatorExecution": "ordinary EVM CREATE with constructor-pinned AS0/ZI0/DI0 dependencies",
+    "engine": {
+      "initSHA256": "764311e11e39ef391c40c3696fdab2fea9ebd2bac5523c648b42be72d2925477",
+      "runtimeBytes": 407633,
+      "runtimeKeccak256": "ebd0ca83ae9c0b926a9f7933044776db5f9bd2d1aa8cb78271757f8892c1f562",
+      "runtimeSHA256": "c4d9d14d10fbd0bc73c843b7b06b9fda60c6fec46f8c255fa9a60ed203ee9514"
+    },
+    "engineExecution": "LOCAL preinstalled-code runtime.Call, not CREATE",
+    "maximumMR01DiagnosticClasses": 253,
+    "ordinaryOpcodeGasChanged": false,
+    "profile": "MC-PATTERN-COMPILE-P36"
+  },
+  "status": "failed"
+}

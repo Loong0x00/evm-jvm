@@ -1,0 +1,63 @@
+{
+  "attempt": 1,
+  "commands": [
+    {
+      "command": [
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/tools/evm_driver",
+        "gate",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-007/fixture-manifest.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-007",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-007/attempts/attempt-1/direct",
+        "2000000000"
+      ],
+      "exit": 0,
+      "label": "direct-generated-engine-gate",
+      "log": "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-007/attempts/attempt-1/logs/direct-generated-engine-gate.log",
+      "timedOut": false,
+      "timeoutSeconds": 2399,
+      "wallSeconds": 1123.647
+    },
+    {
+      "command": [
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/tools/evm_driver",
+        "reopen",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-007/fixture-manifest.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-007",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-007/attempts/attempt-1/direct",
+        "2000000000"
+      ],
+      "exit": 0,
+      "label": "fresh-process-q1-reopen",
+      "log": "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-007/attempts/attempt-1/logs/fresh-process-q1-reopen.log",
+      "timedOut": false,
+      "timeoutSeconds": 1276,
+      "wallSeconds": 0.264
+    },
+    {
+      "command": [
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/tools/evm_driver",
+        "coordinator",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-build-p36-pattern-bootstrap-007/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-007/fixture-manifest.json",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-fixtures-p36-pattern-bootstrap-007",
+        "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-007/attempts/attempt-1/coordinator",
+        "2000000000"
+      ],
+      "exit": 1,
+      "label": "generated-coordinator-engine-route",
+      "log": "/home/user/evm-jvm/pattern-compile-bootstrap/build/java-diff-mc-pattern-compile-bootstrap-gate-p36-pattern-bootstrap-007/attempts/attempt-1/logs/generated-coordinator-engine-route.log",
+      "timedOut": false,
+      "timeoutSeconds": 1276,
+      "wallSeconds": 16.78
+    }
+  ],
+  "error": "generated-coordinator-engine-route failed (1): {\n  \"status\": \"failed\",\n  \"mode\": \"coordinator\",\n  \"engineRuntimeSHA256\": \"c4d9d14d10fbd0bc73c843b7b06b9fda60c6fec46f8c255fa9a60ed203ee9514\",\n  \"engineRuntimeKeccak256\": \"0xebd0ca83ae9c0b926a9f7933044776db5f9bd2d1aa8cb78271757f8892c1f562\",\n  \"coordinatorRuntimeSHA256\": \"b50da3f9b670c6534aef5248a464d1674f630b7aaa853a770d852a5dc22260a5\",\n  \"coordinatorRuntimeKeccak256\": \"0x9e5201b5bea8fc2e5105ac258e60f8281729bace5c68f4340b73ca0a09a527c4\",\n  \"localGasBudget\": 2000000000,\n  \"caller\": \"0x4d432d52414e444f4d2d434c4153532d5031006d\",\n  \"engineAddress\": \"0x4d432d52414e444f4d2d434c4153532d5031006c\",\n  \"coordinatorAddress\": \"0x4d432d41525241594c4953544c4f43414c310002\",\n  \"failure\": {\n    \"classification\": \"EVM-positive-call-failure\",\n    \"case\": \"coordinator-create-exact150\",\n    \"gasBudget\": 2000000000,\n    \"error\": \"EVM-positive-call-failure: coordinator-create-exact150 failed at gas=2000000000: execution reverted revert=0xab23ed080000000000000000000000000000000000000000000000000000000000000003\"\n  },\n  \"processId\": 322235,\n  \"elapsedMs\": 0\n}\n",
+  "gasBudget": 2000000000,
+  "status": "semantic-or-harness-failure",
+  "wallBudgetSeconds": 2400
+}
