@@ -1,3 +1,20 @@
+## Latest P44 accepted — NavigableMap marker linked; next original Ordering resource
+
+- Worker58c8f1c5 integrated, parent freshJava/Sol/Go root/ABI/storage/sourceaudit complete. 107images/root`e7d9456b75653a4945e184c8a48c7af83ac4b17dd7fea813af53a2a420504dff`, ALL106oldprefiximagesbyte-identical. NewNav254BSHA44efe011ca8062c1bb5bb1e8519bb0ab9fe7eb76c1133b7eea678609055d14e1, publicabstractinterface extendsSortedMap, zerofields/methods, navigationAPIs deliberatelyunsupported. Runtime422246SHA`990d44aa156e1392379494311d27326efe19ed886cb659c596ede35046306cae`;coord5411SHAb2badc84bde9e8d0cdd62708d3a7755b2e6093b3bcab9824bd39b090c6e69889. No dispatch/native/schema/ABI/storage/quota change; arrays8192/objects4096/elements262144/handles12545/raw1501063930/CP2M/runtime1M/native21String12 fixed.
+- Parent independentlyEVMtests ownLocalMap ordinarycapturedsize/inheritedMapdispatch/NavSortedMapMap instanceof/checkcast/CCE/nullNPE/Nav[]clone+oldPAT2fixedwidthCRLF. Smallraw2 q7/q1 3669J180.270s@1Bpeak53761239, exactmachine/VFS/counters/heapandreopens. Exactraw150/257classes q4096/q65536 afteractual1Bshortage@**separate2B**2.015speak1608988838; newNavindex**256** representedin2distinctrealNav[]arraysmetadata**0x200**, samecells/uniquehandles, freshEVMCPvalidate/reopen. ThusNOcoordinatorABI/count/hashmigration: itsuint8classCountisRAW<=150 only, engineinternal257usesu16wire/uint256 fields. Sourceunitsrequest/confusion resolvedexplicitly withoutnewquota. RawNavexactreplacement/omittedinterfaceAPI Head/rootatomic@1B.
+- Fresh unchanged original115/802490 **2223795J113I44verifiedreceipts,epoch44/lifecycle1**;645.160sdiscovery+587.044sprecise. CP1283899SHA`f1e0ac0078fa2ddae90e9fb0da1c69a56285373eb5792bc8561d77c173d652b1`;originalImmutableSortedMapinitialization nowreached, nooriginalnavigationAPIclaimed. Next exactq1 MissingClass **com/google/common/collect/Ordering**,site4107/context0. World`/home/user/evm-jvm/geth/build/java-diff-mc-navigable-original115-parent-p44/official`;evidence`parent-navigable-map/artifacts/guava-ordering-resource-blocker.json`;[P44acceptance](JAVA_EVM_MC_NAVIGABLE_MAP_PARENT_PREFLIGHT.md). All65536sinebitsstill87a67a39...71dac2.
+- Parent EVM-measured next originalOrdering13408B, explicit116bindings/815898B prepared at`parent-original116-guava-ordering/`; freshP44source discovery run started, **not yet acceptance**. No newsemanticworker. Oldsource/packageCPnever migrated, failed/terminalstate nevercontinued. Crashrecoverybackup stillpreserved. NoWorld/EULA/listening/Doneclaim.
+
+---
+
+## Active P44 after recovery — NavigableMap link slice
+
+用户询问是否继续后已明确恢复能力推进。P43检查点SHA/恢复后HEADb4b50fe3b/保护路径再次核验通过。Sole semanticworker **sa_3d74beaffd304280**, own `/home/user/evm-jvm/navigable-map-link`, branchjava-navigable-map-link, baseb4b50fe3b；own九文件source-onlyP43snapshot `navigable-map-source-base-p43/` 已逐hash交付，不含original/parent数据；本地NODE_PATH依赖已准备。只补真实NavigableMap->SortedMap链接，旧106镜像前缀保持，所有quotas/native/ABI/storage/wire固定；原版由父级独立fresh115回放，不能迁旧CP。
+
+Worker的requestr1误将coordinator raw classCount与engine combined count混同。父级代码核查已澄清：coordinator n=fixedDecoders.length<=150，uint8只表示raw绑定0..149；bootstrap107并不进入这150槽。Engine内部总classes257/index256由uint256内存字段和2bytecheckpoint表示，**没有授权或需要coordinator uint16协议/存储/哈希迁移**。要求实际EVM验证raw150+107=>257及Nav数组高classIndex256。Parent已准备generatedJava8类型/继承方法dispatch/CCE/NPE/Nav数组clone/旧regex回归用例，stockJava8通过；尚无P44EVM验收。证据 `parent-navigable-map/class-width-and-raw-binding-units.json`。
+
+---
+
 ## Crash recovery verified — exact P43 commit and world restored
 
 电脑意外宕机后发现58个Git looseobjects为零字节。先完整备份2.0G `.git`及P43关键工作文件/world/build/driver，再隔离原空文件（未删除）。从完整索引及哈希匹配工作文件重建40blobs、17trees，并按原tree/parent/author/committer/message重建 **完全相同SHA** 的P43提交 `ab8e76f74ec4c7d44b386d19f8a5ea00d434e8c4`。没有更改source/index/refs，没有reset/clean/gc或重写历史。

@@ -14,21 +14,21 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 115 explicit, authenticated class resources (802,490 bytes) |
-| Guest execution | **2,223,790 JVM instructions**, 112 internal steps, 44 verified successful checkpoint receipts |
-| Current blocker | Missing bootstrap `java.util.NavigableMap`; Function SAM linking passed and the original Guava implementation was constructed |
-| Runtime profile | 420,330-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 106 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,223,795 JVM instructions**, 113 internal steps, 44 verified successful checkpoint receipts |
+| Current blocker | Missing original Guava `Ordering` resource; bounded NavigableMap hierarchy linking passed |
+| Runtime profile | 422,246-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 107 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [Java8 Function SAM link/apply / P43](JAVA_EVM_MC_FUNCTION_INTERFACE_PARENT_PREFLIGHT.md).
-Fresh generated EVM tests exercise captured state, generic bridges, null receiver,
-and an exact150-input/256-class boundary. Small q1/q7 tests use1B; that larger
-class-envelope case needed a separately labeled2B allowance after a real1B shortage.
-`Function` default/static helpers and full Java SE support are not claimed.
+Latest acceptance: [NavigableMap link-only / P44](JAVA_EVM_MC_NAVIGABLE_MAP_PARENT_PREFLIGHT.md).
+Fresh EVM tests cover an exact150-raw-input/**257 internal class** case, including
+interface index256 and its real typed array/clone. The coordinator remains at150
+raw bindings; no ABI or checkpoint-format migration was needed. Navigation methods
+are explicitly unsupported, not replaced with fake results.
 
 ### Important LOCAL-only limits
 
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-function-interface/artifacts/navigable-map-interface-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-navigable-map/artifacts/guava-ordering-resource-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

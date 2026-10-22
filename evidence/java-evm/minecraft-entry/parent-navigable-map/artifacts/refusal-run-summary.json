@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16375504399911733,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-refusals-parent-p44/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-navigable-map/ParentNavigableOmitted.java"
+      ]
+    },
+    {
+      "label": "stock-java8-valid",
+      "exit": 0,
+      "wallSeconds": 0.03160717799983104,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-refusals-parent-p44/classes",
+        "ParentNavigableOmitted"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.8147265389998211,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-refusals-parent-p44/driver",
+        "./build/java-diff-mc-navigable-refusals-parent-p44/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 0.21375409800020861,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-refusals-parent-p44/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-build-parent-p44/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-build-parent-p44/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-refusals-parent-p44/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-refusals-parent-p44",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-navigable-refusals-parent-p44/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}
