@@ -13,9 +13,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 
 | Area | Latest accepted evidence |
 | --- | --- |
-| Original workload | Unmodified 1.12.2 server; 90 explicit, authenticated class resources (658,601 bytes) |
-| Guest execution | **1,974,606 JVM instructions**, 98 internal steps, 36 verified successful checkpoint receipts in the latest fresh run |
-| Current blocker | Missing authenticated `bdc` resource; HashMap.put returned and populated 22 real entries |
+| Original workload | Unmodified 1.12.2 server; 114 explicit, authenticated class resources (801,758 bytes) |
+| Guest execution | **2,086,784 JVM instructions**, 109 internal steps, 32 verified successful checkpoint receipts including a genuine guest terminal outcome |
+| Current blocker | Genuine guest OutOfMemoryError at the **4096 allocated-array count cap**; 8192-capacity candidate is not yet accepted |
 | Runtime profile | 418,986-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 105 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
@@ -24,11 +24,11 @@ Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [bounded HashMap.put / P39](JAVA_EVM_MC_HASH_MAP_PUT_PARENT_PREFLIGHT.md).
-The resize fixture needed a separately labeled **2B test-only gas budget** after
-an actual 1B shortage; small q1/q7 and coordinator controls passed at 1B.
-**Paused at the user's request for reboot**—the next resource is not being added.
-See [saved restart/verification notes](JAVA_EVM_MC_REBOOT_HANDOFF.md).
+Latest measured progress: [authenticated resource continuation / P40](JAVA_EVM_MC_RESOURCE114_ARRAY_LIMIT_PREFLIGHT.md).
+The runtime is unchanged P39; the newest run genuinely terminated at an artificial
+array-count limit. **Terminal checkpoints cannot resume.** Work has resumed after
+the requested reboot pause; only the measured array count is being doubled,
+with independent verification and a fresh original start required.
 
 ### Important LOCAL-only limits
 
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-hash-map-put/artifacts/bdc-resource-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original114-objects-super/artifacts/array-count-4096-terminal.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

@@ -1,3 +1,16 @@
+## RESUMED after reboot — P40 original114 reaches actual4096-array OOM; P41 candidate active
+
+用户已明确说“行继续吧”，此前P39停机要求已完成，现已恢复推进。下方STOPPED FOR REBOOT段是保留的历史快照，不是当前暂停指令。
+
+- P39 main/origin9456cf9ad、原始JARSHA、旧P39 CP SHA、36canonical收据、fresh-process持久化world全部重验通过。当前运行时仍418986B SHA694b1ea5686b03eab3c000de8b9bc6af573edb0ad06053f2279a6d4da748d1c6，105images/rootca3049ae9ad4e09e893a897c34ef016939d1595c01d090c5ee3e9699ac349fbd，native21/String12；所有VM/code/caps/codec保持P39。
+- 原始资源全部EVM AS0/ZI0/DI0量得后显式绑定并fresh start：bdc976B=>91/659577，precise1974890J100I；EVM bcz<clinit>有界窗口187refs支持4类=>95/661345，discovery+same-package precise1975794J105I/38receipts/CPc434b71...8056，nextaty。aow ctor19实际EVM元数据支持aty/awt/awu=>98/671261，仅discovery nextqf；awu ctor/initializer+interfaces支持11类=>109/787319，仅discovery nextGuavaObjects；hierarchy4类=>113/801301，precise HierarchyError(1,109) 1976077J107I/37receipts。EVM header证明GuavaObjects缺ExtraObjectsMethodsForWeb superclass457B，补后114/801758。
+- 当前最新真实原版 **2086784J/109I，32份验证成功收据，epoch32/lifecycle3/Java kind7 OutOfMemoryError**，564.298s；CP1216824B SHA `06f76fea33340276cbb251fd30327adb502f134e2f4b1f85844f7fb5c1d5011c`。world `/home/user/evm-jvm/geth/build/java-diff-mc-original114-objects-super-parent-p40/official`。普通arrays**4096==cap4096**，objects3259<4096，elements105535<262144，CP<2MiB，故明确是数组数量人工额度不足。**终止不可resume，不能拿它迁新代码/包。** 全65536sine bits仍匹配已验oracle table SHA87a67a39...71dac2。没有World/EULA/listening/Done。
+- 有界只读诊断复用旧128引用上限、96PC窗口；全bcz方法直接读超过128的拒绝保留。独立header API仅复用认证DI0读取和EVM parser，输出actualsuper/interfaces/methods并canonical ABI回编码；全在copied成功world，无Java/CP/committed诊断部署。aow method113是w()registration（1948refs），**不是clinit**，未将其全部预装。Metadata只选显式资源，不是执行结果/authority。
+- Discovery opt-in仅复用已测试严格canonicalMCEntryMissingClass谓词，live pre-call Head/root/gas/zeroCP全验证；discovery98/109不是最终验收。非缺类error照旧二分到q1；真实terminal是结果不续跑。95来自same-package成功CP继续到精确q1，不含失败state。详见 [P40 evidence](JAVA_EVM_MC_RESOURCE114_ARRAY_LIMIT_PREFLIGHT.md)，入口 `parent-original114-objects-super/artifacts/array-count-4096-terminal.json`。
+- Sole semantic worker **sa_64d3e2aaaa264e69**，own `/home/user/evm-jvm/max-arrays-8192`，base9456cf9ad，九文件source-only P39 baseline在own `max-arrays-8192-source-base-p39/`。仅将MAX_ARRAYS4096->8192及派生handle界限一致更新，105images/DBOOT根保持不变，object/element/CP/raw/runtime/quantum/gas/ABI/wire均不变；无original/parent/otherworktrees/network/push。实际quota短缺翻倍已获用户授权。**P41尚未验收**，父级需freshbuild/gates/fresh original114；旧terminal保留。parent alone original。
+
+---
+
 ## STOPPED FOR REBOOT — P39 HashMap.put completed, no next blocker started
 
 用户要求完成当前阻塞后停下准备重启。P39已独立验收；只保存/同步本轮结果，不推进bdc、不启动P40。重启后等待用户明确允许再继续。完整路径/校验命令见 [JAVA_EVM_MC_REBOOT_HANDOFF.md](JAVA_EVM_MC_REBOOT_HANDOFF.md)。
