@@ -809,7 +809,8 @@ contract MCEntryInterpreter {
                 || _isReservedEnumClass(users[i])
                 || _isReservedSecurityManagerClass(users[i])
                 || _isReservedLocaleClass(users[i]) || _isReservedRegexClass(users[i])
-                || _isNamedClass(users[i], bytes("java/util/Random"))) {
+                || _isNamedClass(users[i], bytes("java/util/Random"))
+                || _isNamedClass(users[i], bytes("java/util/function/Function"))) {
                 revert BootstrapProfileError(1, i);
             }
             for (uint256 j; j < i; ++j) if (_sameClassName(users[i], users[j])) {

@@ -14,21 +14,21 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 115 explicit, authenticated class resources (802,490 bytes) |
-| Guest execution | **2,223,741 JVM instructions**, 111 internal steps, 45 verified successful checkpoint receipts |
-| Current blocker | Missing bootstrap `java.util.function.Function`; original Guava Function is authenticated and bounded PAT2 compilation has returned |
-| Runtime profile | 421,118-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 105 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,223,790 JVM instructions**, 112 internal steps, 44 verified successful checkpoint receipts |
+| Current blocker | Missing bootstrap `java.util.NavigableMap`; Function SAM linking passed and the original Guava implementation was constructed |
+| Runtime profile | 420,330-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 106 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [parent-corrected bounded regex / P42](JAVA_EVM_MC_REGEX_ANCHOR_PLUS_PARENT_PREFLIGHT.md).
-The original property-name pattern is a real stored PAT2 int[] program; generic
-`Matcher.matches` and replacement edge cases passed fresh EVM tests. The broader
-parent matrix required a separately labeled **32B generated-test allowance**;
-small q1/q7 tests used1B. This is still not full Java regex/Matcher support.
+Latest acceptance: [Java8 Function SAM link/apply / P43](JAVA_EVM_MC_FUNCTION_INTERFACE_PARENT_PREFLIGHT.md).
+Fresh generated EVM tests exercise captured state, generic bridges, null receiver,
+and an exact150-input/256-class boundary. Small q1/q7 tests use1B; that larger
+class-envelope case needed a separately labeled2B allowance after a real1B shortage.
+`Function` default/static helpers and full Java SE support are not claimed.
 
 ### Important LOCAL-only limits
 
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original115-guava-function/artifacts/java8-function-interface-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-function-interface/artifacts/navigable-map-interface-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

@@ -1,0 +1,49 @@
+{
+  "status": "fresh omitted identity raw refusal and Function namespace reservation passed",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "1cc023e3613138f6e943e049e5b69c0acee01f3500c8ffdb60d236bfe9058584",
+  "engineRuntimeKeccak256": "0x4f2c95991a4c30e01e77793b8af9ecc7c681e47f969ba468e5143623bf720a67",
+  "coordinatorRuntimeSHA256": "71975e2ae320eb34af26de9eb190052c9d0a54b3689b991aa68662a28ed706e6",
+  "coordinatorRuntimeKeccak256": "0x6c089807608a300d1fc10828a6ad2d2578fc5437051ed3e816a6d2ac58e5f4ba",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "omitted-identity",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "35"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xe4d0169479d9b3d37a6ce14c9ef516e494e0d37bca600c70acde939f3c34ae0e",
+      "rootAfter": "0xe4d0169479d9b3d37a6ce14c9ef516e494e0d37bca600c70acde939f3c34ae0e",
+      "atomic": true,
+      "successfulSlices": 2,
+      "committedHeadEpoch": 2,
+      "callsIncludingRefusal": 3,
+      "gasUsed": 95229989,
+      "wallMs": 83
+    },
+    {
+      "name": "raw-Function",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "2"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xff50c1f77326ae55653b048e502e2a5460bd6066838abf01077c6b02ed1f1c4b",
+      "rootAfter": "0xff50c1f77326ae55653b048e502e2a5460bd6066838abf01077c6b02ed1f1c4b",
+      "atomic": true,
+      "gasUsed": 433942,
+      "wallMs": 1
+    }
+  ],
+  "processId": 833001,
+  "elapsedMs": 0
+}

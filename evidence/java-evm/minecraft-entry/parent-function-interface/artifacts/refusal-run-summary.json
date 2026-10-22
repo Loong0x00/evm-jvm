@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.1638733349973336,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-refusals-parent-p43/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-function-interface/ParentFunctionOmitted.java"
+      ]
+    },
+    {
+      "label": "stock-java8-valid",
+      "exit": 0,
+      "wallSeconds": 0.06372714800090762,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-refusals-parent-p43/classes",
+        "ParentFunctionOmitted"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.8649679390000529,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-refusals-parent-p43/driver",
+        "./build/java-diff-mc-function-refusals-parent-p43/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 0.1637197060044855,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-refusals-parent-p43/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-build-parent-p43/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-build-parent-p43/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-refusals-parent-p43/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-refusals-parent-p43",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-function-refusals-parent-p43/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

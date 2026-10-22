@@ -1,6 +1,6 @@
 {
-  "profile": "MC-FUNCTION-APPLY-P43",
-  "basis": "P42 parent-fixed source-only; append one Java8 apply-only Function interface",
+  "profile": "MC-FUNCTION-APPLY-P43-PARENT",
+  "basis": "exact accepted parent-fixed P42; Function SAM append only",
   "bootstrapCount": 106,
   "bootstrapRoot": "f9bc0a2e1368e55ca1e9b8f04ce5addf0d8d2427ce73c9996a05c7a1fddec670",
   "expectedBootstrapRoot": "f9bc0a2e1368e55ca1e9b8f04ce5addf0d8d2427ce73c9996a05c7a1fddec670",
@@ -20,14 +20,16 @@
   "address": "0x4d432d52414e444f4d2d434c4153532d50310070",
   "owner": "0x4d432d52414e444f4d2d434c4153532d50310071",
   "engine": {
-    "bytes": 420227,
-    "runtimeSHA256": "cdd478ced0cd26fe8b51f308041ad546848c5370a06d888e85a9f7259cf10255",
-    "runtimeKeccak256": "2597ed2bbcb45d09ed951eb9a8fd0560538c10e13ebae9b77fce94491706017d"
+    "bytes": 420330,
+    "initSHA256": "0a3c973a96bcddf2058da854efe5e451b56e80870aec9df14971e2a0d31fd101",
+    "runtimeSHA256": "1cc023e3613138f6e943e049e5b69c0acee01f3500c8ffdb60d236bfe9058584",
+    "runtimeKeccak256": "4f2c95991a4c30e01e77793b8af9ecc7c681e47f969ba468e5143623bf720a67"
   },
   "coordinator": {
     "bytes": 5411,
-    "runtimeSHA256": "ea78a31d4f8a5df30f04d9f5f4a324ccddead61db6bf3d10d09861e6ab693a55",
-    "runtimeKeccak256": "54aa45b35f97743caa89d9242aaff45e578e4519e41a73f9f0079cb048f2b90a"
+    "initSHA256": "0d861ae3497b05bb5348e668c24da544b41570ea9bf657e96fa0a4bd7b9bb5de",
+    "runtimeSHA256": "71975e2ae320eb34af26de9eb190052c9d0a54b3689b991aa68662a28ed706e6",
+    "runtimeKeccak256": "6c089807608a300d1fc10828a6ad2d2578fc5437051ed3e816a6d2ac58e5f4ba"
   },
   "baselineEngine": {
     "bytes": 392268,
@@ -44,15 +46,13 @@
   "baselineDriverSHA256": "82589aff5248734c18092478636da78dd2309277c39ddb86e5d7de2c2fa09b10",
   "driverSHA256": "fcd6f63b8cb982a31a6b8579b83d73fcd353ebf5ba457fb43ff4c72612a14784",
   "sourceInvariants": {
-    "changedImageSlots": [
-      101,
-      103
-    ],
-    "other103ImagesUnchanged": true,
-    "ABIStorageAndAllQuotasUnchanged": true,
-    "native21String12Unchanged": true,
-    "protocolDomainRetainedCodehashAndRootUpdated": true,
-    "noCheckpointSchemaChange": true
+    "all105PriorLeavesUnchanged": true,
+    "appendedFunctionLeaf": 105,
+    "rawFunctionReserved": true,
+    "native21String12AndAllQuotasFixed": true,
+    "derivedClassBound256NotQuotaIncrease": true,
+    "ABIStorageAndWireSchemaFixed": true,
+    "noNewDispatch": true
   },
   "integer": {
     "slot": 70,
@@ -98,7 +98,7 @@
   "buildID": "01-local-b",
   "generatedFixtureSource": "evidence/java-evm/minecraft-entry/float-packed-checkpoint-preparation/results/generated-gate-v5/fixtures",
   "worker": "parent",
-  "domain": "MC-HASH-MAP-PUT-BOUNDED-P41-ARRAY-8192",
+  "domain": "MC-HASH-MAP-PUT-BOUNDED-P43-FUNCTION-ARRAY-8192",
   "sourceSHA256": "c1a97891c94ecef1a879bf63e3beb6fe7400de6e1b1f7104ccc9fdb9930c3c70",
   "baselineSourceSHA256": "921b3d2b864f00dd13f0ea0d391271e00687dddefe9d8edcb5fcccfa3881a17b",
   "changedFunctions": [
@@ -209,7 +209,8 @@
     "bf8d60d05e78cfaf91326294362f9c14940cfb0c74d43f8bfc2ef27f434ba8a0",
     "486cb333853155ebd6334af067b8479764389718e9de547114e987e677058ab5",
     "5ad670fba25a82418017c03faf644ffd1d5907ca0eba1ace945fbfb474cea8a2",
-    "116b6c77569bd29cf69523ddfbce9f2296ac86ee27022121cdea2f10aafdd302"
+    "116b6c77569bd29cf69523ddfbce9f2296ac86ee27022121cdea2f10aafdd302",
+    "acc23fc8bac0f8cc427d1cd59642176d9fd7770fdc4c7eeea0dfee96e9dc546f"
   ],
   "maxArrays": 8192,
   "maxObjects": 4096,
@@ -265,7 +266,7 @@
   "parentCoordinatorRuntimeKeccak256": "a71b3c48a4ecaf1b7b64ef6edf752abe9664b4257107cc91f4408b20d7114192",
   "driverTemplateSHA256": "f80881acb6cfc3701c8cd3d151ba0de40eb1c57933a01a5ff98e88822dcc5476",
   "storageLayoutSHA256": "0981f4f7824d2bfb6ebfed1b308365e5cbae4ac69f8431819fb2f3db0501dcd6",
-  "baseBootstrapCount": 104,
+  "baseBootstrapCount": 105,
   "runtimeCapBytes": 1048576,
   "newBootstrapImages": [
     "java/util/HashMap$Node"
@@ -288,7 +289,5 @@
     "coordinatorLayoutOnlyFixedArrayGrowth": true
   },
   "generatedCapacityTestGas": 32000000000,
-  "generatedRegexTestBudgetMax": 8000000000,
-  "functionImageBytes": 275,
-  "functionImageSHA256": "0c295ec9f5fcca2672e7b39bb33639dcf5134397eab22909b0ee6b773609bf1a"
+  "generatedRegexTestBudgetMax": 8000000000
 }
