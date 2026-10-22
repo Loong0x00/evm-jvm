@@ -1,0 +1,36 @@
+{
+  "status": "PASS staging/build; generated EVM/heap tests separate",
+  "engineSourceSHA256": "4c7b622910e6a379270682c7e9d3477f1ea8e15a6e89bd9111ce937aedf0d54e",
+  "coordinatorSourceSHA256": "ca78582b58e9a717948dd36a36a047e79b50f109f7aa0e1f531266f0a8c76846",
+  "javaSourceSHA256": "3b195082b4c7ca83610274b18b9b13149b7749e6c6cba690549fb583041a9ae0",
+  "engineRuntimeSHA256": "694b1ea5686b03eab3c000de8b9bc6af573edb0ad06053f2279a6d4da748d1c6",
+  "engineRuntimeBytes": 418986,
+  "coordinatorRuntimeSHA256": "53311c0ad0dfd9df36e6beb31c3e059d8d82a0016a567d6e8a952033a7542720",
+  "coordinatorRuntimeBytes": 5411,
+  "bootstrapRoot": "ca3049ae9ad4e09e893a897c34ef016939d1595c01d090c5ee3e9699ac349fbd",
+  "changedEngineFunctions": [
+    "_appendTailBootstraps#0",
+    "_bootstrapHashMap#0",
+    "_bootstrapRoot#0",
+    "_isReservedPlatformMapClass#0",
+    "_prepare#0"
+  ],
+  "newEngineFunctions": [
+    "_bootstrapHashMapNode#0"
+  ],
+  "bootstrapCount": 105,
+  "unchangedPriorLeaves": 103,
+  "images": {
+    "HashMap": {
+      "bytes": 4318,
+      "sha256": "2fc9b54e66c486c911c1593e8d7e948b5a0a324b96f010a4e86a11ef7dc2fc5c"
+    },
+    "HashMapNode": {
+      "bytes": 1334,
+      "sha256": "7211f3de996fc04705787b8d7b734f674f295e94ad60741262c28bb62c3195e0"
+    }
+  },
+  "newOperationalNatives": 0,
+  "originalInputsRead": false,
+  "draftThresholdBugCorrected": true
+}

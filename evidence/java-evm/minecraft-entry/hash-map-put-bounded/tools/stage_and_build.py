@@ -10,6 +10,9 @@ env=dict(os.environ,NODE_PATH=str(ROOT/'jvmevm/runtime/node_modules'),GOPROXY='o
 def sha(b):return hashlib.sha256(b).hexdigest()
 def run(label,args,timeout=1200):
  with (O/(label+'.log')).open('w') as f:subprocess.run(list(map(str,args)),cwd=ROOT,env=env,stdout=f,stderr=subprocess.STDOUT,check=True,timeout=timeout)
+manifest=json.load(open(BASE/'source-manifest.json'))
+for name,pin in manifest['files'].items():
+ data=(BASE/name).read_bytes();assert len(data)==pin['bytes'] and sha(data)==pin['sha256'],name
 source=H/'source/bootstrap/java/util/HashMap.java';assert 'throw new Error()' not in source.read_text() and 'newCap > 4096' not in source.read_text() and 'newThr = oldThr << 1' in source.read_text()
 rt=O/'platform-build-rt.jar';shutil.copy2('/usr/lib/jvm/java-8-openjdk/jre/lib/rt.jar',rt);run('strip-platform',['zip','-q','-d',rt,'java/util/HashMap.class','java/util/HashMap$*.class'])
 classes=O/'classes';classes.mkdir();run('javac',['/usr/lib/jvm/java-8-openjdk/bin/javac','-g:none','-source','8','-target','8','-bootclasspath',rt,'-d',classes,source])

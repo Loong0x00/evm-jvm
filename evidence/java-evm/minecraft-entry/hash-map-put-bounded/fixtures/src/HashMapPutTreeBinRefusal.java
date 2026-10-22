@@ -16,14 +16,9 @@ public final class HashMapPutTreeBinRefusal {
         HashMap<Object, Object> map = new HashMap<Object, Object>();
         for (int i = 0; i < 10; i++) map.put(new Key(i), "v");
         check(map.size() == 10);
-        boolean refused = false;
-        try {
-            map.put(new Key(10), "must-not-link");
-        } catch (Error expectedUnsupportedTreeBin) {
-            refused = true;
-        }
-        check(refused && map.size() == 10);
-        check(map.put("after-refusal", "ok") == null);
+        // Java8 can complete this operation; the bounded guest profile must
+        // produce an interpreter refusal, never a catchable invented Error.
+        map.put(new Key(10), "tree-required");
         check(map.size() == 11);
     }
 }
