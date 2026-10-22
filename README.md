@@ -14,8 +14,8 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 114 explicit, authenticated class resources (801,758 bytes) |
-| Guest execution | **2,086,784 JVM instructions**, 109 internal steps, 32 verified successful checkpoint receipts including a genuine guest terminal outcome |
-| Current blocker | Genuine guest OutOfMemoryError at the **4096 allocated-array count cap**; 8192-capacity candidate is not yet accepted |
+| Guest execution | **2,210,370 JVM instructions**, 111 internal steps, 40 verified successful checkpoint receipts |
+| Current blocker | `Pattern.compile("^[a-z0-9_]+$")` requires real bounded anchor/plus support; the 8192-array capacity is now accepted |
 | Runtime profile | 418,986-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 105 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
@@ -24,11 +24,11 @@ Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest measured progress: [authenticated resource continuation / P40](JAVA_EVM_MC_RESOURCE114_ARRAY_LIMIT_PREFLIGHT.md).
-The runtime is unchanged P39; the newest run genuinely terminated at an artificial
-array-count limit. **Terminal checkpoints cannot resume.** Work has resumed after
-the requested reboot pause; only the measured array count is being doubled,
-with independent verification and a fresh original start required.
+Latest acceptance: [8192-array capacity / P41](JAVA_EVM_MC_MAX_ARRAYS8192_PARENT_PREFLIGHT.md).
+A fresh original run now holds **4676 actual arrays**, beyond the old4096 limit.
+The capacity-boundary gate uses a separately labeled **32B generated-test budget**;
+retained small q1/q7 tests use1B. The old4096-array terminal state is preserved and
+was never resumed or migrated. Full regex/Matcher support is not claimed.
 
 ### Important LOCAL-only limits
 
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original114-objects-super/artifacts/array-count-4096-terminal.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-max-arrays-8192/artifacts/pattern-anchor-plus-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

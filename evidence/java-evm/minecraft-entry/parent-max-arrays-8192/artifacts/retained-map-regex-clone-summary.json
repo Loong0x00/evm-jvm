@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "generatedOnly": true,
+  "initialGas": 1000000000,
+  "attempts": [
+    {
+      "label": "parent-small-attempt-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 106.58077537700046,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/parent-small-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-small-reopen-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.16372849100116582,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/parent-small-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-resize-attempt-1",
+      "exit": 42,
+      "timedOut": false,
+      "wallSeconds": 1.364691495000443,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/driver",
+        "parent-resize",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/parent-resize-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-resize-attempt-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 1.5651374369990663,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/driver",
+        "parent-resize",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/parent-resize-attempt-2",
+        "2000000000"
+      ],
+      "gasBudget": 2000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-resize-reopen-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.16370156499942823,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-build-parent-p41/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-hash-map-put-fixtures-parent-p39b",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-max-arrays-8192-retained-parent-p41/parent-resize-attempt-2",
+        "2000000000"
+      ]
+    }
+  ],
+  "transportDiagnosticDelta": "105 bootstrap/255 derived classes; CP2MiB; constructor-only int-zero audit generalized to typed ints, specific full map heap checked separately",
+  "noEvmOrGuestCodeModificationByParentDriver": true
+}
