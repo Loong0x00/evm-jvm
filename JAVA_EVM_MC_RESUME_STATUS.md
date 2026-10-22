@@ -1,3 +1,13 @@
+## Crash recovery verified — exact P43 commit and world restored
+
+电脑意外宕机后发现58个Git looseobjects为零字节。先完整备份2.0G `.git`及P43关键工作文件/world/build/driver，再隔离原空文件（未删除）。从完整索引及哈希匹配工作文件重建40blobs、17trees，并按原tree/parent/author/committer/message重建 **完全相同SHA** 的P43提交 `ab8e76f74ec4c7d44b386d19f8a5ea00d434e8c4`。没有更改source/index/refs，没有reset/clean/gc或重写历史。
+
+`git fsck --full` exit0；仅保留旧dangling历史对象，不作删除。tracked tree clean，保护路径core/vm/core/state/params仍匹配95665d570。P43 CP SHA `2b05be6edcc4015337763d3a87a014685819d1a099602d686d0e19b1bcc11337` 重验相同，44canonical收据+fresh-process EVM/LevelDB worldverify通过。恢复到 **2223790J/112I/epoch44/lifecycle1**，下一阻塞仍 `java/util/NavigableMap`，恢复中没有推进guest或启动P44。
+
+备份/隔离/完整检查日志本地保留：`/home/user/evm-jvm/recovery/p43-crash-20261022T180226Z`（Git不包含整份备份和本地buildworld）。精选恢复证据：`evidence/java-evm/minecraft-entry/p43-crash-recovery/`。最新P43源码/世界路径见下节。
+
+---
+
 ## Latest P43 accepted — genuine Function SAM linked; next NavigableMap
 
 - Worker36f753033 explicitly did not run new-artifactEVMgates. ParentreviewfoundrawFunctionnameguardunwired andcoordinatorstilloldP42codehash; preservedsource/result, addedexactrawreservationandfreshactualcodehashanchor. ParentJava8rebuildFunction275BSHA0c295ec9...bf1a, actual106root `f9bc0a2e1368e55ca1e9b8f04ce5addf0d8d2427ce73c9996a05c7a1fddec670`;ALL105oldprefiximagesbyte-identical includingparentPAT2fix. Runtime420330SHA `1cc023e3613138f6e943e049e5b69c0acee01f3500c8ffdb60d236bfe9058584`;coord5411SHA71975e2ae320eb34af26de9eb190052c9d0a54b3689b991aa68662a28ed706e6. Profile/actualdomainsP43FUNCTIONversionedcoherently. No dispatch/native/ABI/storage/codec/schema/quota changes, native21/String12 fixed;derivedclassbound256notquota.
