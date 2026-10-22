@@ -1,0 +1,60 @@
+{
+  "acceptedBudgetsChanged": false,
+  "arrayCloneInitialTestGasBudget": 1000000000,
+  "attempts": [
+    {
+      "classification": "semantic-or-harness-failure",
+      "command": [
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v2/evm_driver",
+        "replaceall",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-final-v2/fixture-manifest.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-final-v2",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v2/string-replaceall-attempt-1",
+        "16000000000"
+      ],
+      "exit": 1,
+      "failure": {
+        "case": "unknown",
+        "classification": "semantic-or-harness-failure",
+        "error": "smaller-quantum replaceAll schedule used fewer calls: q65536-string-replaceall-matrix=1 q4096-string-replaceall-matrix=9",
+        "gasBudget": 16000000000
+      },
+      "gasBudget": 16000000000,
+      "label": "string-replaceall",
+      "log": "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v2/logs/string-replaceall-attempt-1.log",
+      "mode": "replaceall",
+      "timedOut": false,
+      "timeoutSeconds": 4805,
+      "wallBudgetSeconds": 4800,
+      "wallSeconds": 4189.546
+    }
+  ],
+  "generatedFixtureManifestSHA256": "bfc8e0428a12509370151504a0a22471b489f3bf193725b91ba6d60213e4a5df",
+  "hostOriginalExecution": false,
+  "newP38InitialTestGasBudget": 1000000000,
+  "newP38InitialWallBudgetSeconds": 1200,
+  "newP38MaxContinuationCalls": 40000,
+  "newP38MeasuredInsufficientBudgets": [
+    1000000000,
+    2000000000,
+    4000000000,
+    8000000000
+  ],
+  "newP38MeasuredInsufficientWallBudgets": [
+    1200,
+    2400
+  ],
+  "newP38SelectedTestGasBudget": 16000000000,
+  "newP38SelectedWallBudgetSeconds": 4800,
+  "ordinaryEvmGasAccountingChanged": false,
+  "originalMinecraftInputsRead": false,
+  "profile": "MC-STRING-REPLACEALL-BOUNDED-P38",
+  "retainedP36MaxContinuationCalls": 20000,
+  "retainedP36TestGasBudget": 2000000000,
+  "retainedP36WallBudgetSeconds": 2400,
+  "runId": "p38-final-v2",
+  "schema": 1,
+  "sourceOnlyBaseline": "evidence/java-evm/minecraft-entry/string-replaceall-source-base-p37"
+}

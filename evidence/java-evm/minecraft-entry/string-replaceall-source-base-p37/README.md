@@ -1,0 +1,3 @@
+# Exact accepted P37 source-only baseline
+
+Engine410780B/103images/native21/raw1501063930/runtime1MiB/CP2MiB. Parentexplicitsourceprovisionninehashedfiles, nooriginalinputs/results. UseownP36Pattern/Java/tools asgeneratedtemplates, butbaseactualP37sourcecontainsarrayclone/covariancefixes thatmustremain.

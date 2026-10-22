@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "profile": "MC-STRING-REPLACEALL-BOUNDED-P38",
+  "status": "failed test-only wall-budget measurements; no semantic failure observed",
+  "sourceProof": "source-proof.json",
+  "bootstrapRoot": "3896630440a69732a4acda4b8f5c5eec4898768ad074623b522a46a936efae4b",
+  "engineRuntimeBytes": 414732,
+  "engineRuntimeSHA256": "f0959a98ba75f8f6bd013fc87a4a7ff633065d8d283f3857efde863b2fd313ef",
+  "coordinatorRuntimeSHA256": "c21f48b7cd43e5f28c1f148cd6ad13bf00aa5950bf54aa4e3b5336e42941dc84",
+  "fixtureManifestSHA256": "5a8998c1597cdf9fde2b2d20cfe949641c6e3fed84dfbc18d40b231b5912e36b",
+  "selectedGasBudget": 16000000000,
+  "selectedContinuationCallLimit": 40000,
+  "gasProbeEnvironment": {
+    "engineRuntimeSHA256": "f0959a98ba75f8f6bd013fc87a4a7ff633065d8d283f3857efde863b2fd313ef",
+    "bootstrapRoot": "3896630440a69732a4acda4b8f5c5eec4898768ad074623b522a46a936efae4b",
+    "cleanFixtureManifestSHA256": "d1431c81ef6876f90f552cbfbb032a487a4c985af3ef8251c6e29fe930be3a96",
+    "diagnosticProbeFixtureManifestSHA256": "4b9ad55ee08714fbc11b36ef767438b828fc5b62f16ec91b8df9c41e2b4fa36f",
+    "durableProbeArchive": "gas-probes/",
+    "cleanOneBGateFailure": "gas-probes/clean-1B/gate-failure.json",
+    "diagnosticTwoBFourBEightBGateFailures": [
+      "gas-probes/diagnostic-2B-4B-8B/gas-2B-failure.json",
+      "gas-probes/diagnostic-2B-4B-8B/gas-4B-failure.json",
+      "gas-probes/diagnostic-2B-4B-8B/gas-8B-failure.json"
+    ],
+    "rows": [
+      {"gasBudget": 1000000000, "fixture": "clean generated StringReplaceAllMatrix", "classification": "test-only-gas-budget", "typedError": "LC0ControlError(7)", "callGasUsed": 975127904},
+      {"gasBudget": 2000000000, "fixture": "earlier generated diagnostic-probe matrix", "classification": "test-only-gas-budget", "typedError": "LC0ControlError(7)", "callGasUsed": null},
+      {"gasBudget": 4000000000, "fixture": "earlier generated diagnostic-probe matrix", "classification": "test-only-gas-budget", "typedError": "LC0ControlError(7)", "callGasUsed": null},
+      {"gasBudget": 8000000000, "fixture": "earlier generated diagnostic-probe matrix", "classification": "test-only-gas-budget", "typedError": "LC0ControlError(7)", "callGasUsed": 7975559063, "reserveFloor": 25000000, "remainingGas": 24440937}
+    ],
+    "selectedDoubledBudget": 16000000000
+  },
+  "continuationLimitProbe": {
+    "earlierLimit": 20000,
+    "observed": "q1-string-replaceall-matrix reached 20,000 calls without terminal; no Java terminal was emitted",
+    "selectedStringReplaceAllLimit": 40000,
+    "retainedProfileLimit": 20000
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "gasBudget": 16000000000,
+      "wallBudgetSeconds": 1200,
+      "classification": "test-only-wall-budget",
+      "wallSeconds": 1205.002,
+      "driverLogBytes": 0
+    },
+    {
+      "attempt": 2,
+      "gasBudget": 16000000000,
+      "wallBudgetSeconds": 2400,
+      "classification": "test-only-wall-budget",
+      "wallSeconds": 2405.002,
+      "driverLogBytes": 0
+    },
+    {
+      "attempt": 3,
+      "gasBudget": 16000000000,
+      "wallBudgetSeconds": 4800,
+      "status": "externally interrupted before its configured timeout",
+      "runnerTimeoutSeconds": 7200,
+      "elapsedRunnerSeconds": 7200,
+      "driverLogBytes": 0
+    }
+  ],
+  "interpretation": "P38 gate orchestration was killed by the outer tool timeout during a fresh attempt. The third 4800-second test-only wall budget was not fully measured. No successful or failed Java terminal result was emitted by these timed-out runs. The next complete gate should start at 4800 seconds, the coherent double of the last fully measured insufficient 2400-second budget.",
+  "constraints": {
+    "originalMinecraftInputsRead": false,
+    "hostOriginalExecution": false,
+    "acceptedBudgetsChanged": false,
+    "ordinaryEvmGasAccountingChanged": false,
+    "EVMEngineSemanticsChangedForTimeout": false
+  }
+}

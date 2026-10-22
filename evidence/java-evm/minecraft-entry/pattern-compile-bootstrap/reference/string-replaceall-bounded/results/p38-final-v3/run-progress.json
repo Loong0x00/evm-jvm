@@ -1,0 +1,93 @@
+{
+  "acceptedBudgetsChanged": false,
+  "arrayCloneInitialTestGasBudget": 1000000000,
+  "attempts": [
+    {
+      "classification": "passed",
+      "gasBudget": 16000000000,
+      "label": "string-replaceall-reused-completed-schedules",
+      "mode": "verified cached EVM receipts",
+      "sourceGateFailureSHA256": "45672afced87f9c8f20d5701959b4cd056081d9cbfa613ac30a05285af965a4f",
+      "sourceRunId": "p38-final-v2",
+      "wallBudgetSeconds": 4800,
+      "wallSeconds": 4189.546
+    },
+    {
+      "classification": "passed",
+      "command": [
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/evm_driver",
+        "reopen",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-final-v3/fixture-manifest.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-final-v3",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v2/string-replaceall-attempt-1",
+        "16000000000"
+      ],
+      "exit": 0,
+      "gasBudget": 16000000000,
+      "label": "string-replaceall-fresh-reopen",
+      "log": "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/logs/string-replaceall-fresh-reopen-attempt-1.log",
+      "mode": "reopen",
+      "timedOut": false,
+      "timeoutSeconds": 4805,
+      "wallBudgetSeconds": 4800,
+      "wallSeconds": 0.214
+    },
+    {
+      "classification": "semantic-or-harness-failure",
+      "command": [
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/evm_driver",
+        "replaceall-controls",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-final-v3/fixture-manifest.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-final-v3",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/string-replaceall-controls-reuse-attempt-1",
+        "16000000000"
+      ],
+      "exit": 1,
+      "failure": {
+        "case": "unknown",
+        "classification": "semantic-or-harness-failure",
+        "error": "valid-quantifier-refusal-q1 unexpectedly returned; refusal was required",
+        "gasBudget": 16000000000
+      },
+      "gasBudget": 16000000000,
+      "label": "string-replaceall-controls",
+      "log": "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-final-v3/logs/string-replaceall-controls-attempt-1.log",
+      "mode": "replaceall-controls",
+      "timedOut": false,
+      "timeoutSeconds": 4805,
+      "wallBudgetSeconds": 4800,
+      "wallSeconds": 0.064
+    }
+  ],
+  "generatedFixtureManifestSHA256": "bfc8e0428a12509370151504a0a22471b489f3bf193725b91ba6d60213e4a5df",
+  "hostOriginalExecution": false,
+  "newP38InitialTestGasBudget": 1000000000,
+  "newP38InitialWallBudgetSeconds": 1200,
+  "newP38MaxContinuationCalls": 40000,
+  "newP38MeasuredInsufficientBudgets": [
+    1000000000,
+    2000000000,
+    4000000000,
+    8000000000
+  ],
+  "newP38MeasuredInsufficientWallBudgets": [
+    1200,
+    2400
+  ],
+  "newP38SelectedTestGasBudget": 16000000000,
+  "newP38SelectedWallBudgetSeconds": 4800,
+  "ordinaryEvmGasAccountingChanged": false,
+  "originalMinecraftInputsRead": false,
+  "profile": "MC-STRING-REPLACEALL-BOUNDED-P38",
+  "retainedP36MaxContinuationCalls": 20000,
+  "retainedP36TestGasBudget": 2000000000,
+  "retainedP36WallBudgetSeconds": 2400,
+  "reuseCompletedP38ScheduleRunId": "p38-final-v2",
+  "runId": "p38-final-v3",
+  "schema": 1,
+  "sourceOnlyBaseline": "evidence/java-evm/minecraft-entry/string-replaceall-source-base-p37"
+}

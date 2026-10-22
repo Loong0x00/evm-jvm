@@ -1,0 +1,45 @@
+{
+  "acceptedBudgetsChanged": false,
+  "attempts": [
+    {
+      "classification": "semantic-or-harness-failure",
+      "command": [
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-local-gate-v1/evm_driver",
+        "replaceall",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-local-gate-v1/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-local-gate-v1/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-local-gate-v1/fixture-manifest.json",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-fixtures-p38-local-gate-v1",
+        "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-local-gate-v1/string-replaceall-attempt-1",
+        "1000000000"
+      ],
+      "exit": 1,
+      "failure": {
+        "case": "q1-string-replaceall-matrix",
+        "classification": "EVM-positive-call-failure",
+        "error": "EVM-positive-call-failure: q1-string-replaceall-matrix failed at gas=1000000000: execution reverted; typed=MCEntryMissingClass args=[4104 4 [106 97 118 97 47 108 97 110 103 47 65 115 115 101 114 116 105 111 110 69 114 114 111 114]] selector=0x555db429",
+        "gasBudget": 1000000000
+      },
+      "gasBudget": 1000000000,
+      "label": "string-replaceall",
+      "log": "/home/user/evm-jvm/string-replaceall-bounded/build/java-diff-mc-string-replaceall-bounded-build-p38-local-gate-v1/logs/string-replaceall-attempt-1.log",
+      "mode": "replaceall",
+      "timedOut": false,
+      "timeoutSeconds": 1205,
+      "wallBudgetSeconds": 1200,
+      "wallSeconds": 504.379
+    }
+  ],
+  "generatedFixtureManifestSHA256": "aea9f8671293b12b92ad1a0370fb599198bcf93a7d433ee82dbda03d7f2e4330",
+  "hostOriginalExecution": false,
+  "newP38InitialTestGasBudget": 1000000000,
+  "newP38InitialWallBudgetSeconds": 1200,
+  "ordinaryEvmGasAccountingChanged": false,
+  "originalMinecraftInputsRead": false,
+  "profile": "MC-STRING-REPLACEALL-BOUNDED-P38",
+  "retainedP36TestGasBudget": 2000000000,
+  "retainedP36WallBudgetSeconds": 2400,
+  "runId": "p38-local-gate-v1",
+  "schema": 1,
+  "sourceOnlyBaseline": "evidence/java-evm/minecraft-entry/string-replaceall-source-base-p37"
+}
