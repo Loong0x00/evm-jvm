@@ -14,15 +14,20 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 90 explicit, authenticated class resources (658,601 bytes) |
-| Guest execution | **1,922,305 JVM instructions**, 95 internal steps, 34 verified successful checkpoint receipts |
-| Current blocker | `String.replaceAll(String,String)`; generic array `clone()` and bounded `Pattern.compile(String)` have returned |
-| Runtime profile | 410,780-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 103 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **1,923,759 JVM instructions**, 95 internal steps, 39 verified successful checkpoint receipts |
+| Current blocker | `Map.put(Object,Object)` on a real HashMap; bounded `String.replaceAll`, array `clone()` and `Pattern.compile` have returned |
+| Runtime profile | 414,732-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 104 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
+
+Latest acceptance: [bounded String replacement / P38](JAVA_EVM_MC_STRING_REPLACEALL_PARENT_PREFLIGHT.md).
+The large generated regex matrix uses a separately labeled **16B test-only gas
+budget**; its complete worker q1 evidence was provenance-checked/reopened, not
+misreported as an independently rerun ordinary-1B matrix.
 
 ### Important LOCAL-only limits
 
@@ -55,7 +60,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-array-clone/artifacts/string-replaceall-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-string-replaceall/artifacts/map-put-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

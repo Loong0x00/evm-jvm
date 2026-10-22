@@ -1,0 +1,13 @@
+panic: open /home/user/evm-jvm/geth/build/java-diff-mc-string-replaceall-bounded-fixtures-parent-p38c/bundles/ParentReplaceAllSmall/fixtures/ParentReplaceAllSmall.class: no such file or directory
+
+goroutine 1 [running]:
+main.must(...)
+	github.com/ethereum/go-ethereum/build/java-diff-mc-string-replaceall-generated-parent-p38c/driver-src/evm_driver.go:442
+main.(*runner).loadCase(0x1237d7899108, {0x89d57b, 0x15})
+	github.com/ethereum/go-ethereum/build/java-diff-mc-string-replaceall-generated-parent-p38c/driver-src/evm_driver.go:608 +0x54a
+main.(*runner).runSchedule(_, {_, _}, _, {_, _}, _, _)
+	github.com/ethereum/go-ethereum/build/java-diff-mc-string-replaceall-generated-parent-p38c/driver-src/evm_driver.go:812 +0x99
+main.(*runner).parentGate(0x1237d7899108, {0x7fff8371fdce, 0xc})
+	github.com/ethereum/go-ethereum/build/java-diff-mc-string-replaceall-generated-parent-p38c/driver-src/parent_gate.go:8 +0x2bb
+main.main()
+	github.com/ethereum/go-ethereum/build/java-diff-mc-string-replaceall-generated-parent-p38c/driver-src/evm_driver.go:1908 +0x105

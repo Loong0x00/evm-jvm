@@ -1,0 +1,14 @@
+package main
+import("fmt";"path/filepath";"reflect")
+func(r *runner)parentGate(mode string)error{
+ var rows []scheduleReport
+ fixture:="StringReplaceAllMatrix";quanta:=[]uint64{65536,4096}
+ if mode=="parent-small"{fixture="ParentReplaceAllSmall";quanta=[]uint64{7,1}}
+ for _,q:=range quanta{
+ row,w,err:=r.runSchedule(fmt.Sprintf("parent-%s-q%d",fixture,q),q,fixture,true,true)
+ if w!=nil{w.close()};if err!=nil{return err};rows=append(rows,row)
+ }
+ if rows[0].Final.MachineStateRoot!=rows[1].Final.MachineStateRoot || rows[0].Final.VfsStateRoot!=rows[1].Final.VfsStateRoot || rows[0].Final.TotalJvmSteps!=rows[1].Final.TotalJvmSteps || !reflect.DeepEqual(rows[0].HeapAudit,rows[1].HeapAudit){return fmt.Errorf("parent cross-quantum roots/counters/heap mismatch")}
+ r.report.Schedules=rows;r.report.Status="fresh parent generated void schedules and exact cross-quantum roots/heap passed";r.report.Mode=mode
+ return writeJSON(filepath.Join(r.reportDir,"parent-summary.json"),r.report)
+}
