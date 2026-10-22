@@ -1,0 +1,402 @@
+{
+  "generatedOnly": true,
+  "originalInputsIncluded": false,
+  "filesystemEvidence": "World DBs and report trees are retained in the unique external temp run, not copied into repository; compact root/receipt facts are durable here.",
+  "outerProcessTimeoutSeconds": 1200,
+  "actualCallBudgetPolicy": "q1/q7/q4096 ordinary1B. q65536 recorded 1B,2B,4B failures then passed at8B. Call budgets are per EVM call; actual gas/duration is separate from process timeout.",
+  "worlds": [
+    {
+      "quantum": 1,
+      "callBudget": "1B",
+      "lifecycle": 2,
+      "jvmSteps": 21479,
+      "internalSteps": 7,
+      "machineRoot": "0x406a09fabd05facfea25b05b4f46a44dffd2b4c50cdb06a2865c25a6e5548340",
+      "vfsRoot": "0xdf1b03248fa6c150f72b216960d2ffe0388f1f240cf06a93248f714643095de8",
+      "epoch": 21479,
+      "checkpointRoot": "0x8b8fd17f949347e2e44ea5b98f93d57d5b4f2fd2b8a70c01f34cabfd158e3a20",
+      "engineCodeHash": "0x6586be5b1a328fd094fb3c71f2ca656d2ac5b86d8d02d1f78704b10fb0115b93",
+      "coordinatorCodeHash": "0xa913d308f203e28eb06dac5a0e46485c0b0ef3a3698156024ec09c279a6b0976",
+      "finalReopenPID": 539468,
+      "maxExternalCallGas": 125779022,
+      "maxExternalCallMs": 158,
+      "timeoutCancels": 0
+    },
+    {
+      "quantum": 7,
+      "callBudget": "1B",
+      "lifecycle": 2,
+      "jvmSteps": 21479,
+      "internalSteps": 7,
+      "machineRoot": "0x406a09fabd05facfea25b05b4f46a44dffd2b4c50cdb06a2865c25a6e5548340",
+      "vfsRoot": "0xdf1b03248fa6c150f72b216960d2ffe0388f1f240cf06a93248f714643095de8",
+      "epoch": 3069,
+      "checkpointRoot": "0xe6e9f747882cb64146be73c73af98f8a3d517f75adf05eec27a47a38cf1aa102",
+      "engineCodeHash": "0x6586be5b1a328fd094fb3c71f2ca656d2ac5b86d8d02d1f78704b10fb0115b93",
+      "coordinatorCodeHash": "0xa913d308f203e28eb06dac5a0e46485c0b0ef3a3698156024ec09c279a6b0976",
+      "finalReopenPID": 542021,
+      "maxExternalCallGas": 126850151,
+      "maxExternalCallMs": 149,
+      "timeoutCancels": 0
+    },
+    {
+      "quantum": 4096,
+      "callBudget": "1B",
+      "lifecycle": 2,
+      "jvmSteps": 21479,
+      "internalSteps": 7,
+      "machineRoot": "0x406a09fabd05facfea25b05b4f46a44dffd2b4c50cdb06a2865c25a6e5548340",
+      "vfsRoot": "0xdf1b03248fa6c150f72b216960d2ffe0388f1f240cf06a93248f714643095de8",
+      "epoch": 6,
+      "checkpointRoot": "0x0fc2bcd62d5aca78f10df2aeac4e8e99498f9840512713fa8200b91ba42722d3",
+      "engineCodeHash": "0x6586be5b1a328fd094fb3c71f2ca656d2ac5b86d8d02d1f78704b10fb0115b93",
+      "coordinatorCodeHash": "0xa913d308f203e28eb06dac5a0e46485c0b0ef3a3698156024ec09c279a6b0976",
+      "finalReopenPID": 542096,
+      "maxExternalCallGas": 640981117,
+      "maxExternalCallMs": 489,
+      "timeoutCancels": 0
+    },
+    {
+      "quantum": 65536,
+      "callBudget": "8B after 1/2/4B shortages",
+      "lifecycle": 2,
+      "jvmSteps": 21479,
+      "internalSteps": 7,
+      "machineRoot": "0x406a09fabd05facfea25b05b4f46a44dffd2b4c50cdb06a2865c25a6e5548340",
+      "vfsRoot": "0xdf1b03248fa6c150f72b216960d2ffe0388f1f240cf06a93248f714643095de8",
+      "epoch": 1,
+      "checkpointRoot": "0x8b69650d83d1d63f989f9a1867cb9140f01d4c98bf5ef09ef3d7f3ef67650d24",
+      "engineCodeHash": "0x6586be5b1a328fd094fb3c71f2ca656d2ac5b86d8d02d1f78704b10fb0115b93",
+      "coordinatorCodeHash": "0xa913d308f203e28eb06dac5a0e46485c0b0ef3a3698156024ec09c279a6b0976",
+      "finalReopenPID": 542711,
+      "maxExternalCallGas": 5375118716,
+      "maxExternalCallMs": 1743,
+      "timeoutCancels": 0
+    }
+  ],
+  "q1OuterProcessTimeout": {
+    "type": "outer-process-timeout-not-EVM-call",
+    "timeoutSeconds": 1200,
+    "committedJavaStepsAtTimeout": 15374,
+    "lifecycleAtTimeout": 1,
+    "timeoutCancels": 0,
+    "continuationSeconds": 768.443,
+    "recovery": "Fresh-process normal continuation from last successful committed checkpoint to lifecycle2; no failed-state continuation."
+  },
+  "q65536BudgetShortages": [
+    {
+      "budget": "1B",
+      "gas": 961756586,
+      "selector": "0xf15d7343",
+      "error": "execution reverted",
+      "words": [
+        "7"
+      ],
+      "headUnchanged": true,
+      "rootUnchanged": true,
+      "lifecycleAfterFailure": 0,
+      "receiptSHA256": "48a054333c89704a9231e4da27fdf9542f60c46f03bc6573a726c47dbe898b3b",
+      "receipt": {
+        "actualDI0ReadSizes": [
+          1496
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "durableHeadEpochAfter": 0,
+        "durableHeadEpochBefore": 0,
+        "durableHeadSHA256After": "d393deaa1cef9a4003eddc693367c978e5b4e43af538a89f926c49ffae04e8fa",
+        "durableHeadSHA256Before": "d393deaa1cef9a4003eddc693367c978e5b4e43af538a89f926c49ffae04e8fa",
+        "durableHeadUnchanged": true,
+        "error": "execution reverted",
+        "executionBudget": "LOCAL-TEST-1000000000",
+        "gas": 961756586,
+        "resourceHashes": {
+          "0xc29F1fB923add403D6D3143B8ACE547aff7CcC99": "63b01dddd066bce8147a03cadcf69f8f265e70f0ac1702a60d55b74aa7cd26ab"
+        },
+        "resourceReadReceipts": [
+          {
+            "Offset": 0,
+            "Requested": 1496,
+            "Returned": 1496,
+            "SHA256": "63b01dddd066bce8147a03cadcf69f8f265e70f0ac1702a60d55b74aa7cd26ab",
+            "Success": true,
+            "To": "0xc29f1fb923add403d6d3143b8ace547aff7ccc99"
+          }
+        ],
+        "revertHex": "0xf15d73430000000000000000000000000000000000000000000000000000000000000007",
+        "rootAfter": "0xa8a975411a2bc11cbf6fb5447800c61823289b51bc506dd23e622284745d601c",
+        "rootBefore": "0xa8a975411a2bc11cbf6fb5447800c61823289b51bc506dd23e622284745d601c",
+        "rootUnchanged": true,
+        "selector": "0xf15d7343",
+        "suppliedGas": 1000000000,
+        "uint256Words": [
+          "7"
+        ]
+      }
+    },
+    {
+      "budget": "2B",
+      "gas": 1947463071,
+      "selector": "0xf15d7343",
+      "error": "execution reverted",
+      "words": [
+        "7"
+      ],
+      "headUnchanged": true,
+      "rootUnchanged": true,
+      "lifecycleAfterFailure": 0,
+      "receiptSHA256": "722f89b600308ba0a16e3122e441998a28a3be55c060a03c043a7f21081c050e",
+      "receipt": {
+        "actualDI0ReadSizes": [
+          1496
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "durableHeadEpochAfter": 0,
+        "durableHeadEpochBefore": 0,
+        "durableHeadSHA256After": "a998facbaec47bcd169a4a81684da216dcf4cc5ea012a600f042d0c2d99443cf",
+        "durableHeadSHA256Before": "a998facbaec47bcd169a4a81684da216dcf4cc5ea012a600f042d0c2d99443cf",
+        "durableHeadUnchanged": true,
+        "error": "execution reverted",
+        "executionBudget": "LOCAL-TEST-2000000000",
+        "gas": 1947463071,
+        "resourceHashes": {
+          "0xc29F1fB923add403D6D3143B8ACE547aff7CcC99": "63b01dddd066bce8147a03cadcf69f8f265e70f0ac1702a60d55b74aa7cd26ab"
+        },
+        "resourceReadReceipts": [
+          {
+            "Offset": 0,
+            "Requested": 1496,
+            "Returned": 1496,
+            "SHA256": "63b01dddd066bce8147a03cadcf69f8f265e70f0ac1702a60d55b74aa7cd26ab",
+            "Success": true,
+            "To": "0xc29f1fb923add403d6d3143b8ace547aff7ccc99"
+          }
+        ],
+        "revertHex": "0xf15d73430000000000000000000000000000000000000000000000000000000000000007",
+        "rootAfter": "0xa8a975411a2bc11cbf6fb5447800c61823289b51bc506dd23e622284745d601c",
+        "rootBefore": "0xa8a975411a2bc11cbf6fb5447800c61823289b51bc506dd23e622284745d601c",
+        "rootUnchanged": true,
+        "selector": "0xf15d7343",
+        "suppliedGas": 2000000000,
+        "uint256Words": [
+          "7"
+        ]
+      }
+    },
+    {
+      "budget": "4B",
+      "gas": 3912550930,
+      "selector": "0xf15d7343",
+      "error": "execution reverted",
+      "words": [
+        "7"
+      ],
+      "headUnchanged": true,
+      "rootUnchanged": true,
+      "lifecycleAfterFailure": 0,
+      "receiptSHA256": "50d471c4667cc02fc189238d998703010d107a0e71a81a67a5b79e5045a54538",
+      "receipt": {
+        "actualDI0ReadSizes": [
+          1496
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "durableHeadEpochAfter": 0,
+        "durableHeadEpochBefore": 0,
+        "durableHeadSHA256After": "969fd3b43af8bd0abcfd01fefdc104509e502aa1655518d6615af01e637074f6",
+        "durableHeadSHA256Before": "969fd3b43af8bd0abcfd01fefdc104509e502aa1655518d6615af01e637074f6",
+        "durableHeadUnchanged": true,
+        "error": "execution reverted",
+        "executionBudget": "LOCAL-TEST-4000000000",
+        "gas": 3912550930,
+        "resourceHashes": {
+          "0xc29F1fB923add403D6D3143B8ACE547aff7CcC99": "63b01dddd066bce8147a03cadcf69f8f265e70f0ac1702a60d55b74aa7cd26ab"
+        },
+        "resourceReadReceipts": [
+          {
+            "Offset": 0,
+            "Requested": 1496,
+            "Returned": 1496,
+            "SHA256": "63b01dddd066bce8147a03cadcf69f8f265e70f0ac1702a60d55b74aa7cd26ab",
+            "Success": true,
+            "To": "0xc29f1fb923add403d6d3143b8ace547aff7ccc99"
+          }
+        ],
+        "revertHex": "0xf15d73430000000000000000000000000000000000000000000000000000000000000007",
+        "rootAfter": "0xa8a975411a2bc11cbf6fb5447800c61823289b51bc506dd23e622284745d601c",
+        "rootBefore": "0xa8a975411a2bc11cbf6fb5447800c61823289b51bc506dd23e622284745d601c",
+        "rootUnchanged": true,
+        "selector": "0xf15d7343",
+        "suppliedGas": 4000000000,
+        "uint256Words": [
+          "7"
+        ]
+      }
+    }
+  ],
+  "atomicRefusals": [
+    {
+      "probe": "valid ^+ outside subset",
+      "headLifecycle": 1,
+      "selector": "0xd631c3a4",
+      "error": "execution reverted",
+      "words": [
+        "4",
+        "0"
+      ],
+      "headUnchanged": true,
+      "rootUnchanged": true,
+      "beforeEpoch": 15,
+      "afterEpoch": 15,
+      "gas": 34018935,
+      "receiptSHA256": "a47cd7a05c40943ba6973dea3ae21d2fb28c4144047e4ea9f5882dad720794f6",
+      "receipt": {
+        "actualDI0ReadSizes": [
+          516
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "durableHeadEpochAfter": 15,
+        "durableHeadEpochBefore": 15,
+        "durableHeadSHA256After": "6cadf4bb431dbb9749067be2c399c4e74a0245b804b4d462da817ba48f96771d",
+        "durableHeadSHA256Before": "6cadf4bb431dbb9749067be2c399c4e74a0245b804b4d462da817ba48f96771d",
+        "durableHeadUnchanged": true,
+        "error": "execution reverted",
+        "executionBudget": "LOCAL-TEST-1000000000",
+        "gas": 34018935,
+        "resourceHashes": {
+          "0xc29F1fB923add403D6D3143B8ACE547aff7CcC99": "9841663fdf96d08f960f16ef0c78afb85f7310a2c687cce8ffcb3ea563cf06b9"
+        },
+        "resourceReadReceipts": [
+          {
+            "Offset": 0,
+            "Requested": 516,
+            "Returned": 516,
+            "SHA256": "9841663fdf96d08f960f16ef0c78afb85f7310a2c687cce8ffcb3ea563cf06b9",
+            "Success": true,
+            "To": "0xc29f1fb923add403d6d3143b8ace547aff7ccc99"
+          }
+        ],
+        "revertHex": "0xd631c3a400000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000",
+        "rootAfter": "0x28ac94c92b43694463ef6273da689bb2f3b22a8433a1f6c0379200f8ab16ea91",
+        "rootBefore": "0x28ac94c92b43694463ef6273da689bb2f3b22a8433a1f6c0379200f8ab16ea91",
+        "rootUnchanged": true,
+        "selector": "0xd631c3a4",
+        "suppliedGas": 1000000000,
+        "uint256Words": [
+          "4",
+          "0"
+        ]
+      }
+    },
+    {
+      "probe": "mutation after matcher creation",
+      "headLifecycle": 1,
+      "selector": "0xd631c3a4",
+      "error": "execution reverted",
+      "words": [
+        "4",
+        "61"
+      ],
+      "headUnchanged": true,
+      "rootUnchanged": true,
+      "beforeEpoch": 81,
+      "afterEpoch": 81,
+      "gas": 35302981,
+      "receiptSHA256": "73672116037d117c2d26a91c08722b30a034b7dea00409d687051f3fba8d2e6b",
+      "receipt": {
+        "actualDI0ReadSizes": [
+          931,
+          863
+        ],
+        "candidateCheckpoint": "",
+        "candidateHead": "",
+        "candidateRoot": "",
+        "checkpointBytes": 0,
+        "diagnostic": null,
+        "durableHeadEpochAfter": 81,
+        "durableHeadEpochBefore": 81,
+        "durableHeadSHA256After": "8488bbaaefe8f1c826c7ebff07688a85b6647dbc84ff358ffea30e3c88f05909",
+        "durableHeadSHA256Before": "8488bbaaefe8f1c826c7ebff07688a85b6647dbc84ff358ffea30e3c88f05909",
+        "durableHeadUnchanged": true,
+        "error": "execution reverted",
+        "executionBudget": "LOCAL-TEST-1000000000",
+        "gas": 35302981,
+        "resourceHashes": {
+          "0xC1ecDb60757FDE842751Fb9fAffaA77eA7c65598": "a7d3596da1c93322d3f6d90db555450a83e1b15a7fa00f5377ea60e3bc24e5be",
+          "0xc29F1fB923add403D6D3143B8ACE547aff7CcC99": "dd5aa061ebee91e0e9f019fbe51a6be7ae65cc99c61eb26a9384bb6e4deb7fbd"
+        },
+        "resourceReadReceipts": [
+          {
+            "Offset": 0,
+            "Requested": 931,
+            "Returned": 931,
+            "SHA256": "dd5aa061ebee91e0e9f019fbe51a6be7ae65cc99c61eb26a9384bb6e4deb7fbd",
+            "Success": true,
+            "To": "0xc29f1fb923add403d6d3143b8ace547aff7ccc99"
+          },
+          {
+            "Offset": 0,
+            "Requested": 863,
+            "Returned": 863,
+            "SHA256": "a7d3596da1c93322d3f6d90db555450a83e1b15a7fa00f5377ea60e3bc24e5be",
+            "Success": true,
+            "To": "0xc1ecdb60757fde842751fb9faffaa77ea7c65598"
+          }
+        ],
+        "revertHex": "0xd631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000003d",
+        "rootAfter": "0xbbddebc8e60de433ebf5d8a844803bad70f7273aab54960b70e8f4f836ed20ac",
+        "rootBefore": "0xbbddebc8e60de433ebf5d8a844803bad70f7273aab54960b70e8f4f836ed20ac",
+        "rootUnchanged": true,
+        "selector": "0xd631c3a4",
+        "suppliedGas": 1000000000,
+        "uint256Words": [
+          "4",
+          "61"
+        ]
+      }
+    }
+  ],
+  "pat1ReplacementWorlds": [
+    {
+      "quantum": 1,
+      "callBudget": "1B",
+      "lifecycle": 2,
+      "jvmSteps": 6978,
+      "internalSteps": 2,
+      "machineRoot": "0x399317a82089bf8ffe87f30b198c8d940223bdbd39c3a012ae4a42adf3b547c9",
+      "vfsRoot": "0xdf1b03248fa6c150f72b216960d2ffe0388f1f240cf06a93248f714643095de8",
+      "finalReopenPID": 554940,
+      "maxExternalCallGas": 71242574,
+      "maxExternalCallMs": 101,
+      "timeoutCancels": 0
+    },
+    {
+      "quantum": 7,
+      "callBudget": "1B",
+      "lifecycle": 2,
+      "jvmSteps": 6978,
+      "internalSteps": 2,
+      "machineRoot": "0x399317a82089bf8ffe87f30b198c8d940223bdbd39c3a012ae4a42adf3b547c9",
+      "vfsRoot": "0xdf1b03248fa6c150f72b216960d2ffe0388f1f240cf06a93248f714643095de8",
+      "finalReopenPID": 555618,
+      "maxExternalCallGas": 72449728,
+      "maxExternalCallMs": 96,
+      "timeoutCancels": 0
+    }
+  ],
+  "pat1ReplacementWorldsProve": "PAT1 literals/classes, Matcher.matches, escaped dollar plus $0 expansion, replacement-all leftmost behavior, and exact no-match String identity."
+}

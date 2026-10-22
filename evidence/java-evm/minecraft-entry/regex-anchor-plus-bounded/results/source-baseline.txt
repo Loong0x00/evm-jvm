@@ -1,0 +1,13 @@
+Source-only P41 manifest verified in full before edits: 13/13 files matched declared lengths and SHA-256 values. Frozen paths are `../regex-anchor-plus-source-base-p41`.
+
+Java compiler: `/usr/lib/jvm/java-8-openjdk/bin/javac -source 8 -target 8 -g:none`.
+The four frozen Java sources compiled into `results/baseline-classes`. Extracting each actual class-image hex function from frozen `engine/MCEntryInterpreter.sol` and comparing bytes to those javac outputs gave exact equality:
+
+| image | bytes | SHA-256 |
+|---|---:|---|
+| String | 2198 | d4a4e57f636968bc3d6d0ab5c11e45e52ea85c521c31baa63e671243db045155 |
+| Pattern | 4834 | 483c47a95edd6abdaa4eacc751e0cb36986f60cdaf3e911f6bc4a6ae13242fe9 |
+| Matcher | 1703 | 5232a8d6198b7ef56a8fbbdbc03f4e790aedb28cf9ad8b2df729691d5f9350ea |
+| PatternSyntaxException | 967 | 2b8e5e3ee19502fa88c3dfe06948777500ad71a77708f9b1f2685b396ee067d7 |
+
+This establishes the true P41 compiler/materializer correspondence. No accepted P41 artifact or source was changed.

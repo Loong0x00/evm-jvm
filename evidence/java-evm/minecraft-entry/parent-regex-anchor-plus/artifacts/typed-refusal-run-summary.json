@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16367266300221672,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-refusals-parent-p42-fixed/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-regex-anchor-plus/ParentRegexRefusal.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-regex-anchor-plus/ParentRegexMutationRefusal.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7644169839986716,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-refusals-parent-p42-fixed/driver",
+        "./build/java-diff-mc-regex-refusals-parent-p42-fixed/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 6.270159338000667,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-refusals-parent-p42-fixed/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-build-parent-p42-fixed/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-build-parent-p42-fixed/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-refusals-parent-p42-fixed/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-refusals-parent-p42-fixed",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-regex-refusals-parent-p42-fixed/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import hashlib,json,pathlib
+D=pathlib.Path(__file__).resolve().parents[1]
+paths=['PLAN.md','RESULTS.md','P42_REVIEW_FIX.md','p42-generated-receipts.json','verification.json','bootstrap/java/util/regex/Pattern.java','bootstrap/java/util/regex/Matcher.java','bootstrap/java/util/regex/PatternSyntaxException.java','bootstrap/java/lang/String.java','engine/MCEntryInterpreter.sol','engine/MCEntryInterpreter.json','engine/MCEntryInterpreter.init.hex','engine/MCEntryInterpreter.runtime.hex','engine/build.js','coordinator/MCEntryCoordinator.sol','coordinator/MCEntryCoordinator.json','coordinator/MCEntryCoordinator.init.hex','coordinator/MCEntryCoordinator.runtime.hex','coordinator/build.js','pins.json','fixtures/RegexSemanticsProbe.java','fixtures/RegexAnchorPlusGuestProbe.java','fixtures/RegexOnePlusProbe.java','fixtures/RegexUnsupportedProbe.java','fixtures/RegexSurrogateProbe.java','fixtures/RegexEdgeRegressionProbe.java','fixtures/RegexPat1ReplacementProbe.java','fixtures/RegexValidAnchorQuantifierProbe.java','fixtures/RegexMutableSequenceRefusalProbe.java','fixtures/regexprobe.zip','fixtures/oneplus.zip','fixtures/unsupported.zip','fixtures/surrogate.zip','tools/build-profile.sh','tools/materialize.py','tools/pin-artifacts.py','tools/verify-fresh-build.py','tools/driver.go','tools/write-manifest.py','reference/root_helper.py']
+files={}
+for rel in paths:
+ b=(D/rel).read_bytes();files[rel]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
+(D/'source-manifest.json').write_text(json.dumps({'profile':'MC-REGEX-ANCHOR-PLUS-BOUNDED-P42-REVIEW-FIX','baseCommit':'5992b5d002243e0f1d640958880cbc507cdf87fc','sourceOnly':True,'originalInputsIncluded':False,'files':files},indent=2)+'\n')
+print(json.dumps({'files':len(files),'manifestSHA256':hashlib.sha256((D/'source-manifest.json').read_bytes()).hexdigest()}))

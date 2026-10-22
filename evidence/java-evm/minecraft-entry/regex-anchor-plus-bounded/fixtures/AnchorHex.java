@@ -1,0 +1,1 @@
+import java.util.regex.*; public class AnchorHex { public static void main(String[]z){String[] a={"\n","\r","\r\n","\u0085","\u2028","\u2029"};for(String x:a){String y=Pattern.compile("$").matcher("a"+x).replaceAll("X");for(int i=0;i<y.length();i++)System.out.printf("%04x,",(int)y.charAt(i));System.out.println();}}}

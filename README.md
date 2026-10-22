@@ -14,9 +14,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 114 explicit, authenticated class resources (801,758 bytes) |
-| Guest execution | **2,210,370 JVM instructions**, 111 internal steps, 40 verified successful checkpoint receipts |
-| Current blocker | `Pattern.compile("^[a-z0-9_]+$")` requires real bounded anchor/plus support; the 8192-array capacity is now accepted |
-| Runtime profile | 418,986-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Guest execution | **2,223,741 JVM instructions**, 111 internal steps, 45 verified successful checkpoint receipts |
+| Current blocker | Missing original `com/google/common/base/Function`; bounded anchor/plus Pattern compilation has genuinely returned |
+| Runtime profile | 421,118-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 105 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
@@ -24,11 +24,11 @@ Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [8192-array capacity / P41](JAVA_EVM_MC_MAX_ARRAYS8192_PARENT_PREFLIGHT.md).
-A fresh original run now holds **4676 actual arrays**, beyond the old4096 limit.
-The capacity-boundary gate uses a separately labeled **32B generated-test budget**;
-retained small q1/q7 tests use1B. The old4096-array terminal state is preserved and
-was never resumed or migrated. Full regex/Matcher support is not claimed.
+Latest acceptance: [parent-corrected bounded regex / P42](JAVA_EVM_MC_REGEX_ANCHOR_PLUS_PARENT_PREFLIGHT.md).
+The original property-name pattern is a real stored PAT2 int[] program; generic
+`Matcher.matches` and replacement edge cases passed fresh EVM tests. The broader
+parent matrix required a separately labeled **32B generated-test allowance**;
+small q1/q7 tests used1B. This is still not full Java regex/Matcher support.
 
 ### Important LOCAL-only limits
 
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-max-arrays-8192/artifacts/pattern-anchor-plus-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-regex-anchor-plus/artifacts/guava-function-resource-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)
