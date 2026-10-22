@@ -13,9 +13,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 
 | Area | Latest accepted evidence |
 | --- | --- |
-| Original workload | Unmodified 1.12.2 server; 115 explicit, authenticated class resources (802,490 bytes) |
+| Original workload | Unmodified 1.12.2 server; 116 explicit, authenticated class resources (815,898 bytes) |
 | Guest execution | **2,223,795 JVM instructions**, 113 internal steps, 44 verified successful checkpoint receipts |
-| Current blocker | Missing original Guava `Ordering` resource; bounded NavigableMap hierarchy linking passed |
+| Current blocker | Missing bootstrap `java.util.Comparator`; original Guava Ordering is authenticated and NavigableMap hierarchy linking passed |
 | Runtime profile | 422,246-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 107 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-navigable-map/artifacts/guava-ordering-resource-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original116-guava-ordering/artifacts/comparator-interface-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)
