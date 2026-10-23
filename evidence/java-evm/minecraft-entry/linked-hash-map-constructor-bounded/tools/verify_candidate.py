@@ -42,17 +42,19 @@ candidate_helper_spec = importlib.util.spec_from_file_location("p49_root_helper"
 candidate_helper = importlib.util.module_from_spec(candidate_helper_spec)
 candidate_helper_spec.loader.exec_module(candidate_helper)
 env = os.environ.copy()
-env["NODE_PATH"] = "/home/user/evm-jvm/linked-hash-map-constructor/jvmevm/runtime/node_modules"
+env["NODE_PATH"] = str(REPO / "jvmevm/runtime/node_modules")
 base_source = (BASE / "engine/MCEntryInterpreter.sol").read_text()
 candidate_source = (ROOT / "engine/MCEntryInterpreter.sol").read_text()
-base_domain = "MC-HASHMAP-ENTRY-SET-TYPED-TO-ARRAY-BOUNDED"
-root_domain = "MC-LINKED-HASH-MAP-CONSTRUCTOR-P49:BOOTSTRAP:1"
+base_domain = re.search(r'DBOOT\s*=\s*keccak256\("([^"]+)"\)', base_source).group(1)
+root_domain = re.search(r'DBOOT\s*=\s*keccak256\("([^"]+)"\)', candidate_source).group(1)
 old = base_helper.root_record(base_source, base_domain, str(REPO), env)
 new = candidate_helper.root_record(candidate_source, root_domain, str(REPO), env)
+check(old["root"] == load(BASE / "pins.json")["bootstrapRoot"], "actual P48 DBOOT source commitment")
 check(len(old["leaves"]) == 113 and len(new["leaves"]) == 114, "ordered bootstrap counts")
 check(old["leaves"] == new["leaves"][:113], "P48 leaf bytes/order changed")
 check(new["leaves"][113] == candidate_pins["linkedHashMap"]["keccak256"], "new leaf differs from actual class image")
 check(new["root"] == candidate_pins["bootstrapRoot"], "ordered root pin")
+check(new["leaves"] == load(ROOT / "results/root-commitment.json")["orderedLeaves"], "all actual ordered leaves")
 
 # Exact Java 8 generated class image and scoped surface.
 classfile = (ROOT / "bootstrap/java/util/LinkedHashMap.class").read_bytes()

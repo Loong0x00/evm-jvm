@@ -1,109 +1,24 @@
 {
-  "profile": "MC-LINKED-HASH-MAP-CONSTRUCTOR-P49-BOUNDED",
-  "basis": "accepted P47; bounded same-target typed-array copy and inherited raw refusal guard",
-  "bootstrapCount": 114,
-  "bootstrapRoot": "e914d8973c7600cfc893587b32347e13697e43a037d954e4d997476bf31dddd3",
-  "expectedBootstrapRoot": "e914d8973c7600cfc893587b32347e13697e43a037d954e4d997476bf31dddd3",
-  "diagnosticClassBound": 264,
-  "globalNativeBindings": 21,
-  "stringLocalBinding": 12,
-  "rawLimits": [
-    150,
-    1063930
-  ],
-  "checkpointCap": 2097152,
-  "reserve": 25000000,
-  "externalLocalGas": 1000000000,
-  "runtimeCap": 1048576,
-  "maxFrames": 128,
-  "exceptionKinds": 14,
-  "address": "0x4d432d52414e444f4d2d434c4153532d50310070",
-  "owner": "0x4d432d52414e444f4d2d434c4153532d50310071",
+  "profile": "MC-LINKED-HASH-MAP-CONSTRUCTOR-P49-PARENT",
+  "domain": "MC-LINKED-HASH-MAP-CONSTRUCTOR-P49",
+  "basis": "accepted P48 source-only; constructor-only LinkedHashMap append",
   "engine": {
-    "bytes": 429981,
+    "bytes": 429953,
     "initSHA256": "33af10a6bd76891f6e5effded9649840d3b8bc5466cc80e42da27d60196ed327",
     "runtimeSHA256": "732cb0e440706a312cd438a613fc874b132a3d43ccb3122c7e100b36c42d10b4",
     "runtimeKeccak256": "3a550030c24f223b479c293b941c5661c14b93d4ba56843e0c1e066843661226"
   },
   "coordinator": {
-    "bytes": 10379,
+    "bytes": 5411,
     "initSHA256": "2b3794095ce2c8f9735c218139679b77472cec1bb3b96588dac125ad1875b856",
     "runtimeSHA256": "fc0245c0765e00903e0720d291d6ccef3fc5bb4968cc3cb6b093559feb97a9a4",
     "runtimeKeccak256": "41da3ad62a5316a0b36637e4c70a054221eee2c387361398f87b0ac362ecc71b"
   },
-  "baselineEngine": {
-    "bytes": 392268,
-    "initSHA256": "9d91cf66291548a2af77b6ffefba57351148496d45ec2cb6071d886835d86765",
-    "runtimeSHA256": "5b0644d80c2f836a0bd608d9b0caefa508d8265a577b8187f7b260f59cd86a59",
-    "runtimeKeccak256": "94dd4d01a687f3a57fdaaa5c83ebdb01b871dae090c17f0636ae8aad16f69def"
-  },
-  "baselineCoordinator": {
-    "bytes": 5394,
-    "initSHA256": "2314b8008ba265459aa29c1e502bd46908b35559f44df6c39383595e1b939ee1",
-    "runtimeSHA256": "46011850f6e857322d43a26b395117bacd7d8ea6596a3f4b9282630a6ab701d2",
-    "runtimeKeccak256": "eb13579a92937268b1de9093484c9e4e6f8502c22078f99110a85180426e6d97"
-  },
-  "baselineDriverSHA256": "82589aff5248734c18092478636da78dd2309277c39ddb86e5d7de2c2fa09b10",
-  "driverSHA256": "fcd6f63b8cb982a31a6b8579b83d73fcd353ebf5ba457fb43ff4c72612a14784",
-  "sourceInvariants": {
-    "onlyLeaves53And55And110Changed": true,
-    "HashMap100Node104Map40Entry94Exact": true,
-    "noNewBootstrapImages": true,
-    "unsupportedInheritedToArrayRawNotAME": true,
-    "noArrayGrowthReflectionNoArgImplementation": true,
-    "ABIStorageCodecAndQuotasUnchanged": true,
-    "native21String12Fixed": true
-  },
-  "integer": {
-    "slot": 70,
-    "bytes": 2087,
-    "sha256": "8c166273089342e5bd5fba6a6c79b861d2a823a8941307a71695374b510def22",
-    "keccak256": "a650a3f15565b8248e97233b6fe628abff4418eb54574c75fef46fad2680864f"
-  },
-  "object": {
-    "slot": 0,
-    "bytes": 401,
-    "sha256": "ac898039bbd7f71df4c6553f6156c75465f41c1d1537e99c50a09aeee9eab138",
-    "keccak256": "d08322f3721eccab25e9087ee347cd633e0cd3bd618b1ea8dc71c4e099732c37"
-  },
-  "math": {
-    "keccak256": "ce47f22975cb30c8cec530657ebcaa855cc62fcc3dc62f4fa2f464dc2555cff7"
-  },
-  "expectedMathKeccak256": "ce47f22975cb30c8cec530657ebcaa855cc62fcc3dc62f4fa2f464dc2555cff7",
-  "string": {
-    "sha256": "259bed03edf8602dca9ad26e639cb7668b8da38d62422b80788d8339020017fe"
-  },
-  "system": {
-    "sha256": "6e29f00abed753017741ad667314982061178298cb3fca5baa0d92f2f9d57564"
-  },
-  "locale": {
-    "sha256": "8401495628aed9de6e7c7c0ad56f73ac563bd5e7a892b8eb8ca9fcf91bc03e31"
-  },
-  "random": {
-    "sha256": "8d2a1e974c79f6a2a0344a5c776f5feb7b7f09eb7431bd02d54d75518bf76bf3"
-  },
-  "sparseWire": {
-    "flag": "0x80000000",
-    "minimumLength": 1024,
-    "savingRule": "(4+12*nonzero)*4 <= (8*length)*3"
-  },
-  "packedFloatWire": {
-    "flag": "0x40000000",
-    "sparseFlag": "0x80000000",
-    "minimumLength": 1024,
-    "cellWidthBytes": 4,
-    "strictSelection": "4*length < 4+12*nonzero",
-    "guestRepresentation": "eager dense uint64[]"
-  },
-  "buildID": "01-local-b",
-  "generatedFixtureSource": "evidence/java-evm/minecraft-entry/float-packed-checkpoint-preparation/results/generated-gate-v5/fixtures",
-  "worker": "parent",
-  "domain": "MC-LINKED-HASH-MAP-CONSTRUCTOR-P49",
-  "sourceSHA256": "c1a97891c94ecef1a879bf63e3beb6fe7400de6e1b1f7104ccc9fdb9930c3c70",
-  "baselineSourceSHA256": "921b3d2b864f00dd13f0ea0d391271e00687dddefe9d8edcb5fcccfa3881a17b",
-  "changedFunctions": [
-    "_checkpointArrayNonzeroCount"
-  ],
+  "bootstrapCount": 114,
+  "baseBootstrapCount": 113,
+  "diagnosticClassBound": 264,
+  "bootstrapRoot": "302c3174aec4caf25a3bcd8d3fc6990cd9fd18d4e79e5701c92680e4151f00c9",
+  "expectedBootstrapRoot": "302c3174aec4caf25a3bcd8d3fc6990cd9fd18d4e79e5701c92680e4151f00c9",
   "orderedBootstrapLeaves": [
     "d08322f3721eccab25e9087ee347cd633e0cd3bd618b1ea8dc71c4e099732c37",
     "e18178fb10cf22529f14c2f360984904415d7db229834a9ba3bb5dea200cea9f",
@@ -220,148 +135,44 @@
     "f401530628d554b20a58df135e8aec60f179e39dfae968f896bb4c70290fc116",
     "8cd8328b41587302afee36e3f56fc6a0ed65df17e4eac0458e85e85f9d536a94"
   ],
-  "maxArrays": 8192,
-  "maxObjects": 4096,
-  "maxHandles": 12545,
-  "canonicalOOMBootstrapLeafIndex": 9,
-  "canonicalOOMClass": "java/lang/OutOfMemoryError",
-  "maxJvmSteps": 65536,
-  "maxInternalSteps": 4096,
-  "zeroBudgetsRefuse": true,
-  "maxConstantPool": 4096,
-  "maxTransfer": 4096,
-  "maxCheckpointBytes": 2097152,
-  "commitReserve": 25000000,
-  "callWatchdogMs": 30000,
-  "ordinaryGas": 1000000000,
-  "sourceHashes": {
-    "engine": "4686b2c30a42cb56f080ec094e6448796ee759c3f4e9ad3c2586a56363949781",
-    "coordinator": "7030409423b1d65dd92eb645ebfd96f80c5cbd377055e583759e50eb21c24ffd",
-    "engineBuild": "395752305ea04f1c8eceb0ebe7f832e964b060aacf6105d9b8f5fe26859b85ab",
-    "coordinatorBuild": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b"
-  },
-  "normalizedChanges": {
-    "engine": [
-      "MAX_RAW_CLASSES 73->74",
-      "MAX_RAW_BYTES 516040->518516",
-      "two matching _configRoot leaves only"
-    ],
-    "coordinator": [
-      "four fixed arrays 73->74",
-      "count guard 73->74",
-      "per-class/aggregate bytes 516040->518516",
-      "candidate engine codehash pin"
-    ],
-    "observer": [
-      "normal raw bound 73->74",
-      "raw75 driver/coordinator/engine refusals",
-      "518516 positive/518517 refusal",
-      "MR01 class bound 170->171"
-    ]
-  },
-  "maxClassBytes": 262144,
-  "parentProfile": "MC-RANDOM-CLASS-P27-RAW74-BYTE518516",
-  "maxArrayElements": 262144,
-  "engineSourceSHA256": "3f17c17efea4b094ac2e75977a9f1ce837f05506d7549ce070121ad42782f148",
-  "coordinatorSourceSHA256": "5d54f528d3bf5fe8fe239d3f9ddb771554f17df7b3a1f97edaa75345f432b8df",
-  "engineBuildSHA256": "519351b42549fea4dacf5da41f350954f1d916756ab03a40704c160307b9204d",
-  "coordinatorBuildSHA256": "1e9e9fcfdc36ae1e20e6c6458c390fc9bd48218ac0bd2172ce5059f3d47d1f4e",
-  "diagnosticSourceSHA256": "709f31d1387abe921311297b232f93407699212cacf9096bb353659ce39e672b",
-  "parentEngineSourceSHA256": "221e82759ecbfacbc0f6be3bb86b9b71ef6c08491f5dbff18a1cc9dce404dc8f",
-  "parentCoordinatorSourceSHA256": "552a4e606ccc6f23c7866bfa1c57030514dc186667143552faf9921f4e90ab43",
-  "parentEngineRuntimeSHA256": "b314950ec433baa68b8562d01733f27cc3dccdf3666973206b29802978cd203e",
-  "parentCoordinatorRuntimeKeccak256": "a71b3c48a4ecaf1b7b64ef6edf752abe9664b4257107cc91f4408b20d7114192",
-  "driverTemplateSHA256": "f80881acb6cfc3701c8cd3d151ba0de40eb1c57933a01a5ff98e88822dcc5476",
-  "storageLayoutSHA256": "0981f4f7824d2bfb6ebfed1b308365e5cbae4ac69f8431819fb2f3db0501dcd6",
-  "baseBootstrapCount": 113,
-  "runtimeCapBytes": 1048576,
-  "newBootstrapImages": [
-    "java/util/HashMap$Node"
-  ],
-  "quotaPolicy": "project budgets double when measured insufficient, not VM rule changes",
-  "changedBootstrapImages": [
-    "java/util/HashMap"
-  ],
-  "checkpointCapBytes": 2097152,
-  "guestCapability": "bounded guest HashMap.put with real nodes/resize; tree bins and other unsupported APIs refuse",
-  "legacyInheritedBasis": "accepted P27 parent-raw74-byte518516 artifacts",
-  "legacyInheritedSourceInvariants": {
-    "P27LabelsRetained": true,
-    "all97BootstrapLeavesEqualAcceptedP27": true,
-    "noBootstrapImagesAdded": true,
-    "rawEnvelopeOnly": true,
-    "allOtherRawHeapCheckpointAndBudgetCapsUnchanged": true,
-    "engineABIAndStorageLayoutUnchanged": true,
-    "coordinatorABIUnchanged": true,
-    "coordinatorLayoutOnlyFixedArrayGrowth": true
-  },
-  "generatedCapacityTestGas": 32000000000,
-  "generatedRegexTestBudgetMax": 8000000000,
   "newImages": [
     {
-      "leaf": 40,
-      "name": "java/util/Map",
-      "bytes": 607,
-      "sha256": "5153e38570916c4370896466c2093960f902647542a354f0fd4c38927290464f",
-      "keccak256": "dcaf13c97a3be4b99cf6b7f346d0e682e82e27d781b1238cb6ade28b5742ab15"
-    },
-    {
-      "leaf": 53,
-      "name": "java/util/Collection",
-      "bytes": 472,
-      "sha256": "7ae2c6d97e7678defa282d716ebe3ce0181b38af95e929bf728504813281abdd",
-      "keccak256": "abb24b1c624154293e389f78a4ca372a92a25e3a93d7bc78fa9eb0385b296120"
-    },
-    {
-      "leaf": 55,
-      "name": "java/util/AbstractCollection",
-      "bytes": 470,
-      "sha256": "40baff05dfe465cc19d5c5ae3f56c34875eaee0da22ddea740898fbd5bcbd4eb",
-      "keccak256": "93f41b251bb80de3428242d432ff89599a8958cbb8aaded225f4e4eba3549b69"
-    },
-    {
-      "leaf": 94,
-      "name": "java/util/Map$Entry",
-      "bytes": 448,
-      "sha256": "5c0beea6f609e3573672ca67fc5f06d086011f2974c5db179d9d7da59c794ac5",
-      "keccak256": "47bd965aa8c05997905d9d71684cc4409974e23e06bc6d360d9f06f82099e4ac"
-    },
-    {
-      "leaf": 100,
-      "name": "java/util/HashMap",
-      "bytes": 4551,
-      "sha256": "27e5288ef29ef65941dfbaa5f60a8ac6bfba71eb12722ad09c4326496996dea6",
-      "keccak256": "e03c6f0e1985e830ee166ab8de6ab019e2fafb2a09d9bccd8c44c27116919577"
-    },
-    {
-      "leaf": 104,
-      "name": "java/util/HashMap$Node",
-      "bytes": 1334,
-      "sha256": "7211f3de996fc04705787b8d7b734f674f295e94ad60741262c28bb62c3195e0",
-      "keccak256": "116b6c77569bd29cf69523ddfbce9f2296ac86ee27022121cdea2f10aafdd302"
-    },
-    {
-      "leaf": 110,
-      "name": "java/util/HashMap$EntrySet",
-      "bytes": 1856,
-      "sha256": "214b6709727533425bbb99f6dcdc188232edb0f3d46a5d6676f6f723ef03f055",
-      "keccak256": "81693417e6e192c9b88c2f3b800e59fe945f47264cb2cdbec08fbc98ab007166"
-    },
-    {
-      "leaf": 111,
-      "name": "java/util/HashMap$EntryIterator",
-      "bytes": 1334,
-      "sha256": "72c8e0b5ccb2b5ec213fec07a823e37336ba2fe19dcf593fe4ade95a7367964b",
-      "keccak256": "a3d9ad07a1fab588687c63e3e8ee1f2fa37913864b12d9a73d714d515706b3b8"
+      "index": 113,
+      "name": "java/util/LinkedHashMap",
+      "bytes": 431,
+      "sha256": "746398af42137bb424040c85113cdd5f1296d29e983e0e819f320f2c108ddc3f",
+      "keccak256": "8cd8328b41587302afee36e3f56fc6a0ed65df17e4eac0458e85e85f9d536a94"
     }
   ],
+  "globalNativeBindings": 21,
+  "stringLocalBinding": 12,
+  "rawLimits": [
+    150,
+    1063930
+  ],
+  "checkpointCap": 2097152,
+  "reserve": 25000000,
+  "externalLocalGas": 1000000000,
+  "runtimeCap": 1048576,
+  "maxFrames": 128,
+  "sourceInvariants": {
+    "all113PriorImagesByteExact": true,
+    "LinkedHashMapNativePutGuard": true,
+    "noOrderedMutationClaim": true,
+    "ABIStorageCodecAndQuotasUnchanged": true,
+    "rawCoordinatorUint8Bound150Unchanged": true,
+    "native21String12Fixed": true
+  },
+  "address": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "owner": "0x4d432d52414e444f4d2d434c4153532d50310071",
+  "maxCheckpointBytes": 2097152,
   "linkedHashMap": {
-    "slot": 113,
+    "index": 113,
+    "name": "java/util/LinkedHashMap",
     "bytes": 431,
     "sha256": "746398af42137bb424040c85113cdd5f1296d29e983e0e819f320f2c108ddc3f",
     "keccak256": "8cd8328b41587302afee36e3f56fc6a0ed65df17e4eac0458e85e85f9d536a94",
-    "sourceSHA256": "1f11e70db76f470aac7d172b923e782237168951cf0ce75fdfa0512fa6918b9b",
-    "javaSource": "Java 8 javac 1.8.0_504 -g:none -source 8 -target 8"
+    "slot": 113
   },
   "arrayHighIndexProof": {
     "rawClasses": 150,
@@ -371,5 +182,12 @@
     "arrayClassBase": "0x100",
     "metadataAtMaxClassIndex": "0x207",
     "rawIndexType": "uint8 coordinator raw class binding unchanged; EVM class metadata uses uint256"
+  },
+  "parentMetadataCorrection": {
+    "oldWrongRoot": "e914d8973c7600cfc893587b32347e13697e43a037d954e4d997476bf31dddd3",
+    "actualDBOOT": "JVMEVM:MC-LINKED-HASH-MAP-CONSTRUCTOR-P49:BOOTSTRAP:1",
+    "actualRuntimeBytes": 429953,
+    "actualCoordinatorRuntimeBytes": 5411,
+    "noGuestCodeChange": true
   }
 }

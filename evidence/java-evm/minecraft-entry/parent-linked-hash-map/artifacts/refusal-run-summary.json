@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16373271599877626,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedPutDirect.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedPutHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedPutMap.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedGet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedClone.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedDefault.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedViewClear.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/ParentLinkedIntCtor.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7648693959999946,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/driver",
+        "./build/java-diff-mc-linked-map-refusals-parent-p49/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.5653743660004693,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-build-parent-p49-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-build-parent-p49-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-refusals-parent-p49/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

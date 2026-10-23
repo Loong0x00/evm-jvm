@@ -1,0 +1,12 @@
+--- accepted-P48
+
++++ candidate-P49
+
+@@ -94,4 +94,6 @@
+
+         p.classes[classSlot + 71].data = _bootstrapHashMapEntrySet();
+         p.classes[classSlot + 72].data = _bootstrapHashMapEntryIterator();
+         p.classes[classSlot + 73].data = _bootstrapConcurrentModificationException();
++        // LinkedHashMap is image113; it is construction-only and append-only.
++        p.classes[classSlot + 74].data = _bootstrapLinkedHashMap();
+     }

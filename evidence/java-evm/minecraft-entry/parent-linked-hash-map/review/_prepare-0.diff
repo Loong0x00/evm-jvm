@@ -1,0 +1,43 @@
+--- accepted-P48
+
++++ candidate-P49
+
+@@ -32,7 +32,8 @@
+
+                 || _isNamedClass(users[i], bytes("java/util/NavigableMap"))
+                 || _isNamedClass(users[i], bytes("java/util/Comparator"))
+                 || _isNamedClass(users[i], bytes("java/util/SortedSet"))
+-                || _isNamedClass(users[i], bytes("java/util/NavigableSet"))) {
++                || _isNamedClass(users[i], bytes("java/util/NavigableSet"))
++                || _isNamedClass(users[i], bytes("java/util/LinkedHashMap"))) {
+                 revert BootstrapProfileError(1, i);
+             }
+             for (uint256 j; j < i; ++j) if (_sameClassName(users[i], users[j])) {
+@@ -50,7 +51,7 @@
+
+         if (entryPlusOne == 0) revert LinkError(3, 0);
+         // Historical Runnable remains conditional. Class/map/System positions remain
+         // fixed, then the three Properties-family images append after all forty-five.
+-        uint256 count = inputCount + 106 + (suppliedObject ? 0 : 1)
++        uint256 count = inputCount + 107 + (suppliedObject ? 0 : 1)
+             + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
+             + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1) + (suppliedRunnable ? 0 : 1) + 1;
+         p.classes = new ClassInfo[](count);
+@@ -69,11 +70,11 @@
+
+         _appendTailBootstraps(p, at, suppliedRunnable);
+         // Keep the historical five tail images in their existing slots; three new
+         // appended images occupy only the final three leaves.
+-        p.classes[count - 8] = _parseBundleClass(_bootstrapFunction());
+-        p.classes[count - 7] = _parseBundleClass(_bootstrapNavigableMap());
+-        p.classes[count - 6] = _parseBundleClass(_bootstrapComparator());
+-        p.classes[count - 5] = _parseBundleClass(_bootstrapSortedSet());
+-        p.classes[count - 4] = _parseBundleClass(_bootstrapNavigableSet());
++        p.classes[count - 9] = _parseBundleClass(_bootstrapFunction());
++        p.classes[count - 8] = _parseBundleClass(_bootstrapNavigableMap());
++        p.classes[count - 7] = _parseBundleClass(_bootstrapComparator());
++        p.classes[count - 6] = _parseBundleClass(_bootstrapSortedSet());
++        p.classes[count - 5] = _parseBundleClass(_bootstrapNavigableSet());
+         p.rawClassCount = inputCount;
+         p.rootClass = entryPlusOne - 1;
+         _requireSupportedClass(p.classes[p.rootClass], p.rootClass);

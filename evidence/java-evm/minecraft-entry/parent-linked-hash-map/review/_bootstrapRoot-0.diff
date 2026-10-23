@@ -1,0 +1,21 @@
+--- accepted-P48
+
++++ candidate-P49
+
+@@ -1,5 +1,5 @@
+
+ function _bootstrapRoot() private pure returns (bytes32) {
+-        bytes32[] memory h = new bytes32[](113);
++        bytes32[] memory h = new bytes32[](114);
+         h[0] = keccak256(_bootstrapObject());
+         h[1] = keccak256(_bootstrapCloneable());
+         h[2] = keccak256(_bootstrapSerializable());
+@@ -145,5 +145,7 @@
+
+         h[110] = keccak256(_bootstrapHashMapEntrySet());
+         h[111] = keccak256(_bootstrapHashMapEntryIterator());
+         h[112] = keccak256(_bootstrapConcurrentModificationException());
++        // Construction-only LinkedHashMap appends after the complete 113-image P48 root.
++        h[113] = keccak256(_bootstrapLinkedHashMap());
+         return keccak256(abi.encode(DBOOT, h));
+     }
