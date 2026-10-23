@@ -13,9 +13,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 
 | Area | Latest accepted evidence |
 | --- | --- |
-| Original workload | Unmodified 1.12.2 server; 123 explicit, authenticated class resources (865,014 bytes) |
-| Guest execution | **2,223,838 JVM instructions**, 123 internal steps, 45 verified successful checkpoint receipts |
-| Current blocker | Missing original Guava `ObjectArrays` resource; proper SortedSet/NavigableSet marker linking passed |
+| Original workload | Unmodified 1.12.2 server; 124 explicit, authenticated class resources (870,262 bytes) |
+| Guest execution | **2,223,947 JVM instructions**, 128 internal steps, 44 verified successful checkpoint receipts |
+| Current blocker | Measured `HashMap.entrySet()` is unsupported; original Guava calls it through `Map` |
 | Runtime profile | 423,747-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 110 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-navigable-set/artifacts/guava-object-arrays-resource-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original124-guava-object-arrays/artifacts/hash-map-entry-set-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)
