@@ -1,0 +1,498 @@
+{
+  "boundedWindowProbeFailures": null,
+  "checkpointPublished": false,
+  "coordinatorCodeHash": "0x5a2d93d07a604982150c7c5007a4722b116111c257d2a80877901bcdcbf1f8ac",
+  "copiedSuccessfulWorld": "/home/user/evm-jvm/geth/build/java-diff-mc-p50-iterators-headers-world-parent/official",
+  "diagnosticDeploymentCommitted": false,
+  "diagnosticOnly": true,
+  "durableHeadUnchanged": true,
+  "javaExecuted": false,
+  "notExecutionAuthority": true,
+  "observations": [
+    {
+      "DeclaringClass": "com/google/common/collect/Iterators",
+      "ResourceName": "com/google/common/collect/Iterators.class",
+      "SuperName": "java/lang/Object",
+      "binding": 125,
+      "classBytesKeccak": [
+        9,
+        123,
+        35,
+        118,
+        98,
+        142,
+        154,
+        17,
+        80,
+        73,
+        45,
+        214,
+        50,
+        67,
+        99,
+        41,
+        96,
+        44,
+        218,
+        36,
+        94,
+        36,
+        87,
+        232,
+        196,
+        220,
+        176,
+        83,
+        235,
+        243,
+        183,
+        6
+      ],
+      "interfaces": [],
+      "methods": [
+        {
+          "codeLength": 5,
+          "descriptor": "()V",
+          "hasCode": true,
+          "index": 0,
+          "name": "\u003cinit\u003e"
+        },
+        {
+          "codeLength": 4,
+          "descriptor": "()Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 1,
+          "name": "emptyIterator"
+        },
+        {
+          "codeLength": 4,
+          "descriptor": "()Lcom/google/common/collect/UnmodifiableListIterator;",
+          "hasCode": true,
+          "index": 2,
+          "name": "emptyListIterator"
+        },
+        {
+          "codeLength": 4,
+          "descriptor": "()Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 3,
+          "name": "emptyModifiableIterator"
+        },
+        {
+          "codeLength": 28,
+          "descriptor": "(Ljava/util/Iterator;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 4,
+          "name": "unmodifiableIterator"
+        },
+        {
+          "codeLength": 8,
+          "descriptor": "(Lcom/google/common/collect/UnmodifiableIterator;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 5,
+          "name": "unmodifiableIterator"
+        },
+        {
+          "codeLength": 30,
+          "descriptor": "(Ljava/util/Iterator;)I",
+          "hasCode": true,
+          "index": 6,
+          "name": "size"
+        },
+        {
+          "codeLength": 9,
+          "descriptor": "(Ljava/util/Iterator;Ljava/lang/Object;)Z",
+          "hasCode": true,
+          "index": 7,
+          "name": "contains"
+        },
+        {
+          "codeLength": 9,
+          "descriptor": "(Ljava/util/Iterator;Ljava/util/Collection;)Z",
+          "hasCode": true,
+          "index": 8,
+          "name": "removeAll"
+        },
+        {
+          "codeLength": 44,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;)Z",
+          "hasCode": true,
+          "index": 9,
+          "name": "removeIf"
+        },
+        {
+          "codeLength": 12,
+          "descriptor": "(Ljava/util/Iterator;Ljava/util/Collection;)Z",
+          "hasCode": true,
+          "index": 10,
+          "name": "retainAll"
+        },
+        {
+          "codeLength": 62,
+          "descriptor": "(Ljava/util/Iterator;Ljava/util/Iterator;)Z",
+          "hasCode": true,
+          "index": 11,
+          "name": "elementsEqual"
+        },
+        {
+          "codeLength": 28,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/lang/String;",
+          "hasCode": true,
+          "index": 12,
+          "name": "toString"
+        },
+        {
+          "codeLength": 108,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 13,
+          "name": "getOnlyElement"
+        },
+        {
+          "codeLength": 18,
+          "descriptor": "(Ljava/util/Iterator;Ljava/lang/Object;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 14,
+          "name": "getOnlyElement"
+        },
+        {
+          "codeLength": 11,
+          "descriptor": "(Ljava/util/Iterator;Ljava/lang/Class;)[Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 15,
+          "name": "toArray"
+        },
+        {
+          "codeLength": 41,
+          "descriptor": "(Ljava/util/Collection;Ljava/util/Iterator;)Z",
+          "hasCode": true,
+          "index": 16,
+          "name": "addAll"
+        },
+        {
+          "codeLength": 12,
+          "descriptor": "(Ljava/util/Iterator;Ljava/lang/Object;)I",
+          "hasCode": true,
+          "index": 17,
+          "name": "frequency"
+        },
+        {
+          "codeLength": 14,
+          "descriptor": "(Ljava/lang/Iterable;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 18,
+          "name": "cycle"
+        },
+        {
+          "codeLength": 8,
+          "descriptor": "([Ljava/lang/Object;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 19,
+          "name": "cycle"
+        },
+        {
+          "codeLength": 33,
+          "descriptor": "(Ljava/util/Iterator;Ljava/util/Iterator;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 20,
+          "name": "concat"
+        },
+        {
+          "codeLength": 42,
+          "descriptor": "(Ljava/util/Iterator;Ljava/util/Iterator;Ljava/util/Iterator;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 21,
+          "name": "concat"
+        },
+        {
+          "codeLength": 51,
+          "descriptor": "(Ljava/util/Iterator;Ljava/util/Iterator;Ljava/util/Iterator;Ljava/util/Iterator;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 22,
+          "name": "concat"
+        },
+        {
+          "codeLength": 47,
+          "descriptor": "([Ljava/util/Iterator;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 23,
+          "name": "concat"
+        },
+        {
+          "codeLength": 9,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 24,
+          "name": "concat"
+        },
+        {
+          "codeLength": 7,
+          "descriptor": "(Ljava/util/Iterator;I)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 25,
+          "name": "partition"
+        },
+        {
+          "codeLength": 7,
+          "descriptor": "(Ljava/util/Iterator;I)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 26,
+          "name": "paddedPartition"
+        },
+        {
+          "codeLength": 28,
+          "descriptor": "(Ljava/util/Iterator;IZ)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 27,
+          "name": "partitionImpl"
+        },
+        {
+          "codeLength": 20,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 28,
+          "name": "filter"
+        },
+        {
+          "codeLength": 9,
+          "descriptor": "(Ljava/util/Iterator;Ljava/lang/Class;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 29,
+          "name": "filter"
+        },
+        {
+          "codeLength": 15,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;)Z",
+          "hasCode": true,
+          "index": 30,
+          "name": "any"
+        },
+        {
+          "codeLength": 38,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;)Z",
+          "hasCode": true,
+          "index": 31,
+          "name": "all"
+        },
+        {
+          "codeLength": 9,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 32,
+          "name": "find"
+        },
+        {
+          "codeLength": 10,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;Ljava/lang/Object;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 33,
+          "name": "find"
+        },
+        {
+          "codeLength": 27,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;)Lcom/google/common/base/Optional;",
+          "hasCode": true,
+          "index": 34,
+          "name": "tryFind"
+        },
+        {
+          "codeLength": 45,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Predicate;)I",
+          "hasCode": true,
+          "index": 35,
+          "name": "indexOf"
+        },
+        {
+          "codeLength": 15,
+          "descriptor": "(Ljava/util/Iterator;Lcom/google/common/base/Function;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 36,
+          "name": "transform"
+        },
+        {
+          "codeLength": 67,
+          "descriptor": "(Ljava/util/Iterator;I)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 37,
+          "name": "get"
+        },
+        {
+          "codeLength": 37,
+          "descriptor": "(I)V",
+          "hasCode": true,
+          "index": 38,
+          "name": "checkNonnegative"
+        },
+        {
+          "codeLength": 16,
+          "descriptor": "(Ljava/util/Iterator;ILjava/lang/Object;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 39,
+          "name": "get"
+        },
+        {
+          "codeLength": 20,
+          "descriptor": "(Ljava/util/Iterator;Ljava/lang/Object;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 40,
+          "name": "getNext"
+        },
+        {
+          "codeLength": 21,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 41,
+          "name": "getLast"
+        },
+        {
+          "codeLength": 18,
+          "descriptor": "(Ljava/util/Iterator;Ljava/lang/Object;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 42,
+          "name": "getLast"
+        },
+        {
+          "codeLength": 50,
+          "descriptor": "(Ljava/util/Iterator;I)I",
+          "hasCode": true,
+          "index": 43,
+          "name": "advance"
+        },
+        {
+          "codeLength": 29,
+          "descriptor": "(Ljava/util/Iterator;I)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 44,
+          "name": "limit"
+        },
+        {
+          "codeLength": 14,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/util/Iterator;",
+          "hasCode": true,
+          "index": 45,
+          "name": "consumingIterator"
+        },
+        {
+          "codeLength": 26,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/lang/Object;",
+          "hasCode": true,
+          "index": 46,
+          "name": "pollNext"
+        },
+        {
+          "codeLength": 31,
+          "descriptor": "(Ljava/util/Iterator;)V",
+          "hasCode": true,
+          "index": 47,
+          "name": "clear"
+        },
+        {
+          "codeLength": 9,
+          "descriptor": "([Ljava/lang/Object;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 48,
+          "name": "forArray"
+        },
+        {
+          "codeLength": 51,
+          "descriptor": "([Ljava/lang/Object;III)Lcom/google/common/collect/UnmodifiableListIterator;",
+          "hasCode": true,
+          "index": 49,
+          "name": "forArray"
+        },
+        {
+          "codeLength": 9,
+          "descriptor": "(Ljava/lang/Object;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 50,
+          "name": "singletonIterator"
+        },
+        {
+          "codeLength": 14,
+          "descriptor": "(Ljava/util/Enumeration;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 51,
+          "name": "forEnumeration"
+        },
+        {
+          "codeLength": 14,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/util/Enumeration;",
+          "hasCode": true,
+          "index": 52,
+          "name": "asEnumeration"
+        },
+        {
+          "codeLength": 23,
+          "descriptor": "(Ljava/util/Iterator;)Lcom/google/common/collect/PeekingIterator;",
+          "hasCode": true,
+          "index": 53,
+          "name": "peekingIterator"
+        },
+        {
+          "codeLength": 8,
+          "descriptor": "(Lcom/google/common/collect/PeekingIterator;)Lcom/google/common/collect/PeekingIterator;",
+          "hasCode": true,
+          "index": 54,
+          "name": "peekingIterator"
+        },
+        {
+          "codeLength": 24,
+          "descriptor": "(Ljava/lang/Iterable;Ljava/util/Comparator;)Lcom/google/common/collect/UnmodifiableIterator;",
+          "hasCode": true,
+          "index": 55,
+          "name": "mergeSorted"
+        },
+        {
+          "codeLength": 5,
+          "descriptor": "(Ljava/util/Iterator;)Ljava/util/ListIterator;",
+          "hasCode": true,
+          "index": 56,
+          "name": "cast"
+        },
+        {
+          "codeLength": 21,
+          "descriptor": "()V",
+          "hasCode": true,
+          "index": 57,
+          "name": "\u003cclinit\u003e"
+        }
+      ],
+      "resourceRoot": [
+        167,
+        228,
+        27,
+        70,
+        27,
+        156,
+        146,
+        222,
+        17,
+        133,
+        143,
+        225,
+        116,
+        109,
+        88,
+        82,
+        125,
+        123,
+        127,
+        236,
+        105,
+        223,
+        113,
+        95,
+        134,
+        169,
+        83,
+        225,
+        240,
+        78,
+        106,
+        168
+      ]
+    }
+  ],
+  "originalWorldNotOpened": true,
+  "packageRoot": "0xe6c0b622e1342e1edf25822731d90a13a2b329d7b50c5e32dc010bcd754b4651"
+}

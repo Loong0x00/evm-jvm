@@ -13,9 +13,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 
 | Area | Latest accepted evidence |
 | --- | --- |
-| Original workload | Unmodified 1.12.2 server; 125 explicit, authenticated class resources (889,395 bytes) |
-| Guest execution | **2,224,168 JVM instructions**, 129 internal steps, 39 verified successful checkpoint receipts |
-| Current blocker | Missing original Guava `Iterators` resource; genuine ArrayList() construction passed |
+| Original workload | Unmodified 1.12.2 server; 130 explicit, authenticated class resources (915,860 bytes) |
+| Guest execution | **2,224,169 JVM instructions**, 129 internal steps, 40 verified successful checkpoint receipts |
+| Current blocker | Missing bootstrap `java.util.ListIterator` hierarchy link |
 | Runtime profile | 429,653-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 114 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
@@ -62,7 +62,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-array-list-default/artifacts/iterators-resource-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original130-guava-unmodifiable-iterator/artifacts/list-iterator-interface-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)
