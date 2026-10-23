@@ -1,0 +1,101 @@
+{
+  "engineRuntimeSHA256": "0x9aca7678924b7e369185c3b27b115e299e06d7745020ea374b6c8b23557012ba",
+  "mode": "generated",
+  "positive": [
+    {
+      "label": "positive-q1",
+      "quantum": 1,
+      "entry": "TypedToArrayPositive",
+      "calls": 3851,
+      "gasUsed": 232251201116,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJava": 3851,
+      "totalInternal": 7,
+      "executedJava": 1,
+      "executedInternal": 0,
+      "javaKind": 0,
+      "javaClass": "",
+      "checkpointBytes": 6398,
+      "checkpointKeccak": "0xcf01c39be59d0dd01dc4589c0d4000be529493103129486089dc7942eef419f6",
+      "machineRoot": "0xc3fdaae5ad2ab69f82a7c6fde471903258dd0b4f1ba36bf1414d494dda13f550",
+      "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+      "stateRoot": "0xcfdf6ae3485558cba066afa0dc85382e346f062c334c6a25846c55e9b3be4891"
+    },
+    {
+      "label": "positive-q7",
+      "quantum": 7,
+      "entry": "TypedToArrayPositive",
+      "calls": 551,
+      "gasUsed": 33699715030,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJava": 3851,
+      "totalInternal": 7,
+      "executedJava": 1,
+      "executedInternal": 0,
+      "javaKind": 0,
+      "javaClass": "",
+      "checkpointBytes": 6398,
+      "checkpointKeccak": "0xe0f79845e8dbb30d37400e6909f34393df645d18d9fb591efcc3ecf6c04e9fd1",
+      "machineRoot": "0xc3fdaae5ad2ab69f82a7c6fde471903258dd0b4f1ba36bf1414d494dda13f550",
+      "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+      "stateRoot": "0x5ce4026fb236537ce7c17e8c13aeed2a63e2abaaadd4f57599631c62ac88b41d"
+    },
+    {
+      "label": "positive-q65536",
+      "quantum": 65536,
+      "entry": "TypedToArrayPositive",
+      "calls": 1,
+      "gasUsed": 840351933,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJava": 3851,
+      "totalInternal": 7,
+      "executedJava": 3851,
+      "executedInternal": 7,
+      "javaKind": 0,
+      "javaClass": "",
+      "checkpointBytes": 6398,
+      "checkpointKeccak": "0x75cbef5203ed96270ff42d5f810ba1868370ceffae40860b1eff63c4031b1690",
+      "machineRoot": "0xc3fdaae5ad2ab69f82a7c6fde471903258dd0b4f1ba36bf1414d494dda13f550",
+      "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+      "stateRoot": "0x49df14b6f636b801def6f41a5fd1e479db73e1a7c4d58058d7f89861a5e006fe"
+    }
+  ],
+  "refusals": [
+    {
+      "durationMs": 68,
+      "entry": "TypedToArrayShortArray",
+      "error": "execution reverted",
+      "gasUsed": 73452332,
+      "label": "short-array-raw-refusal",
+      "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000e",
+      "rootAfter": "0x589598e69ef0e5f25e7b1193bd657f29e0a31e72b53fb9f9fec82d204497babe",
+      "rootBefore": "0x589598e69ef0e5f25e7b1193bd657f29e0a31e72b53fb9f9fec82d204497babe",
+      "rootUnchanged": true
+    },
+    {
+      "durationMs": 56,
+      "entry": "TypedToArrayUnsupportedAdd",
+      "error": "execution reverted",
+      "gasUsed": 60527915,
+      "label": "entryset-add-remains-unbound",
+      "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001a",
+      "rootAfter": "0x589598e69ef0e5f25e7b1193bd657f29e0a31e72b53fb9f9fec82d204497babe",
+      "rootBefore": "0x589598e69ef0e5f25e7b1193bd657f29e0a31e72b53fb9f9fec82d204497babe",
+      "rootUnchanged": true
+    },
+    {
+      "durationMs": 41,
+      "entry": "TypedToArrayUnsupportedEquals",
+      "error": "execution reverted",
+      "gasUsed": 44258163,
+      "label": "entryset-equals-remains-unbound",
+      "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000f",
+      "rootAfter": "0x589598e69ef0e5f25e7b1193bd657f29e0a31e72b53fb9f9fec82d204497babe",
+      "rootBefore": "0x589598e69ef0e5f25e7b1193bd657f29e0a31e72b53fb9f9fec82d204497babe",
+      "rootUnchanged": true
+    }
+  ]
+}

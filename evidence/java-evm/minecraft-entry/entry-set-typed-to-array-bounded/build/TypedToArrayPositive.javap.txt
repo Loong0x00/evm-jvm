@@ -1,0 +1,352 @@
+public final class TypedToArrayPositive {
+  public TypedToArrayPositive();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    Code:
+       0: new           #5                  // class java/util/HashMap
+       3: dup
+       4: invokespecial #6                  // Method java/util/HashMap."<init>":()V
+       7: astore_1
+       8: aload_1
+       9: invokevirtual #7                  // Method java/util/HashMap.entrySet:()Ljava/util/Set;
+      12: astore_2
+      13: aload_2
+      14: astore_3
+      15: iconst_0
+      16: anewarray     #8                  // class java/util/Map$Entry
+      19: astore        4
+      21: aload_3
+      22: aload         4
+      24: invokeinterface #9,  2            // InterfaceMethod java/util/Collection.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+      29: aload         4
+      31: if_acmpne     38
+      34: iconst_1
+      35: goto          39
+      38: iconst_0
+      39: invokestatic  #10                 // Method check:(Z)V
+      42: aload         4
+      44: arraylength
+      45: ifne          52
+      48: iconst_1
+      49: goto          53
+      52: iconst_0
+      53: invokestatic  #10                 // Method check:(Z)V
+      56: ldc           #11                 // String Aa
+      58: invokevirtual #12                 // Method java/lang/String.hashCode:()I
+      61: ldc           #13                 // String BB
+      63: invokevirtual #12                 // Method java/lang/String.hashCode:()I
+      66: if_icmpne     73
+      69: iconst_1
+      70: goto          74
+      73: iconst_0
+      74: invokestatic  #10                 // Method check:(Z)V
+      77: aload_1
+      78: aconst_null
+      79: aconst_null
+      80: invokevirtual #14                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      83: pop
+      84: aload_1
+      85: ldc           #11                 // String Aa
+      87: ldc           #15                 // String first
+      89: invokevirtual #14                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+      92: pop
+      93: aload_1
+      94: ldc           #13                 // String BB
+      96: ldc           #16                 // String second
+      98: invokevirtual #14                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     101: pop
+     102: aload_1
+     103: ldc           #17                 // String tail
+     105: ldc           #18                 // String third
+     107: invokevirtual #14                 // Method java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+     110: pop
+     111: aload_1
+     112: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     115: iconst_4
+     116: if_icmpne     123
+     119: iconst_1
+     120: goto          124
+     123: iconst_0
+     124: invokestatic  #10                 // Method check:(Z)V
+     127: aload_1
+     128: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     131: anewarray     #8                  // class java/util/Map$Entry
+     134: astore        5
+     136: aload_3
+     137: aload         5
+     139: invokeinterface #9,  2            // InterfaceMethod java/util/Collection.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     144: aload         5
+     146: if_acmpne     153
+     149: iconst_1
+     150: goto          154
+     153: iconst_0
+     154: invokestatic  #10                 // Method check:(Z)V
+     157: iconst_0
+     158: istore        6
+     160: aload_3
+     161: invokeinterface #20,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+     166: astore        7
+     168: aload         7
+     170: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     175: ifeq          207
+     178: aload         5
+     180: iload         6
+     182: iinc          6, 1
+     185: aaload
+     186: aload         7
+     188: invokeinterface #22,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     193: if_acmpne     200
+     196: iconst_1
+     197: goto          201
+     200: iconst_0
+     201: invokestatic  #10                 // Method check:(Z)V
+     204: goto          168
+     207: iload         6
+     209: aload_1
+     210: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     213: if_icmpne     220
+     216: iconst_1
+     217: goto          221
+     220: iconst_0
+     221: invokestatic  #10                 // Method check:(Z)V
+     224: aload         5
+     226: iconst_0
+     227: aaload
+     228: invokeinterface #23,  1           // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     233: ifnonnull     240
+     236: iconst_1
+     237: goto          241
+     240: iconst_0
+     241: invokestatic  #10                 // Method check:(Z)V
+     244: aload         5
+     246: iconst_0
+     247: aaload
+     248: invokeinterface #24,  1           // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+     253: ifnonnull     260
+     256: iconst_1
+     257: goto          261
+     260: iconst_0
+     261: invokestatic  #10                 // Method check:(Z)V
+     264: aload_1
+     265: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     268: iconst_2
+     269: iadd
+     270: anewarray     #8                  // class java/util/Map$Entry
+     273: astore        8
+     275: aload         5
+     277: iconst_0
+     278: aaload
+     279: astore        9
+     281: aload         8
+     283: aload_1
+     284: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     287: iconst_1
+     288: iadd
+     289: aload         9
+     291: aastore
+     292: aload_3
+     293: aload         8
+     295: invokeinterface #9,  2            // InterfaceMethod java/util/Collection.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     300: aload         8
+     302: if_acmpne     309
+     305: iconst_1
+     306: goto          310
+     309: iconst_0
+     310: invokestatic  #10                 // Method check:(Z)V
+     313: iconst_0
+     314: istore        10
+     316: iload         10
+     318: aload_1
+     319: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     322: if_icmpge     352
+     325: aload         8
+     327: iload         10
+     329: aaload
+     330: aload         5
+     332: iload         10
+     334: aaload
+     335: if_acmpne     342
+     338: iconst_1
+     339: goto          343
+     342: iconst_0
+     343: invokestatic  #10                 // Method check:(Z)V
+     346: iinc          10, 1
+     349: goto          316
+     352: aload         8
+     354: aload_1
+     355: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     358: aaload
+     359: ifnonnull     366
+     362: iconst_1
+     363: goto          367
+     366: iconst_0
+     367: invokestatic  #10                 // Method check:(Z)V
+     370: aload         8
+     372: aload_1
+     373: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     376: iconst_1
+     377: iadd
+     378: aaload
+     379: aload         9
+     381: if_acmpne     388
+     384: iconst_1
+     385: goto          389
+     388: iconst_0
+     389: invokestatic  #10                 // Method check:(Z)V
+     392: aload_1
+     393: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     396: anewarray     #25                 // class java/lang/Object
+     399: astore        10
+     401: aload_3
+     402: aload         10
+     404: invokeinterface #9,  2            // InterfaceMethod java/util/Collection.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     409: aload         10
+     411: if_acmpne     418
+     414: iconst_1
+     415: goto          419
+     418: iconst_0
+     419: invokestatic  #10                 // Method check:(Z)V
+     422: iconst_0
+     423: istore        11
+     425: iload         11
+     427: aload_1
+     428: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     431: if_icmpge     461
+     434: aload         10
+     436: iload         11
+     438: aaload
+     439: aload         5
+     441: iload         11
+     443: aaload
+     444: if_acmpne     451
+     447: iconst_1
+     448: goto          452
+     451: iconst_0
+     452: invokestatic  #10                 // Method check:(Z)V
+     455: iinc          11, 1
+     458: goto          425
+     461: aconst_null
+     462: astore        11
+     464: aconst_null
+     465: astore        12
+     467: iconst_0
+     468: istore        13
+     470: iload         13
+     472: aload         5
+     474: arraylength
+     475: if_icmpge     534
+     478: ldc           #11                 // String Aa
+     480: aload         5
+     482: iload         13
+     484: aaload
+     485: invokeinterface #23,  1           // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     490: invokevirtual #26                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     493: ifeq          503
+     496: aload         5
+     498: iload         13
+     500: aaload
+     501: astore        11
+     503: ldc           #13                 // String BB
+     505: aload         5
+     507: iload         13
+     509: aaload
+     510: invokeinterface #23,  1           // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     515: invokevirtual #26                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     518: ifeq          528
+     521: aload         5
+     523: iload         13
+     525: aaload
+     526: astore        12
+     528: iinc          13, 1
+     531: goto          470
+     534: aload         11
+     536: ifnull        548
+     539: aload         12
+     541: ifnull        548
+     544: iconst_1
+     545: goto          549
+     548: iconst_0
+     549: invokestatic  #10                 // Method check:(Z)V
+     552: aload         11
+     554: ldc           #27                 // String changed
+     556: invokeinterface #28,  2           // InterfaceMethod java/util/Map$Entry.setValue:(Ljava/lang/Object;)Ljava/lang/Object;
+     561: ldc           #15                 // String first
+     563: if_acmpne     570
+     566: iconst_1
+     567: goto          571
+     570: iconst_0
+     571: invokestatic  #10                 // Method check:(Z)V
+     574: ldc           #27                 // String changed
+     576: aload         11
+     578: invokeinterface #24,  1           // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+     583: invokevirtual #26                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     586: invokestatic  #10                 // Method check:(Z)V
+     589: iconst_0
+     590: istore        13
+     592: aload_3
+     593: invokeinterface #20,  1           // InterfaceMethod java/util/Collection.iterator:()Ljava/util/Iterator;
+     598: astore        14
+     600: aload         14
+     602: invokeinterface #21,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+     607: ifeq          673
+     610: aload         14
+     612: invokeinterface #22,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+     617: checkcast     #8                  // class java/util/Map$Entry
+     620: astore        15
+     622: ldc           #11                 // String Aa
+     624: aload         15
+     626: invokeinterface #23,  1           // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+     631: invokevirtual #26                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     634: ifeq          670
+     637: aload         15
+     639: aload         11
+     641: if_acmpne     648
+     644: iconst_1
+     645: goto          649
+     648: iconst_0
+     649: invokestatic  #10                 // Method check:(Z)V
+     652: ldc           #27                 // String changed
+     654: aload         15
+     656: invokeinterface #24,  1           // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+     661: invokevirtual #26                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     664: invokestatic  #10                 // Method check:(Z)V
+     667: iconst_1
+     668: istore        13
+     670: goto          600
+     673: iload         13
+     675: invokestatic  #10                 // Method check:(Z)V
+     678: aload_3
+     679: aconst_null
+     680: checkcast     #29                 // class "[Ljava/util/Map$Entry;"
+     683: invokeinterface #9,  2            // InterfaceMethod java/util/Collection.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     688: pop
+     689: new           #2                  // class java/lang/RuntimeException
+     692: dup
+     693: ldc           #30                 // String null array accepted
+     695: invokespecial #4                  // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     698: athrow
+     699: astore        14
+     701: aload_3
+     702: aload_1
+     703: invokevirtual #19                 // Method java/util/HashMap.size:()I
+     706: anewarray     #32                 // class java/lang/String
+     709: invokeinterface #9,  2            // InterfaceMethod java/util/Collection.toArray:([Ljava/lang/Object;)[Ljava/lang/Object;
+     714: pop
+     715: new           #2                  // class java/lang/RuntimeException
+     718: dup
+     719: ldc           #33                 // String incompatible array accepted
+     721: invokespecial #4                  // Method java/lang/RuntimeException."<init>":(Ljava/lang/String;)V
+     724: athrow
+     725: astore        14
+     727: return
+    Exception table:
+       from    to  target type
+         678   699   699   Class java/lang/NullPointerException
+         701   725   725   Class java/lang/ArrayStoreException
+}

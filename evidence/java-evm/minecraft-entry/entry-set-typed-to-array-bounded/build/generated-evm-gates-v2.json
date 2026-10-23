@@ -1,0 +1,102 @@
+{
+  "engineRuntimeKeccak256": "0x9aca7678924b7e369185c3b27b115e299e06d7745020ea374b6c8b23557012ba",
+  "engineRuntimeSHA256": "12bc57a498a267885718cc84655086c2689d7069e7cfc24530414f37bb6cfd71",
+  "mode": "generated",
+  "positive": [
+    {
+      "label": "positive-q1",
+      "quantum": 1,
+      "entry": "TypedToArrayPositive",
+      "calls": 3862,
+      "gasUsed": 233161615238,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJava": 3862,
+      "totalInternal": 7,
+      "executedJava": 1,
+      "executedInternal": 0,
+      "javaKind": 0,
+      "javaClass": "",
+      "checkpointBytes": 6398,
+      "checkpointKeccak": "0x6ec3b3ec18482eada775a07ecf6e178ac71b1c4e9b7fe1f4f728be4d6f620227",
+      "machineRoot": "0x18688116cf5b5ff8285aca15698c0eed1eb4e890814168aa226796c97cfc9a41",
+      "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+      "stateRoot": "0x925ed76e830e91a32eb63a8098a5dfce85fe1fce3530c47b9b25f8a5704f2b66"
+    },
+    {
+      "label": "positive-q7",
+      "quantum": 7,
+      "entry": "TypedToArrayPositive",
+      "calls": 552,
+      "gasUsed": 33790703693,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJava": 3862,
+      "totalInternal": 7,
+      "executedJava": 5,
+      "executedInternal": 1,
+      "javaKind": 0,
+      "javaClass": "",
+      "checkpointBytes": 6398,
+      "checkpointKeccak": "0x031af609067de65e7148535622ce7c365939fcd1db9c94f301636a4328eeac61",
+      "machineRoot": "0x18688116cf5b5ff8285aca15698c0eed1eb4e890814168aa226796c97cfc9a41",
+      "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+      "stateRoot": "0x741f70d690e6d280746f39e41d7ae4cc74909dbf330719b4f87e3ee2cc0ac1c6"
+    },
+    {
+      "label": "positive-q65536",
+      "quantum": 65536,
+      "entry": "TypedToArrayPositive",
+      "calls": 1,
+      "gasUsed": 843522359,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJava": 3862,
+      "totalInternal": 7,
+      "executedJava": 3862,
+      "executedInternal": 7,
+      "javaKind": 0,
+      "javaClass": "",
+      "checkpointBytes": 6398,
+      "checkpointKeccak": "0x8e93c2ab769a782b12206a134790ba630f0346c69894afcdd3b0012ab4413b62",
+      "machineRoot": "0x18688116cf5b5ff8285aca15698c0eed1eb4e890814168aa226796c97cfc9a41",
+      "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+      "stateRoot": "0x30f9eb97e94f0fb663097c29d6c461a17cae31356de965efddcca3e87a596d13"
+    }
+  ],
+  "refusals": [
+    {
+      "durationMs": 70,
+      "entry": "TypedToArrayShortArray",
+      "error": "execution reverted",
+      "gasUsed": 73460052,
+      "label": "short-array-raw-refusal",
+      "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000e",
+      "rootAfter": "0x23e6b87c59540fcae4d494b16af656581235de7f571ee1c28ff81e752f170d82",
+      "rootBefore": "0x23e6b87c59540fcae4d494b16af656581235de7f571ee1c28ff81e752f170d82",
+      "rootUnchanged": true
+    },
+    {
+      "durationMs": 57,
+      "entry": "TypedToArrayUnsupportedAdd",
+      "error": "execution reverted",
+      "gasUsed": 60535410,
+      "label": "entryset-add-remains-unbound",
+      "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001a",
+      "rootAfter": "0x23e6b87c59540fcae4d494b16af656581235de7f571ee1c28ff81e752f170d82",
+      "rootBefore": "0x23e6b87c59540fcae4d494b16af656581235de7f571ee1c28ff81e752f170d82",
+      "rootUnchanged": true
+    },
+    {
+      "durationMs": 42,
+      "entry": "TypedToArrayUnsupportedEquals",
+      "error": "execution reverted",
+      "gasUsed": 44265313,
+      "label": "entryset-equals-remains-unbound",
+      "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000f",
+      "rootAfter": "0x23e6b87c59540fcae4d494b16af656581235de7f571ee1c28ff81e752f170d82",
+      "rootBefore": "0x23e6b87c59540fcae4d494b16af656581235de7f571ee1c28ff81e752f170d82",
+      "rootUnchanged": true
+    }
+  ]
+}

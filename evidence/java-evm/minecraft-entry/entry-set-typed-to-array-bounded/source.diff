@@ -1,0 +1,20 @@
+--- source-basis/bootstrap/java/util/Collection.java	2026-10-24 03:12:46.572540351 +0800
++++ source/bootstrap/java/util/Collection.java	2026-10-24 02:45:26.729380610 +0800
+@@ -4,0 +5 @@
++    <T> T[] toArray(T[] target);
+--- source-basis/bootstrap/java/util/HashMap.java	2026-10-24 03:12:46.572481891 +0800
++++ source/bootstrap/java/util/HashMap.java	2026-10-24 02:45:30.179348587 +0800
+@@ -173 +173,12 @@
+-        public native <T> T[] toArray(T[] target);
++        private native void refuseTypedToArrayTooSmall();
++        @SuppressWarnings("unchecked")
++        public <T> T[] toArray(T[] target) {
++            int length = target.length;
++            int count = size();
++            if (length < count) refuseTypedToArrayTooSmall();
++            Iterator<E> iterator = iterator();
++            int index = 0;
++            while (iterator.hasNext()) target[index++] = (T) iterator.next();
++            if (index < length) target[index] = null;
++            return target;
++        }
