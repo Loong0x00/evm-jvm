@@ -1,0 +1,13 @@
+# Rebuildable executable, never an evidence input.
+/tools/canonical-driver
+
+# Preserve large/failed observer streams locally; key raw receipts and reproductions
+# are recorded in results/attempts.md, the gate summary, and selected manifest files.
+/results/refusals/reports/**
+/results/refusals/LinkedHashMapPutDirect/
+/results/refusals/LinkedHashMapPutHashTyped-q16/
+/results/manifest-write.log
+/results/source-verification-final.log
+/results/q*-empty-*.log
+/results/refusals/*.log
+/tools/__pycache__/

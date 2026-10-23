@@ -1,0 +1,5 @@
+Java compiler: /usr/lib/jvm/java-8-openjdk/bin/javac 1.8.0_504
+Guest LinkedHashMap image: javac -g:none -source 8 -target 8 -d classes/javac bootstrap/java/util/LinkedHashMap.java
+Generated empty/refusal fixtures: javac -g:none -source 8 -target 8 -d classes/fixtures tests/java/*.java
+Generated high-index fixture set: javac -g:none -source 8 -target 8 -d classes/high-index tests/high-index-src/*.java (150 raw classes)
+The accepted HashMap/Map Java sources were not rebuilt or changed. The leaf is compiled against the stock Java 8 API, and its parent class/signatures are audited against the exact P48 source image.
