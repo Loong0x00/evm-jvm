@@ -1,0 +1,38 @@
+# MC ListIterator bounded link marker
+
+Scoped candidate for the measured Java 8 `java/util/ListIterator` interface edge only.
+This is a minimal public abstract marker interface extending the pinned guest
+`Iterator<E>`; it declares no methods. The implementation does not claim any
+ListIterator mutation/traversal API beyond inherited Iterator dispatch.
+
+## Reproduction
+
+From `/home/user/evm-jvm/list-iterator-link`:
+
+```sh
+./evidence/java-evm/minecraft-entry/list-iterator-link-bounded/build-bootstrap.sh
+./evidence/java-evm/minecraft-entry/list-iterator-link-bounded/build-java-fixtures.sh
+NODE_PATH=/home/user/evm-jvm/list-iterator-link/jvmevm/runtime/node_modules \
+  node evidence/java-evm/minecraft-entry/list-iterator-link-bounded/engine/build.js
+NODE_PATH=/home/user/evm-jvm/list-iterator-link/jvmevm/runtime/node_modules \
+  node evidence/java-evm/minecraft-entry/list-iterator-link-bounded/coordinator/build.js
+ go test ./evidence/java-evm/minecraft-entry/list-iterator-link-bounded/tests
+ go run ./evidence/java-evm/minecraft-entry/list-iterator-link-bounded/tests/gate.go
+```
+
+The Java fixture compiler is `/usr/lib/jvm/java-8-openjdk/bin/javac`, `-g:none`,
+Java 8 classfile target. `LinkCheck.java` compiles against the stock Java 8 API as
+test-only fixture code; those fixtures are executed only by the fresh geth EVM
+harness, never by the host JVM. `ListIterator.class` itself is generated against
+minimal compiler-only `Object`, `Throwable`, and the existing-shape Iterator stub.
+
+The EVM runner uses only public geth EVM APIs, the candidate's locally preinstalled
+interpreter runtime, fresh StateDBs, normal ABI calls, and a finite 1,000,000,000
+per-call gas ceiling with a 30-second call watchdog. It does not use a coordinator
+session/persistent store; durable process-reopen coverage is therefore not claimed.
+
+See `pins.json`, `source-manifest.json`, `runs/bootstrap-root.json`, the full
+leaf/source diff, and `runs/gates-004/full-suite.json`. Failed setup/build attempts
+and their disposition are recorded in `runs/attempts.md`. This is an unaccepted
+candidate awaiting parent independent review; it is not original Minecraft
+execution or a profile acceptance claim.

@@ -1,0 +1,9 @@
+# Reproduction attempts and dispositions
+
+- Initial manifest read used the directory path directly; corrected by listing and hashing its nine declared files. All nine source-only SHA-256/byte-count checks passed before implementation. No original/parent-review data was opened.
+- First Java 8 bootstrap compilation with an empty bootclasspath failed because `java.lang` was unavailable; a compiler-only minimal Object/Throwable plus Iterator stub fixed setup. The resulting `ListIterator.class` is Java 8 major 52, public abstract interface, extends `Iterator<E>`, and has no declared methods.
+- An early root helper run caught the old `new bytes32[](114)` allocation after adding `h[114]`; corrected the allocation to 115 before Solidity compilation. Root verification then passed: first 114 leaves exactly match source P50; only leaf 114 is new.
+- The first generated runner invocation used paths relative to the evidence folder while launched at module root; recorded failure in `gates-001/raw150-q128.log`, fixed by resolving fixture/runtime paths from `MC_LINK_ROOT` (with a repository-relative default).
+- The first Go harness compile caught a duplicate `root` declaration and an unaddressable array slice; corrected before EVM execution.
+- `gates-003` correctly refused to mark negative API cases as passed because the fixture builder omitted the new custom `SideMarker` parent, yielding `MCEntryMissingClass` before the target API call. Added the missing fixture interface class. `gates-004` then reached the calls and records the intended atomic `CallError` refusals. The earlier `gates-003` receipt is retained as a failed test-driver-fixture attempt, not counted as a pass.
+- The earlier successful raw-150-only EVM run remains at `runs/gates-001/raw150-q128.json`; it is retained as separate provenance, not overwritten by the final richer suite.

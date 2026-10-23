@@ -1,0 +1,13 @@
+{
+  "baseCommit": "a71d393cec807e9a8c5d612f9fb0283a8f47560e",
+  "branch": "java-list-iterator-link",
+  "repository": "/home/user/evm-jvm/list-iterator-link",
+  "guestCodeCommit": "f205c7776b5c491665c5b4e59e39b3c6f56dd6bc",
+  "javac": "OpenJDK 8; /usr/lib/jvm/java-8-openjdk/bin/javac; -g:none -source 8 -target 8",
+  "solc": "0.8.30+commit.73712a01.Emscripten.clang",
+  "solcSettings": {"optimizer": {"enabled": true, "runs": 200}, "viaIR": true, "evmVersion": "cancun", "metadata": {"appendCBOR": false, "bytecodeHash": "none"}},
+  "go": "1.24+; GOPROXY=off GOSUMDB=off used for final Go package check",
+  "executionBoundary": "fresh geth EVM StateDB; candidate deployed-runtime bytes preinstalled at fixed LOCAL engine address; generated classes only as untrusted raw EVM input",
+  "publicCallLimits": {"gas": 1000000000, "watchdogSeconds": 30},
+  "notRun": ["coordinator session", "separate-process durable checkpoint reopen", "official Minecraft/original JAR execution"]
+}
