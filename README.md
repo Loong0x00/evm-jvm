@@ -14,21 +14,21 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 116 explicit, authenticated class resources (815,898 bytes) |
-| Guest execution | **2,223,795 JVM instructions**, 113 internal steps, 44 verified successful checkpoint receipts |
-| Current blocker | Missing bootstrap `java.util.Comparator`; original Guava Ordering is authenticated and NavigableMap hierarchy linking passed |
-| Runtime profile | 422,246-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 107 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,223,796 JVM instructions**, 116 internal steps, 43 verified successful checkpoint receipts |
+| Current blocker | Missing original Guava `NaturalOrdering` resource; Comparator linking and generated comparison dispatch passed |
+| Runtime profile | 422,008-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 108 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [NavigableMap link-only / P44](JAVA_EVM_MC_NAVIGABLE_MAP_PARENT_PREFLIGHT.md).
-Fresh EVM tests cover an exact150-raw-input/**257 internal class** case, including
-interface index256 and its real typed array/clone. The coordinator remains at150
-raw bindings; no ABI or checkpoint-format migration was needed. Navigation methods
-are explicitly unsupported, not replaced with fake results.
+Latest acceptance: [Comparator compare/link / P45](JAVA_EVM_MC_COMPARATOR_PARENT_PREFLIGHT.md).
+Fresh EVM tests execute captured-state comparisons, generic bridges, null/type
+checks and a typed Comparator[]/clone at index257 in258 internal classes.
+Small q1/q7 tests use1B; the raw150 envelope required a separately labeled4B
+after measured1B/2B shortages. Full Java Comparator helpers are not claimed.
 
 ### Important LOCAL-only limits
 
@@ -61,7 +61,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original116-guava-ordering/artifacts/comparator-interface-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-comparator-interface/artifacts/natural-ordering-resource-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

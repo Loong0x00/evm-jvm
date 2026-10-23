@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16373008499977004,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-refusals-parent-p45/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-comparator-interface/ParentComparatorOmitted.java"
+      ]
+    },
+    {
+      "label": "stock-java8-valid",
+      "exit": 0,
+      "wallSeconds": 0.03158345200063195,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-refusals-parent-p45/classes",
+        "ParentComparatorOmitted"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7643511959995521,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-refusals-parent-p45/driver",
+        "./build/java-diff-mc-comparator-refusals-parent-p45/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 0.3139181179994921,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-refusals-parent-p45/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-build-parent-p45-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-build-parent-p45-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-refusals-parent-p45/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-refusals-parent-p45",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-comparator-refusals-parent-p45/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

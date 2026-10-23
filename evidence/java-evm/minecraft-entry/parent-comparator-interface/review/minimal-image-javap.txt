@@ -1,0 +1,30 @@
+Classfile /home/user/evm-jvm/comparator-interface-link/evidence/java-evm/minecraft-entry/comparator-interface-link/generated-fixtures/Comparator.class
+  Last modified 2026-10-23; size 256 bytes
+  MD5 checksum 45afedd869afe2a1bdde57cccff8076f
+public interface java.util.Comparator<T extends java.lang.Object>
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_INTERFACE, ACC_ABSTRACT
+Constant pool:
+   #1 = Class              #10            // java/util/Comparator
+   #2 = Class              #11            // java/lang/Object
+   #3 = Utf8               compare
+   #4 = Utf8               (Ljava/lang/Object;Ljava/lang/Object;)I
+   #5 = Utf8               Signature
+   #6 = Utf8               (TT;TT;)I
+   #7 = Utf8               equals
+   #8 = Utf8               (Ljava/lang/Object;)Z
+   #9 = Utf8               <T:Ljava/lang/Object;>Ljava/lang/Object;
+  #10 = Utf8               java/util/Comparator
+  #11 = Utf8               java/lang/Object
+{
+  public abstract int compare(T, T);
+    descriptor: (Ljava/lang/Object;Ljava/lang/Object;)I
+    flags: ACC_PUBLIC, ACC_ABSTRACT
+    Signature: #6                           // (TT;TT;)I
+
+  public abstract boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+    flags: ACC_PUBLIC, ACC_ABSTRACT
+}
+Signature: #9                           // <T:Ljava/lang/Object;>Ljava/lang/Object;

@@ -1,0 +1,3 @@
+# Current P45 parent acceptance
+
+The interrupted worker recovery was source/build-only, not EVM acceptance. Parent independently reproduced the exact256-byte interface with javac-g:none, reconstructed all108 ordered leaves and verified all107 prior prefix images unchanged. Actual source ABI-encoded root is7796c48c62a0f714f39b5dcb38b110dd84f98d01992806a7c92ddfb08f45a7dd; worker144cde root claim is preserved but rejected. Parent actualnew-EVM small/wide258classes/highindex257/Comparator[]0x201/clone/bridge/NPE/CCE/equals/typedrawnamespace/omittedhelper/reopen/original gates passed. Current artifacts/pins match parent fresh builds. See parent-comparator-interface/artifacts/natural-ordering-resource-blocker.json. Old interrupted drafts remain on disk, not deleted.
