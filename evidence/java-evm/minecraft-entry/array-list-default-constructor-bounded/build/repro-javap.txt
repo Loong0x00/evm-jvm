@@ -1,0 +1,49 @@
+public class java.util.ArrayList extends java.util.AbstractList implements java.util.RandomAccess,java.lang.Cloneable,java.io.Serializable {
+  private static final java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+
+  private transient java.lang.Object[] elementData;
+
+  private int size;
+
+  public java.util.ArrayList();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/util/AbstractList."<init>":()V
+       4: aload_0
+       5: getstatic     #2                  // Field DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+       8: putfield      #3                  // Field elementData:[Ljava/lang/Object;
+      11: return
+
+  public java.util.ArrayList(int);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/util/AbstractList."<init>":()V
+       4: iload_1
+       5: ifge          16
+       8: new           #4                  // class java/lang/IllegalArgumentException
+      11: dup
+      12: invokespecial #5                  // Method java/lang/IllegalArgumentException."<init>":()V
+      15: athrow
+      16: aload_0
+      17: iload_1
+      18: anewarray     #6                  // class java/lang/Object
+      21: putfield      #3                  // Field elementData:[Ljava/lang/Object;
+      24: return
+
+  public int size();
+    Code:
+       0: aload_0
+       1: getfield      #7                  // Field size:I
+       4: ireturn
+
+  public native boolean add(java.lang.Object);
+
+  public native java.util.Iterator iterator();
+
+  static {};
+    Code:
+       0: iconst_0
+       1: anewarray     #6                  // class java/lang/Object
+       4: putstatic     #2                  // Field DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+       7: return
+}

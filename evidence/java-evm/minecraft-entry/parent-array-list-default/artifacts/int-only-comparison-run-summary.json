@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "sameGeneratedInput": true,
+  "budget": 1000000000,
+  "P49JvmSteps": 56,
+  "P50JvmSteps": 60,
+  "extraClassInitializationJvmSteps": 4,
+  "notAnIsolatedGasAttribution": true,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16371870300645242,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/ParentArrayListIntOnly.java"
+      ]
+    },
+    {
+      "label": "stock-java8",
+      "exit": 0,
+      "wallSeconds": 0.03154671200172743,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/classes",
+        "ParentArrayListIntOnly"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.8146669420020771,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/driver",
+        "./build/java-diff-mc-arraylist-default-int-comparison-parent-p50/driver-src"
+      ]
+    },
+    {
+      "label": "P49",
+      "exit": 0,
+      "wallSeconds": 2.3664231189977727,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-build-parent-p49-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-build-parent-p49-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/parent-int-only-P49",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "P49-reopen",
+      "exit": 0,
+      "wallSeconds": 0.11364491499989526,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-build-parent-p49-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-build-parent-p49-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/parent-int-only-P49",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "P50",
+      "exit": 0,
+      "wallSeconds": 2.566898241006129,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-build-parent-p50/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-build-parent-p50/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/parent-int-only-P50",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "P50-reopen",
+      "exit": 0,
+      "wallSeconds": 0.11364681400300469,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-build-parent-p50/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-build-parent-p50/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-int-comparison-parent-p50/parent-int-only-P50",
+        "1000000000"
+      ]
+    }
+  ]
+}

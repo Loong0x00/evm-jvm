@@ -1,3 +1,15 @@
+# P50 parent-verified default ArrayList construction
+
+Parent independently reproduced the exact old int-constructor image and current Java8 image, rebuilt engine/coordinator/driver, ran fresh q1/q7/raw150/coarse/private-state/refusal/new-process-reopen gates, and a fresh original125 package. No parent guest-semantic correction was necessary. All114 ordered roots and actual source DBOOT match the candidate.
+
+Independent same-input int-only comparison proves real new class-initialization cost: P49 56J/3 arrays -> P50 60J/4 arrays, no quota increase or skipped initialization. Default instances share a genuine empty sentinel; int(0) retains its distinct real array. No add/growth behavior is admitted.
+
+See `../parent-array-list-default/` and root `JAVA_EVM_MC_ARRAY_LIST_DEFAULT_PARENT_PREFLIGHT.md` for parent acceptance. Historical worker results below retain their provenance.
+
+---
+
+## Historical worker report
+
 # P50 bounded ArrayList default-constructor candidate
 
 Source-only candidate based on accepted P49 `451c7619135e8d38d87ed74fbadba650603f9b6a`.

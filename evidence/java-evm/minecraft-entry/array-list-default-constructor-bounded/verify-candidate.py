@@ -44,7 +44,7 @@ base_source = (BASE/'engine/MCEntryInterpreter.sol').read_text()
 candidate_source = (ROOT/'engine/MCEntryInterpreter.sol').read_text()
 base_pairs = helper.leaf_pairs(base_source)
 candidate_pairs = helper.leaf_pairs(candidate_source)
-root_record = helper.root_record(candidate_source, pins['domains']['bootstrap'], str(ROOT), {**os.environ, 'NODE_PATH': '/home/user/evm-jvm/array-list-default-constructor/jvmevm/runtime/node_modules'})
+root_record = helper.root_record(candidate_source, pins['domains']['bootstrap'], str(ROOT), {**os.environ, 'NODE_PATH': str(REPO/'jvmevm/runtime/node_modules')})
 assert len(base_pairs) == len(candidate_pairs) == pins['bootstrapCount'] == 114
 assert [i for i,(a,b) in enumerate(zip(base_pairs,candidate_pairs)) if a != b] == [98]
 assert re.search(r'bytes32 private constant DBOOT = keccak256\("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:BOOTSTRAP:1"\);', candidate_source)
@@ -79,4 +79,4 @@ assert report['intOnlyFirstUse']['firstUseExecutesOrdinaryClassClinit']
 assert report['intOnlyFirstUse']['jvmSteps'] == 84
 assert report['intOnlyFirstUse']['maxSingleEvmCallGas'] < 1_000_000_000
 assert report['rawArrayListReplacement']['rootUnchanged'] and report['rawArrayListReplacement']['durableHeadUnchanged']
-print(json.dumps({'baseManifestFiles':len(manifest['files']),'bootstrapCount':len(candidate_pairs),'changedLeafIndexes':[98],'runtimeBytes':pins['engine']['runtimeBytes'],'engineRuntimeKeccak256':pins['engine']['runtimeKeccak256'],'coordinatorRuntimeBytes':pins['coordinator']['runtimeBytes'],'bootstrapRoot':pins['bootstrapRoot'],'runId':report['runId'],'status':'candidate verified; parent acceptance pending'},indent=2))
+print(json.dumps({'baseManifestFiles':len(manifest['files']),'bootstrapCount':len(candidate_pairs),'changedLeafIndexes':[98],'runtimeBytes':pins['engine']['runtimeBytes'],'engineRuntimeKeccak256':pins['engine']['runtimeKeccak256'],'coordinatorRuntimeBytes':pins['coordinator']['runtimeBytes'],'bootstrapRoot':pins['bootstrapRoot'],'runId':report['runId'],'status':'source verified; parent acceptance recorded separately'},indent=2))

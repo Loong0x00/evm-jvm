@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.163699971002643,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/ParentDefaultAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/ParentDefaultIterator.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/ParentDefaultToArray.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/ParentDefaultEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/ParentDefaultHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/ParentDefaultGet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/ParentDefaultClone.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7644778960020631,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/driver",
+        "./build/java-diff-mc-arraylist-default-refusals-parent-p50/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.164926944002218,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-build-parent-p50/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-build-parent-p50/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-default-refusals-parent-p50/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

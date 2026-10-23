@@ -1,0 +1,14 @@
+--- P49
+
++++ P50
+
+@@ -145,7 +145,7 @@
+
+         h[110] = keccak256(_bootstrapHashMapEntrySet());
+         h[111] = keccak256(_bootstrapHashMapEntryIterator());
+         h[112] = keccak256(_bootstrapConcurrentModificationException());
+-        // Construction-only LinkedHashMap appends after the complete 113-image P48 root.
++        // ArrayList default-constructor image replaces only leaf 98; all 114 root positions and every other image remain fixed.
+         h[113] = keccak256(_bootstrapLinkedHashMap());
+         return keccak256(abi.encode(DBOOT, h));
+     }
