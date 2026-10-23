@@ -1,3 +1,12 @@
+## P51 ListIterator link-only worker active — P50 guest code + resource130 frontier
+
+- Sole semanticworker **sa_5bdd2f7b2c1b4070**, OWN `/home/user/evm-jvm/list-iterator-link`,branchjava-list-iterator-link,basea71d393cec807e9a8c5d612f9fb0283a8f47560e (acceptedP50guestcodef205c7776b5c491665c5b4e59e39b3c6f56dd6bc). Own9hashsource-onlyfiles `list-iterator-source-base-p50/`:engine/co/artifacts/build/pins/canonical/roothelper. NOoriginal/parent/performance-review/otherworktrees/network/push;ownnormalGoSRCreadonlyallowed.
+- ONLYgenuinepublicabstractgenericListIterator<E>extendsIterator<E>LINKmarker;NOdeclaredprevious/hasPrevious/index/remove/set/add/default APIs orfakeanswers. InheritedIteratorhasNext/nextrealguestdispatchmustwork/transitivehierarchy. All114priorimagesEXACT,append114=>115;raw150+115=265,index264array0x208actualEVM+clone/reopenrequested,notuint8rawcoordinatorwidening. RawListIteratorreservation/actualfullDBOOTdomainroot/deployedruntimebytes/cohashrequired. Allnative21String12/quota/ABIstoragecodecdispatch/EVMchargingfixed.
+- Workerrequestedfreshq1/q7/coarse/customhierarchy/NSEE/NPE/CCE/omittedAPI/rawreplacement/typedarrays+reopenifavailable;parentindependentgatesandfreshoriginal130afterhandoff. P51NOTaccepted. ParentUNCOMPILEDgeneratedfixture `parent-list-iterator-link/ParentListIteratorLink.java`preparedlightweight;DONOTcompilewhileworkerheavy.
+- Workerownssingleheavycompiler/EVMslotuntilcompletion,parentlightdocs/sourceonly. Canonicalgenerated1B30swithfiniteactualshortagedoublingandfailurelabels;outer1200sdistinct,originaluint64max60sseparate. Preservealllogs/worlds/sync,noresetclean/gc/deletion/fixedsleeppoll. NoWorld/EULA/listening/Done.
+
+---
+
 ## Same P50 original130 resource-only acceptance — ListIterator link next
 
 - AuthenticatedEVM-onlyIterators22495B ->126/911890B;fresh126/q1-onlymetadatapackageNOTstartupacceptance. Header+selectedactualmethods2emptyListIterator/49forArray/57clinit justifiedalways-newIterators$1(1045B),$2(883B),UnmodifiableListIterator1177B ->129/914995B freshq1-onlymetadatapackage. Authenticatedheader128provesUnmodifiableIteratorparent865B plusjava/util/ListIteratorinterfaceedge ->130/915860B. No unusednonemptyIterators$10preload/nohostparser/nooriginalJava/nooracleinput. Everynewpackagefresh,notCPmigration.126/129worldsretainedmetadata-only.
