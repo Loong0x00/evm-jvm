@@ -23,8 +23,8 @@ for rel in paths:
 classes=['ListIterator.class']+[str(p.relative_to(R)) for p in sorted((R/'tests/raw150-classes').glob('*.class'))]
 for rel in classes:
  b=(R/rel).read_bytes();files[rel]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
-for sub in ['tests/classes','tests/api-classes']:
- for p in sorted((R/sub).glob('*.class')):
+for sub,pattern in [('tests/classes','*.class'),('tests/api-classes','*.class'),('tests/raw150-src','*.java'),('tests/api-src','*.java')]:
+ for p in sorted((R/sub).glob(pattern)):
   rel=str(p.relative_to(R));b=p.read_bytes();files[rel]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
 eng=json.loads((R/'engine/MCEntryInterpreter.json').read_text());co=json.loads((R/'coordinator/MCEntryCoordinator.json').read_text())
 coordbase=pins0['coordinator'];assert co['codeHashes']['runtimeSHA256']==coordbase['runtimeSHA256'];assert co['codeHashes']['runtimeKeccak256']==coordbase['runtimeKeccak256']
