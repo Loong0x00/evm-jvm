@@ -1,3 +1,11 @@
+## Second interruption revalidated — P45 Comparator restarted, P44 data intact
+
+用户再次意外宕机并明确要求继续。此次Git HEADf8bae524a完整、trackedtreeclean、无新增空looseobjects，`git fsck --full` exit0；旧dangling历史对象未删除。最新P44原版116CP SHA `f5431b6390a5159498e9c96fdd071e605281fc2f71f0af853c962bc536e8aedd`、44canonical收据及freshprocessEVM/LevelDBworld全部重验通过，仍2223795J113I。
+
+旧managedjobsa_4d65d46b19554942重启后不存在，未留下重负载进程；7文件未提交Comparator草稿先完整备份到 `/home/user/evm-jvm/recovery/p45-interruption-20261023T122613Z`，ownsource-only9基线hash全部通过。现在SOLEsemanticworker **sa_0e6637a6e87a488b** 在同一OWN `/home/user/evm-jvm/comparator-interface-link` 恢复并完成原P45任务，旧稿/失败记录保留，cachedartifacts不视为通过。编译/EVM重负载串行，及时落盘，不改变guest/EVM计费/行为或额度。父级只准备轻量独立用例，待handoff再freshbuild/gates/freshoriginal116。NoP45accepted yet。恢复证据 `p45-interruption-recovery/verification.json`。
+
+---
+
 ## Same P44 original116 accepted — Comparator interface is next; P45 active
 
 - EVMauthenticated originalGuavaOrdering13408B, explicit116bindings/815898B newP44packagefreshstart, noCPmigration. Discovery648.360s+samepackageprecise588.488s givesexactq1 **java/util/Comparator missing**,site4098/context115. 2223795J113I44verifiedreceipts,epoch44/lifecycle1; CP/hashat `parent-original116-guava-ordering/artifacts/comparator-interface-blocker.json`.
