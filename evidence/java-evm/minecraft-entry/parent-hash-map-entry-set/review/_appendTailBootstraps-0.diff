@@ -1,0 +1,18 @@
+---
+
++++
+
+@@ -87,7 +87,11 @@
+
+         p.classes[classSlot + 65].data = _bootstrapHashMapNode();
+         // Comparator is appended after all 107 accepted P44 images.
+         p.classes[classSlot + 66].data = _bootstrapComparator();
+-        // SortedSet and NavigableSet append after the unchanged P45 tail.
++        // SortedSet and NavigableSet remain at their accepted P45 positions.
+         p.classes[classSlot + 67].data = _bootstrapSortedSet();
+         p.classes[classSlot + 68].data = _bootstrapNavigableSet();
++        // Bounded HashMap entry views append without shifting any prior image.
++        p.classes[classSlot + 71].data = _bootstrapHashMapEntrySet();
++        p.classes[classSlot + 72].data = _bootstrapHashMapEntryIterator();
++        p.classes[classSlot + 73].data = _bootstrapConcurrentModificationException();
+     }

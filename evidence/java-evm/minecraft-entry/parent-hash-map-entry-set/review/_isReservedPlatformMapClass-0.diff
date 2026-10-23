@@ -1,0 +1,14 @@
+---
+
++++
+
+@@ -10,5 +10,8 @@
+
+             || _isNamedClass(c, bytes("java/util/IdentityHashMap"))
+             || _isNamedClass(c, bytes("java/util/HashMap"))
+             || _isNamedClass(c, bytes("java/util/HashMap$Node"))
++            || _isNamedClass(c, bytes("java/util/HashMap$EntrySet"))
++            || _isNamedClass(c, bytes("java/util/HashMap$EntryIterator"))
++            || _isNamedClass(c, bytes("java/util/ConcurrentModificationException"))
+             || _isNamedClass(c, bytes("java/util/NavigableMap"));
+     }

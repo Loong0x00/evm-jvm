@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16375011399941286,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/ParentEntrySetEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/ParentEntrySetRawAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/ParentEntrySetClear.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/ParentEntryIteratorRemove.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7647373550025804,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/driver",
+        "./build/java-diff-mc-entry-set-refusals-parent-p47-v2/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.2648283880007511,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-refusals-parent-p47-v2/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+---
+
++++
+
+@@ -50,7 +50,7 @@
+
+         if (entryPlusOne == 0) revert LinkError(3, 0);
+         // Historical Runnable remains conditional. Class/map/System positions remain
+         // fixed, then the three Properties-family images append after all forty-five.
+-        uint256 count = inputCount + 103 + (suppliedObject ? 0 : 1)
++        uint256 count = inputCount + 106 + (suppliedObject ? 0 : 1)
+             + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
+             + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1) + (suppliedRunnable ? 0 : 1) + 1;
+         p.classes = new ClassInfo[](count);
+@@ -67,11 +67,13 @@
+
+         _appendIOBootstraps(p.classes, at + 22);
+         _appendVFSBootstraps(p.classes, at + 25);
+         _appendTailBootstraps(p, at, suppliedRunnable);
+-        p.classes[count - 5] = _parseBundleClass(_bootstrapFunction());
+-        p.classes[count - 4] = _parseBundleClass(_bootstrapNavigableMap());
+-        p.classes[count - 3] = _parseBundleClass(_bootstrapComparator());
+-        p.classes[count - 2] = _parseBundleClass(_bootstrapSortedSet());
+-        p.classes[count - 1] = _parseBundleClass(_bootstrapNavigableSet());
++        // Keep the historical five tail images in their existing slots; three new
++        // appended images occupy only the final three leaves.
++        p.classes[count - 8] = _parseBundleClass(_bootstrapFunction());
++        p.classes[count - 7] = _parseBundleClass(_bootstrapNavigableMap());
++        p.classes[count - 6] = _parseBundleClass(_bootstrapComparator());
++        p.classes[count - 5] = _parseBundleClass(_bootstrapSortedSet());
++        p.classes[count - 4] = _parseBundleClass(_bootstrapNavigableSet());
+         p.rawClassCount = inputCount;
+         p.rootClass = entryPlusOne - 1;
+         _requireSupportedClass(p.classes[p.rootClass], p.rootClass);

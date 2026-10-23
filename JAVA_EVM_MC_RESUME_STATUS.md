@@ -1,3 +1,12 @@
+## P47 parent-corrected acceptance — genuine Map/HashMap.entrySet; Iterables next
+
+- Worker0c7d3d510unacceptedcandidatecorrectedtwice: actualEVMrawSet.add(Object)castbridgeinventedCCEbeforeunboundnative ->genericEntrySet<E>erasednativeadd,noSyntheticHashMap$1; firstfulloriginalsameCallError(3,79)provedmissingMapinterfacedeclaration ->properabstractMap.entrySetadded. Bothrejectedbuilds/worlds/logspreserved. NoCPcrosscode. Changedoldleaves40/100only, Node104andother108prefiximagesexact, appendhelpers110/111/112,113rootf17b95bad49e93149b028bcc14c1df26926ec7916494d3faf1b787d590457ee2. Engine429415B SHAdb0b3a5ed75c268a3d52d4b9b0c21766f1bba186a5d6d8ce3ece0ea9e0297e22/co5411B authenticatesactualhash. No dispatch/native/heap/codec/ABIstorage/quota/gas changes.
+- IndependentfreshEVM interface-typedMapfixture smallraw2q1/q7:2144J130.796s@1B, livecache/null/collisions/entryaliases/NSEE/CME; raw150+113=263 q4096/q65536@separate2B after1Bshortagepeak1473126276,realCMEclass262array0x206+clone+reopen;resize41entries10164Jq4096/q65536@4Bafter1B/2Bshortagespeak3101551494+reopen.8atomicrawAPI/replacementcontrols@1B. Oldresize-reopenSummaryclassificationfailurepreserved,reportbranchonlyfixed;newv2freshgatespass. Publicgenerated30s vsouter1200s.
+- Fresh original124/870262B v2throughactualauthenticatedcoordinator45verifiedreceipts:2223979J128I epoch45RUNNING CP1285526BSHA36ec4e7843fecb4248e5476fde3c908739a66cfb9debf89cedeba7538cb0ccfa. RealMap8250class224entrySetcached8257class234backref8250. OriginaliteratorNOTclaimed. Discovery670.617s+same-packageprecision665.412s. ExactnextMissing **com/google/common/collect/Iterables**site4107/context4. Doc JAVA_EVM_MC_HASH_MAP_ENTRY_SET_PARENT_PREFLIGHT.md;artifactparent-hash-map-entry-set/artifacts/iterables-resource-blocker.json.
+- Noactiveworker; parentcontinuesmeasuredEVM-onlyoriginalIterablesresource/freshpackage. Hostheavycompiler/EVMserial. Protectedcorevm/state/paramsunchanged95665d570,quotas/native21String12fixed. LOCALpreinstall-only,EVMcharging/consensusunchanged. NoWorld/EULA/listening/Done.
+
+---
+
 ## Same P46 original124 resource-only acceptance — HashMap.entrySet next; P47 active
 
 - EVM-onlyAS0/ZI0/DI0 authenticatedObjectArrays5248B, fresh124/870262B start underUNCHANGEDacceptedP46. Discovery1274.384s localizednewnon-MissingCallErrorallthewaytoq1; separatelyprecisionq1+canonicalreopen16.196s accepted. Noold123CPmigration. **2223947J128I44verifiedreceipts epoch44RUNNING CP1285259BSHA0f36fcf41df44651386356125b4e5b5231f9d7eb64bd5b0ff1e11b19d9f5bf07**.

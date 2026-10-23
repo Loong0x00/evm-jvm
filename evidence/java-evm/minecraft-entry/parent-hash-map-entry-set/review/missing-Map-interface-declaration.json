@@ -1,0 +1,9 @@
+{
+  "firstParentBuild": "build/java-diff-mc-entry-set-build-parent-p47",
+  "firstOriginalWorldPreserved": "build/java-diff-mc-entry-set-original124-parent-p47/official",
+  "notAccepted": true,
+  "cause": "P46 Map interface has no symbolic entrySet declaration; concrete HashMap call-only generated tests do not prove invokeinterface Map.entrySet",
+  "fix": "append abstract Map.entrySet descriptor, keep Map$Entry image and all interpreter dispatch unchanged",
+  "newlyChangedOldLeaf": 40,
+  "nextOriginalMustStartFresh": true
+}

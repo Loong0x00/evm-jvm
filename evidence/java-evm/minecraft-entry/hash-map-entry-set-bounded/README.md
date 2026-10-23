@@ -1,3 +1,13 @@
+# P47 parent-corrected bounded HashMap.entrySet
+
+The historical worker candidate below was **not accepted as written**. Parent preserved and corrected an unsupported add(Object) casting bridge, then a full original replay exposed the missing Map.entrySet interface declaration. Both failed versions/worlds remain preserved; no checkpoint crossed code/package boundaries.
+
+Current independently rebuilt113-image root is `f17b95bad49e93149b028bcc14c1df26926ec7916494d3faf1b787d590457ee2`, engine429415B SHA256 `db0b3a5ed75c268a3d52d4b9b0c21766f1bba186a5d6d8ce3ece0ea9e0297e22`. Changed prior leaves40(Map declaration) and100(HashMap); Node104 and all other108 prior leaves unchanged. New helpers110/111/112. Current pins/artifacts are parent-corrected; old worker EVM receipts below concern only the original candidate, not this code. See `../parent-hash-map-entry-set/` and root `JAVA_EVM_MC_HASH_MAP_ENTRY_SET_PARENT_PREFLIGHT.md` for independent fresh EVM/reopen/original acceptance.
+
+---
+
+## Historical unaccepted worker report (retained verbatim)
+
 # Bounded `HashMap.entrySet` candidate (P47)
 
 This is an **unaccepted source candidate** based only on the manifest-verified, owned P46 source-only snapshot at `../hash-map-entry-set-source-base-p46`. The 10 declared manifest entries were checked byte-for-byte before copying or editing. No Minecraft/original-input/parent review evidence was read. No bindings, EVM ABI, storage layout, checkpoint codec, quota, or interpreter semantics were changed.

@@ -1,0 +1,73 @@
+final class java.util.HashMap$EntrySet<E> extends java.util.AbstractSet<E> {
+  final java.util.HashMap this$0;
+
+  java.util.HashMap$EntrySet(java.util.HashMap);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #1                  // Field this$0:Ljava/util/HashMap;
+       5: aload_0
+       6: invokespecial #2                  // Method java/util/AbstractSet."<init>":()V
+       9: return
+
+  public int size();
+    Code:
+       0: aload_0
+       1: getfield      #1                  // Field this$0:Ljava/util/HashMap;
+       4: getfield      #3                  // Field java/util/HashMap.size:I
+       7: ireturn
+
+  public boolean isEmpty();
+    Code:
+       0: aload_0
+       1: getfield      #1                  // Field this$0:Ljava/util/HashMap;
+       4: getfield      #3                  // Field java/util/HashMap.size:I
+       7: ifne          14
+      10: iconst_1
+      11: goto          15
+      14: iconst_0
+      15: ireturn
+
+  public java.util.Iterator<E> iterator();
+    Code:
+       0: new           #4                  // class java/util/HashMap$EntryIterator
+       3: dup
+       4: aload_0
+       5: getfield      #1                  // Field this$0:Ljava/util/HashMap;
+       8: invokespecial #5                  // Method java/util/HashMap$EntryIterator."<init>":(Ljava/util/HashMap;)V
+      11: areturn
+
+  public native boolean add(E);
+
+  public native boolean addAll(java.util.Collection<? extends E>);
+
+  public native boolean contains(java.lang.Object);
+
+  public native boolean containsAll(java.util.Collection<?>);
+
+  public native boolean remove(java.lang.Object);
+
+  public native boolean removeAll(java.util.Collection<?>);
+
+  public native boolean retainAll(java.util.Collection<?>);
+
+  public native void clear();
+
+  public native java.lang.Object[] toArray();
+
+  public native <T> T[] toArray(T[]);
+
+  public native boolean equals(java.lang.Object);
+
+  public native int hashCode();
+
+  public native void forEach(java.util.function.Consumer<? super E>);
+
+  public native boolean removeIf(java.util.function.Predicate<? super E>);
+
+  public native java.util.Spliterator<E> spliterator();
+
+  public native java.util.stream.Stream<E> stream();
+
+  public native java.util.stream.Stream<E> parallelStream();
+}

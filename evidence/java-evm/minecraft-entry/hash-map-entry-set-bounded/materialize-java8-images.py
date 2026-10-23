@@ -1,12 +1,22 @@
 #!/usr/bin/env python3
 """Synchronize canonical Java 8 class bytes into their Solidity materializers."""
 from pathlib import Path
-import re
+import re, subprocess, sys
 
 ROOT = Path(__file__).resolve().parent
 SOL = ROOT / "engine/MCEntryInterpreter.sol"
-CLASSES = ROOT / "builds/java8-p2/java/util"
+OUT = Path(sys.argv[1]).resolve() if len(sys.argv)>1 else ROOT / "builds/java8-parent-corrected"
+if OUT.exists(): raise SystemExit("choose a new Java image output directory; previous attempts are preserved")
+OUT.mkdir(parents=True)
+JAVAC = "/usr/lib/jvm/java-8-openjdk/bin/javac"
+common = [JAVAC,"-g:none","-source","8","-target","8","-d",str(OUT)]
+subprocess.run(common+[str(ROOT/"bootstrap/java/util/HashMap.java"),str(ROOT/"bootstrap/java/util/ConcurrentModificationException.java")],check=True)
+# Map$Entry is compile-time source context only. Do not materialize it: its
+# independently accepted bootstrap image remains pinned byte-for-byte.
+subprocess.run(common+[str(ROOT/"bootstrap/java/util/Map.java")],check=True)
+CLASSES = OUT / "java/util"
 IMAGES = {
+    "_bootstrapMap": "Map.class",
     "_bootstrapHashMap": "HashMap.class",
     "_bootstrapHashMapNode": "HashMap$Node.class",
     "_bootstrapHashMapEntrySet": "HashMap$EntrySet.class",

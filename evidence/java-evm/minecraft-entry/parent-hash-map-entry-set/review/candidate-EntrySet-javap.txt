@@ -1,0 +1,88 @@
+final class java.util.HashMap$EntrySet extends java.util.AbstractSet<java.util.Map$Entry<K, V>> {
+  final java.util.HashMap this$0;
+
+  private java.util.HashMap$EntrySet(java.util.HashMap);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: putfield      #2                  // Field this$0:Ljava/util/HashMap;
+       5: aload_0
+       6: invokespecial #3                  // Method java/util/AbstractSet."<init>":()V
+       9: return
+
+  public int size();
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field this$0:Ljava/util/HashMap;
+       4: getfield      #4                  // Field java/util/HashMap.size:I
+       7: ireturn
+
+  public boolean isEmpty();
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field this$0:Ljava/util/HashMap;
+       4: getfield      #4                  // Field java/util/HashMap.size:I
+       7: ifne          14
+      10: iconst_1
+      11: goto          15
+      14: iconst_0
+      15: ireturn
+
+  public java.util.Iterator<java.util.Map$Entry<K, V>> iterator();
+    Code:
+       0: new           #5                  // class java/util/HashMap$EntryIterator
+       3: dup
+       4: aload_0
+       5: getfield      #2                  // Field this$0:Ljava/util/HashMap;
+       8: invokespecial #6                  // Method java/util/HashMap$EntryIterator."<init>":(Ljava/util/HashMap;)V
+      11: areturn
+
+  public native boolean add(java.util.Map$Entry<K, V>);
+
+  public native boolean addAll(java.util.Collection<? extends java.util.Map$Entry<K, V>>);
+
+  public native boolean contains(java.lang.Object);
+
+  public native boolean containsAll(java.util.Collection<?>);
+
+  public native boolean remove(java.lang.Object);
+
+  public native boolean removeAll(java.util.Collection<?>);
+
+  public native boolean retainAll(java.util.Collection<?>);
+
+  public native void clear();
+
+  public native java.lang.Object[] toArray();
+
+  public native <T> T[] toArray(T[]);
+
+  public native boolean equals(java.lang.Object);
+
+  public native int hashCode();
+
+  public native void forEach(java.util.function.Consumer<? super java.util.Map$Entry<K, V>>);
+
+  public native boolean removeIf(java.util.function.Predicate<? super java.util.Map$Entry<K, V>>);
+
+  public native java.util.Spliterator<java.util.Map$Entry<K, V>> spliterator();
+
+  public native java.util.stream.Stream<java.util.Map$Entry<K, V>> stream();
+
+  public native java.util.stream.Stream<java.util.Map$Entry<K, V>> parallelStream();
+
+  public boolean add(java.lang.Object);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: checkcast     #7                  // class java/util/Map$Entry
+       5: invokevirtual #8                  // Method add:(Ljava/util/Map$Entry;)Z
+       8: ireturn
+
+  java.util.HashMap$EntrySet(java.util.HashMap, java.util.HashMap$1);
+    Code:
+       0: aload_0
+       1: aload_1
+       2: invokespecial #1                  // Method "<init>":(Ljava/util/HashMap;)V
+       5: return
+}

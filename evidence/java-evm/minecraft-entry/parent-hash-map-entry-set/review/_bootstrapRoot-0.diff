@@ -1,0 +1,23 @@
+---
+
++++
+
+@@ -1,5 +1,5 @@
+
+ function _bootstrapRoot() private pure returns (bytes32) {
+-        bytes32[] memory h = new bytes32[](110);
++        bytes32[] memory h = new bytes32[](113);
+         h[0] = keccak256(_bootstrapObject());
+         h[1] = keccak256(_bootstrapCloneable());
+         h[2] = keccak256(_bootstrapSerializable());
+@@ -141,5 +141,9 @@
+
+         // SortedSet and NavigableSet append after all 108 P45 images.
+         h[108] = keccak256(_bootstrapSortedSet());
+         h[109] = keccak256(_bootstrapNavigableSet());
++        // Genuine bounded HashMap entry-view helpers append after P46.
++        h[110] = keccak256(_bootstrapHashMapEntrySet());
++        h[111] = keccak256(_bootstrapHashMapEntryIterator());
++        h[112] = keccak256(_bootstrapConcurrentModificationException());
+         return keccak256(abi.encode(DBOOT, h));
+     }

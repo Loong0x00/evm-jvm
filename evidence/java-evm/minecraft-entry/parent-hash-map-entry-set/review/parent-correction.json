@@ -1,0 +1,9 @@
+{
+  "rejectedWorkerCommit": "0c7d3d510110704f9d4d7770ae6a39d6c82feb40",
+  "reason": "erased Set.add(Object) bridge ran checkcast before the intended raw unbound-native refusal",
+  "workerCandidateRawAddProducedTerminalJavaKind": 8,
+  "stockRawAddThrows": "UnsupportedOperationException",
+  "fix": "private generic EntrySet<E> makes add(E) erase directly to native add(Object), no argument-casting bridge; explicit package constructor removes unused synthetic HashMap$1 marker",
+  "Node104ByteExact": true,
+  "noInterpreterDispatchOrNativeChanges": true
+}

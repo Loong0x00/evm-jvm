@@ -1,0 +1,148 @@
+{
+  "status": "unimplemented entry view APIs and all reserved raw names atomically refused",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "db0b3a5ed75c268a3d52d4b9b0c21766f1bba186a5d6d8ce3ece0ea9e0297e22",
+  "engineRuntimeKeccak256": "0xc2fe549f931dd213b1dc8458251d657b587c91fd916170834a544dc0e6838718",
+  "coordinatorRuntimeSHA256": "7af53ef47330e61853ab4f09709a8f1ee851052ea3ae56ec648fba517030ff96",
+  "coordinatorRuntimeKeccak256": "0x4b6073da761acb0465c57f0d7a37596ae1f59d234ea0602a23c219bd52793ec6",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "ParentEntrySetEquals",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "13"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x09296f19659c1a98228c268652fff219d201a05f65dabde80ff890443da24d46",
+      "rootAfter": "0x09296f19659c1a98228c268652fff219d201a05f65dabde80ff890443da24d46",
+      "atomic": true,
+      "successfulSlices": 6,
+      "committedHeadEpoch": 6,
+      "callsIncludingRefusal": 7,
+      "gasUsed": 259688909,
+      "wallMs": 233
+    },
+    {
+      "name": "ParentEntrySetRawAdd",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "19"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x94f366799f159d23aaaaf160a084bf1f5ab0b0040f3b8f7c8a950521d0ef4b0d",
+      "rootAfter": "0x94f366799f159d23aaaaf160a084bf1f5ab0b0040f3b8f7c8a950521d0ef4b0d",
+      "atomic": true,
+      "successfulSlices": 7,
+      "committedHeadEpoch": 7,
+      "callsIncludingRefusal": 8,
+      "gasUsed": 298056210,
+      "wallMs": 273
+    },
+    {
+      "name": "ParentEntrySetClear",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "12"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xff6d0284370eca76d56da8a22460c0e7ed5d3bb5b2e7f622a996f7cf3434b24b",
+      "rootAfter": "0xff6d0284370eca76d56da8a22460c0e7ed5d3bb5b2e7f622a996f7cf3434b24b",
+      "atomic": true,
+      "successfulSlices": 6,
+      "committedHeadEpoch": 6,
+      "callsIncludingRefusal": 7,
+      "gasUsed": 259566559,
+      "wallMs": 235
+    },
+    {
+      "name": "ParentEntryIteratorRemove",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "17"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x905ae3892920e7cb21f82125263f1f11744976c19ab4d907f7332e0df1155b79",
+      "rootAfter": "0x905ae3892920e7cb21f82125263f1f11744976c19ab4d907f7332e0df1155b79",
+      "atomic": true,
+      "successfulSlices": 9,
+      "committedHeadEpoch": 9,
+      "callsIncludingRefusal": 10,
+      "gasUsed": 385786663,
+      "wallMs": 351
+    },
+    {
+      "name": "raw-HashMap",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "rootAfter": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "atomic": true,
+      "gasUsed": 849437,
+      "wallMs": 2
+    },
+    {
+      "name": "raw-HashMap$EntrySet",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "rootAfter": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "atomic": true,
+      "gasUsed": 510899,
+      "wallMs": 1
+    },
+    {
+      "name": "raw-HashMap$EntryIterator",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "rootAfter": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "atomic": true,
+      "gasUsed": 471992,
+      "wallMs": 1
+    },
+    {
+      "name": "raw-ConcurrentModificationException",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "rootAfter": "0x6bb94638b317dd3eb3d460ffb16d85cf901964f4131bb95f3c19695c06356213",
+      "atomic": true,
+      "gasUsed": 332313,
+      "wallMs": 1
+    }
+  ],
+  "processId": 292834,
+  "elapsedMs": 0
+}

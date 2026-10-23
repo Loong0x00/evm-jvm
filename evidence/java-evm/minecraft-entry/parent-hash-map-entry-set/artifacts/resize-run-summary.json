@@ -1,0 +1,113 @@
+{
+  "status": "PASS",
+  "generatedOnly": true,
+  "stockJava8Oracle": true,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16375992400207906,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-hash-map-entry-set/ParentEntrySetSmoke.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-hash-map-entry-set/ParentEntrySetResize.java"
+      ]
+    },
+    {
+      "label": "java8-oracle",
+      "exit": 0,
+      "wallSeconds": 0.03154934099802631,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/classes",
+        "ParentEntrySetResize"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7646229569982097,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/driver",
+        "./build/java-diff-mc-entry-set-resize-parent-p47-v2/driver-src"
+      ]
+    },
+    {
+      "label": "parent-resize-attempt-1",
+      "exit": 42,
+      "wallSeconds": 0.8145127330026298,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/parent-resize-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000
+    },
+    {
+      "label": "parent-resize-attempt-2",
+      "exit": 42,
+      "wallSeconds": 1.9158423379994929,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/parent-resize-attempt-2",
+        "2000000000"
+      ],
+      "gasBudget": 2000000000
+    },
+    {
+      "label": "parent-resize-attempt-3",
+      "exit": 0,
+      "wallSeconds": 2.1659848099989176,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/parent-resize-attempt-3",
+        "4000000000"
+      ],
+      "gasBudget": 4000000000
+    },
+    {
+      "label": "reopen",
+      "exit": 0,
+      "wallSeconds": 0.21386281800005236,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-build-parent-p47-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-set-resize-parent-p47-v2/parent-resize-attempt-3",
+        "4000000000"
+      ]
+    }
+  ],
+  "successfulAttempt": 3,
+  "successfulGasBudget": 4000000000
+}

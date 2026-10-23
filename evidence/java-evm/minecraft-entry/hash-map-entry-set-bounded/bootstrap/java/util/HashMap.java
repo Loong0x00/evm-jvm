@@ -150,17 +150,19 @@ public class HashMap<K, V> extends AbstractMap<K, V>
     public native Collection<V> values();
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> view = entrySet;
-        if (view == null) entrySet = view = new EntrySet();
+        if (view == null) entrySet = view = new EntrySet<Map.Entry<K, V>>();
         return view;
     }
 
     /** A cached, live view over this map; mutation surfaces stay unbound. */
-    private final class EntrySet extends AbstractSet<Map.Entry<K, V>> {
+    private final class EntrySet<E> extends AbstractSet<E> {
+        EntrySet() { }
         public int size() { return HashMap.this.size; }
         public boolean isEmpty() { return HashMap.this.size == 0; }
-        public Iterator<Map.Entry<K, V>> iterator() { return new EntryIterator(); }
-        public native boolean add(Map.Entry<K, V> entry);
-        public native boolean addAll(Collection<? extends Map.Entry<K, V>> values);
+        @SuppressWarnings("unchecked")
+        public Iterator<E> iterator() { return (Iterator<E>) new EntryIterator(); }
+        public native boolean add(E entry);
+        public native boolean addAll(Collection<? extends E> values);
         public native boolean contains(Object value);
         public native boolean containsAll(Collection<?> values);
         public native boolean remove(Object value);
@@ -171,11 +173,11 @@ public class HashMap<K, V> extends AbstractMap<K, V>
         public native <T> T[] toArray(T[] target);
         public native boolean equals(Object other);
         public native int hashCode();
-        public native void forEach(java.util.function.Consumer<? super Map.Entry<K, V>> action);
-        public native boolean removeIf(java.util.function.Predicate<? super Map.Entry<K, V>> filter);
-        public native java.util.Spliterator<Map.Entry<K, V>> spliterator();
-        public native java.util.stream.Stream<Map.Entry<K, V>> stream();
-        public native java.util.stream.Stream<Map.Entry<K, V>> parallelStream();
+        public native void forEach(java.util.function.Consumer<? super E> action);
+        public native boolean removeIf(java.util.function.Predicate<? super E> filter);
+        public native java.util.Spliterator<E> spliterator();
+        public native java.util.stream.Stream<E> stream();
+        public native java.util.stream.Stream<E> parallelStream();
     }
 
     /** Java 8 HashIterator traversal and fail-fast next() behavior. */

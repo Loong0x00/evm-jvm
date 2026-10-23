@@ -1,0 +1,118 @@
+package main
+
+import (
+	"bytes"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"os"
+	"reflect"
+
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/state"
+	"github.com/ethereum/go-ethereum/core/tracing"
+	"github.com/ethereum/go-ethereum/core/types"
+	evmrun "github.com/ethereum/go-ethereum/core/vm/runtime"
+)
+
+type artifact struct {
+	ABI              json.RawMessage `json:"abi"`
+	DeployedBytecode string          `json:"deployedBytecode"`
+}
+type seedFile struct {
+	Path     []byte
+	Data     []byte
+	ReadOnly bool
+}
+
+type summary struct {
+	Lifecycle          uint8  `json:"lifecycle"`
+	Outcome            uint8  `json:"outcome"`
+	Epoch              uint64 `json:"epoch"`
+	CheckpointRoot     string `json:"checkpointRoot"`
+	MachineStateRoot   string `json:"machineStateRoot"`
+	VFSStateRoot       string `json:"vfsStateRoot"`
+	TotalJvmSteps      uint64 `json:"totalJvmSteps"`
+	TotalInternalSteps uint64 `json:"totalInternalSteps"`
+	Result             int32  `json:"result"`
+	JavaKind           uint8  `json:"javaKind"`
+	JavaClass          string `json:"javaClass"`
+}
+
+func readArtifact(path string) (abi.ABI, []byte) {
+	b, err := os.ReadFile(path)
+	must(err)
+	var a artifact
+	must(json.Unmarshal(b, &a))
+	contractABI, err := abi.JSON(bytes.NewReader(a.ABI))
+	must(err)
+	code, err := hex.DecodeString(a.DeployedBytecode)
+	must(err)
+	return contractABI, code
+}
+func must(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+func getField(v reflect.Value, name string) reflect.Value { return v.FieldByName(name) }
+func summaryOf(v interface{}) summary {
+	x := reflect.ValueOf(v)
+	get := func(n string) reflect.Value { return getField(x, n) }
+	bytes32 := func(n string) string {
+		f := get(n)
+		b := make([]byte, f.Len())
+		for i := range b {
+			b[i] = byte(f.Index(i).Uint())
+		}
+		return "0x" + hex.EncodeToString(b)
+	}
+	return summary{
+		Lifecycle: uint8(get("Lifecycle").Uint()), Outcome: uint8(get("Outcome").Uint()), Epoch: get("Epoch").Uint(),
+		CheckpointRoot: bytes32("CheckpointRoot"), MachineStateRoot: bytes32("MachineStateRoot"), VFSStateRoot: bytes32("VfsStateRoot"),
+		TotalJvmSteps: get("TotalJvmSteps").Uint(), TotalInternalSteps: get("TotalInternalSteps").Uint(),
+		Result: int32(get("Result").Int()), JavaKind: uint8(get("JavaKind").Uint()), JavaClass: string(get("JavaClass").Bytes()),
+	}
+}
+func invoke(contract common.Address, st *state.StateDB, origin common.Address, data []byte) []byte {
+	out, _, err := evmrun.Call(contract, data, &evmrun.Config{State: st, Origin: origin, GasLimit: 1_000_000_000})
+	if err != nil {
+		panic(fmt.Errorf("EVM call failed: %w revertData=0x%x", err, out))
+	}
+	return out
+}
+func run(q uint64, engineABI abi.ABI, code []byte, raw [][]byte, origin common.Address) summary {
+	st, err := state.New(types.EmptyRootHash, state.NewDatabaseForTesting())
+	must(err)
+	contract := common.BytesToAddress([]byte("contract"))
+	st.CreateAccount(contract)
+	st.SetCode(contract, code, tracing.CodeChangeUnspecified)
+	id := common.BytesToHash([]byte(fmt.Sprintf("entryset-q-%d", q)))
+	data, err := engineABI.Pack("startMain", id, raw, "EntrySetProbe", []seedFile{}, q, uint32(4096))
+	must(err)
+	ret := invoke(contract, st, origin, data)
+	vals, err := engineABI.Unpack("startMain", ret)
+	must(err)
+	cur := summaryOf(vals[0])
+	checkpoint := vals[1].([]byte)
+	for calls := 0; cur.Lifecycle == 1; calls++ {
+		if calls > 16384 {
+			panic("resume call bound exceeded")
+		}
+		data, err = engineABI.Pack("resumeMain", id, cur.Epoch, [32]byte(common.HexToHash(cur.CheckpointRoot)), raw, checkpoint, q, uint32(4096))
+		must(err)
+		ret = invoke(contract, st, origin, data)
+		vals, err = engineABI.Unpack("resumeMain", ret)
+		must(err)
+		cur = summaryOf(vals[0])
+		checkpoint = vals[1].([]byte)
+	}
+	if cur.Lifecycle != 2 || cur.Outcome != 2 || cur.JavaKind != 0 {
+		panic(fmt.Sprintf("guest did not complete normally: %+v", cur))
+	}
+	return cur
+}
+func main(){
+ a,code:=readArtifact(os.Args[1]);st,err:=state.New(types.EmptyRootHash,state.NewDatabaseForTesting());must(err);at:=common.BytesToAddress([]byte("contract"));origin:=common.HexToAddress("0x1");st.CreateAccount(at);st.SetCode(at,code,tracing.CodeChangeUnspecified);raw,err:=os.ReadFile(os.Args[2]);must(err);data,err:=a.Pack("startMain",common.HexToHash("0x1234"),[][]byte{raw},"ParentEntrySetRawAdd",[]seedFile{},uint64(65536),uint32(4096));must(err);ret,_,err:=evmrun.Call(at,data,&evmrun.Config{State:st,Origin:origin,GasLimit:1_000_000_000});if err!=nil{fmt.Printf("RAW_REFUSAL %v %x\n",err,ret);return};vs,err:=a.Unpack("startMain",ret);must(err);out,err:=json.MarshalIndent(summaryOf(vs[0]),"","  ");must(err);fmt.Println(string(out))
+}
