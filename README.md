@@ -14,9 +14,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 125 explicit, authenticated class resources (889,395 bytes) |
-| Guest execution | **2,223,992 JVM instructions**, 128 internal steps, 44 verified successful checkpoint receipts |
-| Current blocker | Measured `Collection.toArray(T[])` on the real HashMap entry view is unsupported |
-| Runtime profile | 429,415-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Guest execution | **2,224,082 JVM instructions**, 128 internal steps, 44 verified successful checkpoint receipts |
+| Current blocker | Missing bootstrap `java.util.LinkedHashMap`; original Guava calls its zero-argument constructor |
+| Runtime profile | 429,978-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 113 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
@@ -24,11 +24,12 @@ Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [Comparator compare/link / P45](JAVA_EVM_MC_COMPARATOR_PARENT_PREFLIGHT.md).
-Fresh EVM tests execute captured-state comparisons, generic bridges, null/type
-checks and a typed Comparator[]/clone at index257 in258 internal classes.
-Small q1/q7 tests use1B; the raw150 envelope required a separately labeled4B
-after measured1B/2B shortages. Full Java Comparator helpers are not claimed.
+Latest acceptance: [Bounded typed EntrySet array copy / P48](JAVA_EVM_MC_ENTRY_SET_TYPED_ARRAY_PARENT_PREFLIGHT.md).
+Fresh EVM tests execute interface-typed real-node copies, target identity,
+tail preservation, aliases and genuine NPE/ASE. Small q1/q7 use1B; the raw150
+case required separately labeled2B after measured1B shortage. Short arrays and
+unsupported inherited operations raw-refuse; component-preserving growth and
+no-arg toArray are not claimed.
 
 ### Important LOCAL-only limits
 
@@ -61,7 +62,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original125-guava-iterables/artifacts/collection-entry-view-to-array-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-entry-set-to-array/artifacts/linked-hash-map-constructor-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

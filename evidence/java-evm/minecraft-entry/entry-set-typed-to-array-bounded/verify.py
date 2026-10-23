@@ -63,15 +63,17 @@ assert len(old["leaves"]) == 113
 assert old["root"] == base_pins["bootstrapRoot"]
 assert new["root"] == json.loads((HERE / "bootstrap-root.json").read_text())["bootstrapRoot"]
 assert len(new["leaves"]) == 113
+assert new["leaves"] == json.loads((HERE / "bootstrap-root.json").read_text())["orderedLeaves"]
 old_pairs = helper.leaf_pairs(base_src.read_text())
 new_pairs = helper.leaf_pairs(candidate_src.read_text())
 changed = [i for i, (a, b) in enumerate(zip(old_pairs, new_pairs)) if a != b]
-assert changed == [53, 110], changed
+assert changed == [53, 55, 110], changed
 for i in (40, 94, 100, 104):
     assert old_pairs[i] == new_pairs[i], ("fixed leaf changed", i)
 
 images = {
     53: HERE / "class-images/java/util/Collection.class",
+    55: HERE / "class-images/java/util/AbstractCollection.class",
     100: HERE / "class-images/java/util/HashMap.class",
     104: HERE / "class-images/java/util/HashMap$Node.class",
     110: HERE / "class-images/java/util/HashMap$EntrySet.class",

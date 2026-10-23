@@ -1,0 +1,10 @@
+{
+  "rejectedCandidateCommit": "94a8845c4a71f16bad322ea3572c1d79ab8a1f66",
+  "probe": "Collection c = new HashSet(); c.toArray(new Object[0])",
+  "candidateOutcome": "terminal javaKind11 AbstractMethodError",
+  "requiredOutcome": "raw profile refusal for unimplemented APIs",
+  "fix": "minimal unbound native typed toArray in common AbstractCollection, covering existing HashSet/EnumSet/ArrayList/COWAL/CLQ inheritance; concrete EntrySet implementation still overrides",
+  "additionalChangedLeaf": 55,
+  "noExtraCopyCapabilityOrNativeBinding": true,
+  "baseSourceReproducesAcceptedAbstractCollectionExactly": true
+}

@@ -1,0 +1,223 @@
+{
+  "status": "typed-copy capacity/inherited unsupported/raw-reservation paths atomically refused",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "d45a84f99606d44480ef4830f9f04fe6d87dd6e0d527c9d0a69862fc7e3bb6d9",
+  "engineRuntimeKeccak256": "0x28a4336d0c9e1e5fe7e6e3fdc59635967ee8ead1ebca1a4d3275acabd2b60a15",
+  "coordinatorRuntimeSHA256": "912bafd76875e7fc1277a31d33e1e3c4ae2305647a7f268beb03bdf2119c2faa",
+  "coordinatorRuntimeKeccak256": "0x43acc2082adc10959771451aadb6c764f4a56ef921a43844a7372cc7e4ac92b8",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "ParentArrayShort",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "14"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x26da582f42ffc7359696995ff4d2f25de227c975786509a931007cd2707728e9",
+      "rootAfter": "0x26da582f42ffc7359696995ff4d2f25de227c975786509a931007cd2707728e9",
+      "atomic": true,
+      "successfulSlices": 22,
+      "committedHeadEpoch": 22,
+      "callsIncludingRefusal": 23,
+      "gasUsed": 878646379,
+      "wallMs": 809
+    },
+    {
+      "name": "ParentArrayShortSentinel",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "14"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xceb3e42710fced330bd89e3e594e84a668a3c8cdae6300ae90559560679c1366",
+      "rootAfter": "0xceb3e42710fced330bd89e3e594e84a668a3c8cdae6300ae90559560679c1366",
+      "atomic": true,
+      "successfulSlices": 54,
+      "committedHeadEpoch": 54,
+      "callsIncludingRefusal": 55,
+      "gasUsed": 2373530018,
+      "wallMs": 2123
+    },
+    {
+      "name": "ParentArrayNoArg",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "12"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xeeb118e3d14d48da3dad943b43c196508f933eb54bb7ec45a42e3afc31750891",
+      "rootAfter": "0xeeb118e3d14d48da3dad943b43c196508f933eb54bb7ec45a42e3afc31750891",
+      "atomic": true,
+      "successfulSlices": 6,
+      "committedHeadEpoch": 6,
+      "callsIncludingRefusal": 7,
+      "gasUsed": 259959048,
+      "wallMs": 233
+    },
+    {
+      "name": "ParentArrayAdd",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "19"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x2eef84d016976f4266eebfae89e116fae4449e3673d2c8bf0a5fdbb92dd2b831",
+      "rootAfter": "0x2eef84d016976f4266eebfae89e116fae4449e3673d2c8bf0a5fdbb92dd2b831",
+      "atomic": true,
+      "successfulSlices": 7,
+      "committedHeadEpoch": 7,
+      "callsIncludingRefusal": 8,
+      "gasUsed": 298646416,
+      "wallMs": 271
+    },
+    {
+      "name": "ParentArrayEquals",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "13"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x6802838185fda863bd99fe36bbc732135a937b59938becab39b79a93a0ed2d1d",
+      "rootAfter": "0x6802838185fda863bd99fe36bbc732135a937b59938becab39b79a93a0ed2d1d",
+      "atomic": true,
+      "successfulSlices": 6,
+      "committedHeadEpoch": 6,
+      "callsIncludingRefusal": 7,
+      "gasUsed": 260244261,
+      "wallMs": 233
+    },
+    {
+      "name": "ParentArrayHashSet",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "13"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x6b4f44595f990cf5f231e2ddadd868a4cc716b52199d52b0fec1d86b2dc84ea2",
+      "rootAfter": "0x6b4f44595f990cf5f231e2ddadd868a4cc716b52199d52b0fec1d86b2dc84ea2",
+      "atomic": true,
+      "successfulSlices": 4,
+      "committedHeadEpoch": 4,
+      "callsIncludingRefusal": 5,
+      "gasUsed": 182915657,
+      "wallMs": 167
+    },
+    {
+      "name": "ParentArrayArrayList",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "14"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x4f28453458e821fa49869828db61869230a20dd7702f7f46d8a35ed3daf9ea1f",
+      "rootAfter": "0x4f28453458e821fa49869828db61869230a20dd7702f7f46d8a35ed3daf9ea1f",
+      "atomic": true,
+      "successfulSlices": 3,
+      "committedHeadEpoch": 3,
+      "callsIncludingRefusal": 4,
+      "gasUsed": 143757141,
+      "wallMs": 131
+    },
+    {
+      "name": "ParentArrayCow",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "13"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x61fc3d108378c54bd4332bd5d4f87ed9d498035be10506e673209885a1658370",
+      "rootAfter": "0x61fc3d108378c54bd4332bd5d4f87ed9d498035be10506e673209885a1658370",
+      "atomic": true,
+      "successfulSlices": 2,
+      "committedHeadEpoch": 2,
+      "callsIncludingRefusal": 3,
+      "gasUsed": 109300153,
+      "wallMs": 99
+    },
+    {
+      "name": "ParentArrayQueue",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "13"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x36f909514c3470fbae66dd136f43403f973fdfaae56e653edd4278b5b4df00d9",
+      "rootAfter": "0x36f909514c3470fbae66dd136f43403f973fdfaae56e653edd4278b5b4df00d9",
+      "atomic": true,
+      "successfulSlices": 2,
+      "committedHeadEpoch": 2,
+      "callsIncludingRefusal": 3,
+      "gasUsed": 106449938,
+      "wallMs": 95
+    },
+    {
+      "name": "raw-Collection",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xfe5d1d75eb99de0d1b218980580ab335f0f29ad8810dd674065cb9f6d4d39e6a",
+      "rootAfter": "0xfe5d1d75eb99de0d1b218980580ab335f0f29ad8810dd674065cb9f6d4d39e6a",
+      "atomic": true,
+      "gasUsed": 358946,
+      "wallMs": 1
+    },
+    {
+      "name": "raw-AbstractCollection",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xfe5d1d75eb99de0d1b218980580ab335f0f29ad8810dd674065cb9f6d4d39e6a",
+      "rootAfter": "0xfe5d1d75eb99de0d1b218980580ab335f0f29ad8810dd674065cb9f6d4d39e6a",
+      "atomic": true,
+      "gasUsed": 355668,
+      "wallMs": 1
+    },
+    {
+      "name": "raw-HashMapEntrySet",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xfe5d1d75eb99de0d1b218980580ab335f0f29ad8810dd674065cb9f6d4d39e6a",
+      "rootAfter": "0xfe5d1d75eb99de0d1b218980580ab335f0f29ad8810dd674065cb9f6d4d39e6a",
+      "atomic": true,
+      "gasUsed": 544986,
+      "wallMs": 1
+    }
+  ],
+  "processId": 363776,
+  "elapsedMs": 0
+}

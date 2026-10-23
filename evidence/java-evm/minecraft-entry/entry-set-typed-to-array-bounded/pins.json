@@ -1,5 +1,5 @@
 {
-  "profile": "generated local EVM bounded Collection.toArray(T[]) / HashMap EntrySet copy candidate; not independently accepted",
+  "profile": "P48 independently parent-accepted bounded typed EntrySet copy; historical worker logs retained",
   "acceptedBaseCommit": "1631a3201672da593f82c7bb4008b93de14ebd6d",
   "sourceBase": "source-basis (exact verified P47 source-only snapshot)",
   "sourceManifestSHA256": "70ea54a426892a5cb3edc9086fbee43e70a5c21b515878c5a4eb17f30cb471d1",
@@ -8,17 +8,20 @@
   "bootstrapCount": 113,
   "baseBootstrapRoot": "f17b95bad49e93149b028bcc14c1df26926ec7916494d3faf1b787d590457ee2",
   "candidateBootstrapDomain": "JVMEVM:MC-HASHMAP-ENTRY-SET-TYPED-TO-ARRAY-BOUNDED:1",
-  "candidateBootstrapRoot": "becacc3754a4006b0add9bfd79c9cb68fc966508b1c23701184a6105ad360c02",
+  "candidateBootstrapRoot": "28a117d6b859fff966c517f49485e15df7db911f9ed1d077a8e7a5f6337f7413",
   "changedLeaves": [
     {
       "index": 53,
-      "class": "java/util/Collection",
       "oldKeccak256": "2678bac4e6565a8811acff77acfe0cdb01159742c92990e59d2554bbe6157701",
       "newKeccak256": "abb24b1c624154293e389f78a4ca372a92a25e3a93d7bc78fa9eb0385b296120"
     },
     {
+      "index": 55,
+      "oldKeccak256": "f74be988c3e87f2a31461b81ea6377643c2478e7031c0360439a189ac5cce459",
+      "newKeccak256": "93f41b251bb80de3428242d432ff89599a8958cbb8aaded225f4e4eba3549b69"
+    },
+    {
       "index": 110,
-      "class": "java/util/HashMap$EntrySet",
       "oldKeccak256": "7c958cceb7026a9a82536ace0e0c0ab99692be903a69ee7a764a24e4ec0d0575",
       "newKeccak256": "81693417e6e192c9b88c2f3b800e59fe945f47264cb2cdbec08fbc98ab007166"
     }
@@ -26,6 +29,7 @@
   "exactPreservation": {
     "leavesChangedOnly": [
       53,
+      55,
       110
     ],
     "hashMapLeaf100Exact": true,
@@ -63,6 +67,13 @@
       "bytes": 448,
       "sha256": "5c0beea6f609e3573672ca67fc5f06d086011f2974c5db179d9d7da59c794ac5",
       "keccak256": "47bd965aa8c05997905d9d71684cc4409974e23e06bc6d360d9f06f82099e4ac"
+    },
+    "AbstractCollection": {
+      "leaf": 55,
+      "name": "java/util/AbstractCollection",
+      "bytes": 470,
+      "sha256": "40baff05dfe465cc19d5c5ae3f56c34875eaee0da22ddea740898fbd5bcbd4eb",
+      "keccak256": "93f41b251bb80de3428242d432ff89599a8958cbb8aaded225f4e4eba3549b69"
     }
   },
   "javaCompiler": {
@@ -72,6 +83,13 @@
     "hashMapContext": "stock JDK 8 compile completed first; minimal Collection.java and Map.java compile separately"
   },
   "engine": {
+    "runtimeBytes": 429978,
+    "initSHA256": "c094d8f638a06c3fbbcfa343e69f9a701c5378c9b19da9044602c0bfad119c27",
+    "runtimeSHA256": "d45a84f99606d44480ef4830f9f04fe6d87dd6e0d527c9d0a69862fc7e3bb6d9",
+    "runtimeKeccak256": "28a4336d0c9e1e5fe7e6e3fdc59635967ee8ead1ebca1a4d3275acabd2b60a15",
+    "sourceHashes": {
+      "MCEntryInterpreter.sol": "2776741a61a823df1e6377924bc17355bec650030e2335f171d6178fb093ef75"
+    },
     "compiler": {
       "version": "0.8.30+commit.73712a01.Emscripten.clang",
       "optimizer": {
@@ -84,16 +102,16 @@
         "appendCBOR": false,
         "bytecodeHash": "none"
       }
-    },
-    "initBytes": 429881,
-    "runtimeBytes": 429853,
-    "initSHA256": "a39cffaaa091102b66c729ebb0e338310bcfd9adba6fea4def76e3eb02268309",
-    "runtimeSHA256": "12bc57a498a267885718cc84655086c2689d7069e7cfc24530414f37bb6cfd71",
-    "runtimeKeccak256": "9aca7678924b7e369185c3b27b115e299e06d7745020ea374b6c8b23557012ba",
-    "sourceSHA256": "cde694216fc26b641316b04766e0384d2ad4774bd5abfa70b6afc49fc88624b5",
-    "abiAndStorageLayoutUnchanged": true
+    }
   },
   "coordinator": {
+    "runtimeBytes": 5411,
+    "initSHA256": "d77ae4e24e7cd5bc0d40c2c9d029477b745ae99acc9bd9064cc9aeb55b481a6f",
+    "runtimeSHA256": "912bafd76875e7fc1277a31d33e1e3c4ae2305647a7f268beb03bdf2119c2faa",
+    "runtimeKeccak256": "43acc2082adc10959771451aadb6c764f4a56ef921a43844a7372cc7e4ac92b8",
+    "sourceHashes": {
+      "MCEntryCoordinator.sol": "323066ddecc1e8f816526cd4e55657fd27011a9dfc3eedb6c80b1d0fde92672c"
+    },
     "compiler": {
       "version": "0.8.30+commit.73712a01.Emscripten.clang",
       "optimizer": {
@@ -106,18 +124,31 @@
         "appendCBOR": false,
         "bytecodeHash": "none"
       }
-    },
-    "initBytes": 10379,
-    "runtimeBytes": 5411,
-    "initSHA256": "8db1f8f46c645ef66043f274925cb0d5113b552d22a61f3a83d3653159462b88",
-    "runtimeSHA256": "0815f44d411ef8606eb0a86c8c3b1515587881a59ed000365cc3bec26fa5dfed",
-    "runtimeKeccak256": "870a6abf0648474b5035755884cf2d2002020f936bd0b2a5d5d3b63344b34859",
-    "sourceSHA256": "80790f316fbfbe39b932c30b2a76cea6f6cc11479a6ef6676da03550c8509fb8",
-    "pinnedEngineKeccak256": "9aca7678924b7e369185c3b27b115e299e06d7745020ea374b6c8b23557012ba",
-    "abiAndStorageLayoutUnchanged": true,
-    "domain": "MC-HASHMAP-ENTRY-SET-TYPED-TO-ARRAY-BOUNDED"
+    }
   },
-  "generatedGate": {
+  "budgets": {
+    "localGasPerEVMCall": 1000000000,
+    "perCallWatchdogSeconds": 30,
+    "testOuterTimeoutSeconds": 1200,
+    "maxRawClassBytes": 150,
+    "maxRawBytes": 1063930,
+    "maxArrays": 8192,
+    "maxObjects": 4096,
+    "maxArrayElements": 262144,
+    "maxHandles": 12545,
+    "maxConstantPoolBytes": 2097152,
+    "maxFrames": 128,
+    "maxJvmSteps": 65536,
+    "maxInternalSteps": 4096,
+    "gasReserve": 25000000,
+    "noLimitsChanged": true
+  },
+  "notRun": "Full Minecraft startup/world/EULA/listening/Done not reached. Parent current-artifact coordinator/original package and durable reopen passed; historical worker did not run them.",
+  "acceptance": "P48 parent-corrected accepted; see linked parent proof and root preflight document",
+  "sourceManifestPath": "source-basis/source-manifest.json",
+  "parentAcceptance": "P48 independently rebuilt/gated; inherited unsupported typed copies raw-refuse rather than AME",
+  "parentProof": "../parent-entry-set-to-array/artifacts/linked-hash-map-constructor-blocker.json",
+  "historicalWorkerGeneratedGate": {
     "report": "build/generated-evm-gates-v3.json",
     "mode": "generated",
     "engineRuntimeSHA256": "12bc57a498a267885718cc84655086c2689d7069e7cfc24530414f37bb6cfd71",
@@ -181,24 +212,9 @@
       }
     ]
   },
-  "budgets": {
-    "localGasPerEVMCall": 1000000000,
-    "perCallWatchdogSeconds": 30,
-    "testOuterTimeoutSeconds": 1200,
-    "maxRawClassBytes": 150,
-    "maxRawBytes": 1063930,
-    "maxArrays": 8192,
-    "maxObjects": 4096,
-    "maxArrayElements": 262144,
-    "maxHandles": 12545,
-    "maxConstantPoolBytes": 2097152,
-    "maxFrames": 128,
-    "maxJvmSteps": 65536,
-    "maxInternalSteps": 4096,
-    "gasReserve": 25000000,
-    "noLimitsChanged": true
-  },
-  "notRun": "Coordinator/DI0 package setup and a fresh-process durable reopen are not verified: direct generated main was called against fresh geth StateDB using the candidate EVM runtime; only source-base manifest inputs were permitted for this worker.",
-  "acceptance": "Candidate only; parent independent rebuild/gates pending. No original Minecraft execution.",
-  "sourceManifestPath": "source-basis/source-manifest.json"
+  "generatedGate": {
+    "currentArtifactParentProof": "../parent-entry-set-to-array/artifacts/linked-hash-map-constructor-blocker.json",
+    "freshCurrentArtifactQ1Q7Raw150AndSeparateProcessReopen": "PASS",
+    "historicalWorkerResultsConcernOriginalCandidateOnly": true
+  }
 }

@@ -1,3 +1,13 @@
+# P48 parent-corrected acceptance
+
+The historical worker candidate below was NOT accepted unchanged: adding the Collection declaration caused unsupported HashSet/ArrayList/COWAL/CLQ inherited calls to throw AbstractMethodError. Parent preserved a real EVM terminal probe, reproduced the old AbstractCollection Java image exactly, and added only an unbound native typed-copy declaration there. Concrete EntrySet still provides the only new copy behavior; no extra copy API or native binding is enabled.
+
+Current113-image root `28a117d6b859fff966c517f49485e15df7db911f9ed1d077a8e7a5f6337f7413`; leaves53/55/110 changed and all other110 exact. Engine429978B SHAd45a84f99606d44480ef4830f9f04fe6d87dd6e0d527c9d0a69862fc7e3bb6d9. Current source/artifacts/pins are parent-corrected. Historical worker EVM results below concern the original uncorrected runtime, not these artifacts. Independent parent evidence: `../parent-entry-set-to-array/`; root doc `JAVA_EVM_MC_ENTRY_SET_TYPED_ARRAY_PARENT_PREFLIGHT.md`.
+
+---
+
+## Historical worker report (retained verbatim)
+
 # Bounded `Collection.toArray(T[])` / HashMap EntrySet candidate
 
 Status: **candidate only; parent independent review/rebuild/gates pending.** This task read and verified only the 12-file P47 source-only manifest plus ordinary local Go runtime sources. Its exact 12-file P47 source-only snapshot is preserved under `source-basis/` for independent reproduction. It did not open any original Minecraft JAR/class/resource/world/receipt, parent review, performance review, other worktree, or network source.

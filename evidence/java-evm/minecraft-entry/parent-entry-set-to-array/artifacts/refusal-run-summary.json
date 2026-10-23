@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.1637063180023688,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayShort.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayShortSentinel.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayNoArg.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayHashSet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayArrayList.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayCow.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/ParentArrayQueue.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7646956059979857,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/driver",
+        "./build/java-diff-mc-entry-array-refusals-parent-p48/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 4.519317938997119,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-build-parent-p48/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-build-parent-p48/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-entry-array-refusals-parent-p48/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "profile": "generated local EVM bounded Collection.toArray(T[]) / HashMap EntrySet copy candidate; not independently accepted",
+  "acceptedBaseCommit": "1631a3201672da593f82c7bb4008b93de14ebd6d",
+  "sourceBase": "source-basis (exact verified P47 source-only snapshot)",
+  "sourceManifestSHA256": "70ea54a426892a5cb3edc9086fbee43e70a5c21b515878c5a4eb17f30cb471d1",
+  "verifiedSourceManifestEntries": 12,
+  "inputIsolation": "No original Minecraft JAR/classes/resources/worlds/receipts, parent-* evidence, performance-review evidence, network, or other worktrees read.",
+  "bootstrapCount": 113,
+  "baseBootstrapRoot": "f17b95bad49e93149b028bcc14c1df26926ec7916494d3faf1b787d590457ee2",
+  "candidateBootstrapDomain": "JVMEVM:MC-HASHMAP-ENTRY-SET-TYPED-TO-ARRAY-BOUNDED:1",
+  "candidateBootstrapRoot": "becacc3754a4006b0add9bfd79c9cb68fc966508b1c23701184a6105ad360c02",
+  "changedLeaves": [
+    {
+      "index": 53,
+      "class": "java/util/Collection",
+      "oldKeccak256": "2678bac4e6565a8811acff77acfe0cdb01159742c92990e59d2554bbe6157701",
+      "newKeccak256": "abb24b1c624154293e389f78a4ca372a92a25e3a93d7bc78fa9eb0385b296120"
+    },
+    {
+      "index": 110,
+      "class": "java/util/HashMap$EntrySet",
+      "oldKeccak256": "7c958cceb7026a9a82536ace0e0c0ab99692be903a69ee7a764a24e4ec0d0575",
+      "newKeccak256": "81693417e6e192c9b88c2f3b800e59fe945f47264cb2cdbec08fbc98ab007166"
+    }
+  ],
+  "exactPreservation": {
+    "leavesChangedOnly": [
+      53,
+      110
+    ],
+    "hashMapLeaf100Exact": true,
+    "nodeLeaf104Exact": true,
+    "mapLeaf40Exact": true,
+    "mapEntry94Exact": true
+  },
+  "compiledImages": {
+    "Collection": {
+      "leafIndex": 53,
+      "bytes": 472,
+      "sha256": "7ae2c6d97e7678defa282d716ebe3ce0181b38af95e929bf728504813281abdd",
+      "keccak256": "abb24b1c624154293e389f78a4ca372a92a25e3a93d7bc78fa9eb0385b296120"
+    },
+    "HashMap": {
+      "leafIndex": 100,
+      "bytes": 4551,
+      "sha256": "27e5288ef29ef65941dfbaa5f60a8ac6bfba71eb12722ad09c4326496996dea6",
+      "keccak256": "e03c6f0e1985e830ee166ab8de6ab019e2fafb2a09d9bccd8c44c27116919577"
+    },
+    "HashMapNode": {
+      "leafIndex": 104,
+      "bytes": 1334,
+      "sha256": "7211f3de996fc04705787b8d7b734f674f295e94ad60741262c28bb62c3195e0",
+      "keccak256": "116b6c77569bd29cf69523ddfbce9f2296ac86ee27022121cdea2f10aafdd302"
+    },
+    "HashMapEntrySet": {
+      "leafIndex": 110,
+      "bytes": 1856,
+      "sha256": "214b6709727533425bbb99f6dcdc188232edb0f3d46a5d6676f6f723ef03f055",
+      "keccak256": "81693417e6e192c9b88c2f3b800e59fe945f47264cb2cdbec08fbc98ab007166"
+    },
+    "MapEntry": {
+      "leafIndex": 94,
+      "bytes": 448,
+      "sha256": "5c0beea6f609e3573672ca67fc5f06d086011f2974c5db179d9d7da59c794ac5",
+      "keccak256": "47bd965aa8c05997905d9d71684cc4409974e23e06bc6d360d9f06f82099e4ac"
+    }
+  },
+  "javaCompiler": {
+    "path": "/usr/lib/jvm/java-8-openjdk/bin/javac",
+    "target": "8",
+    "flags": "-g:none -source 8 -target 8",
+    "hashMapContext": "stock JDK 8 compile completed first; minimal Collection.java and Map.java compile separately"
+  },
+  "engine": {
+    "compiler": {
+      "version": "0.8.30+commit.73712a01.Emscripten.clang",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "viaIR": true,
+      "evmVersion": "cancun",
+      "metadata": {
+        "appendCBOR": false,
+        "bytecodeHash": "none"
+      }
+    },
+    "initBytes": 429881,
+    "runtimeBytes": 429853,
+    "initSHA256": "a39cffaaa091102b66c729ebb0e338310bcfd9adba6fea4def76e3eb02268309",
+    "runtimeSHA256": "12bc57a498a267885718cc84655086c2689d7069e7cfc24530414f37bb6cfd71",
+    "runtimeKeccak256": "9aca7678924b7e369185c3b27b115e299e06d7745020ea374b6c8b23557012ba",
+    "sourceSHA256": "cde694216fc26b641316b04766e0384d2ad4774bd5abfa70b6afc49fc88624b5",
+    "abiAndStorageLayoutUnchanged": true
+  },
+  "coordinator": {
+    "compiler": {
+      "version": "0.8.30+commit.73712a01.Emscripten.clang",
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "viaIR": true,
+      "evmVersion": "cancun",
+      "metadata": {
+        "appendCBOR": false,
+        "bytecodeHash": "none"
+      }
+    },
+    "initBytes": 10379,
+    "runtimeBytes": 5411,
+    "initSHA256": "8db1f8f46c645ef66043f274925cb0d5113b552d22a61f3a83d3653159462b88",
+    "runtimeSHA256": "0815f44d411ef8606eb0a86c8c3b1515587881a59ed000365cc3bec26fa5dfed",
+    "runtimeKeccak256": "870a6abf0648474b5035755884cf2d2002020f936bd0b2a5d5d3b63344b34859",
+    "sourceSHA256": "80790f316fbfbe39b932c30b2a76cea6f6cc11479a6ef6676da03550c8509fb8",
+    "pinnedEngineKeccak256": "9aca7678924b7e369185c3b27b115e299e06d7745020ea374b6c8b23557012ba",
+    "abiAndStorageLayoutUnchanged": true,
+    "domain": "MC-HASHMAP-ENTRY-SET-TYPED-TO-ARRAY-BOUNDED"
+  },
+  "generatedGate": {
+    "report": "build/generated-evm-gates-v3.json",
+    "mode": "generated",
+    "engineRuntimeSHA256": "12bc57a498a267885718cc84655086c2689d7069e7cfc24530414f37bb6cfd71",
+    "engineRuntimeKeccak256": "0x9aca7678924b7e369185c3b27b115e299e06d7745020ea374b6c8b23557012ba",
+    "quantumRuns": [
+      {
+        "quantum": 1,
+        "calls": 3862,
+        "totalJava": 3862,
+        "totalInternal": 7,
+        "lifecycle": 2,
+        "outcome": 2,
+        "machineRoot": "0x18688116cf5b5ff8285aca15698c0eed1eb4e890814168aa226796c97cfc9a41",
+        "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+        "gasUsed": 233161615238
+      },
+      {
+        "quantum": 7,
+        "calls": 552,
+        "totalJava": 3862,
+        "totalInternal": 7,
+        "lifecycle": 2,
+        "outcome": 2,
+        "machineRoot": "0x18688116cf5b5ff8285aca15698c0eed1eb4e890814168aa226796c97cfc9a41",
+        "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+        "gasUsed": 33790703693
+      },
+      {
+        "quantum": 65536,
+        "calls": 1,
+        "totalJava": 3862,
+        "totalInternal": 7,
+        "lifecycle": 2,
+        "outcome": 2,
+        "machineRoot": "0x18688116cf5b5ff8285aca15698c0eed1eb4e890814168aa226796c97cfc9a41",
+        "vfsRoot": "0x3a60e6910a09a982ef14fa7a04196953c1fa5f7e28a54344e930967401fb788d",
+        "gasUsed": 843522359
+      }
+    ],
+    "equivalentRealMachineStateAndCounters": true,
+    "rawAtomicRefusals": [
+      {
+        "label": "short-array-raw-refusal",
+        "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000e",
+        "rootUnchanged": true
+      },
+      {
+        "label": "entryset-add-remains-unbound",
+        "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000001a",
+        "rootUnchanged": true
+      },
+      {
+        "label": "entryset-equals-remains-unbound",
+        "revertData": "d631c3a40000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000f",
+        "rootUnchanged": true
+      },
+      {
+        "label": "noarg-toArray-remains-unbound",
+        "revertData": "d631c3a400000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000010",
+        "rootUnchanged": true
+      }
+    ]
+  },
+  "budgets": {
+    "localGasPerEVMCall": 1000000000,
+    "perCallWatchdogSeconds": 30,
+    "testOuterTimeoutSeconds": 1200,
+    "maxRawClassBytes": 150,
+    "maxRawBytes": 1063930,
+    "maxArrays": 8192,
+    "maxObjects": 4096,
+    "maxArrayElements": 262144,
+    "maxHandles": 12545,
+    "maxConstantPoolBytes": 2097152,
+    "maxFrames": 128,
+    "maxJvmSteps": 65536,
+    "maxInternalSteps": 4096,
+    "gasReserve": 25000000,
+    "noLimitsChanged": true
+  },
+  "notRun": "Coordinator/DI0 package setup and a fresh-process durable reopen are not verified: direct generated main was called against fresh geth StateDB using the candidate EVM runtime; only source-base manifest inputs were permitted for this worker.",
+  "acceptance": "Candidate only; parent independent rebuild/gates pending. No original Minecraft execution.",
+  "sourceManifestPath": "source-basis/source-manifest.json"
+}
