@@ -1,0 +1,20 @@
+--- P50
+
++++ P51
+
+@@ -1,5 +1,5 @@
+
+ function _bootstrapRoot() private pure returns (bytes32) {
+-        bytes32[] memory h = new bytes32[](114);
++        bytes32[] memory h = new bytes32[](115);
+         h[0] = keccak256(_bootstrapObject());
+         h[1] = keccak256(_bootstrapCloneable());
+         h[2] = keccak256(_bootstrapSerializable());
+@@ -147,5 +147,6 @@
+
+         h[112] = keccak256(_bootstrapConcurrentModificationException());
+         // ArrayList default-constructor image replaces only leaf 98; all 114 root positions and every other image remain fixed.
+         h[113] = keccak256(_bootstrapLinkedHashMap());
++        h[114] = keccak256(_bootstrapListIterator());
+         return keccak256(abi.encode(DBOOT, h));
+     }

@@ -15,14 +15,14 @@ contract MCEntryCoordinator {
     }
 
     address private constant ENGINE = address(bytes20(hex"4d432d52414e444f4d2d434c4153532d50310070"));
-    bytes32 private constant ENGINE_CODEHASH = hex"adc2e0015136b2c7a375e9ec618ff11257e2764d57fd7ab671a53cd6a534b390";
+    bytes32 private constant ENGINE_CODEHASH = hex"9a7d11811e9fbbb6654b744dbf304c06d936acc62c4a6368717cb5d32950b77f";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50/package/v1");
-    bytes32 private constant CLASS_DOMAIN = keccak256("MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50/class/v1");
-    bytes32 private constant SEED_DOMAIN = keccak256("MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50/selected-resource/v1");
-    bytes32 private constant VM_DOMAIN = keccak256("MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50/vm/v1");
+    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-LIST-ITERATOR-LINK-1/package/v1");
+    bytes32 private constant CLASS_DOMAIN = keccak256("MC-LIST-ITERATOR-LINK-1/class/v1");
+    bytes32 private constant SEED_DOMAIN = keccak256("MC-LIST-ITERATOR-LINK-1/selected-resource/v1");
+    bytes32 private constant VM_DOMAIN = keccak256("MC-LIST-ITERATOR-LINK-1/vm/v1");
     uint32 private constant MAX_SELECTED_RESOURCE_BYTES = 4096;
 
     address public owner;

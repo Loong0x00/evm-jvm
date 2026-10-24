@@ -27,7 +27,11 @@ for sub,pattern in [('tests/classes','*.class'),('tests/api-classes','*.class'),
  for p in sorted((R/sub).glob(pattern)):
   rel=str(p.relative_to(R));b=p.read_bytes();files[rel]={'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()}
 eng=json.loads((R/'engine/MCEntryInterpreter.json').read_text());co=json.loads((R/'coordinator/MCEntryCoordinator.json').read_text())
-coordbase=pins0['coordinator'];assert co['codeHashes']['runtimeSHA256']==coordbase['runtimeSHA256'];assert co['codeHashes']['runtimeKeccak256']==coordbase['runtimeKeccak256']
+coordbase=json.loads((R/'source-base/coordinator/MCEntryCoordinator.json').read_text())
+assert co['abi']==coordbase['abi'] and co['storageLayout']==coordbase['storageLayout']
+assert eng['codeHashes']['runtimeKeccak256'] in (R/'coordinator/MCEntryCoordinator.sol').read_text()
+assert (R/'coordinator/MCEntryCoordinator.sol').read_text().count('MC-LIST-ITERATOR-LINK-1')==4
+assert co['codeHashes']['runtimeKeccak256']!=coordbase['codeHashes']['runtimeKeccak256']
 # ABI and non-target limit invariants.
 baseabi=json.loads((R/'source-base/engine/MCEntryInterpreter.json').read_text())['abi']
 assert eng['abi']==baseabi
@@ -41,7 +45,7 @@ pins={
  'verifiedSourceOnlyManifest9':source,
  'domains':{'artifact':'JVMEVM:MC-LIST-ITERATOR-LINK-1:ARTIFACT:1','bootstrap':domain},
  'engine':{'initBytes':len(eng['bytecode'])//2,'runtimeBytes':len(eng['deployedBytecode'])//2,**eng['codeHashes'],'sourceSHA256':eng['sourceHashes']['MCEntryInterpreter.sol']},
- 'coordinator':{'initBytes':len(co['bytecode'])//2,'runtimeBytes':len(co['deployedBytecode'])//2,**co['codeHashes'],'sourceSHA256':co['sourceHashes']['MCEntryCoordinator.sol'],'sourceUnchangedFromP50':True},
+ 'coordinator':{'initBytes':len(co['bytecode'])//2,'runtimeBytes':len(co['deployedBytecode'])//2,**co['codeHashes'],'sourceSHA256':co['sourceHashes']['MCEntryCoordinator.sol'],'sourceUnchangedFromP50':False},
  'bootstrapCount':115,'baseBootstrapCount':114,'oldLeavesByteAndOrderPinned':True,'newLeaf':{'index':114,'class':'java/util/ListIterator','classBytes':len((R/'ListIterator.class').read_bytes()),'sha256':hashlib.sha256((R/'ListIterator.class').read_bytes()).hexdigest(),'keccak256':record['leaves'][114]},
  'bootstrapRoot':record['root'],'orderedBootstrapLeaves':record['leaves'],
  'highRawGate':{'rawClasses':150,'rawBytes':sum((R/'tests/raw150-classes').glob('*.class'),start=0) if False else sum(p.stat().st_size for p in (R/'tests/raw150-classes').glob('*.class')),'ListIteratorActualClassIndex':264,'typedArrayMetadata':hex(0x100+264),'actualEVMTest':'raw150/high-index-typed-array-clone'},

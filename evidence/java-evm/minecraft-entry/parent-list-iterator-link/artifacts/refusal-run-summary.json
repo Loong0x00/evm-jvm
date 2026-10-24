@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16367904999788152,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-list-iterator-link/ParentListIteratorLink.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/ParentOmittedHasPrevious.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/ParentOmittedPrevious.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/ParentOmittedNextIndex.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/ParentOmittedPreviousIndex.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/ParentOmittedRemove.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/ParentOmittedSet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/ParentOmittedAdd.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7642775200001779,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/driver",
+        "./build/java-diff-mc-list-iterator-refusals-parent-p51/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 0.7143001910008024,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-build-parent-p51/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-build-parent-p51/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-list-iterator-refusals-parent-p51/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

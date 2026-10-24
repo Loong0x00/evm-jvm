@@ -1,0 +1,14 @@
+--- P50
+
++++ P51
+
+@@ -94,6 +94,7 @@
+
+         p.classes[classSlot + 71].data = _bootstrapHashMapEntrySet();
+         p.classes[classSlot + 72].data = _bootstrapHashMapEntryIterator();
+         p.classes[classSlot + 73].data = _bootstrapConcurrentModificationException();
+-        // LinkedHashMap is image113; it is construction-only and append-only.
++        // LinkedHashMap remains image113; ListIterator is the link-only image114.
+         p.classes[classSlot + 74].data = _bootstrapLinkedHashMap();
++        p.classes[classSlot + 75].data = _bootstrapListIterator();
+     }

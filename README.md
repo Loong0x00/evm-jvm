@@ -14,22 +14,22 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 130 explicit, authenticated class resources (915,860 bytes) |
-| Guest execution | **2,224,169 JVM instructions**, 129 internal steps, 40 verified successful checkpoint receipts |
-| Current blocker | Missing bootstrap `java.util.ListIterator` hierarchy link |
-| Runtime profile | 429,653-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 114 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,224,257 JVM instructions**, 133 internal steps, 39 verified successful checkpoint receipts |
+| Current blocker | Missing original Minecraft resource `ew$b`; ListIterator hierarchy linking passed |
+| Runtime profile | 431,159-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 115 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [ArrayList default construction / P50](JAVA_EVM_MC_ARRAY_LIST_DEFAULT_PARENT_PREFLIGHT.md).
-Fresh EVM tests verify ordinary class initialization, real shared empty default
-storage, unchanged int-constructor behavior, exact heap/quantum equivalence and
-separate-process reopen. Small q1/q7 and raw150 tests pass at1B. An identical
-int-only input measures the new clinit cost:4 extra JVM instructions and1 real
-array. Mutation/growth and other unimplemented APIs still raw-refuse.
+Latest acceptance: [ListIterator link marker / P51](JAVA_EVM_MC_LIST_ITERATOR_PARENT_PREFLIGHT.md).
+Parent corrected a bootstrap tail-slot regression and stale coordinator engine
+pin, then independently tested retained old class identities, inherited iterator
+dispatch, real arrays/clones at index264, refusals and separate-process reopen.
+Small q1/q7 and raw150 cases pass at1B. No previous/index/mutation ListIterator
+API is claimed.
 
 ### Important LOCAL-only limits
 
@@ -62,7 +62,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original130-guava-unmodifiable-iterator/artifacts/list-iterator-interface-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-list-iterator-link/artifacts/ew-b-resource-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

@@ -399,8 +399,8 @@ contract MCEntryInterpreter {
 
     uint32 private constant MR0_SCHEMA = 1;
     uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
-    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:MAIN:EMPTY-STRING-ARRAY:1");
-    bytes32 private constant DROOT = keccak256("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:ROOT:1");
+    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-LIST-ITERATOR-LINK-1:MAIN:EMPTY-STRING-ARRAY:1");
+    bytes32 private constant DROOT = keccak256("JVMEVM:MC-LIST-ITERATOR-LINK-1:ROOT:1");
     uint256 private constant MAX_RAW_CLASSES = 150;
     uint256 private constant MAX_RAW_BYTES = 1063930;
     uint256 private constant MAX_CHECKPOINT_BYTES = 2097152;
@@ -434,11 +434,11 @@ contract MCEntryInterpreter {
     bytes32 private constant DBOOT_THREAD_LOCAL = hex"93a0007b6336f667890f5afa2b01572278a7e39ab93b2faf1095e054317f538a";
     // Image94 commitment keeps the constrained runtime below its fixed LOCAL cap.
     bytes32 private constant DBOOT_SECURITY_MANAGER = hex"057ca3fbcb2390bdc0d8a6bd4f9a942b378525c0dca258dff442b04e7b526a28";
-    bytes32 private constant DCFG = keccak256("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:CONFIG:1");
-    bytes32 private constant DMACH = keccak256("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:MACHINE:1");
-    bytes32 private constant DSEED = keccak256("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:SEED:1");
-    bytes32 private constant DVFS = keccak256("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:VFS:1");
-    bytes32 private constant DFILE = keccak256("JVMEVM:MC-ARRAYLIST-DEFAULT-CONSTRUCTOR-P50:FILE:1");
+    bytes32 private constant DCFG = keccak256("JVMEVM:MC-LIST-ITERATOR-LINK-1:CONFIG:1");
+    bytes32 private constant DMACH = keccak256("JVMEVM:MC-LIST-ITERATOR-LINK-1:MACHINE:1");
+    bytes32 private constant DSEED = keccak256("JVMEVM:MC-LIST-ITERATOR-LINK-1:SEED:1");
+    bytes32 private constant DVFS = keccak256("JVMEVM:MC-LIST-ITERATOR-LINK-1:VFS:1");
+    bytes32 private constant DFILE = keccak256("JVMEVM:MC-LIST-ITERATOR-LINK-1:FILE:1");
 
     mapping(bytes32 => Anchor) private anchors;
     bool private enteredVFS0A;
@@ -866,11 +866,11 @@ contract MCEntryInterpreter {
         _appendTailBootstraps(p, at, suppliedRunnable);
         // Keep the historical five tail images in their existing slots; three new
         // appended images occupy only the final three leaves.
-        p.classes[count - 9] = _parseBundleClass(_bootstrapFunction());
-        p.classes[count - 8] = _parseBundleClass(_bootstrapNavigableMap());
-        p.classes[count - 7] = _parseBundleClass(_bootstrapComparator());
-        p.classes[count - 6] = _parseBundleClass(_bootstrapSortedSet());
-        p.classes[count - 5] = _parseBundleClass(_bootstrapNavigableSet());
+        p.classes[count - 10] = _parseBundleClass(_bootstrapFunction());
+        p.classes[count - 9] = _parseBundleClass(_bootstrapNavigableMap());
+        p.classes[count - 8] = _parseBundleClass(_bootstrapComparator());
+        p.classes[count - 7] = _parseBundleClass(_bootstrapSortedSet());
+        p.classes[count - 6] = _parseBundleClass(_bootstrapNavigableSet());
         p.rawClassCount = inputCount;
         p.rootClass = entryPlusOne - 1;
         _requireSupportedClass(p.classes[p.rootClass], p.rootClass);

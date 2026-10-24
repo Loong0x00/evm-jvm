@@ -1,0 +1,25 @@
+--- P50
+
++++ P51
+
+@@ -33,7 +33,8 @@
+
+                 || _isNamedClass(users[i], bytes("java/util/Comparator"))
+                 || _isNamedClass(users[i], bytes("java/util/SortedSet"))
+                 || _isNamedClass(users[i], bytes("java/util/NavigableSet"))
+-                || _isNamedClass(users[i], bytes("java/util/LinkedHashMap"))) {
++                || _isNamedClass(users[i], bytes("java/util/LinkedHashMap"))
++                || _isNamedClass(users[i], bytes("java/util/ListIterator"))) {
+                 revert BootstrapProfileError(1, i);
+             }
+             for (uint256 j; j < i; ++j) if (_sameClassName(users[i], users[j])) {
+@@ -51,7 +52,7 @@
+
+         if (entryPlusOne == 0) revert LinkError(3, 0);
+         // Historical Runnable remains conditional. Class/map/System positions remain
+         // fixed, then the three Properties-family images append after all forty-five.
+-        uint256 count = inputCount + 107 + (suppliedObject ? 0 : 1)
++        uint256 count = inputCount + 108 + (suppliedObject ? 0 : 1)
+             + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
+             + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1) + (suppliedRunnable ? 0 : 1) + 1;
+         p.classes = new ClassInfo[](count);

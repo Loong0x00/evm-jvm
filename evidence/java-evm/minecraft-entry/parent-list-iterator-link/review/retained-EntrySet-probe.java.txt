@@ -1,0 +1,1 @@
+import java.util.*; public class ParentRetainedEntrySet { public static void main(String[] args) { Map<Object,Object> map=new HashMap<Object,Object>(); Set entries=map.entrySet(); if(!entries.isEmpty())throw new ArithmeticException(); } }
