@@ -1,0 +1,180 @@
+{
+  "profile": "P58 EnumMap type-link marker only",
+  "scope": "No EnumMap data, public constructors, mutation, lookup, universe, clone, or constructed EnumMap guest object",
+  "inputIsolation": {
+    "usesOriginalMinecraftJAR": false,
+    "usesOriginalMinecraftClassesResourcesWorldsOrReceipts": false,
+    "usesGeneratedJava8FixtureOnly": true
+  },
+  "sourceBaseVerification": {
+    "manifestEntries": 11,
+    "allHashesMatched": true,
+    "path": "evidence/java-evm/minecraft-entry/enum-map-link-source-base-p57"
+  },
+  "classImage": {
+    "internalName": "java/util/EnumMap",
+    "classFileBytes": 532,
+    "sha256": "b8670f4f80b81dd47a646ccce8b5d35595b2944740016fd90dd047448ae51f73",
+    "keccak256": "8a6b7f377bf1692a819396e3419f66873a7cc58c79603402d50180d13db316bd",
+    "javaCompiler": "javac 1.8.0_504",
+    "bootstrapIndexWith150RawClasses": 273,
+    "totalClassCount": 274,
+    "superclass": "java/util/AbstractMap",
+    "interfacesInStockOrder": [
+      "java/io/Serializable",
+      "java/lang/Cloneable"
+    ],
+    "classFlags": "public concrete nonfinal",
+    "constructors": [
+      {
+        "descriptor": "()V",
+        "access": "private",
+        "body": "invokespecial AbstractMap.<init>()V"
+      }
+    ],
+    "publicClassMapConstructors": [
+      "(Ljava/lang/Class;)V",
+      "(Ljava/util/EnumMap;)V",
+      "(Ljava/util/Map;)V"
+    ],
+    "publicConstructorsPresent": false,
+    "fields": 0,
+    "unboundNativeErasedGuards": [
+      "get(Object):Object",
+      "put(Object,Object):Object",
+      "size():int",
+      "isEmpty():boolean",
+      "clear():void",
+      "containsKey(Object):boolean",
+      "entrySet():Set"
+    ]
+  },
+  "bootstrap": {
+    "oldOrderedPrefixCount": 123,
+    "oldOrderedPrefixExact": true,
+    "oldSlots105Through122Exact": true,
+    "newCount": 124,
+    "newIndex": 123,
+    "oldRoot": "10dffc603774551e32da71d0b20c9002460ec64b4d48cf23d6a29cbf195ffd7c",
+    "newRoot": "d28348ab89997268a5618df6160de26c7e0651c1fdc46e9afe4a3b490bd01c7d",
+    "newLeafKeccak256": "8a6b7f377bf1692a819396e3419f66873a7cc58c79603402d50180d13db316bd",
+    "indexFormula": "rawCount 150 + bootstrap leaf 123 = internal ClassInfo index 273"
+  },
+  "artifacts": {
+    "engine": {
+      "initBytes": 446408,
+      "runtimeBytes": 446380,
+      "initSHA256": "c6a8c6fb48b1ac6fd19f25d5d35ee4ccbed8cac9c4a5089c0cf62c626e2cf378",
+      "runtimeSHA256": "8f4053e29d3693025acec90f8576ebf44b3fde7ab379e578c7e0138cbf16dc42",
+      "runtimeKeccak256": "072360ef8f04101a9977368c2c64e669d045932ca05f5d65235cb2e1a9533f1f",
+      "sourceSHA256": "3e9ea7c1dc15ee6de355618d2c05e217a58ac495eeb61ecf50453081ae78558f"
+    },
+    "coordinator": {
+      "initBytes": 10379,
+      "runtimeBytes": 5411,
+      "initSHA256": "923cb3cb6b11145f82fe394ab683ccdcfba0d4b9b93119a9a59de8cd2ebdc282",
+      "runtimeSHA256": "94b74f936705a92f6d8436c87dd5dd6204064ac4e945177321cff69f88fdadd6",
+      "runtimeKeccak256": "c8026327a748875519e9eb2f95557e065bf72c377bf459643a22e14ddab39d18",
+      "sourceSHA256": "4c136cbeaac3da932fa9b2dc5dbae380407b9fe2618a5ace775902a8cf9a43a7"
+    },
+    "compiledEngineRuntimeUnderLocal1MiB": true
+  },
+  "freshDomains": {
+    "engineCount": 9,
+    "coordinatorCount": 4,
+    "prefix": "MC-ENUM-MAP-LINK-BOUNDED-1"
+  },
+  "limitsUnchanged": {
+    "rawClasses": 150,
+    "rawBytes": 1063930,
+    "checkpointBytes": 2097152,
+    "runtimeBytes": 1048576,
+    "frames": 128,
+    "handleFrontier": 12545,
+    "allocatableArraysAndObjects": 12288,
+    "arrayElements": 8192,
+    "arrayLength": 262144,
+    "arrayCap": 65536,
+    "ordinaryGas": 1000000000,
+    "gasReserve": 25000000,
+    "quantum": 65536,
+    "internalSlice": 4096
+  },
+  "probeAssertions": [
+    "EnumMap.class canonical identity and getName",
+    "new LinkedHashMap instance instanceof EnumMap is false",
+    "wrong LinkedHashMap cast throws guest ClassCastException; null instanceof false and null cast remains null",
+    "EnumMap[0] and EnumMap[1] arrays materialize with actual EnumMap component metadata",
+    "EnumMap[] covaries to Object[], Map[], AbstractMap[], Serializable[], Cloneable[]",
+    "storing LinkedHashMap into EnumMap[] throws guest ArrayStoreException",
+    "clone preserves actual array component and length and returns distinct array",
+    "reflect.Array.newInstance(EnumMap.class,2) returns actual EnumMap[] with length 2"
+  ],
+  "runs": {
+    "q1": {
+      "world": "world-q1-raw150-002",
+      "zipSHA256": "369ea85a475a86b66672557b855efee3be481c4c93c88bf7f6cfb0295c1c7f66",
+      "zipBytes": 45191,
+      "rawBindingCount": 150,
+      "slices": 208,
+      "terminalEpoch": 208,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJvmSteps": 208,
+      "totalInternalSteps": 6,
+      "javaKind": 0,
+      "result": 0,
+      "machineStateRoot": "0xfa35707d17f86dd49888528b5737a2eba19c9978f37b96a67fcc2b74eb6e082a",
+      "checkpointRoot": "0xd301e4b7480bf66aa8527327c183cd2a8e1a93f8c5631f666249606bd1317a94",
+      "vfsStateRoot": "0xd17142a62c968e21e2fa7d9dc98a3bcdafe23171cd908943e28effd84102f4e8",
+      "separateProcessReopenVerified": true,
+      "refusedResume": false
+    },
+    "q7": {
+      "world": "world-q7-raw150-002",
+      "zipSHA256": "369ea85a475a86b66672557b855efee3be481c4c93c88bf7f6cfb0295c1c7f66",
+      "zipBytes": 45191,
+      "rawBindingCount": 150,
+      "slices": 30,
+      "terminalEpoch": 30,
+      "lifecycle": 2,
+      "outcome": 2,
+      "totalJvmSteps": 208,
+      "totalInternalSteps": 6,
+      "javaKind": 0,
+      "result": 0,
+      "machineStateRoot": "0xfa35707d17f86dd49888528b5737a2eba19c9978f37b96a67fcc2b74eb6e082a",
+      "checkpointRoot": "0x04a9b55f3d5c104d13338147db248d8bd11b8f34f25aca348990b9376b161a84",
+      "vfsStateRoot": "0xd17142a62c968e21e2fa7d9dc98a3bcdafe23171cd908943e28effd84102f4e8",
+      "separateProcessReopenVerified": true,
+      "refusedResume": false
+    }
+  },
+  "rawReplacementRefusal": {
+    "selector": "0x6a23ad80",
+    "expectedError": "BootstrapProfileError",
+    "arguments": [
+      "1",
+      "0"
+    ],
+    "gas": 386181,
+    "rootUnchanged": true,
+    "durableHeadUnchanged": true
+  },
+  "attempts": [
+    "wrong-cwd build failed before compiler launch; retained attempt-001-build-wrong-cwd.txt",
+    "build_fixture generator initially interpreted zero-padded 008 as octal; fixed seq generation and retained attempt-002-fixture-seq.txt",
+    "pin writer initially lacked NODE_PATH for local node dependency; no files written; retained attempt-003-write-pins-nodepath.txt",
+    "initial binding without .class suffix yielded DI0Error(4); preserved world-q1-001",
+    "unsupported Class.getSuperclass fixture call yielded CallError(3,30); trimmed only unmeasured API and preserved world-q1-002",
+    "unsupported reflect.Array.getLength fixture call yielded CallError(3,327); removed only that assertion and preserved world-q1-003",
+    "raw EnumMap replacement refused atomically as BootstrapProfileError(1,0)"
+  ],
+  "limitations": [
+    "No EnumMap instance was allocated in guest runs.",
+    "Public EnumMap(Class), EnumMap(EnumMap), EnumMap(Map) constructors remain absent.",
+    "Map-operation native declarations are unbound; no data-operation results are claimed.",
+    "Class.getSuperclass and reflect.Array.getLength are outside this probe; their failed attempts are preserved.",
+    "Candidate is not parent-reviewed or accepted; no original Minecraft execution."
+  ]
+}

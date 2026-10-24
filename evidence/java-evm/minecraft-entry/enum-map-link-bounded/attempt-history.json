@@ -1,0 +1,56 @@
+{
+  "profile": "MC-ENUM-MAP-LINK-BOUNDED-1",
+  "attempts": [
+    {
+      "id": 1,
+      "result": "setup error before compiler launch",
+      "detail": "node build.js invoked from repository root instead of candidate engine directory; fixed by cd to the candidate engine; no source/output damage",
+      "log": "logs/attempt-001-build-wrong-cwd.txt"
+    },
+    {
+      "id": 2,
+      "result": "fixture generator failed before compilation",
+      "detail": "zero-padded seq value 008 was interpreted by bash printf as octal; generator changed to use unpadded integers",
+      "log": "logs/attempt-002-fixture-seq.txt"
+    },
+    {
+      "id": 3,
+      "result": "metadata writer failed before output",
+      "detail": "standalone Node Keccak command lacked NODE_PATH for approved local js-sha3 dependency; retried with jvmevm/runtime/node_modules",
+      "log": "logs/attempt-003-write-pins-nodepath.txt"
+    },
+    {
+      "id": 4,
+      "result": "generated resource setup refused",
+      "detail": "binding used EnumMapTypeLinkProbe without the .class ZIP entry suffix; DI0Error(4); corrected binding and preserved the world",
+      "world": "world-q1-001"
+    },
+    {
+      "id": 5,
+      "result": "generated probe reached unsupported API",
+      "detail": "Class.getSuperclass at guest PC 30 returned CallError(3,30); removed this unmeasured call, retaining hierarchy checks through real array covariance",
+      "world": "world-q1-002"
+    },
+    {
+      "id": 6,
+      "result": "generated probe reached unsupported API",
+      "detail": "reflect.Array.getLength at guest PC 327 returned CallError(3,327); removed this unmeasured call, retaining Array.newInstance and EnumMap[] instance/length checks",
+      "world": "world-q1-003"
+    },
+    {
+      "id": 7,
+      "result": "negative raw-owner test passed",
+      "detail": "raw java/util/EnumMap replacement refused as BootstrapProfileError(1,0); trie root and durable Head unchanged",
+      "world": "world-raw-replacement-001",
+      "receipt": "reports/world-raw-replacement-001/start-refusal.json"
+    },
+    {
+      "id": 8,
+      "result": "generated EVM q1/q7 runs completed and reopened",
+      "detail": "150 raw generated class bindings, 124-image bootstrap set, EnumMap index 273; same terminal machine root; separate process verify succeeded",
+      "worlds": ["world-q1-raw150-002", "world-q7-raw150-002"]
+    }
+  ],
+  "prohibitedInputsUsed": false,
+  "originalMinecraftExecutionAttempted": false
+}

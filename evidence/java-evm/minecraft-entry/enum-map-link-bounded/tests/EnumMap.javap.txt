@@ -1,0 +1,79 @@
+Classfile /home/user/evm-jvm/enum-map-link/evidence/java-evm/minecraft-entry/enum-map-link-bounded/bootstrap/classes/java/util/EnumMap.class
+  Last modified 2026-10-24; size 532 bytes
+  MD5 checksum 7af04808552df831b40067485d9a804a
+  Compiled from "EnumMap.java"
+public class java.util.EnumMap extends java.util.AbstractMap implements java.io.Serializable,java.lang.Cloneable
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #3.#25         // java/util/AbstractMap."<init>":()V
+   #2 = Class              #26            // java/util/EnumMap
+   #3 = Class              #27            // java/util/AbstractMap
+   #4 = Class              #28            // java/io/Serializable
+   #5 = Class              #29            // java/lang/Cloneable
+   #6 = Utf8               <init>
+   #7 = Utf8               ()V
+   #8 = Utf8               Code
+   #9 = Utf8               LineNumberTable
+  #10 = Utf8               get
+  #11 = Utf8               (Ljava/lang/Object;)Ljava/lang/Object;
+  #12 = Utf8               put
+  #13 = Utf8               (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+  #14 = Utf8               size
+  #15 = Utf8               ()I
+  #16 = Utf8               isEmpty
+  #17 = Utf8               ()Z
+  #18 = Utf8               clear
+  #19 = Utf8               containsKey
+  #20 = Utf8               (Ljava/lang/Object;)Z
+  #21 = Utf8               entrySet
+  #22 = Utf8               ()Ljava/util/Set;
+  #23 = Utf8               SourceFile
+  #24 = Utf8               EnumMap.java
+  #25 = NameAndType        #6:#7          // "<init>":()V
+  #26 = Utf8               java/util/EnumMap
+  #27 = Utf8               java/util/AbstractMap
+  #28 = Utf8               java/io/Serializable
+  #29 = Utf8               java/lang/Cloneable
+{
+  private java.util.EnumMap();
+    descriptor: ()V
+    flags: ACC_PRIVATE
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/util/AbstractMap."<init>":()V
+         4: return
+      LineNumberTable:
+        line 7: 0
+
+  public native java.lang.Object get(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Ljava/lang/Object;
+    flags: ACC_PUBLIC, ACC_NATIVE
+
+  public native java.lang.Object put(java.lang.Object, java.lang.Object);
+    descriptor: (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+    flags: ACC_PUBLIC, ACC_NATIVE
+
+  public native int size();
+    descriptor: ()I
+    flags: ACC_PUBLIC, ACC_NATIVE
+
+  public native boolean isEmpty();
+    descriptor: ()Z
+    flags: ACC_PUBLIC, ACC_NATIVE
+
+  public native void clear();
+    descriptor: ()V
+    flags: ACC_PUBLIC, ACC_NATIVE
+
+  public native boolean containsKey(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+    flags: ACC_PUBLIC, ACC_NATIVE
+
+  public native java.util.Set entrySet();
+    descriptor: ()Ljava/util/Set;
+    flags: ACC_PUBLIC, ACC_NATIVE
+}
+SourceFile: "EnumMap.java"

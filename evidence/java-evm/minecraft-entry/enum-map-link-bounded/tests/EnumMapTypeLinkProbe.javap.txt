@@ -1,0 +1,329 @@
+Classfile /home/user/evm-jvm/enum-map-link/evidence/java-evm/minecraft-entry/enum-map-link-bounded/tests/classes/EnumMapTypeLinkProbe.class
+  Last modified 2026-10-24; size 1630 bytes
+  MD5 checksum 9fcccf08049d60f55b37a51776e868fb
+  Compiled from "EnumMapTypeLinkProbe.java"
+public final class EnumMapTypeLinkProbe
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_FINAL, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #22.#40        // java/lang/Object."<init>":()V
+   #2 = Class              #41            // java/lang/RuntimeException
+   #3 = Methodref          #2.#40         // java/lang/RuntimeException."<init>":()V
+   #4 = Class              #42            // java/util/EnumMap
+   #5 = Methodref          #21.#43        // EnumMapTypeLinkProbe.require:(Z)V
+   #6 = String             #44            // java.util.EnumMap
+   #7 = Methodref          #45.#46        // java/lang/Class.getName:()Ljava/lang/String;
+   #8 = Methodref          #47.#48        // java/lang/String.equals:(Ljava/lang/Object;)Z
+   #9 = Class              #49            // java/util/LinkedHashMap
+  #10 = Methodref          #9.#40         // java/util/LinkedHashMap."<init>":()V
+  #11 = Class              #50            // java/lang/ClassCastException
+  #12 = Class              #51            // "[Ljava/util/Map;"
+  #13 = Class              #52            // "[Ljava/util/AbstractMap;"
+  #14 = Class              #53            // "[Ljava/io/Serializable;"
+  #15 = Class              #54            // "[Ljava/lang/Cloneable;"
+  #16 = Methodref          #55.#56        // "[Ljava/util/EnumMap;".clone:()Ljava/lang/Object;
+  #17 = Methodref          #57.#56        // "[Ljava/util/EnumMap;".clone:()Ljava/lang/Object;
+  #18 = Class              #58            // "[Ljava/util/EnumMap;"
+  #19 = Class              #59            // java/lang/ArrayStoreException
+  #20 = Methodref          #60.#61        // java/lang/reflect/Array.newInstance:(Ljava/lang/Class;I)Ljava/lang/Object;
+  #21 = Class              #62            // EnumMapTypeLinkProbe
+  #22 = Class              #63            // java/lang/Object
+  #23 = Utf8               <init>
+  #24 = Utf8               ()V
+  #25 = Utf8               Code
+  #26 = Utf8               LineNumberTable
+  #27 = Utf8               require
+  #28 = Utf8               (Z)V
+  #29 = Utf8               StackMapTable
+  #30 = Utf8               main
+  #31 = Utf8               ([Ljava/lang/String;)V
+  #32 = Class              #64            // java/util/Map
+  #33 = Class              #63            // java/lang/Object
+  #34 = Class              #50            // java/lang/ClassCastException
+  #35 = Class              #65            // "[Ljava/lang/String;"
+  #36 = Class              #66            // "[Ljava/lang/Object;"
+  #37 = Class              #59            // java/lang/ArrayStoreException
+  #38 = Utf8               SourceFile
+  #39 = Utf8               EnumMapTypeLinkProbe.java
+  #40 = NameAndType        #23:#24        // "<init>":()V
+  #41 = Utf8               java/lang/RuntimeException
+  #42 = Utf8               java/util/EnumMap
+  #43 = NameAndType        #27:#28        // require:(Z)V
+  #44 = Utf8               java.util.EnumMap
+  #45 = Class              #67            // java/lang/Class
+  #46 = NameAndType        #68:#69        // getName:()Ljava/lang/String;
+  #47 = Class              #70            // java/lang/String
+  #48 = NameAndType        #71:#72        // equals:(Ljava/lang/Object;)Z
+  #49 = Utf8               java/util/LinkedHashMap
+  #50 = Utf8               java/lang/ClassCastException
+  #51 = Utf8               [Ljava/util/Map;
+  #52 = Utf8               [Ljava/util/AbstractMap;
+  #53 = Utf8               [Ljava/io/Serializable;
+  #54 = Utf8               [Ljava/lang/Cloneable;
+  #55 = Class              #58            // "[Ljava/util/EnumMap;"
+  #56 = NameAndType        #73:#74        // clone:()Ljava/lang/Object;
+  #57 = Class              #58            // "[Ljava/util/EnumMap;"
+  #58 = Utf8               [Ljava/util/EnumMap;
+  #59 = Utf8               java/lang/ArrayStoreException
+  #60 = Class              #75            // java/lang/reflect/Array
+  #61 = NameAndType        #76:#77        // newInstance:(Ljava/lang/Class;I)Ljava/lang/Object;
+  #62 = Utf8               EnumMapTypeLinkProbe
+  #63 = Utf8               java/lang/Object
+  #64 = Utf8               java/util/Map
+  #65 = Utf8               [Ljava/lang/String;
+  #66 = Utf8               [Ljava/lang/Object;
+  #67 = Utf8               java/lang/Class
+  #68 = Utf8               getName
+  #69 = Utf8               ()Ljava/lang/String;
+  #70 = Utf8               java/lang/String
+  #71 = Utf8               equals
+  #72 = Utf8               (Ljava/lang/Object;)Z
+  #73 = Utf8               clone
+  #74 = Utf8               ()Ljava/lang/Object;
+  #75 = Utf8               java/lang/reflect/Array
+  #76 = Utf8               newInstance
+  #77 = Utf8               (Ljava/lang/Class;I)Ljava/lang/Object;
+{
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=11, args_size=1
+         0: ldc           #4                  // class java/util/EnumMap
+         2: ldc           #4                  // class java/util/EnumMap
+         4: if_acmpne     11
+         7: iconst_1
+         8: goto          12
+        11: iconst_0
+        12: invokestatic  #5                  // Method require:(Z)V
+        15: ldc           #6                  // String java.util.EnumMap
+        17: ldc           #4                  // class java/util/EnumMap
+        19: invokevirtual #7                  // Method java/lang/Class.getName:()Ljava/lang/String;
+        22: invokevirtual #8                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+        25: invokestatic  #5                  // Method require:(Z)V
+        28: new           #9                  // class java/util/LinkedHashMap
+        31: dup
+        32: invokespecial #10                 // Method java/util/LinkedHashMap."<init>":()V
+        35: astore_1
+        36: aload_1
+        37: astore_2
+        38: aload_2
+        39: instanceof    #4                  // class java/util/EnumMap
+        42: ifne          49
+        45: iconst_1
+        46: goto          50
+        49: iconst_0
+        50: invokestatic  #5                  // Method require:(Z)V
+        53: aconst_null
+        54: instanceof    #4                  // class java/util/EnumMap
+        57: ifne          64
+        60: iconst_1
+        61: goto          65
+        64: iconst_0
+        65: invokestatic  #5                  // Method require:(Z)V
+        68: aload_2
+        69: checkcast     #4                  // class java/util/EnumMap
+        72: astore_3
+        73: new           #2                  // class java/lang/RuntimeException
+        76: dup
+        77: invokespecial #3                  // Method java/lang/RuntimeException."<init>":()V
+        80: athrow
+        81: astore_3
+        82: aconst_null
+        83: checkcast     #4                  // class java/util/EnumMap
+        86: ifnonnull     93
+        89: iconst_1
+        90: goto          94
+        93: iconst_0
+        94: invokestatic  #5                  // Method require:(Z)V
+        97: iconst_0
+        98: anewarray     #4                  // class java/util/EnumMap
+       101: astore_3
+       102: iconst_1
+       103: anewarray     #4                  // class java/util/EnumMap
+       106: astore        4
+       108: aload         4
+       110: astore        5
+       112: aload         4
+       114: astore        6
+       116: aload         4
+       118: astore        7
+       120: aload         4
+       122: astore        8
+       124: aload         4
+       126: astore        9
+       128: aload         5
+       130: aload         4
+       132: if_acmpne     153
+       135: aload         6
+       137: aload         4
+       139: if_acmpne     153
+       142: aload         7
+       144: aload         4
+       146: if_acmpne     153
+       149: iconst_1
+       150: goto          154
+       153: iconst_0
+       154: invokestatic  #5                  // Method require:(Z)V
+       157: aload         8
+       159: aload         4
+       161: if_acmpne     175
+       164: aload         9
+       166: aload         4
+       168: if_acmpne     175
+       171: iconst_1
+       172: goto          176
+       175: iconst_0
+       176: invokestatic  #5                  // Method require:(Z)V
+       179: aload_3
+       180: arraylength
+       181: ifne          195
+       184: aload         4
+       186: arraylength
+       187: iconst_1
+       188: if_icmpne     195
+       191: iconst_1
+       192: goto          196
+       195: iconst_0
+       196: invokestatic  #5                  // Method require:(Z)V
+       199: aload         4
+       201: instanceof    #12                 // class "[Ljava/util/Map;"
+       204: invokestatic  #5                  // Method require:(Z)V
+       207: aload         4
+       209: instanceof    #13                 // class "[Ljava/util/AbstractMap;"
+       212: invokestatic  #5                  // Method require:(Z)V
+       215: aload         4
+       217: instanceof    #14                 // class "[Ljava/io/Serializable;"
+       220: invokestatic  #5                  // Method require:(Z)V
+       223: aload         4
+       225: instanceof    #15                 // class "[Ljava/lang/Cloneable;"
+       228: invokestatic  #5                  // Method require:(Z)V
+       231: aload         4
+       233: invokevirtual #16                 // Method "[Ljava/util/EnumMap;".clone:()Ljava/lang/Object;
+       236: aload         4
+       238: if_acmpeq     245
+       241: iconst_1
+       242: goto          246
+       245: iconst_0
+       246: invokestatic  #5                  // Method require:(Z)V
+       249: aload         4
+       251: invokevirtual #17                 // Method "[Ljava/util/EnumMap;".clone:()Ljava/lang/Object;
+       254: checkcast     #18                 // class "[Ljava/util/EnumMap;"
+       257: checkcast     #18                 // class "[Ljava/util/EnumMap;"
+       260: arraylength
+       261: iconst_1
+       262: if_icmpne     269
+       265: iconst_1
+       266: goto          270
+       269: iconst_0
+       270: invokestatic  #5                  // Method require:(Z)V
+       273: aload         5
+       275: iconst_0
+       276: aload_2
+       277: aastore
+       278: new           #2                  // class java/lang/RuntimeException
+       281: dup
+       282: invokespecial #3                  // Method java/lang/RuntimeException."<init>":()V
+       285: athrow
+       286: astore        10
+       288: ldc           #4                  // class java/util/EnumMap
+       290: iconst_2
+       291: invokestatic  #20                 // Method java/lang/reflect/Array.newInstance:(Ljava/lang/Class;I)Ljava/lang/Object;
+       294: astore        10
+       296: aload         10
+       298: instanceof    #18                 // class "[Ljava/util/EnumMap;"
+       301: invokestatic  #5                  // Method require:(Z)V
+       304: aload         10
+       306: checkcast     #18                 // class "[Ljava/util/EnumMap;"
+       309: checkcast     #18                 // class "[Ljava/util/EnumMap;"
+       312: arraylength
+       313: iconst_2
+       314: if_icmpne     321
+       317: iconst_1
+       318: goto          322
+       321: iconst_0
+       322: invokestatic  #5                  // Method require:(Z)V
+       325: return
+      Exception table:
+         from    to  target type
+            68    81    81   Class java/lang/ClassCastException
+           273   286   286   Class java/lang/ArrayStoreException
+      LineNumberTable:
+        line 17: 0
+        line 18: 15
+        line 19: 28
+        line 20: 36
+        line 21: 38
+        line 22: 53
+        line 24: 68
+        line 25: 73
+        line 26: 81
+        line 29: 82
+        line 31: 97
+        line 32: 102
+        line 33: 108
+        line 34: 112
+        line 35: 116
+        line 36: 120
+        line 37: 124
+        line 38: 128
+        line 39: 157
+        line 40: 179
+        line 41: 199
+        line 42: 207
+        line 43: 215
+        line 44: 223
+        line 45: 231
+        line 46: 249
+        line 48: 273
+        line 49: 278
+        line 50: 286
+        line 54: 288
+        line 55: 296
+        line 56: 304
+        line 57: 325
+      StackMapTable: number_of_entries = 22
+        frame_type = 11 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 253 /* append */
+          offset_delta = 36
+          locals = [ class java/util/Map, class java/lang/Object ]
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 13 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 79 /* same_locals_1_stack_item */
+          stack = [ class java/lang/ClassCastException ]
+        frame_type = 11 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 255 /* full_frame */
+          offset_delta = 58
+          locals = [ class "[Ljava/lang/String;", class java/util/Map, class java/lang/Object, class "[Ljava/util/EnumMap;", class "[Ljava/util/EnumMap;", class "[Ljava/lang/Object;", class "[Ljava/util/Map;", class "[Ljava/util/AbstractMap;", class "[Ljava/io/Serializable;", class "[Ljava/lang/Cloneable;" ]
+          stack = []
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 20 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 18 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 48 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 22 /* same */
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+        frame_type = 79 /* same_locals_1_stack_item */
+          stack = [ class java/lang/ArrayStoreException ]
+        frame_type = 252 /* append */
+          offset_delta = 34
+          locals = [ class java/lang/Object ]
+        frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+}
+SourceFile: "EnumMapTypeLinkProbe.java"
