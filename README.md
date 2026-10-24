@@ -13,9 +13,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 
 | Area | Latest accepted evidence |
 | --- | --- |
-| Original workload | Unmodified 1.12.2 server; 138 explicit, authenticated class resources (947,894 bytes) |
-| Guest execution | **2,224,810 JVM instructions**, 138 internal steps, 42 verified successful checkpoint receipts |
-| Current blocker | Measured original `awp$1` class resource is missing at `awp.<clinit>` PC8 |
+| Original workload | Unmodified 1.12.2 server; 139 explicit, authenticated class resources (949,838 bytes) |
+| Guest execution | **2,224,828 JVM instructions**, 140 internal steps, 43 verified successful checkpoint receipts |
+| Current blocker | Measured `EnumMap` type is missing for original `ImmutableMap.copyOf` instanceof |
 | Runtime profile | 445,564-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 123 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
