@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.21380434298771434,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/CollisionRefusalProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/ReentrantRefusalProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/EqualsReentrantRefusalProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/ShortArrayRefusalProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/InheritedGetRefusalProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/MapEqualsRefusalProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/ViewEqualsRefusalProbe.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentViewAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentEntryEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentViewNoArg.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentMapRemove.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentMapClear.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentMapContains.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentLinkedCapacity.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/ParentHashTraversalReentry.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.8147231000039028,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/driver",
+        "./build/java-diff-mc-linked-map-put-refusals-parent-p59-002/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 29.648347411013674,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-refusals-parent-p59-002/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

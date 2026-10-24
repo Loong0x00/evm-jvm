@@ -2,6 +2,10 @@ import java.util.*;
 /** Generated-only proposed P59 witness. Not compiled or accepted until design approval. */
 public final class ParentLinkedMapPut {
     private static void check(boolean ok) { if (!ok) throw new ArithmeticException(); }
+    static final class MisleadingSize extends LinkedHashMap {
+        public int size() { return 777; }
+        public boolean isEmpty() { return true; }
+    }
     public static void main(String[] args) {
         LinkedHashMap map = new LinkedHashMap();
         Map viaMap = map;
@@ -25,6 +29,13 @@ public final class ParentLinkedMapPut {
         Object tail = target[4];
         check(view.toArray(target) == target && target[0] == first && target[1] == second);
         check(target[3] == null && target[4] == tail);
+        check(first.setValue(v1) == v3 && first.getValue() == v1);
+        Iterator replaced = view.iterator();
+        check(map.put(b, v3) == v1 && replaced.next() == first);
+        try { view.toArray(new String[3]); throw new ArithmeticException(); }
+        catch (ArrayStoreException expected) { }
+        try { view.toArray((Object[]) null); throw new ArithmeticException(); }
+        catch (NullPointerException expected) { }
         Iterator stale = view.iterator();
         check(map.put("four", "value") == null);
         try { stale.next(); throw new ArithmeticException(); }
@@ -36,7 +47,14 @@ public final class ParentLinkedMapPut {
         check(states.size() == 1 && !states.isEmpty() && states.hashCode() == state.hashCode());
         Map.Entry stateEntry = (Map.Entry) states.entrySet().iterator().next();
         check(stateEntry.getKey() == emptyKey && stateEntry.getValue() == state);
-        check(!(map instanceof EnumMap));
+        MisleadingSize misleading = new MisleadingSize();
+        misleading.put("one", "value");
+        Set privateView = misleading.entrySet();
+        check(privateView.size() == 1 && !privateView.isEmpty());
+        Object[] privateTarget = new Object[1];
+        check(privateView.toArray(privateTarget) == privateTarget && privateTarget[0] != null);
+        check(privateView.iterator().next() == privateTarget[0]);
+        check(!((Object) map instanceof EnumMap));
         String unit = String.valueOf((char) 65535);
         check(unit.length() == 1 && unit.charAt(0) == (char) 65535);
         Object[] backing = {state};

@@ -1,0 +1,31 @@
+package java.util;
+
+/** Cached live insertion-order view over a LinkedHashMap's genuine entries. */
+final class LinkedHashMapEntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
+    private final LinkedHashMap<K, V> owner;
+
+    LinkedHashMapEntrySet(LinkedHashMap<K, V> owner) { this.owner = owner; }
+
+    public int size() { return owner.size(); }
+    public boolean isEmpty() { return owner.isEmpty(); }
+
+    public Iterator<Map.Entry<K, V>> iterator() {
+        return new LinkedHashMapEntryIterator<K, V>(owner);
+    }
+
+    public <T> T[] toArray(T[] target) {
+        int length = target.length;
+        int count = size();
+        if (length < count) refuseTypedToArrayTooSmall();
+        Iterator<Map.Entry<K, V>> cursor = iterator();
+        int index = 0;
+        while (cursor.hasNext()) target[index++] = (T) cursor.next();
+        if (index < length) target[index] = null;
+        return target;
+    }
+
+    private native void refuseTypedToArrayTooSmall();
+    public native boolean add(Map.Entry<K, V> entry);
+    public native boolean equals(Object other);
+    public native int hashCode();
+}

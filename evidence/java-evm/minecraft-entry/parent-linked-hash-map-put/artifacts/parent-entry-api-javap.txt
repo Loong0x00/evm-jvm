@@ -1,0 +1,84 @@
+final class java.util.LinkedHashMapEntry<K, V> implements java.util.Map$Entry<K, V> {
+  final int hash;
+    descriptor: I
+
+  final K key;
+    descriptor: Ljava/lang/Object;
+
+  V value;
+    descriptor: Ljava/lang/Object;
+
+  java.util.LinkedHashMapEntry<K, V> next;
+    descriptor: Ljava/util/LinkedHashMapEntry;
+
+  java.util.LinkedHashMapEntry(int, K, V);
+    descriptor: (ILjava/lang/Object;Ljava/lang/Object;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: iload_1
+       6: putfield      #2                  // Field hash:I
+       9: aload_0
+      10: aload_2
+      11: putfield      #3                  // Field key:Ljava/lang/Object;
+      14: aload_0
+      15: aload_3
+      16: putfield      #4                  // Field value:Ljava/lang/Object;
+      19: return
+
+  public K getKey();
+    descriptor: ()Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field key:Ljava/lang/Object;
+       4: areturn
+
+  public V getValue();
+    descriptor: ()Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field value:Ljava/lang/Object;
+       4: areturn
+
+  public V setValue(V);
+    descriptor: (Ljava/lang/Object;)Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field value:Ljava/lang/Object;
+       4: astore_2
+       5: aload_0
+       6: aload_1
+       7: putfield      #4                  // Field value:Ljava/lang/Object;
+      10: aload_2
+      11: areturn
+
+  public int hashCode();
+    descriptor: ()I
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field key:Ljava/lang/Object;
+       4: ifnonnull     11
+       7: iconst_0
+       8: goto          18
+      11: aload_0
+      12: getfield      #3                  // Field key:Ljava/lang/Object;
+      15: invokevirtual #5                  // Method java/lang/Object.hashCode:()I
+      18: istore_1
+      19: aload_0
+      20: getfield      #4                  // Field value:Ljava/lang/Object;
+      23: ifnonnull     30
+      26: iconst_0
+      27: goto          37
+      30: aload_0
+      31: getfield      #4                  // Field value:Ljava/lang/Object;
+      34: invokevirtual #5                  // Method java/lang/Object.hashCode:()I
+      37: istore_2
+      38: iload_1
+      39: iload_2
+      40: ixor
+      41: ireturn
+
+  public native boolean equals(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+}

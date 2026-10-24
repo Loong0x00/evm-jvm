@@ -1,0 +1,117 @@
+package java.util;
+
+/**
+ * Bounded genuine insertion-order put profile for the LOCAL Minecraft VM.
+ *
+ * This implementation owns linked entries rather than using HashMap's private
+ * bucket nodes. The inherited HashMap table remains unused; no bucket or resize
+ * behavior is claimed. Inherited size, modCount, and entrySet cache are kept
+ * coherent. Other inherited data APIs remain unbound refusals.
+ */
+public class LinkedHashMap<K, V> extends HashMap<K, V> {
+    private static final long serialVersionUID = 3801124242820219131L;
+    private final boolean accessOrder;
+    private LinkedHashMapEntry<K, V> first;
+    private LinkedHashMapEntry<K, V> last;
+
+    public LinkedHashMap() {
+        super();
+        this.accessOrder = false;
+    }
+
+    /** Java 8 HashMap spread transform, applied after exactly one raw key hash. */
+    private static int spread(int hash) { return hash ^ (hash >>> 16); }
+
+    /** Explicit refusal boundaries; these native methods intentionally have no binding. */
+    private native void refuseSameMapStructuralReentry();
+    private native void refuseCollisionBinLimit();
+
+    @Override public V put(K key, V value) {
+        int hash;
+        if (key == null) {
+            hash = 0;
+        } else {
+            int beforeHash = modCount;
+            int rawHash = key.hashCode();
+            if (modCount != beforeHash) refuseSameMapStructuralReentry();
+            hash = spread(rawHash);
+        }
+
+        int matchingHashEntries = 0;
+        LinkedHashMapEntry<K, V> entry = first;
+        while (entry != null) {
+            if (entry.hash == hash) {
+                matchingHashEntries++;
+                if (entry.key == key) {
+                    V oldValue = entry.value;
+                    entry.value = value;
+                    return oldValue;
+                }
+                if (key != null) {
+                    int beforeEquals = modCount;
+                    boolean equal = key.equals(entry.key);
+                    if (modCount != beforeEquals) refuseSameMapStructuralReentry();
+                    if (equal) {
+                        V oldValue = entry.value;
+                        entry.value = value;
+                        return oldValue;
+                    }
+                }
+            }
+            entry = entry.next;
+        }
+
+        // Eight distinct entries with one spread hash are supported. Refuse
+        // the ninth only after the normal identity/equals search above.
+        if (matchingHashEntries >= 8) refuseCollisionBinLimit();
+
+        // Constructor is allocation-free apart from its object and only assigns
+        // fields. Allocate fully before publishing links/counters so allocator
+        // OOM leaves the receiver unchanged.
+        LinkedHashMapEntry<K, V> added =
+                new LinkedHashMapEntry<K, V>(hash, key, value);
+        if (last == null) {
+            first = added;
+            last = added;
+        } else {
+            last.next = added;
+            last = added;
+        }
+        size++;
+        modCount++;
+        return null;
+    }
+
+    @Override public Set<Map.Entry<K, V>> entrySet() {
+        Set<Map.Entry<K, V>> view = entrySet;
+        if (view == null) {
+            view = new LinkedHashMapEntrySet(this);
+            entrySet = view;
+        }
+        return view;
+    }
+
+    @Override public int hashCode() {
+        int expectedModCount = modCount;
+        int sum = 0;
+        LinkedHashMapEntry<K, V> entry = first;
+        while (entry != null) {
+            int keyHash = 0;
+            if (entry.key != null) {
+                keyHash = entry.key.hashCode();
+                if (modCount != expectedModCount) refuseSameMapStructuralReentry();
+            }
+            int valueHash = 0;
+            if (entry.value != null) {
+                valueHash = entry.value.hashCode();
+                if (modCount != expectedModCount) refuseSameMapStructuralReentry();
+            }
+            sum += keyHash ^ valueHash;
+            entry = entry.next;
+        }
+        if (modCount != expectedModCount) refuseSameMapStructuralReentry();
+        return sum;
+    }
+
+    final LinkedHashMapEntry<K, V> firstEntry() { return first; }
+}

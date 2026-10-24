@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "budget": 1000000000,
+  "freshP54Artifact": true,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.21382707401062362,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-enum-map-link/ParentEnumMapLink.java"
+      ]
+    },
+    {
+      "label": "stock-java8",
+      "exit": 0,
+      "wallSeconds": 0.0315429479960585,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/classes",
+        "ParentEnumMapLink"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.764696307000122,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/driver",
+        "./build/java-diff-mc-linked-map-put-retained-enum-parent-p59/driver-src"
+      ]
+    },
+    {
+      "label": "reflect-controls",
+      "exit": 0,
+      "wallSeconds": 0.46410910499980673,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/parent-retained-reflect",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "reopen",
+      "exit": 0,
+      "wallSeconds": 0.16370508099498693,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-retained-enum-parent-p59/parent-retained-reflect",
+        "1000000000"
+      ]
+    }
+  ]
+}

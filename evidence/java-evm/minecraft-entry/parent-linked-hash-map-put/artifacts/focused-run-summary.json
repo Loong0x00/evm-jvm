@@ -1,0 +1,257 @@
+{
+  "status": "PASS",
+  "initialGas": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.2137368840049021,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/PutProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/CallbackExceptionProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/CollisionRefusalProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/linked-hash-map-put-bounded/tests/src/CollisionEightProbe.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-linked-hash-map-put/ParentCallbackSideeffects.java"
+      ]
+    },
+    {
+      "label": "stock-CallbackExceptionProbe",
+      "exit": 0,
+      "wallSeconds": 0.03147267398890108,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/classes",
+        "CallbackExceptionProbe"
+      ]
+    },
+    {
+      "label": "stock-ParentCallbackSideeffects",
+      "exit": 0,
+      "wallSeconds": 0.03141819500888232,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/classes",
+        "ParentCallbackSideeffects"
+      ]
+    },
+    {
+      "label": "stock-PutProbe",
+      "exit": 0,
+      "wallSeconds": 0.0314235749974614,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/classes",
+        "PutProbe"
+      ]
+    },
+    {
+      "label": "stock-CollisionEightProbe",
+      "exit": 0,
+      "wallSeconds": 0.03136959599214606,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/classes",
+        "CollisionEightProbe"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7643356610060437,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "./build/java-diff-mc-linked-map-put-focused-parent-p59/driver-src"
+      ]
+    },
+    {
+      "label": "parent-case-CallbackExceptionProbe-attempt-1",
+      "exit": 0,
+      "wallSeconds": 18.43506791999971,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "parent-case-CallbackExceptionProbe",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-CallbackExceptionProbe-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000
+    },
+    {
+      "label": "parent-case-CallbackExceptionProbe-attempt-1-reopen",
+      "exit": 0,
+      "wallSeconds": 0.16369116998976097,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-CallbackExceptionProbe-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-case-ParentCallbackSideeffects-attempt-1",
+      "exit": 0,
+      "wallSeconds": 47.72274860800826,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "parent-case-ParentCallbackSideeffects",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-ParentCallbackSideeffects-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000
+    },
+    {
+      "label": "parent-case-ParentCallbackSideeffects-attempt-1-reopen",
+      "exit": 0,
+      "wallSeconds": 0.16370638299849816,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-ParentCallbackSideeffects-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-case-PutProbe-attempt-1",
+      "exit": 42,
+      "wallSeconds": 1.014466820997768,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "parent-case-PutProbe",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-PutProbe-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000
+    },
+    {
+      "label": "parent-case-PutProbe-attempt-2",
+      "exit": 42,
+      "wallSeconds": 2.366094110009726,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "parent-case-PutProbe",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-PutProbe-attempt-2",
+        "2000000000"
+      ],
+      "gasBudget": 2000000000
+    },
+    {
+      "label": "parent-case-PutProbe-attempt-3",
+      "exit": 42,
+      "wallSeconds": 2.7660610229941085,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "parent-case-PutProbe",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-PutProbe-attempt-3",
+        "4000000000"
+      ],
+      "gasBudget": 4000000000
+    },
+    {
+      "label": "parent-case-PutProbe-attempt-4",
+      "exit": 0,
+      "wallSeconds": 2.967222735998803,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "parent-case-PutProbe",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-PutProbe-attempt-4",
+        "8000000000"
+      ],
+      "gasBudget": 8000000000
+    },
+    {
+      "label": "parent-case-PutProbe-attempt-4-reopen",
+      "exit": 0,
+      "wallSeconds": 0.26374747199588455,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-PutProbe-attempt-4",
+        "8000000000"
+      ]
+    },
+    {
+      "label": "parent-case-CollisionEightProbe-attempt-1",
+      "exit": 0,
+      "wallSeconds": 0.7643921470007626,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "parent-case-CollisionEightProbe",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-CollisionEightProbe-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000
+    },
+    {
+      "label": "parent-case-CollisionEightProbe-attempt-1-reopen",
+      "exit": 0,
+      "wallSeconds": 0.16370439701131545,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-focused-parent-p59/parent-case-CollisionEightProbe-attempt-1",
+        "1000000000"
+      ]
+    }
+  ],
+  "workerFixturesReexecutedUnderParentCorrectedEngine": true,
+  "parentCallbackSideeffectFixture": true
+}
