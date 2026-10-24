@@ -1,0 +1,365 @@
+{
+  "profile": "MC-COLLECTIONS-SINGLETON-LIST-BOUNDED-1 candidate; NOT parent accepted",
+  "scope": "java.util.Collections.singletonList(Object):List only; immutable real one-element list; fresh independent real iterators; all other operations refuse; no full Collections/List API.",
+  "provenance": {
+    "baseCommit": "bebd4be5bf5cd1c7e2df1f933c090d4a033e1e19",
+    "acceptedGuestCodeCommit": "14449892eb7ac543b61e79e68b4b753149577fab",
+    "baseManifestPath": "../collections-singleton-source-base-p54/source-manifest.json",
+    "baseManifestFiles": 15,
+    "baseManifestVerified": true,
+    "originalMinecraftInputsUsed": false,
+    "parentReviewInputsUsed": false,
+    "performanceReviewInputsUsed": false
+  },
+  "sourceAndBuild": {
+    "engineSourceSHA256": "f88d47bbcacb56a2ea5eecb6eeefd427b18dd514f1f5a8d4a5b9811ecac20eba",
+    "engineRuntimeBytes": 441398,
+    "engineRuntimeSHA256": "d56a048337f13aa52a1949b808a8f046cfdd499a983fa4fbdc3d4e180ac4aa8c",
+    "engineRuntimeKeccak256": "bcee4ab8b2ee679012df029cf834097ee119cd7f25a5a1977477e066e871b7a0",
+    "coordinatorRuntimeBytes": 5411,
+    "coordinatorRuntimeKeccak256": "86a06aa1ff9146eca8a671879cda850f5fbcadf4960be90ffef1222a04456b4d",
+    "bootstrapCount": 120,
+    "bootstrapRoot": "36bb00560de1bdd9cf1fcec36e58b86fa2439fb00b5a31128c2647a44883c01d",
+    "old117BootstrapLeavesExact": true,
+    "engineExternalABIAndStorageLayoutUnchanged": true,
+    "coordinatorABIAndStorageLayoutUnchanged": true,
+    "configRootFlatEncoding512CasesPass": true,
+    "configRootAggregateKeccak": "0x2f1182fca75cfe7874d3e3b746696d9d56db4ccdad3433b50addf762c3adef86",
+    "sourceOnlyConfigRootGuidance": {
+      "path": "reference/compiler-guidance-configroot/",
+      "fullSourceSHA256": "f88d47bbcacb56a2ea5eecb6eeefd427b18dd514f1f5a8d4a5b9811ecac20eba",
+      "validationSHA256": "30bd1daa8e52bdd000f05e5bef3e528d1095796feeec96e8e761ba82ebfe7330",
+      "rootCause": "pinned viaIR stack cliff in _configRoot with all flat fields live across bootstrap materialization",
+      "change": "single dynamic ConfigRootEncoding tuple plus hashing the unchanged flat ABI payload after its leading offset word"
+    },
+    "slot105to116Audit": {
+      "status": "PASS",
+      "slotIndices": [
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "priorBytesEqualSourceBase": true,
+      "priorLeavesEqual": true,
+      "actualMaterializerAssignments": {
+        "tailSlot105Function": true,
+        "tailSlot106NavigableMap": true,
+        "tailSlot107Comparator": true,
+        "tailSlot108SortedSet": true,
+        "tailSlot109NavigableSet": true,
+        "tailSlot110EntrySet": true,
+        "tailSlot111EntryIterator": true,
+        "tailSlot112ConcurrentModification": true,
+        "tailSlot113LinkedHashMap": true,
+        "tailSlot114ListIterator": true,
+        "tailSlot115ArrayListIterator": true,
+        "tailSlot116ReflectArray": true
+      },
+      "threeNewImages": [
+        117,
+        118,
+        119
+      ],
+      "correctRawPlusDefaultCountFor150Fixture": 270
+    },
+    "functionDeltaAudit": {
+      "changedFunctions": [
+        "_bootstrapRoot",
+        "_configRoot",
+        "_isReservedCollectionClass",
+        "_prepare"
+      ],
+      "addedFunctions": [
+        "_bootstrapCollections",
+        "_bootstrapSingletonIterator",
+        "_bootstrapSingletonList"
+      ],
+      "removedFunctions": [],
+      "_bootstrapMatcher": "unchanged; false-positive avoided because it is the final function in source-base",
+      "oldLeafRootProof": "all117 prior bootstrap leaves exactly match source-only base pins"
+    },
+    "sourceBaseHashEvidence": "build/reports/source-base-manifest-check.json",
+    "sourceManifest": "source-manifest.json",
+    "strayUncompiledCopy": {
+      "path": "coordinator/MCEntryInterpreter.sol",
+      "sha256": "ebec7224cd30b6aadc977696669b25fe7743bc1d7c713ff58a0afa71ca9ea850",
+      "reason": "accidental early copy, preserved, never compiled or used; canonical source is engine/MCEntryInterpreter.sol"
+    },
+    "priorSlotAuditFile": "build/reports/slot105-116-audit.json",
+    "functionDeltaAuditFile": "build/reports/function-delta-audit.json"
+  },
+  "positiveGeneratedEVM": {
+    "fixture": "SingletonListProbe.java",
+    "fixtureClassSHA256": "5ad2fc63fd6782e3259f2c0d46fd5d68e9d194d3b464b85af74442250c722b0a",
+    "fixtureZipSHA256": "0b1f20f533570646fd9d797f5c512032e6526f31d78b414ae6126a1b767d8db1",
+    "assertions": [
+      "arbitrary Object element; actual zero-length Object[] held as ONE element, not flattened",
+      "null element stored and returned",
+      "List/Collection/Iterable size and inherited isEmpty behavior",
+      "fresh iterator per call and across independent factory instances",
+      "hasNext true once; next returns identical reference then false; exhausted next throws genuine NoSuchElementException",
+      "no mutation or Object.identity List equality behavior substituted"
+    ],
+    "quantumRuns": {
+      "q1": {
+        "quantum": 1,
+        "epoch": 536,
+        "lifecycle": 2,
+        "outcome": 2,
+        "jvmSteps": 536,
+        "internalSteps": 8,
+        "machineRoot": "0x62ed95c6034393a2720e402a52eb77eeae2b332c1b6485f096313940914c9618",
+        "vfsRoot": "0xdaf76b53741d385b95b49b921cecc7a8aaeeb7432dcd9237d6cea7838c22f2af",
+        "checkpointRoot": "0xcc86da52fdfb8f222a36c8b906236a7fb9678fa10b523c9b5d1c47484f22b356",
+        "evmGas": 22123301245,
+        "maxSingleEVMCallGas": 46910428,
+        "maxSingleCallMs": 64,
+        "reopenedInNewProcess": true
+      },
+      "q7": {
+        "quantum": 7,
+        "epoch": 77,
+        "lifecycle": 2,
+        "outcome": 2,
+        "jvmSteps": 536,
+        "internalSteps": 8,
+        "machineRoot": "0x62ed95c6034393a2720e402a52eb77eeae2b332c1b6485f096313940914c9618",
+        "vfsRoot": "0xdaf76b53741d385b95b49b921cecc7a8aaeeb7432dcd9237d6cea7838c22f2af",
+        "checkpointRoot": "0x74c87e665b3c7c5f6b4f5351360e6436f454ea46d2d92c626eba97951ca7a656",
+        "evmGas": 3288340347,
+        "maxSingleEVMCallGas": 48302564,
+        "maxSingleCallMs": 62,
+        "reopenedInNewProcess": true
+      },
+      "q128": {
+        "quantum": 128,
+        "epoch": 5,
+        "lifecycle": 2,
+        "outcome": 2,
+        "jvmSteps": 536,
+        "internalSteps": 8,
+        "machineRoot": "0x62ed95c6034393a2720e402a52eb77eeae2b332c1b6485f096313940914c9618",
+        "vfsRoot": "0xdaf76b53741d385b95b49b921cecc7a8aaeeb7432dcd9237d6cea7838c22f2af",
+        "checkpointRoot": "0xa6855acf05da7c7c63f21671bab153cd106499cdfcd402e6ec216ca3958081ae",
+        "evmGas": 327787670,
+        "maxSingleEVMCallGas": 70223947,
+        "maxSingleCallMs": 94,
+        "reopenedInNewProcess": true
+      }
+    },
+    "semanticEquivalenceAcrossQuanta": true,
+    "checkpointRootsExpectedToDifferByQuantum": true,
+    "perCallGasWithinInitial1BGasBudget": true,
+    "ordinaryCallWatchdog30sPass": true,
+    "checkpointResumeAndFreshProcessReopenPass": true
+  },
+  "highIndexEVM": {
+    "status": "PASS",
+    "rawClassCount": 150,
+    "bootstrapCount": 120,
+    "actualCheckpointClassCount": 270,
+    "maxActualClassIndex": 269,
+    "appendedIndices": {
+      "java/util/Collections": 267,
+      "java/util/Collections$SingletonList": 268,
+      "java/util/Collections$SingletonIterator": 269
+    },
+    "completedProbe": "SingletonListProbe.main invoked the factory/list/iterator through the >255 bootstrap region",
+    "quantum": 128,
+    "epoch": 5,
+    "lifecycle": 2,
+    "jvmSteps": 536,
+    "internalSteps": 8,
+    "machineRoot": "0x89540b4c7c696d1b555f8d591115c8b5bd184fae5acdf649e817379383c6f334",
+    "vfsRoot": "0xdaf76b53741d385b95b49b921cecc7a8aaeeb7432dcd9237d6cea7838c22f2af",
+    "checkpointRoot": "0x88eec6d59704a33d32afe0bf818c76dec5e7f04a546e0d994f4335fd4d1c177a",
+    "checkpointSHA256": "38c206283534ad70a4c3f6e97844ed77145557b8bff22a04a05d2dfa85c66898",
+    "checkpointBytes": 4148,
+    "noOriginalInputs": true
+  },
+  "retainedControls": {
+    "fixture": "SingletonListRetainedControlsSafeProbe.java",
+    "terminalLifecycle": 2,
+    "jvmSteps": 250,
+    "internalSteps": 7,
+    "checks": [
+      "ReflectArray.newInstance native binding22",
+      "ArrayList capacity constructor, honest typed-array target behavior, fresh iterator",
+      "HashMap entrySet empty view and iterator",
+      "Function.apply through the append-only Function interface",
+      "NavigableSet class literal"
+    ],
+    "machineRoot": "0x22bb09369654a48e54163278eacb70f8c3180eb8ac00aeea461b3d66071d9d96",
+    "vfsRoot": "0xdaf76b53741d385b95b49b921cecc7a8aaeeb7432dcd9237d6cea7838c22f2af",
+    "newProcessReopenPass": true,
+    "ArrayListAddFailurePreserved": {
+      "fixture": "SingletonListRetainedControlsProbe.java",
+      "selector": "0xd631c3a4",
+      "CallError": [
+        4,
+        44
+      ],
+      "headUnchanged": true,
+      "classification": "legacy ArrayList.add API/capability failure; not altered in this singletonList-only task"
+    }
+  },
+  "rawRefusalProbes": {
+    "ToArrayProbe": {
+      "error": "execution reverted",
+      "selector": "0xd631c3a4",
+      "uint256Words": [
+        4,
+        16
+      ],
+      "rootUnchanged": true,
+      "headUnchanged": true,
+      "javaDiagnostic": null,
+      "terminalJavaOutcome": false
+    },
+    "EqualsProbe": {
+      "error": "execution reverted",
+      "selector": "0xd631c3a4",
+      "uint256Words": [
+        4,
+        13
+      ],
+      "rootUnchanged": true,
+      "headUnchanged": true,
+      "javaDiagnostic": null,
+      "terminalJavaOutcome": false
+    },
+    "HashCodeProbe": {
+      "error": "execution reverted",
+      "selector": "0xd631c3a4",
+      "uint256Words": [
+        4,
+        12
+      ],
+      "rootUnchanged": true,
+      "headUnchanged": true,
+      "javaDiagnostic": null,
+      "terminalJavaOutcome": false
+    },
+    "GetProbe": {
+      "error": "execution reverted",
+      "selector": "0xd631c3a4",
+      "uint256Words": [
+        3,
+        13
+      ],
+      "rootUnchanged": true,
+      "headUnchanged": true,
+      "javaDiagnostic": null,
+      "terminalJavaOutcome": false
+    },
+    "RemoveProbe": {
+      "error": "execution reverted",
+      "selector": "0xd631c3a4",
+      "uint256Words": [
+        3,
+        17
+      ],
+      "rootUnchanged": true,
+      "headUnchanged": true,
+      "javaDiagnostic": null,
+      "terminalJavaOutcome": false
+    },
+    "UtilityProbe": {
+      "error": "execution reverted",
+      "selector": "0xd631c3a4",
+      "uint256Words": [
+        3,
+        0
+      ],
+      "rootUnchanged": true,
+      "headUnchanged": true,
+      "javaDiagnostic": null,
+      "terminalJavaOutcome": false
+    },
+    "helperGetterOrPrivateField": {
+      "status": "not directly invoked",
+      "sourceEvidence": "compiled-helper-layout.txt: element and cursor state are private; no field accessor methods are declared",
+      "noDefaultValuesOrPublicAccessors": true
+    },
+    "CollectionAdd": {
+      "error": "execution reverted",
+      "selector": "0xd631c3a4",
+      "uint256Words": [
+        4,
+        19
+      ],
+      "rootUnchanged": true,
+      "headUnchanged": true,
+      "javaDiagnostic": null,
+      "terminalJavaOutcome": false
+    },
+    "unboundMethodResolution": {
+      "tested": [
+        "equals",
+        "hashCode",
+        "Collection.toArray(T[])",
+        "List.get(int)",
+        "Iterator.remove()",
+        "Collections.emptyList()"
+      ],
+      "classification": "raw CallError; no Java/AME/UOE outcome; atomic Head/root unchanged"
+    }
+  },
+  "knownPreservedAttempts": {
+    "compilerStackFailures": "attempts/stack-cliff/",
+    "incorrect119ClassInfoLayout": [
+      "build/run-q1-clean",
+      "build/run-q7",
+      "build/run-q128",
+      "build/run-class-boundary-150",
+      "build/run-add-refusal"
+    ],
+    "oldArrayListAddControlFailure": "build/run120-retained-controls-rootfirst",
+    "oldnegativeProbeFinishDriverMisuse": [
+      "build/logs/run120-negative-*-finish.log"
+    ]
+  },
+  "limitations": [
+    "This is a bounded candidate, not parent acceptance or Minecraft execution.",
+    "Collections utility exports only singletonList; no emptyList/asList/other methods. List get and unrelated mutators remain raw refusals.",
+    "List equality/hashCode and typed Collection.toArray remain explicit unresolved/native refusals; tested below.",
+    "An earlier old-slot control attempted unsupported ArrayList.add and failed CallError(4,44); no unrelated repair was made.",
+    "Raw add and unsupported method probes end by raw CallError and leave Head unchanged; those are not Java outcomes.",
+    "No performance improvement claim; outer EVM continuation gas/call counts vary by quantum."
+  ],
+  "javaImages": {
+    "Collections.class": {
+      "bytes": 492,
+      "sha256": "420acb552258544d9883fb016f21703bcc1d20953e567189134167bce827fde7"
+    },
+    "Collections$SingletonList.class": {
+      "bytes": 544,
+      "sha256": "36f659382863a42b1f1e9b19cc8ddefaa6788ed6fb96dd9fcab607faf18bdef6"
+    },
+    "Collections$SingletonIterator.class": {
+      "bytes": 588,
+      "sha256": "f01154c5ae4797399d2cb526b3a422cf45a6300234479997306c54c671e619eb"
+    }
+  },
+  "buildAttemptHistory": {
+    "wrong119Layout": [
+      "build/run-q1-clean",
+      "build/run-q7",
+      "build/run-q128",
+      "build/run-class-boundary-150",
+      "build/run-add-refusal"
+    ],
+    "wrongLayoutNeverContinued": true,
+    "pinnedCompilerStackFailures": "attempts/stack-cliff/",
+    "correct120LayoutFreshRunsPrefix": "build/run120-*"
+  }
+}

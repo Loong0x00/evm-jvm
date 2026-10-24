@@ -1,0 +1,39 @@
+public class java.util.Collections {
+  private java.util.Collections();
+    descriptor: ()V
+
+  public static <T> java.util.List<T> singletonList(T);
+    descriptor: (Ljava/lang/Object;)Ljava/util/List;
+}
+final class java.util.Collections$SingletonList extends java.util.AbstractList {
+  private final java.lang.Object element;
+    descriptor: Ljava/lang/Object;
+  java.util.Collections$SingletonList(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)V
+
+  public int size();
+    descriptor: ()I
+
+  public java.util.Iterator iterator();
+    descriptor: ()Ljava/util/Iterator;
+
+  public native boolean add(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+}
+final class java.util.Collections$SingletonIterator implements java.util.Iterator {
+  private final java.lang.Object element;
+    descriptor: Ljava/lang/Object;
+  private boolean available;
+    descriptor: Z
+  java.util.Collections$SingletonIterator(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)V
+
+  public boolean hasNext();
+    descriptor: ()Z
+
+  public java.lang.Object next();
+    descriptor: ()Ljava/lang/Object;
+
+  public native void remove();
+    descriptor: ()V
+}
