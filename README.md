@@ -13,9 +13,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 
 | Area | Latest accepted evidence |
 | --- | --- |
-| Original workload | Unmodified 1.12.2 server; 143 explicit, authenticated class resources (970,853 bytes) |
-| Guest execution | **2,225,278 JVM instructions**, 143 internal steps, 46 verified successful checkpoint receipts |
-| Current blocker | Measured original `com/google/common/collect/HashBasedTable` resource is missing |
+| Original workload | Unmodified 1.12.2 server; 149 explicit, authenticated class resources (999,009 bytes) |
+| Guest execution | **2,225,301 JVM instructions**, 145 internal steps, 44 verified successful checkpoint receipts |
+| Current blocker | Measured JDK `java.util.function.Supplier` superinterface is missing |
 | Runtime profile | 455,023-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 127 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
