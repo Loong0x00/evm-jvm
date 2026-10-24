@@ -14,22 +14,22 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 139 explicit, authenticated class resources (949,838 bytes) |
-| Guest execution | **2,224,828 JVM instructions**, 140 internal steps, 43 verified successful checkpoint receipts |
-| Current blocker | Measured `EnumMap` type is missing for original `ImmutableMap.copyOf` instanceof |
-| Runtime profile | 445,564-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 123 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,224,938 JVM instructions**, 140 internal steps, 42 verified successful checkpoint receipts |
+| Current blocker | Measured original `com/google/common/collect/ImmutableBiMap` resource is missing |
+| Runtime profile | 446,380-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 124 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [Ordinary UTF-16 String.valueOf(char) / P57](JAVA_EVM_MC_STRING_VALUEOF_CHAR_PARENT_PREFLIGHT.md).
-Fresh EVM tests verify21 UTF-16 boundary units, real independent String/backing
-allocations, retained features and new-process reopen. Only bootstrap leaf26
-changes; no native binding is added. q1/q7 pass at1B; raw150 coarse tests separately
-require16B after preserved1B/2B/4B/8B shortages. Deferred overloads, malformed and
-wrong-owner calls retain atomic refusal. Full String/Java SE APIs are not claimed.
+Latest acceptance: [EnumMap type-link marker / P58](JAVA_EVM_MC_ENUM_MAP_LINK_PARENT_PREFLIGHT.md).
+Fresh EVM tests verify real type hierarchy, array covariance and component identity,
+constructor/access refusals, retained features and separate-process reopen. All123
+prior images remain exact; no EnumMap data object or public constructor is admitted.
+q1/q7 and raw150 coarse tests pass at1B without budget escalation. No native binding
+is added; full EnumMap/Map/Java SE behavior is not claimed.
 
 ### Important LOCAL-only limits
 

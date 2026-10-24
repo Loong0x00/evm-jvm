@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "generatedOnly": true,
+  "initialGas": 1000000000,
+  "attempts": [
+    {
+      "label": "parent-small-attempt-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 41.41308204099187,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/parent-small-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-small-reopen-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.16368292899278458,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/parent-small-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-matrix-attempt-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 1.5656082939967746,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/driver",
+        "parent-matrix",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/parent-matrix-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-matrix-reopen-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.5643747019930743,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-build-parent-p58-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-fixtures-parent-p58",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-enum-map-link-generated-parent-p58/parent-matrix-attempt-1",
+        "1000000000"
+      ]
+    }
+  ],
+  "transportDiagnosticDelta": "124 bootstrap/274 derived classes; CP2MiB; constructor-only int-zero audit generalized to typed ints, specific full map heap checked separately",
+  "noEvmOrGuestCodeModificationByParentDriver": true
+}

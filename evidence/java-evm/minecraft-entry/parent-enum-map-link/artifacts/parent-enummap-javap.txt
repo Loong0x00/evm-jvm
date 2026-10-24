@@ -1,0 +1,30 @@
+Compiled from "EnumMap.java"
+public class java.util.EnumMap extends java.util.AbstractMap implements java.io.Serializable,java.lang.Cloneable {
+  private java.util.EnumMap();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/util/AbstractMap."<init>":()V
+       4: return
+
+  public native java.lang.Object get(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Ljava/lang/Object;
+
+  public native java.lang.Object put(java.lang.Object, java.lang.Object);
+    descriptor: (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+
+  public native int size();
+    descriptor: ()I
+
+  public native boolean isEmpty();
+    descriptor: ()Z
+
+  public native void clear();
+    descriptor: ()V
+
+  public native boolean containsKey(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public native java.util.Set entrySet();
+    descriptor: ()Ljava/util/Set;
+}

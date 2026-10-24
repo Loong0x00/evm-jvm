@@ -1,0 +1,91 @@
+{
+  "status": "all public constructor overloads/private access/raw replacement atomically refused; no EnumMap data-instance claim",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "8f4053e29d3693025acec90f8576ebf44b3fde7ab379e578c7e0138cbf16dc42",
+  "engineRuntimeKeccak256": "0x072360ef8f04101a9977368c2c64e669d045932ca05f5d65235cb2e1a9533f1f",
+  "coordinatorRuntimeSHA256": "94b74f936705a92f6d8436c87dd5dd6204064ac4e945177321cff69f88fdadd6",
+  "coordinatorRuntimeKeccak256": "0xc8026327a748875519e9eb2f95557e065bf72c377bf459643a22e14ddab39d18",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "ParentEnumCtorClass",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "8"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "rootAfter": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "atomic": true,
+      "gasUsed": 30846729,
+      "wallMs": 26
+    },
+    {
+      "name": "ParentEnumCtorMap",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "8"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "rootAfter": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "atomic": true,
+      "gasUsed": 30843811,
+      "wallMs": 27
+    },
+    {
+      "name": "ParentEnumCtorCopy",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "8"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "rootAfter": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "atomic": true,
+      "gasUsed": 30839020,
+      "wallMs": 26
+    },
+    {
+      "name": "private-noarg",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "8"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "rootAfter": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "atomic": true,
+      "gasUsed": 30839429,
+      "wallMs": 27
+    },
+    {
+      "name": "raw-EnumMap",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "rootAfter": "0x51c73d5da3b5defd1c3b43f05812398fb1bee257f067204ca0d70c1c9fa068b6",
+      "atomic": true,
+      "gasUsed": 409997,
+      "wallMs": 1
+    }
+  ],
+  "processId": 1567649,
+  "elapsedMs": 0
+}
