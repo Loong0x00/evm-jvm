@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.21384152000246104,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalGet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalSet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalRemoveIndex.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalRemoveValue.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalIndexedAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalAddAll.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalListIterator.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalNoArgArray.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalShortArray.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalClone.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalClear.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentListRefusalIteratorRemove.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/ParentArrayArgumentMismatch.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7647019380092388,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/driver",
+        "./build/java-diff-mc-array-list-add-refusals-parent-p60/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 63.54362236900488,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-refusals-parent-p60/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

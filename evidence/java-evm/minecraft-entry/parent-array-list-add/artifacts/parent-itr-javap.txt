@@ -1,0 +1,77 @@
+final class java.util.ArrayList$Itr implements java.util.Iterator {
+  private final java.util.ArrayList owner;
+    descriptor: Ljava/util/ArrayList;
+
+  private int cursor;
+    descriptor: I
+
+  private int expectedModCount;
+    descriptor: I
+
+  java.util.ArrayList$Itr(java.util.ArrayList);
+    descriptor: (Ljava/util/ArrayList;)V
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field owner:Ljava/util/ArrayList;
+       9: aload_0
+      10: aload_1
+      11: invokestatic  #3                  // Method java/util/ArrayList.access$000:(Ljava/util/ArrayList;)I
+      14: putfield      #4                  // Field expectedModCount:I
+      17: return
+
+  public boolean hasNext();
+    descriptor: ()Z
+    Code:
+       0: aload_0
+       1: getfield      #5                  // Field cursor:I
+       4: aload_0
+       5: getfield      #2                  // Field owner:Ljava/util/ArrayList;
+       8: invokestatic  #6                  // Method java/util/ArrayList.access$100:(Ljava/util/ArrayList;)I
+      11: if_icmpge     18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+
+  public java.lang.Object next();
+    descriptor: ()Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: getfield      #4                  // Field expectedModCount:I
+       4: aload_0
+       5: getfield      #2                  // Field owner:Ljava/util/ArrayList;
+       8: invokestatic  #3                  // Method java/util/ArrayList.access$000:(Ljava/util/ArrayList;)I
+      11: if_icmpeq     22
+      14: new           #7                  // class java/util/ConcurrentModificationException
+      17: dup
+      18: invokespecial #8                  // Method java/util/ConcurrentModificationException."<init>":()V
+      21: athrow
+      22: aload_0
+      23: getfield      #5                  // Field cursor:I
+      26: aload_0
+      27: getfield      #2                  // Field owner:Ljava/util/ArrayList;
+      30: invokestatic  #6                  // Method java/util/ArrayList.access$100:(Ljava/util/ArrayList;)I
+      33: if_icmplt     44
+      36: new           #9                  // class java/util/NoSuchElementException
+      39: dup
+      40: invokespecial #10                 // Method java/util/NoSuchElementException."<init>":()V
+      43: athrow
+      44: aload_0
+      45: getfield      #2                  // Field owner:Ljava/util/ArrayList;
+      48: invokestatic  #11                 // Method java/util/ArrayList.access$200:(Ljava/util/ArrayList;)[Ljava/lang/Object;
+      51: aload_0
+      52: dup
+      53: getfield      #5                  // Field cursor:I
+      56: dup_x1
+      57: iconst_1
+      58: iadd
+      59: putfield      #5                  // Field cursor:I
+      62: aaload
+      63: areturn
+
+  public native void remove();
+    descriptor: ()V
+}

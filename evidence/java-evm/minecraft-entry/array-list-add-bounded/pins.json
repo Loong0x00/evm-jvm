@@ -1,21 +1,21 @@
 {
-  "profile": "MC-ARRAY-LIST-ADD-BOUNDED-CANDIDATE-1",
+  "profile": "MC-ARRAY-LIST-ADD-P60-PARENT",
   "domain": "MC-ARRAY-LIST-ADD-BOUNDED-1",
-  "basis": "accepted guest P59; source-only P59 snapshot; ordinary Java8 ArrayList.add(Object) append and iterator fail-fast only; Java8-g:none images pinned to OpenJDK 8 SDK",
+  "basis": "accepted P59; genuine ArrayList append/growth and fail-fast private iterator",
   "engine": {
-    "bytes": 454921,
-    "initSHA256": "ee951c9aff9c02f957126ad17618bc07a7ea5e186f7c2a02129767486d12183c",
-    "runtimeSHA256": "42c0a3713ddbb8144a698bfdceae784174678afed0cf653a6c5d32d80fa8032d",
-    "runtimeKeccak256": "ea27e41942b6d998d0264a8a393a131bc51f2cd94b9a45559e82ff370622c795"
+    "bytes": 455023,
+    "initSHA256": "0f464345aba294f78de1cbca0ddf50ed830c6c1137c67aaa49a1fc3814f807c1",
+    "runtimeSHA256": "829545f33510d28879685dc26928a33f454ba88b4f729e1f9d7c3085bccd35ce",
+    "runtimeKeccak256": "f16a96a46bec49a5c7fb00072571dbd60d07ca5bf3b1420a2ce551452d5ce369"
   },
   "coordinator": {
     "bytes": 5411,
-    "initSHA256": "bab12e00788f5620422e6d57fbeb2ff47e41df76cd17d4d145dbcb6b11a873e9",
-    "runtimeSHA256": "b19d553c9dc998821c2de4cf2bb142cdb23633ea647eb28b4deaa39098675492",
-    "runtimeKeccak256": "28ee7fa7a1d99ef8d2c7a2f82794d99aa147fa81f626560627fcea87908a77e5"
+    "initSHA256": "59b9e419f41f39d0af92886bf4122e3c05e07b42cc3589b9ff5f3075350149c5",
+    "runtimeSHA256": "09a45def3bb69a10528a0846d06309cef1d4ceecbeee4e70b8f426dca04bee93",
+    "runtimeKeccak256": "285ba5918a2135f61a33f55b693752edf3bc2fc2b63d72072fe03a92895d537c"
   },
   "bootstrapCount": 127,
-  "baseBootstrapCount": 124,
+  "baseBootstrapCount": 127,
   "diagnosticClassBound": 277,
   "bootstrapRoot": "a34286fcbd75d2da7c02c3c803a825d1b77d7228a896da502973dbf15e1ad2ed",
   "expectedBootstrapRoot": "a34286fcbd75d2da7c02c3c803a825d1b77d7228a896da502973dbf15e1ad2ed",
@@ -148,29 +148,7 @@
     "d7ae6ce05a91f0f4558fe3169756e4e8bf01e800356c8ed75f7703e74fb391d6",
     "399cefed432118bce3389d638c591b1a2feb518235abc5ef9d48f9d47a14a0d5"
   ],
-  "newImages": [
-    {
-      "index": 124,
-      "name": "java/util/LinkedHashMapEntry",
-      "bytes": 1059,
-      "sha256": "dce473c8343277fe3e9098da651fcd07f8d710ab67bf5d1a521215e795de7808",
-      "keccak256": "5dc5b96467ccfc05408fad91c6f15d313851053cc37c6b77e9808bef2fd6e733"
-    },
-    {
-      "index": 125,
-      "name": "java/util/LinkedHashMapEntrySet",
-      "bytes": 1101,
-      "sha256": "4285f614e7bc823f0daab32a84b96af07029f7e2b4f57908600cae76d0c56fbf",
-      "keccak256": "d7ae6ce05a91f0f4558fe3169756e4e8bf01e800356c8ed75f7703e74fb391d6"
-    },
-    {
-      "index": 126,
-      "name": "java/util/LinkedHashMapEntryIterator",
-      "bytes": 1305,
-      "sha256": "dacf32ea3a60f004a61743ef33fce3a6b606c1acf2f7d7bc1013fb56d5807ef0",
-      "keccak256": "399cefed432118bce3389d638c591b1a2feb518235abc5ef9d48f9d47a14a0d5"
-    }
-  ],
+  "newImages": [],
   "globalNativeBindings": 22,
   "stringLocalBinding": 12,
   "rawLimits": [
@@ -188,13 +166,11 @@
   "maxHandleFrontier": 12545,
   "allocatableArraysAndObjects": 12288,
   "sourceInvariants": {
-    "onlyArrayList98AndItr115Changes": true,
+    "only98And115Changed": true,
     "all125OtherImagesExact": true,
-    "classCount127AndRawLimits150/1063930Unchanged": true,
-    "old105Through126SlotsPreserved": true,
-    "defaultAndIntConstructorsPreserved": true,
-    "actualPrivateSizeBackingAndIteratorFailFast": true,
-    "baselineStartResumeCommitEnvelopeConfigRootAndStringGuardUnchanged": true,
+    "ordinaryAppendGrowthAndCopy": true,
+    "privateSizeAndModCount": true,
+    "baselineStartResumeCommitEnvelopeConfigRootAndSlotsUnchanged": true,
     "native22String12AbiStorageCodecQuotasUnchanged": true
   },
   "changedImages": [
@@ -213,22 +189,5 @@
       "keccak256": "74dcdbd75c1fd4a8d3a223403f4885fa500e34203217885650b4676f70d8d68b"
     }
   ],
-  "maxClassIndexAtRaw150": 276,
-  "sourceHashes": {
-    "engine/MCEntryInterpreter.sol": "704d6248480849612ea7de50874dd21874a06dd066f8b95ab729ba69ea9f883b",
-    "coordinator/MCEntryCoordinator.sol": "9ba0fdeb856fffdd18bdb42410407322fb91aba80028c7b934e89b67aa6caa18",
-    "bootstrap/java/util/ArrayList.java": "01fae8b91fc77e497fd4dc8afa67efb813f4e29087cc84a4f1592b93452c0455"
-  },
-  "compilerImages": {
-    "ArrayList": {
-      "bytes": 1620,
-      "sha256": "00f45238a3b8d18be113b2e4f6a789aec62cfc3947ad0e0f5b7433c531b6761e"
-    },
-    "ArrayList$Itr": {
-      "bytes": 856,
-      "sha256": "5eb966be7c155031ba175038e48852582b1c8fa995b21e4826d4de414a03ef0c"
-    },
-    "javac": "/usr/lib/jvm/java-8-openjdk/bin/javac 1.8.0_504",
-    "flags": "-g:none -source 8 -target 8"
-  }
+  "maxClassIndexAtRaw150": 276
 }

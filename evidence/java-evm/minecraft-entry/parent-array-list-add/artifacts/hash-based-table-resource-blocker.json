@@ -1,0 +1,111 @@
+{
+  "profile": "MC-ARRAY-LIST-ADD-P60-PARENT",
+  "workerCommit": "b79dc40163dbd31ae51ce60b2507e84e11b3f4d1",
+  "parentMeasuredColdArrayHierarchyFix": true,
+  "bootstrapCount": 127,
+  "bootstrapRoot": "a34286fcbd75d2da7c02c3c803a825d1b77d7228a896da502973dbf15e1ad2ed",
+  "only98And115ChangedAllOther125Exact": true,
+  "changedImages": [
+    {
+      "index": 98,
+      "name": "java/util/ArrayList",
+      "bytes": 1620,
+      "sha256": "00f45238a3b8d18be113b2e4f6a789aec62cfc3947ad0e0f5b7433c531b6761e",
+      "keccak256": "3fae9b5e6773855d139433033768906b552b49958d4873dd16d89095257ddc42"
+    },
+    {
+      "index": 115,
+      "name": "java/util/ArrayList$Itr",
+      "bytes": 856,
+      "sha256": "5eb966be7c155031ba175038e48852582b1c8fa995b21e4826d4de414a03ef0c",
+      "keccak256": "74dcdbd75c1fd4a8d3a223403f4885fa500e34203217885650b4676f70d8d68b"
+    }
+  ],
+  "engine": {
+    "bytes": 455023,
+    "initSHA256": "0f464345aba294f78de1cbca0ddf50ed830c6c1137c67aaa49a1fc3814f807c1",
+    "runtimeSHA256": "829545f33510d28879685dc26928a33f454ba88b4f729e1f9d7c3085bccd35ce",
+    "runtimeKeccak256": "f16a96a46bec49a5c7fb00072571dbd60d07ca5bf3b1420a2ce551452d5ce369"
+  },
+  "coordinator": {
+    "bytes": 5411,
+    "initSHA256": "59b9e419f41f39d0af92886bf4122e3c05e07b42cc3589b9ff5f3075350149c5",
+    "runtimeSHA256": "09a45def3bb69a10528a0846d06309cef1d4ceecbeee4e70b8f426dca04bee93",
+    "runtimeKeccak256": "285ba5918a2135f61a33f55b693752edf3bc2fc2b63d72072fe03a92895d537c"
+  },
+  "native22String12AbiStorageCodecQuotasUnchanged": true,
+  "compiledEvmFlatConfigUnchanged": true,
+  "small": {
+    "budget": 1000000000,
+    "jvmSteps": 4434,
+    "internalSteps": 17,
+    "quanta": [
+      7,
+      1
+    ],
+    "peakGas": 109248970,
+    "scheduleSeconds": 316.148
+  },
+  "raw150": {
+    "budget": 8000000000,
+    "jvmSteps": 4434,
+    "internalSteps": 17,
+    "quanta": [
+      4096,
+      65536
+    ],
+    "peakGas": 6191590987,
+    "scheduleSeconds": 7.863
+  },
+  "coldArray": {
+    "budget": 1000000000,
+    "jvmSteps": 57,
+    "internalSteps": 2,
+    "quanta": [
+      1,
+      7,
+      65536
+    ],
+    "peakGas": 40302124,
+    "scheduleSeconds": 2.571
+  },
+  "realQuotaGrowOom": {
+    "budget": 2000000000,
+    "jvmSteps": 1990,
+    "internalSteps": 13,
+    "quanta": [
+      4096,
+      65536
+    ],
+    "peakGas": 1385595199,
+    "scheduleSeconds": 3.658
+  },
+  "generatedBudgets": "1B initial; raw150 actual1/2/4B shortages->8B; realquotaOOM testcase actual1B shortage->2B; no MAXgenerated",
+  "negativeControls": 17,
+  "publicGeneratedWatchdogSeconds": 30,
+  "outerGeneratedProcessSeconds": 1200,
+  "original": {
+    "rawCount": 143,
+    "rawBytes": 970853,
+    "jvmSteps": 2225278,
+    "internalSteps": 143,
+    "epoch": 46,
+    "lifecycle": 1,
+    "verifiedReceipts": 46,
+    "checkpointBytes": 1290587,
+    "checkpointSHA256": "b58f1772600d5e8f2e45f4e9142d41a3faec7c10026c4339a50c00884bd70798",
+    "coldDiscoverySeconds": 717.5228316350112,
+    "sameCodeBoundedProgressSeconds": 270.33249621900904,
+    "finiteQuantumHintSeconds": 42.52147064699966,
+    "nearFrontierPrecisionSeconds": 353.8384882550017,
+    "oneDeadlineCancellationPreservedNoWatchdogIncrease": true
+  },
+  "nextMeasuredBlocker": {
+    "context": "15",
+    "name": "com/google/common/collect/HashBasedTable",
+    "site": "4107"
+  },
+  "q1Exact": true,
+  "localPreinstallNotStandardCreate": true,
+  "noWorldEulaListeningDone": true
+}

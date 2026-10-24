@@ -9371,6 +9371,15 @@ contract MCEntryInterpreter {
                 );
                 wantedLeafType = ARRAY_CLASS_BASE + wantedLeafClass;
             }
+            // A resumed all-null reference array may have no live component
+            // object to warm its source hierarchy. Resolve that hierarchy too,
+            // not only the wanted type, before testing normal array covariance.
+            if (arrayLeafTypes[handle] >= ARRAY_CLASS_BASE) {
+                _validateHierarchy(
+                    classes, arrayLeafTypes[handle] - ARRAY_CLASS_BASE,
+                    parentLinks, new uint8[](classes.length)
+                );
+            }
             if (!_arrayTypeAssignable(
                 classes, arrayRanks[handle], arrayLeafTypes[handle],
                 wantedRank, wantedLeafType, parentLinks

@@ -14,9 +14,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 143 explicit, authenticated class resources (970,853 bytes) |
-| Guest execution | **2,225,103 JVM instructions**, 143 internal steps, 45 verified successful checkpoint receipts |
-| Current blocker | Measured `List.add` on a real ArrayList is refused at original awu PC171 |
-| Runtime profile | 454,237-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Guest execution | **2,225,278 JVM instructions**, 143 internal steps, 46 verified successful checkpoint receipts |
+| Current blocker | Measured original `com/google/common/collect/HashBasedTable` resource is missing |
+| Runtime profile | 455,023-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 127 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
@@ -24,13 +24,13 @@ Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [Real ordered LinkedHashMap.put / P59](JAVA_EVM_MC_LINKED_HASH_MAP_PUT_PARENT_PREFLIGHT.md).
-Fresh EVM tests verify real linked entries/order, callbacks and retained exception
-sideeffects, content hash, views/aliases, typed arrays, iterator consistency and
-separate-process reopen. Only old image113 changes; three helpers append. Canonical
-1B tests are distinguished from measured raw1504B and larger8B cases, with earlier
-shortages preserved. No full Map contract, inherited bucket/resize or host-result
-claim; parent-corrected pinned Java8 artifacts are authoritative.
+Latest acceptance: [ArrayList append/growth and fail-fast iteration / P60](JAVA_EVM_MC_ARRAY_LIST_ADD_PARENT_PREFLIGHT.md).
+Fresh EVM tests verify real reference storage/growth, private size, iterator CME,
+nonempty typed copies and genuine quota-OOM ordering. Only images98/115 change;
+all125 others remain exact. A measured preexisting cold-array resume hierarchy
+bug was independently reproduced and minimally repaired. Canonical1B, measured
+raw1508B and quota2B cases remain separately labeled, with failures preserved.
+No full List/Java SE or host-result claim; original execution remains EVM-only.
 
 ### Important LOCAL-only limits
 

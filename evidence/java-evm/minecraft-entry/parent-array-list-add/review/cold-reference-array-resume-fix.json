@@ -1,0 +1,8 @@
+{
+  "status": "measured parent correction, pending fresh gates",
+  "reproducer": "parent core String[21] passed to ArrayList.toArray(Object[]) at caller PC418; raw150 coarse passed, q7 cold-source hierarchy ReferenceError2",
+  "failedWorldPreserved": "build/java-diff-mc-array-list-add-generated-parent-p60-002/parent-small-attempt-1",
+  "cause": "_requireAssignable only validates wanted hierarchy. On resume an all-null String[] has no component object to populate scratch source parent links; covariance incorrectly fails.",
+  "scope": "validate actual reference-array leaf hierarchy using existing resolver before ordinary _arrayTypeAssignable; no new API, type rule, quota, wire or native binding",
+  "mustRerunFreshAfterEngineChange": true
+}

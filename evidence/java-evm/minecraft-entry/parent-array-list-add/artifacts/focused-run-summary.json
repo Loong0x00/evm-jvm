@@ -1,0 +1,155 @@
+{
+  "status": "PASS",
+  "initialGas": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16367435400024988,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-array-list-add/ParentColdArrayArguments.java",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-array-list-add/ParentArrayListGrowOOM.java"
+      ]
+    },
+    {
+      "label": "stock-cold",
+      "exit": 0,
+      "wallSeconds": 0.03148246199998539,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/classes",
+        "ParentColdArrayArguments"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7644389390043216,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/driver",
+        "./build/java-diff-mc-array-list-add-focused-parent-p60/driver-src"
+      ]
+    },
+    {
+      "label": "baseline-build",
+      "exit": 0,
+      "wallSeconds": 0.7643851159955375,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/baseline-driver",
+        "./build/java-diff-mc-array-list-add-focused-parent-p60/baseline-src"
+      ]
+    },
+    {
+      "label": "baseline-cold",
+      "exit": 0,
+      "wallSeconds": 0.21374122198903933,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/baseline-driver",
+        "parent-baseline-cold",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-linked-map-put-build-parent-p59-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/parent-baseline-cold",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-cold-attempt-1",
+      "exit": 0,
+      "wallSeconds": 2.6662577410024824,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/driver",
+        "parent-cold",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/parent-cold-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000
+    },
+    {
+      "label": "parent-cold-attempt-1-reopen",
+      "exit": 0,
+      "wallSeconds": 0.16379140899516642,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/parent-cold-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-oom-attempt-1",
+      "exit": 42,
+      "wallSeconds": 0.6140488899982302,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/driver",
+        "parent-oom",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/parent-oom-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000
+    },
+    {
+      "label": "parent-oom-attempt-2",
+      "exit": 0,
+      "wallSeconds": 3.7172652299923357,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/driver",
+        "parent-oom",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/parent-oom-attempt-2",
+        "2000000000"
+      ],
+      "gasBudget": 2000000000
+    },
+    {
+      "label": "parent-oom-attempt-2-reopen",
+      "exit": 0,
+      "wallSeconds": 1.465032420004718,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-build-parent-p60-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-array-list-add-focused-parent-p60/parent-oom-attempt-2",
+        "2000000000"
+      ]
+    }
+  ],
+  "actualGlobalArrayElementsQuotaNotChanged": 262144,
+  "baselineColdFailureReproducedBeforeAnyOriginalRun": true
+}

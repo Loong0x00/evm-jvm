@@ -1,0 +1,22 @@
+package main
+
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "github.com/ethereum/go-ethereum/accounts/abi"
+ "github.com/ethereum/go-ethereum/common"
+ "github.com/ethereum/go-ethereum/crypto"
+)
+
+// Verification only: no expected hash or class metadata enters guest execution.
+func(r *runner)parentFlatConfig(row scheduleReport, entryClass string)error{
+ cp,err:=os.ReadFile(filepath.Join(r.reportDir,"checkpoints",row.Name+".checkpoint.bin"));if err!=nil{return err};if len(cp)<280{return fmt.Errorf("short config proof checkpoint")}
+ pack:=func(types []string,values ...interface{})([]byte,error){args:=make(abi.Arguments,len(types));for i,s:=range types{t,e:=abi.NewType(s,"",nil);if e!=nil{return nil,e};args[i]=abi.Argument{Type:t}};return args.Pack(values...)}
+ limits:=[11]uint32{150,1063930,64,32,65536,65536,16,64,256,4096,2097152};lim,err:=pack([]string{"uint32[11]"},limits);if err!=nil{return err}
+ prefix:="JVMEVM:MC-ARRAY-LIST-ADD-BOUNDED-1:"
+ runtimeHash:=common.BytesToHash(cp[84:116]);artifact:=common.BytesToHash(cp[116:148]);actual:=common.BytesToHash(cp[148:180]);seed:=common.BytesToHash(cp[212:244]);bootstrap:=common.HexToHash("BOOTSTRAP_ROOT_HEX")
+ flat,err:=pack([]string{"bytes32","uint32","bytes32","bytes32","bytes32","bytes32","uint8","string","string","bytes32","int32[]","bytes32","bytes32"},crypto.Keccak256Hash([]byte(prefix+"CONFIG:1")),uint32(1),runtimeHash,bootstrap,artifact,crypto.Keccak256Hash([]byte(prefix+"ROOT:1")),uint8(1),entryClass,"main",crypto.Keccak256Hash([]byte(prefix+"MAIN:EMPTY-STRING-ARRAY:1")),[]int32{},seed,crypto.Keccak256Hash(lim));if err!=nil{return err};want:=crypto.Keccak256Hash(flat);if want!=actual{return fmt.Errorf("COMPILED EVM config differs from original flat ABI: actual=%s want=%s",actual,want)}
+ b,err:=json.MarshalIndent(map[string]interface{}{"status":"PASS","scope":"actual compiled EVM commitment equals original flat13-field ABI, independent verification only","entryClass":entryClass,"quantum":row.Quantum,"actualEvmConfigRoot":actual,"expectedOriginalFlatConfigRoot":want,"preimageBytes":len(flat),"bootstrapRoot":bootstrap,"runtimeHash":runtimeHash,"artifactRoot":artifact,"seedRoot":seed},"","  ");if err!=nil{return err};return os.WriteFile(filepath.Join(r.reportDir,row.Name+"-flat-config-proof.json"),append(b,'\n'),0600)
+}
