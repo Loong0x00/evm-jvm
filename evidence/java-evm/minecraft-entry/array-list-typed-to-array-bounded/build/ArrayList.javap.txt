@@ -1,0 +1,119 @@
+public class java.util.ArrayList extends java.util.AbstractList implements java.util.RandomAccess,java.lang.Cloneable,java.io.Serializable {
+  private static final java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+    descriptor: [Ljava/lang/Object;
+
+  private transient java.lang.Object[] elementData;
+    descriptor: [Ljava/lang/Object;
+
+  private int size;
+    descriptor: I
+
+  public java.util.ArrayList();
+    descriptor: ()V
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method java/util/AbstractList."<init>":()V
+       4: aload_0
+       5: getstatic     #4                  // Field DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+       8: putfield      #1                  // Field elementData:[Ljava/lang/Object;
+      11: return
+
+  public java.util.ArrayList(int);
+    descriptor: (I)V
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method java/util/AbstractList."<init>":()V
+       4: iload_1
+       5: ifge          16
+       8: new           #5                  // class java/lang/IllegalArgumentException
+      11: dup
+      12: invokespecial #6                  // Method java/lang/IllegalArgumentException."<init>":()V
+      15: athrow
+      16: aload_0
+      17: iload_1
+      18: anewarray     #7                  // class java/lang/Object
+      21: putfield      #1                  // Field elementData:[Ljava/lang/Object;
+      24: return
+
+  public int size();
+    descriptor: ()I
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field size:I
+       4: ireturn
+
+  public java.lang.Object[] toArray(java.lang.Object[]);
+    descriptor: ([Ljava/lang/Object;)[Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field size:I
+       4: istore_2
+       5: aload_1
+       6: arraylength
+       7: istore_3
+       8: iload_3
+       9: iload_2
+      10: if_icmpge     17
+      13: aload_0
+      14: invokespecial #8                  // Method rejectShortTarget:()V
+      17: iconst_0
+      18: istore        4
+      20: iload         4
+      22: iload_2
+      23: if_icmpge     43
+      26: aload_1
+      27: iload         4
+      29: aload_0
+      30: getfield      #1                  // Field elementData:[Ljava/lang/Object;
+      33: iload         4
+      35: aaload
+      36: aastore
+      37: iinc          4, 1
+      40: goto          20
+      43: iload_3
+      44: iload_2
+      45: if_icmple     52
+      48: aload_1
+      49: iload_2
+      50: aconst_null
+      51: aastore
+      52: aload_1
+      53: areturn
+
+  private native void rejectShortTarget();
+    descriptor: ()V
+
+  public native boolean add(java.lang.Object);
+    descriptor: (Ljava/lang/Object;)Z
+
+  public java.util.Iterator iterator();
+    descriptor: ()Ljava/util/Iterator;
+    Code:
+       0: new           #9                  // class java/util/ArrayList$Itr
+       3: dup
+       4: aload_0
+       5: invokespecial #10                 // Method java/util/ArrayList$Itr."<init>":(Ljava/util/ArrayList;)V
+       8: areturn
+
+  static int access$000(java.util.ArrayList);
+    descriptor: (Ljava/util/ArrayList;)I
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field size:I
+       4: ireturn
+
+  static java.lang.Object[] access$100(java.util.ArrayList);
+    descriptor: (Ljava/util/ArrayList;)[Ljava/lang/Object;
+    Code:
+       0: aload_0
+       1: getfield      #1                  // Field elementData:[Ljava/lang/Object;
+       4: areturn
+
+  static {};
+    descriptor: ()V
+    Code:
+       0: iconst_0
+       1: anewarray     #7                  // class java/lang/Object
+       4: putstatic     #4                  // Field DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+       7: return
+}
