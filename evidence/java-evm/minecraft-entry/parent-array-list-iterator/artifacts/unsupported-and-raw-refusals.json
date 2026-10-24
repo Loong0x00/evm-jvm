@@ -1,0 +1,157 @@
+{
+  "status": "iterator/list mutation and other unmeasured APIs plus raw helper replacement atomically refused",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "4a25323e450c256efeee6a41519166a06c908beb8812dceca2c1e6c44238866a",
+  "engineRuntimeKeccak256": "0x5604d91a05e1ed9c4693b258654adaf3b7d33bdce765df3fb93d2aa9ccee30bc",
+  "coordinatorRuntimeSHA256": "6c1e9cee5a30b42d9d8bfeb89092c259ceb883134760e77f7fc53b9b62063415",
+  "coordinatorRuntimeKeccak256": "0x50d8c43d1fcbd9135253e51dad1335414e1184f5a6ede0e80ebc2dcb93ca0841",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "ParentIteratorRemove",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "12"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x7bc0888df58c8e0530154a590f3c5ce44f0dd9960afdec343326061799ca591a",
+      "rootAfter": "0x7bc0888df58c8e0530154a590f3c5ce44f0dd9960afdec343326061799ca591a",
+      "atomic": true,
+      "successfulSlices": 5,
+      "committedHeadEpoch": 5,
+      "callsIncludingRefusal": 6,
+      "gasUsed": 231452975,
+      "wallMs": 209
+    },
+    {
+      "name": "ParentIteratorAdd",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "16"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x28d71a755a10cebfdd6aa3b220cf26accc8036341843b2a4a1ee21c8f75afaba",
+      "rootAfter": "0x28d71a755a10cebfdd6aa3b220cf26accc8036341843b2a4a1ee21c8f75afaba",
+      "atomic": true,
+      "successfulSlices": 3,
+      "committedHeadEpoch": 3,
+      "callsIncludingRefusal": 4,
+      "gasUsed": 149628043,
+      "wallMs": 135
+    },
+    {
+      "name": "ParentIteratorGet",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "10"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x907089ab0e90ebb5344aeef267e889699c25dab2672339c45f1f2e93ecdc0d73",
+      "rootAfter": "0x907089ab0e90ebb5344aeef267e889699c25dab2672339c45f1f2e93ecdc0d73",
+      "atomic": true,
+      "successfulSlices": 3,
+      "committedHeadEpoch": 3,
+      "callsIncludingRefusal": 4,
+      "gasUsed": 149442950,
+      "wallMs": 135
+    },
+    {
+      "name": "ParentIteratorToArray",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "13"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x3a6c65886a812fb5340ef3e33d410794ff32bee7f49068bed30dc1fcf7933e71",
+      "rootAfter": "0x3a6c65886a812fb5340ef3e33d410794ff32bee7f49068bed30dc1fcf7933e71",
+      "atomic": true,
+      "successfulSlices": 3,
+      "committedHeadEpoch": 3,
+      "callsIncludingRefusal": 4,
+      "gasUsed": 149344821,
+      "wallMs": 138
+    },
+    {
+      "name": "ParentIteratorEquals",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "10"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xa49b5d5cfaa333ec87b0a869b03281d9ab9764c48f663ae75ca1b768576e3ba4",
+      "rootAfter": "0xa49b5d5cfaa333ec87b0a869b03281d9ab9764c48f663ae75ca1b768576e3ba4",
+      "atomic": true,
+      "successfulSlices": 3,
+      "committedHeadEpoch": 3,
+      "callsIncludingRefusal": 4,
+      "gasUsed": 149248980,
+      "wallMs": 137
+    },
+    {
+      "name": "ParentIteratorHash",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "9"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x1bfb9ef50a48b6903fd18a361bea473143902ba13a5870e85562db1b7d2b124e",
+      "rootAfter": "0x1bfb9ef50a48b6903fd18a361bea473143902ba13a5870e85562db1b7d2b124e",
+      "atomic": true,
+      "successfulSlices": 3,
+      "committedHeadEpoch": 3,
+      "callsIncludingRefusal": 4,
+      "gasUsed": 148982983,
+      "wallMs": 135
+    },
+    {
+      "name": "ParentIteratorClone",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "9"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xc87123efcae01d2ee7cee1598bba0b9ea216d8fd709841462a0e6c25ba4dc8c8",
+      "rootAfter": "0xc87123efcae01d2ee7cee1598bba0b9ea216d8fd709841462a0e6c25ba4dc8c8",
+      "atomic": true,
+      "successfulSlices": 3,
+      "committedHeadEpoch": 3,
+      "callsIncludingRefusal": 4,
+      "gasUsed": 149450673,
+      "wallMs": 137
+    },
+    {
+      "name": "raw-ArrayListItr",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xcac72282c1214b9b8a2219112eb6ef3c2781441eaaf395d4396a2e778e622944",
+      "rootAfter": "0xcac72282c1214b9b8a2219112eb6ef3c2781441eaaf395d4396a2e778e622944",
+      "atomic": true,
+      "gasUsed": 439377,
+      "wallMs": 1
+    }
+  ],
+  "processId": 1141652,
+  "elapsedMs": 0
+}

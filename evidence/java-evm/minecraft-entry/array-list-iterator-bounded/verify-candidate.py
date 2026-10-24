@@ -114,7 +114,7 @@ raw = load(ROOT / 'runs/iterator-refusal-final-001/reports/raw-helper/start-refu
 assert raw['selector'] == '0x6a23ad80' and raw['rootUnchanged'] and raw['durableHeadUnchanged']
 
 report = {
-    'status':'candidate worker verification only; parent independent review/acceptance pending',
+    'status':'source and historical worker receipts verified; independent parent proof recorded separately',
     'sourceBaseFilesVerified':16,
     'oldBootstrapImages':115,
     'newBootstrapImages':116,

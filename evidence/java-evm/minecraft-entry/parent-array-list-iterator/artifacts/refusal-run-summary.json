@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.1637100830048439,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/ParentIteratorRemove.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/ParentIteratorAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/ParentIteratorGet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/ParentIteratorToArray.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/ParentIteratorEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/ParentIteratorHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/ParentIteratorClone.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7645007820028695,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/driver",
+        "./build/java-diff-mc-arraylist-iterator-refusals-parent-p52/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.2149308670050232,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-build-parent-p52/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-build-parent-p52/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-iterator-refusals-parent-p52/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

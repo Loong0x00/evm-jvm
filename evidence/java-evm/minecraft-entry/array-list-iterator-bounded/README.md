@@ -1,3 +1,13 @@
+# P52 independently parent-verified ArrayList.iterator
+
+Parent independently rebuilt the exact old and new Java8 images, engine/coordinator and driver, verified private owner/cursor/size/backing state (including misleading public size override), retained actual tail slots, high-raw private helper class265, atomic refusal and separate-process reopen, then ran a fresh original131 package. No parent guest-semantic correction was needed. Nonempty iteration, mutation and fail-fast remain unclaimed.
+
+Current116-image root `c1b50cfbeb974b541531c6f931ddc5ebc42b6047779525bfb99a72618848e97b`; engine431490B SHA4a25323e450c256efeee6a41519166a06c908beb8812dceca2c1e6c44238866a. Parent proof: `../parent-array-list-iterator/artifacts/reflect-array-newinstance-blocker.json`; root doc `JAVA_EVM_MC_ARRAY_LIST_ITERATOR_PARENT_PREFLIGHT.md`.
+
+---
+
+## Historical worker report
+
 # Bounded genuine `ArrayList.iterator()` candidate
 
 Worker-only implementation/evidence on branch `java-array-list-iterator`, based on
