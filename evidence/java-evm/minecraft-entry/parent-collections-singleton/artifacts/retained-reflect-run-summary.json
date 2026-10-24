@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "budget": 1000000000,
+  "freshP54Artifact": true,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16365206601039972,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-reflect-array/ParentReflectReferenceArray.java"
+      ]
+    },
+    {
+      "label": "stock-java8",
+      "exit": 0,
+      "wallSeconds": 0.031475064999540336,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/classes",
+        "ParentReflectReferenceArray"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7642633989889873,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/driver",
+        "./build/java-diff-mc-singleton-list-retained-reflect-parent-p55/driver-src"
+      ]
+    },
+    {
+      "label": "reflect-controls",
+      "exit": 0,
+      "wallSeconds": 1.0147490379895316,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-build-parent-p55/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-build-parent-p55/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/parent-retained-reflect",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "reopen",
+      "exit": 0,
+      "wallSeconds": 0.26381766400299966,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-build-parent-p55/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-build-parent-p55/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-retained-reflect-parent-p55/parent-retained-reflect",
+        "1000000000"
+      ]
+    }
+  ]
+}

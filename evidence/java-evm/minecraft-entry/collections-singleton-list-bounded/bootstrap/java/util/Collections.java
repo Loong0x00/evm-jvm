@@ -8,7 +8,7 @@ public class Collections {
         return (List<T>) new SingletonList(element);
     }
 
-    static final class SingletonList extends AbstractList {
+    static final class SingletonList extends AbstractList implements RandomAccess, java.io.Serializable {
         private final Object element;
 
         SingletonList(Object element) { this.element = element; }

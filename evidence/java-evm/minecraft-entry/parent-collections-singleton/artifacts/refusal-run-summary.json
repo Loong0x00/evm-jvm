@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16370687399466988,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentSingletonAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentSingletonEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentSingletonHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentSingletonTypedArray.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentSingletonNoArg.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentSingletonGet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentSingletonRemove.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/ParentCollectionsEmpty.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7644300559913972,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/driver",
+        "./build/java-diff-mc-singleton-list-refusals-parent-p55/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.5150149740074994,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-build-parent-p55/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-build-parent-p55/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-singleton-list-refusals-parent-p55/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

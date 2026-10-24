@@ -14,22 +14,22 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 136 explicit, authenticated class resources (945,385 bytes) |
-| Guest execution | **2,224,469 JVM instructions**, 136 internal steps, 42 verified successful checkpoint receipts |
-| Current blocker | Measured `Collections.singletonList(Object)` is missing |
-| Runtime profile | 435,694-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 117 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,224,516 JVM instructions**, 136 internal steps, 40 verified successful checkpoint receipts |
+| Current blocker | Missing original Guava `Iterators$7` resource; genuine singleton list/iterator created |
+| Runtime profile | 441,562-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 120 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [Bounded ArrayList typed-target copy / P54](JAVA_EVM_MC_ARRAY_LIST_TYPED_ARRAY_PARENT_PREFLIGHT.md).
-Fresh EVM tests prove same target/type, private-size behavior, tail preservation,
-NPEs, retained iterator and reflective array controls, and separate-process reopen.
-Small q1/q7 use1B; raw150 requires separately2B after a measured1B shortage.
-Nonempty copying, undersized-target branch execution, growth and no-arg toArray
-remain unclaimed because admitted lists cannot be populated.
+Latest acceptance: [Genuine singleton list / P55](JAVA_EVM_MC_COLLECTIONS_SINGLETON_PARENT_PREFLIGHT.md).
+Fresh EVM tests verify one real stored element (including null or a zero-length
+array as an object), independent iterator state, type markers, retained features
+and separate-process reopen. q1/q7 and raw150 pass at1B. The pinned compiler stack
+refactor preserves config-root bytes: actual compiled EVM hashes match the old
+flat ABI encoding. Full Collections/List APIs are not claimed.
 
 ### Important LOCAL-only limits
 
@@ -62,7 +62,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-original136-guava-absent/artifacts/collections-singleton-list-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-collections-singleton/artifacts/iterators-transform-resource-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

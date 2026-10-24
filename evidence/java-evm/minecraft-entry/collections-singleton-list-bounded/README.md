@@ -1,3 +1,15 @@
+# P55 independently parent-verified true singleton list
+
+Parent preserved the compiler cliff/wrong119-layout evidence, adopted only the canonical-config memory encoding refactor, and independently rebuilt the correct120-class layout. A generated EVM probe found missing Java8 RandomAccess/Serializable markers on the returned helper; parent corrected those two existing marker links and reran fresh current-artifact gates.
+
+Current root08d8a3019da084226f5d4c0e60d8f0f450bc0421aa7f04da031314e05070252a; engine441562B SHAf0506373cdad2daeb97216629f949653edefcacc9ec0471e8f8a14dafe10f348; coordinator5411B SHA2fa5eff126cf957f772c4fb3e39847c395e2c2b08148a07414e62effb1128688. All117 old image bytes/order remain exact. Current compiled-EVM config roots match independent old13-field flat ABI encodings, including the original136 case;512 generated ABI vectors also pass. ABI/storage/codec/resource/geth rules are unchanged.
+
+Genuine stored one-element/null/array-as-object state, independent iterators, native22/tail controls, raw150class270/highprivate269, atomic boundaries and separate-process reopens passed. Fresh original136 created actual list+iterator and advanced to missing original Iterators$7; no Cartesian product/full Collections claim. Proof `../parent-collections-singleton/`; root doc `JAVA_EVM_MC_COLLECTIONS_SINGLETON_PARENT_PREFLIGHT.md`. Historical worker receipts below refer to the pre-marker-correction candidate, not these fresh artifact bytes.
+
+---
+
+## Historical worker report
+
 # Bounded Collections.singletonList candidate (P55)
 
 This is an **unaccepted local candidate** for the measured Java 8 `Collections.singletonList(Object)` call only. It supplies the ordinary generic factory, a stored-element immutable list with true size/isEmpty behavior, fresh independent one-element iterators and genuine exhaustion. It does not implement the broader `Collections`/`List` API.

@@ -1,0 +1,15 @@
+Compiled from "Collections.java"
+class java.util.Collections$SingletonList<E> extends java.util.AbstractList<E> implements java.util.RandomAccess, java.io.Serializable {
+  private static final long serialVersionUID;
+  private final E element;
+  java.util.Collections$SingletonList(E);
+  public java.util.Iterator<E> iterator();
+  public int size();
+  public boolean contains(java.lang.Object);
+  public E get(int);
+  public void forEach(java.util.function.Consumer<? super E>);
+  public boolean removeIf(java.util.function.Predicate<? super E>);
+  public void replaceAll(java.util.function.UnaryOperator<E>);
+  public void sort(java.util.Comparator<? super E>);
+  public java.util.Spliterator<E> spliterator();
+}
