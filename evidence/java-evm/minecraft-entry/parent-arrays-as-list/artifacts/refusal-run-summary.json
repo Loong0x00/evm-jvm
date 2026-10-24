@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16366781400574837,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysTypedArray.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysNoArg.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysGet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysSet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysRemove.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysCopy.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/ParentArraysSort.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7643832960020518,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/driver",
+        "./build/java-diff-mc-arrays-as-list-refusals-parent-p56/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.8654446190048475,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-refusals-parent-p56/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

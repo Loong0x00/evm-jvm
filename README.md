@@ -14,22 +14,23 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 138 explicit, authenticated class resources (947,894 bytes) |
-| Guest execution | **2,224,581 JVM instructions**, 137 internal steps, 42 verified successful checkpoint receipts |
-| Current blocker | Measured `Arrays.asList(Object[])` is missing; original transform applied its real tuple |
-| Runtime profile | 441,562-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 120 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,224,752 JVM instructions**, 138 internal steps, 41 verified successful checkpoint receipts |
+| Current blocker | Measured `String.valueOf(char)` is missing in original `Joiner.on(char)` |
+| Runtime profile | 445,645-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 123 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [Genuine singleton list / P55](JAVA_EVM_MC_COLLECTIONS_SINGLETON_PARENT_PREFLIGHT.md).
-Fresh EVM tests verify one real stored element (including null or a zero-length
-array as an object), independent iterator state, type markers, retained features
-and separate-process reopen. q1/q7 and raw150 pass at1B. The pinned compiler stack
-refactor preserves config-root bytes: actual compiled EVM hashes match the old
-flat ABI encoding. Full Collections/List APIs are not claimed.
+Latest acceptance: [Live array-backed Arrays.asList / P56](JAVA_EVM_MC_ARRAYS_AS_LIST_PARENT_PREFLIGHT.md).
+Fresh EVM tests verify real array aliasing and caller-update visibility, independent
+iterators, type markers, retained features and separate-process reopen. q1/q7 pass
+at1B; raw150 coarse tests separately require2B after a preserved1B shortage.
+All120 previous images remain exact. Full List/Arrays APIs are not claimed.
+The original controller's1200s timeout is retained; its successful checkpoints and
+a subsequent fresh-process exact q1 frontier/reopen were independently validated.
 
 ### Important LOCAL-only limits
 

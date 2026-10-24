@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "generatedOnly": true,
+  "initialGas": 1000000000,
+  "attempts": [
+    {
+      "label": "parent-small-attempt-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 58.1260807459912,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/parent-small-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-small-reopen-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.21381756900518667,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/parent-small-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-matrix-attempt-1",
+      "exit": 42,
+      "timedOut": false,
+      "wallSeconds": 0.6141796250012703,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/driver",
+        "parent-matrix",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/parent-matrix-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-matrix-attempt-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 1.8657758599874796,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/driver",
+        "parent-matrix",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/parent-matrix-attempt-2",
+        "2000000000"
+      ],
+      "gasBudget": 2000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-matrix-reopen-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.614165396997123,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-build-parent-p56-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-fixtures-parent-p56",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arrays-as-list-generated-parent-p56/parent-matrix-attempt-2",
+        "2000000000"
+      ]
+    }
+  ],
+  "transportDiagnosticDelta": "123 bootstrap/273 derived classes; CP2MiB; constructor-only int-zero audit generalized to typed ints, specific full map heap checked separately",
+  "noEvmOrGuestCodeModificationByParentDriver": true
+}

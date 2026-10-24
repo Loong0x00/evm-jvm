@@ -1,0 +1,257 @@
+{
+  "profile": "MC-ARRAYS-AS-LIST-BOUNDED-1",
+  "status": "worker candidate; parent independent review/build/gates pending",
+  "sourceBaseVerification": "build/pins/source-base-verification.json",
+  "bootstrapRoot": "build/pins/bootstrap-root.json",
+  "pins": "pins.json",
+  "executionInput": "generated Java 8 test classfiles only; no original Minecraft archive/classes/resources/worlds",
+  "assertionCoverage": [
+    "empty and nonempty Object[]",
+    "String[] and Serializable[]",
+    "null elements and singleton null varargs",
+    "factory returns a new list each time while sharing the supplied array",
+    "independent cursors",
+    "live caller writes after factory and iterator creation",
+    "identity-preserving ordered next",
+    "hasNext and genuine NoSuchElementException on empty/nonempty exhaustion",
+    "null array use raises genuine NullPointerException",
+    "RandomAccess and Serializable markers",
+    "fixed-size mutation/get/set/toArray/iterator-remove refusal",
+    "unsupported Arrays.copyOf and Arrays.sort refusal",
+    "retained ArrayList(int)/typed toArray/iterator, Function, NavigableSet type-link, HashMap.entrySet, and singletonList controls"
+  ],
+  "classBoundary": {
+    "rawClasses": 150,
+    "bootstrapImages": 123,
+    "assembledProgramClasses": 273,
+    "lastRawIndex": 149,
+    "ArraysArrayIteratorBootstrapIndex": 122,
+    "lastActualArraysArrayIteratorProgramIndex": 272,
+    "executionEvidence": "q1 raw150 fixture successfully called asList, constructed/consumed actual iterator, and completed all assertions"
+  },
+  "successfulEVMWorlds": [
+    {
+      "world": "world-q1-raw150-controls-v5",
+      "quantum": 1,
+      "rawBindingCount": 150,
+      "rawNamesSHA256": "6ae65ea0794d02c2b08c649aef2c5c801efec529f0d4c16d641bb74082525c5a",
+      "epoch": 1680,
+      "lifecycle": 2,
+      "jvmSteps": 1680,
+      "internalSteps": 14,
+      "checkpointBytes": 7199,
+      "checkpointRoot": "0xcdf33844b63758555fd4546bf0152910fc1cabdf1849b587914b2efcbb6b8ea4",
+      "machineRoot": "0x7141f20ac4af842fffd0e713f2bed00e78dc7001c45b002048c6ccc736703d3f",
+      "vfsRoot": "0xece4edd0086695b92a85b747a6c6631e8e31408afd1d8566e7b3d044fc4c10c0",
+      "processes": [
+        {
+          "pid": 1415752,
+          "initialRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+          "finalRoot": "0xf502e8a8e895ea7d4254310df526c44ec9334049df346dcf1245a65577f683be"
+        },
+        {
+          "pid": 1415800,
+          "initialRoot": "0xf502e8a8e895ea7d4254310df526c44ec9334049df346dcf1245a65577f683be",
+          "finalRoot": "0xb2714cc8ff5f1de7cf67364d653e6e2d619ac6a31dde8f023099d88b3f9b8dcd"
+        }
+      ],
+      "sliceCount": 1680,
+      "lastSlice": {
+        "epoch": 1680,
+        "lifecycle": 2,
+        "jvmTotal": 1680,
+        "internalTotal": 14,
+        "gas": 270890744,
+        "elapsedMS": 360
+      },
+      "resourceReadCount": 252000,
+      "evmCalls": 5200,
+      "checkpointPublishes": 1680
+    },
+    {
+      "world": "world-q7-controls-v5",
+      "quantum": 7,
+      "rawBindingCount": 1,
+      "rawNamesSHA256": "0f4048845d8c5ec3fbb9cc680b1b4f75ef23ce8cb4f6c6598de00ba8f1dba381",
+      "epoch": 240,
+      "lifecycle": 2,
+      "jvmSteps": 1680,
+      "internalSteps": 14,
+      "checkpointBytes": 6603,
+      "checkpointRoot": "0x628dd9705b620114a1f4687b636da424c1a2d50894939fc3fb1a69adbe4fa3a3",
+      "machineRoot": "0x663f61ee4ddbb901ad7b1c8be2a4e1db06f7d93ce4049dfba85a73c24beba7cb",
+      "vfsRoot": "0xece4edd0086695b92a85b747a6c6631e8e31408afd1d8566e7b3d044fc4c10c0",
+      "processes": [
+        {
+          "pid": 1420441,
+          "initialRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+          "finalRoot": "0x481c211ad64de075c407d62ea412a71ba2f671441dae7afdd84b951dee0de4cc"
+        },
+        {
+          "pid": 1420458,
+          "initialRoot": "0x481c211ad64de075c407d62ea412a71ba2f671441dae7afdd84b951dee0de4cc",
+          "finalRoot": "0xc11f7a7057ac7787ad8685d5e85addc63d500adf89eebb8dbad524dc16cbaea2"
+        }
+      ],
+      "sliceCount": 240,
+      "lastSlice": {
+        "epoch": 240,
+        "lifecycle": 2,
+        "jvmTotal": 1680,
+        "internalTotal": 14,
+        "gas": 81461920,
+        "elapsedMS": 108
+      },
+      "resourceReadCount": 240,
+      "evmCalls": 517,
+      "checkpointPublishes": 240
+    },
+    {
+      "world": "world-q65536-controls-v5",
+      "quantum": 65536,
+      "rawBindingCount": 1,
+      "rawNamesSHA256": "0f4048845d8c5ec3fbb9cc680b1b4f75ef23ce8cb4f6c6598de00ba8f1dba381",
+      "epoch": 1,
+      "lifecycle": 2,
+      "jvmSteps": 1680,
+      "internalSteps": 14,
+      "checkpointBytes": 6603,
+      "checkpointRoot": "0x8cf3f45cb041f0eb06746318f02d2403824e770e21d30a5fef3a570cb6ee31ee",
+      "machineRoot": "0x663f61ee4ddbb901ad7b1c8be2a4e1db06f7d93ce4049dfba85a73c24beba7cb",
+      "vfsRoot": "0xece4edd0086695b92a85b747a6c6631e8e31408afd1d8566e7b3d044fc4c10c0",
+      "processes": [
+        {
+          "pid": 1420713,
+          "initialRoot": "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+          "finalRoot": "0x7cdb0b513dc740b742c5c22b0795b206c238bddb2e2fdb0db5377719c7b59178"
+        },
+        {
+          "pid": 1420732,
+          "initialRoot": "0x7cdb0b513dc740b742c5c22b0795b206c238bddb2e2fdb0db5377719c7b59178",
+          "finalRoot": "0x7cdb0b513dc740b742c5c22b0795b206c238bddb2e2fdb0db5377719c7b59178"
+        }
+      ],
+      "sliceCount": 1,
+      "lastSlice": {
+        "epoch": 1,
+        "lifecycle": 2,
+        "jvmTotal": 1680,
+        "internalTotal": 14,
+        "gas": 438893771,
+        "elapsedMS": 394
+      },
+      "resourceReadCount": 1,
+      "evmCalls": 39,
+      "checkpointPublishes": 1
+    }
+  ],
+  "unsupportedSurfaceRefusals": [
+    {
+      "fixture": "ArraysAsListGetRefusal",
+      "error": "CallError",
+      "code": "3",
+      "pc": "15",
+      "gas": 36300389,
+      "rootUnchanged": true
+    },
+    {
+      "fixture": "ArraysAsListSetRefusal",
+      "error": "CallError",
+      "code": "3",
+      "pc": "17",
+      "gas": 36738768,
+      "rootUnchanged": true
+    },
+    {
+      "fixture": "ArraysAsListAddRefusal",
+      "error": "CallError",
+      "code": "4",
+      "pc": "16",
+      "gas": 37458427,
+      "rootUnchanged": true
+    },
+    {
+      "fixture": "ArraysAsListToArrayRefusal",
+      "error": "CallError",
+      "code": "3",
+      "pc": "14",
+      "gas": 36302160,
+      "rootUnchanged": true
+    },
+    {
+      "fixture": "ArraysAsListIteratorRemoveRefusal",
+      "error": "CallError",
+      "code": "3",
+      "pc": "19",
+      "gas": 36327643,
+      "rootUnchanged": true
+    },
+    {
+      "fixture": "ArraysCopyOfRefusal",
+      "error": "CallError",
+      "code": "3",
+      "pc": "5",
+      "gas": 33056700,
+      "rootUnchanged": true
+    },
+    {
+      "fixture": "ArraysSortRefusal",
+      "error": "CallError",
+      "code": "3",
+      "pc": "4",
+      "gas": 33043472,
+      "rootUnchanged": true
+    }
+  ],
+  "preservedFailedAttempts": [
+    {
+      "label": "initial resource names omitted required .class suffix",
+      "path": "logs/q1-raw150-setup.log",
+      "sha256": "f161bbbd4f05e2a3a7f8305d02db1204dcc0638648f8d6079111c8dde0169ca1"
+    },
+    {
+      "label": "coordinator still pinned P55 engine codehash before isolated coordinator rebuild",
+      "path": "logs/q1-raw150-setup-v2.log",
+      "sha256": "0b2f54fcb606e0f9c3030ff87879e07fcfa0b2edab949ea0eae17bb79f80dc32"
+    },
+    {
+      "label": "driver initially carried the previous candidate coordinator codehash",
+      "path": "logs/q1-raw150-controls-v4-setup.log",
+      "sha256": "c738950f26dcadb7db5ad38989e723f8d68a281470ba3378e2ead7aa417796bf"
+    },
+    {
+      "label": "driver then carried the wrong engine keccak while updating coordinator pin",
+      "path": "logs/q1-raw150-controls-v4b-setup.log",
+      "sha256": "7c7a60cd546c99ef737e1c86ec9f903778396da941cc8e26603c473433c1e5b6"
+    },
+    {
+      "label": "earlier probe attempted ArrayList.add outside this bounded API surface",
+      "path": "reports/world-q1-raw150-controls-v2/resume-refusal.json",
+      "sha256": "e5189f22d7699cf1783ea074a0296f36a108e8a56c7807a043dac50d7dad3708"
+    }
+  ],
+  "limitsUnchanged": {
+    "rawClasses": 150,
+    "rawBytes": 1063930,
+    "arrays": 8192,
+    "arrayElements": 262144,
+    "arrayLength": 65536,
+    "objects": 4096,
+    "handles": 12545,
+    "runtimeBytes": 1048576,
+    "frames": 128,
+    "quantum": 65536,
+    "internalPerSlice": 4096,
+    "reserveGas": 25000000
+  },
+  "localCallBudgets": {
+    "ordinaryGas": 1000000000,
+    "perCallWatchdogSeconds": 30,
+    "outerWatchdogSeconds": 1200
+  },
+  "nonGoals": [
+    "no get/set/mutation/toArray or other Arrays APIs implemented",
+    "no Minecraft original execution",
+    "no profile acceptance or production merge claim"
+  ]
+}
