@@ -1,3 +1,10 @@
+## User communication preference — continue autonomously, no routine progress reports
+
+- User: “你自己来,不用频繁汇报.” Continue the existing authorized Minecraft work autonomously. Suppress routine per-stage commentary/final progress counts; report only genuine completion, a material decision needing the user, or a serious blocker that cannot be resolved within existing authority. Handle worker handoffs/reviews independently. Keep faster coupled batches/focused tests and all truthfulness/input isolation/resource/protected-code rules unchanged.
+- Verified P60 managed worker sa_3b3b8bf57d2a4502 is still running; it retains the one semantic/heavy slot. Parent must not launch a competing build/EVM process. Latest main before this docs-only update d4022b69c7c25319e85fb373cdecae9859071cb8; runtime remains accepted P59 605113f81, last independently verified origin6b4b8e724. No new guest acceptance or Done.
+
+---
+
 ## User cadence refinement — batch related startup work, fast generated tests first
 
 - User agrees to faster implement/test/fix iteration with focused generated cases. Keep work tied to measured Minecraft blockers, but implement coupled semantics in one batch (P60 add/growth/Itr consistency), not one full original replay per tiny helper. Development: source/Java8 checks and focused coarse-EVM probes first; milestone acceptance: relevant compatibility/q1-q7/reopen checks, then one fresh original batch replay and required precise frontier. Do not repeat full-repository suites or unneeded cold replays after every local edit. No relaxation of untouched-original/EVM-only/no-fake-result/checkpoint-isolation/resource rules.
