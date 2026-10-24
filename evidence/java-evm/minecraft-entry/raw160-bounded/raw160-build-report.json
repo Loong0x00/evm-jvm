@@ -1,0 +1,37 @@
+{
+  "commands": [
+    "NODE_PATH=\"$PWD/jvmevm/runtime/node_modules\" node evidence/java-evm/minecraft-entry/raw160-bounded/engine/build.js",
+    "NODE_PATH=\"$PWD/jvmevm/runtime/node_modules\" node evidence/java-evm/minecraft-entry/raw160-bounded/coordinator/build.js",
+    "go build -o build/bin/mc-raw160-driver evidence/java-evm/minecraft-entry/raw160-bounded/canonical-driver.go"
+  ],
+  "tools": {
+    "go": "go version go1.27.3-X:nodwarf5 linux/amd64",
+    "node": "v24.22.1",
+    "solc": "0.8.30+commit.73712a01.Emscripten.clang",
+    "javac": "javac 1.8.0_504"
+  },
+  "artifacts": {
+    "engineRuntimeBytes": 455565,
+    "engineRuntimeSHA256": "b385d221ca1f44fd476e23846aad83d0b3fa1de5d2d19fc62353259501e6f545",
+    "engineRuntimeKeccak256": "02593391ee49cf1b8b9e67f2f45563cd498b30a93ded342b522300566a3bab33",
+    "coordinatorRuntimeBytes": 5411,
+    "coordinatorRuntimeSHA256": "d43bb4a7439494bc8e31e202fbfbe1ab90ba3189936ff81431a0b30ffcd4ff13",
+    "coordinatorRuntimeKeccak256": "75b40eebc76278e48069620e7e3c56bed92c2e75f13489aee59a626f1d4bce34",
+    "goDriverBuildSHA256": "98ed912ab21304bf070dfcf724c440c6e0c59a1aae3af6e37800a0cf8e4264a8"
+  },
+  "sourceHashes": {
+    "engine/MCEntryInterpreter.sol": "51aad16f3fa64b0af06be2a67429c472bc108e6971310255dc8b4d302afae215",
+    "coordinator/MCEntryCoordinator.sol": "78298feb05ee934b7040098884b51085c9120d174ade43412080f2210d46e8ef",
+    "canonical-driver.go.txt": "cd2f23c3dbd22c98f8146998c487302c77d9c5179caf1d6ca47fbae4683fe09a",
+    "pins.json": "34bf46750e7bac4273f47c6e3ec19a1510e3ee8bf00baf02da364dec42de781a",
+    "engine/MCEntryInterpreter.json": "de56d368f4906cb401413abd7694b9e8441bf2230c94654d2dd284bf132f670a",
+    "coordinator/MCEntryCoordinator.json": "f1be42a6edf2b216f4598521743273454d7fd2feb79e79b9de30941692ff47c5"
+  },
+  "validation": [
+    "verify_raw160_source.py",
+    "fresh Solidity DBOOT root recomputation with all 128 exact leaves",
+    "fresh-process generated EVM positive count runs at 150/151/160",
+    "q1/q7/65536 compact generated root equality"
+  ],
+  "status": "candidate only; parent acceptance gates pending"
+}
