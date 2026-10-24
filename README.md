@@ -14,23 +14,23 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 149 explicit, authenticated class resources (999,009 bytes) |
-| Guest execution | **2,225,301 JVM instructions**, 145 internal steps, 44 verified successful checkpoint receipts |
-| Current blocker | Measured JDK `java.util.function.Supplier` superinterface is missing |
-| Runtime profile | 455,023-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
-| Bootstrap | 127 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
+| Guest execution | **2,225,358 JVM instructions**, 145 internal steps, 46 verified successful checkpoint receipts |
+| Current blocker | Measured original `com/google/common/collect/RegularImmutableSet` resource is missing |
+| Runtime profile | 455,564-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Bootstrap | 128 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
 Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [ArrayList append/growth and fail-fast iteration / P60](JAVA_EVM_MC_ARRAY_LIST_ADD_PARENT_PREFLIGHT.md).
-Fresh EVM tests verify real reference storage/growth, private size, iterator CME,
-nonempty typed copies and genuine quota-OOM ordering. Only images98/115 change;
-all125 others remain exact. A measured preexisting cold-array resume hierarchy
-bug was independently reproduced and minimally repaired. Canonical1B, measured
-raw1508B and quota2B cases remain separately labeled, with failures preserved.
-No full List/Java SE or host-result claim; original execution remains EVM-only.
+Latest acceptance: [Genuine Java8 Supplier SAM linkage / P61](JAVA_EVM_MC_SUPPLIER_LINK_PARENT_PREFLIGHT.md).
+All127 prior images remain exact; one public abstract interface appends, with no
+native binding/get-result shortcut. Independent tests verify normal/covariant
+bridge/subinterface execution, sideeffects/throws, typed interface arrays/high-state
+and separate-process reopen. Canonical1B and measured raw1502B are separately
+labeled. Original table/factory construction is real; complete JavaSE/server startup
+or standard-chain deployment is not claimed.
 
 ### Important LOCAL-only limits
 

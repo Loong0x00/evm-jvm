@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "generatedOnly": true,
+  "initialGas": 1000000000,
+  "attempts": [
+    {
+      "label": "parent-matrix-attempt-1",
+      "exit": 42,
+      "timedOut": false,
+      "wallSeconds": 0.8649425219919067,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/driver",
+        "parent-matrix",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/parent-matrix-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-matrix-attempt-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 2.566974368004594,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/driver",
+        "parent-matrix",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/parent-matrix-attempt-2",
+        "2000000000"
+      ],
+      "gasBudget": 2000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-matrix-reopen-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.7146680909936549,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/parent-matrix-attempt-2",
+        "2000000000"
+      ]
+    },
+    {
+      "label": "parent-small-attempt-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 84.74300722000771,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/parent-small-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-small-reopen-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.2150467819883488,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-fixtures-parent-p61",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-generated-parent-p61/parent-small-attempt-1",
+        "1000000000"
+      ]
+    }
+  ],
+  "transportDiagnosticDelta": "128 bootstrap/278 derived classes; CP2MiB; constructor-only int-zero audit generalized to typed ints, specific full map heap checked separately",
+  "noEvmOrGuestCodeModificationByParentDriver": true
+}

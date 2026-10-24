@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.21409409199259244,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-refusals-parent-p61/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-refusals-parent-p61/ParentSupplierWrongKind.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.9652919419895625,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-refusals-parent-p61/driver",
+        "./build/java-diff-mc-supplier-link-refusals-parent-p61/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.366120332997525,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-refusals-parent-p61/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-build-parent-p61-002/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-refusals-parent-p61/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-refusals-parent-p61",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-supplier-link-refusals-parent-p61/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

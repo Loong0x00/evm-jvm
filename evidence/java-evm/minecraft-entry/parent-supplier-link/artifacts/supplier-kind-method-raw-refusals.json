@@ -1,0 +1,85 @@
+{
+  "status": "Supplier interface boundary raw-name/method/kind controls atomically refused",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "dfa8d02fb2556300f5dfdb5bed542eee0fcc1bf4e563ac5f9a7b2b627d0cbdeb",
+  "engineRuntimeKeccak256": "0xcb0719839a5b81d48d19ff0adfa8ea6e3bce8d8cc834165962d8364f8145cee2",
+  "coordinatorRuntimeSHA256": "30f84e9888c1a719ddabb2653918927b69c663e0a8ba21d2d96f6292bf419be2",
+  "coordinatorRuntimeKeccak256": "0x81d2f439c5dd7bcbead3dbfa2f08b9621617a3870aab4e24146cd2cad69bb6f4",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "wrong-virtual",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "1",
+        "9"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xaf736e43778c5ea2ff7aabf4e046f428dd887f8011f398245727a471d2cd2e01",
+      "rootAfter": "0xaf736e43778c5ea2ff7aabf4e046f428dd887f8011f398245727a471d2cd2e01",
+      "atomic": true,
+      "successfulSlices": 9,
+      "committedHeadEpoch": 9,
+      "callsIncludingRefusal": 10,
+      "gasUsed": 376177773,
+      "wallMs": 393
+    },
+    {
+      "name": "wrong-static",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "9"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x6928d82b714860935546b7df7a8d420839920d7cf0f4e7efdf53792407381436",
+      "rootAfter": "0x6928d82b714860935546b7df7a8d420839920d7cf0f4e7efdf53792407381436",
+      "atomic": true,
+      "successfulSlices": 9,
+      "committedHeadEpoch": 9,
+      "callsIncludingRefusal": 10,
+      "gasUsed": 376491011,
+      "wallMs": 411
+    },
+    {
+      "name": "extra-api",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "9"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x2a6b01e9d3ae102d46be51fc77245e71de8f3f23cc39f05027c839b057f4cd78",
+      "rootAfter": "0x2a6b01e9d3ae102d46be51fc77245e71de8f3f23cc39f05027c839b057f4cd78",
+      "atomic": true,
+      "successfulSlices": 9,
+      "committedHeadEpoch": 9,
+      "callsIncludingRefusal": 10,
+      "gasUsed": 376727722,
+      "wallMs": 412
+    },
+    {
+      "name": "raw-Supplier",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "2"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x3e4270fad6615a2ccdd48f0d935880c92a7597749d09118cc0cb167905236556",
+      "rootAfter": "0x3e4270fad6615a2ccdd48f0d935880c92a7597749d09118cc0cb167905236556",
+      "atomic": true,
+      "gasUsed": 484012,
+      "wallMs": 2
+    }
+  ],
+  "processId": 2053197,
+  "elapsedMs": 0
+}
