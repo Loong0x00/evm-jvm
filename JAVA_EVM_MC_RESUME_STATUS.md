@@ -1,3 +1,11 @@
+## User cadence refinement — batch related startup work, fast generated tests first
+
+- User agrees to faster implement/test/fix iteration with focused generated cases. Keep work tied to measured Minecraft blockers, but implement coupled semantics in one batch (P60 add/growth/Itr consistency), not one full original replay per tiny helper. Development: source/Java8 checks and focused coarse-EVM probes first; milestone acceptance: relevant compatibility/q1-q7/reopen checks, then one fresh original batch replay and required precise frontier. Do not repeat full-repository suites or unneeded cold replays after every local edit. No relaxation of untouched-original/EVM-only/no-fake-result/checkpoint-isolation/resource rules.
+- Recent P59 timing from existing logs (no heavy rerun): generated/core/focused/refusal/retained process sum301.655s (~5m02s); original cold discovery757.567s (~12m38s), precision/reopen680.156s (~11m20s), original total1437.723s (~23m58s). Successful build span~256s (~4m16s), ESTIMATED from artifact timestamps. Combined~1996s (~33m16s), excluding parent coding/review/reporting and discarded build/fixture harness failures. This is current Minecraft validation TO CURRENT BLOCKER, not all geth tests or Done. Source parent-linked-hash-map-put/artifacts/timing-breakdown-p59.json. Main bottleneck original replay/precision; quick case execution itself seconds-to-tens-of-seconds but embedding Java changes still requires~4min solc rebuild.
+- P60 worker sa_3b3b8bf57d2a4502 retains the sole heavy/semantic slot; parent only light docs/source until handoff.
+
+---
+
 ## P60 ArrayList append worker active
 
 - SOLEworker **sa_3b3b8bf57d2a4502**,keyp60-array-list-add,OWN `/home/user/evm-jvm/array-list-add` branchjava-array-list-add/base2b0c5c61a07f2c40030b0168a04efc28d0a10043(acceptedP59guest605113f812953d6d69af9cefc16336450e029bd6). ApprovedOWN16hashsource-onlybaseline `array-list-add-source-base-p59/`:9engine/co/artifact/build/pins/canonical/roothelper+7JavaArrayList/Iterator/AbstractCollection/AbstractList/compilerCollection/List/RandomAccess. Parentpre-handoffJava8-g:none98/115exactverified1178B/713B. OthercontextCFneverembed. NOoriginal/parent/perfreviewEVENcommitted/otherworktree/network/push;normalGoSDK/dependenciesreadonlyallowed.
