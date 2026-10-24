@@ -1,0 +1,1 @@
+import java.lang.reflect.Array; public final class Probe { public static void main(String[] args) { Component[] a=(Component[])Array.newInstance(Component.class,3); Component c=new Component(); c.value=7; Component[] alias=a; alias[0]=c; Component[] copy=a.clone(); copy[1]=c; if (copy[2] != null) throw new RuntimeException(); } }

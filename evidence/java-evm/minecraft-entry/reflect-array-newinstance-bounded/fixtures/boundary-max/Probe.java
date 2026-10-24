@@ -1,0 +1,1 @@
+import java.lang.reflect.Array; public final class Probe { public static void main(String[] args) { Object[] a=(Object[])Array.newInstance(Object.class,65536); if(a.length!=65536) throw new RuntimeException(); } }

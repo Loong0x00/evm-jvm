@@ -1,0 +1,11 @@
+Preserved failed harness attempt (not an engine semantic result):
+
+The first q1 runner used `core/vm/runtime.Execute` for every resume slice. Initial start returned a running lifecycle at epoch1, but a following `head` lookup showed zero owner/epoch/lifecycle and `resumeMain` reverted `LC0ControlError(1)`. This was harness state-lifetime behavior: `Execute` is an ephemeral one-call helper, not the persistence API. The runner was corrected to use `Execute` only for initial runtime installation/call and `runtime.Call` against the same retained StateDB for later slices; the final q1/q7/coarse runs then agreed on machine-state roots. No engine source change was made for this failure. Output excerpt:
+
+```
+continuing epoch=1 lifecycle=1
+anchor=0x0000000000000000000000000000000000000000 epoch=0 lifecycle=0
+resume revert=f15d73430000000000000000000000000000000000000000000000000000000000000001
+```
+
+This is not evidence of separate-process durable reopen, which remains untested.

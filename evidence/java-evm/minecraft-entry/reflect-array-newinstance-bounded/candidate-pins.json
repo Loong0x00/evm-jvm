@@ -1,0 +1,72 @@
+{
+  "profile": "MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1-CANDIDATE",
+  "acceptedGuestCodeCommit": "98ca72b9853aa6d02d028c730c9f9f907ebf17bb",
+  "base": "evidence/java-evm/minecraft-entry/reflect-array-source-base-p52",
+  "bootstrapBaseCount": 116,
+  "bootstrapCount": 117,
+  "diagnosticClassBound": 267,
+  "bootstrapRoot": "c8d971a4f3db916bdd896fd508b45803013e3929a9e65d5444fb30ff37626f55",
+  "oldP52BootstrapPrefixExact": true,
+  "appendedImage": {
+    "index": 116,
+    "name": "java/lang/reflect/Array",
+    "bytes": 477,
+    "sha256": "be9db74abc11c9fb3ffc60a1f69191332df180fc0cdff73ddef720ad493713b9",
+    "keccak256": "0b56876c5ada44f991eac1b780b888be397b18670e07d02dabf4fff653974211"
+  },
+  "nativeBindings": {
+    "globalExisting": "1..21 unchanged",
+    "newGlobalBinding": 22,
+    "stringLocalBinding": 12,
+    "priorBindingsAndStringLocalBehaviorUnchanged": true
+  },
+  "arrayApi": {
+    "wrapper": "public static Object newInstance(Class<?>, int) ordinary Code",
+    "native": "private static native Object newArray(Class<?>, int)",
+    "descriptor": "(Ljava/lang/Class;I)Ljava/lang/Object;",
+    "nativeAccessFlags": "0x010a"
+  },
+  "rawLimits": [
+    150,
+    1063930
+  ],
+  "maxArrayObjects": 8192,
+  "maxArrayElements": 262144,
+  "maxArrayLength": 65536,
+  "maxHandles": 12545,
+  "maxRawClasses": 150,
+  "maxProgramClasses": 267,
+  "maxConstantPool": 4096,
+  "runtimeCap": 1048576,
+  "maxFrames": 128,
+  "maxJvmQuantum": 65536,
+  "maxInternalSteps": 4096,
+  "commitReserve": 25000000,
+  "ordinaryGasBudget": 1000000000,
+  "perCallWatchdogSeconds": 30,
+  "outerTimeoutSeconds": 1200,
+  "checkpointCap": 2097152,
+  "coordinator": "same ABI/storage; ENGINE_CODEHASH updated to candidate engine",
+  "engine": {
+    "sourceSHA256": "1b89870beec18e01accc7a473ebc2d6d6b30b3f1a1ddd76818f5ce5dfed46e4d",
+    "initBytes": 435030,
+    "runtimeBytes": 435002,
+    "initSHA256": "8f282433ebda51b3991ecd61d014c4925c3f51171399eb6f5ec257d76bb9ea40",
+    "runtimeSHA256": "902a882141a18397b86ab2e6a34ef12e06c3dc3cc760364d771fd8b16ae0994e",
+    "runtimeKeccak256": "2de54138ddccdf589b48f23940e06695ce42b9826f8a5d9850bd41822c24af2c"
+  },
+  "coordinatorArtifact": {
+    "sourceSHA256": "758c30f8a08fcec1982b9bd4bc48abf35d39c3cf8666475d5f030b3dba3240f0",
+    "initBytes": 10379,
+    "runtimeBytes": 5411,
+    "initSHA256": "511c60ef2921ee5520d9cae423601732e306aefc540b763808455bde810e4aaf",
+    "runtimeSHA256": "9c65ae750865c8037a76c69cbe7bd8405401d380ddc42710ea36f1916c560f08",
+    "runtimeKeccak256": "030ad0b1803eae04885480221989fc2c18b7d603750147ebab492b0882cf6e9f"
+  },
+  "status": "UNACCEPTED candidate; parent independent review/build/replay and fresh original131 gate pending",
+  "excluded": [
+    "official Minecraft JAR/classes/resources/worlds/receipts",
+    "parent-* evidence",
+    "performance-review evidence"
+  ]
+}

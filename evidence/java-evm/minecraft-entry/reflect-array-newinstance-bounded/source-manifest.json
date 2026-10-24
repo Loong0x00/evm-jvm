@@ -1,0 +1,2735 @@
+{
+  "profile": "MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1-CANDIDATE",
+  "status": "UNACCEPTED candidate; parent independent review/build/replay and fresh original131 gate pending",
+  "baseCommit": "98ca72b9853aa6d02d028c730c9f9f907ebf17bb",
+  "baseSourceManifestSHA256": "fe23b73db8f3ffe5ace46f1f51e5a0359a6b10264f6f745d8dfe31ee04961f65",
+  "basePinsSHA256": "3bc58c8727a2822a6eb4386a7b677d31529fc7ff360492568a34d3cfcf4f01be",
+  "compiler": "solc 0.8.30+commit.73712a01; optimizer200 viaIR Cancun metadata hash none",
+  "jdk": "OpenJDK 8; javac -source 8 -target 8; no host Java fixture execution",
+  "files": [
+    {
+      "path": "IMPLEMENTATION_REPORT.md",
+      "bytes": 4355,
+      "sha256": "9e891ccd1eaf4b3d96f2ae213869f317a7a278ac076449fded969509e205f6c4",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "array-component-run.log",
+      "bytes": 347,
+      "sha256": "a05cda1bc8f4b033b89d02f170a65fa0a32417a11562d3501af7d45c40953083",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "astore-run.log",
+      "bytes": 153,
+      "sha256": "85d90de71656fd71200a4a81e9f942c398fdf58479f7b824b6232c3c9a0bb62d",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/MCEntryInterpreter.init.hex",
+      "bytes": 870061,
+      "sha256": "1a20fbb5757a908b7e31f15a1bf7db691ca536a282aaf59cb6c8854663cd5a13",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/MCEntryInterpreter.json",
+      "bytes": 1768573,
+      "sha256": "3aaa3a618a4163dac7b1c1349a8e7f1f6ae3a6a6c12eafe1b7d835e10c9fd7c6",
+      "role": "candidate Solidity build artifact"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/MCEntryInterpreter.runtime.hex",
+      "bytes": 870005,
+      "sha256": "b21867050d5dfcc9c93816fe55478bf9f588c72f4094edca8b347f27694e0e77",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/MCEntryInterpreter.sol",
+      "bytes": 807624,
+      "sha256": "a6e4d30cae41a956b8f6a44e66bf5418f79f590309ecdb5c7ca6720a974a9686",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/build.log",
+      "bytes": 19774,
+      "sha256": "a013038e43c4d9c760735b256c36ed7ce2691f20b005710dc8eebcbad41c8776",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/candidate-pins.json",
+      "bytes": 2775,
+      "sha256": "0743c8d159395a68f717d2b59fdc2f63863c5e7c4c58292b61b4758b65621a60",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/coordinator/MCEntryCoordinator.init.hex",
+      "bytes": 20759,
+      "sha256": "a08ec9b6ed9db7036481fff247e7f8376f7e526fffba0abaa2f378e52ce80ab2",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/coordinator/MCEntryCoordinator.json",
+      "bytes": 43801,
+      "sha256": "eada727bc087dee15b8585004075889b8ec46c1edd9859aff8736296d710fcca",
+      "role": "candidate Solidity build artifact"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/coordinator/MCEntryCoordinator.runtime.hex",
+      "bytes": 10823,
+      "sha256": "422e5775ea4b7dc2168a506f332d380b2087a5a314bc2b58a4d6553cbf440ca8",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/coordinator/MCEntryCoordinator.sol",
+      "bytes": 16840,
+      "sha256": "02a23c33296684923b4529b8b183381838a7ce9020c4481415432211d5aa0129",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/coordinator/build.log",
+      "bytes": 389,
+      "sha256": "6d1ecd24ff9e4fb2da84af738300839c5935d7bd38ee40427d391d86f88af61b",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/noinit-q1.log",
+      "bytes": 284,
+      "sha256": "a6917d76cf9efbd30a96baa25a54687160214f28393707238fd5cd117f957f8a",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "attempts/pre-tail-parser-fix/noinit-q7.log",
+      "bytes": 673,
+      "sha256": "14154f4580040b3cbaa3b908117f0c99456fd1cdfe3f48b7522548ad14ce1014",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "attempts/runtime-execute-resume-failure.log",
+      "bytes": 984,
+      "sha256": "5f3917e56f69b02ec7a99e403e162c6e0be0ec282d74bd30626ea434c6b19cbf",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "base-pins.json",
+      "bytes": 10773,
+      "sha256": "3bc58c8727a2822a6eb4386a7b677d31529fc7ff360492568a34d3cfcf4f01be",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "base-source-manifest.json",
+      "bytes": 1479,
+      "sha256": "fe23b73db8f3ffe5ace46f1f51e5a0359a6b10264f6f745d8dfe31ee04961f65",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "boundary-max-run.log",
+      "bytes": 591,
+      "sha256": "d347e05da11e4a5d2af9b858fc223cedec374526cffa1deff13b480cea322d0e",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "boundary-over-run.log",
+      "bytes": 574,
+      "sha256": "4bb99f2e6fe380c3500c9e877a0a50bfa05a05f55c2c08934766a2d80246f1f4",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "candidate-pins.json",
+      "bytes": 2825,
+      "sha256": "67f93081d69ca8029882375fa17c4e686a1c6243d57c0c1599de4c030f3ae3b3",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "canonical-driver.go.txt",
+      "bytes": 75699,
+      "sha256": "1758f6480001c62257dd387ac37e5a97002ef1a7a79593f8cfdf6c669c5f0d6b",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "classes/java/lang/reflect/Array.class",
+      "bytes": 477,
+      "sha256": "be9db74abc11c9fb3ffc60a1f69191332df180fc0cdff73ddef720ad493713b9",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "coordinator/MCEntryCoordinator.abi.json",
+      "bytes": 6273,
+      "sha256": "160910d1962bdadb5c94fbc568ab5dd4127b1df9c6dbd9fa07ba41ec539f125d",
+      "role": "candidate Solidity build artifact"
+    },
+    {
+      "path": "coordinator/MCEntryCoordinator.init.hex",
+      "bytes": 20759,
+      "sha256": "b467a7eeba0fd788dcc935107ca2453cf67cdd9c04efe2be4f636f5a873707cd",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "coordinator/MCEntryCoordinator.json",
+      "bytes": 43801,
+      "sha256": "607a41d7897da62f8ed7f1f2df7329e36b5c21086669a8a3adb430acecc0504e",
+      "role": "candidate Solidity build artifact"
+    },
+    {
+      "path": "coordinator/MCEntryCoordinator.runtime.hex",
+      "bytes": 10823,
+      "sha256": "10f060c72c1feed994cf0000ee3e130dcd26070b83fcbf9217a45b38d5888cc9",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "coordinator/MCEntryCoordinator.sol",
+      "bytes": 16840,
+      "sha256": "758c30f8a08fcec1982b9bd4bc48abf35d39c3cf8666475d5f030b3dba3240f0",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "coordinator/build.js",
+      "bytes": 2635,
+      "sha256": "cd07ab4055f795d70a97c6318fc8b3e491c29af0769423881cdf2b3bf2c23f5b",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "coordinator/build.log",
+      "bytes": 389,
+      "sha256": "7e90fcbca28e6eadcdeaf5e9bbbf4ab90d587a259d16dd40d95df5607154d614",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "dense-check-1-run.log",
+      "bytes": 166,
+      "sha256": "cff8e2b2fc9aebd0ac9b05e9193581b9b9b253452df2cb43e79c3cadc8243b15",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "dense-check-2-run.log",
+      "bytes": 166,
+      "sha256": "7b8189d86991809eb42fd2c16e69d035ff4b12f6bf0e0a1b7dd4eb3325d3c9a3",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "dense-check-3-run.log",
+      "bytes": 166,
+      "sha256": "b697187a837309d14570775b9935f568b48a84ba48a8f57fd5ccf2e21f03cef7",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "dense-check-4-run.log",
+      "bytes": 166,
+      "sha256": "a9bc613cf630107107aea40256a1282a3a64df372c4aa89462dcd27767a335de",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "dense-run.log",
+      "bytes": 166,
+      "sha256": "4b8f6ca97747af596a472b3a5f569b2bb5a66d2e18311cfa6da61c2c599fed95",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "engine/MCEntryInterpreter.abi.json",
+      "bytes": 21643,
+      "sha256": "d1824a84571035557e1383d3cb7a97aa3a93ae8459e217521046c4b1a7481296",
+      "role": "candidate Solidity build artifact"
+    },
+    {
+      "path": "engine/MCEntryInterpreter.init.hex",
+      "bytes": 870061,
+      "sha256": "f0d7b89553001b015ed2ff68af9d52983fb0cc1507a906ad0979e0d9cc9926a3",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "engine/MCEntryInterpreter.json",
+      "bytes": 1768573,
+      "sha256": "587978df85b2f0ac9ddd5de5830fa4a9aa0a648c70e4c20b0e939c0af87f5682",
+      "role": "candidate Solidity build artifact"
+    },
+    {
+      "path": "engine/MCEntryInterpreter.runtime.hex",
+      "bytes": 870005,
+      "sha256": "fbfc9f1545ab3088db52d6c02908b99353f8e77ac1d83d90affa5a5244145ccc",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "engine/MCEntryInterpreter.sol",
+      "bytes": 807770,
+      "sha256": "1b89870beec18e01accc7a473ebc2d6d6b30b3f1a1ddd76818f5ce5dfed46e4d",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "engine/build.js",
+      "bytes": 2115,
+      "sha256": "395752305ea04f1c8eceb0ebe7f832e964b060aacf6105d9b8f5fe26859b85ab",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "engine/build.log",
+      "bytes": 19774,
+      "sha256": "9ebb10d106a0db9146f85e995d0d58b79481bae4151b2a111fcd1272325127a2",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/array-refusal.log",
+      "bytes": 375,
+      "sha256": "d52e45b1d39a53b6311347f8c2ecaa5116de41b12ca2efb40bb07dddd608fae0",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/astore.log",
+      "bytes": 615,
+      "sha256": "7d7a6b61ff17a4041059136836dab24bfcf064259e9f2f7349f5b2648d79b451",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/boundary-max.log",
+      "bytes": 607,
+      "sha256": "817348312d5f9a510595f9069d608ec9fcae6b9609544e36e651d3594f3cb1df",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/boundary-over.log",
+      "bytes": 593,
+      "sha256": "899c4659facdb26e03d8213b2fcdc715a470407b6d41adb85c02297adda28c54",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/dense-check-1.log",
+      "bytes": 596,
+      "sha256": "6dcda1af5894e88d43575a108a1146c56ef6108461be99d90a7e4aac2d64dbf7",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/dense-check-2.log",
+      "bytes": 595,
+      "sha256": "d5e75fea37533f8ec786574fe48a1953aae61930edbddf0128a6c8b4ba83e6df",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/dense-check-3.log",
+      "bytes": 592,
+      "sha256": "468f82b02221e742c28e7b63578b176f853671ede9d38e61fe98a7caf0693ba4",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/dense-check-4.log",
+      "bytes": 588,
+      "sha256": "4aafe8619b8d52a992b0c5447673f8eb2db20b914cd637732b1008f36162e70b",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/high-component-coarse.log",
+      "bytes": 595,
+      "sha256": "d5ea0192c80f49cda95ca155a702ef5491d713531168f8d654568fca3fc7f884",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/high-component-q1.log",
+      "bytes": 2532,
+      "sha256": "2f154d5e3fc238ab1d524270b8f868c6d142c1324559b4d59d299da228b07ceb",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/high-component-q7.log",
+      "bytes": 797,
+      "sha256": "68604a49190dd572bddec30280e601118acad4f0d4f788637686cef23634f719",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/interface.log",
+      "bytes": 597,
+      "sha256": "6bedeb833113be0e04cee0af85f323dcae57399e7747c204e29574e99bb8db80",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/legacy-controls.log",
+      "bytes": 380,
+      "sha256": "c3f3969a1466bc54cb2853b568cc5e474dc557d7c2081bef055352cb5657a58f",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/legacy-enumset-initialized.log",
+      "bytes": 577,
+      "sha256": "3022c9c9090b39da9da955c5b597f01a08cbe7fd6af35df0a99a65a6bcb59f60",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/legacy-name-arraycopy.log",
+      "bytes": 567,
+      "sha256": "8d2b0c8eb2cc5c0a5ab7736f357906c156b6c28add1f074fe2f10ab6f685530c",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/negative.log",
+      "bytes": 592,
+      "sha256": "9d867ffa5287ceb06b0d006165fe137f1e78b097a90b66945e089caa40c958ef",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/noinit-coarse.log",
+      "bytes": 601,
+      "sha256": "4aaa188745e781ab14de9a4e66c124163a78ac14675e67d45701631f68a9db1d",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/noinit-q1.log",
+      "bytes": 1611,
+      "sha256": "20a8e14620eb96bf0f2fbf18ada143002b7f6d1c1e4dc635ae88473c75a6075d",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/noinit-q7.log",
+      "bytes": 697,
+      "sha256": "ea45a39245a16462bcffbbd8bf550006607e181dc3057b6ed4e547b3c8474b07",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/null-negative.log",
+      "bytes": 601,
+      "sha256": "2a57ff0ac64f68c07da80543c501be9668eb847415864ae244af3786933f8f37",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/overload-refusal.log",
+      "bytes": 375,
+      "sha256": "72a4abe83324726e36527a840073938e820fa061dc92ef07128ef3342e7cbd6b",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/primitive-refusal.log",
+      "bytes": 375,
+      "sha256": "bd24a4be55afed2716f140014a3fc47bd6642bb0647ad4ae95ac1fa6501b8f66",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/private-abstract.log",
+      "bytes": 591,
+      "sha256": "fbf1087da3faa9e1ef7d637310198ee02c034f6a4215730ea5bb9ebf3c5d9831",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/raw-owner-refusal.log",
+      "bytes": 375,
+      "sha256": "655d20283d441403e63c0702626146752b004e374f029425dca87aa775fa8c06",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "final-gates/unique.log",
+      "bytes": 601,
+      "sha256": "ed14283424c8ac4fe5e414f93f20eadb859646f2c9fdec094d2fe0e5f273784b",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "fixtures/array-component/Probe.class",
+      "bytes": 381,
+      "sha256": "4aca669ac434c756d0f8bdcc2a0cafc02b5a037baea206d52ae269d3555ad0ce",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/array-component/Probe.java",
+      "bytes": 141,
+      "sha256": "dbf70704a4e1ceceac22ecabf9a138e882028ab2c2b2cffad0a291cc87aaa75a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/astore/Component.class",
+      "bytes": 192,
+      "sha256": "4346fb926f9d64c449dc01ebdafda9cb9a5ca67687dc70f89d93187852516ee3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/astore/Component.java",
+      "bytes": 33,
+      "sha256": "545106eb99188f31cbe12662d31efc2819d21e9ecbf6265962e9c625576d0b18",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/astore/Probe.class",
+      "bytes": 426,
+      "sha256": "cdc5f111b441397a1569e6334a2792e7907dd253ebf805b334ec0eb9452c4774",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/astore/Probe.java",
+      "bytes": 242,
+      "sha256": "126b8e3fe37a98518d1eaa468ac332b1ada3a845b12c4cf0566d647127f08da7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/boundary-max/Probe.class",
+      "bytes": 475,
+      "sha256": "27ce2350b4d6dcf204c33f337bd6b04e77c33e37b66148e4f8ff6db4c8333863",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/boundary-max/Probe.java",
+      "bytes": 214,
+      "sha256": "550f1cd0586760ede774bf56fdc2183f812f81f6f50655d0ce1610c2abe9e35c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/boundary-over/Probe.class",
+      "bytes": 362,
+      "sha256": "2600e171c8856128c9ddb52fbbc8f960224189a20f70a79f4748793c49eab822",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/boundary-over/Probe.java",
+      "bytes": 143,
+      "sha256": "d36423df994626747a6f53a7f700b58975a3e7802552d728a585d6baed7f3870",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense/Component.class",
+      "bytes": 212,
+      "sha256": "a4ac202cef38257f1497c08d032ef32237b77ad9db129ae8a1d6d755646035df",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense/Component.java",
+      "bytes": 51,
+      "sha256": "9ff95e8429f6254ffd5ef9aa9f2517d963c68af7ba54b4952165f041e92341d4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense/Probe.class",
+      "bytes": 516,
+      "sha256": "fd08026718de2e4b57d9f57fa4552c415adf7cf495f85d3603b8cac51d4b989e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense/Probe.java",
+      "bytes": 307,
+      "sha256": "4c9a531b948f1a6de05c0426a4a138aaa04a158cb262d7a9bf0e991a035cd3ff",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-1/Component.class",
+      "bytes": 212,
+      "sha256": "a4ac202cef38257f1497c08d032ef32237b77ad9db129ae8a1d6d755646035df",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-1/Component.java",
+      "bytes": 51,
+      "sha256": "9ff95e8429f6254ffd5ef9aa9f2517d963c68af7ba54b4952165f041e92341d4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-1/Probe.class",
+      "bytes": 624,
+      "sha256": "ef306106faed154798c2f610ee8977b4564c6d3dd6bcd2f8f799e6e868e5f325",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-1/Probe.java",
+      "bytes": 327,
+      "sha256": "1b7ebdb6072cfdd2fa452322f4351b5a1e94ad436dec836550ed032fb84ba7d8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-2/Component.class",
+      "bytes": 212,
+      "sha256": "a4ac202cef38257f1497c08d032ef32237b77ad9db129ae8a1d6d755646035df",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-2/Component.java",
+      "bytes": 51,
+      "sha256": "9ff95e8429f6254ffd5ef9aa9f2517d963c68af7ba54b4952165f041e92341d4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-2/Probe.class",
+      "bytes": 626,
+      "sha256": "993371b7b99b27be900499754e8be0b7ab09e8dbc2fd58ce066420cafe841a63",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-2/Probe.java",
+      "bytes": 326,
+      "sha256": "59fe30f1311ae7de0285683054b3ddc7268dd5d576a040732b2b870501f64914",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-3/Component.class",
+      "bytes": 212,
+      "sha256": "a4ac202cef38257f1497c08d032ef32237b77ad9db129ae8a1d6d755646035df",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-3/Component.java",
+      "bytes": 51,
+      "sha256": "9ff95e8429f6254ffd5ef9aa9f2517d963c68af7ba54b4952165f041e92341d4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-3/Probe.class",
+      "bytes": 627,
+      "sha256": "1c6c124d13c1ce5b9d324796e1b0d956a923bf9f5a5704de37c253a17dee874b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-3/Probe.java",
+      "bytes": 329,
+      "sha256": "657dea9de3c717327755f935f18a63966711b59c6728aecdd769683d461bf985",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-4/Component.class",
+      "bytes": 212,
+      "sha256": "a4ac202cef38257f1497c08d032ef32237b77ad9db129ae8a1d6d755646035df",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-4/Component.java",
+      "bytes": 51,
+      "sha256": "9ff95e8429f6254ffd5ef9aa9f2517d963c68af7ba54b4952165f041e92341d4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-4/Probe.class",
+      "bytes": 626,
+      "sha256": "52b002badc5f9f26f64f3c0625567c3497f1a0fccdaa33a5093c58dd41a8a6d9",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/dense-check-4/Probe.java",
+      "bytes": 332,
+      "sha256": "b6cc2a4fe3f4cbff31800083193f2e06a7f5185aab29b9279add79775efaba26",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/Component.class",
+      "bytes": 192,
+      "sha256": "4346fb926f9d64c449dc01ebdafda9cb9a5ca67687dc70f89d93187852516ee3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/Component.java",
+      "bytes": 33,
+      "sha256": "545106eb99188f31cbe12662d31efc2819d21e9ecbf6265962e9c625576d0b18",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F000.class",
+      "bytes": 182,
+      "sha256": "e6e748b6be7a78d9fdb01c846695e48fcb3f85ab832f25492ff4d0df60f2d579",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F000.java",
+      "bytes": 28,
+      "sha256": "4b2699a4879a0c48afcf126ee9567b5e5ff3021ef3ae52963bc33aa13da6cb3a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F001.class",
+      "bytes": 182,
+      "sha256": "6a14a62d54e9b7e8d2724cf28c594a98ea753d78d6889aaa1f49d362f272d8e0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F001.java",
+      "bytes": 28,
+      "sha256": "68b3399fee319e967de2253a64e7094d8a5cbd224a67219b84bed2e2a3d3d81e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F002.class",
+      "bytes": 182,
+      "sha256": "b44324e34bacce785d0242683661397eb1ca2d25cdfced6c84746502bf97932d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F002.java",
+      "bytes": 28,
+      "sha256": "3c2ed2346d4fe41b7c0b90a6584f328c00e7ad445afce215dce16d9f49e31852",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F003.class",
+      "bytes": 182,
+      "sha256": "1b31f4c7c730e609c4c992ea5c950416e9b087e1aa8cd490ebf69c0bf79579d7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F003.java",
+      "bytes": 28,
+      "sha256": "a2cb67773b833a69b776fa530307d659377e6d7f5c03747af80f39b2efcb40c8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F004.class",
+      "bytes": 182,
+      "sha256": "d3d356d4515ce41ac0df39eccd3387b40dff6c4208dfb1ba0cdb7a64a03680cd",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F004.java",
+      "bytes": 28,
+      "sha256": "75cd6511c39b15e7917dd2f380a59b4d869d9437424b5f74bfacfc5113dd52c0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F005.class",
+      "bytes": 182,
+      "sha256": "a0d0be62f188d45ffcbcacbe5d405f4df5d8a8cfb2658107b0386f5162e07710",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F005.java",
+      "bytes": 28,
+      "sha256": "f0758660a327f346a0cef33734bd4cf377b07e53ad5352ac32934828de526540",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F006.class",
+      "bytes": 182,
+      "sha256": "e106418937550a8c15e020c56c1de413ac7b9ff3370450526160a856b8e8557e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F006.java",
+      "bytes": 28,
+      "sha256": "1bb6e6b42c97da9ada7ae3e2fd0433d2b3e495e50d2bf3fd364d6fe59937cb74",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F007.class",
+      "bytes": 182,
+      "sha256": "3175711e39e0040ecbd3b3e322d7248b07111354e6ecefa29efbbc08641fca6c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F007.java",
+      "bytes": 28,
+      "sha256": "f06d3e2cc1468b83f523ebb1db3606b31199d07b3c2a14e0b240fc1249819997",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F008.class",
+      "bytes": 182,
+      "sha256": "5a1ec242bd1ca1d097b2d66746236c8a12c2446d7e0e74f450a09adbd61b609a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F008.java",
+      "bytes": 28,
+      "sha256": "7d58cf3c340db4287d8576e4e005933a06cc6d645c698d223c8853c3c1fff30b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F009.class",
+      "bytes": 182,
+      "sha256": "dd345c632849162415593b1d37ec34d287831c8ef016db2ed89760f3ecb1436f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F009.java",
+      "bytes": 28,
+      "sha256": "8e905d560adace516cb99ef9d964b38893d39ced9a1ea328390a1f4195996bc5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F010.class",
+      "bytes": 182,
+      "sha256": "09566693bbd7c281bb314cc700dde962a8fe7a4ce8c59e1bed70a26d95f8f6a1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F010.java",
+      "bytes": 28,
+      "sha256": "71b029a4076d6cb4df278ed592265516fd627a905bbcf4d9318d584c0c882b13",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F011.class",
+      "bytes": 182,
+      "sha256": "bd15fee40df30eabf434dadf3f07b3ee2c8e9517d0adddf7e2a8d14dc5d5e3c4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F011.java",
+      "bytes": 28,
+      "sha256": "0b885df22f38c51a22719a0efaebb2e050f431b626e962b06a05723470ce071b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F012.class",
+      "bytes": 182,
+      "sha256": "bcc3149cd97ef78f8e0dc25836654f3b5b503b494378d0ec9e8d487916968276",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F012.java",
+      "bytes": 28,
+      "sha256": "776b3a3fd2d55b924f01a92ee43ff050bee57161809a4518fc5acb6bf8905296",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F013.class",
+      "bytes": 182,
+      "sha256": "b466dad2ce19770b341998f73db14d3d574aedd912d62dd7a8e218c0ede3b961",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F013.java",
+      "bytes": 28,
+      "sha256": "9491fb33358552e6ff79eaa913ff72f53a4c87046bda85240bb0f0a89303d055",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F014.class",
+      "bytes": 182,
+      "sha256": "896b18dd9588887312d14ae135827789a9c2e53444ed75eea74a8b9d3b02abdf",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F014.java",
+      "bytes": 28,
+      "sha256": "44aa470baa47f924197da28cf1e0bb28bcf5601f9b10062ee7833a75e70f4f37",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F015.class",
+      "bytes": 182,
+      "sha256": "c59925ebf5199a40305676c8848ca5e27325f3bc356a4e8dbc408b3b6da034d0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F015.java",
+      "bytes": 28,
+      "sha256": "34c5bf3e7d51d8cefe98b8c8d5710634f35b60dfa7dea108dc0b581a6b992d45",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F016.class",
+      "bytes": 182,
+      "sha256": "aa5c53b1a855ec7e60758bdb3706c558de2c871b1e605c1610148d99b21c59e8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F016.java",
+      "bytes": 28,
+      "sha256": "d6246ab69d8a5a8446c6ad9c3f31e55a91b63b11289600dfb83cbb82b0375656",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F017.class",
+      "bytes": 182,
+      "sha256": "f4ff32d76085eda0be94bc4a74d5efaf5ec5b339d4d8f894bcf0d19c7f7c4fd7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F017.java",
+      "bytes": 28,
+      "sha256": "ef8fdc695c1a693dbf72c3253c72fa000bc69b5d4d93396078b3a6017681a305",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F018.class",
+      "bytes": 182,
+      "sha256": "3712d14509cf6dd11c653503bf2e761bb4ebbf43bb003f903e7fd2f27fee2ca4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F018.java",
+      "bytes": 28,
+      "sha256": "51eb6dfae1aeb1ffd25d7787a0c1801079869e94e46676453a8955644870b183",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F019.class",
+      "bytes": 182,
+      "sha256": "1bb31e58e9957a4aa527fe4a9f4387b1e6a64b48ddf4fd65959b5058e819a213",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F019.java",
+      "bytes": 28,
+      "sha256": "159ccde044407a7bd5e5c814f326c1fc30ce9f4d114d0aefc48c8557f45168ba",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F020.class",
+      "bytes": 182,
+      "sha256": "1d85142d6e3de1aabb2b9b4002b7d071a577f70419404706e4f716e24bc697d3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F020.java",
+      "bytes": 28,
+      "sha256": "5108953f470e9fcd22994d57319053a53f30cc1be00574abb94018ce93070d98",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F021.class",
+      "bytes": 182,
+      "sha256": "6d0300d535b052ea59ba0685de95fa5137c18206dd2254082f5d1cd742dba8b4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F021.java",
+      "bytes": 28,
+      "sha256": "c7833757f6637cfc7f139e3c2689e760f62cdf211fc7a97c6a9b9d98dd806fdf",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F022.class",
+      "bytes": 182,
+      "sha256": "1f6a84649fed4f703ba3d09cb65263ae1812d33e70500d490da2e0af4350440d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F022.java",
+      "bytes": 28,
+      "sha256": "3086931bdb8ba69c781d856eba63f27d77c43d5aee0bb296e60ad7209e34346a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F023.class",
+      "bytes": 182,
+      "sha256": "35015c0c17d35a990211b609e737a28ecacd0a7120a65a2b13bbb5f6650c5b4a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F023.java",
+      "bytes": 28,
+      "sha256": "9a9e2e15a58dadf94df5cc05de5632aba2e4c61b58e52868b2d540b8aeee2c70",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F024.class",
+      "bytes": 182,
+      "sha256": "b286977c80cff4c2be74cfad2146150b0c63d552c16c3952ee99f95366bb5097",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F024.java",
+      "bytes": 28,
+      "sha256": "2b887ef4fa175634982a1a5a60f358e6c16cf00e04c77e8f86dd262d79a1534c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F025.class",
+      "bytes": 182,
+      "sha256": "6c1c1d06d92e705b9bf7679d961480164d8a6c9223d5f5cf2270549e934cd1d8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F025.java",
+      "bytes": 28,
+      "sha256": "4b23175abf6f19b81244c9e2ed585970ad6cd1112e825796f80f74076da1175e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F026.class",
+      "bytes": 182,
+      "sha256": "acf9b7ff85c83c6bad627745d5d9b131372a17073ccf04867c8a8c66f67e0eb0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F026.java",
+      "bytes": 28,
+      "sha256": "1d56cf6483a70e42b5476503566455b71719115964e31c256a8a78165adc4a55",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F027.class",
+      "bytes": 182,
+      "sha256": "8027932c79423702b42d77226cc65bff4f4db90f2e7b25848dfeecc9e51f397d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F027.java",
+      "bytes": 28,
+      "sha256": "d7e601cc758050491d56f0b07da5e64fe5a547a0d2b1fe3df1f6c9a0da02e085",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F028.class",
+      "bytes": 182,
+      "sha256": "415aed8dbe635e42c0c07f473f501afe84c1cd2907beb3dd2f07efb21184cb58",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F028.java",
+      "bytes": 28,
+      "sha256": "4a0e4f713b764d6e135c261e31193815c23a98fb04738441ba724e8394b51925",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F029.class",
+      "bytes": 182,
+      "sha256": "4c6c444d9451c1f6a5c51c190e2594f66b36d5cf78b6c0d7189e5e23b69cd03d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F029.java",
+      "bytes": 28,
+      "sha256": "21667cd3169458c05fec63348dffcd792e6bd95532b9a536de0d30146392e805",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F030.class",
+      "bytes": 182,
+      "sha256": "3be57183bbbf07566a1261158e6054ad0c06e669dd411b77194fdee2fe80ab19",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F030.java",
+      "bytes": 28,
+      "sha256": "a8c7c69ed7dfd75e9914b2b97a43f46cf5f2658bdb614610d97f5e4150f85906",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F031.class",
+      "bytes": 182,
+      "sha256": "7677126e902b124dd6b4eb78c39ba0d42e5b608f0e89c917d05964c7d08058b9",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F031.java",
+      "bytes": 28,
+      "sha256": "505da42c658bbede89715908f978915f4889fcb7326b7769da17a7052aa4e371",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F032.class",
+      "bytes": 182,
+      "sha256": "ecc52047b8e48d6f074d5527a26807eb269b60a94ee72dd8eff34542d52b28df",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F032.java",
+      "bytes": 28,
+      "sha256": "c94fcc60393ab4ad29d138da21986375e0767a014edd327958f257f2e6af6eed",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F033.class",
+      "bytes": 182,
+      "sha256": "29a750713ed4487ea6a7ab7738f99e36cf59efd59e385ef42944e1c6fd302069",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F033.java",
+      "bytes": 28,
+      "sha256": "b15bbd2089cedd11556516472eac29799a26f4de1aee1d3b9584c9f97fe9d449",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F034.class",
+      "bytes": 182,
+      "sha256": "e7642d6c1102407dbeebc408ad099535ab0bda2384ee2be83850440cb6ad2d37",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F034.java",
+      "bytes": 28,
+      "sha256": "d35b6b6d42ce78ac6fa7bf43880a13fcc29df10a4ae7427b10d41ab81c03c1be",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F035.class",
+      "bytes": 182,
+      "sha256": "66062e18d460b0b9555473489b2579b74192f2deefab68780791e4cb9873d53a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F035.java",
+      "bytes": 28,
+      "sha256": "1f96d02847099c1af6b9ffc263afe3caa1825f979af1935e4960b64fce6e1f89",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F036.class",
+      "bytes": 182,
+      "sha256": "933535d1c33455b14d46692aec6ccb75ce17dbc4dd9be59a682ae3e8cc832665",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F036.java",
+      "bytes": 28,
+      "sha256": "69900fd8c1701c6a43cd6219651cf2d8a4c1cae0cef7c081b182c53f69fe1bdd",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F037.class",
+      "bytes": 182,
+      "sha256": "ab79794796434390adf647bb118aed73cb208a35a3201be1f808590e68b9c8bd",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F037.java",
+      "bytes": 28,
+      "sha256": "3d504edfb41f3b0bebc1d11690ec454938865ed22a3399cd95d47fca9b783de6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F038.class",
+      "bytes": 182,
+      "sha256": "938679ad77a0cc5149b62751a5ff495c7beb06585f656858d019db44d1d3ff30",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F038.java",
+      "bytes": 28,
+      "sha256": "f4d9dc565b67f2d022495d02ba6b5b34629430c5a74f1b6ae9f6550da5255a0b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F039.class",
+      "bytes": 182,
+      "sha256": "7c31408ec514123250c51768b789b2a324eaac05874474560a92a9bcd59c2be3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F039.java",
+      "bytes": 28,
+      "sha256": "411462cbe1272b27e3ad8bb1ca15b6b8d8875fd5e59dd641b58acb3ad8cafff6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F040.class",
+      "bytes": 182,
+      "sha256": "9fd13669b120267f8ae39419cde6e910d91731cc1922d1935e3fa34a316d3cd7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F040.java",
+      "bytes": 28,
+      "sha256": "3ee703e8eac7bbf8ad89d72a7ca793e902cd630fe10c60368626ea81fb99237e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F041.class",
+      "bytes": 182,
+      "sha256": "2fb938de2cadbe2294a66641e2a187d77453895c6c5275302634eff7c3887ff7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F041.java",
+      "bytes": 28,
+      "sha256": "17d5c040063544488a63f9c45e43a9ff5d216d0ced0e983ac8df38fba834415c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F042.class",
+      "bytes": 182,
+      "sha256": "bde4017d05529c9a9bfae30848f77ac8d1fda02a22099b3f61a1528e54d648a1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F042.java",
+      "bytes": 28,
+      "sha256": "407e3a868209a6e74f9d016bce72301b221de19894de3ddac2cbd7485d522e82",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F043.class",
+      "bytes": 182,
+      "sha256": "e408da1bda4b5035507cc18fbf801c8d1d5c39a53eac047ec209b59ab084da3b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F043.java",
+      "bytes": 28,
+      "sha256": "8b5a6581954ee87f5dbf180e88951cfe54ad1fbaeedcb0e14bec948614fe8b67",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F044.class",
+      "bytes": 182,
+      "sha256": "94304df51ddf094c3aebf64fd8ebbb5cbe95e732b38d98966cc31416bdf9e05b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F044.java",
+      "bytes": 28,
+      "sha256": "5c6c214f6c11ea228f4c3e8478fc423fcc3ea082448372f26e07118bd4d19a78",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F045.class",
+      "bytes": 182,
+      "sha256": "f954025ae64b281e3d5e70ac64b81734bdc7bb157d8eaa6538f1e6a3c61c2fa2",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F045.java",
+      "bytes": 28,
+      "sha256": "a59089238a424418fb74dc5b5a1f3b061bf2090d60f89b03efb73d5f06d876ba",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F046.class",
+      "bytes": 182,
+      "sha256": "e9461fb2816877f3429f43049478f9f9274f78772562a98d3ad4fff4f92a6804",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F046.java",
+      "bytes": 28,
+      "sha256": "bae2fd967619c7d888db6b45d04bcd86cbce799d40861fb9993682802cd650c5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F047.class",
+      "bytes": 182,
+      "sha256": "2c7597d11117535762fb37e14d6b277cef62fd8dffa27ec28f3a5f7fa37686c5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F047.java",
+      "bytes": 28,
+      "sha256": "4063e79a68b410bffc0a9ab9e762a59e1535337f425e12a7c8c91cbaba25880d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F048.class",
+      "bytes": 182,
+      "sha256": "6fdd6d872e59d3ee3194d807739702eaa9be7161dd9ce701892b493026ef30e9",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F048.java",
+      "bytes": 28,
+      "sha256": "c69fad8799f6024b3412e26e2d9da7015ebdf2c3d848b73493baefe99d75ecbe",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F049.class",
+      "bytes": 182,
+      "sha256": "daddaac408ab05c003960f8c03f06f714850e171fe13b1533a7116cfd51b2fb0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F049.java",
+      "bytes": 28,
+      "sha256": "a2a71e6b5dee412d1d133d17f3a4e12f2e7359cad40b6ff42ed9c21fc558bfdd",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F050.class",
+      "bytes": 182,
+      "sha256": "cbe466d5a64ddecf2c1226e2b1406e6208d1e1f1df8a35a638f1b4a5d410bd34",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F050.java",
+      "bytes": 28,
+      "sha256": "45fcdac6970fab77a815294372e87db3e7f36e0b9041a2478e360eaf3fc6da24",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F051.class",
+      "bytes": 182,
+      "sha256": "d035fafcec926f9e29c617d15fe7a69f0a46619f2a9f5207ad2b049ab7ed95bb",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F051.java",
+      "bytes": 28,
+      "sha256": "141f43e4a10c9f280ebaeed52a0a6bf6a8e844c2c5f8a7a88a41ee938604bdb8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F052.class",
+      "bytes": 182,
+      "sha256": "c4a12585efcceeb8864dbb8419db325aff0c6fad06929fffaf1eff9ee4bd6359",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F052.java",
+      "bytes": 28,
+      "sha256": "a196de7f863efcd62016173457fc2a5d1043a6a9f6bfedee6a83f73ebc9006b2",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F053.class",
+      "bytes": 182,
+      "sha256": "473138bb44d119a02ef74fa3aaa1a31cc2ea1f3289455af54de8893f8929c3c8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F053.java",
+      "bytes": 28,
+      "sha256": "519f045e15313d0b6df9f467e151356f59304a11cb21ecc01fca8993712669e4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F054.class",
+      "bytes": 182,
+      "sha256": "a7abebe75e0355eccb198951d468c31850eca54aedd0dd13c8b4b859bf7b9ba4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F054.java",
+      "bytes": 28,
+      "sha256": "ce9ca851608db56c9c21243ca72793c44d2636acc8c26b90cd074ec7341c210f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F055.class",
+      "bytes": 182,
+      "sha256": "243bc02cb7926af57c106c55a3c7006a73b9e3c47ef095e53708388b02fc13f3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F055.java",
+      "bytes": 28,
+      "sha256": "45829721b623c31f898ad1d39f230307bb367ae6fbca430958b042d6c6e2b823",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F056.class",
+      "bytes": 182,
+      "sha256": "bf0b5bd01ffeb75e96446230237d50998ebb1e47a15bab72d30f53fd1428fdeb",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F056.java",
+      "bytes": 28,
+      "sha256": "21563e2370d87e1a6115acaa540d6b95990badadc9ae30f1c2f4ddc3f490a4b0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F057.class",
+      "bytes": 182,
+      "sha256": "27955b52b44e046fee52865aba149006926fd7b81ae7d429b21b008554e0c902",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F057.java",
+      "bytes": 28,
+      "sha256": "d9cd42d860e992e8faafdf327e10d9c9f4ea155d1399816c25f149fbfc386ca7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F058.class",
+      "bytes": 182,
+      "sha256": "41516ada59320256436985d3790c5955d06883781c461c00e5ce7b8f95e5eea5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F058.java",
+      "bytes": 28,
+      "sha256": "4affc20c9a0289013964d8316636587b0cf33af1411306a636afd6796cf713bb",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F059.class",
+      "bytes": 182,
+      "sha256": "82a6569cc9ef40ad6608f52c4439a8548eecbca9d45d503d6d38205722d57815",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F059.java",
+      "bytes": 28,
+      "sha256": "3ffa8a4ccf6f26c7a7eeaf8290fc2582b5625ba9a622e82b75bc198f4321869c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F060.class",
+      "bytes": 182,
+      "sha256": "d309963b23f294632d0cc64482dccbfe44b4857066e621b407c99c3e9dcdfe10",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F060.java",
+      "bytes": 28,
+      "sha256": "cde4e3223008ca048da22c56b30ed3abaeba9dbdc98279138a424cbd261467e5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F061.class",
+      "bytes": 182,
+      "sha256": "b1b5373c5a59715796e5f15194f631ac4c3acf8a50da37bdaef2d5a33d4ab76f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F061.java",
+      "bytes": 28,
+      "sha256": "03ac9256240dd46154d10b73fdccf0217cb272624c006c7db86f8171667acce5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F062.class",
+      "bytes": 182,
+      "sha256": "9a12fc83860ca5fd05691f40e7a1a4450416862f18010f73f915965e41a5d685",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F062.java",
+      "bytes": 28,
+      "sha256": "e1c96e4a8f40f199ef1e5bf08c3a47bd9c7e11095e683be527f36214011b415d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F063.class",
+      "bytes": 182,
+      "sha256": "d89430f8640da5aeffd5a3b2b55535ad4f4128bae2221ca3c894851ab1f8ae63",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F063.java",
+      "bytes": 28,
+      "sha256": "daa7adfea5983fe40f063b4b71780e4896ced7a51983c36016a1ca248ff1a339",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F064.class",
+      "bytes": 182,
+      "sha256": "eca78777bad98137357df6e31e5215e35b2a89380ab62b226ed42cfee923ce25",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F064.java",
+      "bytes": 28,
+      "sha256": "c186e75dcbfb43be887b143da8bef7a5245f215cdbf9ac85b2bc7394f881f619",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F065.class",
+      "bytes": 182,
+      "sha256": "ffcfa3e2a9cceec3d434d373edaeb53dd54bdd9a412b2478d46dccde2985d623",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F065.java",
+      "bytes": 28,
+      "sha256": "da0eeb8edbddb8af755004d4e22e03c090fd3bd9a634ad0363e5c67b8d9f7fc2",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F066.class",
+      "bytes": 182,
+      "sha256": "fdb6507cb44cd795e66956501bb151099cdc8b7e606584890e3d5bd1995f7ea9",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F066.java",
+      "bytes": 28,
+      "sha256": "94860a4cc6b14466b65849e91d71be903952844eff39f647d084aaae1748f6c5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F067.class",
+      "bytes": 182,
+      "sha256": "341159c587e8d7517643ceaa038b457631c75b6fa0908d25adf6ebbf3e37be5e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F067.java",
+      "bytes": 28,
+      "sha256": "572e561a741bafd52664d5f5b913c679a31a9ec738f1c10030eee55dafc58e36",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F068.class",
+      "bytes": 182,
+      "sha256": "61c124836cf34bf1332fca41b7566fac8ff10e594d2a0f0e0dc6c8336378360c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F068.java",
+      "bytes": 28,
+      "sha256": "bd6c17387062c75dee46dce829e4aa8f36281b29fe519bc23398174bf01a65b8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F069.class",
+      "bytes": 182,
+      "sha256": "df695b2b701efa6d45afe8f55664019ac522143e8097923cfffa418b9b5b08e7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F069.java",
+      "bytes": 28,
+      "sha256": "1e61a271f54ddf6257e2ed8c7b103481b5696f5c7f1ed6bb63e134b123c1b446",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F070.class",
+      "bytes": 182,
+      "sha256": "59e015808ee1b7ea0c5239b97637441eb16a41f5b0e50483eb951f413264371a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F070.java",
+      "bytes": 28,
+      "sha256": "341b767d33fae588c5c5c25af742cd0b581e5b3d2a7b62678d73e0be336b454b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F071.class",
+      "bytes": 182,
+      "sha256": "021fa4227cd8b8839416f32a63ffdd1be7d2502f6576e0c3739c1d6aa79b8d63",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F071.java",
+      "bytes": 28,
+      "sha256": "9aeff8f5590457da10b4584df04fd6e18ff0bc291fb5442c6ce76ffdf30f7f6d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F072.class",
+      "bytes": 182,
+      "sha256": "cfa15ffd85c5f31f4036e384dc48fc78948735257ac3234cb1e9b88759ecb1a7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F072.java",
+      "bytes": 28,
+      "sha256": "e806677491d20518f0060de376bbbb9cdfdddce68fff902d11bc0ce805af63a8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F073.class",
+      "bytes": 182,
+      "sha256": "d4848a905da848ac985bdeff653c33adcc60cb1b29c5e464caa1b13b7764466f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F073.java",
+      "bytes": 28,
+      "sha256": "1cc473d073174094fc9e0ca1427735791a8666d05dba16e0c89bd3875bc66f8c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F074.class",
+      "bytes": 182,
+      "sha256": "642da4b96cc99b63f0d6ad47662026d95c5768c5e28e0c8e4ca3f38614b6fcc7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F074.java",
+      "bytes": 28,
+      "sha256": "36c1c4cd74a7ff56cd1cb98ee4e2dca9981a1328e691485ddacba67473ee266e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F075.class",
+      "bytes": 182,
+      "sha256": "23eee53ee52446607c0509faaa7b40b98d409c8efe346519821081dd17e47295",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F075.java",
+      "bytes": 28,
+      "sha256": "2f44ad4542019cc7f51c8010bd87880be79a8c4503e3eb26164a0aea0bd3ab5f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F076.class",
+      "bytes": 182,
+      "sha256": "b42861e6b3384116c977f5c190809740395b4865ca1b4a216e1334f36874e3d7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F076.java",
+      "bytes": 28,
+      "sha256": "3d06e2fbfc607cb60fbd6e8e55fe0716ac678a4e81ab187a59012f106b9ae3bb",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F077.class",
+      "bytes": 182,
+      "sha256": "d8be83776dd78eb56fda1d975fc005e632f371e83653044f0e079ae8018a7a7f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F077.java",
+      "bytes": 28,
+      "sha256": "16162589675f03ca52e5005292f10e839fce568cddfa3c26bf066a8cf5585c59",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F078.class",
+      "bytes": 182,
+      "sha256": "08e28f698481095ad897ae29fcfb14c7e0a1cd80a507c78e887d8bdd1d3e5397",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F078.java",
+      "bytes": 28,
+      "sha256": "664dc7859bd67c0ff0877f5409be24fa9416d32017fd4e201db5f2a3f0452371",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F079.class",
+      "bytes": 182,
+      "sha256": "d83ef0332c5a881c2ba4d58427b69fde6cc4b6e9f7973f85cfc97b75796afd8b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F079.java",
+      "bytes": 28,
+      "sha256": "1c345b89367e238e4346fabb1a7929cd6b7a3ac3cdb18574a1a01524d39f1a81",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F080.class",
+      "bytes": 182,
+      "sha256": "fd54bf8db0b95a1e94bf09f1b425c14947029d27f5773e0e0d0721a2431ebfa9",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F080.java",
+      "bytes": 28,
+      "sha256": "7b57a606642be483f98f4809dd30234f3c392afd6bc32cc13387279276abb05e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F081.class",
+      "bytes": 182,
+      "sha256": "49181cd3a8737fa495b88d32890cfeb2ae025cb338de8803678e30716b714f9b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F081.java",
+      "bytes": 28,
+      "sha256": "b1423ebc6c2d1bda9d97e32e8c80425dd4d7c3ee7ed2b78841ab3d5242eeb75d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F082.class",
+      "bytes": 182,
+      "sha256": "a5b5afeddbdb963126b0f3e1f3580829705f58187078826d8442c296c1d52f92",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F082.java",
+      "bytes": 28,
+      "sha256": "646f56c224f238fc8246f515e2e667d2f6d5183af3b9d150968dbfece5c90a2d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F083.class",
+      "bytes": 182,
+      "sha256": "b32975037bed8e69f7ee621d99dd4e33740930f044a625aa87d320e1e87287ab",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F083.java",
+      "bytes": 28,
+      "sha256": "8a554710156bf0f84500cdc3317165c12f3b9e18520e02d5ed9bb2d49276cfc6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F084.class",
+      "bytes": 182,
+      "sha256": "7b0a07497366feb23c5187836d9990a693b84d7d4bd6aaf1c998a206b53e0a3a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F084.java",
+      "bytes": 28,
+      "sha256": "5bbf0abc1adad9369c6c6a6146edd76a48241160ff782e4933d9cfb033509d47",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F085.class",
+      "bytes": 182,
+      "sha256": "addfc6299445802cdb573fcd0b5c51a57696a946bf8b5952d69ee41bba7c75b4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F085.java",
+      "bytes": 28,
+      "sha256": "24e8048a951f9e5dcd843e59f711840599e1f8ebc663609b0e669a46f4fc783c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F086.class",
+      "bytes": 182,
+      "sha256": "00be9a5e76845c0cbfa9be5124abd22ad5f1241cb48d34d5095c8f667a32a30a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F086.java",
+      "bytes": 28,
+      "sha256": "d44537ba6dd5a970da5dadd5cbcdf0fa8655fbffa48637c5d0ea6f15e11168f4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F087.class",
+      "bytes": 182,
+      "sha256": "9bdb6cf6aac9b799f4b5d84e1b7718aef0a374cfc29deeac2cf68522e015eb14",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F087.java",
+      "bytes": 28,
+      "sha256": "0f685f4c08a439d6d1270680d4dc624b04e1e18e9dcbb3451b978e8c19c1a308",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F088.class",
+      "bytes": 182,
+      "sha256": "38dbb28ca5ce17f1140f73976724ac63149491d3af2701405fbd2067dd44a4fa",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F088.java",
+      "bytes": 28,
+      "sha256": "7fee92ea66067d70c0501584beb6c43ef47bf2de219f11e257b9bdbbff8bdfe4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F089.class",
+      "bytes": 182,
+      "sha256": "0204bd0f47120bf53b966abc56f5c483bdef597d3ba57e0ba375fbad44190304",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F089.java",
+      "bytes": 28,
+      "sha256": "de8d8b53fa2e8df869671bbb93aa078b152091033f675dd4fcc89053a1a23776",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F090.class",
+      "bytes": 182,
+      "sha256": "5e538aa4df2f690d548ef9368c9258401ff622196e011bd748b0a916494cd593",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F090.java",
+      "bytes": 28,
+      "sha256": "6c2b8804db5bdeaa7a2ab0f14ac08b296da4fe635aab93bf56bac36d06fb20ea",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F091.class",
+      "bytes": 182,
+      "sha256": "62c9988921d82b13da9d773c82665d7b212f46b890827144f55c285f2126c277",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F091.java",
+      "bytes": 28,
+      "sha256": "8225267c6f887eb8c9975e9b02b1bcc0abf31d8ca3972f1f21b163684f59262f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F092.class",
+      "bytes": 182,
+      "sha256": "d77b77ffac046321a84d3ef399178b3b488ee5e9e76d2d676ed9aeab5064330a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F092.java",
+      "bytes": 28,
+      "sha256": "f15881825f7421edcd79ff08a8445875115b6d451621972d0bd12e879454c01d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F093.class",
+      "bytes": 182,
+      "sha256": "944f8eb92ae2d9f202311fa91dfef5b162f701dd0887e1abff789f6cd19e9570",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F093.java",
+      "bytes": 28,
+      "sha256": "81d7f297a8a785a666db14cbe150457e9da0e75dae3117926d3e607ad04848f0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F094.class",
+      "bytes": 182,
+      "sha256": "aafdb264495f49922783a630aa4eafa1ba18b2136ee1e8368bfe0f4af3d7a30e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F094.java",
+      "bytes": 28,
+      "sha256": "43597b4899bae3b4df50711f8da4dab519e539bb47727ea0e4fe69db3d13336f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F095.class",
+      "bytes": 182,
+      "sha256": "92dca10fdec18eb043da3869f40d8760280688ebbdd32e163fcee92000330bca",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F095.java",
+      "bytes": 28,
+      "sha256": "15ab9eb081425b8af2e13f3e16cf9c60af3e947ba3fc701595ebe6d80512039a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F096.class",
+      "bytes": 182,
+      "sha256": "2d83322f93586a803d86c0bfec6426b0a4dc4a675fc124912795247379ec3552",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F096.java",
+      "bytes": 28,
+      "sha256": "0dbaa1bbb4ba5cebd5a4ab71c11765ce6ac5195ac4ecfcc27c0187665e80df79",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F097.class",
+      "bytes": 182,
+      "sha256": "449626d874143319209e748e27c937a7f3bdcaf594565df3a86b6e689066d686",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F097.java",
+      "bytes": 28,
+      "sha256": "0cd1247c12d0f5854861ffcfd620d7c1bc397336d2c1855d2d70b1a14918ca8e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F098.class",
+      "bytes": 182,
+      "sha256": "84e3ee3c8369db36e360101418155fcfaf691bed90c543b79cbc5da49399a0ed",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F098.java",
+      "bytes": 28,
+      "sha256": "0a17322581f1361faa01198ce677df15b78c0a5bcc99aff6f5d771d0d5cf4bc2",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F099.class",
+      "bytes": 182,
+      "sha256": "c4f5463e42dfc9d460ffa175cd3db9b8c073ace61877fdedff085a971a5e2bd7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F099.java",
+      "bytes": 28,
+      "sha256": "1665f1ed46e4ea890a24901df7f31cb4142b26599fc05a6bb7db49d54e29d990",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F100.class",
+      "bytes": 182,
+      "sha256": "8979168762c8460fa8c30e03cb9ef17de9aa6ad0aeed7a551d0ad8f503e56938",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F100.java",
+      "bytes": 28,
+      "sha256": "03c9712bafbec8ef71fe74d1a481f20deaa1a2ccc06d7ba8ee365c15ee670e55",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F101.class",
+      "bytes": 182,
+      "sha256": "dffbd31d20f0e0d15bbb9d7c9c40fbb0ec6bf3d83641249745e87f974c09269d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F101.java",
+      "bytes": 28,
+      "sha256": "2602ab93d040a2bca2b94eb7316ad3189dcb591130b7df387a7e3a6ac0c1c43e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F102.class",
+      "bytes": 182,
+      "sha256": "23d0a2fe6b8984363438cf71091646b82440d58756df439344c6cad97abc373b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F102.java",
+      "bytes": 28,
+      "sha256": "bd8b7ebe80027e86a00a382ad81598b52535929b79887c5365da4ec8f55809ad",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F103.class",
+      "bytes": 182,
+      "sha256": "4b34de2b4d1db8a37ef00f40c49e0affcd994e8487810fbda158ef23bd7ea7f8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F103.java",
+      "bytes": 28,
+      "sha256": "9614aee44269de9566ba38c9c67467ab27bc42500c7701b017083c9080d81f40",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F104.class",
+      "bytes": 182,
+      "sha256": "56ebccc797b1a5372578b1069c71325a72d864a8d7d9f920d0f70465319aadea",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F104.java",
+      "bytes": 28,
+      "sha256": "ac4c588db85b9f163052f155d68490a39c3cdba43cdd5e5c400b0c930bfc0a7b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F105.class",
+      "bytes": 182,
+      "sha256": "c8ab6e93609d1d3b28521c191ffc848bcfe1b83dde84b90783f41eca57376bb8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F105.java",
+      "bytes": 28,
+      "sha256": "83d0ef06df1658352b4e04c4228cb1fcf249f40df93f1b77395bf39df48328fd",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F106.class",
+      "bytes": 182,
+      "sha256": "7ab9ac670da78f7c0d1c86df59a8ea4458aaa90b6abb695899f238ce9f9418cd",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F106.java",
+      "bytes": 28,
+      "sha256": "f2200d57238f7ef52eba75d41fd32f656d775d3821ac7ac5865b53000aa93ba6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F107.class",
+      "bytes": 182,
+      "sha256": "9903c49b8a41fb109521ee0c8de4fe1318744cdab2617e7a62179b608f6b1855",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F107.java",
+      "bytes": 28,
+      "sha256": "f7438a17ccd39237498721af6e4c28ef3af1b87fbf884fecd4a2edb47c746452",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F108.class",
+      "bytes": 182,
+      "sha256": "278a4138e5cde21c064350d526da77e7aa1bba74a38481ca9026d50c018f72e3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F108.java",
+      "bytes": 28,
+      "sha256": "bb3e5df374c0feac9a49e672ce61ff5e283e9bb4c0c36690c810182c18ce371b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F109.class",
+      "bytes": 182,
+      "sha256": "4bc6ecf5990bc36fade093475799a8747e4cf5992860f175f201a4526f7f695e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F109.java",
+      "bytes": 28,
+      "sha256": "dec1590b31b59ca20def8bbbc38a338394d88c3071d055e5274dbea79f0e1e19",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F110.class",
+      "bytes": 182,
+      "sha256": "1d9df1e5947f4d1d83ab7940efe5b61fcb04471ef0476e26856cbe7dc6c387c5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F110.java",
+      "bytes": 28,
+      "sha256": "0e91b855c9c6f8aa121b7ffdf22454491115c7ad470a8724479704e190c0b8e6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F111.class",
+      "bytes": 182,
+      "sha256": "3c76bb91815b5629edf6c807e9385a6207fe559fb1337fdcc40107f94f7b4fda",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F111.java",
+      "bytes": 28,
+      "sha256": "284ecc748efc5999166c18f6e7016e3c7b5621985c266911485eb3812e478bde",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F112.class",
+      "bytes": 182,
+      "sha256": "55ba76f94048f70f6835a5437e58a9ba4c133c130084c136dd445c29b4d71060",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F112.java",
+      "bytes": 28,
+      "sha256": "caae5c78ff8793a730dbc1b83b32e0decfc466349b8be0961836d2741ce6ed11",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F113.class",
+      "bytes": 182,
+      "sha256": "a9ae74eea6bee9c9e1f615ee306b2fc4c5fbaab48e46681a7055797fedf44630",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F113.java",
+      "bytes": 28,
+      "sha256": "4440ba1dd398ef6b5c493e8d668c3d20baab24bba6c6ace2636acb15dfa704b2",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F114.class",
+      "bytes": 182,
+      "sha256": "76dec725fe7ab5ecc45510573e14a814029c128fcc3a953ffcfba50f618e18c4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F114.java",
+      "bytes": 28,
+      "sha256": "109be524c3a34ad1142c1abeb197d5aa556eaa72044cb6acaef5e23cef028ef3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F115.class",
+      "bytes": 182,
+      "sha256": "08b217e3a34b18454762563bb62832674725e09b9ddefea506ff905b93f0d6e2",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F115.java",
+      "bytes": 28,
+      "sha256": "b6735f16f4d99a0751cc0751cef163e35a32620c59bdd5063b613ccbb894be35",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F116.class",
+      "bytes": 182,
+      "sha256": "c3a66760cdc82e92bfdde630e66a8641e96d471b669046fa90e43b7be89c647c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F116.java",
+      "bytes": 28,
+      "sha256": "36f86f5127b0638a38d844e7f2db912d0333c273293ac6952e5bbe1c820da9a7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F117.class",
+      "bytes": 182,
+      "sha256": "d2b5fd224aee2ac5a75d43a45fa1d2419344f03ab7b88dad91914502d87adf82",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F117.java",
+      "bytes": 28,
+      "sha256": "d3a372fe47bac5e2e34b9adc082a72f1c0c5619b56edc525fc078852153a4166",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F118.class",
+      "bytes": 182,
+      "sha256": "f7fe7fb481de112f60364fde7b0b2f36ca7e77115f635690af4a31a79fda745d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F118.java",
+      "bytes": 28,
+      "sha256": "1eff1e32384af3cb0f6f4226dfebcbcb3e8bc3aa299c0441984686f1efb25660",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F119.class",
+      "bytes": 182,
+      "sha256": "0722259c14104aff0407604357525b0f4f53d222514e0646371c4ecc63c640ac",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F119.java",
+      "bytes": 28,
+      "sha256": "76c54692a4ab998b80ec79250cf291ad4977992bf0d13ad7d61f6497291cb6dd",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F120.class",
+      "bytes": 182,
+      "sha256": "c95c3ccda03203f25819d0539af568253f47b42b2789f63a4de865a540bf4d1d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F120.java",
+      "bytes": 28,
+      "sha256": "d8ba86871b1afc4a68fbd69c9fd1abeb7cbf794896d08e88e255781b54cf1821",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F121.class",
+      "bytes": 182,
+      "sha256": "4a63b61afb6f6035852298629b7deaf68b8495a0bf302914c29b64c8dbfba453",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F121.java",
+      "bytes": 28,
+      "sha256": "1b26941832ff4dec89bff093b9971b30bf4711b7905154635fd60adfa3c436b0",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F122.class",
+      "bytes": 182,
+      "sha256": "65d1127f6f0e6f6d9a829ff268f52befcf19fb6a2af194997d7c9278652f688d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F122.java",
+      "bytes": 28,
+      "sha256": "29ed8520f54f0a527d2d24978ac61357eca14339841b39b45c44077551b781cc",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F123.class",
+      "bytes": 182,
+      "sha256": "1e541d414149e8c427582b5657f53d113bb296ad0325490bdac219fbb16790e6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F123.java",
+      "bytes": 28,
+      "sha256": "21da98ed5b5bacf32b7ef5e72e8d330e89b7c752bac18b3b9f3d233f22cd6444",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F124.class",
+      "bytes": 182,
+      "sha256": "af31e44208404bb3bed49b73c9da7f597a4c3b416e37f46041384d9d1e3967c1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F124.java",
+      "bytes": 28,
+      "sha256": "ac451dee0c69e4b57d9a00ba1698999b93389d8e40cc3d8bb5efd510976d5b7c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F125.class",
+      "bytes": 182,
+      "sha256": "b14c0160d9a6b35bf3cff9ce888238a2de9c6e4b077287511b0e573d03f19844",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F125.java",
+      "bytes": 28,
+      "sha256": "3369d87eaad2dc65bdd560019524b22bd34cba09d0bf864fa3673ebce2a0ee95",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F126.class",
+      "bytes": 182,
+      "sha256": "9f74f63c2e54d6031e5b53d4bf14bd03ae46b67cd8c945caaedfec606c09405c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F126.java",
+      "bytes": 28,
+      "sha256": "2477da4cb899b453b7de530e1957af09542ba40943bd5395201ff405217f0479",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F127.class",
+      "bytes": 182,
+      "sha256": "48a54027a53323a7fab11e23a799afc246a334080f436890fd6f216588ba1c7d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F127.java",
+      "bytes": 28,
+      "sha256": "bb28871d88d33393cee2f93b8a5be760463550fbf99bd470c767621cfbdc117b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F128.class",
+      "bytes": 182,
+      "sha256": "63df17f65ce77225e1cb2f0f441edfea3ab7e022c11beb2a2282e208d4448194",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F128.java",
+      "bytes": 28,
+      "sha256": "665118ece1bae3c19057c9e99c73048783b5a748a9ae39cca9453e5c188d1bc8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F129.class",
+      "bytes": 182,
+      "sha256": "9ad554d4d97c83fa71e2c7347caa8229abb538189e3321a27b5a58949d91c361",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F129.java",
+      "bytes": 28,
+      "sha256": "faf403e57e2d8f69a37c205be41ae2d5af7b7385c5a114db3fa5f150ac62d77c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F130.class",
+      "bytes": 182,
+      "sha256": "8c7d2aa6c9e94eac84c4345273da320258a467c34e638613e658155ec019aeab",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F130.java",
+      "bytes": 28,
+      "sha256": "974ad8147e17635e67313da3b86c832e20fc0b8d8586107f6c4d9dca66b83d0a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F131.class",
+      "bytes": 182,
+      "sha256": "15a377faae0a56cdfabe1bf806ce2e6e93142c27dc839e21c2f309c6b1a1ae64",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F131.java",
+      "bytes": 28,
+      "sha256": "0eb890305c48c5c67ebbd95bb5e7c33180cfea48844df2398d847e9307d31acb",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F132.class",
+      "bytes": 182,
+      "sha256": "8794880175fc02fd756f74ee24a5ff299f1a2fd4a28ea90980c497db1f89ad8e",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F132.java",
+      "bytes": 28,
+      "sha256": "6b7e452133123e63bfbc6711fa99af2cfa7f371788ed3bee26ed4f1675fe579f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F133.class",
+      "bytes": 182,
+      "sha256": "c25b6cc3e5842b1623bb7ec17176e84e149bcfd6476463d3c14eebca4343c9c7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F133.java",
+      "bytes": 28,
+      "sha256": "b8f0df0614a8a997033c6851da6f297ec333562a87b7bd63969da51bb55c4423",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F134.class",
+      "bytes": 182,
+      "sha256": "ac06a807f905e3b4064daaa44d2b886e71b2f6af86f7467bc90ce42179cc4560",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F134.java",
+      "bytes": 28,
+      "sha256": "dd512ce8127e6dbcf221a22fab2279a9af7f13169244dcc7da347443b8018270",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F135.class",
+      "bytes": 182,
+      "sha256": "b9c000fbac8ecab10005f57adcffcb647c5194069704796955f82202d362d9e2",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F135.java",
+      "bytes": 28,
+      "sha256": "c4554125d359e2e3e80ab79c452fb308c749075ee0af1a90025db39df445593a",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F136.class",
+      "bytes": 182,
+      "sha256": "5de3212f7226accbcff66a9ad5d67e78941f9bedaf1f39571d2a59dade110ef8",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F136.java",
+      "bytes": 28,
+      "sha256": "33e24206ab7ecedf40d322c1d73fee204aee9dfb4164a57f57b40ebb04945f88",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F137.class",
+      "bytes": 182,
+      "sha256": "81d521acfbddb5e7c2cdd22cefecb628fccad48d9623077f170fb2626585a16b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F137.java",
+      "bytes": 28,
+      "sha256": "546b09524e1df1f702d9d8adb39340e606357e5157fc61e70e5f73d7b3cb3ba3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F138.class",
+      "bytes": 182,
+      "sha256": "37ebaf7f6fa176918ce04901faf9ed8258c4ef95aa2b815323b480c09565e5d5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F138.java",
+      "bytes": 28,
+      "sha256": "6de4169e74267a68518265c0e424b836ea0cc9a3b49d1a8135194fb6bd8e86e1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F139.class",
+      "bytes": 182,
+      "sha256": "79ed7a7b38291af82dd02f4cef1bd68de7ac09bd1ba834126d8064cdee86814c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F139.java",
+      "bytes": 28,
+      "sha256": "e11a39d644c64c3452c052ebed61c80d0c4ed457128b2932d0aa78cd04756959",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F140.class",
+      "bytes": 182,
+      "sha256": "cc5d76928949dbd82d533ffd17aa38aa1e8eed3a4b9573d89a013cc4a643dd10",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F140.java",
+      "bytes": 28,
+      "sha256": "d6cbd1344fb88124c5706e94b1880f55b9aef9e46be0a7e32a94f3708e53da98",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F141.class",
+      "bytes": 182,
+      "sha256": "2cc7dfeaa482914bfbdd878f94651f34ac4d8febaa227c4c0d1fc68291954fc3",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F141.java",
+      "bytes": 28,
+      "sha256": "421c35af21135ef1fc85b27464980d558252a437708ccf5d79ae6556168cd062",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F142.class",
+      "bytes": 182,
+      "sha256": "c8871a5953ccd4ad63e3a5728f56cd2693b40a848d674c5238be28972404750d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F142.java",
+      "bytes": 28,
+      "sha256": "4e69b075bae6ccb03a202aa3b8d5324096f72b68f2cd4f95abd9bfa7b5585d19",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F143.class",
+      "bytes": 182,
+      "sha256": "9ab96d3cdd56709360c825b79b4e7be3ec1c39a8ccff40ddb4fc17836b5ff1b7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F143.java",
+      "bytes": 28,
+      "sha256": "e6dd2f49c5d93c05cd50dfb1a3e0142862f849d504587b60d25b13b1ec7e4684",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F144.class",
+      "bytes": 182,
+      "sha256": "9e7d2f6e751922545d272cc1398dab31830073f1813fac8d85d98aded6d81c8b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F144.java",
+      "bytes": 28,
+      "sha256": "8d978d8663131b21dede93457fa50eac68baee6f34550cdbea54051c88e1a8cc",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F145.class",
+      "bytes": 182,
+      "sha256": "0c214d47b6947c6685a0e7e59373a6efd082fe906e105c7fd99d8bfdf7f90e6c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F145.java",
+      "bytes": 28,
+      "sha256": "f7a2c66498d07c90f96c7a2b8f21ec5b7bedca03057d5e16aeef6437fd3293c6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F146.class",
+      "bytes": 182,
+      "sha256": "d211bd86486d9a3b0e22f37d715e445e831145cf4d717488bb7e10363211fb2f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F146.java",
+      "bytes": 28,
+      "sha256": "a2ea35634f43bf589c9fec2cf353016cff0fe6c758ab2f50a37e21ee2e2ca6b7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F147.class",
+      "bytes": 182,
+      "sha256": "c5bc9d9917ee4f1f5dc791fa7ce368896a634ec7157f2f815813c40b5ebdddf4",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/F147.java",
+      "bytes": 28,
+      "sha256": "8f66c0c811f8a5355f4d9fd02b43dac59346cdb5552145317f1596adee3b98ea",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/Probe.class",
+      "bytes": 407,
+      "sha256": "d727c9029b75cddd4621f4dafd2ef64a6e288eaed6b55ea3f9af688d4319ecb6",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/high-component/Probe.java",
+      "bytes": 208,
+      "sha256": "383926274d4bbbd95ba45850ea7093dd6ffe1e474b6c5270549266394d2b942c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/interface/Impl.class",
+      "bytes": 194,
+      "sha256": "832f9fda6b7532c61139027b247b83febaa545bdd126d25f34a3638a31764561",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/interface/Impl.java",
+      "bytes": 44,
+      "sha256": "96044230389ab01cd858830e790b6b6683067d7dc3a3d1b95df971b698cb5a5f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/interface/Mark.class",
+      "bytes": 89,
+      "sha256": "629625388e807ae840a6b1a1bdd3c544e9233be978c04cb8fc53ffe644766c57",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/interface/Mark.java",
+      "bytes": 26,
+      "sha256": "9478e557691b87f40573960aa392998d97cebbd811016efea70cb2223fb58003",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/interface/Probe.class",
+      "bytes": 410,
+      "sha256": "01931ef7f215ed81e218d422664d038ed797bd4bb2983756e9e7f6c5600c2b37",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/interface/Probe.java",
+      "bytes": 177,
+      "sha256": "e1e7a236c0a29675077dde743c703832b97b49a941c48e110d7078d7a6e48573",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-controls/Probe$Choice.class",
+      "bytes": 828,
+      "sha256": "12e84ff7ce68e5b286f4f47fe4a0181f1c0c11b9f87d2f1aed2a1ff6ea849e1d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-controls/Probe.class",
+      "bytes": 878,
+      "sha256": "5aebebaeed3379f0f2e2632771b1e28fb67b660de2a4a06daebab681a3fae36f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-controls/Probe.java",
+      "bytes": 507,
+      "sha256": "4a367fda8cb52b81fc3ad4fce4f5f49922f92849d8c522a89f0f5182627976c1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-enumset-initialized/Probe$Choice.class",
+      "bytes": 828,
+      "sha256": "12e84ff7ce68e5b286f4f47fe4a0181f1c0c11b9f87d2f1aed2a1ff6ea849e1d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-enumset-initialized/Probe.class",
+      "bytes": 568,
+      "sha256": "4618bf750ca8160e7808f25f6e91e667c8baeae98ddcece07a8ed240239e0b67",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-enumset-initialized/Probe.java",
+      "bytes": 270,
+      "sha256": "c9a22a402d9d0d1c58b06df84be4c706b53dc8b3a6b19743c6682961df880e23",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-name-arraycopy/Probe.class",
+      "bytes": 676,
+      "sha256": "9ce06efab99ea176a36e2a5ac11f256f03ee1dc4e48747c6f525af257dfd6e79",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/legacy-name-arraycopy/Probe.java",
+      "bytes": 328,
+      "sha256": "d16584bac3956e228c30c31c4b7f73146113731e7ce8f740295ade8e7ac88a95",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/negative/Probe.class",
+      "bytes": 356,
+      "sha256": "1c0b5ebd345b9eaadc035616a29a80cfce6eb3324a4b98632a0e23ec67d8179b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/negative/Probe.java",
+      "bytes": 141,
+      "sha256": "26b6c31295cfdf17daae75ed3e8a65b4b07c1960f2fd132e9c93010806ee61c1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/noinit/Component.class",
+      "bytes": 283,
+      "sha256": "8ee271136064524b354a0d444cdbc851c38f5043378718e0678f529431b35873",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/noinit/Component.java",
+      "bytes": 119,
+      "sha256": "cb5866ccaa3375ae35f9d32c393dd76d7108fb68fb4103f79ce5bade5b2b8a91",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/noinit/Probe.class",
+      "bytes": 459,
+      "sha256": "546cbc3606ccbf7bdad4366ae7767fb22ed4deb1c4756249134ee1eb4ee05b41",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/noinit/Probe.java",
+      "bytes": 221,
+      "sha256": "f1324b5870e26c3b692732397a6a64fc6e589a84d2c76f36a3eb7fc965bfacf5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/null-negative/Probe.class",
+      "bytes": 355,
+      "sha256": "ffa8aab555cb62899f2931d500cd71a8bc14dd04e4905f28dc337ff438ce5ab1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/null-negative/Probe.java",
+      "bytes": 133,
+      "sha256": "86f053a188b4a92c05acbe9a720de1f6c53562224048f5da92e80ba98b467419",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/overload/Probe.class",
+      "bytes": 363,
+      "sha256": "b230cbfc42ca63fba3939d8c524d4fd316aa01702bc2cda6a50678d0f63d9cc1",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/overload/Probe.java",
+      "bytes": 150,
+      "sha256": "90698876e489e9126a8c65a425cad88449f813c3aaa17763b5cbc931e75c9afc",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/primitive-component/Probe.class",
+      "bytes": 417,
+      "sha256": "19856e5c2302fd47c1b847712e5981042b595fb0e533e87ec21757d218c25e6f",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/primitive-component/Probe.java",
+      "bytes": 136,
+      "sha256": "859298984445e382dbaaf1641f6f52744507dab8df723b4dea1ab9aa9b17f68b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/private-abstract/Probe$Hidden.class",
+      "bytes": 242,
+      "sha256": "42ea70a61708beb875750556fe2fce51838f33ff158aa1128586cef00c0dcc7b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/private-abstract/Probe.class",
+      "bytes": 447,
+      "sha256": "40611715ae66cf6d21859ef749e78479a07abc87cde57c0c7ab915fc6cd439f5",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/private-abstract/Probe.java",
+      "bytes": 236,
+      "sha256": "68b213513d84a55c84ddb5718a3a0788eef02bc4aac702df20b1579c241a3c6c",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/raw-owner/Array.class",
+      "bytes": 477,
+      "sha256": "be9db74abc11c9fb3ffc60a1f69191332df180fc0cdff73ddef720ad493713b9",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/raw-owner/Probe.class",
+      "bytes": 255,
+      "sha256": "ed01ad09fe6bbcf01ae6536609562777a9024dae211892fceccd5113f739fbb7",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/raw-owner/Probe.java",
+      "bytes": 72,
+      "sha256": "adb7e5a7e22f772b109d0b017bf01e0862890349a2b92a7ed08386176c46cd21",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/unique/Probe.class",
+      "bytes": 449,
+      "sha256": "3e08e62215cf1625cc8eeec31c00b54c00ac815fd875d1465e8c36f782845b0b",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "fixtures/unique/Probe.java",
+      "bytes": 231,
+      "sha256": "dcfea0f82dbd3066600c52f678d3df72830d8cf230e0f6a6cf22c7066ed9047d",
+      "role": "locally generated Java8 fixture source/class; guest execution only via geth EVM runner"
+    },
+    {
+      "path": "high-component-q1.log",
+      "bytes": 2497,
+      "sha256": "08f36ed987e87b0126e820f19f6a0ff9ce9cf3ef31d9e98f00d350bb9203c230",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "high-component-q7.log",
+      "bytes": 755,
+      "sha256": "28ff7e4f88d5a0b400321b4a5f10c3fc05136be65b5951d9fd531df8f7ea2066",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "high-component-run.log",
+      "bytes": 565,
+      "sha256": "e33508e037d3b22b6d8ddb308a4c0f7dd7bbd6c4315ebb13d20637f7cd4368d6",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "interface-run.log",
+      "bytes": 153,
+      "sha256": "fbf97a6b6bfa785bf54d4df9fa06289cbb74470d2339f443f75c3fd6f2971f95",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "java/lang/reflect/Array.java",
+      "bytes": 459,
+      "sha256": "64ac03988d2f7b67a39fc776054b78ef5f199d7d15faa614e68743729bf120b9",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "legacy-controls-run.log",
+      "bytes": 347,
+      "sha256": "5755189c3cf4d017add27d47bf0f8a83e55bc4b21693d0ed1e21f35b963f8878",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "manifest_helper.py",
+      "bytes": 1774,
+      "sha256": "437c166701ccbaa0ce81c2c1de263c96df1f304f141bbbea6497b3c2c54724aa",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "negative-run.log",
+      "bytes": 151,
+      "sha256": "ea3a1a87c6a60c7873fec03550d0458c29b22aeab3937fefbba932aa413c96c5",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "noinit-q1.log",
+      "bytes": 284,
+      "sha256": "a6917d76cf9efbd30a96baa25a54687160214f28393707238fd5cd117f957f8a",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "noinit-q65536.log",
+      "bytes": 578,
+      "sha256": "3e44f57bcf6e64062bb28790dca34f14f90ac135c6adce161a9c968c898f33e6",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "noinit-q7.log",
+      "bytes": 673,
+      "sha256": "14154f4580040b3cbaa3b908117f0c99456fd1cdfe3f48b7522548ad14ce1014",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "noinit-run.log",
+      "bytes": 153,
+      "sha256": "0a29d48b665df76113bb72beb4864ed90e8c952ca09ec59761c6b1afd3791ae8",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "null-negative-run.log",
+      "bytes": 151,
+      "sha256": "be4a097600ca5968af186bdf3b8554cdf500bae3e68404ca405b932e1e7c8691",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "overload-run.log",
+      "bytes": 347,
+      "sha256": "1e9d7902c028b740f7d5a407da3b2f814a2c3a72d6cb24df3707ea496dc59172",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "primitive-component-run.log",
+      "bytes": 347,
+      "sha256": "00f876971903ad898cfc0158eb3f65779d87fcebfbf7c12c9be5fa58c27c0572",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "private-abstract-run.log",
+      "bytes": 576,
+      "sha256": "8536750b9f55d5013fd3ec4ace3868691ae7ff474086df72003557a9023fd97e",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "raw-owner-run.log",
+      "bytes": 347,
+      "sha256": "7dcca2479f6a0926ea09c7385ac09c1dab1c49585bf939f4e73761377e09c95d",
+      "role": "preserved build/test attempt log"
+    },
+    {
+      "path": "root.json",
+      "bytes": 8683,
+      "sha256": "140629487cca39c3f86d37c9bfec5fc6d51fd25e11f2b9fcbbca1b3fb6d91d40",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "root_helper.py",
+      "bytes": 1356,
+      "sha256": "cc09220bf2f5641abe3bee7c83845c95f2dfa4244b7bd398ade23d3b428f03b4",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "runner",
+      "bytes": 14219552,
+      "sha256": "671005b549a4da248650d9871994b24bd33081dbd074c04cbbb2db0d50ac633e",
+      "role": "compiled local geth EVM runner"
+    },
+    {
+      "path": "runner.go",
+      "bytes": 4010,
+      "sha256": "ee85c1b1208dd8484fe8e5756f9756ae221bb247d1ebfd9933ff2534789e86f5",
+      "role": "candidate source or pinned evidence"
+    },
+    {
+      "path": "unique-run.log",
+      "bytes": 582,
+      "sha256": "06e9532efd168af8ccb289452221fbcd1cd58d11a8ea2a9f504c40acf2332c7b",
+      "role": "preserved build/test attempt log"
+    }
+  ]
+}

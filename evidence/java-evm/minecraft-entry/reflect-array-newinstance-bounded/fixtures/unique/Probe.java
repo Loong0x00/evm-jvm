@@ -1,0 +1,1 @@
+import java.lang.reflect.Array; public final class Probe { public static void main(String[] args) { Object a=Array.newInstance(Object.class,0); Object b=Array.newInstance(Object.class,0); if(a==b) throw new RuntimeException(); } }
