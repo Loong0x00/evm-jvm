@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "generatedOnly": true,
+  "initialGas": 1000000000,
+  "attempts": [
+    {
+      "label": "parent-small-attempt-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 127.14853173399752,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/parent-small-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-small-reopen-1",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.2136823929977254,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/parent-small-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "parent-matrix-attempt-1",
+      "exit": 42,
+      "timedOut": false,
+      "wallSeconds": 0.7141791590038338,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/driver",
+        "parent-matrix",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/parent-matrix-attempt-1",
+        "1000000000"
+      ],
+      "gasBudget": 1000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-matrix-attempt-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 2.4159330740003497,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/driver",
+        "parent-matrix",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/parent-matrix-attempt-2",
+        "2000000000"
+      ],
+      "gasBudget": 2000000000,
+      "wallBudget": 1200
+    },
+    {
+      "label": "parent-matrix-reopen-2",
+      "exit": 0,
+      "timedOut": false,
+      "wallSeconds": 0.7143953949998831,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-fixtures-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-generated-parent-p54/parent-matrix-attempt-2",
+        "2000000000"
+      ]
+    }
+  ],
+  "transportDiagnosticDelta": "117 bootstrap/267 derived classes; CP2MiB; constructor-only int-zero audit generalized to typed ints, specific full map heap checked separately",
+  "noEvmOrGuestCodeModificationByParentDriver": true
+}

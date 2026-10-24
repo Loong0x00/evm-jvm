@@ -34,9 +34,9 @@ assert co_normalized==base_co, 'coordinator changed beyond profile domains and e
 spec=importlib.util.spec_from_file_location('array_list_to_array_root_helper',ROOT/'root_helper.py')
 helper=importlib.util.module_from_spec(spec);spec.loader.exec_module(helper)
 domain=P['bootstrapDomain']
-root=helper.root_record(engine,domain,str(ROOT),{**os.environ,'NODE_PATH':'/home/user/evm-jvm/array-list-to-array/jvmevm/runtime/node_modules'})
+root=helper.root_record(engine,domain,str(ROOT),{**os.environ,'NODE_PATH':str(ROOT.parents[3]/'jvmevm/runtime/node_modules')})
 base_domain=re.search(r'bytes32 private constant DBOOT = keccak256\("([^"]+)"\);',base_engine).group(1)
-base_root=helper.root_record(base_engine,base_domain,str(ROOT),{**os.environ,'NODE_PATH':'/home/user/evm-jvm/array-list-to-array/jvmevm/runtime/node_modules'})
+base_root=helper.root_record(base_engine,base_domain,str(ROOT),{**os.environ,'NODE_PATH':str(ROOT.parents[3]/'jvmevm/runtime/node_modules')})
 assert root['root']==P['bootstrapRoot'] and root['leaves']==P['orderedBootstrapLeaves']
 assert [i for i,(a,b) in enumerate(zip(base_root['leaves'],root['leaves'])) if a!=b]==[98]
 assert len(root['leaves'])==P['bootstrapCount']==117
@@ -107,7 +107,7 @@ for op in ('noarg','add','get','equals','hash','clone'):
 raw=load(runs/'raw-arraylist-replacement-q1-001/reports/session/start-refusal.json')
 assert raw['selector']=='0x6a23ad80' and raw['rootUnchanged'] and raw['durableHeadUnchanged']
 report={
- 'status':'candidate source/build and worker-owned fresh EVM gates pass; independent parent acceptance pending',
+ 'status':'source/build and historical worker-owned EVM receipts verified; parent acceptance is separate',
  'baseSourceFilesVerified':16,'baseCommit':P['baseGuestCodeCommit'],'oldBootstrapImageCount':117,'changedLeafIndexes':[98],
  'bootstrapRoot':P['bootstrapRoot'],'arrayListImage':P['arrayListImage'],'engine':P['engine'],'coordinator':P['coordinator'],
  'q1q7q128':results,'generatedFixtureSHA256':sha((ROOT/'test-fixtures/generated/typed-to-array-positive.zip').read_bytes()),

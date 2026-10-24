@@ -14,9 +14,9 @@ server `Done (...)!` message. Superflat is the first world-generation target.
 | Area | Latest accepted evidence |
 | --- | --- |
 | Original workload | Unmodified 1.12.2 server; 131 explicit, authenticated class resources (917,284 bytes) |
-| Guest execution | **2,224,329 JVM instructions**, 133 internal steps, 41 verified successful checkpoint receipts |
-| Current blocker | Measured typed `ArrayList.toArray(T[])` is unsupported; reflective array allocation passed |
-| Runtime profile | 435,002-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
+| Guest execution | **2,224,372 JVM instructions**, 133 internal steps, 42 verified successful checkpoint receipts |
+| Current blocker | Missing original Minecraft resource `ew$a`; bounded ArrayList typed copy passed |
+| Runtime profile | 435,694-byte interpreter; **1 MiB runtime-artifact ceiling** and a separate **2 MiB checkpoint ceiling** |
 | Bootstrap | 117 bounded platform-class images; this is **not a complete JVM / Java SE implementation** |
 | Execution integrity | Original class/resource extraction runs in authenticated EVM AS0/ZI0/DI0 contracts; no host JVM or host original-JAR/class parser in the execution path |
 
@@ -24,13 +24,12 @@ Execution is genuine guest bytecode, not a replacement Minecraft program or a
 host-produced result. Only successfully authenticated checkpoints can continue;
 failed execution and diagnostic metadata do not authorize guest-state recovery.
 
-Latest acceptance: [Reference reflective array allocation / P53](JAVA_EVM_MC_REFLECT_ARRAY_PARENT_PREFLIGHT.md).
-One explicit new Solidity-JVM native binding22 allocates real rank1 reference
-arrays from canonical component mirrors. Old bindings1..21 and String-local12
-remain intact; resource/gas/consensus rules are unchanged. Fresh typing, poison
-class non-initialization, fault, quota and reopen tests pass. Small tests use1B;
-raw150 required separately4B after measured1B/2B shortages. Primitive/array
-components, multidimensional overload and other reflection APIs are not claimed.
+Latest acceptance: [Bounded ArrayList typed-target copy / P54](JAVA_EVM_MC_ARRAY_LIST_TYPED_ARRAY_PARENT_PREFLIGHT.md).
+Fresh EVM tests prove same target/type, private-size behavior, tail preservation,
+NPEs, retained iterator and reflective array controls, and separate-process reopen.
+Small q1/q7 use1B; raw150 requires separately2B after a measured1B shortage.
+Nonempty copying, undersized-target branch execution, growth and no-arg toArray
+remain unclaimed because admitted lists cannot be populated.
 
 ### Important LOCAL-only limits
 
@@ -63,7 +62,7 @@ migrating checkpoints across different packages.
 
 - [Current accepted state and next blocker](JAVA_EVM_MC_RESUME_STATUS.md)
 - [Independent performance/equivalence acceptance](JAVA_EVM_MC_PERFORMANCE_PARENT_ACCEPTANCE.md)
-- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-reflect-array/artifacts/array-list-typed-array-blocker.json)
+- [Latest precise original-run evidence](evidence/java-evm/minecraft-entry/parent-array-list-to-array/artifacts/ew-a-resource-blocker.json)
 - [Checkpoint-2MiB profile evidence](evidence/java-evm/minecraft-entry/parent-checkpoint-2m/artifacts/ahs-resource-blocker.json)
 - [Discovery controller and generated-EVM equivalence tests](evidence/java-evm/minecraft-entry/perf-replay-discovery/README.md)
 - [Authenticated EVM dependency-preflight API and tests](evidence/java-evm/minecraft-entry/perf-evm-dependency-preflight/README.md)

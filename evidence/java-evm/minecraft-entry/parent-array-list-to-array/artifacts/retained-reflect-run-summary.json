@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "budget": 1000000000,
+  "freshP54Artifact": true,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16363252900191583,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-reflect-array/ParentReflectReferenceArray.java"
+      ]
+    },
+    {
+      "label": "stock-java8",
+      "exit": 0,
+      "wallSeconds": 0.031439341997611336,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/classes",
+        "ParentReflectReferenceArray"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7643626440039952,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/driver",
+        "./build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/driver-src"
+      ]
+    },
+    {
+      "label": "reflect-controls",
+      "exit": 0,
+      "wallSeconds": 1.014610480000556,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/parent-retained-reflect",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "reopen",
+      "exit": 0,
+      "wallSeconds": 0.26366687600238947,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-retained-reflect-parent-p54/parent-retained-reflect",
+        "1000000000"
+      ]
+    }
+  ]
+}

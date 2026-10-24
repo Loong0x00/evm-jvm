@@ -1,3 +1,15 @@
+# P54 independently parent-verified bounded ArrayList typed-target copy
+
+Parent reproduced old/new Java8 class images and unchanged Itr115, rebuilt engine/coordinator/driver and ran fresh q1/q7/raw150/coarse/private-size/typed-target/tail/native22/Poison/Class-native/refusal/separate-process-reopen gates plus a fresh original131 world. Only image98 changes; no new binding/quota or parent guest-semantic repair. Same target/type/tail semantics hold on default/int0/int3 and misleading public size3/private0 lists.
+
+Nonempty element copying and the short-target branch remain explicitly unexecuted because no admitted mutation populates lists. This is not array growth or noarg toArray support.
+
+Current root960dacb69402d356d78b20fb269611474742c17f3c4efbf6644a004a2ed8fd8c; engine435694B SHA43ef610db287b0ca64f3cd5cc6c63661dc531a1f303cc687ae647ffdcf79ae5c. Parent proof `../parent-array-list-to-array/artifacts/ew-a-resource-blocker.json`; root doc `JAVA_EVM_MC_ARRAY_LIST_TYPED_ARRAY_PARENT_PREFLIGHT.md`. Historical worker evidence below is retained with its own limits.
+
+---
+
+## Historical worker report
+
 # Bounded `ArrayList.toArray(Object[])` candidate (P53)
 
 This worker candidate is based on accepted GuestCode `52cc8e84594698c92d119eca158a094cd27ec2a4`. Before changes, `source-base-verification.json` records exact SHA-256/size verification of all 16 files in the archived `source-base-p53/` snapshot. The snapshot is included so verification does not depend on an untracked worktree input.

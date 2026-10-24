@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16367325699684443,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/ParentTypedNoArg.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/ParentTypedAdd.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/ParentTypedGet.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/ParentTypedEquals.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/ParentTypedHash.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/ParentTypedClone.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/ParentTypedRemove.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.764511675995891,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/driver",
+        "./build/java-diff-mc-arraylist-to-array-refusals-parent-p54/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 1.214909798996814,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-build-parent-p54/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-arraylist-to-array-refusals-parent-p54/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}
