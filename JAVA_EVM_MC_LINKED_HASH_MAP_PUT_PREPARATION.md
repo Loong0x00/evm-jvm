@@ -60,3 +60,37 @@ The next worker must first write a source-only PLAN and request parent review
 before semantic Solidity edits or heavy compiler/EVM work. Original inputs and
 all parent review/performance evidence stay excluded. Parent alone later rebuilds,
 tests and runs a fresh original143. No world/EULA/listening/Done yet.
+
+## Parent design approval — sa_ad855681dba448f2.r1
+
+The source-only18-file plan/audit were reviewed. Implementation is now approved,
+not accepted: subclass-owned real entry chain, only old image113 changed, exactly
+3 helpers appended (entry/view/iterator),127 bootstrap images/raw150 count277/max276.
+No HashMap/Node privacy/finality or other old-image change. No inherited bucket/
+resize claim; inherited size/modCount/cache must stay coherent. Genuine Entry.setValue
+is approved with return-old/stable alias/no structural invalidation and focused gates.
+
+Entry upper bound4096 follows existing global object cap, not a new larger quota
+or host/precompile free-space oracle. Global allocator remains sole authority.
+Allocate an entry completely before linking/counters; no later allocating step in
+publication. View/iterator OOM must precede cache publication. Permit8 distinct
+same-spread-hash entries; prospective ninth new nonmatching key raw-refuses before
+allocation/mutation, after ordinary hash/equals matching search. Matching overwrite
+remains possible at the bound. Other hashes do not share an artificial8-entry cap.
+
+Key hash once, before outer receiver writes; incoming equals direction/identity
+shortcircuit. Detect same-map structural callback reentry via modCount and raw-refuse
+before outer mutation, rather than locking/making fake results. No mutable active-put
+lock without review. A thrown guest exception may retain genuine callback sideeffects:
+promise only no outer insertion, not a blanket Java rollback. Content hash traverses
+real entries with fresh callback hashes/Java32 sum, plus coherence/reentry checks.
+Distinct-map equals stays unbound. Typed array fit/tail/NPE/ASE and short-target raw
+boundary remain; iterator next checks CME before NSEE, overwrite/setValue no CME.
+
+Protocol/layout-only Solidity integration, all9/4 new domains and actual pins,
+helper raw-name reservations/count positions are approved; no generic dispatcher,
+ABI/storage/codec/config-root/entrypoint/commit/envelope/native22/String12/quota/EVM
+rule change. CHECKPOINT2MiB/runtime1MiB, not a CP-pool2MiB/checkpoint1MiB label.
+New Java images-g:none; old P58 EnumMap532B default debug remains exact.
+Fresh generated1B/30s with measured-shortage doubling only; outer1200s separate.
+Parent alone later rebuilds/replays fresh original143. No acceptance or Done claim.
