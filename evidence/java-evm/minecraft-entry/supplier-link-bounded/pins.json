@@ -1,0 +1,220 @@
+{
+  "acceptance": "NOT ACCEPTED; source-only implementation handoff",
+  "acceptedGuestCodeCommit": "c32a351f3ae412015fa6eaa7df0cccf9590e719f",
+  "baseSnapshotVerified": true,
+  "baseSourceSnapshot": "evidence/java-evm/minecraft-entry/supplier-link-source-base-p60",
+  "baseWorktreeCommit": "6268564fbf5cac672572ef9c1ee71f70917ba9ed",
+  "bootstrap": {
+    "count": 128,
+    "countForRaw150NoOptionalCollisions": 278,
+    "newRoot": "cc8f91923d7ea181f19178b2f8d4e08bf7af5337fc58ebe4cc5cbaddf017f593",
+    "oldPrefixRoot": "a34286fcbd75d2da7c02c3c803a825d1b77d7228a896da502973dbf15e1ad2ed",
+    "physicalSlotForRaw150NoOptionalCollisions": 277,
+    "prefixLeavesPreserved": true,
+    "priorCount": 127,
+    "supplierLeaf": "80f004e245a068059e13a541d1f659069f27e6d8f09428499b6972fcc334ea85"
+  },
+  "compiler": {
+    "evmVersion": "cancun",
+    "hostJavaOracle": "/usr/lib/jvm/java-8-openjdk/jre/bin/java (trusted generated fixture only)",
+    "javac": "/usr/lib/jvm/java-8-openjdk/bin/javac -g:none -source 8 -target 8",
+    "javap": "/usr/lib/jvm/java-8-openjdk/bin/javap",
+    "metadata": {
+      "appendCBOR": false,
+      "bytecodeHash": "none"
+    },
+    "optimizerRuns": 200,
+    "solc": "0.8.30+commit.73712a01.Emscripten.clang",
+    "viaIR": true
+  },
+  "coordinator": {
+    "abiAndStorageLayoutUnchanged": true,
+    "domains": [
+      "MC-SUPPLIER-LINK-BOUNDED-1/package/v1",
+      "MC-SUPPLIER-LINK-BOUNDED-1/class/v1",
+      "MC-SUPPLIER-LINK-BOUNDED-1/selected-resource/v1",
+      "MC-SUPPLIER-LINK-BOUNDED-1/vm/v1"
+    ],
+    "engineCodeHashPin": "cb0719839a5b81d48d19ff0adfa8ea6e3bce8d8cc834165962d8364f8145cee2",
+    "runtimeBytes": 5411,
+    "runtimeKeccak256": "81d2f439c5dd7bcbead3dbfa2f08b9621617a3870aab4e24146cd2cad69bb6f4",
+    "runtimeSHA256": "30f84e9888c1a719ddabb2653918927b69c663e0a8ba21d2d96f6292bf419be2",
+    "source": "coordinator/MCEntryCoordinator.sol",
+    "sourceSHA256": "240058a76d37248c3f0ef75a3ecceab45ccab6483c26ea063ffdc08ac850aea6"
+  },
+  "engine": {
+    "abiAndStorageLayoutUnchanged": true,
+    "domains": [
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:MAIN:EMPTY-STRING-ARRAY:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:ROOT:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:ARTIFACT:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:BOOTSTRAP:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:CONFIG:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:MACHINE:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:SEED:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:VFS:1",
+      "JVMEVM:MC-SUPPLIER-LINK-BOUNDED-1:FILE:1"
+    ],
+    "initBytes": 455592,
+    "initSHA256": "584ea75c1b1741728f306ef508e7d8717e7f60b700a591e4d19953a58797418b",
+    "runtimeBytes": 455564,
+    "runtimeKeccak256": "cb0719839a5b81d48d19ff0adfa8ea6e3bce8d8cc834165962d8364f8145cee2",
+    "runtimeSHA256": "dfa8d02fb2556300f5dfdb5bed542eee0fcc1bf4e563ac5f9a7b2b627d0cbdeb",
+    "source": "engine/MCEntryInterpreter.sol",
+    "sourceSHA256": "ef6a09b44817716c6816ce377bf9d5d01f30f27014d60e451b9cb3837fa1b0fa"
+  },
+  "generatedEvmRuns": {
+    "direct": {
+      "checkpointRoot": "0x359f8d5d94ea097856decec456e6517505860cd85cef3ba5cef226ecb469c047",
+      "epochs": 1,
+      "lifecycle": 2,
+      "machineStateRoot": "0x37e85a160b8aa25644654b4d262c970814742ff0d2522e463e2bf78dd496672a",
+      "outcome": 2,
+      "quantum": 65536,
+      "totalInternalSteps": 7,
+      "totalJvmSteps": 143,
+      "vfsStateRoot": "0xd7e7d0aaee0b0c8475b8f72807e5187e639bf7ad9d67ccf2554def9ad29c068d",
+      "world": "worlds/local-supplier-generated/direct-v4"
+    },
+    "q1": {
+      "checkpointRoot": "0x17d3c3cdb365e968daba2c3e2e5be7292dd87ff7c1fa9f6f0eaafccf96915aa1",
+      "epochs": 143,
+      "finalReopenPID": 2028269,
+      "headEpoch": 143,
+      "headLifecycle": 2,
+      "headOwner": "0x88fd94e5b26047ad62a83127cf8594d84b538826",
+      "lifecycle": 2,
+      "machineStateRoot": "0x37e85a160b8aa25644654b4d262c970814742ff0d2522e463e2bf78dd496672a",
+      "outcome": 2,
+      "quantum": 1,
+      "totalInternalSteps": 7,
+      "totalJvmSteps": 143,
+      "vfsStateRoot": "0xd7e7d0aaee0b0c8475b8f72807e5187e639bf7ad9d67ccf2554def9ad29c068d",
+      "world": "worlds/local-supplier-generated/q1-v4"
+    },
+    "q1AndQ7ReopenedInFreshProcesses": true,
+    "q1q7DirectMachineRootEqual": true,
+    "q1q7DirectVFSRootEqual": true,
+    "q7": {
+      "checkpointRoot": "0x099ca672ed14950850e8a7c6cf3805f0b61d744ed3feb38544b12c5201c96d0a",
+      "epochs": 21,
+      "finalReopenPID": 2028850,
+      "headEpoch": 21,
+      "headLifecycle": 2,
+      "headOwner": "0x88fd94e5b26047ad62a83127cf8594d84b538826",
+      "lifecycle": 2,
+      "machineStateRoot": "0x37e85a160b8aa25644654b4d262c970814742ff0d2522e463e2bf78dd496672a",
+      "outcome": 2,
+      "quantum": 7,
+      "totalInternalSteps": 7,
+      "totalJvmSteps": 143,
+      "vfsStateRoot": "0xd7e7d0aaee0b0c8475b8f72807e5187e639bf7ad9d67ccf2554def9ad29c068d",
+      "world": "worlds/local-supplier-generated/q7-v4"
+    },
+    "raw150": {
+      "checkpointRoot": "0xc7f2b6fad45c527dbd54e0cc90432f2bd21c1a6091e6f6294fb94a35b969f6c5",
+      "epochs": 1,
+      "finalReopenPID": 2029745,
+      "headEpoch": 1,
+      "headLifecycle": 2,
+      "headOwner": "0xf181f66625fb0c3d47c859e18decf9964c450a65",
+      "lifecycle": 2,
+      "machineStateRoot": "0x990cdeba1834e20a184152a43289771de6e940fe344e3f8286fdda7954b4ae59",
+      "outcome": 2,
+      "quantum": 65536,
+      "totalInternalSteps": 7,
+      "totalJvmSteps": 143,
+      "vfsStateRoot": "0xd7e7d0aaee0b0c8475b8f72807e5187e639bf7ad9d67ccf2554def9ad29c068d",
+      "world": "worlds/local-supplier-generated/raw150-v4"
+    },
+    "raw150ReopenedInFreshProcess": true
+  },
+  "generatedFixture": {
+    "positiveBindings": [
+      "fixture/SupplierMain.class",
+      "fixture/ProviderLink.class",
+      "fixture/RealProvider.class"
+    ],
+    "positiveZip": "fixtures/supplier-fixture-v4.zip",
+    "positiveZipSHA256": "85f1bdfe3061c8fe28f34dd038604ab7cf256635ad22a32cf4d44faca6754acd",
+    "raw150Bindings": "fixture/SupplierMain.class,fixture/ProviderLink.class,fixture/RealProvider.class, then fixture/Filler000.class through fixture/Filler146.class",
+    "raw150Classes": 150,
+    "raw150Limit": 1063930,
+    "raw150TotalClassBytes": 21401,
+    "raw150Zip": "fixtures/raw150/supplier-fixture-raw150.zip",
+    "raw150ZipSHA256": "f7a800c555da0da11f20918d19181290fd715a54c92aecb952468a7c9bf22ec7",
+    "sourceDir": "fixtures/src"
+  },
+  "knownBaseLimitation": {
+    "reason": "approved P60 Class bootstrap image exposes no getSuperclass; not expanded because this task adds Supplier only. Preserved generated v3 failure evidence in ignored test world/report directory.",
+    "requestedCheck": "Class.getSuperclass()",
+    "result": "CallError code3,pc230"
+  },
+  "negativeControls": {
+    "rawSupplierReplacement": {
+      "headUnchanged": true,
+      "selector": "0x6a23ad80",
+      "words": [
+        "1",
+        "3"
+      ],
+      "world": "worlds/local-supplier-generated/raw-replacement"
+    },
+    "wrongInvokeKind": {
+      "headUnchanged": true,
+      "selector": "0xd631c3a4",
+      "words": [
+        "1",
+        "11"
+      ],
+      "world": "worlds/local-supplier-generated/wrong-invoke-kind"
+    }
+  },
+  "profile": "MC-SUPPLIER-LINK-BOUNDED-1-candidate",
+  "provenanceBoundary": {
+    "networkOrPush": false,
+    "originalMinecraftExecution": false,
+    "originalMinecraftJarClassesResourcesWorldsOrReceiptsRead": false,
+    "parentReviewOrPerformanceEvidenceRead": false
+  },
+  "supplier": {
+    "accessFlags": "0x0601 ACC_PUBLIC|ACC_INTERFACE|ACC_ABSTRACT",
+    "binaryName": "java/util/function/Supplier",
+    "bytes": 195,
+    "classFile": "java/classes/java/util/function/Supplier.class",
+    "classVersion": 52,
+    "fields": 0,
+    "interfaces": 0,
+    "javaSource": "java/bootstrap/java/util/function/Supplier.java",
+    "methods": [
+      {
+        "code": false,
+        "descriptor": "()Ljava/lang/Object;",
+        "flags": "0x0401 ACC_PUBLIC|ACC_ABSTRACT",
+        "name": "get",
+        "native": false,
+        "signature": "()TT;"
+      }
+    ],
+    "sha256": "67d3786e7e16a66579fae0687706c72b26c109ac94b0e77cc27eac39a431a1ff",
+    "super": "java/lang/Object"
+  },
+  "unchangedLimits": {
+    "arrayElements": 262144,
+    "arrayLength": 65536,
+    "arrays": 8192,
+    "checkpointBytes": 2097152,
+    "frames": 128,
+    "globalNativeBindings": 22,
+    "internalSteps": 4096,
+    "objects": 4096,
+    "quantum": 65536,
+    "rawByteFrontier": 12288,
+    "rawClassBytes": 1063930,
+    "rawClassFrontier": 12545,
+    "rawClasses": 150,
+    "reserveGas": 25000000,
+    "runtimeBytesCeiling": 1048576,
+    "stringLocalBinding": 12
+  }
+}

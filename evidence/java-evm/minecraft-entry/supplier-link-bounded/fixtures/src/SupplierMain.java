@@ -1,0 +1,46 @@
+package fixture;
+
+public final class SupplierMain {
+    public static void main(String[] args) {
+        ProviderLink provider = new RealProvider();
+        java.util.function.Supplier<String> erased = provider;
+        String first = erased.get();
+        if (first != RealProvider.token || RealProvider.calls != 1) throw new ArithmeticException();
+        if (provider.get() != RealProvider.token || RealProvider.calls != 2) throw new ArithmeticException();
+
+        RealProvider.fail = true;
+        try {
+            erased.get();
+            throw new ArithmeticException();
+        } catch (ArithmeticException expected) {
+            RealProvider.fail = false;
+        }
+        if (RealProvider.calls != 3) throw new ArithmeticException();
+
+        java.util.function.Supplier<?>[] values = new java.util.function.Supplier<?>[1];
+        values[0] = provider;
+        java.util.function.Supplier<?>[] copy = values.clone();
+        if (copy[0] != provider) throw new ArithmeticException();
+        if (values.length != 1) throw new ArithmeticException();
+        Object reflectedArray = java.lang.reflect.Array.newInstance(java.util.function.Supplier.class, 1);
+        java.util.function.Supplier<?>[] reflected = (java.util.function.Supplier<?>[]) reflectedArray;
+        reflected[0] = provider;
+        if (reflected.length != 1 || reflected[0] != provider) throw new ArithmeticException();
+        if (!java.util.function.Supplier.class.getName().equals("java.util.function.Supplier")) throw new ArithmeticException();
+
+        try {
+            Object object = new Object();
+            java.util.function.Supplier<?> invalid = (java.util.function.Supplier<?>) object;
+            throw new ArithmeticException();
+        } catch (ClassCastException expected) {
+            // ordinary JVM cast failure
+        }
+        try {
+            java.util.function.Supplier<?> absent = null;
+            absent.get();
+            throw new ArithmeticException();
+        } catch (NullPointerException expected) {
+            // ordinary JVM invokeinterface null receiver failure
+        }
+    }
+}
