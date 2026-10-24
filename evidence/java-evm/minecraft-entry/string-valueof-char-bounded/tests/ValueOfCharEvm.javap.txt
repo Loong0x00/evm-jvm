@@ -1,0 +1,121 @@
+public final class p57.ValueOfCharEvm {
+  public p57.ValueOfCharEvm();
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return
+
+  private static void verify(char);
+    Code:
+       0: iload_0
+       1: invokestatic  #2                  // Method java/lang/String.valueOf:(C)Ljava/lang/String;
+       4: astore_1
+       5: iload_0
+       6: invokestatic  #2                  // Method java/lang/String.valueOf:(C)Ljava/lang/String;
+       9: astore_2
+      10: aload_1
+      11: invokevirtual #3                  // Method java/lang/String.length:()I
+      14: iconst_1
+      15: if_icmpne     32
+      18: aload_1
+      19: iconst_0
+      20: invokevirtual #4                  // Method java/lang/String.charAt:(I)C
+      23: iload_0
+      24: if_icmpne     32
+      27: aload_1
+      28: aload_2
+      29: if_acmpne     42
+      32: new           #5                  // class java/lang/ArithmeticException
+      35: dup
+      36: ldc           #6                  // String String.valueOf(char) UTF-16 unit/identity mismatch
+      38: invokespecial #7                  // Method java/lang/ArithmeticException."<init>":(Ljava/lang/String;)V
+      41: athrow
+      42: aload_1
+      43: aload_2
+      44: invokevirtual #8                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+      47: ifeq          77
+      50: aload_1
+      51: invokevirtual #9                  // Method java/lang/String.hashCode:()I
+      54: aload_2
+      55: invokevirtual #9                  // Method java/lang/String.hashCode:()I
+      58: if_icmpne     77
+      61: aload_1
+      62: aload_2
+      63: invokevirtual #10                 // Method java/lang/String.compareTo:(Ljava/lang/String;)I
+      66: ifne          77
+      69: aload_1
+      70: invokevirtual #11                 // Method java/lang/String.toString:()Ljava/lang/String;
+      73: aload_1
+      74: if_acmpeq     87
+      77: new           #5                  // class java/lang/ArithmeticException
+      80: dup
+      81: ldc           #12                 // String ordinary String methods mismatch
+      83: invokespecial #7                  // Method java/lang/ArithmeticException."<init>":(Ljava/lang/String;)V
+      86: athrow
+      87: iconst_1
+      88: newarray       char
+      90: dup
+      91: iconst_0
+      92: iload_0
+      93: castore
+      94: astore_3
+      95: new           #13                 // class java/lang/String
+      98: dup
+      99: aload_3
+     100: invokespecial #14                 // Method java/lang/String."<init>":([C)V
+     103: astore        4
+     105: new           #13                 // class java/lang/String
+     108: dup
+     109: aload         4
+     111: invokespecial #15                 // Method java/lang/String."<init>":(Ljava/lang/String;)V
+     114: astore        5
+     116: aload_3
+     117: iconst_0
+     118: iload_0
+     119: iconst_1
+     120: ixor
+     121: i2c
+     122: castore
+     123: aload         4
+     125: iconst_0
+     126: invokevirtual #4                  // Method java/lang/String.charAt:(I)C
+     129: iload_0
+     130: if_icmpne     166
+     133: aload         4
+     135: aload         5
+     137: invokevirtual #8                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+     140: ifeq          166
+     143: aload         4
+     145: aload         5
+     147: invokevirtual #10                 // Method java/lang/String.compareTo:(Ljava/lang/String;)I
+     150: ifne          166
+     153: aload         4
+     155: invokevirtual #16                 // Method java/lang/String.intern:()Ljava/lang/String;
+     158: aload         5
+     160: invokevirtual #16                 // Method java/lang/String.intern:()Ljava/lang/String;
+     163: if_acmpeq     176
+     166: new           #5                  // class java/lang/ArithmeticException
+     169: dup
+     170: ldc           #17                 // String constructor-copy/intern controls mismatch
+     172: invokespecial #7                  // Method java/lang/ArithmeticException."<init>":(Ljava/lang/String;)V
+     175: athrow
+     176: return
+
+  public static void main(java.lang.String[]);
+    Code:
+       0: bipush        44
+       2: invokestatic  #18                 // Method verify:(C)V
+       5: iconst_0
+       6: invokestatic  #18                 // Method verify:(C)V
+       9: sipush        255
+      12: invokestatic  #18                 // Method verify:(C)V
+      15: sipush        256
+      18: invokestatic  #18                 // Method verify:(C)V
+      21: ldc           #19                 // int 55296
+      23: invokestatic  #18                 // Method verify:(C)V
+      26: ldc           #20                 // int 56320
+      28: invokestatic  #18                 // Method verify:(C)V
+      31: ldc           #21                 // int 65535
+      33: invokestatic  #18                 // Method verify:(C)V
+      36: return
+}
