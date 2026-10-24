@@ -1,0 +1,80 @@
+{
+  "profile": "accepted P55 unchanged code; targeted original transformed iterator resources138",
+  "rawCount": 138,
+  "rawBytes": 947894,
+  "newResources": {
+    "com/google/common/collect/Iterators$7.class": 1131,
+    "com/google/common/collect/TransformedIterator.class": 1378
+  },
+  "selection": "actual original Iterators.transform NEW$7 then authenticated header superclass TransformedIterator; did not implement Arrays from unexecuted ew$a reference until actual call",
+  "packages137And138Q1MetadataOnlyNotStartupAcceptance": true,
+  "fresh138FullStartNoCodeOrPackageCheckpointMigration": true,
+  "jvmSteps": 2224581,
+  "internalSteps": 137,
+  "epoch": 42,
+  "lifecycle": 1,
+  "checkpointBytes": 1288408,
+  "checkpointSHA256": "d73cea8487173ebe989bcd2aa8006ae0b520c4148be9a3e59369c54ad9688442",
+  "verifiedReceipts": 42,
+  "discoverySeconds": 698.2056705959985,
+  "preciseSeconds": 593.5152046430012,
+  "nextMeasuredBlocker": {
+    "diagnostic": {
+      "context": "4",
+      "name": "java/util/Arrays",
+      "site": "4107"
+    },
+    "callerClass": 131,
+    "callerMethod": 1,
+    "callerName": "ew$a.a(Object[])",
+    "pc": 4,
+    "owner": "java/util/Arrays",
+    "method": "asList",
+    "descriptor": "([Ljava/lang/Object;)Ljava/util/List;",
+    "actualArrayHandle": 8280,
+    "actualArray": {
+      "handle": 8280,
+      "metadata": "0x18a",
+      "classIndex": 0,
+      "rank": 1,
+      "count": 0,
+      "cells": [],
+      "sparse": false,
+      "packedFloat": false,
+      "sparseCount": 0,
+      "sparseCountOffset": null,
+      "sparseCells": [],
+      "packedCells": [],
+      "recordStart": 1280942,
+      "countOffset": 1280981,
+      "wireCount": 0,
+      "recordEnd": 1280985
+    },
+    "q1Exact": true
+  },
+  "originalSingletonIteratorConsumedOneRealTuple": {
+    "handle": 8282,
+    "metadata": "0x8000000000000000000000000000000000000000000000000000000000000000",
+    "classIndex": 257,
+    "rank": 0,
+    "count": 2,
+    "cells": [
+      "0x20000000000002058",
+      "0x10000000000000000"
+    ],
+    "sparse": false,
+    "packedFloat": false,
+    "sparseCount": 0,
+    "sparseCountOffset": null,
+    "sparseCells": [],
+    "packedCells": [],
+    "recordStart": 1281060,
+    "countOffset": 1281099,
+    "wireCount": 2,
+    "recordEnd": 1281167
+  },
+  "cartesianProductCompleteNotClaimed": true,
+  "selectedMemberEvidence": "parent-original132-cartesian-transform/artifacts/evm-transform-selected-methods.json binding131 method1 PC4",
+  "noOriginalHostParserOrJavaOrOracleInput": true,
+  "noWorldEulaListeningDone": true
+}
