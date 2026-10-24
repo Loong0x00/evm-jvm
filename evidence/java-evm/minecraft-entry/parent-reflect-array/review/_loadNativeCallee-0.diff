@@ -1,0 +1,28 @@
+--- accepted-P52
+
++++ candidate-P53
+
+@@ -10,7 +10,8 @@
+
+         if ((binding != 5 && binding != 6 && binding != 7 && binding != 8 && binding != 9
+                 && binding != 10 && binding != 11 && binding != 12 && binding != 13
+                 && binding != 14 && binding != 15 && binding != 16 && binding != 17
+-                && binding != 18 && binding != 19 && binding != 20 && binding != 21 && s.argumentKinds.length != 1)
++                && binding != 18 && binding != 19 && binding != 20 && binding != 21
++                && binding != 22 && s.argumentKinds.length != 1)
+             || (binding == 5 && (s.argumentKinds.length != 5 || s.returnKind != 2))
+             || (binding == 6 && (uint16(meta) != 0x0109 || s.argumentKinds.length != 0
+                 || s.returnKind != 3))
+@@ -28,6 +29,11 @@
+
+                     bytes("Ljava/lang/Object;"))))
+             || (binding == 12 && (s.argumentKinds.length != 1
+                 || s.argumentKinds[0] != KIND_REF || s.returnKind != 3))
++            || (binding == 22 && (s.argumentKinds.length != 2
++                || s.argumentKinds[0] != KIND_REF || s.argumentKinds[1] != KIND_INT
++                || s.returnKind != 3
++                || !_equalsLiteral(c.data, s.returnTypeOffset, s.returnTypeLength,
++                    bytes("Ljava/lang/Object;"))))
+             || (binding == 13 && (s.argumentKinds.length != 0 || s.returnKind != 3
+                 || !_equalsLiteral(c.data, s.returnTypeOffset, s.returnTypeLength,
+                     bytes("Ljava/lang/Class;"))))

@@ -1,0 +1,107 @@
+{
+  "status": "PASS",
+  "successfulBudget": 1000000000,
+  "successfulAttempt": 1,
+  "noResourceCapChanges": true,
+  "preservedReopenCountFailure": "legacy harness accepted max3 request files; parent4casesx2quanta produces8; exact8 report-arity check now used, allCP/code/Head validation unchanged",
+  "runs": [
+    {
+      "label": "attempt-1",
+      "exit": 0,
+      "wallSeconds": 4.618084019006346,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/driver",
+        "parent-quota",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-build-parent-p53-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-build-parent-p53-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/parent-quota-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7647042309981771,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/driver",
+        "./build/java-diff-mc-reflect-array-quota-parent-p53/driver-src"
+      ]
+    },
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.1637869789992692,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/ParentReflectMax.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/ParentReflectOver.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/ParentReflectElements.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/ParentReflectEnum.java"
+      ]
+    },
+    {
+      "label": "reopen",
+      "exit": 1,
+      "wallSeconds": 0.007485472997359466,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-build-parent-p53-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-build-parent-p53-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/parent-quota-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "exit": 0,
+      "wallSeconds": 2.6164862219957286,
+      "command": [
+        "build/java-diff-mc-reflect-array-quota-parent-p53/driver-reopen-v2",
+        "reopen",
+        "build/java-diff-mc-reflect-array-build-parent-p53-v2/engine/MCEntryInterpreter.json",
+        "build/java-diff-mc-reflect-array-build-parent-p53-v2/coordinator/MCEntryCoordinator.json",
+        "build/java-diff-mc-reflect-array-quota-parent-p53/fixture-manifest.json",
+        "build/java-diff-mc-reflect-array-quota-parent-p53",
+        "build/java-diff-mc-reflect-array-quota-parent-p53/parent-quota-attempt-1",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "stock-ParentReflectEnum",
+      "exit": 0,
+      "wallSeconds": 0.031414053999469616,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/classes",
+        "ParentReflectEnum"
+      ]
+    },
+    {
+      "label": "stock-ParentReflectMax",
+      "exit": 0,
+      "wallSeconds": 0.03148265300114872,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-quota-parent-p53/classes",
+        "ParentReflectMax"
+      ]
+    }
+  ]
+}

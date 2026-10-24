@@ -1,0 +1,21 @@
+--- accepted-P52
+
++++ candidate-P53
+
+@@ -1,5 +1,5 @@
+
+ function _bootstrapRoot() private pure returns (bytes32) {
+-        bytes32[] memory h = new bytes32[](116);
++        bytes32[] memory h = new bytes32[](117);
+         h[0] = keccak256(_bootstrapObject());
+         h[1] = keccak256(_bootstrapCloneable());
+         h[2] = keccak256(_bootstrapSerializable());
+@@ -149,5 +149,7 @@
+
+         h[113] = keccak256(_bootstrapLinkedHashMap());
+         h[114] = keccak256(_bootstrapListIterator());
+         h[115] = keccak256(_bootstrapArrayListItr());
++        // Reflection Array is an append-only leaf; existing P52 leaves stay fixed.
++        h[116] = keccak256(_bootstrapReflectArray());
+         return keccak256(abi.encode(DBOOT, h));
+     }

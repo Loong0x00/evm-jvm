@@ -15,14 +15,14 @@ contract MCEntryCoordinator {
     }
 
     address private constant ENGINE = address(bytes20(hex"4d432d52414e444f4d2d434c4153532d50310070"));
-    bytes32 private constant ENGINE_CODEHASH = hex"2de54138ddccdf589b48f23940e06695ce42b9826f8a5d9850bd41822c24af2c";
+    bytes32 private constant ENGINE_CODEHASH = hex"b94913eefc3e672fac01a1362ee4105f4f2e21be429ad3adb0430f0bdc89d8c2";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-ARRAYLIST-ITERATOR-BOUNDED-1/package/v1");
-    bytes32 private constant CLASS_DOMAIN = keccak256("MC-ARRAYLIST-ITERATOR-BOUNDED-1/class/v1");
-    bytes32 private constant SEED_DOMAIN = keccak256("MC-ARRAYLIST-ITERATOR-BOUNDED-1/selected-resource/v1");
-    bytes32 private constant VM_DOMAIN = keccak256("MC-ARRAYLIST-ITERATOR-BOUNDED-1/vm/v1");
+    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1/package/v1");
+    bytes32 private constant CLASS_DOMAIN = keccak256("MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1/class/v1");
+    bytes32 private constant SEED_DOMAIN = keccak256("MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1/selected-resource/v1");
+    bytes32 private constant VM_DOMAIN = keccak256("MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1/vm/v1");
     uint32 private constant MAX_SELECTED_RESOURCE_BYTES = 4096;
 
     address public owner;

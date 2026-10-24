@@ -1,0 +1,73 @@
+--- accepted-P52
+
++++ candidate-P53
+
+@@ -1862,6 +1862,67 @@
+
+                         f.sp = base + 1;
+                         continue;
+                     }
++                    if (nativeBinding == 22) {
++                        // Array.newInstance has ordinary wrapper Code; only this
++                        // exact private native receives the canonical Class mirror.
++                        uint256 componentMirror = _payload(f.stack[base]);
++                        if (componentMirror == 0) {
++                            f.sp = base;
++                            nextHandle = _raiseJava(
++                                6, opPC, arena, classes, objectHeap, heapKinds,
++                                heapClasses, arrayLeafTypes, parentLinks,
++                                hierarchyState, nextHandle
++                            );
++                            continue;
++                        }
++                        uint256 componentClass = _canonicalClassMirrorTarget(
++                            arena, classes, rawClassCount, loaderClass, componentMirror,
++                            parentLinks, hierarchyState, opPC
++                        );
++                        _validateHierarchy(classes, componentClass, parentLinks, hierarchyState);
++                        int32 signedLength = int32(uint32(_payload(f.stack[base + 1])));
++                        f.sp = base;
++                        if (signedLength < 0) {
++                            nextHandle = _raiseJava(
++                                4, opPC, arena, classes, objectHeap, heapKinds,
++                                heapClasses, arrayLeafTypes, parentLinks,
++                                hierarchyState, nextHandle
++                            );
++                            continue;
++                        }
++                        uint256 length = uint256(uint32(signedLength));
++                        if (arena.ordinaryArrayCount == MAX_ARRAYS
++                            || length > MAX_ARRAY_LENGTH
++                            || length > MAX_ARRAY_ELEMENTS - arena.ordinaryArrayElements) {
++                            nextHandle = _raiseJava(
++                                7, opPC, arena, classes, objectHeap, heapKinds,
++                                heapClasses, arrayLeafTypes, parentLinks,
++                                hierarchyState, nextHandle
++                            );
++                            continue;
++                        }
++                        _ensureExceptionRegistry(arena, classes, parentLinks, hierarchyState);
++                        if (arena.heap.arrayHeap.length == 0) {
++                            arena.heap.arrayHeap = new uint64[][](MAX_HANDLES + 1);
++                            arena.heap.ranks = new uint8[](MAX_HANDLES + 1);
++                        }
++                        arrayHeap = arena.heap.arrayHeap;
++                        objectHeap = arena.heap.objectHeap;
++                        arrayLeafTypes = arena.heap.metadata;
++                        heapKinds = arrayLeafTypes;
++                        heapClasses = arena.heap.classes;
++                        arrayRanks = arena.heap.ranks;
++                        nextHandle = arena.nextHandle;
++                        unchecked { ++arena.ordinaryArrayCount; ++nextHandle; }
++                        arena.nextHandle = nextHandle;
++                        arena.ordinaryArrayElements += length;
++                        arrayRanks[nextHandle] = 1;
++                        arrayLeafTypes[nextHandle] = ARRAY_CLASS_BASE + componentClass;
++                        arrayHeap[nextHandle] = new uint64[](length);
++                        f.stack[base] = _packRef(uint32(nextHandle));
++                        f.sp = base + 1;
++                        continue;
++                    }
+                     if (nativeBinding == 12) {
+                         // Inspect every operand before raising at most once.  The
+                         // universe is read from a field already published by

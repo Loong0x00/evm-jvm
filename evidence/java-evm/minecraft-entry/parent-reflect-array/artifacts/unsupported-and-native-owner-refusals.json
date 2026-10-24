@@ -1,0 +1,121 @@
+{
+  "status": "reference reflection subset/private-native/canonical-owner raw boundaries atomically refused",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "eadc25de896d01347ed8ff1ebda49ba47d734469dbf92e2ca4c66d4ed8d4454c",
+  "engineRuntimeKeccak256": "0xb94913eefc3e672fac01a1362ee4105f4f2e21be429ad3adb0430f0bdc89d8c2",
+  "coordinatorRuntimeSHA256": "125735698a5db91c10b447b77e62a8b9061ce40ab58a6a17aca01f25ca5f0f5a",
+  "coordinatorRuntimeKeccak256": "0xc449e34db56693c3c62f1d4e28c855b6a98e0d3883ae7bf3f68f46e287c08e43",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "ParentReflectPrimitive",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "FieldError",
+      "errorArgs": [
+        "2",
+        "0"
+      ],
+      "selector": "0x8cae2d03",
+      "rootBefore": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "rootAfter": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "atomic": true,
+      "gasUsed": 28549033,
+      "wallMs": 24
+    },
+    {
+      "name": "ParentReflectArrayComponent",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BytecodeError",
+      "errorArgs": [
+        "13",
+        "0"
+      ],
+      "selector": "0x62d5596d",
+      "rootBefore": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "rootAfter": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "atomic": true,
+      "gasUsed": 962584,
+      "wallMs": 2
+    },
+    {
+      "name": "ParentReflectMulti",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "13"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "rootAfter": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "atomic": true,
+      "gasUsed": 29919576,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentReflectAccessor",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "3",
+        "4"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "rootAfter": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "atomic": true,
+      "gasUsed": 28321454,
+      "wallMs": 24
+    },
+    {
+      "name": "ParentReflectPrivateNative",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "3"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "rootAfter": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "atomic": true,
+      "gasUsed": 29864183,
+      "wallMs": 25
+    },
+    {
+      "name": "raw-ReflectArray",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "rootAfter": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "atomic": true,
+      "gasUsed": 385462,
+      "wallMs": 1
+    },
+    {
+      "name": "raw-Class",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "rootAfter": "0x4c6cfc19a2e00c4c8a002071cb056d118e11b504866db95dcce4f8901a55b31f",
+      "atomic": true,
+      "gasUsed": 438654,
+      "wallMs": 1
+    }
+  ],
+  "processId": 1191333,
+  "elapsedMs": 0
+}

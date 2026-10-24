@@ -1,0 +1,18 @@
+--- accepted-P52
+
++++ candidate-P53
+
+@@ -105,6 +105,12 @@
+
+             if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("loadClass0"))
+                 && _equalsLiteral(c.data, descriptorOffset, descriptorLength,
+                     bytes("(Ljava/lang/String;)Ljava/lang/Class;"))) return 8;
++        } else if (_isNamedClass(c, bytes("java/lang/reflect/Array"))) {
++            // Binding22 is only the private canonical Java 8 one-dimensional
++            // reference-array allocator; all other reflection APIs stay absent.
++            if (_equalsLiteral(c.data, nameOffset, nameLength, bytes("newArray"))
++                && _equalsLiteral(c.data, descriptorOffset, descriptorLength,
++                    bytes("(Ljava/lang/Class;I)Ljava/lang/Object;"))) return 22;
+         } else if (_isNamedClass(c, bytes("java/util/EnumSet"))) {
+             // Binding12 is the sole EnumSet primitive.  It returns the enum
+             // class's already-published constant table, never a fabricated set.

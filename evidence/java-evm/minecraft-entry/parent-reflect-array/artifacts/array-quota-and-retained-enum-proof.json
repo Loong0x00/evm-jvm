@@ -1,0 +1,143 @@
+{
+  "status": "PASS",
+  "budget": 1000000000,
+  "quotaAndLengthBoundariesNotFullArrayCountSweep": true,
+  "cases": [
+    {
+      "name": "parent-ParentReflectMax-q4096",
+      "quanta": 4096,
+      "jvmSteps": 23,
+      "maxCallGas": 240854304,
+      "heapCounts": {
+        "ordinaryObjects": 2,
+        "ordinaryArrays": 3,
+        "arrayElements": 65552,
+        "ordinaryFields": 4,
+        "emergency": 1,
+        "exceptionObjects": 0,
+        "exceptionFields": 2
+      },
+      "successfulMaxLengthArrays": 1,
+      "largeArraysDenseNull": true
+    },
+    {
+      "name": "parent-ParentReflectMax-q65536",
+      "quanta": 65536,
+      "jvmSteps": 23,
+      "maxCallGas": 240854304,
+      "heapCounts": {
+        "ordinaryObjects": 2,
+        "ordinaryArrays": 3,
+        "arrayElements": 65552,
+        "ordinaryFields": 4,
+        "emergency": 1,
+        "exceptionObjects": 0,
+        "exceptionFields": 2
+      },
+      "successfulMaxLengthArrays": 1,
+      "largeArraysDenseNull": true
+    },
+    {
+      "name": "parent-ParentReflectOver-q4096",
+      "quanta": 4096,
+      "jvmSteps": 8,
+      "maxCallGas": 44146199,
+      "heapCounts": {
+        "ordinaryObjects": 2,
+        "ordinaryArrays": 2,
+        "arrayElements": 16,
+        "ordinaryFields": 4,
+        "emergency": 1,
+        "exceptionObjects": 1,
+        "exceptionFields": 4
+      },
+      "successfulMaxLengthArrays": 0,
+      "largeArraysDenseNull": true
+    },
+    {
+      "name": "parent-ParentReflectOver-q65536",
+      "quanta": 65536,
+      "jvmSteps": 8,
+      "maxCallGas": 44146199,
+      "heapCounts": {
+        "ordinaryObjects": 2,
+        "ordinaryArrays": 2,
+        "arrayElements": 16,
+        "ordinaryFields": 4,
+        "emergency": 1,
+        "exceptionObjects": 1,
+        "exceptionFields": 4
+      },
+      "successfulMaxLengthArrays": 0,
+      "largeArraysDenseNull": true
+    },
+    {
+      "name": "parent-ParentReflectElements-q4096",
+      "quanta": 4096,
+      "jvmSteps": 48,
+      "maxCallGas": 829185411,
+      "heapCounts": {
+        "ordinaryObjects": 2,
+        "ordinaryArrays": 5,
+        "arrayElements": 196624,
+        "ordinaryFields": 4,
+        "emergency": 1,
+        "exceptionObjects": 1,
+        "exceptionFields": 4
+      },
+      "successfulMaxLengthArrays": 3,
+      "largeArraysDenseNull": true
+    },
+    {
+      "name": "parent-ParentReflectElements-q65536",
+      "quanta": 65536,
+      "jvmSteps": 48,
+      "maxCallGas": 829185411,
+      "heapCounts": {
+        "ordinaryObjects": 2,
+        "ordinaryArrays": 5,
+        "arrayElements": 196624,
+        "ordinaryFields": 4,
+        "emergency": 1,
+        "exceptionObjects": 1,
+        "exceptionFields": 4
+      },
+      "successfulMaxLengthArrays": 3,
+      "largeArraysDenseNull": true
+    },
+    {
+      "name": "parent-ParentReflectEnum-q4096",
+      "quanta": 4096,
+      "jvmSteps": 240,
+      "maxCallGas": 106703887,
+      "heapCounts": {
+        "ordinaryObjects": 8,
+        "ordinaryArrays": 7,
+        "arrayElements": 29,
+        "ordinaryFields": 14,
+        "emergency": 1,
+        "exceptionObjects": 0,
+        "exceptionFields": 2
+      },
+      "successfulMaxLengthArrays": 0,
+      "largeArraysDenseNull": true
+    },
+    {
+      "name": "parent-ParentReflectEnum-q65536",
+      "quanta": 65536,
+      "jvmSteps": 240,
+      "maxCallGas": 106703887,
+      "heapCounts": {
+        "ordinaryObjects": 8,
+        "ordinaryArrays": 7,
+        "arrayElements": 29,
+        "ordinaryFields": 14,
+        "emergency": 1,
+        "exceptionObjects": 0,
+        "exceptionFields": 2
+      },
+      "successfulMaxLengthArrays": 0,
+      "largeArraysDenseNull": true
+    }
+  ]
+}

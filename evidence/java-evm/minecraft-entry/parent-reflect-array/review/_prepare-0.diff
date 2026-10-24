@@ -1,0 +1,47 @@
+--- accepted-P52
+
++++ candidate-P53
+
+@@ -35,7 +35,8 @@
+
+                 || _isNamedClass(users[i], bytes("java/util/NavigableSet"))
+                 || _isNamedClass(users[i], bytes("java/util/LinkedHashMap"))
+                 || _isNamedClass(users[i], bytes("java/util/ListIterator"))
+-                || _isNamedClass(users[i], bytes("java/util/ArrayList$Itr"))) {
++                || _isNamedClass(users[i], bytes("java/util/ArrayList$Itr"))
++                || _isNamedClass(users[i], bytes("java/lang/reflect/Array"))) {
+                 revert BootstrapProfileError(1, i);
+             }
+             for (uint256 j; j < i; ++j) if (_sameClassName(users[i], users[j])) {
+@@ -53,7 +54,7 @@
+
+         if (entryPlusOne == 0) revert LinkError(3, 0);
+         // Historical Runnable remains conditional. Class/map/System positions remain
+         // fixed, then the three Properties-family images append after all forty-five.
+-        uint256 count = inputCount + 109 + (suppliedObject ? 0 : 1)
++        uint256 count = inputCount + 110 + (suppliedObject ? 0 : 1)
+             + (suppliedCloneable ? 0 : 1) + (suppliedSerializable ? 0 : 1)
+             + (suppliedFloat ? 0 : 1) + (suppliedDouble ? 0 : 1) + (suppliedRunnable ? 0 : 1) + 1;
+         p.classes = new ClassInfo[](count);
+@@ -72,11 +73,15 @@
+
+         _appendTailBootstraps(p, at, suppliedRunnable);
+         // Keep the historical five tail images in their existing slots; three new
+         // appended images occupy only the final three leaves.
+-        p.classes[count - 11] = _parseBundleClass(_bootstrapFunction());
+-        p.classes[count - 10] = _parseBundleClass(_bootstrapNavigableMap());
+-        p.classes[count - 9] = _parseBundleClass(_bootstrapComparator());
+-        p.classes[count - 8] = _parseBundleClass(_bootstrapSortedSet());
+-        p.classes[count - 7] = _parseBundleClass(_bootstrapNavigableSet());
++        // Keep the historical raw-to-bootstrap tail positions 105..109 fixed
++        // while the newly appended Array image occupies slot 116.
++        p.classes[count - 12] = _parseBundleClass(_bootstrapFunction());
++        p.classes[count - 11] = _parseBundleClass(_bootstrapNavigableMap());
++        p.classes[count - 10] = _parseBundleClass(_bootstrapComparator());
++        p.classes[count - 9] = _parseBundleClass(_bootstrapSortedSet());
++        p.classes[count - 8] = _parseBundleClass(_bootstrapNavigableSet());
++        // The raw-class count tail remains unchanged; Array is new leaf 116.
++        p.classes[count - 1] = _parseBundleClass(_bootstrapReflectArray());
+         p.rawClassCount = inputCount;
+         p.rootClass = entryPlusOne - 1;
+         _requireSupportedClass(p.classes[p.rootClass], p.rootClass);

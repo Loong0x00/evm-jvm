@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+"""Atomic unsupported reflection/API-owner/native-access boundaries, generated only."""
+from pathlib import Path
+import json,hashlib,os,re,shutil,subprocess,time
+H=Path(__file__).resolve().parent;ROOT=H.parents[3];B=ROOT/'build/java-diff-mc-reflect-array-build-parent-p53-v2';G=ROOT/'build/java-diff-mc-reflect-array-generated-parent-p53';O=ROOT/'build/java-diff-mc-reflect-array-refusals-parent-p53';assert not O.exists();O.mkdir();D=O/'driver-src';shutil.copytree(G/'driver-src',D);C=O/'classes';C.mkdir();env=dict(os.environ,GOPROXY='off',GOSUMDB='off',GOTOOLCHAIN='local');rows=[]
+def run(label,args,timeout=1200):
+ t=time.monotonic()
+ with(O/(label+'.log')).open('w')as f:p=subprocess.run(list(map(str,args)),cwd=ROOT,env=env,stdout=f,stderr=subprocess.STDOUT,timeout=timeout)
+ row={'label':label,'exit':p.returncode,'wallSeconds':time.monotonic()-t,'command':list(map(str,args))};(O/(label+'-process.json')).write_text(json.dumps(row,indent=2)+'\n');rows.append(row);assert p.returncode==0,row
+bodies={'ParentReflectPrimitive':'java.lang.reflect.Array.newInstance(int.class,0);','ParentReflectArrayComponent':'java.lang.reflect.Array.newInstance(Object[].class,0);','ParentReflectMulti':'java.lang.reflect.Array.newInstance(Object.class,new int[]{1,1});','ParentReflectAccessor':'java.lang.reflect.Array.getLength(new Object[0]);'};sources=[]
+for name,body in bodies.items():
+ p=O/(name+'.java');p.write_text('public class '+name+' { public static void main(String[] args) {'+body+'} }\n');sources.append(p)
+run('javac',['/usr/lib/jvm/java-8-openjdk/bin/javac','-g:none','-source','8','-target','8','-d',C,*sources]);stub=O/'compile-only/java/lang/reflect/Array.java';stub.parent.mkdir(parents=True);stub.write_text('package java.lang.reflect; public final class Array { public static native Object newArray(Class<?> component,int n); }\n');p=O/'ParentReflectPrivateNative.java';p.write_text('public class ParentReflectPrivateNative { public static void main(String[] args) { java.lang.reflect.Array.newArray(Object.class,0); } }\n');run('javac-private-access-probe',['/usr/lib/jvm/java-8-openjdk/bin/javac','-g:none','-source','8','-target','8','-d',C,stub,p]);sets=[(name,name,[(name,(C/(name+'.class')).read_bytes())])for name in(*bodies,'ParentReflectPrivateNative')];sol=(B/'engine/MCEntryInterpreter.sol').read_text()
+for method,binary in [('ReflectArray','java/lang/reflect/Array'),('Class','java/lang/Class')]:
+ data=bytes.fromhex(re.search(r'function _bootstrap'+method+r'\(\) private pure returns \(bytes memory\) \{ return hex"([0-9a-f]+)";',sol)[1]);sets.append(('raw-'+method,'ParentReflectMulti',[('ParentReflectMulti',(C/'ParentReflectMulti.class').read_bytes()),(binary,data)]))
+cases={}
+for name,entry,items in sets:
+ q=O/'bundles'/name;q.mkdir(parents=True);rs=[]
+ for i,(binary,data)in enumerate(items):
+  fn=f'{i:03d}.class';(q/fn).write_bytes(data);rs.append({'index':i,'binaryName':binary,'file':fn,'bytes':len(data),'sha256':hashlib.sha256(data).hexdigest()})
+ cases[name]={'entryClass':entry,'rawCount':len(rs),'rawBytes':sum(r['bytes']for r in rs),'rawClasses':rs}
+(O/'fixture-manifest.json').write_text(json.dumps({'generatedOnly':True,'privateNativeStubCompileContextNotInInput':True,'cases':cases},indent=2)+'\n');p=D/'evm_driver.go';s=p.read_text();a='if mode == "parent-small" || mode == "parent-matrix" {';assert a in s;p.write_text(s.replace(a,'if mode=="parent-refusals"{if err=r.parentReflectionRefusals();err!=nil{os.Exit(writeFailure(r,err))};return}\n '+a,1));labels=','.join('"'+x+'"'for x in(*bodies,'ParentReflectPrivateNative'))
+(D/'parent_reflect_refusals.go').write_text('package main\nimport("path/filepath")\nfunc(r *runner)parentReflectionRefusals()error{\nfor _,name:=range []string{'+labels+'}{row,err:=r.runRejection(name,name,"","",maxJvm,maxInternal);if err!=nil{return err};r.report.Controls=append(r.report.Controls,row)}\nfor _,name:=range []string{"raw-ReflectArray","raw-Class"}{row,err:=r.runRejection(name,name,"BootstrapProfileError","1",maxJvm,maxInternal);if err!=nil{return err};r.report.Controls=append(r.report.Controls,row)}\nr.report.Status="reference reflection subset/private-native/canonical-owner raw boundaries atomically refused";return writeJSON(filepath.Join(r.reportDir,"parent-refusals-summary.json"),r.report)}\n');run('go-build',['go','build','-trimpath','-o',O/'driver','./'+str(D.relative_to(ROOT))],600);run('controls',[O/'driver','parent-refusals',B/'engine/MCEntryInterpreter.json',B/'coordinator/MCEntryCoordinator.json',O/'fixture-manifest.json',O,O/'controls','1000000000']);(O/'summary.json').write_text(json.dumps({'status':'PASS','gasBudget':1000000000,'runs':rows},indent=2)+'\n');print(json.dumps(rows,indent=2))

@@ -1,0 +1,14 @@
+--- accepted-P52
+
++++ candidate-P53
+
+@@ -7,7 +7,7 @@
+
+         // Bindings7/8/9/10/12 are exactly owned private static native
+         // primitives.  All prior bindings retain public-static validation.
+         if (binding == 7 || binding == 8 || binding == 9 || binding == 10
+-            || binding == 12) {
++            || binding == 12 || binding == 22) {
+             if (access != 0x010a || _methodCodeCount(meta) != 0) revert CallError(4, callPC);
+             return;
+         }

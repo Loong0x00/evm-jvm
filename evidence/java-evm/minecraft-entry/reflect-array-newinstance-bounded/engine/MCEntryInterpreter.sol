@@ -399,8 +399,8 @@ contract MCEntryInterpreter {
 
     uint32 private constant MR0_SCHEMA = 1;
     uint8 private constant ROOT_KIND_MAIN_EMPTY_STRING_ARRAY = 1;
-    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:MAIN:EMPTY-STRING-ARRAY:1");
-    bytes32 private constant DROOT = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:ROOT:1");
+    bytes32 private constant EMPTY_ARGS_COMMITMENT = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:MAIN:EMPTY-STRING-ARRAY:1");
+    bytes32 private constant DROOT = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:ROOT:1");
     uint256 private constant MAX_RAW_CLASSES = 150;
     uint256 private constant MAX_RAW_BYTES = 1063930;
     uint256 private constant MAX_CHECKPOINT_BYTES = 2097152;
@@ -416,8 +416,8 @@ contract MCEntryInterpreter {
     uint32 private constant MAX_PATH_DEPTH = 16;
     uint32 private constant MAX_PATH_BYTES = 256;
     uint32 private constant MAX_TRANSFER = 4096;
-    bytes32 private constant DART = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:ARTIFACT:1");
-    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:BOOTSTRAP:1");
+    bytes32 private constant DART = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:ARTIFACT:1");
+    bytes32 private constant DBOOT = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:BOOTSTRAP:1");
     bytes32 private constant DBOOT_HASHMAP = hex"2df9559a496d367a0bcdc4a19e72b7c01ff329d33d9aed3d8280bf38246aaccf";
     // Append-only EnumSet image commitment; folded from the exact bytes at
     // compile time so the runtime carries the append-only literal once.
@@ -434,11 +434,11 @@ contract MCEntryInterpreter {
     bytes32 private constant DBOOT_THREAD_LOCAL = hex"93a0007b6336f667890f5afa2b01572278a7e39ab93b2faf1095e054317f538a";
     // Image94 commitment keeps the constrained runtime below its fixed LOCAL cap.
     bytes32 private constant DBOOT_SECURITY_MANAGER = hex"057ca3fbcb2390bdc0d8a6bd4f9a942b378525c0dca258dff442b04e7b526a28";
-    bytes32 private constant DCFG = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:CONFIG:1");
-    bytes32 private constant DMACH = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:MACHINE:1");
-    bytes32 private constant DSEED = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:SEED:1");
-    bytes32 private constant DVFS = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:VFS:1");
-    bytes32 private constant DFILE = keccak256("JVMEVM:MC-ARRAYLIST-ITERATOR-BOUNDED-1:FILE:1");
+    bytes32 private constant DCFG = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:CONFIG:1");
+    bytes32 private constant DMACH = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:MACHINE:1");
+    bytes32 private constant DSEED = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:SEED:1");
+    bytes32 private constant DVFS = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:VFS:1");
+    bytes32 private constant DFILE = keccak256("JVMEVM:MC-REFLECT-ARRAY-NEWINSTANCE-BOUNDED-1:FILE:1");
 
     mapping(bytes32 => Anchor) private anchors;
     bool private enteredVFS0A;

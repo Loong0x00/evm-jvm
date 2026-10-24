@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16371167799661634,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/ParentReflectPrimitive.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/ParentReflectArrayComponent.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/ParentReflectMulti.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/ParentReflectAccessor.java"
+      ]
+    },
+    {
+      "label": "javac-private-access-probe",
+      "exit": 0,
+      "wallSeconds": 0.16373852799733868,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/compile-only/java/lang/reflect/Array.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/ParentReflectPrivateNative.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7645649070036598,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/driver",
+        "./build/java-diff-mc-reflect-array-refusals-parent-p53-v2/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 0.26385948400275083,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-build-parent-p53-v2/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-build-parent-p53-v2/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-reflect-array-refusals-parent-p53-v2/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@ spec.loader.exec_module(p52)
 
 def root_record(source, domain, root_dir, environment):
     result = p52.root_record(source, domain, root_dir, environment)
-    assert len(result["leaves"]) == 117, len(result["leaves"])
+    assert len(result["leaves"]) == int(__import__("re").search(r"new bytes32\[\]\((\d+)\)", source[source.index("function _bootstrapRoot("):]).group(1)), len(result["leaves"])
     return result
 
 
