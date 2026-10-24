@@ -1,0 +1,61 @@
+{
+  "profile": "accepted P54 unchanged code; targeted original transform-resource closure136",
+  "rawCount": 136,
+  "rawBytes": 945385,
+  "newResources": {
+    "ew$a.class": 1127,
+    "com/google/common/collect/Iterables$6.class": 2744,
+    "com/google/common/collect/FluentIterable.class": 16478,
+    "com/google/common/base/Optional.class": 3970,
+    "com/google/common/base/Absent.class": 3782
+  },
+  "selection": "authenticated selected ew.b transform call -> Iterables.transform mandatory new$6 -> superclass FluentIterable ctor Optional.absent -> Absent.withType; no unused iterator-transform/Arrays API preload",
+  "packages132Through135Q1MetadataOnlyNotStartupAcceptance": true,
+  "fresh136FullStartNoCodeOrPackageCheckpointMigration": true,
+  "jvmSteps": 2224469,
+  "internalSteps": 136,
+  "epoch": 42,
+  "lifecycle": 1,
+  "checkpointBytes": 1287839,
+  "checkpointSHA256": "bf9d777f4946600c96647e7cee10168897b0df9111c2584cd1cd17276ee6d802",
+  "verifiedReceipts": 42,
+  "discoverySeconds": 687.0480004110068,
+  "preciseSeconds": 587.8137251559965,
+  "nextMeasuredBlocker": {
+    "diagnostic": {
+      "context": "19",
+      "name": "java/util/Collections",
+      "site": "4107"
+    },
+    "callerClass": 130,
+    "callerMethod": 1,
+    "callerName": "ew$b.iterator()",
+    "pc": 19,
+    "owner": "java/util/Collections",
+    "method": "singletonList",
+    "descriptor": "(Ljava/lang/Object;)Ljava/util/List;",
+    "actualElementHandle": 8280,
+    "actualElement": {
+      "handle": 8280,
+      "metadata": "0x188",
+      "classIndex": 0,
+      "rank": 1,
+      "count": 0,
+      "cells": [],
+      "sparse": false,
+      "packedFloat": false,
+      "sparseCount": 0,
+      "sparseCountOffset": null,
+      "sparseCells": [],
+      "packedCells": [],
+      "recordStart": 1280662,
+      "countOffset": 1280701,
+      "wireCount": 0,
+      "recordEnd": 1280705
+    },
+    "q1Exact": true
+  },
+  "selectedMemberEvidence": "parent-original131-cartesian-iterable/artifacts/evm-cartesian-selected-methods.json binding130 method1 PC19",
+  "noOriginalHostParserOrJavaOrOracleInput": true,
+  "noWorldEulaListeningDone": true
+}
