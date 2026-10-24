@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "budget": 1000000000,
+  "freshP54Artifact": true,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.21379127900581807,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-reflect-array/ParentReflectReferenceArray.java"
+      ]
+    },
+    {
+      "label": "stock-java8",
+      "exit": 0,
+      "wallSeconds": 0.031553560998872854,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/classes",
+        "ParentReflectReferenceArray"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.7646971939975629,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/driver",
+        "./build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/driver-src"
+      ]
+    },
+    {
+      "label": "reflect-controls",
+      "exit": 0,
+      "wallSeconds": 1.0648443350073649,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-build-parent-p57/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-build-parent-p57/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/parent-retained-reflect",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "reopen",
+      "exit": 0,
+      "wallSeconds": 0.26386510000156704,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-build-parent-p57/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-build-parent-p57/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-retained-reflect-parent-p57/parent-retained-reflect",
+        "1000000000"
+      ]
+    }
+  ]
+}

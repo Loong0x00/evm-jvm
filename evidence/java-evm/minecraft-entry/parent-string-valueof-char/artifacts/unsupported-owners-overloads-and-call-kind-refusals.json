@@ -1,0 +1,289 @@
+{
+  "status": "exact char-only permission and all preserved refusal precedences passed",
+  "mode": "parent-refusals",
+  "engineRuntimeSHA256": "6a91e222d7406511a5cbacf27a3b349eeebba240227b9e908199c36ba4aba4b7",
+  "engineRuntimeKeccak256": "0x1d3300d57b13ba527e7263285457b800e54d764504bbd75a7e45cc583b9aa162",
+  "coordinatorRuntimeSHA256": "0c11c4dfd2dfb7997a01954aeacdcec8df5796398beae78f5ca48005f753e6b4",
+  "coordinatorRuntimeKeccak256": "0xa46bb78c3f041a1f9914563a15cef6837696fa06e9b8f18cfe299127b58cbbee",
+  "localGasBudget": 1000000000,
+  "caller": "0x4d432d52414e444f4d2d434c4153532d5031006d",
+  "engineAddress": "0x4d432d52414e444f4d2d434c4153532d50310070",
+  "coordinatorAddress": "0x4d432d41525241594c4953544c4f43414c310002",
+  "controls": [
+    {
+      "name": "ParentCharRefusalInt",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "2"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29457842,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalLong",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "3"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29463593,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalBoolean",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29455395,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalFloat",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29460877,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalDouble",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29461769,
+      "wallMs": 26
+    },
+    {
+      "name": "ParentCharRefusalObject",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29472078,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalChars",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "3"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29471188,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalCharsRange",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "5"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29488318,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalCopyChars",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "3"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29470737,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharRefusalBounds",
+      "expectation": "typed EVM refusal after successful checkpoints; prior running Head/root preserved",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "2",
+        "6"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xc670290ebcfcc5303ac66d21455f1d9d46af814dd8eb6383338840fc202821ae",
+      "rootAfter": "0xc670290ebcfcc5303ac66d21455f1d9d46af814dd8eb6383338840fc202821ae",
+      "atomic": true,
+      "successfulSlices": 44,
+      "committedHeadEpoch": 44,
+      "callsIncludingRefusal": 45,
+      "gasUsed": 1717904929,
+      "wallMs": 1523
+    },
+    {
+      "name": "ParentCharRefusalVirtual",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "2"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29440902,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharBadDescriptor",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "CallError",
+      "errorArgs": [
+        "4",
+        "2"
+      ],
+      "selector": "0xd631c3a4",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29442270,
+      "wallMs": 24
+    },
+    {
+      "name": "ParentCharStringInterfaceRef",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "InterfaceError",
+      "errorArgs": [
+        "1",
+        "2"
+      ],
+      "selector": "0x069163bc",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29411182,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharComparableStatic",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "2"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29211452,
+      "wallMs": 25
+    },
+    {
+      "name": "ParentCharCharSequenceStatic",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "StringProfileError",
+      "errorArgs": [
+        "1",
+        "2"
+      ],
+      "selector": "0x32e310eb",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 29217148,
+      "wallMs": 26
+    },
+    {
+      "name": "raw-String",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 536331,
+      "wallMs": 1
+    },
+    {
+      "name": "raw-Comparable",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 311443,
+      "wallMs": 1
+    },
+    {
+      "name": "raw-CharSequence",
+      "expectation": "typed EVM refusal; root/head unchanged",
+      "errorName": "BootstrapProfileError",
+      "errorArgs": [
+        "1",
+        "1"
+      ],
+      "selector": "0x6a23ad80",
+      "rootBefore": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "rootAfter": "0xcafda2c59eeb096fd199ca1792acdc2ff1c9cb912130d37bfd51478e6b05f28e",
+      "atomic": true,
+      "gasUsed": 322025,
+      "wallMs": 1
+    }
+  ],
+  "processId": 1490050,
+  "elapsedMs": 0
+}

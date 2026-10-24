@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "gasBudget": 1000000000,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.16376499900070485,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/classes",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalInt.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalLong.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalBoolean.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalFloat.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalDouble.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalObject.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalChars.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalCharsRange.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalCopyChars.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalBounds.java",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/ParentCharRefusalVirtual.java"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.814827089998289,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/driver",
+        "./build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/driver-src"
+      ]
+    },
+    {
+      "label": "controls",
+      "exit": 0,
+      "wallSeconds": 2.266424087996711,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/driver",
+        "parent-refusals",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-build-parent-p57/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-build-parent-p57/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-string-valueof-char-refusals-parent-p57-002/controls",
+        "1000000000"
+      ]
+    }
+  ]
+}

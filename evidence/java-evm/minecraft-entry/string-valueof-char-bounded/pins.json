@@ -1,24 +1,24 @@
 {
-  "profile": "MC-ARRAYS-AS-LIST-BOUNDED-P57-CANDIDATE",
-  "domain": "MC-ARRAYS-AS-LIST-BOUNDED-1",
-  "basis": "accepted P55; genuine fixed-size caller-array-backed list and fresh live traversal",
+  "profile": "MC-STRING-VALUEOF-CHAR-P57-PARENT",
+  "domain": "MC-STRING-VALUEOF-CHAR-BOUNDED-1",
+  "basis": "accepted P56; only ordinary one-UTF16-unit String.valueOf(char) and exact symbolic-call permission",
   "engine": {
     "bytes": 445564,
-    "initSHA256": "b5e99426f6850b80e5afd8796898c91720262a294cb5959d94fd66e49de96fea",
-    "runtimeSHA256": "ca7d9a96440c2ba3f1f7fb9bbec6d4f672278e1f666db4c27a3dfb6740f75f5b",
-    "runtimeKeccak256": "172100f22e0a2407309029b667be9c27e77781466dcb2732a82906336b4f959c"
+    "initSHA256": "cadcf2d1977e2b0eaa9ba5e6a8833af7569b9e1bdea4ac6b63608ccb80a995f9",
+    "runtimeSHA256": "6a91e222d7406511a5cbacf27a3b349eeebba240227b9e908199c36ba4aba4b7",
+    "runtimeKeccak256": "1d3300d57b13ba527e7263285457b800e54d764504bbd75a7e45cc583b9aa162"
   },
   "coordinator": {
     "bytes": 5411,
-    "initSHA256": "c7410fae0d16caa493069929b1c672270c8181b0896085884edaf1f7b815dc00",
-    "runtimeSHA256": "1b07a75710606dea27db6e8c466fe4846e6c9914e3f73037f2bd68856e30493e",
-    "runtimeKeccak256": "2ef323726dd8b93dcdb64541304215a8fdbc90f4df0ddded844e286e1a5b103e"
+    "initSHA256": "432595aeeab23d00f40a49b3fb670f0a9a7be305ac7f23d28285b5efdec2f716",
+    "runtimeSHA256": "0c11c4dfd2dfb7997a01954aeacdcec8df5796398beae78f5ca48005f753e6b4",
+    "runtimeKeccak256": "a46bb78c3f041a1f9914563a15cef6837696fa06e9b8f18cfe299127b58cbbee"
   },
   "bootstrapCount": 123,
-  "baseBootstrapCount": 120,
+  "baseBootstrapCount": 123,
   "diagnosticClassBound": 273,
-  "bootstrapRoot": "e018143afd38ad0531860fad7f8116bcdbfaa6ebe3c9348fa06a424097f09573",
-  "expectedBootstrapRoot": "e018143afd38ad0531860fad7f8116bcdbfaa6ebe3c9348fa06a424097f09573",
+  "bootstrapRoot": "10dffc603774551e32da71d0b20c9002460ec64b4d48cf23d6a29cbf195ffd7c",
+  "expectedBootstrapRoot": "10dffc603774551e32da71d0b20c9002460ec64b4d48cf23d6a29cbf195ffd7c",
   "orderedBootstrapLeaves": [
     "d08322f3721eccab25e9087ee347cd633e0cd3bd618b1ea8dc71c4e099732c37",
     "e18178fb10cf22529f14c2f360984904415d7db229834a9ba3bb5dea200cea9f",
@@ -144,29 +144,7 @@
     "bcb146e68f4745e46f1674f3901bb2c6f1a056fda6f24714fc7ff8838890ca3e",
     "7b4f6870f3ec5d8cf10f1b96143579b80211ddb31930c9d33c9df0b13af27b0b"
   ],
-  "newImages": [
-    {
-      "index": 120,
-      "name": "java/util/Arrays",
-      "bytes": 458,
-      "sha256": "4d35d3ec7a3edf4ebf364a3cc2ac7fc076498befd60406804736a8c34590b0ca",
-      "keccak256": "f5a2ae30107672714a892eaaf6e843db097c9113a06b405a6559bfa4077d01fd"
-    },
-    {
-      "index": 121,
-      "name": "java/util/Arrays$ArrayList",
-      "bytes": 647,
-      "sha256": "8f4a327faf5b55e14cf5e7ea59a4228ef5e2f9c020602dbe552e0cb9765ff822",
-      "keccak256": "bcb146e68f4745e46f1674f3901bb2c6f1a056fda6f24714fc7ff8838890ca3e"
-    },
-    {
-      "index": 122,
-      "name": "java/util/Arrays$ArrayIterator",
-      "bytes": 534,
-      "sha256": "e899be90fff8aa0e94c38b03451f95ff17e4ea8d514a21da88b8ac8e63457a6b",
-      "keccak256": "7b4f6870f3ec5d8cf10f1b96143579b80211ddb31930c9d33c9df0b13af27b0b"
-    }
-  ],
+  "newImages": [],
   "globalNativeBindings": 22,
   "stringLocalBinding": 12,
   "rawLimits": [
@@ -184,25 +162,13 @@
   "maxHandleFrontier": 12545,
   "allocatableArraysAndObjects": 12288,
   "sourceInvariants": {
-    "all122OtherBootstrapImagesExact": true,
-    "onlyStringBootstrapLeaf26Changed": true,
-    "ordinaryStaticStringValueOfCharCode": true,
-    "exactStaticSymbolicExceptionOnly": true,
-    "nativeBindingsUnchanged": true,
-    "runtimeAbiStorageCodecWireAndQuotasUnchanged": true,
-    "originalInputsNotRead": true,
+    "exactlyLeaf26Changed": true,
     "all122OtherImagesExact": true,
-    "bootstrapRootRecomputedFromFullOrderedLeaves": true
-  },
-  "stringImage": {
-    "bootstrapIndex": 26,
-    "bytes": 2285,
-    "sha256": "fe68ab4a5124d504c2a56805cf8766b4c5f5ccdbb646733351b67bac8ddfef2a",
-    "keccak256": "a6bea491c1a065db2e954d2c8ca825def0af9db04aa736af05c5ff05c0516486",
-    "parentVerifiedExactJava8Reproduction": false,
-    "basisImageBytes": 2198,
-    "basisImageSHA256": "d4a4e57f636968bc3d6d0ab5c11e45e52ea85c521c31baa63e671243db045155",
-    "selfReproducedJava8Javac": true
+    "oldStringMethodCodeFieldsAndBridgesPreserved": true,
+    "ordinaryValueOfCharOnly": true,
+    "baselineStartResumeCommitEnvelopeConfigRootUnchanged": true,
+    "actualProgramAssemblyUnchanged": true,
+    "native22String12AbiStorageCodecQuotasUnchanged": true
   },
   "changedImages": [
     {
@@ -210,9 +176,7 @@
       "name": "java/lang/String",
       "bytes": 2285,
       "sha256": "fe68ab4a5124d504c2a56805cf8766b4c5f5ccdbb646733351b67bac8ddfef2a",
-      "keccak256": "a6bea491c1a065db2e954d2c8ca825def0af9db04aa736af05c5ff05c0516486",
-      "baseBytes": 2198,
-      "baseSHA256": "d4a4e57f636968bc3d6d0ab5c11e45e52ea85c521c31baa63e671243db045155"
+      "keccak256": "a6bea491c1a065db2e954d2c8ca825def0af9db04aa736af05c5ff05c0516486"
     }
   ]
 }

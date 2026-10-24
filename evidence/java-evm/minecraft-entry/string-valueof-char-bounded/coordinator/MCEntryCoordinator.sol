@@ -15,14 +15,14 @@ contract MCEntryCoordinator {
     }
 
     address private constant ENGINE = address(bytes20(hex"4d432d52414e444f4d2d434c4153532d50310070"));
-    bytes32 private constant ENGINE_CODEHASH = hex"172100f22e0a2407309029b667be9c27e77781466dcb2732a82906336b4f959c";
+    bytes32 private constant ENGINE_CODEHASH = hex"1d3300d57b13ba527e7263285457b800e54d764504bbd75a7e45cc583b9aa162";
     bytes32 private constant AS0_CODEHASH = hex"c8cec283e80fd82b15254bd50a9f2aea3a91305ba71f756f834439280600f896";
     bytes32 private constant ZI0_CODEHASH = hex"0c22eca78e00865ce03e8e298708bfe51ce9856cff138d1046905fc285ad5a77";
     bytes32 private constant DI0_CODEHASH = hex"946686a0a4f09ec9a03e3eb63e9bbeac008212061d6f316586034cf800380c37";
-    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-ARRAYS-AS-LIST-BOUNDED-1/package/v1");
-    bytes32 private constant CLASS_DOMAIN = keccak256("MC-ARRAYS-AS-LIST-BOUNDED-1/class/v1");
-    bytes32 private constant SEED_DOMAIN = keccak256("MC-ARRAYS-AS-LIST-BOUNDED-1/selected-resource/v1");
-    bytes32 private constant VM_DOMAIN = keccak256("MC-ARRAYS-AS-LIST-BOUNDED-1/vm/v1");
+    bytes32 private constant PACKAGE_DOMAIN = keccak256("MC-STRING-VALUEOF-CHAR-BOUNDED-1/package/v1");
+    bytes32 private constant CLASS_DOMAIN = keccak256("MC-STRING-VALUEOF-CHAR-BOUNDED-1/class/v1");
+    bytes32 private constant SEED_DOMAIN = keccak256("MC-STRING-VALUEOF-CHAR-BOUNDED-1/selected-resource/v1");
+    bytes32 private constant VM_DOMAIN = keccak256("MC-STRING-VALUEOF-CHAR-BOUNDED-1/vm/v1");
     uint32 private constant MAX_SELECTED_RESOURCE_BYTES = 4096;
 
     address public owner;
