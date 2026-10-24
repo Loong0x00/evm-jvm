@@ -1,0 +1,67 @@
+public class java.util.ArrayList extends java.util.AbstractList implements java.util.RandomAccess,java.lang.Cloneable,java.io.Serializable {
+  private static final java.lang.Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+
+  private transient java.lang.Object[] elementData;
+
+  private int size;
+
+  public java.util.ArrayList();
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method java/util/AbstractList."<init>":()V
+       4: aload_0
+       5: getstatic     #4                  // Field DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+       8: putfield      #1                  // Field elementData:[Ljava/lang/Object;
+      11: return
+
+  public java.util.ArrayList(int);
+    Code:
+       0: aload_0
+       1: invokespecial #3                  // Method java/util/AbstractList."<init>":()V
+       4: iload_1
+       5: ifge          16
+       8: new           #5                  // class java/lang/IllegalArgumentException
+      11: dup
+      12: invokespecial #6                  // Method java/lang/IllegalArgumentException."<init>":()V
+      15: athrow
+      16: aload_0
+      17: iload_1
+      18: anewarray     #7                  // class java/lang/Object
+      21: putfield      #1                  // Field elementData:[Ljava/lang/Object;
+      24: return
+
+  public int size();
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field size:I
+       4: ireturn
+
+  public native boolean add(java.lang.Object);
+
+  public java.util.Iterator iterator();
+    Code:
+       0: new           #8                  // class java/util/ArrayList$Itr
+       3: dup
+       4: aload_0
+       5: invokespecial #9                  // Method java/util/ArrayList$Itr."<init>":(Ljava/util/ArrayList;)V
+       8: areturn
+
+  static int access$000(java.util.ArrayList);
+    Code:
+       0: aload_0
+       1: getfield      #2                  // Field size:I
+       4: ireturn
+
+  static java.lang.Object[] access$100(java.util.ArrayList);
+    Code:
+       0: aload_0
+       1: getfield      #1                  // Field elementData:[Ljava/lang/Object;
+       4: areturn
+
+  static {};
+    Code:
+       0: iconst_0
+       1: anewarray     #7                  // class java/lang/Object
+       4: putstatic     #4                  // Field DEFAULTCAPACITY_EMPTY_ELEMENTDATA:[Ljava/lang/Object;
+       7: return
+}

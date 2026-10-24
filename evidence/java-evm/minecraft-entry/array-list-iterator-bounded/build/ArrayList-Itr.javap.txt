@@ -1,0 +1,54 @@
+final class java.util.ArrayList$Itr implements java.util.Iterator {
+  private final java.util.ArrayList owner;
+
+  private int cursor;
+
+  java.util.ArrayList$Itr(java.util.ArrayList);
+    Code:
+       0: aload_0
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: aload_0
+       5: aload_1
+       6: putfield      #2                  // Field owner:Ljava/util/ArrayList;
+       9: return
+
+  public boolean hasNext();
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field cursor:I
+       4: aload_0
+       5: getfield      #2                  // Field owner:Ljava/util/ArrayList;
+       8: invokestatic  #4                  // Method java/util/ArrayList.access$000:(Ljava/util/ArrayList;)I
+      11: if_icmpge     18
+      14: iconst_1
+      15: goto          19
+      18: iconst_0
+      19: ireturn
+
+  public java.lang.Object next();
+    Code:
+       0: aload_0
+       1: getfield      #3                  // Field cursor:I
+       4: aload_0
+       5: getfield      #2                  // Field owner:Ljava/util/ArrayList;
+       8: invokestatic  #4                  // Method java/util/ArrayList.access$000:(Ljava/util/ArrayList;)I
+      11: if_icmplt     22
+      14: new           #5                  // class java/util/NoSuchElementException
+      17: dup
+      18: invokespecial #6                  // Method java/util/NoSuchElementException."<init>":()V
+      21: athrow
+      22: aload_0
+      23: getfield      #2                  // Field owner:Ljava/util/ArrayList;
+      26: invokestatic  #7                  // Method java/util/ArrayList.access$100:(Ljava/util/ArrayList;)[Ljava/lang/Object;
+      29: aload_0
+      30: dup
+      31: getfield      #3                  // Field cursor:I
+      34: dup_x1
+      35: iconst_1
+      36: iadd
+      37: putfield      #3                  // Field cursor:I
+      40: aaload
+      41: areturn
+
+  public native void remove();
+}
