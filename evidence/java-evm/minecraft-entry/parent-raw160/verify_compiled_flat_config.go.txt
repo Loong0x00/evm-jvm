@@ -1,0 +1,23 @@
+package main
+
+import (
+ "encoding/json"
+ "fmt"
+ "os"
+ "github.com/ethereum/go-ethereum/accounts/abi"
+ "github.com/ethereum/go-ethereum/common"
+ "github.com/ethereum/go-ethereum/crypto"
+)
+
+// Verification only: no expected hash or class metadata enters guest execution.
+func verifyConfig(cpPath, entryClass, output string)error{
+ cp,err:=os.ReadFile(cpPath);if err!=nil{return err};if len(cp)<280{return fmt.Errorf("short config proof checkpoint")}
+ pack:=func(types []string,values ...interface{})([]byte,error){args:=make(abi.Arguments,len(types));for i,s:=range types{t,e:=abi.NewType(s,"",nil);if e!=nil{return nil,e};args[i]=abi.Argument{Type:t}};return args.Pack(values...)}
+ limits:=[11]uint32{160,1063930,64,32,65536,65536,16,64,256,4096,2097152};lim,err:=pack([]string{"uint32[11]"},limits);if err!=nil{return err}
+ prefix:="JVMEVM:MC-RAW160-BOUNDED-1:"
+ runtimeHash:=common.BytesToHash(cp[84:116]);artifact:=common.BytesToHash(cp[116:148]);actual:=common.BytesToHash(cp[148:180]);seed:=common.BytesToHash(cp[212:244]);bootstrap:=common.HexToHash("a81fd6be4347f7a2312965a68edea1eb34fd32969d97c76b0cf97b80c0b57db6")
+ flat,err:=pack([]string{"bytes32","uint32","bytes32","bytes32","bytes32","bytes32","uint8","string","string","bytes32","int32[]","bytes32","bytes32"},crypto.Keccak256Hash([]byte(prefix+"CONFIG:1")),uint32(1),runtimeHash,bootstrap,artifact,crypto.Keccak256Hash([]byte(prefix+"ROOT:1")),uint8(1),entryClass,"main",crypto.Keccak256Hash([]byte(prefix+"MAIN:EMPTY-STRING-ARRAY:1")),[]int32{},seed,crypto.Keccak256Hash(lim));if err!=nil{return err};want:=crypto.Keccak256Hash(flat);if want!=actual{return fmt.Errorf("COMPILED EVM config differs from original flat ABI: actual=%s want=%s",actual,want)}
+ b,err:=json.MarshalIndent(map[string]interface{}{"status":"PASS","scope":"actual compiled EVM commitment equals original flat13-field ABI, independent verification only","entryClass":entryClass,"actualEvmConfigRoot":actual,"expectedOriginalFlatConfigRoot":want,"preimageBytes":len(flat),"bootstrapRoot":bootstrap,"runtimeHash":runtimeHash,"artifactRoot":artifact,"seedRoot":seed},"","  ");if err!=nil{return err};return os.WriteFile(output,append(b,'\n'),0600)
+}
+
+func main(){if len(os.Args)!=4{panic("checkpoint entry-class output")};if err:=verifyConfig(os.Args[1],os.Args[2],os.Args[3]);err!=nil{panic(err)}}

@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "budget": 1000000000,
+  "freshP54Artifact": true,
+  "runs": [
+    {
+      "label": "javac",
+      "exit": 0,
+      "wallSeconds": 0.21390030201291665,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/javac",
+        "-g:none",
+        "-source",
+        "8",
+        "-target",
+        "8",
+        "-d",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/classes",
+        "/home/user/evm-jvm/geth/evidence/java-evm/minecraft-entry/parent-linked-hash-map-put/ParentLinkedMapPut.java"
+      ]
+    },
+    {
+      "label": "stock-java8",
+      "exit": 0,
+      "wallSeconds": 0.031636013998650014,
+      "command": [
+        "/usr/lib/jvm/java-8-openjdk/bin/java",
+        "-cp",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/classes",
+        "ParentLinkedMapPut"
+      ]
+    },
+    {
+      "label": "go-build",
+      "exit": 0,
+      "wallSeconds": 0.865330405998975,
+      "command": [
+        "go",
+        "build",
+        "-trimpath",
+        "-o",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/driver",
+        "./build/java-diff-mc-raw160-retained-linked-parent-p62/driver-src"
+      ]
+    },
+    {
+      "label": "reflect-controls",
+      "exit": 0,
+      "wallSeconds": 1.165579943015473,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/driver",
+        "parent-small",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-build-parent-p62/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-build-parent-p62/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/parent-retained-reflect",
+        "1000000000"
+      ]
+    },
+    {
+      "label": "reopen",
+      "exit": 0,
+      "wallSeconds": 0.2139503619982861,
+      "command": [
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/driver",
+        "reopen",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-build-parent-p62/engine/MCEntryInterpreter.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-build-parent-p62/coordinator/MCEntryCoordinator.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/fixture-manifest.json",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62",
+        "/home/user/evm-jvm/geth/build/java-diff-mc-raw160-retained-linked-parent-p62/parent-retained-reflect",
+        "1000000000"
+      ]
+    }
+  ]
+}
